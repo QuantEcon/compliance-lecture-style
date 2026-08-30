@@ -1,10 +1,10 @@
 # Contributions to action-style-guide
 
-Feedback this audit fed back to [QuantEcon/action-style-guide](https://github.com/QuantEcon/action-style-guide) and the [QuantEcon style guide](https://github.com/QuantEcon/QuantEcon.manual/tree/main/manual/styleguide). This folder is the source material behind the four issues opened from the May 2026 audit, plus three drafts from the 2026-08 pass that are not yet filed; the reader-facing summary is the [Feedback appendix](../lectures/appendix.md) in the report.
+Feedback this ledger has fed back to [QuantEcon/action-style-guide](https://github.com/QuantEcon/action-style-guide) and the [QuantEcon style guide](https://github.com/QuantEcon/QuantEcon.manual/tree/main/manual/styleguide). This folder is the source material behind the four issues opened from the May 2026 audit, plus three drafts from the 2026-08 pass that are not yet filed; the reader-facing summary is the [Feedback appendix](../lectures/appendix.md) in the report.
 
 ## Issues posted
 
-All four are open on `action-style-guide`. The files here are the bodies as posted (kept in sync).
+All four are open on `action-style-guide`. The files here are the bodies, and are now ahead of the live issues — see [Status & next steps](#status--next-steps).
 
 | Issue | Title | Body | Type |
 |-------|-------|------|------|
@@ -57,11 +57,13 @@ Each rule-draft has two sections: the **rule entry** (ready to paste into the ru
 - **#18 (new rules)** — open. The program direction has since evolved: rules are being consolidated into the `QuantEcon/style-guide` rule database (coordinated in the private hub `QuantEcon/project-style-guide`), and `action-style-guide` is slated to be split & retired. The `rule-drafts/` here are **transcription inputs for that consolidation**, not a PR against `action-style-guide`. The two weakest-evidence rules (`qe-math-014`, `qe-math-015`) may be deferred.
 - **#19 (Phase 4.3)** — the body has been rewritten. The original asked whether scope should go from ~13 to 22 rules; building the checks answered it: **41 of 49 are mechanically checkable**, and the issue now also offers `tools/qestyle_rules.py` and `qestyle_lex.py` for adoption rather than parallel maintenance. **The live issue still carries the old "22 rules" text and needs re-syncing.**
 - **#20 (bulk-audit mode)** — open design question on where cross-series synthesis should live.
-- **#21 (corpus offer)** — no action required from the team; the published audit is offered as test/eval data.
+- **#21 (corpus offer)** — no action required from the team; the published corpus is offered as test/eval data.
 
-**These bodies are ahead of the live issues.** The 2026-08 pass rewrote #19 and refreshed
-the evidence counts cited in the others, but `action-style-guide` is not in the audit
-session's GitHub scope, so nothing was pushed. Someone with access needs to run:
+**These bodies are ahead of the live issues.** The 2026-08 pass rewrote #19, and this
+assembly retargeted the repository links in all four — but the corpus counts quoted in #18,
+#20 and #21 are still the May 2026 ones, so re-syncing does not refresh them.
+`action-style-guide` is not in this pass's GitHub scope, so nothing was pushed. Someone with
+access needs to run:
 
 ```bash
 for n in 18:01-new-style-rules 19:02-phase-4-3-deterministic-checks \
@@ -71,10 +73,13 @@ for n in 18:01-new-style-rules 19:02-phase-4-3-deterministic-checks \
 done
 ```
 
-Note that the bodies contain GitHub Pages links, which do **not** survive the repo rename
-tracked in [#2](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/2) — best to
-re-sync after that rename rather than twice.
+The bodies link to this repository and to its published pages, and those links now point at
+`compliance-lecture-style`. There is no rename coming:
+[#2](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/2) settled on
+assembling a separate ledger and leaving `audit.2026-05.style-guide` archived under its own
+name. So the loop above is a single run — once this assembly has landed, from a checkout of
+the ledger, by someone with access to `action-style-guide`.
 
 ## Provenance
 
-Generated as part of the May 2026 style audit ([repo](https://github.com/QuantEcon/audit.2026-05.style-guide) · [report](https://quantecon.github.io/audit.2026-05.style-guide/)). See [`../UPDATE.md`](../UPDATE.md) for how the audit is reproduced.
+First generated in the May 2026 style audit ([repo](https://github.com/QuantEcon/audit.2026-05.style-guide) · [report](https://quantecon.github.io/audit.2026-05.style-guide/)), and maintained here since that audit was absorbed into this ledger. See [`../UPDATE.md`](../UPDATE.md) for how a pass is reproduced.

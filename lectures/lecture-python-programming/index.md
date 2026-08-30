@@ -13,17 +13,36 @@ Style audit of the **lecture-python-programming** series.
 <!-- /qe:series-meta -->
 
 <!-- qe:series-narrative -->
-The highest-scoring series overall (8.6) and the corpus's model for code and mathematics:
-Math scores 9.1, and `qe-code-002` — spelled-out Greek letters, which reaches 106 lectures
-corpus-wide — appears in **1 of 27** here, four occurrences in total.
+Writing is the whole story here. At **4.1** it is the lowest cell in the entire
+series-by-category grid — below the corpus's 4.6, below `lecture-python.myst`'s 4.5 — and
+it is the only category at the floor anywhere in the series. All **20 HIGH lectures are
+HIGH because Writing fell to or below 4**, and not one of them for any other reason: no
+Math floor, no Figures floor, no lecture with two categories at the floor. Every other
+series mixes them — `lecture-python.myst` has 26 Math floors and 24 double-floored
+lectures, `lecture-dp` 14 and 12.
 
-It also carries the weakest single category anywhere in the corpus: **Writing, at 5.7**.
-That is almost entirely one rule. `qe-writing-006` (Title Case in H2+ headings) appears in
-**23 of 27 lectures**, 178 headings in total — 85 % of the series. And it accounts for the
-whole HIGH list: **all 5 HIGH lectures are floored by Writing**, none by anything else.
+One rule carries most of that load: `qe-writing-006` — Title Case in H2+ headings —
+(23 / 27, 178 headings). That is 85 % of the series against 49 % in `lecture-python.myst`
+and 4 % in `lecture-python-advanced.myst`, and those 178 headings are 23 % of every
+`qe-writing-006` occurrence in the corpus from under 8 % of its lectures. The weight sits
+in the tutorial lectures — `getting_started` (17), `python_essentials` (14), `functions`
+(13), `numpy` (12) — and every one of the 20 HIGH lectures carries it. Behind it are three
+cheaper mechanical rules, `qe-writing-008` (16 / 27, 43 occurrences), `qe-writing-001`
+(15 / 27, 29) and `qe-writing-004` (6 / 27, 14), plus a judgment backlog led by
+`qe-writing-005`, found in 23 of the 27 lectures. Since 2026-05 Writing has fallen from
+5.7 to 4.1 and HIGH from 5 to 20 over one added lecture, while the corpus fell 6.6 to 4.6;
+both history rows are re-measured with the current code ([spec](../spec.md)), so this
+series moved roughly with the corpus, from an already lower base.
 
-One scripted sweep over heading capitalisation would clear every HIGH lecture in this
-series. No other series has that property.
+Everything else here is the corpus's best. Math **9.0**, Code **8.4** and Figures **7.3**
+are each the highest of the five series; `qe-code-002` has zero violations in this series
+against 66 lectures and 798 occurrences corpus-wide; no math build-risk rule fires
+anywhere. Hence the pairing that defines the series: the second-highest mean overall
+(**8.0**, behind `lecture-python-intro`'s 8.1) alongside the **highest HIGH share of any
+series** — 20 of 27, 74 %, against 57 % across the corpus. Its one build-risk finding is
+also the corpus's only one of that kind: `python_by_example` holds both `qe-admon-003`
+occurrences in the corpus (1 / 27, 2 occurrences), `{exercise-start}` fences at lines 499
+and 549 that are never closed.
 <!-- /qe:series-narrative -->
 
 ## Priority distribution
@@ -81,22 +100,51 @@ already holds to.
 ## Series-level recommendations
 
 <!-- qe:series-recommendations -->
-1. **`qe-writing-006` — sentence-case the H2+ headings** (23 / 27, 178 headings). This is
-   the series. It is a sweep, but it needs the proper-noun allowlist in
-   `tools/qestyle_rules.py` to avoid lowercasing `Python`, `Jupyter` or `Anaconda` — the
-   list is already curated from this corpus.
-2. **`qe-fig-005` — name the figures** (21 / 27, 128 figures). Second-largest reach, same
-   mechanical fix as elsewhere.
-3. **`qe-writing-008` — collapse repeated spaces** (16 / 27, 43 occurrences). Small here;
-   fold it into the same commit as item 1.
-4. **`qe-fig-008` — `lw=2` on line plots** (15 / 27, 66 calls).
-5. **`python_by_example.md` — two unclosed `{exercise-start}` fences** (lines 499 and 549,
-   `qe-admon-003`). Structural rather than stylistic: each swallows the rest of its
-   exercise, including a nested `{hint}` at the same tick count. These are the only two
-   malformed gated directives in roughly 690 across the whole corpus — fix them regardless
-   of the rest.
-6. **Leave the code alone.** This series is where the other four should be looking for
-   Greek-letter and timing conventions, not the reverse.
+Ordered by HIGH lectures cleared per unit of work. The projections below re-score the
+series with `tools/qestyle_draft.py`'s own model, which reproduces all 27 published
+Writing scores exactly; they are projections, not measurements.
+
+1. **`qe-writing-006` — sentence-case the H2+ headings** (23 / 27, 178 headings). A
+   scriptable sweep, and the highest-leverage single action available in this series:
+   clearing this rule and nothing else takes it from 20 HIGH to 3 and lifts Writing from
+   4.1 to 5.7. The sweep needs the 376-entry proper-noun allowlist in
+   `tools/qestyle_rules.py` so `Python`, `Jupyter`, `Anaconda`, `NumPy` and `Polars`
+   survive it — that list is already curated from this corpus.
+2. **Finish Writing with the other three mechanical rules** — `qe-writing-008`
+   (16 / 27, 43 occurrences), `qe-writing-001` (15 / 27, 29) and `qe-writing-004`
+   (6 / 27, 14). Eighty-six occurrences between them, all sweepable. On the same
+   projection these clear the last three HIGH lectures — `python_essentials`,
+   `python_oop`, `writing_good_code` — and empty the series' HIGH list without a single
+   judgment finding being touched. Whitespace is trivial here: 43 occurrences against
+   2,569 in `lecture-python.myst`.
+3. **Close the two `{exercise-start}` fences in `python_by_example.md`**, lines 499 and
+   549 (`qe-admon-003`, 1 / 27, 2 occurrences). Out of leverage order deliberately — it
+   clears no HIGH lecture. But it is two lines, it is a build defect rather than a style
+   one (each fence swallows the rest of its exercise, including a nested `{hint}` at the
+   same tick count), and it is the only `qe-admon-003` violation in the corpus.
+4. **Figures — worth doing, but not for this series' sake.** `qe-fig-005`
+   (21 / 27, 128 occurrences), `qe-fig-008` (14 / 27, 63) and `qe-fig-001` (9 / 27, 22),
+   heaviest in `workspace` (17), `matplotlib` (13) and `getting_started` (12). Clearing
+   all three lifts Figures from 7.3 to 9.4 and still leaves all 20 HIGH lectures HIGH,
+   because nothing here is floored by Figures. Do them inside the corpus-wide sweep —
+   `qe-fig-005` reaches 273 of the 348 lectures — rather than at the top of this list.
+5. **Treat the judgment backlog as editorial work, not remediation.** `qe-writing-005` is
+   found in 23 of the 27 lectures, `qe-writing-003` in 23, `qe-writing-002` in 21 and
+   `qe-code-001` in 19 — reading passes, roughly five agent-minutes a lecture, and they
+   are recorded in `judgment.csv` rather than in the mechanical reach table. None of them
+   gates a priority bucket here, since item 2 already empties the HIGH list. Schedule
+   them for the prose, not for the score.
+
+**Where the fixes belong.** Every lecture edit is a PR in
+[`QuantEcon/lecture-python-programming`](https://github.com/QuantEcon/lecture-python-programming);
+this ledger measures the corpus, it does not patch it. Two cross-repo notes. `pandas_panel`
+shares a filename with `lecture-python.myst`'s copy — the blobs differ at this snapshot,
+but the two measure identically on all seven rules they share, the `lecture-python.myst`
+copy carrying one extra `qe-link-002` — so mirror any fix rather than fixing one side.
+And leave the code conventions alone: `qe-code-002` is at zero here, `qe-code-005` is
+clean, and `qe-code-004` is one lecture (1 / 27, 10 occurrences) — `polars`, ten
+`time.perf_counter()` calls. On code, this series is where the other four should be
+looking, not the reverse.
 <!-- /qe:series-recommendations -->
 
 ## Lectures ranked by priority (lowest score first)

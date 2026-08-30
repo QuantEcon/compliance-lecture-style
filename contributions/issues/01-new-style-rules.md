@@ -93,6 +93,7 @@ These rules are already enforced informally in code review and via the [QuantEco
 
 ## References
 
-- **Audit data:** https://github.com/QuantEcon/audit.2026-05.style-guide
-- **Audit spec (rule mapping):** https://quantecon.github.io/audit.2026-05.style-guide/spec.html
+- **May 2026 audit — the pass these counts come from:** https://github.com/QuantEcon/audit.2026-05.style-guide
+- **Corpus data, re-measured each pass:** https://github.com/QuantEcon/compliance-lecture-style
+- **Rule mapping (spec §3):** https://quantecon.github.io/compliance-lecture-style/spec.html
 - **Style guide source:** https://github.com/QuantEcon/QuantEcon.manual/tree/main/manual/styleguide

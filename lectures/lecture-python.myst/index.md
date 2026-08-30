@@ -13,22 +13,36 @@ Style audit of the **lecture-python.myst** series.
 <!-- /qe:series-meta -->
 
 <!-- qe:series-narrative -->
-The largest series at 145 lectures, and the widest spread: 63 lectures need nothing,
-40 are HIGH. The average (8.4) sits mid-field, but that average is hiding two different
-populations rather than describing a uniform state.
+**Writing is the binding constraint.** At 4.5 it is the weakest of the seven categories —
+as it was in 2026-05, when it scored 5.9 — and it is now at or below the 4-point floor in
+**72 of the 81 HIGH lectures**. Math floors 26 and Figures 8; Code, References, Links and
+Admonitions floor none. In **49** of the 81, Writing is the *only* floored category, so a
+Writing pass is the one action that can clear more than half this series' HIGH list on its
+own. Two very different jobs sit under it. `qe-writing-006` (sentence case below H1, the
+highest-weighted Writing rule) appears in 59 of the 72 and `qe-writing-008` (runs of extra
+whitespace, the lowest-weighted) in 60, and both are mechanical; but 57 of the 72 also
+carry `qe-writing-001` or `qe-writing-004`, which want an editor rather than a script.
 
-**Math is the binding constraint on the HIGH list** — 21 of the 40 HIGH lectures are
-floored by it, against 14 by Writing and 5 by Figures. Two rules do most of that work:
-`qe-math-010` *(proposed)* in 50 lectures (521 bare or unbraced expectation operators) and
-`qe-math-002` in 49 (661 apostrophe or `^T` transposes). `qe-math-004` is narrower but
-intense — 18 lectures carrying 509 bold vectors between them.
+At 145 lectures this series is 42 % of the corpus and holds 81 of its 197 HIGH lectures,
+and it scores like the corpus largely because it *is* the corpus: overall 7.7 against 7.7,
+math 7.0 against 7.0, figures 6.5 against 6.5. The floor proportions match too — Writing
+89 %, Math 32 %, Figures 10 % of the HIGH list, the same three shares as corpus-wide. The
+extremes are what distinguish it. `cross_product_trick` at **5.5** is the lowest-scoring
+lecture in all 348, and `qe-writing-008` at **2,569 occurrences across 89 lectures** is the
+largest count of any rule in any series — 36 % of the corpus total for that rule, with
+`ak2` alone at 197. Math and Figures both edged up since 2026-05 (6.6 → 7.0 and 6.3 → 6.5)
+while Writing fell 1.4 points; the series grew from 110 lectures to 145 over the same
+interval, so part of that movement is composition rather than regression.
 
-Figures are the weakest category by average (6.5) but rarely the floor: `qe-fig-005`
-(110 / 145) and `qe-fig-001` (107 / 145) are near-universal and low-weight, so they lower
-scores broadly without pushing lectures into HIGH.
-
-`qe-writing-008` deserves a mention for scale alone: **2,569 occurrences** across 89
-lectures, the largest single count anywhere in the corpus.
+**A caveat this series shares with `lecture-dp`.** 31 of these 145 filenames also exist in
+`lecture-dp`, which syncs them from here; 16 of the 31 are HIGH here and 15 are HIGH in
+both. Only **6 are byte-identical** at this snapshot (`cross_product_trick`,
+`ifp_discrete`, `ifp_opi`, `lq_inventories`, `mccall_model_with_separation`,
+`os_numerical`) — for those, this repo is where a fix belongs and both copies clear. The
+other 25 share an origin and have since diverged, so the same defect usually appears in
+both but each copy needs its own edit. Whether the corpus totals should de-duplicate the 6
+is open as
+[compliance-lecture-style#3](https://github.com/QuantEcon/compliance-lecture-style/issues/3).
 <!-- /qe:series-narrative -->
 
 ## Priority distribution
@@ -72,24 +86,58 @@ already holds to.
 ## Series-level recommendations
 
 <!-- qe:series-recommendations -->
-1. **`qe-math-010` *(proposed)* and `qe-math-002` together** (50 and 49 lectures,
-   1,182 occurrences). The Math floor is what makes 21 lectures HIGH, and these two rules
-   are almost all of it. Best done as one careful pass — both are mechanical substitutions
-   (`E[·]` → `\mathbb{E}[·]`, `'` and `^T` → `^\top`) but they touch equations, so they
-   want review rather than blind `sed`.
-2. **`qe-fig-005` — name the figures** (110 / 145, 446 figures). Largest reach in the
-   series; a pure sweep.
-3. **`qe-fig-001` — drop `figsize=`** (107 / 145, 462 overrides).
-4. **`qe-writing-008` — collapse repeated spaces** (89 / 145, 2,569 occurrences). The
-   biggest raw count in the corpus and entirely safe to automate.
-5. **`qe-fig-003` — plot titles into captions** (79 / 145, 329 calls). Needs a human: each
-   `ax.set_title(...)` becomes a caption that has to be written. Titles inside
-   `exercise`/`solution` regions are exempt and already excluded from the count.
-6. **`qe-math-004` — un-bold the vectors** (18 / 145, 509 occurrences). Narrow but dense;
-   a good single-sitting fix.
-7. **Start with the four worst:** `navy_captain` (6.1), `cross_product_trick` (6.3),
-   `prob_matrix` (6.8), `rs_inventory_q` (6.9). Note that `cross_product_trick` and
-   `rs_inventory_q` are also synced into `lecture-dp` — fixing them here clears both.
+1. **`qe-writing-006` — sentence-case the headings below H1** (71 / 145, 410 headings).
+   The highest-weighted Writing rule in the spec, and present in 59 of the 72
+   Writing-floored lectures — the best return per heading edited. Scriptable against the
+   curated proper-noun list in `tools/qestyle_rules.py`, but that list is heuristic, so
+   read the diff before it lands. `linear_models` (25), `markov_asset` and
+   `linear_algebra` (18 each) are the densest.
+2. **`qe-writing-008` — collapse repeated spaces** (89 / 145, 2,569 occurrences). The
+   largest count of any rule in any series in the corpus, and present in 60 of the 72. It
+   is the *lowest*-weighted Writing rule, so it moves a score less than its size suggests
+   — but it is entirely safe to automate, which is why it ranks here rather than lower.
+   `ak2` holds 197 of them and `var_dmd` 180.
+3. **`qe-writing-001` and `qe-writing-004`** (65 / 145, 165 blocks; 43 / 145, 148 words).
+   Reading passes rather than sweeps: splitting a paragraph and deciding what is a proper
+   noun both need an editor. Unavoidable, though — 57 of the 72 Writing-floored lectures
+   carry one or the other, so items 1–2 alone will not lift them off the floor. Items 1–3
+   together are the only route to the **49** lectures floored on Writing alone, and a
+   precondition for the 23 floored on Writing plus something else.
+4. **`qe-math-010` *(proposed)* — expectation and probability operators, with braces**
+   (60 / 145, 689 occurrences). The largest Math finding, and present in 19 of the 26
+   Math-floored lectures. A mechanical substitution, but it edits equations, so review it
+   rather than running `sed` blind. `util_rand_resp` (113) and `prob_matrix` (81) dominate.
+5. **`qe-math-004` — un-bold the vectors and matrices** (18 / 145, 509 occurrences) and
+   **`qe-math-002` — `^\top` for transpose** (24 / 145, 494). Narrow and dense rather than
+   broad: three lectures hold 370 of the 509 (`hansen_singleton_1983` 143, `lln_clt` 121,
+   `mle` 106), and `linear_algebra` alone holds 114 of the 494. Good single sittings. With
+   item 4 they cover the Math floor — of which only six lectures (`affine_risk_prices`,
+   `hansen_singleton_1983`, `imp_sample`, `likelihood_bayes`, `likelihood_var`, `mle`) are
+   floored on Math alone.
+6. **The figure rules, for the average rather than the triage.** `qe-fig-005` — name the
+   figures (110 / 145, 446 figures) and `qe-fig-001` — drop `figsize=` (107 / 145, 462
+   overrides) are the two largest reaches in the series and pure sweeps, but Figures is the
+   floor in only 8 lectures and just two of those (`ak_aiyagari`, `sargent_surico`) are
+   floored on Figures alone. `qe-fig-003` — titles into captions (79 / 145, 329 calls) is a
+   reading pass instead: each `ax.set_title(...)` becomes a caption someone has to write.
+   `two_computation` (28) and `navy_captain` (20) are the heaviest.
+7. **Two structural one-line fixes, independent of the HIGH list.**
+   `cross_product_trick.md:133` has `` {eq}`eq:Kalman102} `` — mismatched braces, pointing
+   at a bare `align*` block that carries no label — and `ifp_advanced.md:158` has a raw
+   `\label{a:y0}` inside `$$`, which MyST does not resolve. Both change what the build
+   produces, and both exist in the `lecture-dp` copies too.
+8. **Sequence the sweeps here before `lecture-dp` runs its own**, and get the two proposed
+   rules encoded upstream. This series is the sync source for the 31 shared filenames, so
+   a fix landed in `lecture-dp` on one of the 6 byte-identical lectures is overwritten by
+   the next sync; for the 25 diverged copies the sweeps have to run in both repos. And
+   `qe-math-010` *(proposed)* (item 4) and `qe-writing-009` *(proposed)* (15 / 145, 27 occurrences) are scored here
+   from the manual style guide but are not encoded in `action-style-guide` — they are
+   proposed in [issue #18](https://github.com/QuantEcon/action-style-guide/issues/18).
+   Sweeping 689 occurrences with nothing in CI to hold the line means measuring the same
+   debt again next period.
+9. **Start with the four lowest:** `cross_product_trick` (5.5, the corpus minimum),
+   `qr_decomp` (5.9), `navy_captain` (6.0) and `two_auctions` (6.0). The first is
+   byte-identical to its `lecture-dp` copy, so fixing it here clears both.
 <!-- /qe:series-recommendations -->
 
 ## Lectures ranked by priority (lowest score first)

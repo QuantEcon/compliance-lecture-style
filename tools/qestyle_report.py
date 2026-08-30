@@ -458,6 +458,15 @@ def block_review_coverage(rows, data_dir):
     # Which admonition is right is also a fact about coverage: a warning at full coverage
     # reads as a caveat that no longer applies, and nothing outside this function knows
     # whether it applies.
+    # The two branches cite deliberately different places. The completed-coverage sentence
+    # is a historical citation — `audit.2026-05.style-guide#5` is the *record* of the caveat
+    # it retires, and an archived repo keeps its issues readable forever, so that link stays
+    # good. The partial-coverage branches describe a live question about the pass being
+    # measured right now, and a locked issue on an archived repo cannot receive one; they
+    # point at this ledger's own issues instead. No ledger issue covers coverage
+    # comparability today, so the reference is to the tracker as a whole, not to a number
+    # that does not exist. Keep every link label a single unbroken token: ``_wrap`` will not
+    # split one, and this repo's prose has no link broken across a line.
     def _admonition(kind, body):
         return "```{" + kind + "}\n" + _wrap(body) + "\n```"
 
@@ -469,14 +478,15 @@ def block_review_coverage(rows, data_dir):
             f"series' Summary page, and the *within-series* ranking and the rule-reach "
             f"numbers were always sound — those are measured over the whole corpus by the "
             f"same code. This retires the caveat tracked in "
-            f"[#5](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/5)."
+            f"[audit.2026-05.style-guide#5]"
+            f"(https://github.com/QuantEcon/audit.2026-05.style-guide/issues/5)."
         )
     if not have:
         return _admonition("warning",
             "**No lecture has been through the judgment layer yet**, so every score below "
             "reflects the measured rules only, and the cross-series comparison is a "
-            "ranking of the deterministic evidence alone. Tracked in "
-            "[#5](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/5)."
+            "ranking of the deterministic evidence alone. Coverage is tracked in this "
+            "ledger's [issues](https://github.com/QuantEcon/compliance-lecture-style/issues)."
         )
 
     a, b = stats(have), stats(lack)
@@ -491,8 +501,9 @@ def block_review_coverage(rows, data_dir):
         f"the per-series coverage is published on each series' Summary page. Treat the "
         f"*within-series* ranking and the rule-reach numbers as sound — those are measured "
         f"over the whole corpus by the same code — and treat a small gap between two "
-        f"series' overall scores as noise until coverage evens out. Tracked in "
-        f"[#5](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/5)."
+        f"series' overall scores as noise until coverage evens out. This gap is tracked "
+        f"in this ledger's "
+        f"[issues](https://github.com/QuantEcon/compliance-lecture-style/issues)."
     )
 
 

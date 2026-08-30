@@ -82,6 +82,15 @@ This builds on existing infrastructure:
 - Each audit produces its own `audit.YYYY-MM.{topic}` repo
 - **Risk:** every audit reinvents the orchestration; calibration drift between subagents is hard to mitigate without shared infrastructure
 
+Since this issue was filed, the second half of that pattern has been proposed. QuantEcon's
+repository-naming standard QEP-3 ([open PR](https://github.com/QuantEcon/qeps/pull/7), not
+yet accepted) registers a `compliance-{domain}` type for the standing record a repeated
+audit turns into, on the rule that the audit is the event and the compliance repo is the
+ledger. The May 2026 audit is its first instance: the dated repo keeps its name and is
+archived, and the findings now live in `compliance-lecture-style`, re-measured in place per
+pass. That settles where the *output* lives. It says nothing about where the *tooling*
+should live, which is what this issue asks.
+
 ## Cost considerations
 
 A full audit of 299 lectures × ~16 mechanical rules (per the Phase 4.3-extended scope from [#19 — Phase 4.3 acceleration](https://github.com/QuantEcon/action-style-guide/issues/19)) running through deterministic checks would be cents. Subjective/style rules running through Claude at current per-rule architecture would be **$24–116** depending on average lecture length. Sampling strategies (audit a random 20 % per quarter, full audit annually) make this manageable.
@@ -98,5 +107,6 @@ Bulk-audit mode + Phase 4.3 together would dramatically lower the cost of regula
 ## References
 
 - **May 2026 audit output:** https://github.com/QuantEcon/audit.2026-05.style-guide
-- **Audit spec / scoring rubric:** https://quantecon.github.io/audit.2026-05.style-guide/spec.html
+- **Scoring rubric, as maintained since:** https://quantecon.github.io/compliance-lecture-style/spec.html
+- **Repository types for audits and standing records (QEP-3, open PR):** https://github.com/QuantEcon/qeps/pull/7
 - **Existing batch-processing plan:** [`docs/developer/roadmap.md` Phase 6.3](https://github.com/QuantEcon/action-style-guide/blob/main/docs/developer/roadmap.md)

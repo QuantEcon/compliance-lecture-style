@@ -11,10 +11,11 @@ kernelspec:
 
 # Charts
 
-Visual summary of the audit across 5 lecture series and 7 in-scope rule categories.
+Visual summary of the current pass across 5 lecture series and 7 in-scope rule
+categories.
 
 Every figure on this page is generated at build time from the CSVs in
-[`lectures/data/`](https://github.com/QuantEcon/audit.2026-05.style-guide/tree/main/lectures/data),
+[`lectures/data/`](https://github.com/QuantEcon/compliance-lecture-style/tree/main/lectures/data),
 which are themselves produced by `tools/qestyle_scan.py` and `tools/qestyle_score.py`
 from a pinned corpus snapshot. Nothing here is typed in by hand, so the charts cannot
 drift away from the [scoreboard](details.md) or the per-lecture reports.

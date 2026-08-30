@@ -20,7 +20,8 @@ Two readings, both defensible:
 ## What the corpus does
 
 Counting only `plot()` calls that set a width explicitly. These figures are measured, not
-typed: `tools/qestyle_scan.py` writes them to `lectures/data/fig_line_widths.csv` and the
+typed: [`tools/qestyle_scan.py`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/tools/qestyle_scan.py)
+writes them to [`lectures/data/fig_line_widths.csv`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/lectures/data/fig_line_widths.csv) and the
 consistency gate holds this table to that file, so they cannot drift when the checker's
 exemptions move.
 

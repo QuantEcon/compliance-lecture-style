@@ -5,7 +5,7 @@ the front page to decide *where* to focus; come here for the full numbers, every
 rule, every HIGH-priority lecture, and the ordered remediation plan.
 
 Every table on this page is generated from
-[`lectures/data/*.csv`](https://github.com/QuantEcon/audit.2026-05.style-guide/tree/main/lectures/data)
+[`lectures/data/*.csv`](https://github.com/QuantEcon/compliance-lecture-style/tree/main/lectures/data)
 by `tools/qestyle_report.py`, so it cannot disagree with the per-lecture reports.
 
 ---
@@ -426,7 +426,7 @@ needs a reading pass; the third is small and structural.
     about different files even where the defect is the same. For the identical 6, fix
     upstream and both clear; for the diverged 25, each copy needs its own fix. Worth a
     decision on whether the corpus totals should de-duplicate the 6 —
-    [#4](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/4).
+    [#3](https://github.com/QuantEcon/compliance-lecture-style/issues/3).
 
 ---
 

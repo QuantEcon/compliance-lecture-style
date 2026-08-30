@@ -1,8 +1,11 @@
-# QuantEcon Style Audit
+# QuantEcon Lecture Style Compliance
 
-A style-guide compliance audit of the QuantEcon lecture corpus, scored against 7 rule
-categories from the [`action-style-guide`](https://github.com/QuantEcon/action-style-guide)
-registry.
+A standing record of how the QuantEcon lecture corpus conforms to the style guide, scored
+against 7 rule categories from the
+[`action-style-guide`](https://github.com/QuantEcon/action-style-guide) registry. Each
+pass re-measures the whole corpus and updates this record in place: the scores and
+findings here are the **2026-08** pass, with the change since the previous pass, 2026-05,
+measured alongside them.
 
 This page is for triage — *where should we put our attention?* Start here, then open a
 [series report](#where-to-focus-first) for the detail, the [charts](charts.md) for a
@@ -25,11 +28,12 @@ are LOW or NONE.
 | 🟠 **Some** | [lecture-python-intro](lecture-python-intro/index.md) | 8.1 | 19 / 56 | Writing (5.2), Figures (6.5) |
 <!-- /qe:focus -->
 
-**Every HIGH-priority lecture in this pass is HIGH because of one weak category, not
-because of a low overall score.** No lecture in the corpus has an overall score at or
-below 5.0. So the useful triage question is not *which lectures* but *which category*:
-Math is the binding constraint on most of them, then Writing, then Figures. Fix a
-category across a series and a large block of HIGH lectures clears at once.
+**Every HIGH-priority lecture in this pass is HIGH because a category fell below the bar,
+not because of a low overall score** — all 197 of them, while no lecture in the corpus has
+an overall score at or below 5.0. So the useful triage question is not *which lectures* but
+*which category*: Writing is the binding constraint, at or below the floor in 176 of the 197
+HIGH lectures against Math's 64 and Figures' 20. Fix a category across a series and a large
+block of HIGH lectures clears at once.
 
 ---
 
@@ -124,7 +128,7 @@ now, 66 of 348 lectures, is four times what the pass first measured.
 41 of the 49 rules — 36 of the 42 in-scope registry rules plus 5 of the 7 proposed — are
 checked by program, over a **pinned corpus snapshot**: one commit
 per series, recorded in every report header and in
-[`lectures/data/snapshot.json`](https://github.com/QuantEcon/audit.2026-05.style-guide/blob/main/lectures/data/snapshot.json).
+[`lectures/data/snapshot.json`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/lectures/data/snapshot.json).
 Scores and priority buckets are then derived arithmetically from the rubric. The 8
 judgment-only rules are reviewed by reading. [Spec §8](spec.md) describes the layers and
 why they are separate; [§9](spec.md) lists exactly which rules fall where.
@@ -139,7 +143,7 @@ below are comparable across series and the cross-series comparison stands on its
 Per-series coverage is still published on each series' Summary page, and the
 *within-series* ranking and the rule-reach numbers were always sound — those are
 measured over the whole corpus by the same code. This retires the caveat tracked in
-[#5](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/5).
+[audit.2026-05.style-guide#5](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/5).
 ```
 <!-- /qe:review-coverage -->
 
@@ -152,10 +156,10 @@ measured over the whole corpus by the same code. This retires the caveat tracked
 - **[Charts](charts.md)** — heatmap, rule reach, the cross-pass trend, priority mix.
 - **[Full findings](details.md)** — the complete scoreboard, every recurring rule, every
   HIGH lecture, and the remediation plan.
-- **[Scoring spec](spec.md)** — the rubric, the pass methodology, and the measured
+- **[Scoring rubric](spec.md)** — the rubric, the pass methodology, and the measured
   deterministic coverage.
-- **[Appendix — feedback](appendix.md)** — what this audit fed back to the style guide and
-  `action-style-guide` (proposed rules and tooling, issues #18–#21).
+- **[Appendix — feedback](appendix.md)** — what these passes fed back to the style guide
+  and `action-style-guide` (proposed rules and tooling, issues #18–#21).
 
 > Rules are cited by their `action-style-guide` IDs (e.g. `qe-fig-001`). Seven are tagged
 > **(proposed)** — documented in the style guide but not yet in the rule registry

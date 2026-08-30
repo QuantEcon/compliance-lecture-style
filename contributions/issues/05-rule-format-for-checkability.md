@@ -192,13 +192,13 @@ Two of those fields fix live false positives on the current corpus. `Identifier-
 
 ## Offer
 
-The reference implementation is in [`tools/`](https://github.com/QuantEcon/audit.2026-05.style-guide/tree/main/tools) of the lecture style audit — one function per rule plus the MyST lexer, dependency-free, running the whole 348-lecture corpus in seconds. Per-rule false-positive rates and fixes are in [`tools/VERIFICATION.md`](https://github.com/QuantEcon/audit.2026-05.style-guide/blob/main/tools/VERIFICATION.md); labelled per-lecture counts with line numbers are in `lectures/data/violations.csv` at a pinned commit per series.
+The reference implementation is in [`tools/`](https://github.com/QuantEcon/compliance-lecture-style/tree/main/tools) of the lecture style compliance ledger — one function per rule plus the MyST lexer, dependency-free, running the whole 348-lecture corpus in seconds. Per-rule false-positive rates and fixes are in [`tools/VERIFICATION.md`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/tools/VERIFICATION.md); labelled per-lecture counts with line numbers are in `lectures/data/violations.csv` at a pinned commit per series.
 
 It is offered for adoption rather than parallel maintenance — see [#19](https://github.com/QuantEcon/action-style-guide/issues/19). If the format changes proposed here land, the checkers should be regenerated from the registry rather than maintained by hand, and most of this issue becomes unnecessary.
 
 ## References
 
 - Rule files audited: `style_checker/rules/{writing,math,code,figures,links,references,admonitions,jax}-rules.md`
-- Audit repo: https://github.com/QuantEcon/audit.2026-05.style-guide
-- Measured coverage and the judgment-only set: [`lectures/spec.md`](https://quantecon.github.io/audit.2026-05.style-guide/spec.html) §9
+- Compliance ledger (the reference implementation and its data): https://github.com/QuantEcon/compliance-lecture-style
+- Measured coverage and the judgment-only set: [`lectures/spec.md`](https://quantecon.github.io/compliance-lecture-style/spec.html) §9
 - Related: [#18](https://github.com/QuantEcon/action-style-guide/issues/18) (7 proposed rules — all seven would want these fields from the start), [#19](https://github.com/QuantEcon/action-style-guide/issues/19) (deterministic-checker scope), [#20](https://github.com/QuantEcon/action-style-guide/issues/20) (where checkers should live)

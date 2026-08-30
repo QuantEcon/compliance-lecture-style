@@ -1,5 +1,5 @@
-# Jupyter Book configuration — QuantEcon Style Audit (May 2026)
-title: "QuantEcon Style Audit — May 2026"
+# Jupyter Book configuration — QuantEcon Lecture Style Compliance
+title: "QuantEcon Lecture Style Compliance"
 author: QuantEcon
 logo: _static/qe-logo-large.png
 
@@ -26,11 +26,11 @@ parse:
     - substitution
 
 html:
-  baseurl: https://quantecon.github.io/audit.2026-05.style-guide/
+  baseurl: https://quantecon.github.io/compliance-lecture-style/
   use_repository_button: true
 
 repository:
-  url: https://github.com/QuantEcon/audit.2026-05.style-guide
+  url: https://github.com/QuantEcon/compliance-lecture-style
   path_to_book: lectures
   branch: main
 
@@ -51,7 +51,7 @@ sphinx:
     html_theme_options:
       header_organisation_url: https://quantecon.org
       header_organisation: QuantEcon
-      repository_url: https://github.com/QuantEcon/audit.2026-05.style-guide
-      description: "Style-guide compliance audit of the QuantEcon lecture series."
+      repository_url: https://github.com/QuantEcon/compliance-lecture-style
+      description: "A standing record of how the QuantEcon lecture series conforms to the style guide."
   extra_extensions:
     - sphinx.ext.intersphinx

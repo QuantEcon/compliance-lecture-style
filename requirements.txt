@@ -1,4 +1,4 @@
-# Build dependencies for the QuantEcon Style Audit Jupyter Book.
+# Build dependencies for the QuantEcon Lecture Style Compliance Jupyter Book.
 # Versions pinned to QuantEcon's known-good lecture-build combination.
 jupyter-book>=1.0.4post1,<2.0
 quantecon-book-theme==0.15.1

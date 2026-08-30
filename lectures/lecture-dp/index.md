@@ -13,24 +13,52 @@ Style audit of the **lecture-dp** series.
 <!-- /qe:series-meta -->
 
 <!-- qe:series-narrative -->
-A mid-field series (8.2) with the same shape as `lecture-python-advanced.myst` but less
-of it. Math and Figures tie as the weakest categories (6.4 each), and **Math is the floor
-for 12 of the 15 HIGH lectures**.
+**Writing is the floor under this series, and that is new.** At 4.7 it is the weakest of the
+seven categories measured here, and it sits at or below the ≤ 4 threshold in **30 of the 34
+HIGH lectures** — against Math's 14 and Figures' 2. Nineteen lectures are HIGH on Writing and
+nothing else. In the previous pass Math and Figures tied as the weakest at 6.4 and Writing
+scored 7.0; Math and Figures have barely moved since (6.6 and 6.4) while Writing fell to 4.7
+and the HIGH list grew from 15 to 34. That fall is not particular to this series — the corpus
+Writing mean went 6.6 → 4.6 over the same interval, and at 4.7 `lecture-dp` is marginally
+*above* it. Every one of the 34 is HIGH on a category floor, never on the overall — the
+lowest overall in the series is 5.7. The series mean, 7.7, is exactly the corpus
+mean, but 65.4 % of its lectures are HIGH against 57 % corpus-wide — the second-largest share
+of any series, behind `lecture-python-programming`.
 
-`qe-math-002` is the story: 31 of 52 lectures, **509 occurrences** — the second-densest
-transpose debt in the corpus after `lecture-python-advanced.myst`. Beyond it the Math
-findings thin out quickly (`qe-math-010` *(proposed)* 16 / 52 but only 63 occurrences), so this is one
-rule rather than a cluster.
+What sits under Writing divides into a scriptable half and a reading half, and the reading
+half is the larger one. Repeated spaces dominate the mechanical side:
+**`qe-writing-008`** **(40 / 52, 1,578 occurrences)**, a per-lecture density second only to
+`lecture-python-advanced.myst`. Then **`qe-writing-001`** **(23 / 52, 45)**,
+**`qe-writing-006`** **(22 / 52, 146)** and **`qe-writing-004`** **(14 / 52, 28)**. By
+reading: `qe-writing-003` (logical flow) reaches 45 of the 52 lectures, `qe-writing-002` 39,
+`qe-writing-007` 36, `qe-writing-005` 31. **All 30 Writing-floored lectures carry findings
+from both halves** — not one of them can be cleared by a sweep alone. That is what separates
+this series from `lecture-python-programming`, where a single heading sweep would empty the
+HIGH list.
 
-**A caveat specific to this series.** 31 of these 52 lectures share a filename with a
-lecture in `lecture-python.myst` — but only **6 are byte-identical** today
-(`cross_product_trick`, `ifp_discrete`, `ifp_opi`, `lq_inventories`,
-`mccall_model_with_separation`, `os_numerical`). The other 25 share an origin and have
-since diverged. So the two situations need different handling: for the identical 6, a
-finding here and a finding there are the same finding, and one upstream fix clears both;
-for the diverged 25, the same defect often appears in both copies but each needs its own
-fix. `cross_product_trick` (6.3) is in the identical set. `rs_inventory_q` (6.9) is not —
-it has drifted from its upstream namesake, so it needs fixing here.
+Math is the second problem and a far more concentrated one: at 6.6 it is the lowest in the
+corpus after `lecture-python-advanced.myst`, and nearly all of it is one rule.
+**`qe-math-002`** — transpose notation — **(14 / 52, 416 occurrences)** reaches fewer lectures
+than four of the figure rules but averages about thirty sites in each, and it lands where it
+counts: 12 of the 14 Math-floored lectures carry it, holding 381 of its 416 occurrences.
+`lqcontrol` alone has 85, `lagrangian_lqdp` 69, `tax_smoothing_2` 59, `cross_product_trick`
+52, `markov_jump_lq` 47. Past it the Math findings thin out quickly: the next largest is
+**`qe-math-010`** **(20 / 52, 132)**, itself a proposed rule — so this is one rule and not a
+cluster.
+
+**A caveat specific to this series.** 31 of these 52 lectures share a filename with a lecture
+in `lecture-python.myst`, the repository `lecture-dp` syncs from — but only **6 are
+byte-identical** at this snapshot (`cross_product_trick`, `ifp_discrete`, `ifp_opi`,
+`lq_inventories`, `mccall_model_with_separation`, `os_numerical`). For those 6 a finding here
+and a finding there are the same finding, and one upstream fix clears both; the other 25 share
+an origin and have since diverged, so the same defect usually needs two edits. Only two of the
+6 are HIGH here — `cross_product_trick` (5.7, the series' lowest) and `lq_inventories` (7.4).
+It is worth recording how the two independent passes over identical bytes came out: all six
+pairs differ in at least one judgment-heavy category — Writing in four, Code in two, Math in
+one — while Figures, References, Links and Admonitions agree exactly, no overall differs by
+more than 0.2, and all six land in the same priority bucket. Whether the corpus totals should
+de-duplicate those six is open —
+[`compliance-lecture-style#3`](https://github.com/QuantEcon/compliance-lecture-style/issues/3).
 <!-- /qe:series-narrative -->
 
 ## Priority distribution
@@ -79,21 +107,57 @@ already holds to.
 ## Series-level recommendations
 
 <!-- qe:series-recommendations -->
-1. **`qe-math-002` — transpose notation** (31 / 52, 509 occurrences). The dominant
-   finding and the floor under most of the HIGH list. `lqcontrol` alone carries 85.
-2. **Check whether a lecture is still identical to its upstream namesake before fixing
-   it.** `cross_product_trick` is byte-identical to the `lecture-python.myst` copy, so its
-   malformed `` {eq}`eq:Kalman102} `` reference at line 133 should be fixed upstream — a
-   fix here would be overwritten by the next sync. `rs_inventory_q` and `ifp_advanced`
-   have diverged, so they need fixing in this repo as well; `ifp_advanced:158` carries a
-   raw `\label{}` inside `$$` in **both** copies, and each needs its own edit.
-3. **`qe-fig-005` — name the figures** (42 / 52, 164 figures) and **`qe-fig-008` — `lw=2`**
-   (39 / 52, 252 calls). Routine sweeps.
-4. **`qe-writing-008` — collapse repeated spaces** (40 / 52, 1,578 occurrences).
-5. **`qe-fig-001` — drop `figsize=`** (31 / 52) and **`qe-fig-003` — titles into captions**
-   (30 / 52, 105 calls). The second needs a reading pass.
-6. **Start with `lqcontrol`** (6.6) — it is the largest genuine (non-synced) Math debt in
-   the series, then `cons_news` (7.0).
+Ordered by HIGH lectures cleared per unit of work, not by size of the finding.
+
+1. **`qe-math-002` on the four HIGH lectures Writing does not floor** — `tax_smoothing_2`
+   (59 occurrences), `markov_jump_lq` (47), `tax_smoothing_1` (11), `lqramsey` (10). These
+   are the only lectures in the series where Math work on its own can move the bucket;
+   every other HIGH lecture is also floored by Writing and stays HIGH until a reading pass
+   lands there. Mostly a mechanical `'` → `\top` rewrite, but the check has to tell a
+   transpose apostrophe from a derivative, so each site wants an eye. `tax_smoothing_2`
+   needs its Figures floor cleared too — `qe-fig-003` (9 embedded titles) and `qe-fig-006`
+   (9 axis labels); `lqramsey`'s Math is as much **`qe-math-010`** *(proposed)* (19) as
+   transpose.
+
+2. **`qe-math-002` across the other ten Math-floored lectures** — **(14 / 52, 416
+   occurrences)** series-wide, 381 of them inside Math-floored lectures. `lqcontrol` holds
+   85, `lagrangian_lqdp` 69. Same scripted-with-review work as item 1, and it lifts the Math
+   mean, but these lectures stay HIGH on Writing regardless, so it buys score rather than
+   bucket. `lqcontrol` and `lq_inventories` also carry **`qe-math-003`** (17 `pmatrix`
+   environments each) — a clean regex, worth doing in the same edit.
+
+3. **Fix the synced lectures upstream, not here.** `cross_product_trick` is byte-identical
+   to the `lecture-python.myst` copy and carries the series' only build-risk finding —
+   `qe-math-006`, five `align` environments inside `$$` — plus the malformed
+   `` {eq}`eq:Kalman102} `` at line 133. Both belong in `lecture-python.myst`; an edit here
+   is overwritten at the next sync. Three more want a re-sync rather than an edit, because
+   the upstream copy is already ahead: `mccall_q` (six `qe-writing-006` headings and four
+   repeated spaces that upstream no longer has), `os_egm` and `os_egm_jax` (each carries a
+   `qe-code-003` the upstream copy does not — the missing install cell). By contrast
+   `ifp_advanced` has diverged, so its raw `\label{a:y0}` at line 158 (`qe-math-007`) needs
+   its own edit here even though the same defect sits at the same line upstream.
+
+4. **The Writing reading pass — the only route that clears the 30.** `qe-writing-003` (45 of
+   52 lectures), `qe-writing-002` (39), `qe-writing-007` (36), `qe-writing-005` (31) are
+   judgment rules; no script helps, and every Writing-floored lecture carries at least one of
+   them. Work down from the lowest overalls, where the mechanical half is thick enough to
+   fold into the same edit: `smoothing` (6.0), `perm_income_cons` (6.5), `rs_inventory_q`
+   (6.5), `cons_news` (6.6), `lqcontrol` (6.6). Pair it with **`qe-writing-008`** **(40 / 52,
+   1,578 occurrences)** and **`qe-writing-006`** **(22 / 52, 146)** in the same pass — both
+   are near-scripted, but on their own they clear no lecture out of HIGH in this series.
+
+5. **Figures sweeps — broad, cheap, and low-leverage on the HIGH list.**
+   **`qe-fig-005`** **(42 / 52, 164)**, **`qe-fig-008`** **(38 / 52, 219)** and
+   **`qe-fig-001`** **(31 / 52, 102)** are scriptable; **`qe-fig-003`** **(30 / 52, 105)** is
+   a reading pass, because each embedded title has to be rewritten as a caption. Only two
+   lectures are Figures-floored — `smoothing_tax` (20 `qe-fig-008` sites, the most in the
+   series) and `tax_smoothing_2` — so this raises the series mean rather than shortening the
+   HIGH list.
+
+6. **Leave `qe-ref-001` (20 / 52, 45) and `qe-link-002` (15 / 52, 53) last.** References at
+   9.3 and Links at 9.5 are already near the top of their range, and neither rule floors a
+   lecture anywhere in the series. `tax_smoothing_1` holds 9 of the 45 citation findings if
+   one lecture is wanted for a first pass.
 <!-- /qe:series-recommendations -->
 
 ## Lectures ranked by priority (lowest score first)

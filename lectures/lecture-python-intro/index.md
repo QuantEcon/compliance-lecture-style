@@ -13,17 +13,29 @@ Style audit of the **lecture-python-intro** series.
 <!-- /qe:series-meta -->
 
 <!-- qe:series-narrative -->
-This series is in the best shape of the five, and its problems are shallow: no lecture
-scores below 7.2, and 23 of 56 need nothing at all. What holds the average down is not
-a hard spot but a pair of habits applied almost everywhere — `qe-fig-005` (46 of 56
-lectures have a figure with no `name:`) and `qe-writing-008` (710 runs of extra
-whitespace across 39 lectures).
+**Writing, at 5.2, is the weakest category here, and it is very nearly the whole HIGH
+list.** Eighteen of the 19 HIGH lectures are HIGH only because Writing sits at or below the
+≤ 4 floor; the nineteenth, `markov_chains_I`, is floored by Math (3.0) instead. Three of
+the 18 — `geom_series`, `french_rev` and `eigen_I` — are also floored by Figures, and no
+lecture in the series is floored by Code, References, Links or Admonitions at all.
 
-The 11 HIGH lectures are all triggered by a single category floor rather than a low
-overall: **Writing** in 6 of them, Figures in 3, Math in 2. Math is barely a factor here —
-`qe-math-002` appears in only 6 lectures, against 35 in `lecture-python-advanced.myst`.
-So the whole series is reachable with figure metadata and a prose sweep; there is no
-notation debt to work through.
+Underneath Writing are four rules, and no single one of them accounts for a lecture.
+`qe-writing-008` (39 / 56, 709 occurrences of repeated spaces) is the largest raw count and
+the only one that sweeps cleanly, but every one of the 18 floored lectures also breaks at
+least one rule that has to be read: `qe-writing-001` (30 / 56) in 16 of them,
+`qe-writing-006` (13 / 56) in 11, `qe-writing-004` (18 / 56) in 9. Across the 18 that is 85
+hand-edited sites, against 338 whitespace occurrences a script handles. The 2026-05 pass,
+done by reading, put Writing at 7.5 here and left Figures as the weakest category; corpus
+Writing moved 6.6 → 4.6 over the same interval, so the reordering is not particular to this
+series.
+
+By every other measure this is the strongest series in the corpus: the highest overall (8.1
+against 7.7), the smallest share of HIGH lectures (19 of 56, against 197 of 348), nothing
+below 7.2 — only `lecture-python-programming` also has no lecture under 7.0 — and neither a
+build-risk violation nor any of the corpus's four structural findings. Math especially is
+not the problem: 8.6, second only to `lecture-python-programming`, against 7.0 corpus-wide,
+with `qe-math-002` (4 / 56, 13 occurrences) where `lecture-python-advanced.myst` has it in
+20 of its 68. Figures (6.5) sits exactly on the corpus mean and Code (7.3) just under it.
 <!-- /qe:series-narrative -->
 
 ## Priority distribution
@@ -72,21 +84,46 @@ already holds to.
 ## Series-level recommendations
 
 <!-- qe:series-recommendations -->
-1. **`qe-fig-005` — name the figures** (46 / 56, 174 figures). The single highest-return
-   fix in the series, and a pure sweep: add `name:` under the `mystnb.figure` metadata of
-   each figure-producing cell. Unlocks `{numref}` cross-referencing as a side effect.
-2. **`qe-writing-008` — collapse repeated spaces** (39 / 56, 710 occurrences). Entirely
-   safe to automate, and it is the largest raw count in the series.
-3. **`qe-fig-008` — `lw=2` on line plots** (39 / 56, 266 calls). Scriptable, though worth
-   a glance where a plot deliberately uses a thin line.
-4. **`qe-fig-001` — drop `figsize=`** (30 / 56, 91 overrides). Let the series
-   `_config.yml` defaults apply; keep an override only where a plot needs a different
-   aspect ratio.
-5. **`qe-writing-001` — one sentence per paragraph** (30 / 56, 53 blocks). A reading pass,
-   not a sweep: splitting a paragraph changes its rhythm, so it wants an editor.
-6. **Figures and Writing together clear 9 of the 11 HIGH lectures.** Start with
-   `linear_equations` (7.2), then `business_cycle`, `heavy_tails` and `inflation_history`
-   (7.4 each).
+1. **`qe-writing-008` — collapse repeated spaces** (39 / 56, 709 occurrences). Free and
+   scriptable, so do it first; 338 of the occurrences are inside the 18 Writing-floored
+   lectures, 89 of them in `french_rev` alone. On its own it clears no HIGH lecture — each
+   of the 18 also breaks a rule that needs reading.
+2. **`qe-writing-006` — sentence-case the headings** (13 / 56, 31 headings). The best ratio
+   of floored lectures reached to work done in the series: it reaches 11 of the 18, and 29
+   of the 31 headings are in those 11. Scriptable, but the check is heuristic and leans on
+   a curated proper-noun list, so read the diff before committing it.
+3. **`qe-writing-004` — drop the mid-sentence capitals** (18 / 56, 40 sites). Reaches 9 of
+   the 18, concentrated in `time_series_with_matrices` (7 sites) and `eigen_I` (5). Same
+   heuristic caveat, and small enough to check by hand.
+4. **`qe-writing-001` — one sentence per paragraph** (30 / 56, 54 blocks). The largest
+   single blocker — 16 of the 18 — but a reading pass rather than a sweep, because
+   splitting a paragraph changes its rhythm. 31 of the 54 blocks sit in the floored
+   lectures.
+5. **Take the floored lectures cheapest first.** On top of the sweeps,
+   `observed_distributions` and `laffer_adaptive` need one hand-edited site each,
+   `msy_fishery` two (and no whitespace work at all), then `cagan_ree`, `networks`,
+   `solow`, `tax_smooth`, `unpleasant` and `greek_square` at three each. The tail is
+   `time_series_with_matrices` (9 sites), `complex_and_trig` (8) and `french_rev` (8).
+6. **`qe-fig-005` — name the figures** (46 / 56, 174 figures). The widest-reaching rule in
+   the series, a pure sweep, and it unlocks `{numref}` cross-referencing — but it lifts the
+   series average, not the HIGH list. The three Figures floors are `geom_series`,
+   `french_rev` and `eigen_I`; `qe-fig-005` is only 14 of their 135 figure findings, and
+   all three are floored by Writing regardless. `qe-fig-008` (35 / 56, 217 calls) and
+   `qe-fig-001` (30 / 56, 91 overrides) are the same kind of item: broad, cheap, no effect
+   on priority.
+7. **`markov_chains_I` — the one Math floor** (3.0). 22 of its 23 math findings are
+   `qe-math-004` (4 / 56, 15 occurrences) and `qe-math-010` *(proposed)* (8 / 56, 100 occurrences),
+   and the latter is still a proposed rule rather than a registry one. So this lecture's
+   priority turns partly on
+   [`action-style-guide` #18](https://github.com/QuantEcon/action-style-guide/issues/18);
+   `qe-math-004` is worth doing either way.
+8. **Do the work upstream, in `QuantEcon/lecture-python-intro`.** This repository only
+   measures. One file needs care about where the edit lands: `short_path` is byte-identical
+   with the `lecture-dp` copy at this snapshot, so fixing it once clears both series. It is
+   the only substantive shared file here — `status` and `zreferences` also match another
+   series byte for byte but are boilerplate, while `lake_model`, `lln_clt` and `mle` share
+   a filename with `lecture-python.myst` and have diverged, so each of those copies needs
+   its own edit.
 <!-- /qe:series-recommendations -->
 
 ## Lectures ranked by priority (lowest score first)

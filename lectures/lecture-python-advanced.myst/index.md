@@ -13,19 +13,47 @@ Style audit of the **lecture-python-advanced.myst** series.
 <!-- /qe:series-meta -->
 
 <!-- qe:series-narrative -->
-The weakest series (8.1) and the one with the clearest single cause. **Math scores 5.9 —
-the lowest category average anywhere in the corpus** — and it is the floor for **22 of the
-29 HIGH lectures**. Figures (4) and Writing (3) account for the rest.
+The lowest-scoring series in the corpus — 7.4 against a corpus mean of 7.7, with 43 of its
+68 lectures at HIGH. Every one of those 43 is HIGH on a category floor rather than on its
+overall: the lowest overall here is 5.6. The floor is **Writing**, not Math. Writing
+averages 4.6 and sits at or below the ≤ 4 floor in **36 of the 43** HIGH lectures; Math
+(5.8) floors 23 of them, Figures (6.3) 7. Writing was 7.3 at the previous pass, the
+steepest fall of any series — but every series fell, so this is the corpus being re-scored,
+not a regression here. Exactly one full lecture reaches NONE (`supply_demand_var`, 8.6);
+the other four are `intro`, `status`, `zreferences` and `troubleshooting`.
 
-The Math problem is notation debt in the older LQ, filtering and robustness material, and
-it is concentrated in two rules: `qe-math-002` in 35 of 68 lectures with **941
-occurrences**, and `qe-math-010` *(proposed)* in 28 with 485. Those are the densest
-per-lecture counts of either rule in the corpus. `hs_recursive_models` at **5.6** is the
-lowest-scoring lecture in all 348.
+Most of what is under that Writing floor does not appear in the systemic table above.
+`qe-writing-008` (53 / 68, 2,223 occurrences) has the largest count in the series and the
+lowest audit weight — it is a whitespace rule. The mechanical rules that actually move the
+score are far smaller: `qe-writing-001` (42 / 68, 155 occurrences) and `qe-writing-004`
+(24 / 68, 109 occurrences), both High weight. The rest is judgment-only and so carries no
+mechanical count at all — bold-and-italic use is flagged in 55 of the 68 lectures with 356
+findings, clarity in 56, logical flow in 56, visual elements in 60. That is the densest
+judgment load of any series, and no sweep touches it.
 
-Everything else here is ordinary: `qe-fig-005` (54 / 68), `qe-writing-008` (53 / 68, 2,144
-occurrences) and `qe-fig-001` (47 / 68) look much like the other series. Fix the maths and
-this series stops being the outlier.
+Math is what makes this series distinctive rather than what makes it worst. 5.8 is the
+lowest Math average of any series against a corpus 7.0, and Math is at the floor in 23 of
+the 43 HIGH lectures here against 64 of 197 corpus-wide. Two rules carry nearly all of it:
+`qe-math-002` (20 / 68, 671 occurrences) and `qe-math-010` *(proposed)* (33 / 68, 682 occurrences),
+each roughly 42 % of that rule's corpus-wide total and each at the highest per-lecture
+density in the corpus — 34 and 21 occurrences per affected lecture. 648 of the 671
+transpose findings and 553 of the 682 operator findings fall inside the 23 Math-floored
+lectures, concentrated in the LQ, filtering and robustness material: `hs_recursive_models`
+(5.6, the series minimum and the second-lowest score in the corpus) carries 154 and 76 of
+them by itself, `robustness` 117, `doubts_or_variability` 148.
+
+**A caveat specific to this series.** 23 of these 68 lectures share a filename with
+`lecture-dp`, and **18 are byte-identical** at this snapshot — three times the
+byte-identical overlap between `lecture-dp` and `lecture-python.myst`, and the largest in
+the corpus. Those 18 hold 1,780 of this series' 5,605 mechanical findings, and 15 of them
+are HIGH here. Their mechanical counts agree exactly across the two series, which is the
+check working; the judgment overlays differ in every one of the 18, and 12 land on a
+different overall. So for these a finding here and a finding in `lecture-dp` are the same
+finding, and one upstream edit clears both. Whether the corpus totals should de-duplicate
+them is still open —
+[compliance-lecture-style#3](https://github.com/QuantEcon/compliance-lecture-style/issues/3).
+The other five shared names (`cons_news`, `opt_tax_recur`, `intro`, `status`,
+`zreferences`) have diverged, so each copy needs its own edit.
 <!-- /qe:series-narrative -->
 
 ## Priority distribution
@@ -71,24 +99,52 @@ already holds to.
 ## Series-level recommendations
 
 <!-- qe:series-recommendations -->
-1. **`qe-math-002` — transpose notation** (35 / 68, **941 occurrences**). The largest
-   concentration of any rule in any series. Replace `'` and `^T` with `^\top`. Worth doing
-   as one pass over the LQ/filtering cluster rather than lecture by lecture, so the
-   notation stays consistent within a topic.
-2. **`qe-math-010` *(proposed)* — expectation and probability operators** (28 / 68, 485
-   occurrences). `\mathbb{E}` / `\mathbb{P}` / `\mathbb{V}`, with braces. Same cluster,
-   same pass.
-3. **`qe-math-003` — `bmatrix` for matrices** (15 / 68, 113 blocks) and **`qe-math-011`
-   *(proposed)*** — plain `N` rather than `\mathcal{N}` (12 / 68). Both fall out naturally
-   while doing items 1–2.
-4. **Items 1–3 together should clear most of the 22 Math-floored HIGH lectures**, which is
-   three quarters of the series' HIGH list. Nothing else here has comparable leverage.
-5. **`qe-fig-005` — name the figures** (54 / 68, 203 figures) and **`qe-writing-008`**
-   (53 / 68, 2,144 occurrences). Routine sweeps, best kept in separate commits from the
-   maths so the notation diff stays reviewable.
-6. **Start with `hs_recursive_models`** (5.6, the corpus minimum), then
-   `knowing_forecasts_of_others` and `match_transport` (6.9 each) and `asset_pricing_lph`
-   (7.0).
+1. **Writing first — it clears more HIGH lectures than anything else here.** 17 of the 43
+   HIGH lectures have Writing as their *only* floored category, so they clear on this work
+   alone; a further 15 need it alongside Math. It is three different jobs, cheapest first:
+   - `qe-writing-008` (53 / 68, 2,223 occurrences) — a scriptable regex sweep, Low audit
+     weight. The largest number in the series and the smallest effect on the score. Worth
+     doing, in its own commit, but it will not lift a lecture off the floor by itself.
+   - `qe-writing-001` (42 / 68, 155 occurrences) and `qe-writing-004` (24 / 68, 109
+     occurrences) — both High weight, both reading passes. Splitting a paragraph changes
+     its rhythm, and the capitalisation check is heuristic, so every hit needs an eye.
+   - The judgment-only writing rules — bold-and-italic use in 55 of the 68 lectures,
+     clarity in 56, logical flow in 56, visual elements in 60. No script exists, and none
+     can. This is the bulk of the 4.6 and it is a per-lecture reading pass.
+2. **Math second — one notation pass over the LQ, filtering and robustness cluster.**
+   `qe-math-002` (20 / 68, 671 occurrences) and `qe-math-010` *(proposed)* (33 / 68, 682 occurrences)
+   are both Very-high weight and both concentrated in the 23 Math-floored lectures, which
+   hold 648 and 553 of those occurrences. Semi-scriptable: `'` → `^\top` has a
+   derivative-prime exception, so a blind substitution is wrong. `qe-math-011` *(proposed)* (18 / 68, 95
+   occurrences) and `qe-math-003` (15 / 68, 113 occurrences) fall out of the same pass.
+   On its own this clears only the 4 lectures whose sole floor is Math
+   (`cagan_rational_expectations`, `classical_filtering`, `lucas_asset_pricing_dles`,
+   `markov_jump_lq`) — but combined with item 1 it reaches 36 of the 43.
+3. **`qe-math-010` *(proposed)* and `qe-math-011` *(proposed)* belong in the registry before the rewrite, and that
+   part is upstream work.** Both are proposed rules rather than registry rules, offered in
+   [action-style-guide#18](https://github.com/QuantEcon/action-style-guide/issues/18).
+   Rewriting 682 operator occurrences against a rule the PR-time checker does not enforce
+   leaves nothing to hold them in place afterwards. `qe-math-010` *(proposed)* is the strongest case in
+   that set of seven, and this series is its single largest concentration — the evidence
+   for adopting it is here.
+4. **Coordinate the 18 byte-identical lectures with `lecture-dp`.** 15 of them are HIGH
+   here — 13 Writing-floored, 7 Math-floored — and they include the two largest whitespace
+   sites in the series, `calvo` at 242 occurrences and `calvo_machine_learn` at 193. One
+   edit, two PRs, same subject and title in both repos. Doing them independently doubles
+   the reading and drives the two copies further apart.
+5. **Figures last.** All 7 Figures-floored lectures also have Writing or Math at the floor,
+   so none of them clears on Figures work alone. `qe-fig-001` (47 / 68, 215 occurrences)
+   and `qe-fig-008` (40 / 68, 302 occurrences) are Low-weight mechanical sweeps;
+   `qe-fig-005` (54 / 68, 203 occurrences) needs a name chosen per figure, and
+   `qe-fig-003` (36 / 68, 149 occurrences) a caption written per title, so both are
+   reading passes despite being mechanically detected.
+6. **Start with `hs_recursive_models`** (5.6), then `entropy` and `smoothing` (6.0 each)
+   and `knowing_forecasts_of_others` (6.1) — all four are Writing and Math at the floor
+   together. `match_transport` (6.1) is the exception in the bottom five: its Math is 9.5
+   and its floors are Writing and Figures.
+7. **Not urgent.** The series' only `build_risk` row — `qe-math-006` in `asset_pricing_lph`,
+   2 occurrences — is a bare top-level `\begin{align}`, which this pass reclassified
+   corpus-wide as a convention outlier rather than a build break.
 <!-- /qe:series-recommendations -->
 
 ## Lectures ranked by priority (lowest score first)

@@ -4,7 +4,7 @@ Phase 4.3 in the [roadmap](https://github.com/QuantEcon/action-style-guide/blob/
 
 This issue originally argued from corpus evidence that the number should be **22**. That estimate has since been settled by building the checks: **41 of the 49 rules are mechanically checkable.** 36 of the 42 in-scope registry rules, plus 5 of the 7 rules proposed in [#18](https://github.com/QuantEcon/action-style-guide/issues/18). The 8 that are not are genuine judgment and are listed below.
 
-A working reference implementation exists — one function per rule, plus the MyST lexer they need — in the [lecture style audit](https://github.com/QuantEcon/audit.2026-05.style-guide) under `tools/`. It runs the whole 348-lecture corpus in seconds. **It is offered for adoption rather than as something to maintain separately**; see [§ What's being asked](#whats-being-asked).
+A working reference implementation exists — one function per rule, plus the MyST lexer they need — in the lecture style compliance ledger under [`tools/`](https://github.com/QuantEcon/compliance-lecture-style/tree/main/tools). It runs the whole 348-lecture corpus in seconds. **It is offered for adoption rather than as something to maintain separately**; see [§ What's being asked](#whats-being-asked).
 
 ## What is mechanically checkable
 
@@ -65,7 +65,7 @@ Six checked rules have **zero** hits corpus-wide, which is a result rather than 
 | `qe-fig-002` | 36 / 20 | Screenshots and photographs flagged as "should be code-generated" |
 | `qe-writing-006` | 52 / 40 | Possessives (`Newton's`) and hyphenated surnames (`Gram-Schmidt`) defeated the proper-noun list |
 
-A shipped checker with `qe-fig-008`'s original behaviour would have told authors to add `lw=2` to plots that already had it, 149 times. The full table, with the fix for each, is in [`tools/VERIFICATION.md`](https://github.com/QuantEcon/audit.2026-05.style-guide/blob/main/tools/VERIFICATION.md).
+A shipped checker with `qe-fig-008`'s original behaviour would have told authors to add `lw=2` to plots that already had it, 149 times. The full table, with the fix for each, is in [`tools/VERIFICATION.md`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/tools/VERIFICATION.md).
 
 Three checks remain deliberately heuristic and say so where they fire: `qe-writing-004` and `qe-writing-006` consult curated proper-noun and common-noun lists, and `qe-math-002` has to tell a transpose apostrophe from a derivative, and a `^T` transpose from a terminal date — `Y^T` is a data history in several lectures.
 
@@ -98,13 +98,13 @@ Useful as:
 ## What's being asked
 
 1. Should Phase 4.3's scope be **41 rules** rather than ~13, using the measured prioritisation above?
-2. Would the team rather **adopt `tools/qestyle_rules.py` and `qestyle_lex.py`** than reimplement? They are dependency-free Python, one function per rule, and the lexer is the part worth having. Maintaining them in an audit repo is the wrong home — this is a checker, and `action-style-guide` is where checkers live. Related: [#20](https://github.com/QuantEcon/action-style-guide/issues/20).
+2. Would the team rather **adopt `tools/qestyle_rules.py` and `qestyle_lex.py`** than reimplement? They are dependency-free Python, one function per rule, and the lexer is the part worth having. Maintaining them in a compliance ledger is the wrong home — this is a checker, and `action-style-guide` is where checkers live. Related: [#20](https://github.com/QuantEcon/action-style-guide/issues/20).
 3. Should the corpus be ingested as test data — referenced by commit SHA, or vendored into `tests/fixtures/`?
 4. Should the two genuine build-risk findings ship as their own small PR, separate from the larger Phase 4.3 effort?
 
 ## References
 
-- **Audit repo:** https://github.com/QuantEcon/audit.2026-05.style-guide
-- **Measured coverage (spec §9):** https://quantecon.github.io/audit.2026-05.style-guide/spec.html
-- **Detector verification:** [`tools/VERIFICATION.md`](https://github.com/QuantEcon/audit.2026-05.style-guide/blob/main/tools/VERIFICATION.md)
+- **Compliance ledger (the tools, the data and the reports):** https://github.com/QuantEcon/compliance-lecture-style
+- **Measured coverage (spec §9):** https://quantecon.github.io/compliance-lecture-style/spec.html
+- **Detector verification:** [`tools/VERIFICATION.md`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/tools/VERIFICATION.md)
 - **Existing Phase 4.3:** [`docs/developer/roadmap.md`](https://github.com/QuantEcon/action-style-guide/blob/main/docs/developer/roadmap.md), [`IMPROVEMENTS.md §2.C`](https://github.com/QuantEcon/action-style-guide/blob/main/IMPROVEMENTS.md)

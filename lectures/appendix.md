@@ -1,13 +1,13 @@
 # Appendix — feedback to the style guide & action-style-guide
 
-This audit doesn't just score lectures — it also feeds back into the tooling and conventions it scores against. This page summarises that feedback. The source material (issue bodies, ready-to-merge rule entries) lives in the repo under [`contributions/`](https://github.com/QuantEcon/audit.2026-05.style-guide/tree/main/contributions).
+A pass does more than score lectures — it also feeds back into the tooling and conventions it scores against. This page is the standing summary of that feedback: four issues filed from the May 2026 audit, and three drafts from the 2026-08 pass that are not yet filed. The source material (issue bodies, ready-to-merge rule entries) lives in this repo under [`contributions/`](https://github.com/QuantEcon/compliance-lecture-style/tree/main/contributions).
 
 ## How the pieces fit
 
 - The **[QuantEcon manual style guide](https://github.com/QuantEcon/QuantEcon.manual/tree/main/manual/styleguide)** is the human-readable source of conventions.
-- **[`action-style-guide`](https://github.com/QuantEcon/action-style-guide)** is the tool that enforces them — a registry of `qe-*` rules checked at PR time. This audit scores lectures against that registry (see the [scoring spec](spec.md)).
-- Where the audit found a convention in the manual that **isn't yet a coded rule**, or a way to make the tool **catch more, faster**, it became feedback. Four issues capture it.
-- Where the audit found that a rule's *text* does not settle a question its own counts depend on, that became feedback too — three drafts from this pass, not yet filed.
+- **[`action-style-guide`](https://github.com/QuantEcon/action-style-guide)** is the tool that enforces them — a registry of `qe-*` rules checked at PR time. This ledger scores lectures against that registry (see the [scoring spec](spec.md)).
+- Where a pass found a convention in the manual that **isn't yet a coded rule**, or a way to make the tool **catch more, faster**, it became feedback. Four issues capture it.
+- Where a pass found that a rule's *text* does not settle a question its own counts depend on, that became feedback too — three drafts from this pass, not yet filed.
 
 ## Four issues opened
 
@@ -43,7 +43,7 @@ tightened against false positives — `qe-math-012` was firing on `\operatorname
 convolution notation, and `qe-math-013` on references into other authors' papers, where a
 numeric equation reference is the only thing that can be cited.
 
-Ready-to-merge rule entries for each are in [`contributions/rule-drafts/`](https://github.com/QuantEcon/audit.2026-05.style-guide/tree/main/contributions/rule-drafts).
+Ready-to-merge rule entries for each are in [`contributions/rule-drafts/`](https://github.com/QuantEcon/compliance-lecture-style/tree/main/contributions/rule-drafts).
 
 ## Direct feedback to a lecture repo
 
@@ -65,15 +65,19 @@ cost of both readings, so whoever answers can see what they are choosing between
 
 | Draft | The question | What turns on it |
 |---|---|---|
-| [`05-rule-format-for-checkability`](https://github.com/QuantEcon/audit.2026-05.style-guide/blob/main/contributions/issues/05-rule-format-for-checkability.md) | Should a rule definition carry the exemptions and scope its own counts depend on? | 144 under-specification gaps across 42 in-scope rules. `qe-fig-003`, the only rule with an explicit exemption clause, is also the only figure rule with zero false positives. |
-| [`06-ref-001-author-name-citations`](https://github.com/QuantEcon/audit.2026-05.style-guide/blob/main/contributions/issues/06-ref-001-author-name-citations.md) | What makes a citation "narrative" — the author's name in the sentence, or the citation's position? | 299 author-name sites are undetermined under the current text; the two readings need different fixes, and repairing one deletes true findings under the other. |
-| [`07-fig-008-line-width-tolerance`](https://github.com/QuantEcon/audit.2026-05.style-guide/blob/main/contributions/issues/07-fig-008-line-width-tolerance.md) | Does `lw=2` mean every line, or the primary lines? | 264 `plot()` calls across 84 lectures set some other width, spread over twenty-one distinct values. Just over half carry a de-emphasis signal and read as deliberate; the rest read as drift. |
+| [`05-rule-format-for-checkability`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/contributions/issues/05-rule-format-for-checkability.md) | Should a rule definition carry the exemptions and scope its own counts depend on? | 144 under-specification gaps across 42 in-scope rules. `qe-fig-003`, the only rule with an explicit exemption clause, is also the only figure rule with zero false positives. |
+| [`06-ref-001-author-name-citations`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/contributions/issues/06-ref-001-author-name-citations.md) | What makes a citation "narrative" — the author's name in the sentence, or the citation's position? | 299 author-name sites are undetermined under the current text; the two readings need different fixes, and repairing one deletes true findings under the other. |
+| [`07-fig-008-line-width-tolerance`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/contributions/issues/07-fig-008-line-width-tolerance.md) | Does `lw=2` mean every line, or the primary lines? | 264 `plot()` calls across 84 lectures set some other width, spread over twenty-one distinct values. Just over half carry a de-emphasis signal and read as deliberate; the rest read as drift. |
 
 ## Status
 
 All four issues are open. **The bodies in `contributions/issues/` are now ahead of the
-live issues** — this pass rewrote #19 around the measured 41-of-49 result and refreshed the
-evidence counts the others cite, but `action-style-guide` was not in the audit session's
-GitHub scope, so nothing was pushed. See
-[`contributions/README.md`](https://github.com/QuantEcon/audit.2026-05.style-guide/blob/main/contributions/README.md)
-for the re-sync command. Since they were filed, the broader style-guide program (coordinated in `QuantEcon/project-style-guide`, a private planning hub) has set a new direction: rules are being consolidated into a single `QuantEcon/style-guide` rule database, and `action-style-guide` is slated to be split and retired. Under that direction the `rule-drafts/` here serve as **transcription inputs** for the consolidated database rather than a PR against `action-style-guide`. See [`contributions/README.md`](https://github.com/QuantEcon/audit.2026-05.style-guide/blob/main/contributions/README.md) for the current status.
+live issues** — this pass rewrote #19 around the measured 41-of-49 result, and the links in
+all four now point at this repository, but `action-style-guide` was not in this pass's
+GitHub scope, so nothing was pushed. The `rule-drafts/` here are written as
+**transcription inputs** for a consolidated rule database rather than as a PR against
+`action-style-guide`. Program-level direction for the style guide is coordinated in
+`QuantEcon/project-style-guide`, a private planning hub, and is recorded there rather than
+here. See
+[`contributions/README.md`](https://github.com/QuantEcon/compliance-lecture-style/blob/main/contributions/README.md)
+for the re-sync command and the per-issue status.

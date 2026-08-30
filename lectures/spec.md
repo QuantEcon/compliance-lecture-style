@@ -1,12 +1,14 @@
-# QuantEcon Style Audit — Scoring Spec
+# Scoring rubric
 
-This file is the canonical scoring rubric and report template for QuantEcon lecture audits. The audit *complements* the per-rule LLM review provided by [QuantEcon/action-style-guide](https://github.com/QuantEcon/action-style-guide) by adding:
+This file is the rubric this record is scored against, and the report template every pass writes to. It *complements* the per-rule LLM review provided by [QuantEcon/action-style-guide](https://github.com/QuantEcon/action-style-guide) by adding:
 
 - per-lecture scoring on a 0–10 scale
 - severity-bucketed prioritisation across a lecture series
 - cross-series synthesis and remediation roadmaps
 
-It is not a replacement for `action-style-guide`; it consumes the same rule definitions and produces a different output format (audit reports rather than PR-with-fixes).
+It is not a replacement for `action-style-guide`; it consumes the same rule definitions and produces a different output format (scored reports rather than PR-with-fixes).
+
+Every pass is scored against the rubric as it stands, and the previous pass is re-measured with the current code rather than quoted from its old report — so a change here moves the published history as well as the current numbers, and the trend measures the lectures rather than the method. §10 has the commands.
 
 ---
 
@@ -16,7 +18,7 @@ The 49 canonical rules live in [`QuantEcon/action-style-guide/style_checker/rule
 
 `writing-rules.md`, `math-rules.md`, `code-rules.md`, `jax-rules.md`, `figures-rules.md`, `references-rules.md`, `links-rules.md`, `admonitions-rules.md`.
 
-The audit uses **qe-\* IDs verbatim**. It does not redefine rules.
+This rubric uses **qe-\* IDs verbatim**. It does not redefine rules.
 
 ---
 
@@ -117,19 +119,19 @@ Tables organised by category. **Audit weight** is how heavily a rule influences 
 
 ---
 
-## 3. Audit-only addendum rules (proposed for action-style-guide)
+## 3. Ledger-only addendum rules (proposed for action-style-guide)
 
-These rules are **specified in the QuantEcon manual style guide** ([`QuantEcon.manual/manual/styleguide/`](https://github.com/QuantEcon/QuantEcon.manual/tree/main/manual/styleguide)) but are **not yet encoded as rules in `action-style-guide`**. They are scored during audits using the permanent IDs proposed below (each tagged **(proposed)** wherever it appears in the report) and have been observed at scale in the 299-lecture audit corpus (see [the synthesis](intro.md) for counts).
+These rules are **specified in the QuantEcon manual style guide** ([`QuantEcon.manual/manual/styleguide/`](https://github.com/QuantEcon/QuantEcon.manual/tree/main/manual/styleguide)) but are **not yet encoded as rules in `action-style-guide`**. They are scored each pass using the permanent IDs proposed below (each tagged **(proposed)** wherever it appears in the report) and are measured over the whole corpus — 348 lectures, one pinned commit per series (see [the synthesis](intro.md) for counts). The reach below is read from `lectures/data/rule_reach.csv` rather than estimated; the five mechanised rules carry counts, the two judgment rules cannot.
 
-| Proposed ID | Title | Source | Audit weight | Detect-by | Corpus evidence |
-|-------------|-------|--------|--------------|-----------|-----------------|
-| **qe-writing-009** | Write "IID" — not "i.i.d." or "iid" | `writing.md` §General writing advice; `math.md` §IID | Medium | Mechanical (case-sensitive regex `\bi\.i\.d\.\b|\biid\b`) | ~30 lectures |
-| **qe-math-010** | Blackboard `\mathbb{P}`, `\mathbb{E}`, `\mathbb{V}` for probability, expectation, variance — with braces | `math.md` §Probability, expectation, variance | **Very high** | Mechanical (regex catches bare `E[`, `E_t`, `\mathbb E` missing braces, `\Pr(`, `\Var(`) | ~60 lectures |
-| **qe-math-011** | Distribution names: plain letters (`N`, `U`); `\mathrm{…}` for multi-letter — never `\mathcal` / `\mathbb` | `math.md` §Distribution names | High | Mechanical (regex on `\mathcal\{N\}` / `\{\\cal N\}`) | ~30 lectures |
-| **qe-math-012** | Multiplication: `\cdot` or juxtaposition — never `*` in math | `math.md` §Multiplication in equations | Medium | Mechanical (regex `\*` inside `$…$` / `$$…$$`) | Small (~5 lectures) but a strong rule |
-| **qe-math-013** | Reference equations via `` {eq}`label` ``; do not write "see equation (3)" manually | `math.md` §end | Medium | Partial (detect numeric refs near labelled equations) | Repeatedly observed |
-| **qe-math-014** | Braces `\{…\}` for events, parentheses `(…)` for sets when using `\mathbb{P}` | `math.md` §Probability, expectation, variance | Low | Judgment | Limited corpus evidence |
-| **qe-math-015** | Lowercase for densities/PMFs (`f`, `g`, `p`), uppercase for CDFs (`F`) | `math.md` §Density and mass functions | Low | Judgment | Limited corpus evidence |
+| Proposed ID | Title | Source | Audit weight | Detect-by | Lectures | Occurrences |
+|-------------|-------|--------|--------------|-----------|---------:|------------:|
+| **qe-writing-009** | Write "IID" — not "i.i.d." or "iid" | `writing.md` §General writing advice; `math.md` §IID | Medium | Mechanical (case-sensitive regex `\bi\.i\.d\.\b|\biid\b`) | 30 / 348 | 61 |
+| **qe-math-010** | Blackboard `\mathbb{P}`, `\mathbb{E}`, `\mathbb{V}` for probability, expectation, variance — with braces | `math.md` §Probability, expectation, variance | **Very high** | Mechanical (regex catches bare `E[`, `E_t`, `\mathbb E` missing braces, `\Pr(`, `\Var(`) | 124 / 348 | 1,608 |
+| **qe-math-011** | Distribution names: plain letters (`N`, `U`); `\mathrm{…}` for multi-letter — never `\mathcal` / `\mathbb` | `math.md` §Distribution names | High | Mechanical (regex on `\mathcal\{N\}` / `\{\\cal N\}`) | 34 / 348 | 134 |
+| **qe-math-012** | Multiplication: `\cdot` or juxtaposition — never `*` in math | `math.md` §Multiplication in equations | Medium | Mechanical (regex `\*` inside `$…$` / `$$…$$`) | 4 / 348 | 6 |
+| **qe-math-013** | Reference equations via `` {eq}`label` ``; do not hand-write numeric equation references | `math.md` §end | Medium | Partial (detect numeric refs near labelled equations) | 6 / 348 | 6 |
+| **qe-math-014** | Braces `\{…\}` for events, parentheses `(…)` for sets when using `\mathbb{P}` | `math.md` §Probability, expectation, variance | Low | Judgment | — | not mechanically checkable |
+| **qe-math-015** | Lowercase for densities/PMFs (`f`, `g`, `p`), uppercase for CDFs (`F`) | `math.md` §Density and mass functions | Low | Judgment | — | not mechanically checkable |
 
 > **Status:** these are proposed as rules `qe-writing-009` and `qe-math-010`–`qe-math-015` in [`action-style-guide` issue #18](https://github.com/QuantEcon/action-style-guide/issues/18). The two weakest-evidence rules (`qe-math-014`, `qe-math-015`) may be deferred.
 
