@@ -2,14 +2,46 @@
   "series": "lecture-python.myst",
   "lecture": "cass_fiscal_2",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [225, 401, 497],
-     "detail": "the H4 at line 497 reads \"Experiment 2: A foreseen increase in $g$ from 0.2 to 0.4 at t=10\", which is a verbatim copy of the Experiment 1 heading at 433 - the experiment is actually a capital-tax increase, as the prose at 499 and the `'τ_k'` shock at 508 both say. The production function `f` and its derivative `f_prime` are not defined until 401-411, after the five functions that call them (`Bf_path` at 150, `Bf_ss` at 159, `compute_euler` at 221, `compute_residuals_global` at 305, `plot_global_results` indirectly), so the reader meets $f(k_t)$ in code four times before learning it is Cobb-Douglas. And the three-line H3 at 225-229 is followed immediately by an H3 at 231 on the same subject"},
-    {"rule": "qe-code-001", "count": 4, "lines": [142, 335, 348, 519],
-     "detail": "35 code lines carry trailing whitespace (142, 145, 147, 149, 157, 158, 192, 216, 284, 289-302, 309, 322, 333, 353, 360, 366, 368, 370, 372, 376, 383, 401, 512, 520, 526, 527, 570); every axes index omits the space after the comma - `axes[0,0]`, `axes[1,2]` and so on across 33 lines (348-388, 574-580); line 335-336 continues an expression with a backslash and then starts the continuation with `*(1+τc[:-1])` at the same indent as the assignment, where parentheses and a leading space would be PEP8; and the continuation lines at 368-373 and 520-522 are indented to a column that does not match their opening bracket, with `init_glob, tol=1e-12` at 522 lined up under the lambda's arguments rather than under `root(`'s"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [18, 127, 482],
-     "detail": "line 18 is a 45-word sentence that uses the phrase \"this QuantEcon lecture\" twice and chains two cross-references, a model class and a shock type into one span; lines 121-127 make the same point twice (\"We can set holdings of foreign capital equal to zero in each country if we allow $B_t^f$ to be nonzero\" at 123, then \"Therefore, we set holdings of foreign capital equal to zero in both countries while allowing international lending\" at 127); line 482 is a 42-word sentence carrying the timing of the opening, the no-arbitrage link, the direction of the saving response and its effect on the foreign return"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [51, 348],
-     "detail": "the model's structure - two countries, goods and claims traded but not labour, one bilateral IOU $B^f_t$, capital taxed at the rate of the jurisdiction where it sits (51-53, 81-87) - is exactly the kind of thing a two-box-and-arrows diagram settles in one glance, and there is none. Separately the three figures cannot be read on their own: `plot_global_results` (322-391) passes no `label=` to any of its eighteen `plot` calls and never calls `ax.legend()`, so the domestic/foreign distinction lives only in the prose at 439 (\"blue lines represent the domestic economy and orange dotted lines represent the foreign economy\"), which is stated once and never repeated for the figures at 503-531 and 569-584"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        225,
+        401,
+        497
+      ],
+      "detail": "the H4 at line 497 reads \"Experiment 2: A foreseen increase in $g$ from 0.2 to 0.4 at t=10\", which is a verbatim copy of the Experiment 1 heading at 433 - the experiment is actually a capital-tax increase, as the prose at 499 and the `'τ_k'` shock at 508 both say. The production function `f` and its derivative `f_prime` are not defined until 401-411, after the five functions that call them (`Bf_path` at 150, `Bf_ss` at 159, `compute_euler` at 221, `compute_residuals_global` at 305, `plot_global_results` indirectly), so the reader meets $f(k_t)$ in code four times before learning it is Cobb-Douglas. And the three-line H3 at 225-229 is followed immediately by an H3 at 231 on the same subject"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        142,
+        335,
+        348,
+        519
+      ],
+      "detail": "35 code lines carry trailing whitespace (142, 145, 147, 149, 157, 158, 192, 216, 284, 289-302, 309, 322, 333, 353, 360, 366, 368, 370, 372, 376, 383, 401, 512, 520, 526, 527, 570); every axes index omits the space after the comma - `axes[0,0]`, `axes[1,2]` and so on across 33 lines (348-388, 574-580); line 335-336 continues an expression with a backslash and then starts the continuation with `*(1+τc[:-1])` at the same indent as the assignment, where parentheses and a leading space would be PEP8; and the continuation lines at 368-373 and 520-522 are indented to a column that does not match their opening bracket, with `init_glob, tol=1e-12` at 522 lined up under the lambda's arguments rather than under `root(`'s"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        18,
+        127,
+        482
+      ],
+      "detail": "line 18 is a 45-word sentence that uses the phrase \"this QuantEcon lecture\" twice and chains two cross-references, a model class and a shock type into one span; lines 121-127 make the same point twice (\"We can set holdings of foreign capital equal to zero in each country if we allow $B_t^f$ to be nonzero\" at 123, then \"Therefore, we set holdings of foreign capital equal to zero in both countries while allowing international lending\" at 127); line 482 is a 42-word sentence carrying the timing of the opening, the no-arbitrage link, the direction of the saving response and its effect on the foreign return"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        51,
+        348
+      ],
+      "detail": "the model's structure - two countries, goods and claims traded but not labour, one bilateral IOU $B^f_t$, capital taxed at the rate of the jurisdiction where it sits (51-53, 81-87) - is exactly the kind of thing a two-box-and-arrows diagram settles in one glance, and there is none. Separately the three figures cannot be read on their own: `plot_global_results` (322-391) passes no `label=` to any of its eighteen `plot` calls and never calls `ax.legend()`, so the domestic/foreign distinction lives only in the prose at 439 (\"blue lines represent the domestic economy and orange dotted lines represent the foreign economy\"), which is stated once and never repeated for the figures at 503-531 and 569-584"
+    }
   ],
   "strengths": [
     "The Euler equation is implemented once and reused for both countries (216-222), with the prose at 213 saying explicitly why that works - \"they have the same form but use different variables\" - rather than duplicating the function with starred arguments",
@@ -27,5 +59,9 @@
     "Add `mystnb: figure: caption/name` metadata to the three code-cell figures at 441, 503 and 569 (qe-fig-005, 3 occurrences), drop the `figsize=` override at 329 (qe-fig-001), and set `lw=2` on the two calls at 577-578 (qe-fig-008, 2 occurrences)",
     "Sweep the whitespace and casing: sentence-case the H2s at 44 and 79 (qe-writing-006, 2 occurrences), collapse the eight double spaces at 18, 22, 65, 394 and 588 (qe-writing-008, 8 occurrences), split the two-sentence paragraph at 83 (qe-writing-001), strip the 35 trailing-whitespace code lines, and fix \"As in our in the one-country model\" at 394"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "2ff84230b9496588e4d40f0fe317ccb665c5e7c3"
+  }
 }

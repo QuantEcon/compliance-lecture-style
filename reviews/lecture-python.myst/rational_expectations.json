@@ -2,18 +2,74 @@
   "series": "lecture-python.myst",
   "lecture": "rational_expectations",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 4, "lines": [70, 418, 741, 952],
-     "detail": "a 981-line lecture built around a fixed point, with `import matplotlib.pyplot as plt` at 70 and not one `plt.` call anywhere in the file - the Figures category scores 10/10 because there is nothing to check. Four places pay for it. (1) The mapping $\\Phi$ from a perceived law of motion to an actual one (418-424) is the concept the lecture exists to teach, and §\"Failure of contractivity\" (433-447) argues that $\\Phi$ *reverses* the ordering of beliefs - \"suppose there are two beliefs with $H_a(Y) > H_b(Y)$ for every $Y$ ... $\\Phi$ reverses the ordering\" - which is one 45-degree diagram of $\\kappa_1 \\mapsto \\Phi(\\kappa)_1$ with two iterates marked, and is left entirely to prose. (2) Exercise 2 tests three candidate $(\\kappa_0, \\kappa_1)$ pairs (741-743) and the solution reports only which one passes `np.allclose` (793-800); the residual $h_0 + h_1 + h_2 - \\kappa_1$ plotted over a $\\kappa_1$ grid would show that the equilibrium is a crossing and would connect directly to the order reversal of 445. (3) Exercise 4's conclusion is handed to the reader as arithmetic homework - \"If you crunch the numbers, you will see that the monopolist adopts a lower long-run quantity\" (964-966) - when the two laws of motion it just computed, $Y_{t+1} = 73.4729 + 0.9265 Y_t$ and $Y_{t+1} = 95.0818 + 0.9525 Y_t$, drawn against the 45-degree line, would put both fixed points on one axes. (4) The static example of 110-176, where the whole Big-$Y$-little-$y$ trick is introduced, has an inverse demand curve, a cost curve, consumer surplus as \"the area under the inverse demand curve\" (180) and a planning problem (190-198) - four objects that live naturally in a single supply-and-demand picture that is never drawn"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [236, 183, 202, 314],
-     "detail": "(1) The lecture cannot decide whether there are $n$ firms or a unit measure of them, and the two conventions are interleaved. 86 and 127 set a unit measure, $\\Omega = [0,1]$ and $Y = \\int_0^1 y(\\omega)d\\omega$; 152 then warns the reader \"*not* to set $Y = n y$\" with $n$ undefined; 236 opens the dynamic model with \"a collection of $n$ firms\" and 251 immediately writes $Y_t = \\int_0^1 y_t(\\omega)d\\omega = y_t$; the exercise-1 solution works \"the case $n > 1$\" at 707-714 *and* \"the case of a unit measure\" at 716-725, giving two different answers; and 761-765 writes the aggregate law as $Y_{t+1} = n h(Y_t/n, Y_t)$ before saying \"we can use $Y_t = n y_t = y_t$\", which quietly sets $n = 1$. (2) 183 mistypes the consumer-surplus formula as $a_o Y - \\frac{a_1}{2}Y^2$ - a letter `o` where the subscript zero belongs - in the display that {eq}`staticY` is derived from three lines later. (3) §\"Further Reading\" (202-208) is an H3 sitting inside the Overview, between the static example and the model, so the reader meets the reading list before meeting the problem; it belongs at the end. (4) 314 introduces $Y^e_{t+1}$ for perceived output and never uses it again"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [49, 973, 800, 258, 233],
-     "detail": "five sentences are broken as written. 49 loses its parenthesis and its number agreement at once: \"a setting that is readily \\\"Bellmanized\\\" (i.e., susceptible to being formulated as a dynamic programming problems.\" - the opening bracket is never closed and \"a ... problems\" does not agree. The footnote at 973-981 is three sentences in one paragraph (the file's only qe-writing-001 hit) and its last sentence has no main verb: \"conditions under which collections of adaptive agents who use least squares learning to converge to a rational expectations equilibrium\". 800 says \"the answer is pair (iii)\" where the candidates at 741-743 are an unnumbered bullet list, so there is no pair (iii) to point at. 258 (\"While it faces no uncertainty, it does face adjustment costs\") has no full stop. And \"equilibrium\" is misspelled twice - \"Competitive Equilbrium\" in the `{index}` entry at 233 and \"in equilbrium\" at 395"},
-    {"rule": "qe-math-009", "count": 4, "lines": [503, 343, 976, 90],
-     "detail": "four small notational inconsistencies, each a choice between two forms where the file already uses both. (1) 503 writes the quadratic term as `{a_1 \\over 2} Y^2` - plain-TeX `\\over` - while every other fraction in the lecture is `\\frac`, including the one three characters later in the same display (`\\frac{\\gamma (Y' - Y)^2}{2}`) and at 273, 327, 344, 479 and 906. (2) 343 hand-sets `\\textrm{argmax}` where the series provides an `\\argmax` macro (`lectures/_config.yml:110`), so the operator is upright but not spaced as an operator. (3) $\\gamma$ is the adjustment-cost parameter throughout (273, 280, 327, 376, 479) and then, in the footnote at 976-977, the relaxation parameter of the modified mapping $\\gamma\\Phi + (1-\\gamma)I$ - two meanings, one of them introduced with the words \"$\\gamma \\in (0,1)$ is a *relaxation parameter*\" directly under a lecture in which $\\gamma = 10$. (4) The differential is spelled three ways: `d \\, \\omega` (90, 92), `d \\omega` (127, 251, 296) and `d\\omega` (720-721). Related: $s$ is the integration variable in $\\int_0^Y (a_0 - a_1 s)\\,ds$ (183) and the surplus function $s(Y_t, Y_{t+1})$ at 478, and $x$ is the integration variable at 479 and the LQ state vector at 616"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [42, 56, 82, 977],
-     "detail": "the file bolds most of its definitions - **representative firm** (82), **consumer surplus** (180), **belief function** (312), **Euler equation** (371), **transversality condition** (384), **actual law of motion** (395), **rational expectations equilibrium** and **recursive competitive equilibrium** (409), **planning problem** (484) - but three of its central terms are marked twice, differently. *rational expectations equilibrium* is italic where it is first named (42, \"This lecture introduces the concept of a *rational expectations equilibrium*\") and bold where it is defined (409). *perceived law of motion* and *actual law of motion* are italic at 56 and the second is bold at 395. And **representative firm** is bold at 82 in a sentence that puts the companion term in quotation marks (`is a \"price taker\"`), which 148 then sets in italic (`we want the firm to be a *price taker*`) - three markings, no bold. 977 introduces the *relaxation parameter* in italic, which is a definition"},
-    {"rule": "qe-code-001", "count": 5, "lines": [795, 684, 686, 685, 693],
-     "detail": "flake8 finds one thing (E226 at 685, `a1/2` and `a0/2` tight inside a list literal, where the same matrix at 879 is written `a1 / 2`, `-a0 / 2`), and the rest is what a linter cannot see. 795 is a bug: `print('f(h0, h1, h2) = {h0}, {h1}, {h2}')` puts the `f` *inside* the quotes, so the line prints the literal text `f(h0, h1, h2) = {h0}, {h1}, {h2}` - and it sits directly under 794, which is a correct f-string. 684 sets a shape by assignment, `B.shape = 3, 1`, where the two later cells build the same object properly (`B = np.array([[1], [0]])` at 878 and 940). 686, 880 and 942 write the same quantity three ways - `Q = 0.5 * γ`, `Q = γ / 2`, `Q = γ / 2` - against $Q = \\gamma/2$ in the algebra at 640 and 855. And 693-698 routes two f-strings through `out1` and `out2` before printing them, where 794 prints directly. Separately, the cell language is `ipython` in the three setup cells (33, 69, 76) and `python3` in the four solution cells (667, 776, 874, 938)"}
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        70,
+        418,
+        741,
+        952
+      ],
+      "detail": "a 981-line lecture built around a fixed point, with `import matplotlib.pyplot as plt` at 70 and not one `plt.` call anywhere in the file - the Figures category scores 10/10 because there is nothing to check. Four places pay for it. (1) The mapping $\\Phi$ from a perceived law of motion to an actual one (418-424) is the concept the lecture exists to teach, and §\"Failure of contractivity\" (433-447) argues that $\\Phi$ *reverses* the ordering of beliefs - \"suppose there are two beliefs with $H_a(Y) > H_b(Y)$ for every $Y$ ... $\\Phi$ reverses the ordering\" - which is one 45-degree diagram of $\\kappa_1 \\mapsto \\Phi(\\kappa)_1$ with two iterates marked, and is left entirely to prose. (2) Exercise 2 tests three candidate $(\\kappa_0, \\kappa_1)$ pairs (741-743) and the solution reports only which one passes `np.allclose` (793-800); the residual $h_0 + h_1 + h_2 - \\kappa_1$ plotted over a $\\kappa_1$ grid would show that the equilibrium is a crossing and would connect directly to the order reversal of 445. (3) Exercise 4's conclusion is handed to the reader as arithmetic homework - \"If you crunch the numbers, you will see that the monopolist adopts a lower long-run quantity\" (964-966) - when the two laws of motion it just computed, $Y_{t+1} = 73.4729 + 0.9265 Y_t$ and $Y_{t+1} = 95.0818 + 0.9525 Y_t$, drawn against the 45-degree line, would put both fixed points on one axes. (4) The static example of 110-176, where the whole Big-$Y$-little-$y$ trick is introduced, has an inverse demand curve, a cost curve, consumer surplus as \"the area under the inverse demand curve\" (180) and a planning problem (190-198) - four objects that live naturally in a single supply-and-demand picture that is never drawn"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        236,
+        183,
+        202,
+        314
+      ],
+      "detail": "(1) The lecture cannot decide whether there are $n$ firms or a unit measure of them, and the two conventions are interleaved. 86 and 127 set a unit measure, $\\Omega = [0,1]$ and $Y = \\int_0^1 y(\\omega)d\\omega$; 152 then warns the reader \"*not* to set $Y = n y$\" with $n$ undefined; 236 opens the dynamic model with \"a collection of $n$ firms\" and 251 immediately writes $Y_t = \\int_0^1 y_t(\\omega)d\\omega = y_t$; the exercise-1 solution works \"the case $n > 1$\" at 707-714 *and* \"the case of a unit measure\" at 716-725, giving two different answers; and 761-765 writes the aggregate law as $Y_{t+1} = n h(Y_t/n, Y_t)$ before saying \"we can use $Y_t = n y_t = y_t$\", which quietly sets $n = 1$. (2) 183 mistypes the consumer-surplus formula as $a_o Y - \\frac{a_1}{2}Y^2$ - a letter `o` where the subscript zero belongs - in the display that {eq}`staticY` is derived from three lines later. (3) §\"Further Reading\" (202-208) is an H3 sitting inside the Overview, between the static example and the model, so the reader meets the reading list before meeting the problem; it belongs at the end. (4) 314 introduces $Y^e_{t+1}$ for perceived output and never uses it again"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        49,
+        973,
+        800,
+        258,
+        233
+      ],
+      "detail": "five sentences are broken as written. 49 loses its parenthesis and its number agreement at once: \"a setting that is readily \\\"Bellmanized\\\" (i.e., susceptible to being formulated as a dynamic programming problems.\" - the opening bracket is never closed and \"a ... problems\" does not agree. The footnote at 973-981 is three sentences in one paragraph (the file's only qe-writing-001 hit) and its last sentence has no main verb: \"conditions under which collections of adaptive agents who use least squares learning to converge to a rational expectations equilibrium\". 800 says \"the answer is pair (iii)\" where the candidates at 741-743 are an unnumbered bullet list, so there is no pair (iii) to point at. 258 (\"While it faces no uncertainty, it does face adjustment costs\") has no full stop. And \"equilibrium\" is misspelled twice - \"Competitive Equilbrium\" in the `{index}` entry at 233 and \"in equilbrium\" at 395"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        503,
+        343,
+        976,
+        90
+      ],
+      "detail": "four small notational inconsistencies, each a choice between two forms where the file already uses both. (1) 503 writes the quadratic term as `{a_1 \\over 2} Y^2` - plain-TeX `\\over` - while every other fraction in the lecture is `\\frac`, including the one three characters later in the same display (`\\frac{\\gamma (Y' - Y)^2}{2}`) and at 273, 327, 344, 479 and 906. (2) 343 hand-sets `\\textrm{argmax}` where the series provides an `\\argmax` macro (`lectures/_config.yml:110`), so the operator is upright but not spaced as an operator. (3) $\\gamma$ is the adjustment-cost parameter throughout (273, 280, 327, 376, 479) and then, in the footnote at 976-977, the relaxation parameter of the modified mapping $\\gamma\\Phi + (1-\\gamma)I$ - two meanings, one of them introduced with the words \"$\\gamma \\in (0,1)$ is a *relaxation parameter*\" directly under a lecture in which $\\gamma = 10$. (4) The differential is spelled three ways: `d \\, \\omega` (90, 92), `d \\omega` (127, 251, 296) and `d\\omega` (720-721). Related: $s$ is the integration variable in $\\int_0^Y (a_0 - a_1 s)\\,ds$ (183) and the surplus function $s(Y_t, Y_{t+1})$ at 478, and $x$ is the integration variable at 479 and the LQ state vector at 616"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        42,
+        56,
+        82,
+        977
+      ],
+      "detail": "the file bolds most of its definitions - **representative firm** (82), **consumer surplus** (180), **belief function** (312), **Euler equation** (371), **transversality condition** (384), **actual law of motion** (395), **rational expectations equilibrium** and **recursive competitive equilibrium** (409), **planning problem** (484) - but three of its central terms are marked twice, differently. *rational expectations equilibrium* is italic where it is first named (42, \"This lecture introduces the concept of a *rational expectations equilibrium*\") and bold where it is defined (409). *perceived law of motion* and *actual law of motion* are italic at 56 and the second is bold at 395. And **representative firm** is bold at 82 in a sentence that puts the companion term in quotation marks (`is a \"price taker\"`), which 148 then sets in italic (`we want the firm to be a *price taker*`) - three markings, no bold. 977 introduces the *relaxation parameter* in italic, which is a definition"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        795,
+        684,
+        686,
+        685,
+        693
+      ],
+      "detail": "flake8 finds one thing (E226 at 685, `a1/2` and `a0/2` tight inside a list literal, where the same matrix at 879 is written `a1 / 2`, `-a0 / 2`), and the rest is what a linter cannot see. 795 is a bug: `print('f(h0, h1, h2) = {h0}, {h1}, {h2}')` puts the `f` *inside* the quotes, so the line prints the literal text `f(h0, h1, h2) = {h0}, {h1}, {h2}` - and it sits directly under 794, which is a correct f-string. 684 sets a shape by assignment, `B.shape = 3, 1`, where the two later cells build the same object properly (`B = np.array([[1], [0]])` at 878 and 940). 686, 880 and 942 write the same quantity three ways - `Q = 0.5 * γ`, `Q = γ / 2`, `Q = γ / 2` - against $Q = \\gamma/2$ in the algebra at 640 and 855. And 693-698 routes two f-strings through `out1` and `out2` before printing them, where 794 prints directly. Separately, the cell language is `ipython` in the three setup cells (33, 69, 76) and `python3` in the four solution cells (667, 776, 874, 938)"
+    }
   ],
   "strengths": [
     "The Big $Y$, little $y$ trick is taught twice, once in a static model where the whole argument fits in twenty lines (110-176) and then in the dynamic one, and both times the lecture says exactly where the substitution must not happen: \"The essence of the Big $Y$, little $y$ trick is *not* to set $Y = n y$ *before* taking the first-order condition\" (152-153), then \"At this point, *but not before*, we substitute $Y = y$\" (165)",
@@ -43,5 +99,9 @@
   "scanner_doubts": [
     "rational_expectations.md:502,503,511,517 - qe-math-002 reports 14 hits and 6 of them are false, but the interesting part is *why*, because this file is the case the per-file `evident` gate cannot express. The gate (qestyle_rules.py:512-517) decides once per lecture whether the apostrophe means transpose, on the evidence of a prime juxtaposed with a following factor. Here that evidence is genuine: `$x_t' R x_t + u_t' Q u_t$` at 645 and 860 really are transposes. But the same file also uses the apostrophe for a next-period value throughout the model sections - $Y'$ in the planner's Bellman equation and its first-order condition (502, 503, 511, 517) and $V'$ for the derivative - so the gate flips on and those six count too. A file that uses both conventions defeats any per-file decision. Two things worth recording rather than a fix to file. (1) The lecture-side fix clears everything: I replaced `x_t' R x_t + u_t' Q u_t` with `x_t^\\top R x_t + u_t^\\top Q u_t` at both sites and re-ran `check_math_002`, and the count went 14 -> 0. (2) I tested the obvious checker-side fix and it must be **rejected**: making the `prime` branch require `FOLLOWING_FACTOR` at the match site (the test it already supplies as file-level evidence) takes the corpus from 1596 hits in 64 files to 1311 in 60, and sampling the 285 suppressed hits shows most are genuine transposes that simply end a group - `cross_product_trick.md:68` writes $(A'PB + H')(Q + B'PB)^{-1}$, where `H'` is followed by `)`, and that file alone loses 35, `linear_models.md` 28, `multivariate_normal.md` 20. The guard cannot be applied at the match site without losing those. Note also that the two genuine sites are each counted four times (`x_t'`, `u_t'` and `t'` twice), which is the already-filed double-counting defect: the true number of transposes to fix is 4, not 8.",
     "Cleared, not filed. (1) qe-math-014 (proposed) has nothing to score: the model is deterministic, there is no probability operator anywhere, and 258 says so (\"it faces no uncertainty\"). (2) qe-math-015 (proposed) likewise - no density, mass function or CDF. (3) The lowercase next-period primes `y'` (327, 343-344, 353, 358, 366, 369) are correctly *not* counted even with the gate on, because the `prime` branch needs an uppercase base or a subscript and `prime_vec` needs a following factor - so the file's $y'$ and $Y'$ are treated differently for a purely syntactic reason, which is worth knowing when reading the six false positives. (4) The Figures 10/10 is not a compliment: the lecture has no figures at all, which is the qe-writing-007 finding above. (5) flake8 at a 90-character limit reports only the four E226 hits at 685."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "844d982867906c7d7c27e8e1e79fde31bf878610"
+  }
 }

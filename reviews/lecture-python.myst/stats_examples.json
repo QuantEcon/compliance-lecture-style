@@ -2,20 +2,88 @@
   "series": "lecture-python.myst",
   "lecture": "stats_examples",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 6, "lines": [64, 121, 417, 428, 500, 528],
-     "detail": "the displayed algebra and the code disagree repeatedly, and where they disagree the code is right. 121-122 gives the negative binomial moments as $\\mathbb{E}(X) = k(1-p)/p$ and $\\mathbb{V}(X) = k(1-p)/p^2$, using $k$ - which is the realised number of failures, the argument of the mass function two lines above at 110 - where $r$ is meant; the code at 138-139 correctly computes `r*(1-p)/p` and `r*(1-p)/p**2`. 417 writes the exponential CDF as $F(x)=\\int_{0}^{\\infty}\\lambda e^{-\\lambda x}=1-e^{-\\lambda x}$: the upper limit must be $x$ (with $\\infty$ the integral is 1, contradicting the stated answer) and the $dx$ is missing. 428-431 derives the inverse transform with two errors - 429 reads $-U = e^{-\\lambda X}$, dropping the 1 from $1-U$, and 431 concludes $X = (1-U)/(-\\lambda)$ with the logarithm dropped - while 430 in between and 435 after both have it right, as does the code at 449. 479 sums $\\lambda^i$ over $j = 0, \\ldots, i$ where the summand is $\\lambda^j$. 500 inverts its own relation: \"However, $\\tilde{U}=F^{-1}(X)$ may not be an integer for any $x\\geq0$\" - it is $X = F^{-1}(\\tilde U)$, and it is $X$, not $\\tilde U$, that need not be an integer. 64 says $k$ is \"the number of trials before the first success\" where the mass function $(1-p)^{k-1}p$ on $k = 1, 2, \\ldots$ counts trials *including* the success. And 528 compares the wrong two samples: `x` from 525 has support $\\{0, 1, \\ldots\\}$, matching the parameterisation at 470, while `rng.geometric(1-λ, n)` returns $\\{1, 2, \\ldots\\}$, so the two histograms the section exists to compare are offset by exactly one and the verification promised at 512 does not hold"},
-    {"rule": "qe-math-014", "count": 7, "lines": [61, 110, 287, 291, 470, 471, 479],
-     "detail": "the lecture writes events both ways in roughly equal measure. With braces, as the convention asks: $\\textrm{Prob}\\{X=d\\}$ (153), $\\textrm{Prob}\\{\\tilde{X}=i\\}$ (343), $\\textrm{Prob}\\{X=i\\}$ (346), $\\textrm{Prob}\\{X\\le x\\}$ (385) and $\\textrm{Prob}\\left\\{X\\leq x\\right\\}$ three times in the derivation at 393-395. With parentheses, for events of exactly the same kind: $\\textrm{Prob}(X=k)$ (61), $\\textrm{Prob}(X=k;r,p)$ (110), $\\textrm{Prob}(X=i)$ (470, 471), $\\textrm{Prob}(X\\le i)$ (479), and the bare $P(X=0)$ and $P(300\\le X \\le 400)$ at 287 and 291. The two styles appear within a single derivation: 385 uses braces for $\\textrm{Prob}\\{X \\le x\\}$ and 479 uses parentheses for $\\textrm{Prob}(X \\le i)$. Nothing in the file is a named set, so every one of these arguments is a logical condition and every one should be braced"},
-    {"rule": "qe-code-001", "count": 6, "lines": [39, 77, 234, 302, 535, 540],
-     "detail": "77 creates the only generator in the lecture with `np.random.default_rng()` and no seed, and every section then prints a sample moment next to a population moment for the reader to compare (89-93, 137-139, 228-229, 270-272, 309) - so all the printed numbers change on every build. 234-235 makes that worse by testing one-sidedly: `print(μ-μ_hat < 1e-3)` and `print(σ-σ_hat < 1e-3)` pass automatically whenever the estimate exceeds the parameter, so the check labelled `# compare` cannot fail in half the cases; `abs(...)` is meant. 302 leaves a commented-out earlier version of the next line in the cell. 39 imports `Axes3D` and never uses it - the file draws no 3-D figure, and modern matplotlib needs no such import for `projection='3d'`. 535-541 are two orphan cells with no surrounding prose: `rng.geometric(1-λ, n).max()` and `np.log(0.4)/np.log(0.3)`, the second using two constants that appear nowhere else in the section, where $\\lambda = 0.8$ at 519. Smaller items: 303 rebuilds the boolean mask `x > 0.95` three times in one statement, 176 uses a list comprehension where `np.log10(1 + 1/np.arange(1, 10))` vectorises, 176 and 193 write `range(1,10)` without the space after the comma, and 331-332 run operators together (`0.95*17.5**2+0.0005/3*(...)`)"},
-    {"rule": "qe-math-009", "count": 4, "lines": [70, 110, 210, 435],
-     "detail": "70 writes the variance operator as `\\mathbb{Var}(X)`, which typesets as three separate blackboard-bold letters $\\mathbb{V}\\mathbb{a}\\mathbb{r}$, while 122, 169 and 252 write `\\mathbb{V}` for the same operator - one operator, two spellings, and the first is malformed. 110 uses a matrix environment for a binomial coefficient, `\\begin{bmatrix}k+r-1 \\\\ r-1 \\end{bmatrix}`, which renders as a two-row column vector in square brackets rather than as $\\binom{k+r-1}{r-1}$; `\\binom` is the macro. 210 writes the normal density as $f(x|u,\\sigma^2)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}e^{[-\\frac{1}{2\\sigma^2}(x-u)^2]}$, using Latin `u` for the mean that 205 and 212 call $\\mu$, and wrapping the exponent in square brackets for no reason; it is also the only display in the file written on a single `$$ ... $$` line. 435 writes `log` rather than `\\log` inside math, so it renders as the product $l \\cdot o \\cdot g$, and 505 uses unsized `\\lceil ... \\rceil` around a fraction that overflows them"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [191, 275, 455],
-     "detail": "the two places where the lecture says \"# plot and compare\" cannot compare anything: 454-461 and 530-545 each draw the transformed sample and the library sample as separate histograms in separate cells with separate `plt.show()` calls, so they land as two figures with independently chosen axis limits - and the `alpha=0.6` on the second of each pair (460, 544) only makes sense for overlaid series, which is evidently what was intended. Two `hist` calls in one cell would settle both verifications, and would also have exposed the off-by-one between `x` and `x_g` at 525-528. Second, the mixed discrete-continuous distribution (275-335) is the most interesting object in the lecture - a point mass of 0.95 at zero plus a uniform slab of total mass 0.05 on $[300,400]$ - and it has no figure at all, even though `x` is already simulated at 301-304 and a single histogram would show the atom and the slab together and make the variance of 332 (dominated by the $0.95 \\times 17.5^2$ term) intuitive. Third, the Benford figure at 191-195 plots nine probabilities as unconnected markers via `plt.plot(range(1,10), Benford_pmf, 'o')` with a title and no axis labels; a bar chart is the natural form for a mass function, and the claim the section opens with - that in real data \"the leading digit is more likely to be small than large\" (145-146) - is never plotted against any data"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [74, 282, 353, 379],
-     "detail": "four sentences drop an auxiliary verb or a preposition: \"Let's use Python draw observations from the distribution\" (74), \"you know your salary will uniformly distributed in the interval 300~400 a day\" (282), \"It turns out that if we use draw uniform random numbers $U$\" (379), and \"Let $X$ distributed geometrically\" (466). 353-364 then states one idea three times: the three-bullet recipe at 353-357, the summary at 360 (\"Thus, knowing the **\\\"inverse\\\"** CDF of a distribution is enough to simulate from this distribution\"), and a `{note}` at 362-364 repeating the caveat that the scare quotes around \"inverse\" have already flagged twice. 347 also carries a typo, \"arbitary\""},
-    {"rule": "qe-writing-005", "count": 3, "lines": [356, 404, 464],
-     "detail": "404 and 464 set whole-line headings in bold - **Example: A continuous geometric (exponential) distribution** and **Geometric distribution** - where the file's other seven distributions each get a real `##` heading (56, 97, 143, 200, 238, 275, 338), so these two sections are absent from the `{contents}` table and cannot be linked. 356 and 360 bold a scare-quoted word, **\\\"inverse\\\"**, and 438 bolds **continuous geometric** for emphasis. The file contains no italics at all, and its two genuine definitions are correctly bolded (**Newcomb-Benford law** 145, **first digit** 156), so the marker is doing headings, scare quotes and emphasis as well as definitions"}
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        64,
+        121,
+        417,
+        428,
+        500,
+        528
+      ],
+      "detail": "the displayed algebra and the code disagree repeatedly, and where they disagree the code is right. 121-122 gives the negative binomial moments as $\\mathbb{E}(X) = k(1-p)/p$ and $\\mathbb{V}(X) = k(1-p)/p^2$, using $k$ - which is the realised number of failures, the argument of the mass function two lines above at 110 - where $r$ is meant; the code at 138-139 correctly computes `r*(1-p)/p` and `r*(1-p)/p**2`. 417 writes the exponential CDF as $F(x)=\\int_{0}^{\\infty}\\lambda e^{-\\lambda x}=1-e^{-\\lambda x}$: the upper limit must be $x$ (with $\\infty$ the integral is 1, contradicting the stated answer) and the $dx$ is missing. 428-431 derives the inverse transform with two errors - 429 reads $-U = e^{-\\lambda X}$, dropping the 1 from $1-U$, and 431 concludes $X = (1-U)/(-\\lambda)$ with the logarithm dropped - while 430 in between and 435 after both have it right, as does the code at 449. 479 sums $\\lambda^i$ over $j = 0, \\ldots, i$ where the summand is $\\lambda^j$. 500 inverts its own relation: \"However, $\\tilde{U}=F^{-1}(X)$ may not be an integer for any $x\\geq0$\" - it is $X = F^{-1}(\\tilde U)$, and it is $X$, not $\\tilde U$, that need not be an integer. 64 says $k$ is \"the number of trials before the first success\" where the mass function $(1-p)^{k-1}p$ on $k = 1, 2, \\ldots$ counts trials *including* the success. And 528 compares the wrong two samples: `x` from 525 has support $\\{0, 1, \\ldots\\}$, matching the parameterisation at 470, while `rng.geometric(1-λ, n)` returns $\\{1, 2, \\ldots\\}$, so the two histograms the section exists to compare are offset by exactly one and the verification promised at 512 does not hold"
+    },
+    {
+      "rule": "qe-math-014",
+      "count": 7,
+      "lines": [
+        61,
+        110,
+        287,
+        291,
+        470,
+        471,
+        479
+      ],
+      "detail": "the lecture writes events both ways in roughly equal measure. With braces, as the convention asks: $\\textrm{Prob}\\{X=d\\}$ (153), $\\textrm{Prob}\\{\\tilde{X}=i\\}$ (343), $\\textrm{Prob}\\{X=i\\}$ (346), $\\textrm{Prob}\\{X\\le x\\}$ (385) and $\\textrm{Prob}\\left\\{X\\leq x\\right\\}$ three times in the derivation at 393-395. With parentheses, for events of exactly the same kind: $\\textrm{Prob}(X=k)$ (61), $\\textrm{Prob}(X=k;r,p)$ (110), $\\textrm{Prob}(X=i)$ (470, 471), $\\textrm{Prob}(X\\le i)$ (479), and the bare $P(X=0)$ and $P(300\\le X \\le 400)$ at 287 and 291. The two styles appear within a single derivation: 385 uses braces for $\\textrm{Prob}\\{X \\le x\\}$ and 479 uses parentheses for $\\textrm{Prob}(X \\le i)$. Nothing in the file is a named set, so every one of these arguments is a logical condition and every one should be braced"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        39,
+        77,
+        234,
+        302,
+        535,
+        540
+      ],
+      "detail": "77 creates the only generator in the lecture with `np.random.default_rng()` and no seed, and every section then prints a sample moment next to a population moment for the reader to compare (89-93, 137-139, 228-229, 270-272, 309) - so all the printed numbers change on every build. 234-235 makes that worse by testing one-sidedly: `print(μ-μ_hat < 1e-3)` and `print(σ-σ_hat < 1e-3)` pass automatically whenever the estimate exceeds the parameter, so the check labelled `# compare` cannot fail in half the cases; `abs(...)` is meant. 302 leaves a commented-out earlier version of the next line in the cell. 39 imports `Axes3D` and never uses it - the file draws no 3-D figure, and modern matplotlib needs no such import for `projection='3d'`. 535-541 are two orphan cells with no surrounding prose: `rng.geometric(1-λ, n).max()` and `np.log(0.4)/np.log(0.3)`, the second using two constants that appear nowhere else in the section, where $\\lambda = 0.8$ at 519. Smaller items: 303 rebuilds the boolean mask `x > 0.95` three times in one statement, 176 uses a list comprehension where `np.log10(1 + 1/np.arange(1, 10))` vectorises, 176 and 193 write `range(1,10)` without the space after the comma, and 331-332 run operators together (`0.95*17.5**2+0.0005/3*(...)`)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        70,
+        110,
+        210,
+        435
+      ],
+      "detail": "70 writes the variance operator as `\\mathbb{Var}(X)`, which typesets as three separate blackboard-bold letters $\\mathbb{V}\\mathbb{a}\\mathbb{r}$, while 122, 169 and 252 write `\\mathbb{V}` for the same operator - one operator, two spellings, and the first is malformed. 110 uses a matrix environment for a binomial coefficient, `\\begin{bmatrix}k+r-1 \\\\ r-1 \\end{bmatrix}`, which renders as a two-row column vector in square brackets rather than as $\\binom{k+r-1}{r-1}$; `\\binom` is the macro. 210 writes the normal density as $f(x|u,\\sigma^2)=\\frac{1}{\\sqrt{2\\pi\\sigma^2}}e^{[-\\frac{1}{2\\sigma^2}(x-u)^2]}$, using Latin `u` for the mean that 205 and 212 call $\\mu$, and wrapping the exponent in square brackets for no reason; it is also the only display in the file written on a single `$$ ... $$` line. 435 writes `log` rather than `\\log` inside math, so it renders as the product $l \\cdot o \\cdot g$, and 505 uses unsized `\\lceil ... \\rceil` around a fraction that overflows them"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        191,
+        275,
+        455
+      ],
+      "detail": "the two places where the lecture says \"# plot and compare\" cannot compare anything: 454-461 and 530-545 each draw the transformed sample and the library sample as separate histograms in separate cells with separate `plt.show()` calls, so they land as two figures with independently chosen axis limits - and the `alpha=0.6` on the second of each pair (460, 544) only makes sense for overlaid series, which is evidently what was intended. Two `hist` calls in one cell would settle both verifications, and would also have exposed the off-by-one between `x` and `x_g` at 525-528. Second, the mixed discrete-continuous distribution (275-335) is the most interesting object in the lecture - a point mass of 0.95 at zero plus a uniform slab of total mass 0.05 on $[300,400]$ - and it has no figure at all, even though `x` is already simulated at 301-304 and a single histogram would show the atom and the slab together and make the variance of 332 (dominated by the $0.95 \\times 17.5^2$ term) intuitive. Third, the Benford figure at 191-195 plots nine probabilities as unconnected markers via `plt.plot(range(1,10), Benford_pmf, 'o')` with a title and no axis labels; a bar chart is the natural form for a mass function, and the claim the section opens with - that in real data \"the leading digit is more likely to be small than large\" (145-146) - is never plotted against any data"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        74,
+        282,
+        353,
+        379
+      ],
+      "detail": "four sentences drop an auxiliary verb or a preposition: \"Let's use Python draw observations from the distribution\" (74), \"you know your salary will uniformly distributed in the interval 300~400 a day\" (282), \"It turns out that if we use draw uniform random numbers $U$\" (379), and \"Let $X$ distributed geometrically\" (466). 353-364 then states one idea three times: the three-bullet recipe at 353-357, the summary at 360 (\"Thus, knowing the **\\\"inverse\\\"** CDF of a distribution is enough to simulate from this distribution\"), and a `{note}` at 362-364 repeating the caveat that the scare quotes around \"inverse\" have already flagged twice. 347 also carries a typo, \"arbitary\""
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        356,
+        404,
+        464
+      ],
+      "detail": "404 and 464 set whole-line headings in bold - **Example: A continuous geometric (exponential) distribution** and **Geometric distribution** - where the file's other seven distributions each get a real `##` heading (56, 97, 143, 200, 238, 275, 338), so these two sections are absent from the `{contents}` table and cannot be linked. 356 and 360 bold a scare-quoted word, **\\\"inverse\\\"**, and 438 bolds **continuous geometric** for emphasis. The file contains no italics at all, and its two genuine definitions are correctly bolded (**Newcomb-Benford law** 145, **first digit** 156), so the marker is doing headings, scare quotes and emphasis as well as definitions"
+    }
   ],
   "strengths": [
     "Every distribution follows the same three-step template stated up front at 50-54 - population moments from the distribution, a sample of $N$ IID draws, then a comparison - and the code delivers all three for the geometric (76-94), Pascal (126-140), Gaussian (214-236), uniform (256-273) and mixed (300-335) cases, so a reader can read any one section without the others",
@@ -39,5 +107,9 @@
   ],
   "scanner_doubts": [
     "stats_examples.md:287,291,70 - qe-math-010 (proposed) is measured at 12, all of them `\\textrm{Prob}`, and it misses three further probability and variance operators in the same file. 287 is `P(X=0)=0.95` and 291 is `P(300\\le X \\le 400)=\\int_{300}^{400} f(x)\\, dx=0.05` - a bare `P` applied to an event, in a lecture whose other fourteen probabilities are written `\\textrm{Prob}`, so this is a genuine inconsistency the check should see. 70 is `\\mathbb{Var}(X)`, which is not just non-canonical but malformed: it typesets as three blackboard-bold letters. Both gaps are in `check_math_010` (tools/qestyle_rules.py:664-674): the bare-letter branch `bare_E` is built for the single letter `E`, so a bare `P(`, `V(`, `Var(` or `Prob(` matches nothing, and `bare_mathbb` requires whitespace after `\\mathbb` (`\\\\(?:mathbb|Bbb)\\s+[PEV]`) so a *braced* multi-letter word like `\\mathbb{Var}` or `\\mathbb{Prob}` falls through both branches. This is the same defect I reported from `multivariate_normal.md:902` (`Var\\left(`), now with a second letter and a second lecture, which suggests the fix is one added branch rather than two special cases: `(?<![\\\\A-Za-z0-9_{])(?:P|Var|Cov|Pr|Prob|Cor)\\s*(?:_\\{[^}]*\\}|_[A-Za-z0-9])?\\s*(?:\\\\left)?\\s*[(\\[\\\\{]` for the bare form, plus allowing a braced multi-letter argument in the `\\mathbb{...}` branch. Note the existing known-and-left entry covers a braced *wrong letter* (`\\mathbb{D}[X]`); a braced *word* is a different miss and it produces broken output, not merely non-standard output. A bare `P(` branch does carry false-positive risk in lectures where $P$ is a transition matrix, so it may need the same `e_is_operator` style gate the `E` branch already has."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "8a1e5ccccb8ed0e34ca0b003f90f1ededbef29d7"
+  }
 }

@@ -2,20 +2,82 @@
   "series": "lecture-dp",
   "lecture": "odu",
   "judgment": [
-    {"rule": "qe-math-015", "count": 4, "lines": [1022, 216, 256, 1096],
-     "detail": "the lecture states the convention correctly and then breaks it in both directions. 127-129: 'The worker knows there are two possible distributions $F$ and $G$. / These two distributions have densities $f$ and $g$, repectively.' - uppercase for the distributions, lowercase for the densities, exactly as the rule asks. But 1022-1023 plot `1 - beta.cdf(w_bar, F_a, F_b)` and `1 - beta.cdf(w_bar, G_a, G_b)` under the legend labels `'$f$'` and `'$g$'`, i.e. a quantity computed from the CDF carries the density letter - and the panel's own y-axis label at 1027, `$\\mathbb{P}\\{w > \\overline{w}(\\pi)\\}$`, says what the quantity is, so only the legend is wrong. In the other direction, the lowercase letters are used for the distributions throughout the prose: '$f$ is $\\operatorname{Beta}(1, 1)$' and '$g$ is $\\operatorname{Beta}(3, 1.2)$' (216-217, where $f$ and $g$ are densities and Beta(1,1) is a distribution), '$f$ is a less attractive offer distribution than $g$' (256), 'if $f$ generates successive wage offers' and 'if $g$ generates wage offers' (1096, 1099), 'the worker believes the true distribution is $g$' (1111) - while the Examples section switches back to the uppercase for the same objects ('$F$ ~ Beta(1, 1), $G$ ~ Beta(3, 1.2)' at 1066, 1123, 1140, 1152, 1178; '$G$ has the same mean as $F$' at 1125; '$G$ is now an \"inferior\" distribution to $F$' at 1128). After 129 the uppercase letters never appear again until line 872, so a reader has no way to know whether $f$ and $F$ are being distinguished on purpose"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [94, 265, 129, 27, 1159],
-     "detail": "94 and 133 write the wage sequence as `${W_t}$` with the braces unescaped, so the set notation vanishes and the source renders as $W_t$ - the same object is written correctly as `$\\{W_t\\}$` nowhere in the file. 265 is worse: `$\\mathbb 1{w\\geq \\bar w(\\pi) }$` has both an unbraced `\\mathbb 1` and unescaped set braces, in the sentence that states the lecture's central conjecture ('**Summary:** We conjecture that the optimal policy is of the form ...'), and line 113 writes the same indicator correctly as `$\\mathbf{1}\\{w \\geq \\bar w\\}$` - so the file has two spellings of one symbol and the broken one is in the summary. Then five typos: 'repectively' (129), 'the  the distribution' (149), 'accpet_t' (892), 'currently employment' (832), 'unemployment compensation if low' (1159), plus 'priori' for 'prior' twice (906, 1088). And 27 says 'this lecture deploys the libraries:' - plural, above a cell that installs one"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [38, 478, 820, 21],
-     "detail": "38 links the previous lecture in this series by raw URL - '[previously studied](https://python.quantecon.org/mccall_model.html)' - while line 84 links the same lecture correctly, '{doc}`in the baseline model <mccall_model>`'; `mccall_model.md` is in `lecture-dp`, so the raw URL both breaks the convention and points out of the book. Second, the two internal cross-references are written as markdown links to MyST targets rather than as references: '[looking forward](looking-forward)' (477-478) and '[shown above](take-1-solution-by-vfi)' (693). Without a leading `#` these resolve as relative document paths, not as the `(looking-forward)=` and `(take-1-solution-by-vfi)=` labels defined at 241 and 268, so both are broken - and neither link rule reports an intra-document reference of this shape. Third, the Appendix A simulation initialises everyone as employed - `e = np.ones((N, T+1))` at 820 - in a lecture whose entire subject is an unemployed worker deciding when to accept, with the only explanation being the garbled comment at 832 ('# If agent is currently employment'); the reader has to infer that the simulation is of a steady-state labour market with separation rate `s`, which 771-780 never says. Fourth, the H1 at 21 numbers this lecture 'Job Search VIII' while the otherwise near-identical copy in `lecture-python.myst` numbers it 'Job Search IX' - one of the two series has it wrong"},
-    {"rule": "qe-code-001", "count": 6, "lines": [371, 970, 799, 833, 311, 1009],
-     "detail": "371 opens the docstring of `get_greedy` with four quotation marks, `\"\"\"\"`, so the docstring begins with a stray `\"` character. 970-972 assign lambdas to names (`l = lambda w: f(w) / g(w)`, `obj = lambda w: l(w) - 1.`) - E731, and `l` is the identifier PEP8 singles out as ambiguous (E741); the same pattern appears at 230-231, 302-303 and 793. 799 tests `if e == False:` where `if not e:` is the PEP8 form (E712). 833 binds `p = np.random.uniform(0, 1)` inside a jitted function while `p` is the beta density defined at module scope (224) and called as a function at 913 - and 642 does the same again with `def ω_func(p, ω)`, so `p` is a density, a float and a probability grid point in one lecture. 311-312 draw the Monte Carlo integration nodes with `np.random.beta` and no seed, as do 800, 912 and 833, so every figure in the lecture - and the convergence counts printed at 737 and 743 - change on each build. 1009 assigns the quiver artist to `q`, the symbol the model uses for the unknown density (94, 123, 184), and never uses it (F841). Also 441-442 are two blank lines before a `return` inside a function (E303), and 1002-1007 allocates `ΔW` with `np.zeros` and `ΔΠ` with `np.empty` but fills only `ΔΠ`, which is deliberate (the arrows are horizontal) and worth one comment"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [981, 471, 1064],
-     "detail": "`job_search_example` (951-1057) produces the lecture's analytical centrepiece - a 2x2 panel of the likelihood ratio, the accept/reject regions with belief-update arrows, the two densities, and the acceptance probability under each distribution - and then a second 2-panel figure of empirical CDFs. It is called five times (1118, 1135, 1147, 1173, 1184), producing ten figures, none of which carries a `:name:` or a caption, so all the prose can do is point positionally: 'the red arrows in the upper right figure' (1068), 'the lower right figure sheds light on which effect dominates' (1103), 'That graph shows that ...' (1109). Worse, 1158 asks for a cross-example comparison - 'Comparing outcomes to the baseline case (example 1)' - across roughly a hundred lines and eight intervening figures. Second, the 'reject' and 'accept' annotations are placed at hard-coded coordinates (471-472, 759-760, 996-997: `ax.text(0.5, 0.6, 'reject')`, `ax.text(0.7, 0.9, 'accept')`) while the shape and level of $\\bar w(\\pi)$ change from example to example - 1131-1132 says that in Example 2 the curve is *increasing* rather than decreasing - so nothing guarantees the two labels still fall inside the regions they name in Examples 2 through 5. Third, the sequence of five examples varies two parameters ($G$'s Beta parameters and $c$) and the payoff is a comparison of $\\bar w(\\pi)$ curves; one overlay figure of the five reservation-wage functions on shared axes would make the comparative statics visible in a way that ten separate 2x2 panels cannot"},
-    {"rule": "qe-math-009", "count": 3, "lines": [590, 561, 1066],
-     "detail": "590 introduces two symbols that are already taken, inside the contraction proof: 'for real numbers $a, b, c$ we always have', where $c$ is unemployment compensation throughout the lecture (218, 542, 567) and appears in {eq}`odu_dq` twelve lines above, and $b$ is the space of bounded functions declared at 558 ('$b[0,1]$ be the bounded real-valued functions on $[0,1]$'). Renaming the three dummies in {eq}`odu_nt2` costs nothing and removes both collisions. 561 names the operator $Q$ in a lecture whose unknown object is the density $q$ (94, 123) and whose mixture density is $q_\\pi$ (184) - three closely related meanings on one letter, and the code then binds `q` to a matplotlib artist at 1009. 1066, 1123, 1140, 1152 and 1178 write the distributional statements with a literal tilde outside math, '$F$ ~ Beta(1, 1), $G$ ~ Beta(3, 1.2)', where `$F \\sim \\operatorname{Beta}(1, 1)$` is both correct and what 216-217 already uses for `\\operatorname{Beta}`"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [1128, 283],
-     "detail": "the three bold spans in the file are all correct - **reservation wage** (114) and **reservation wage functional equation** (548) are definitions, and **Summary:** (264) is a label - and italic is never misused, because italic is never used at all in 1185 lines. The gap shows where a term is introduced in a special sense and gets typographic quotes instead: '$G$ is now an \"inferior\" distribution to $F$' (1128) and '$G$ is even more \"inferior\"' (1143), and the model's own name in scare quotes at 283 ('a given parameterization of the \"offer distribution unknown\" model') and 705 ('This code solves the \"Offer Distribution Unknown\" model'), the second of which is also the qe-writing-004 hit. Italic is the convention for the first pair; the model name should either be bolded once where it is defined at 116 or set in plain text"}
+    {
+      "rule": "qe-math-015",
+      "count": 4,
+      "lines": [
+        1022,
+        216,
+        256,
+        1096
+      ],
+      "detail": "the lecture states the convention correctly and then breaks it in both directions. 127-129: 'The worker knows there are two possible distributions $F$ and $G$. / These two distributions have densities $f$ and $g$, repectively.' - uppercase for the distributions, lowercase for the densities, exactly as the rule asks. But 1022-1023 plot `1 - beta.cdf(w_bar, F_a, F_b)` and `1 - beta.cdf(w_bar, G_a, G_b)` under the legend labels `'$f$'` and `'$g$'`, i.e. a quantity computed from the CDF carries the density letter - and the panel's own y-axis label at 1027, `$\\mathbb{P}\\{w > \\overline{w}(\\pi)\\}$`, says what the quantity is, so only the legend is wrong. In the other direction, the lowercase letters are used for the distributions throughout the prose: '$f$ is $\\operatorname{Beta}(1, 1)$' and '$g$ is $\\operatorname{Beta}(3, 1.2)$' (216-217, where $f$ and $g$ are densities and Beta(1,1) is a distribution), '$f$ is a less attractive offer distribution than $g$' (256), 'if $f$ generates successive wage offers' and 'if $g$ generates wage offers' (1096, 1099), 'the worker believes the true distribution is $g$' (1111) - while the Examples section switches back to the uppercase for the same objects ('$F$ ~ Beta(1, 1), $G$ ~ Beta(3, 1.2)' at 1066, 1123, 1140, 1152, 1178; '$G$ has the same mean as $F$' at 1125; '$G$ is now an \"inferior\" distribution to $F$' at 1128). After 129 the uppercase letters never appear again until line 872, so a reader has no way to know whether $f$ and $F$ are being distinguished on purpose"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        94,
+        265,
+        129,
+        27,
+        1159
+      ],
+      "detail": "94 and 133 write the wage sequence as `${W_t}$` with the braces unescaped, so the set notation vanishes and the source renders as $W_t$ - the same object is written correctly as `$\\{W_t\\}$` nowhere in the file. 265 is worse: `$\\mathbb 1{w\\geq \\bar w(\\pi) }$` has both an unbraced `\\mathbb 1` and unescaped set braces, in the sentence that states the lecture's central conjecture ('**Summary:** We conjecture that the optimal policy is of the form ...'), and line 113 writes the same indicator correctly as `$\\mathbf{1}\\{w \\geq \\bar w\\}$` - so the file has two spellings of one symbol and the broken one is in the summary. Then five typos: 'repectively' (129), 'the  the distribution' (149), 'accpet_t' (892), 'currently employment' (832), 'unemployment compensation if low' (1159), plus 'priori' for 'prior' twice (906, 1088). And 27 says 'this lecture deploys the libraries:' - plural, above a cell that installs one"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        38,
+        478,
+        820,
+        21
+      ],
+      "detail": "38 links the previous lecture in this series by raw URL - '[previously studied](https://python.quantecon.org/mccall_model.html)' - while line 84 links the same lecture correctly, '{doc}`in the baseline model <mccall_model>`'; `mccall_model.md` is in `lecture-dp`, so the raw URL both breaks the convention and points out of the book. Second, the two internal cross-references are written as markdown links to MyST targets rather than as references: '[looking forward](looking-forward)' (477-478) and '[shown above](take-1-solution-by-vfi)' (693). Without a leading `#` these resolve as relative document paths, not as the `(looking-forward)=` and `(take-1-solution-by-vfi)=` labels defined at 241 and 268, so both are broken - and neither link rule reports an intra-document reference of this shape. Third, the Appendix A simulation initialises everyone as employed - `e = np.ones((N, T+1))` at 820 - in a lecture whose entire subject is an unemployed worker deciding when to accept, with the only explanation being the garbled comment at 832 ('# If agent is currently employment'); the reader has to infer that the simulation is of a steady-state labour market with separation rate `s`, which 771-780 never says. Fourth, the H1 at 21 numbers this lecture 'Job Search VIII' while the otherwise near-identical copy in `lecture-python.myst` numbers it 'Job Search IX' - one of the two series has it wrong"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        371,
+        970,
+        799,
+        833,
+        311,
+        1009
+      ],
+      "detail": "371 opens the docstring of `get_greedy` with four quotation marks, `\"\"\"\"`, so the docstring begins with a stray `\"` character. 970-972 assign lambdas to names (`l = lambda w: f(w) / g(w)`, `obj = lambda w: l(w) - 1.`) - E731, and `l` is the identifier PEP8 singles out as ambiguous (E741); the same pattern appears at 230-231, 302-303 and 793. 799 tests `if e == False:` where `if not e:` is the PEP8 form (E712). 833 binds `p = np.random.uniform(0, 1)` inside a jitted function while `p` is the beta density defined at module scope (224) and called as a function at 913 - and 642 does the same again with `def ω_func(p, ω)`, so `p` is a density, a float and a probability grid point in one lecture. 311-312 draw the Monte Carlo integration nodes with `np.random.beta` and no seed, as do 800, 912 and 833, so every figure in the lecture - and the convergence counts printed at 737 and 743 - change on each build. 1009 assigns the quiver artist to `q`, the symbol the model uses for the unknown density (94, 123, 184), and never uses it (F841). Also 441-442 are two blank lines before a `return` inside a function (E303), and 1002-1007 allocates `ΔW` with `np.zeros` and `ΔΠ` with `np.empty` but fills only `ΔΠ`, which is deliberate (the arrows are horizontal) and worth one comment"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        981,
+        471,
+        1064
+      ],
+      "detail": "`job_search_example` (951-1057) produces the lecture's analytical centrepiece - a 2x2 panel of the likelihood ratio, the accept/reject regions with belief-update arrows, the two densities, and the acceptance probability under each distribution - and then a second 2-panel figure of empirical CDFs. It is called five times (1118, 1135, 1147, 1173, 1184), producing ten figures, none of which carries a `:name:` or a caption, so all the prose can do is point positionally: 'the red arrows in the upper right figure' (1068), 'the lower right figure sheds light on which effect dominates' (1103), 'That graph shows that ...' (1109). Worse, 1158 asks for a cross-example comparison - 'Comparing outcomes to the baseline case (example 1)' - across roughly a hundred lines and eight intervening figures. Second, the 'reject' and 'accept' annotations are placed at hard-coded coordinates (471-472, 759-760, 996-997: `ax.text(0.5, 0.6, 'reject')`, `ax.text(0.7, 0.9, 'accept')`) while the shape and level of $\\bar w(\\pi)$ change from example to example - 1131-1132 says that in Example 2 the curve is *increasing* rather than decreasing - so nothing guarantees the two labels still fall inside the regions they name in Examples 2 through 5. Third, the sequence of five examples varies two parameters ($G$'s Beta parameters and $c$) and the payoff is a comparison of $\\bar w(\\pi)$ curves; one overlay figure of the five reservation-wage functions on shared axes would make the comparative statics visible in a way that ten separate 2x2 panels cannot"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        590,
+        561,
+        1066
+      ],
+      "detail": "590 introduces two symbols that are already taken, inside the contraction proof: 'for real numbers $a, b, c$ we always have', where $c$ is unemployment compensation throughout the lecture (218, 542, 567) and appears in {eq}`odu_dq` twelve lines above, and $b$ is the space of bounded functions declared at 558 ('$b[0,1]$ be the bounded real-valued functions on $[0,1]$'). Renaming the three dummies in {eq}`odu_nt2` costs nothing and removes both collisions. 561 names the operator $Q$ in a lecture whose unknown object is the density $q$ (94, 123) and whose mixture density is $q_\\pi$ (184) - three closely related meanings on one letter, and the code then binds `q` to a matplotlib artist at 1009. 1066, 1123, 1140, 1152 and 1178 write the distributional statements with a literal tilde outside math, '$F$ ~ Beta(1, 1), $G$ ~ Beta(3, 1.2)', where `$F \\sim \\operatorname{Beta}(1, 1)$` is both correct and what 216-217 already uses for `\\operatorname{Beta}`"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        1128,
+        283
+      ],
+      "detail": "the three bold spans in the file are all correct - **reservation wage** (114) and **reservation wage functional equation** (548) are definitions, and **Summary:** (264) is a label - and italic is never misused, because italic is never used at all in 1185 lines. The gap shows where a term is introduced in a special sense and gets typographic quotes instead: '$G$ is now an \"inferior\" distribution to $F$' (1128) and '$G$ is even more \"inferior\"' (1143), and the model's own name in scare quotes at 283 ('a given parameterization of the \"offer distribution unknown\" model') and 705 ('This code solves the \"Offer Distribution Unknown\" model'), the second of which is also the qe-writing-004 hit. Italic is the convention for the first pair; the model name should either be bolded once where it is defined at 116 or set in plain text"
+    }
   ],
   "strengths": [
     "The contraction argument is given in full and at the right level of detail: the function space and norm are declared (556-559), the operator $Q$ is defined as a display (563-569), the equivalence between its fixed points and the RWFE is stated both ways (571-573), the bound is built in three steps with the elementary inequality $|\\max\\{a,b\\} - \\max\\{a,c\\}| \\leq |b-c|$ isolated as its own numbered equation (592-596), and the two consequences - existence of a unique $\\bar w$ and uniform convergence of $Q^k\\omega$ from any starting point - are drawn out separately (622-625)",
@@ -39,5 +101,9 @@
     "Sentence-case the seven Title Case headings (70, 82, 116, 242, 484, 499, 1064) - note that 269 ('Take 1: Solution by VFI') and 551 ('Solving the RWFE') are already correct and their acronyms should be left capitalised. Reconcile the H1 with the sibling copy, which numbers this lecture 'Job Search IX'; the two series disagree and only one can be right",
     "Rewrite the `{cite}`-as-subject at 79 ('Let's first review the basic McCall model {cite}`McCall1970` and then add the variation') - this is the qe-ref-001 hit - fix the seven typos (129, 149, 832, 892, 906, 1088, 1159), correct 'deploys the libraries' at 27 to the house wording with the single library named, and clear the 23 double spaces. Note that the two copies of this file differ only in the H1 number and in two em dashes (248, 253), so every other fix has to be mirrored in `lecture-python.myst`"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "c62519468fa785336e6627150b519d608b3653e2"
+  }
 }

@@ -2,20 +2,78 @@
   "series": "lecture-python.myst",
   "lecture": "likelihood_ratio_process",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 4, "lines": [399, 927, 1157, 1379],
-     "detail": "1155-1161 has the two error descriptions exchanged. The code fills blue with the $f$ density above the boundary and labels it $\\tilde\\alpha_t$ (1134-1137), red with the $g$ density below it labelled $\\tilde\\beta_t$ (1139-1142), and 1077 defines $\\tilde\\alpha_t = {\\rm Prob}(l_t < 1 \\mid f)$ and $\\tilde\\beta_t = {\\rm Prob}(l_t \\geq 1 \\mid g)$ - so blue is truly-$f$-classified-as-$g$ and red is truly-$g$-classified-as-$f$. But 1157 says the red area is \"the probability of classifying someone as a type $g$ individual when it is really a type $f$ individual\" and 1161 says the blue area is \"classifying someone as a type $f$ when it is really a type $g$ individual\": both are the other way round. Separately, 399-409 and 414-426 present $\\alpha$ twice with the identical display; 927-939 repeats the three definitions of 96-119 verbatim 830 lines later; and the prose carries typos - \"simmulation\" (1379), \"The decision makers has observed\" (947), \"Jensen-Shannon entropy\" for divergence (1477)"},
-    {"rule": "qe-math-009", "count": 3, "lines": [380, 687, 1497],
-     "detail": "687 and 695 write the same object three ways in one line each - `K_{f} = D_{KL}\\bigl(h\\|f\\bigr) = KL(h, f)` - and the lecture then adds a fourth, $h_{KL}(f,g)$, at 1532, so a reader tracking KL divergence meets $K_f$, $D_{KL}(h\\|f)$, $KL(h,f)$ and $h_{KL}$ for one concept. $L$ means \"likelihood ratio\" for 1480 lines (113: $L(w^t) = \\prod \\ell(w_i)$) and then means \"likelihood\" at 1497 ($L_T^{(m)} = \\pi_{0,x_0}^{(m)}\\prod\\prod (P_{ij}^{(m)})^{N_{ij}}$), with the ratio formed as $L_T^{(f)}/L_T^{(g)}$ at 1509 - the same letter for the ratio and for its two ingredients. And 368-381 switches to uppercase $W$ (\"a sample $\\{W_i\\}_{i=1}^t$\", \"accept $H_0$ if $L(W^t) > c$\") while everything before and after uses lowercase $w$, including $\\Pr\\{L(w^t) < c\\}$ twenty lines later at 402. $\\pi_{-1}$ is also the mixing parameter at 851 and $\\pi_0^{(f)}$, $\\pi_i^{(f)}$ are Markov distributions at 1488-1520"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [121, 872, 927, 1244],
-     "detail": "121 italicises a term as it is coined (\"satisfies the *recursion*\") where the companion lecture `likelihood_bayes` bolds the same term at 128; **likelihood ratio process** is bolded four separate times (94, 109, 927, 933), the last two being restatements of the first; and bold is used for pure emphasis at 872 and 876 (\"flips a coin only **once**\", \"flips a coin **often**\") and at 1244-1246 (\"just **one** decision\", \"**all** individuals\", \"**many** decisions\"), which the rule assigns to italic - the lecture's own correct italics are at 390 (*best*), 449 (*should*) and 308 (*different*)"},
-    {"rule": "qe-code-001", "count": 5, "lines": [145, 486, 708, 1299, 1424],
-     "detail": "145 is internally inconsistent about exponent spacing in one expression - `r * x** (a-1) * (1 - x) ** (b-1)` - where the rule's own guidance is that `a**b` needs no spaces; 486 and 582 use mutable list literals as default arguments (`time_points=[1, 7, 14, 21]`, `t_values=[1, 5, 9, 13]`); 708 binds a lambda to a name (E731); 1299 puts a top-level statement immediately after a `return` with no blank line (E305), so `C_fg, ϕ_optimal = compute_chernoff_entropy(f, g)` reads as part of the function; and 1424 has two spaces after `=` in `cor_data =  {`. 1681 also runs to 88 characters (E501), 546-551 returns the same array under two keys (`'alpha'` and `'PFA'`) of which only one is used, and 1169 and 1173 evaluate `f(w)` and `g(w)` twice per call"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [70, 667, 1725],
-     "detail": "the H2 at 70, \"## Likelihood Ratio Process\", restates the H1 at 23, \"# Likelihood Ratio Processes\", so the table of contents opens with the lecture's own title; \"### A third distribution $h$\" (667) and \"### A helpful formula\" (722) are H3s nested under \"## Likelihood ratio test\" (359) although they abandon hypothesis testing entirely for KL divergence, and the KL material is the foundation for the next two H2s rather than a subsection of the previous one; and \"## Related lectures\" (1725-1732) closes the lecture ten lines before \"## Exercises\" (1735) opens it again, so the forward pointers to `likelihood_bayes`, `odu` and `likelihood_ratio_process_2` arrive before the two exercises rather than after"},
-    {"rule": "qe-math-014", "count": 4, "lines": [955, 961, 1077],
-     "detail": "the lecture writes its frequentist events with braces under `\\Pr` - `\\Pr\\left\\{ L(w^t) < c \\mid q=f\\right\\}` at 402, 408, 418, 425, 618 and 619 - and then switches to parentheses for the same kind of event in the model-selection and classification sections: `{\\rm Prob}\\left(L_T < 1 \\Big| f\\right)` at 955, `{\\rm Prob}\\left(L_T \\geq 1 \\Big| g\\right)` at 961, and `{\\rm Prob}(l_t < 1 \\mid f)` and `{\\rm Prob}(l_t \\geq 1 \\mid g)` both at 1077. All four are logical conditions on random variables, which is the case proposed qe-math-014 assigns to braces, and the earlier half of the lecture already writes them that way"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [1681],
-     "detail": "`compute_markov_selection_error` (1681-1703) computes the model-selection error probability for the two Markov chains across a range of $T$ - the Markov analogue of the central result of section 941-1054 and of the Chernoff comparison at 1306-1325 - and it is never called. No cell invokes it, no figure shows its output, and the Markov section ends at 1722 with only the log-likelihood-ratio path plot. The function exists, the transition matrices exist (1714-1720), and one plot of the error against $T$ with $e^{-h_{KL}T}$ overlaid would close the section the same way 1306-1325 closes the IID case"}
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        399,
+        927,
+        1157,
+        1379
+      ],
+      "detail": "1155-1161 has the two error descriptions exchanged. The code fills blue with the $f$ density above the boundary and labels it $\\tilde\\alpha_t$ (1134-1137), red with the $g$ density below it labelled $\\tilde\\beta_t$ (1139-1142), and 1077 defines $\\tilde\\alpha_t = {\\rm Prob}(l_t < 1 \\mid f)$ and $\\tilde\\beta_t = {\\rm Prob}(l_t \\geq 1 \\mid g)$ - so blue is truly-$f$-classified-as-$g$ and red is truly-$g$-classified-as-$f$. But 1157 says the red area is \"the probability of classifying someone as a type $g$ individual when it is really a type $f$ individual\" and 1161 says the blue area is \"classifying someone as a type $f$ when it is really a type $g$ individual\": both are the other way round. Separately, 399-409 and 414-426 present $\\alpha$ twice with the identical display; 927-939 repeats the three definitions of 96-119 verbatim 830 lines later; and the prose carries typos - \"simmulation\" (1379), \"The decision makers has observed\" (947), \"Jensen-Shannon entropy\" for divergence (1477)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        380,
+        687,
+        1497
+      ],
+      "detail": "687 and 695 write the same object three ways in one line each - `K_{f} = D_{KL}\\bigl(h\\|f\\bigr) = KL(h, f)` - and the lecture then adds a fourth, $h_{KL}(f,g)$, at 1532, so a reader tracking KL divergence meets $K_f$, $D_{KL}(h\\|f)$, $KL(h,f)$ and $h_{KL}$ for one concept. $L$ means \"likelihood ratio\" for 1480 lines (113: $L(w^t) = \\prod \\ell(w_i)$) and then means \"likelihood\" at 1497 ($L_T^{(m)} = \\pi_{0,x_0}^{(m)}\\prod\\prod (P_{ij}^{(m)})^{N_{ij}}$), with the ratio formed as $L_T^{(f)}/L_T^{(g)}$ at 1509 - the same letter for the ratio and for its two ingredients. And 368-381 switches to uppercase $W$ (\"a sample $\\{W_i\\}_{i=1}^t$\", \"accept $H_0$ if $L(W^t) > c$\") while everything before and after uses lowercase $w$, including $\\Pr\\{L(w^t) < c\\}$ twenty lines later at 402. $\\pi_{-1}$ is also the mixing parameter at 851 and $\\pi_0^{(f)}$, $\\pi_i^{(f)}$ are Markov distributions at 1488-1520"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        121,
+        872,
+        927,
+        1244
+      ],
+      "detail": "121 italicises a term as it is coined (\"satisfies the *recursion*\") where the companion lecture `likelihood_bayes` bolds the same term at 128; **likelihood ratio process** is bolded four separate times (94, 109, 927, 933), the last two being restatements of the first; and bold is used for pure emphasis at 872 and 876 (\"flips a coin only **once**\", \"flips a coin **often**\") and at 1244-1246 (\"just **one** decision\", \"**all** individuals\", \"**many** decisions\"), which the rule assigns to italic - the lecture's own correct italics are at 390 (*best*), 449 (*should*) and 308 (*different*)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        145,
+        486,
+        708,
+        1299,
+        1424
+      ],
+      "detail": "145 is internally inconsistent about exponent spacing in one expression - `r * x** (a-1) * (1 - x) ** (b-1)` - where the rule's own guidance is that `a**b` needs no spaces; 486 and 582 use mutable list literals as default arguments (`time_points=[1, 7, 14, 21]`, `t_values=[1, 5, 9, 13]`); 708 binds a lambda to a name (E731); 1299 puts a top-level statement immediately after a `return` with no blank line (E305), so `C_fg, ϕ_optimal = compute_chernoff_entropy(f, g)` reads as part of the function; and 1424 has two spaces after `=` in `cor_data =  {`. 1681 also runs to 88 characters (E501), 546-551 returns the same array under two keys (`'alpha'` and `'PFA'`) of which only one is used, and 1169 and 1173 evaluate `f(w)` and `g(w)` twice per call"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        70,
+        667,
+        1725
+      ],
+      "detail": "the H2 at 70, \"## Likelihood Ratio Process\", restates the H1 at 23, \"# Likelihood Ratio Processes\", so the table of contents opens with the lecture's own title; \"### A third distribution $h$\" (667) and \"### A helpful formula\" (722) are H3s nested under \"## Likelihood ratio test\" (359) although they abandon hypothesis testing entirely for KL divergence, and the KL material is the foundation for the next two H2s rather than a subsection of the previous one; and \"## Related lectures\" (1725-1732) closes the lecture ten lines before \"## Exercises\" (1735) opens it again, so the forward pointers to `likelihood_bayes`, `odu` and `likelihood_ratio_process_2` arrive before the two exercises rather than after"
+    },
+    {
+      "rule": "qe-math-014",
+      "count": 4,
+      "lines": [
+        955,
+        961,
+        1077
+      ],
+      "detail": "the lecture writes its frequentist events with braces under `\\Pr` - `\\Pr\\left\\{ L(w^t) < c \\mid q=f\\right\\}` at 402, 408, 418, 425, 618 and 619 - and then switches to parentheses for the same kind of event in the model-selection and classification sections: `{\\rm Prob}\\left(L_T < 1 \\Big| f\\right)` at 955, `{\\rm Prob}\\left(L_T \\geq 1 \\Big| g\\right)` at 961, and `{\\rm Prob}(l_t < 1 \\mid f)` and `{\\rm Prob}(l_t \\geq 1 \\mid g)` both at 1077. All four are logical conditions on random variables, which is the case proposed qe-math-014 assigns to braces, and the earlier half of the lecture already writes them that way"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        1681
+      ],
+      "detail": "`compute_markov_selection_error` (1681-1703) computes the model-selection error probability for the two Markov chains across a range of $T$ - the Markov analogue of the central result of section 941-1054 and of the Chernoff comparison at 1306-1325 - and it is never called. No cell invokes it, no figure shows its output, and the Markov section ends at 1722 with only the log-likelihood-ratio path plot. The function exists, the transition matrices exist (1714-1720), and one plot of the error against $T$ with $e^{-h_{KL}T}$ overlaid would close the section the same way 1306-1325 closes the IID case"
+    }
   ],
   "strengths": [
     "The peculiar property is posed as a genuine puzzle and then answered: 277-285 asks how $E[L(w^t) \\mid q=g] = 1$ can hold while the mass piles up at zero, 281-285 answers with the fat-tail argument, and 296-306 then admits that plain Monte Carlo cannot verify it and hands the reader `imp_sample` for the method that can - an unusually honest treatment of a result the lecture cannot demonstrate with the tools in hand",
@@ -37,5 +95,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 x7 in `lectures/likelihood_ratio_process.md` is a mix: 541 (`beta = np.array([...])`) and 548 (`'beta': beta`) are genuine - that variable is the Type II error probability the lecture writes as $\\beta$ at 408 and should be `β`. But 59 (`from math import gamma`), 62 (`from scipy.stats import beta as beta_dist`) and the three `gamma(...)` calls on 144 are imported names, not author-chosen identifiers: `gamma` is the standard-library gamma function used to build the beta density, and `beta_dist` is SciPy's distribution object. So five of the seven are false positives, and the fix is the same one needed in `imp_sample.md`, `lagrangian_lqdp.md`:476, `learning_approximation.md`:190 and `likelihood_bayes.md`:56 - exclude imported names and keyword-argument names, and look only at assignment targets and parameter definitions."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "a73ab28fa992ed7fa04bc320688de829a598e3d7"
+  }
 }

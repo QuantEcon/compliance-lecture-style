@@ -60,5 +60,9 @@
   "scanner_doubts": [
     "qe-writing-004 x4 (workspace.md:37, 213, 246, 252): every hit is a product or UI name rather than narrative capitalisation. 37 and 213 flag the word 'Code' inside 'Visual Studio Code (VS Code)'; 246 flags 'Kernel' in 'the Select Kernel button' and 252 flags 'Control' in 'the Source Control tab'. The proper-noun list needs 'Visual Studio Code'/'VS Code'; the two UI labels are at most a missing-backticks issue, not a capitalisation one.",
     "qe-writing-006 x1 (workspace.md:211): the H2 'A walk through Visual Studio Code' is already sentence case - the three flagged words (Visual, Studio, Code) are the product name. If this and the four qe-writing-004 hits above are discounted, nothing measured remains behind the drafted Writing score of 7/10."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "b305f0cfba1955f8f8f4c828f5d5d5d96ce6590f"
+  }
 }

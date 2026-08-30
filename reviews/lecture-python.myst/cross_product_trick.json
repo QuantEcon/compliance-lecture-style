@@ -2,12 +2,34 @@
   "series": "lecture-python.myst",
   "lecture": "cross_product_trick",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 3, "lines": [77, 80, 94],
-     "detail": "line 80 is a single 55-word sentence that names both 4-tuples, both value-function matrices and both policy matrices before reaching its verb (\"...are related to...by\"); lines 94-95 are a 58-word sentence carrying the duality claim, the existence of the transformation and the before/after covariance structure at once, and it contains the doubled word \"between between\"; lines 77-78 read \"That the omitted matrix $H=0$ indicates that there are no cross products...\" - the sentence has no main clause and says only that H is omitted because it is zero"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [106, 173],
-     "detail": "$F$ carries two unrelated meanings that are never distinguished: the optimal feedback matrix in the LQ half (59, 63, 87) and the measurement-noise loading matrix in the Kalman half (106, 109, 119-120), and the duality table then uses both senses in the same table - row 165 maps $Q$ to the Kalman $FF'$ while row 167 maps the LQ $F$ to $K'$; separately, the lecture ends at 173-175 with an empty `{code-cell}`, so a reader who follows the Algorithm section (131-151) is left with a stub where the numerical demonstration should be"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [74, 145],
-     "detail": "bold is used for emphasis rather than definition in both places it appears outside a heading: **equivalent** at line 74 stresses a word in an ordinary sentence, and **with non-zero covariance** at line 145 stresses a qualifying phrase; neither is a term being defined, so both should be italic"}
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        77,
+        80,
+        94
+      ],
+      "detail": "line 80 is a single 55-word sentence that names both 4-tuples, both value-function matrices and both policy matrices before reaching its verb (\"...are related to...by\"); lines 94-95 are a 58-word sentence carrying the duality claim, the existence of the transformation and the before/after covariance structure at once, and it contains the doubled word \"between between\"; lines 77-78 read \"That the omitted matrix $H=0$ indicates that there are no cross products...\" - the sentence has no main clause and says only that H is omitted because it is zero"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        106,
+        173
+      ],
+      "detail": "$F$ carries two unrelated meanings that are never distinguished: the optimal feedback matrix in the LQ half (59, 63, 87) and the measurement-noise loading matrix in the Kalman half (106, 109, 119-120), and the duality table then uses both senses in the same table - row 165 maps $Q$ to the Kalman $FF'$ while row 167 maps the LQ $F$ to $K'$; separately, the lecture ends at 173-175 with an empty `{code-cell}`, so a reader who follows the Algorithm section (131-151) is left with a stub where the numerical demonstration should be"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        74,
+        145
+      ],
+      "detail": "bold is used for emphasis rather than definition in both places it appears outside a heading: **equivalent** at line 74 stresses a word in an ordinary sentence, and **with non-zero covariance** at line 145 stresses a qualifying phrase; neither is a term being defined, so both should be italic"
+    }
   ],
   "strengths": [
     "The duality table (160-168) is a genuinely useful compact device: seven rows pairing each LQ matrix with its Kalman counterpart, which is the one thing a reader will come back to this lecture for",
@@ -24,5 +46,9 @@
     "Fill in the empty `{code-cell}` at 173-175 with the numerical check the Algorithm section implies, or delete the cell - an empty cell renders as an empty input box on the site",
     "Sweep the remaining mechanical items: sentence-case the two H2s at 33 and 92 (qe-writing-006), collapse the 24 double spaces (qe-writing-008), write \"IID\" at line 110 (qe-writing-009, proposed), and italicise the emphasis at 74 and 145"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "7824c6c3acc8652a67c20f382a1eb470391c2b4a"
+  }
 }

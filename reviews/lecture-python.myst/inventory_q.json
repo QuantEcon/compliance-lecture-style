@@ -2,14 +2,45 @@
   "series": "lecture-python.myst",
   "lecture": "inventory_q",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 4, "lines": [51, 396, 465, 708],
-     "detail": "the lecture's bold-for-definition discipline is otherwise excellent, which makes the four exceptions stand out: 51 italicises the term being introduced (\"A key idea is the *Q-factor* representation\") and then bolds the same concept at 410, so the reader meets it in the wrong typeface first; and 396, 465 and 708 use bold for pure emphasis - \"can an agent **learn** the optimal policy\", \"Notice what is **not** required\", \"All panels use the **same demand sequence**\" - which the rule reserves for italic"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [398, 463, 512],
-     "detail": "the \"### What the manager needs to know\" section (463-477) reproduces the Introduction's list at 42-49 almost item for item - inventory level, order quantity, resulting profit, next inventory level, plus the discount factor from 49 - and 398-402 makes the same point a third time (\"suppose the agent does not know the demand distribution $\\phi$, the cost parameters ... or the transition function $h$\"), so one claim is stated three times in 420 lines; separately, 512-514 is a 36-word sentence carrying a because-clause, a main clause and an em-dash aside (\"affects only which $(x, a)$ entries get visited -- and hence updated -- over time\")"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [485, 538],
-     "detail": "\"### The Q-table and the role of the max\" (480-506) spends 27 lines describing a two-dimensional lookup table, which single entry $q_t(x,a)$ an update touches, and how the scalar $\\max_{a'} q_t(X_{t+1}, a')$ differs from the action $\\argmax_{a'} q_t(X_{t+1}, a')$ - all of it inherently spatial, and all of it in prose; a heatmap of the final `q` array (which the lecture already has in memory at 659) with the updated cell marked would carry the whole argument. \"### Exploration: epsilon-greedy\" (538-551) likewise states a decay law $\\varepsilon_{t+1} = \\max(\\varepsilon_{\\min}, \\varepsilon_t \\lambda)$ over 5 million steps without plotting it, so the reader cannot see when exploration effectively stops"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [521, 549],
-     "detail": "521 asserts convergence of the Q-table conditional on \"the learning rates satisfy standard conditions (see below)\", but those conditions are not given until the \"### Learning rate\" section at 531-535, so the central convergence claim rests on a forward reference; and 549 introduces $\\lambda$ in the decay rule $\\varepsilon_{t+1} = \\max(\\varepsilon_{\\min},\\; \\varepsilon_t \\cdot \\lambda)$ without ever saying what it is - the reader has to reach the `ε_decay=0.999999` default at 643 to find out"}
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        51,
+        396,
+        465,
+        708
+      ],
+      "detail": "the lecture's bold-for-definition discipline is otherwise excellent, which makes the four exceptions stand out: 51 italicises the term being introduced (\"A key idea is the *Q-factor* representation\") and then bolds the same concept at 410, so the reader meets it in the wrong typeface first; and 396, 465 and 708 use bold for pure emphasis - \"can an agent **learn** the optimal policy\", \"Notice what is **not** required\", \"All panels use the **same demand sequence**\" - which the rule reserves for italic"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        398,
+        463,
+        512
+      ],
+      "detail": "the \"### What the manager needs to know\" section (463-477) reproduces the Introduction's list at 42-49 almost item for item - inventory level, order quantity, resulting profit, next inventory level, plus the discount factor from 49 - and 398-402 makes the same point a third time (\"suppose the agent does not know the demand distribution $\\phi$, the cost parameters ... or the transition function $h$\"), so one claim is stated three times in 420 lines; separately, 512-514 is a 36-word sentence carrying a because-clause, a main clause and an em-dash aside (\"affects only which $(x, a)$ entries get visited -- and hence updated -- over time\")"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        485,
+        538
+      ],
+      "detail": "\"### The Q-table and the role of the max\" (480-506) spends 27 lines describing a two-dimensional lookup table, which single entry $q_t(x,a)$ an update touches, and how the scalar $\\max_{a'} q_t(X_{t+1}, a')$ differs from the action $\\argmax_{a'} q_t(X_{t+1}, a')$ - all of it inherently spatial, and all of it in prose; a heatmap of the final `q` array (which the lecture already has in memory at 659) with the updated cell marked would carry the whole argument. \"### Exploration: epsilon-greedy\" (538-551) likewise states a decay law $\\varepsilon_{t+1} = \\max(\\varepsilon_{\\min}, \\varepsilon_t \\lambda)$ over 5 million steps without plotting it, so the reader cannot see when exploration effectively stops"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        521,
+        549
+      ],
+      "detail": "521 asserts convergence of the Q-table conditional on \"the learning rates satisfy standard conditions (see below)\", but those conditions are not given until the \"### Learning rate\" section at 531-535, so the central convergence claim rests on a forward reference; and 549 introduces $\\lambda$ in the decay rule $\\varepsilon_{t+1} = \\max(\\varepsilon_{\\min},\\; \\varepsilon_t \\cdot \\lambda)$ without ever saying what it is - the reader has to reach the `ε_decay=0.999999` default at 643 to find out"
+    }
   ],
   "strengths": [
     "Bold marks definitions and italic marks emphasis almost throughout, and the definitions are the ones that matter: **$v$-greedy policy** (171, 273), **Q-function** (410), **Q-table** (485), **behavior policy** (510), **off-policy** (516), **optimistic initialization** (555), against *that one entry* (490), *actually takes* (504), *speed* and *limit* (523, 525)",
@@ -32,5 +63,9 @@
     "qe-math-002 x3 in `lectures/inventory_q.md` (434, 456, 499) is a false positive, and it is one of the three High-severity findings that put Math at 4/10 and the whole lecture in the HIGH bucket. Every prime in this file is next-period notation, not a transpose: line 438 states the convention outright (\"where $x' = h(x, a, D)$\"), and the flagged expressions are `\\max_{a' \\in \\Gamma(x')} q(x', a')` over a scalar action and a scalar state. Nothing in the lecture is a matrix or a vector - there is no linear algebra in it at all - so no apostrophe here can be a transpose. The check's matrix-like-base heuristic appears to treat `x` and `a` as matrix-like.",
     "qe-math-004 is reported clean for `lectures/inventory_q.md`, but line 231 contains `\\kappa \\, \\mathbf{1}\\{a > 0\\}`. `\\mathbf{` is exactly what the qe-math-004 regex is described as matching in spec section 2.2, so this looks like a missed detection rather than a judgment call. It is the file's only `\\mathbf`, it sits inside a `$$` display, and the same indicator is written plain at 119, so the lecture is internally inconsistent as well.",
     "qe-writing-006 x2 (76, 154) appears to undercount by one: \"## Q-Learning\" at 394 capitalises \"Learning\" in an H2, while the lecture's own prose writes \"Q-learning\" at 40, 447, 583 and in the figure label at 685. If \"Q-Learning\" is in the curated proper-noun list, the list is out of step with house usage here."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "5e798f6e6ddb6f3692ea9f8e2429ae84a324a26c"
+  }
 }

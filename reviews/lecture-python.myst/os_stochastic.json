@@ -2,18 +2,71 @@
   "series": "lecture-python.myst",
   "lecture": "os_stochastic",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [79, 106, 556, 575, 835],
-     "detail": "line 79 is an unfinished placeholder in the past tense at the head of the main section - \"Here we described the new model and the optimization problem.\" The sentence at 96 ends with a dangling \"and\", the `{math}` block at 98-102 intervenes, 104 closes it with \"is **current savings**.\", and then 106 opens a fresh paragraph with a second dangling \"and all variables are required to be nonnegative.\" Line 553 says \"The next function implements the Bellman operator\" and shows `T`; line 575 then says \"Here's the function:\" and shows `get_greedy`, which the prose has never mentioned - the sentence points at nothing and the greedy policy of {eq}`defgp20` gets no introduction. `T`'s signature at 556 annotates `-> tuple[np.ndarray, np.ndarray]` but the body returns the single array `v_new` at 572. And the exercise at 813-815 asks for $u(c) = c^{1-\\gamma}/(1-\\gamma)$ while its own solution at 835 codes `(c**(1 - γ) - 1) / (1 - γ)`, a different function"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [232, 437, 716, 776, 801],
-     "detail": "the same gloss is given twice for what is the same expression: 210-211 says {eq}`texss` is \"the total expected present value of following policy $\\sigma$ forever, given initial income $x_0$\" and 232-233 says {eq}`vfcsdp00` is \"the lifetime value of following policy $\\sigma$ forever, starting at initial condition $x$\". Line 437's parenthetical \"(In subsequent lectures we will focus on efficiency and speed.)\" restates the `{note}` already made at 50. And each of the last three figures is summarised by a verdict rather than a number: 716 \"We are clearly getting closer\" immediately after 714 has already said the iterates converge; 776 \"The figure shows that we are pretty much on the money\"; 801-802 \"the figure shows that we've done a good job in this instance\" - `solve_model` computes `error` at 739 and prints it at 742, so an actual sup-norm deviation is available and would replace all three"},
-    {"rule": "qe-code-001", "count": 6, "lines": [460, 481, 500, 582, 653, 670],
-     "detail": "460 assigns a lambda to a name, `objective = lambda x: -g(x)`, which PEP8 asks be written as a `def`, and names the argument `x` where every other use of `x` in the lecture is the state and this one is consumption; 582 and 731 are single-quoted one-line docstrings padded with spaces (`\" Compute the v-greedy policy on x_grid.\"`, `\" Solve by value function iteration. \"`) where the other five docstrings in the lecture use `\"\"\"` (452, 501, 557, 634, 644); 481-487 aligns the trailing field comments in `class Model` with several spaces on 481-485 but only one on 486-487 (`x_grid: np.ndarray # state grid`), below PEP8's two; 500, 527, 581 and 730 indent the closing `)` of a multi-line signature to 4 columns, the same column as the body that follows, so `) -> Model:` and `# Set up grid` line up; 653-655 and 832-834 put `α = 0.4` and `γ = 1.5` immediately against a top-level `def` with no blank line, where 632-643 does leave one; and 670-671 uses a 4-space gap before `# Start at the solution` and a 13-space gap before `# Apply T once` on consecutive lines"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [471, 694, 776],
-     "detail": "lines 32-43 say the key difference from {doc}`os` and {doc}`os_numerical` is that wealth now evolves stochastically through a production function, and 471-475 introduces the lognormal $\\xi = \\exp(\\mu + \\nu\\zeta)$ - but all five figures (667, 688, 762, 788, 849) plot $v$ or $\\sigma$ against $x$, which is exactly what the deterministic predecessors plot. Nothing draws $\\phi$, nothing draws the production function $f$, and nothing simulates a path of $\\{x_t\\}$ under $\\sigma^*$, so the reader never sees the randomness the lecture is about. Second, 694-699 encodes the iteration index in `plt.cm.jet` colours and then explains the encoding in prose at 711 (\"hotter colors given to higher iterates\") - a colorbar would carry that inside the figure, and `jet` is not perceptually ordered so the encoding is hard to read even once explained. Third, the accuracy claims at 681, 776 and 801 are made in words about figures where two curves overlap; a plot of $v_{\\text{approx}} - v^*$ would show the error that the overlap hides"},
-    {"rule": "qe-math-009", "count": 2, "lines": [471, 473],
-     "detail": "471 names the shock scale parameter $\\nu$ in a lecture whose central object is the value function $v$ - the two glyphs differ by a hairline, and they appear together in the same code (`ν: float` at 485 alongside `v_array`, `v_new`, `v_greedy`) and the same call (`v_star(x_grid, α, model.β, model.μ)` at 670). Line 473 then uses $\\zeta$ for the standard normal driving $\\xi$, so two visually similar Greek letters carry the two closely related shock objects. A plain letter for the scale (say $s$ or $\\eta$) and reusing $\\varepsilon$ for the normal would both be simpler and remove the collision"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [264, 335],
-     "detail": "the lecture is otherwise a model of the rule - definitions are bold throughout (**production function** 96, **current savings** 104, **adapted** 146, **state** 150, **control** 151, **policy functions** 160, **feasible consumption policy** 173, **value function** 235, **optimal** 246, **Bellman equation** 251, $v$-**greedy** 296, **Bellman operator** 333, **value function iteration** 394). Two places invert it: 264 introduces the term in italic, \"This is a *functional equation in* $v$, in the sense that a given $v$ can either satisfy it or not satisfy it\", which is a definition; and 335 bolds **operator** for a parenthetical aside - \"(The term **operator** is usually reserved for functions that send functions into functions!)\" - which is emphasis"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        79,
+        106,
+        556,
+        575,
+        835
+      ],
+      "detail": "line 79 is an unfinished placeholder in the past tense at the head of the main section - \"Here we described the new model and the optimization problem.\" The sentence at 96 ends with a dangling \"and\", the `{math}` block at 98-102 intervenes, 104 closes it with \"is **current savings**.\", and then 106 opens a fresh paragraph with a second dangling \"and all variables are required to be nonnegative.\" Line 553 says \"The next function implements the Bellman operator\" and shows `T`; line 575 then says \"Here's the function:\" and shows `get_greedy`, which the prose has never mentioned - the sentence points at nothing and the greedy policy of {eq}`defgp20` gets no introduction. `T`'s signature at 556 annotates `-> tuple[np.ndarray, np.ndarray]` but the body returns the single array `v_new` at 572. And the exercise at 813-815 asks for $u(c) = c^{1-\\gamma}/(1-\\gamma)$ while its own solution at 835 codes `(c**(1 - γ) - 1) / (1 - γ)`, a different function"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        232,
+        437,
+        716,
+        776,
+        801
+      ],
+      "detail": "the same gloss is given twice for what is the same expression: 210-211 says {eq}`texss` is \"the total expected present value of following policy $\\sigma$ forever, given initial income $x_0$\" and 232-233 says {eq}`vfcsdp00` is \"the lifetime value of following policy $\\sigma$ forever, starting at initial condition $x$\". Line 437's parenthetical \"(In subsequent lectures we will focus on efficiency and speed.)\" restates the `{note}` already made at 50. And each of the last three figures is summarised by a verdict rather than a number: 716 \"We are clearly getting closer\" immediately after 714 has already said the iterates converge; 776 \"The figure shows that we are pretty much on the money\"; 801-802 \"the figure shows that we've done a good job in this instance\" - `solve_model` computes `error` at 739 and prints it at 742, so an actual sup-norm deviation is available and would replace all three"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        460,
+        481,
+        500,
+        582,
+        653,
+        670
+      ],
+      "detail": "460 assigns a lambda to a name, `objective = lambda x: -g(x)`, which PEP8 asks be written as a `def`, and names the argument `x` where every other use of `x` in the lecture is the state and this one is consumption; 582 and 731 are single-quoted one-line docstrings padded with spaces (`\" Compute the v-greedy policy on x_grid.\"`, `\" Solve by value function iteration. \"`) where the other five docstrings in the lecture use `\"\"\"` (452, 501, 557, 634, 644); 481-487 aligns the trailing field comments in `class Model` with several spaces on 481-485 but only one on 486-487 (`x_grid: np.ndarray # state grid`), below PEP8's two; 500, 527, 581 and 730 indent the closing `)` of a multi-line signature to 4 columns, the same column as the body that follows, so `) -> Model:` and `# Set up grid` line up; 653-655 and 832-834 put `α = 0.4` and `γ = 1.5` immediately against a top-level `def` with no blank line, where 632-643 does leave one; and 670-671 uses a 4-space gap before `# Start at the solution` and a 13-space gap before `# Apply T once` on consecutive lines"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        471,
+        694,
+        776
+      ],
+      "detail": "lines 32-43 say the key difference from {doc}`os` and {doc}`os_numerical` is that wealth now evolves stochastically through a production function, and 471-475 introduces the lognormal $\\xi = \\exp(\\mu + \\nu\\zeta)$ - but all five figures (667, 688, 762, 788, 849) plot $v$ or $\\sigma$ against $x$, which is exactly what the deterministic predecessors plot. Nothing draws $\\phi$, nothing draws the production function $f$, and nothing simulates a path of $\\{x_t\\}$ under $\\sigma^*$, so the reader never sees the randomness the lecture is about. Second, 694-699 encodes the iteration index in `plt.cm.jet` colours and then explains the encoding in prose at 711 (\"hotter colors given to higher iterates\") - a colorbar would carry that inside the figure, and `jet` is not perceptually ordered so the encoding is hard to read even once explained. Third, the accuracy claims at 681, 776 and 801 are made in words about figures where two curves overlap; a plot of $v_{\\text{approx}} - v^*$ would show the error that the overlap hides"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        471,
+        473
+      ],
+      "detail": "471 names the shock scale parameter $\\nu$ in a lecture whose central object is the value function $v$ - the two glyphs differ by a hairline, and they appear together in the same code (`ν: float` at 485 alongside `v_array`, `v_new`, `v_greedy`) and the same call (`v_star(x_grid, α, model.β, model.μ)` at 670). Line 473 then uses $\\zeta$ for the standard normal driving $\\xi$, so two visually similar Greek letters carry the two closely related shock objects. A plain letter for the scale (say $s$ or $\\eta$) and reusing $\\varepsilon$ for the normal would both be simpler and remove the collision"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        264,
+        335
+      ],
+      "detail": "the lecture is otherwise a model of the rule - definitions are bold throughout (**production function** 96, **current savings** 104, **adapted** 146, **state** 150, **control** 151, **policy functions** 160, **feasible consumption policy** 173, **value function** 235, **optimal** 246, **Bellman equation** 251, $v$-**greedy** 296, **Bellman operator** 333, **value function iteration** 394). Two places invert it: 264 introduces the term in italic, \"This is a *functional equation in* $v$, in the sense that a given $v$ can either satisfy it or not satisfy it\", which is a definition; and 335 bolds **operator** for a parenthetical aside - \"(The term **operator** is usually reserved for functions that send functions into functions!)\" - which is emphasis"
+    }
   ],
   "strengths": [
     "Every mathematical object is later reachable by name in the code: `B` at 522 is the display at 517, `T` at 556 is {eq}`fcbell20_optgrowth`, `get_greedy` at 578 is {eq}`defgp20`, and `x_grid`/`shocks` on the `Model` tuple are the grid and the draws from $\\phi$ - so the implementation can be read against the theory line for line",
@@ -35,5 +88,9 @@
   ],
   "scanner_doubts": [
     "os_stochastic.md:404 - qe-writing-006 is reported with count 11 but the lecture has twelve Title Case headings below H1; the twelfth, `### {index}`Unbounded Utility <single: Unbounded Utility>`` at line 404, is invisible to the check. `_heading_words` (tools/qestyle_rules.py:154-159) strips inline-code spans first, at line 155, and an `{index}`...`` heading is entirely inside one, so the whole heading text is deleted before the Title Case scan at 197-205 ever sees it. Verified: `python3 -c \"from qestyle_rules import _heading_words; print(repr(_heading_words('{index}`Unbounded Utility <single: Unbounded Utility>`')))\"` prints `'  '`, and running run_all over os_stochastic.md lists 74, 155, 249, 291, 329, 372, 443, 551, 596, 718, 778 and not 404. This is not local to this lecture: `grep -rhE '^#{1,4} .*\\{index\\}'` over the five series matches 81 headings in 46 files (e.g. `### {index}`ARMA Processes <single: ARMA Processes>``, which is a genuine violation, and `### {index}`Spectral analysis <single: Spectral Analysis>``, which is not), so the whole family is currently unmeasured in both directions. The same masking also means the H1 branch at 186-194 never checks the lecture title at line 21, which is itself written as an `{index}` role. A fix would unwrap the role before stripping code spans - replace `{index}`display <target>`` and `{index}`text`` with their display text (the part before `<`) in `_heading_words`, rather than deleting it"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "5ba75f01a65b918afddb934e1834bc2b711930f6"
+  }
 }

@@ -2,16 +2,62 @@
   "series": "lecture-python-intro",
   "lecture": "french_rev",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 4, "lines": [30, 36, 563, 763],
-     "detail": "the Overview's theory list opens with a 70-word single sentence at line 30 (the whole tax-smoothing prescription, war-time debt, roll-over and post-war taxes, chained with semicolons) and a 46-word sentence at 36 (the real-bills theory plus its backing mechanism); line 563 \"These led to outcomes that vary over time and that illustrate the playing out in practice of theories that guided the Revolutionaries' monetary policy decisions\" says almost nothing in 24 words; and 763-768 repeats 683-689 verbatim - the same two sentences about the three clouds of points, 80 lines apart"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [683, 409, 976],
-     "detail": "lines 683-689 interpret `{numref}`fr_fig104`` 50 lines before the cell that creates it at 733-738, and then the identical paragraph reappears at 763 in its right place - so the reader meets the conclusion before the evidence and again after it; line 409 restarts the narrative with \"In 1789 the French Revolutionaries formed a National Assembly and set out to remake French fiscal policy\", which is where line 344 already started; and line 976 attributes the reversed regression to `fr_fig104e`, the figure discussed at 942, instead of `fr_fig104f` directly above it"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [36, 366, 368, 417],
-     "detail": "the six theories listed in the Overview are bolded - **tax-smoothing** (28), **unpleasant monetarist arithmetic** (32), **gold** / **silver standard** (43), **inflation-tax** (47), **legal restrictions** / **financial repression** (51) - but *real bills* at 36 is italicised instead; **The Wealth of Nations** at 366 is bold for a book title, where italic is wanted; and the two explicit definitions are italic where bold is wanted, \"Adam Smith defined a *real bill* as a paper money note that is backed by...\" at 368 and \"*tax farming*\" at 417, defined on the line below"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [979],
-     "detail": "the \"Hyperinflation Ends\" section (979-988) asserts that the government \"abruptly ended the inflation\" in 1797 and lists the four measures, with no figure - in a lecture where every other empirical claim is a plotted series, and where the price-level series in fr_fig9 stops at mid-1796, just short of the stabilisation the section is about"},
-    {"rule": "qe-code-001", "count": 9, "lines": [103, 108, 229, 267, 433, 469, 515, 578, 647],
-     "detail": "nine `pd.read_excel(` calls open with an argument on the first line and then indent the continuation to an arbitrary column - 8 spaces at 104-105 and 109-110, 12 at 230 and 232, 10 at 268, 20 at 434, 8 at 470, 9 at 516, 10 at 579-581, 8 at 648-650 - none of which matches the visual indent of the opening parenthesis; the call at 152-153 in the same lecture is aligned correctly, so the fix is already demonstrated in the file"}
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        30,
+        36,
+        563,
+        763
+      ],
+      "detail": "the Overview's theory list opens with a 70-word single sentence at line 30 (the whole tax-smoothing prescription, war-time debt, roll-over and post-war taxes, chained with semicolons) and a 46-word sentence at 36 (the real-bills theory plus its backing mechanism); line 563 \"These led to outcomes that vary over time and that illustrate the playing out in practice of theories that guided the Revolutionaries' monetary policy decisions\" says almost nothing in 24 words; and 763-768 repeats 683-689 verbatim - the same two sentences about the three clouds of points, 80 lines apart"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        683,
+        409,
+        976
+      ],
+      "detail": "lines 683-689 interpret `{numref}`fr_fig104`` 50 lines before the cell that creates it at 733-738, and then the identical paragraph reappears at 763 in its right place - so the reader meets the conclusion before the evidence and again after it; line 409 restarts the narrative with \"In 1789 the French Revolutionaries formed a National Assembly and set out to remake French fiscal policy\", which is where line 344 already started; and line 976 attributes the reversed regression to `fr_fig104e`, the figure discussed at 942, instead of `fr_fig104f` directly above it"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        36,
+        366,
+        368,
+        417
+      ],
+      "detail": "the six theories listed in the Overview are bolded - **tax-smoothing** (28), **unpleasant monetarist arithmetic** (32), **gold** / **silver standard** (43), **inflation-tax** (47), **legal restrictions** / **financial repression** (51) - but *real bills* at 36 is italicised instead; **The Wealth of Nations** at 366 is bold for a book title, where italic is wanted; and the two explicit definitions are italic where bold is wanted, \"Adam Smith defined a *real bill* as a paper money note that is backed by...\" at 368 and \"*tax farming*\" at 417, defined on the line below"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        979
+      ],
+      "detail": "the \"Hyperinflation Ends\" section (979-988) asserts that the government \"abruptly ended the inflation\" in 1797 and lists the four measures, with no figure - in a lecture where every other empirical claim is a plotted series, and where the price-level series in fr_fig9 stops at mid-1796, just short of the stabilisation the section is about"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 9,
+      "lines": [
+        103,
+        108,
+        229,
+        267,
+        433,
+        469,
+        515,
+        578,
+        647
+      ],
+      "detail": "nine `pd.read_excel(` calls open with an argument on the first line and then indent the continuation to an arbitrary column - 8 spaces at 104-105 and 109-110, 12 at 230 and 232, 10 at 268, 20 at 434, 8 at 470, 9 at 516, 10 at 579-581, 8 at 648-650 - none of which matches the visual indent of the opening parenthesis; the call at 152-153 in the same lecture is aligned correctly, so the fix is already demonstrated in the file"
+    }
   ],
   "strengths": [
     "Twelve of the thirteen figures carry `mystnb: figure:` metadata with a stable `name`, and the prose then cites them by `{numref}` rather than \"the figure above\" - fr_fig4 at 137 and 140, fr_fig2 at 180, 185, 191, 201, 210, fr_fig1 at 259, fr_fig3 at 304, fr_fig5 at 451, fr_fig11 at 502, fr_fig24 at 539, fr_fig9 and fr_fig8 at 609",
@@ -29,5 +75,9 @@
     "Fix the emphasis: italicise *The Wealth of Nations* at 366, bold **real bill** at 368 and **tax farming** at 417 where they are defined, and make **real bills** at 36 match the five bolded theory names around it",
     "Align the nine `pd.read_excel` continuation lines on the pattern already used at 152-153, drop the duplicate `import pandas as pd` at 1034 (pandas is imported at 66), and move the five `{cite}` calls at 39, 313, 340, 405 and 981 out of the middle of their sentences (qe-ref-001 x5)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "078af708b58ac87b19fb345f13a666677ba2c84b"
+  }
 }

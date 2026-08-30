@@ -2,16 +2,59 @@
   "series": "lecture-dp",
   "lecture": "markov_jump_lq",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [200, 205, 262],
-     "detail": "the central display of the lecture - the $N$ interrelated Bellman equations at 204-209 - is malformed in three ways at once. It carries two `&` markers on one row (`& = \\max_u - x'R_i x  & + u' Q_i u`), which opens a third alignment column; the leading minus binds only to `x'R_i x`, so `u'Q_i u`, `2u'W_i x` and the quadratic form inside the expectation all enter with the wrong sign; and there is a stray `x` after `(A_i x + B_i u + C_i w)' P_j (A_i x + B_i u + C_i w)` with `+ \\rho_j` where the value function form at 197 requires `- \\rho_j`. The correctly signed version is two displays later at 217-221, which is how the errors can be identified. Second, the $N$ Markov states are indexed as '$i = 1, \\ldots, n$' at 201 and '$\\rho_{s_t} = \\rho_i, i = 1, \\ldots$, n' at 213, but $n$ is the dimension of $x_t$ (57, 72) and $N$ is the number of Markov states (54-55) - two different quantities. Third, the problem is a minimisation of a loss at 94 and 163 and a maximisation of a payoff at 262 and 205, with nothing said about the sign flip in between"},
-    {"rule": "qe-code-001", "count": 7, "lines": [245, 319, 505, 510, 673, 844, 868],
-     "detail": "`from mpl_toolkits.mplot3d import Axes3D` (245) is unused - `projection='3d'` has needed no import since matplotlib 3.2 (F401). Both array constructors take mutable list defaults, and `f1_vals=[1. ,1.]` (319, 844) puts a space before the comma and none after (E203 plus E231) while the five sibling defaults on the following lines write `[1., 1.]`. Eight calls end in a semicolon - `ex1_a.stationary_values();` at 411, 510, 520, 537, 579, 603, 648, 704 - and six of them are inert, since the statement is not the last expression in its cell (510, 520) or is inside a loop (537, 603, 648, 704). Line 505 and 515 put one space before an inline comment where PEP8 asks for two (E261). Lines 673 and 675 build labels by `+` concatenation with `str(i+1)` where an f-string would read better, and 868-869 write `1/2` without spaces two lines after `f1_vals[i] / 2` with them"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [469, 474, 736, 762],
-     "detail": "line 474 compares a quantity with itself: '$| u_{t,2}| > | u_{t,2} |$, so that the decision-maker adjusts toward the fixed point faster when the Markov state $s_t$ takes a value that makes it cheaper' - the intended claim is $|u_{t,2}| > |u_{t,1}|$, and this is the sentence that explains the lecture's first figure. The sentence just above says 'in Markov state $2$' twice: 'the optimal decision rule in Markov state $2$, in which the adjustment cost is lower, makes $k_{t+1}$ a flatter function of $k_t$ in Markov state $2$' (469-471). Line 736-737 reads 'there are different $s_t$-dependent optimal static $k$ level in different states', and line 762 'in the two states Markov jump state'. Also 'Construct matrices that maps' in the docstring at 851"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [45, 53, 71],
-     "detail": "the same long phrase is bolded five times in the first 80 lines: '**Markov jump linear quadratic dynamic programming**' at 37 and again at 45, '**linear quadratic dynamic programming**' at 48-49, '**linear quadratic dynamic programming problem**' at 53 and again at 71. After the first, the bold is not marking a definition but re-emphasising a term the reader has just met. The two italics in the file, *closed loop* (465) and *more nearly periodic* (558), are both correct emphasis, so the convention is understood"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [366],
-     "detail": "the lecture turns on the shape of the transition matrix and works through three of them - $\\Pi_1$ strictly periodic (367-371), $\\Pi_2$ symmetric with parameter $\\lambda$ (498-502), $\\Pi_3$ asymmetric with $\\lambda$ and $\\delta$ (567-571) - and there is no diagram of the two-state chain anywhere. Three small state-transition diagrams, or one with labelled arrows, would make 'strictly periodic', 'becomes close to absorbing state' (749-750) and 'more nearly periodic' (558) visible instead of arithmetic the reader has to do on the matrix entries. Every figure in the file plots a decision-rule coefficient; none shows the object that is being varied"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        200,
+        205,
+        262
+      ],
+      "detail": "the central display of the lecture - the $N$ interrelated Bellman equations at 204-209 - is malformed in three ways at once. It carries two `&` markers on one row (`& = \\max_u - x'R_i x  & + u' Q_i u`), which opens a third alignment column; the leading minus binds only to `x'R_i x`, so `u'Q_i u`, `2u'W_i x` and the quadratic form inside the expectation all enter with the wrong sign; and there is a stray `x` after `(A_i x + B_i u + C_i w)' P_j (A_i x + B_i u + C_i w)` with `+ \\rho_j` where the value function form at 197 requires `- \\rho_j`. The correctly signed version is two displays later at 217-221, which is how the errors can be identified. Second, the $N$ Markov states are indexed as '$i = 1, \\ldots, n$' at 201 and '$\\rho_{s_t} = \\rho_i, i = 1, \\ldots$, n' at 213, but $n$ is the dimension of $x_t$ (57, 72) and $N$ is the number of Markov states (54-55) - two different quantities. Third, the problem is a minimisation of a loss at 94 and 163 and a maximisation of a payoff at 262 and 205, with nothing said about the sign flip in between"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        245,
+        319,
+        505,
+        510,
+        673,
+        844,
+        868
+      ],
+      "detail": "`from mpl_toolkits.mplot3d import Axes3D` (245) is unused - `projection='3d'` has needed no import since matplotlib 3.2 (F401). Both array constructors take mutable list defaults, and `f1_vals=[1. ,1.]` (319, 844) puts a space before the comma and none after (E203 plus E231) while the five sibling defaults on the following lines write `[1., 1.]`. Eight calls end in a semicolon - `ex1_a.stationary_values();` at 411, 510, 520, 537, 579, 603, 648, 704 - and six of them are inert, since the statement is not the last expression in its cell (510, 520) or is inside a loop (537, 603, 648, 704). Line 505 and 515 put one space before an inline comment where PEP8 asks for two (E261). Lines 673 and 675 build labels by `+` concatenation with `str(i+1)` where an f-string would read better, and 868-869 write `1/2` without spaces two lines after `f1_vals[i] / 2` with them"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        469,
+        474,
+        736,
+        762
+      ],
+      "detail": "line 474 compares a quantity with itself: '$| u_{t,2}| > | u_{t,2} |$, so that the decision-maker adjusts toward the fixed point faster when the Markov state $s_t$ takes a value that makes it cheaper' - the intended claim is $|u_{t,2}| > |u_{t,1}|$, and this is the sentence that explains the lecture's first figure. The sentence just above says 'in Markov state $2$' twice: 'the optimal decision rule in Markov state $2$, in which the adjustment cost is lower, makes $k_{t+1}$ a flatter function of $k_t$ in Markov state $2$' (469-471). Line 736-737 reads 'there are different $s_t$-dependent optimal static $k$ level in different states', and line 762 'in the two states Markov jump state'. Also 'Construct matrices that maps' in the docstring at 851"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        45,
+        53,
+        71
+      ],
+      "detail": "the same long phrase is bolded five times in the first 80 lines: '**Markov jump linear quadratic dynamic programming**' at 37 and again at 45, '**linear quadratic dynamic programming**' at 48-49, '**linear quadratic dynamic programming problem**' at 53 and again at 71. After the first, the bold is not marking a definition but re-emphasising a term the reader has just met. The two italics in the file, *closed loop* (465) and *more nearly periodic* (558), are both correct emphasis, so the convention is understood"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        366
+      ],
+      "detail": "the lecture turns on the shape of the transition matrix and works through three of them - $\\Pi_1$ strictly periodic (367-371), $\\Pi_2$ symmetric with parameter $\\lambda$ (498-502), $\\Pi_3$ asymmetric with $\\lambda$ and $\\delta$ (567-571) - and there is no diagram of the two-state chain anywhere. Three small state-transition diagrams, or one with labelled arrows, would make 'strictly periodic', 'becomes close to absorbing state' (749-750) and 'more nearly periodic' (558) visible instead of arithmetic the reader has to do on the matrix entries. Every figure in the file plots a decision-rule coefficient; none shows the object that is being varied"
+    }
   ],
   "strengths": [
     "The comparative-statics design is systematic in a way few lectures manage: `run` (627-718) is written once and then called eight times, each call changing exactly one primitive - $d$, $f_1$, $f_2$, $\\alpha_0$, $\\rho$, $\\sigma$ (766, 776, 895-925) - so the reader can attribute every difference between figures to one parameter",
@@ -32,5 +75,9 @@
   "scanner_doubts": [
     "markov_jump_lq.md - qe-math-002 is reported as 45 but only 30 transposes exist; every prime in this file is a genuine transpose, and the extra 15 are double counts. A subscripted symbol matches twice: once via the `prime` branch of check_math_002 and again via `prime_vec` catching the subscript letter, because the lookbehind at tools/qestyle_rules.py:393 does not exclude `_`. The extras are `t'` inside `x_t'` and `u_t'` (81 x3, 108, 169 x3, 191, 197) and `i'` inside `A_i'`, `B_i'` (217, 219 x2, 220, 231, 232). Adding `_` to that lookbehind class fixes it. This file is the largest single contributor in lecture-dp to the inflation of the series' headline qe-math-002 figure.",
     "markov_jump_lq.md, lines 409, 509, 519, 536, 578, 602, 647, 703 - all 8 qe-code-002 hits are false positives, and they are the entire Code deduction (7.5/10 instead of 10/10). Each is `qe.LQMarkov(Π, Qs, Rs, As, Bs, Cs=Cs, Ns=Ns, beta=β)`: `beta` is the library's own keyword-argument name and `β` is the Unicode variable being passed into it, so the author is already complying with the rule and cannot rename quantecon's parameter. check_code_002 (tools/qestyle_rules.py) has a targeted exception for matplotlib's `alpha=` but none for keyword-argument names in general; a Greek word immediately followed by `=` and receiving a Unicode Greek value should be skipped. The same miss produced hits on career.md, lq_inventories.md and lagrangian_lqdp.md, and this file is the worst case."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "92c27dccc44b4f2deb5bd680803848a371495592"
+  }
 }

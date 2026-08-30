@@ -2,16 +2,66 @@
   "series": "lecture-dp",
   "lecture": "chang_ramsey",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 12, "lines": [378, 386, 460, 473, 514, 535, 605, 643, 668, 676, 752, 757],
-     "detail": "bold is used exclusively as a structural label and never for a definition: '**Definition:**' at 378, 386, 460, 514, 643, 668 and 676, '**Proposition:**' at 473, 535, 605, 752 and 757, and '**Step 1**' / '**Step 2**' / '**Step 3**' at 849, 851 and 894. Every term the lecture actually defines is italicised instead - *value of money* (164), *government strategy* (626), *admissible* (643), *outer hyperplane approximation algorithm* (837). Seven definitions and five propositions written as bold run-in labels also means there is nothing for `qe-admon-004` to check, which is why the whole Admonitions category is N/A for this file"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [594, 1017, 1091],
-     "detail": "line 594-600 defines the central operator as a fragment: the display reads $B(Q) = \\theta \\in \\mathbb{R}$ 'such that there is $(m,x,h,\\theta') \\in E \\times Q$' with no set braces at all, and the three conditions that complete the definition are named in prose two lines later at 599-600 rather than inside the display - so as printed the lecture asserts that a set equals a real number. Line 1017-1029 then claims 'We have solved the Bellman equation for the two sets of parameter values for which we computed the equilibrium value sets above. Hence for these parameter configurations, we know the bounds of $\\Omega$', and quotes $\\Omega = [0.0088, 0.0499]$ and $[0.0395, 0.2193]$ - but `ch1` and `ch2` are rebuilt at 1030-1033 with different parameters (`h_min=0.99, h_max=1/0.3, N_g=50` against the earlier `h_min=0.9, h_max=2, N_g=10`), so those bounds belong to the discarded parameterisation, and the `solve_bellman` calls at 1037-1038 use 0.0499 from the old bounds but 0.15 rather than the quoted 0.2193. Third, $\\bar\\theta$ carries the punchline of the numerical section - 'the choice of $\\bar\\theta$ is clearly important' (1091), 'does not intersect the 45-degree line until $\\bar\\theta$' (1097) - and is never defined anywhere in the lecture"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [179, 750, 833, 891],
-     "detail": "line 179-180 drops a conjunction: 'how real balances $q_t M_t$ carried out of period $t$ depend on real balances $q_t M_{t-1}$ carried into period $t$, income, consumption, taxes'; line 750 reads 'It is possible to establish.' with a full stop where the colon introducing the proposition belongs; lines 833-835 pack a parenthetical and two sentences into one paragraph ('...a grid of possible values for $m$ and $h$ (note that $x$ is implied by $m$ and $h$). This discretization simplifies...'); line 891-892 writes the nested sequence as '$S_{t+1} \\subset S_t \\subset S_{t-1} \\cdots \\subset S_0$', missing the $\\subset$ before the ellipsis"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [837, 1101],
-     "detail": "the outer hyperplane approximation algorithm (837-895) is described as producing 'a sequence of progressively smaller sets $S_{t+1} \\subset S_t \\subset \\cdots \\subset S_0$' (890-892) by cutting a polytope back with subgradient linear programs, and no figure shows a single intermediate set - the equilibrium-set figure at 934-960 plots only the converged object, although the machinery for drawing a polytope from its extreme points is right there at 938-946. Second, lines 1093-1098 tell the reader precisely what to look for in the next figure - whether $\\theta'(\\theta)$ meets the 45-degree line in the interior or only at $\\bar\\theta$ - and the figure at 1101-1109 draws both curves but marks neither $\\bar\\theta$ nor the intersection, so the one feature the text singles out is the one thing the panel does not show"},
-    {"rule": "qe-code-001", "count": 4, "lines": [934, 946, 947, 967],
-     "detail": "line 934 declares `def plot_competitive(ChangModel):` - a CapWords parameter shadowing the class of the same name (PEP8 asks for lowercase parameter names). Line 946 writes `ax.fill(ext_C[:,0], ext_C[:,1], ...)` with no space after the slice commas (E231) while lines 947 and 948 immediately below write `ext_C[:, 1]` with the space. Line 947-948 also makes the plotting function mutate its argument - `ChangModel.min_theta = min(...)`, `ChangModel.max_theta = max(...)` - so calling a plot routine silently writes attributes onto the model. Line 967 writes `h_max=1/0.8` unspaced where the earlier call at 929 writes `h_max=2`, and lines 957-958 under-indent the `ax.annotate(...)` continuation (E128)"}
+    {
+      "rule": "qe-writing-005",
+      "count": 12,
+      "lines": [
+        378,
+        386,
+        460,
+        473,
+        514,
+        535,
+        605,
+        643,
+        668,
+        676,
+        752,
+        757
+      ],
+      "detail": "bold is used exclusively as a structural label and never for a definition: '**Definition:**' at 378, 386, 460, 514, 643, 668 and 676, '**Proposition:**' at 473, 535, 605, 752 and 757, and '**Step 1**' / '**Step 2**' / '**Step 3**' at 849, 851 and 894. Every term the lecture actually defines is italicised instead - *value of money* (164), *government strategy* (626), *admissible* (643), *outer hyperplane approximation algorithm* (837). Seven definitions and five propositions written as bold run-in labels also means there is nothing for `qe-admon-004` to check, which is why the whole Admonitions category is N/A for this file"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        594,
+        1017,
+        1091
+      ],
+      "detail": "line 594-600 defines the central operator as a fragment: the display reads $B(Q) = \\theta \\in \\mathbb{R}$ 'such that there is $(m,x,h,\\theta') \\in E \\times Q$' with no set braces at all, and the three conditions that complete the definition are named in prose two lines later at 599-600 rather than inside the display - so as printed the lecture asserts that a set equals a real number. Line 1017-1029 then claims 'We have solved the Bellman equation for the two sets of parameter values for which we computed the equilibrium value sets above. Hence for these parameter configurations, we know the bounds of $\\Omega$', and quotes $\\Omega = [0.0088, 0.0499]$ and $[0.0395, 0.2193]$ - but `ch1` and `ch2` are rebuilt at 1030-1033 with different parameters (`h_min=0.99, h_max=1/0.3, N_g=50` against the earlier `h_min=0.9, h_max=2, N_g=10`), so those bounds belong to the discarded parameterisation, and the `solve_bellman` calls at 1037-1038 use 0.0499 from the old bounds but 0.15 rather than the quoted 0.2193. Third, $\\bar\\theta$ carries the punchline of the numerical section - 'the choice of $\\bar\\theta$ is clearly important' (1091), 'does not intersect the 45-degree line until $\\bar\\theta$' (1097) - and is never defined anywhere in the lecture"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        179,
+        750,
+        833,
+        891
+      ],
+      "detail": "line 179-180 drops a conjunction: 'how real balances $q_t M_t$ carried out of period $t$ depend on real balances $q_t M_{t-1}$ carried into period $t$, income, consumption, taxes'; line 750 reads 'It is possible to establish.' with a full stop where the colon introducing the proposition belongs; lines 833-835 pack a parenthetical and two sentences into one paragraph ('...a grid of possible values for $m$ and $h$ (note that $x$ is implied by $m$ and $h$). This discretization simplifies...'); line 891-892 writes the nested sequence as '$S_{t+1} \\subset S_t \\subset S_{t-1} \\cdots \\subset S_0$', missing the $\\subset$ before the ellipsis"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        837,
+        1101
+      ],
+      "detail": "the outer hyperplane approximation algorithm (837-895) is described as producing 'a sequence of progressively smaller sets $S_{t+1} \\subset S_t \\subset \\cdots \\subset S_0$' (890-892) by cutting a polytope back with subgradient linear programs, and no figure shows a single intermediate set - the equilibrium-set figure at 934-960 plots only the converged object, although the machinery for drawing a polytope from its extreme points is right there at 938-946. Second, lines 1093-1098 tell the reader precisely what to look for in the next figure - whether $\\theta'(\\theta)$ meets the 45-degree line in the interior or only at $\\bar\\theta$ - and the figure at 1101-1109 draws both curves but marks neither $\\bar\\theta$ nor the intersection, so the one feature the text singles out is the one thing the panel does not show"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        934,
+        946,
+        947,
+        967
+      ],
+      "detail": "line 934 declares `def plot_competitive(ChangModel):` - a CapWords parameter shadowing the class of the same name (PEP8 asks for lowercase parameter names). Line 946 writes `ax.fill(ext_C[:,0], ext_C[:,1], ...)` with no space after the slice commas (E231) while lines 947 and 948 immediately below write `ext_C[:, 1]` with the space. Line 947-948 also makes the plotting function mutate its argument - `ChangModel.min_theta = min(...)`, `ChangModel.max_theta = max(...)` - so calling a plot routine silently writes attributes onto the model. Line 967 writes `h_max=1/0.8` unspaced where the earlier call at 929 writes `h_max=2`, and lines 957-958 under-indent the `ax.annotate(...)` continuation (E128)"
+    }
   ],
   "strengths": [
     "The lecture names its organising idea, says where else the reader has met it, and defines it structurally rather than by slogan: 'dynamic programming squared' (36) is characterised at 38-44 as two interrelated Bellman equations, one for the followers with value $v_a$ and one for the leader in which $v_a$ appears as an argument, with pointers to {doc}`dyn_stack` and {doc}`opt_tax_recur`",
@@ -33,5 +83,9 @@
   "scanner_doubts": [
     "chang_ramsey.md, line 759 - both `qe-math-002` hits are false positives, identical in kind to chang_credible.md line 568: 'Monotonicity of $D$: $Z \\subset Z'$ implies $D(Z) \\subset D(Z')$'. `Z'` is a second set, not a transpose. The two Chang lectures state this proposition in the same words, so this is one authored sentence generating four corpus hits.",
     "chang_ramsey.md - the same unbalanced-delimiter blind spot I raised on chang_credible.md, and this file shows it is systematic rather than incidental: `D(Z)` at 712-748 opens `\\Bigl\\{` in one `$$` block and closes `\\Bigr\\}` in another six displays later, `CE` at 460-462 splits `\\bigl\\{ ... \\bigr\\}` across two inline spans, `D(Z)` again at 782 opens a `\\{` with no closer in its block, and `B(Q)` at 593-597 has no delimiters at all. Between this file, chang_credible.md and amss.md (402-413) there are seven display blocks in this series with unmatched math delimiters, none visible to any current rule and all detectable by counting `\\left`/`\\right`, `\\bigl`/`\\bigr`, `\\Bigl`/`\\Bigr` and braces per block."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "2f0d62b0592da09dc9d436fea230553203ea9780"
+  }
 }

@@ -2,18 +2,78 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "additive_functionals",
   "judgment": [
-    {"rule": "qe-code-001", "count": 11, "lines": [283, 291, 312, 396, 482, 518, 563, 686, 1122, 1128, 1252],
-     "detail": "the two long code cells carry most of the file's style debt. Naming: 1122 and 1175 unpack a simulation into `foo, bar` and then read `x = bar[0, :]`, `y = bar[1, :]`; 1128 names the path count `I` (PEP8 E741, and unlike the identity matrix at 372 it has no mathematical justification - it is `n_paths`); 1132-1133 use `storeX`/`storeY`, 516, 599 and 682 use `LI, UI`, and 562, 571 and 656 use `Mdist`/`Sdist`, all camel- or upper-case locals with no mathematical reading. Spacing and continuation: 482 and 648 write `for t in range (T)` (E211); 396 has `obs =  temp * FFinv * temp` with a double space; 572 has `scale = np.exp(...)` and 657 `scale= np.exp(...)` as keyword arguments (PEP8 asks for no spaces either side); the argument lists at 517-524, 601-609, 683-685, 1314-1316 and 1426-1434 are indented to arbitrary columns well past their opening delimiter (E128), and 563-570, 581-593, 657-664 and 671-676 add backslash continuations *inside* parentheses where they are inert; 615, 1086-1090, 1099-1101 and 1239 leave trailing whitespace; 461 and 615 follow a top-level `def` with one blank line where 531 uses two. Redundant or dead: `(.5)` at 386, 400, 564, 582, 589, 658 and 672 wraps a float literal in parentheses; 587 writes `1/np.exp(-y[...])` where `np.exp(y[...])` is the same thing and is what 580 and 588 do; `ldens_to_plot` is built at 1252-1253 and never used; `amf` is a parameter of `plot_given_paths` (415) and `plot_martingale_paths` (615) and is never read in either body; and `self.add_decomp` is set to `None` at 279 and never assigned before `construct_ss` runs at 302, so the `if self.add_decomp:` branch at 312-313 is unreachable. Three items are latent defects rather than style: 283 and 289 test `if not np.any(F)` / `if not np.any(ν)` where the signature's sentinel is `None`, so a genuine all-zero `F` or `ν` silently takes the default branch; 291 uses `type(ν) == float` instead of `isinstance` (E721); and 396's `temp * FFinv * temp` is elementwise, which is a quadratic form only when `k == 1`, in a class whose docstring at 248 promises it \"Handles both matrix and scalar inputs\". Finally 686-687 puts a backslash continuation inside a string literal, so the figure title reads `Martingale components for many paths of` followed by thirty-two spaces and then `$y_1$`"},
-    {"rule": "qe-math-009", "count": 5, "lines": [55, 900, 906, 970, 989],
-     "detail": "$\\phi$ carries three unrelated meanings. At 55 it is the multiplicative functional itself (\"if a process $\\{y_t\\}$ is an additive functional and $\\phi_t = \\exp(y_t)$\"), at 210 it is the autoregressive lag polynomial $\\phi(z)$, and at 202-204 (and `ϕ_1..ϕ_4` in code at 697) it is the four AR coefficients - and the object introduced as $\\phi_t$ at 55 is renamed $M_t$ at 892 without a word, 840 lines later. The tilde macro is inconsistent for the same symbol: `\\widetilde M_t` at 906, 914, 950, 978, 984, 989, 1005-1030 against `\\tilde M_t` at 970 and 1106 and `\\tilde{M}_t` at 1111 and 1258, and `{\\widetilde M}_t` at 989. Case is inconsistent inside a single pair of displays: 900 writes the martingale sum as $\\sum_{j=1}^t H \\cdot Z_j$ with an uppercase $Z$ where 914 and 984 use lowercase $z_j$, and 906 writes $\\tilde e(X_0)/\\tilde e(x_t)$ with an uppercase $X_0$ where every other appearance of the initial state is $x_0$ (103, 735, 881, 900, 920)"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [243, 871, 927, 1252],
-     "detail": "160 lines of implementation arrive before the reader is told what they are for: the `AMF_LSS_VAR` class occupies 243-406 and the three plotting functions 412-690, while the section that explains the class is \"## Code\" at 858-867, which has to open by pointing backwards - \"The class `AMF_LSS_VAR` mentioned {ref}`above <amf_lss>` does all that we want\" - and only then reveals what AMF stands for (865-867). The prose at 871-872 and 927-928 then instructs the reader to do by hand what the executed notebook has already done: \"If you run {ref}`the code that first simulated that example <addfunc_egcode>` again and then the method call you will generate (modulo randomness) the plot\" (also missing a verb) and \"If you run ... again and then the method call in the cell below you'll obtain the graph in the next cell\" - both immediately above cells that run unconditionally. And the same object is named three different things in three consecutive paragraphs: \"population 95% probability coverage sets\" (879), \"population 95% confidence bands\" (935) and \"purple 95 percent frequency coverage interval\" (974), of which the middle one is the wrong term for a population object"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [615, 1252, 1255],
-     "detail": "the figure that carries the lecture's headline claim has no axes at all: `plot_martingale_paths` (615-631) draws a shaded band, a horizontal line and 25 paths, with no axis labels, no legend and no tick annotation, and it is the figure used for the $T = 12000$ demonstration of the peculiar property at 964-967 - so the \"purple 95 percent frequency coverage interval collapses around zero\" that 974 asks the reader to see is unlabelled on both axes. Second, the six-panel density figure at 1255-1265 is built without `sharex`/`sharey`, so each panel auto-scales and the leftward collapse claimed at 1270-1272 has to be inferred across six differently scaled axes; and `ldens_to_plot` - the densities of $\\log \\widetilde M_t$, the Gaussian object that 989 says the whole property follows from - is computed at 1252-1253 and then never plotted, so the one panel that would make the argument obvious is constructed and discarded. Third, `plot_given_paths` puts the titles inside the axes (431, 441, 451, 456) and the panels share a $y$ axis (`sharey=True`, 422) even though $y_t$, $m_t$, $s_t$ and $\\tau_t$ have very different scales, which is what forces the martingale panel's band to be read against the trend panel's range"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [124, 960, 1097, 1268],
-     "detail": "the lecture's named phenomenon is formatted three ways: **peculiar property** in bold at 960 (\"The second is a **peculiar property** noted and proved by Hansen and Sargent\") and again in bold at 1268, but *peculiar property* in italic at 1097. The two growth types are handled the other way round from the two process classes: 50-51 bolds the definitions **additive functionals** and **multiplicative functionals**, while 124 and 55 italicise *arithmetic growth* and, at 51, quote \"geometric growth\" - three treatments for one pair of defined terms. 881 uses italic correctly for emphasis (\"all starting from the *same* non-random initial conditions\"), which is what makes the definitional italics stand out"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [38, 862, 943],
-     "detail": "the opening four paragraphs (38-46) take four sentences to say that growth breaks stationarity and that two model classes accommodate it, with 44 running to 33 words and restating 42 (\"But there are good ways to model time series that have persistent growth that still enable statistical learning based on a law of large numbers for an asymptotically stationary and ergodic process\"). 862-867 is three paragraphs and a parenthetical to say that the class also handles multiplicative functionals, one of which is a gloss on the class's own name. And two sentences are missing words: \"It is interesting to how the martingale behaves as $T \\rightarrow +\\infty$\" (943) and \"only the squared norm $H \\cdot H$ and $t$ matters\" (1443)"}
+    {
+      "rule": "qe-code-001",
+      "count": 11,
+      "lines": [
+        283,
+        291,
+        312,
+        396,
+        482,
+        518,
+        563,
+        686,
+        1122,
+        1128,
+        1252
+      ],
+      "detail": "the two long code cells carry most of the file's style debt. Naming: 1122 and 1175 unpack a simulation into `foo, bar` and then read `x = bar[0, :]`, `y = bar[1, :]`; 1128 names the path count `I` (PEP8 E741, and unlike the identity matrix at 372 it has no mathematical justification - it is `n_paths`); 1132-1133 use `storeX`/`storeY`, 516, 599 and 682 use `LI, UI`, and 562, 571 and 656 use `Mdist`/`Sdist`, all camel- or upper-case locals with no mathematical reading. Spacing and continuation: 482 and 648 write `for t in range (T)` (E211); 396 has `obs =  temp * FFinv * temp` with a double space; 572 has `scale = np.exp(...)` and 657 `scale= np.exp(...)` as keyword arguments (PEP8 asks for no spaces either side); the argument lists at 517-524, 601-609, 683-685, 1314-1316 and 1426-1434 are indented to arbitrary columns well past their opening delimiter (E128), and 563-570, 581-593, 657-664 and 671-676 add backslash continuations *inside* parentheses where they are inert; 615, 1086-1090, 1099-1101 and 1239 leave trailing whitespace; 461 and 615 follow a top-level `def` with one blank line where 531 uses two. Redundant or dead: `(.5)` at 386, 400, 564, 582, 589, 658 and 672 wraps a float literal in parentheses; 587 writes `1/np.exp(-y[...])` where `np.exp(y[...])` is the same thing and is what 580 and 588 do; `ldens_to_plot` is built at 1252-1253 and never used; `amf` is a parameter of `plot_given_paths` (415) and `plot_martingale_paths` (615) and is never read in either body; and `self.add_decomp` is set to `None` at 279 and never assigned before `construct_ss` runs at 302, so the `if self.add_decomp:` branch at 312-313 is unreachable. Three items are latent defects rather than style: 283 and 289 test `if not np.any(F)` / `if not np.any(ν)` where the signature's sentinel is `None`, so a genuine all-zero `F` or `ν` silently takes the default branch; 291 uses `type(ν) == float` instead of `isinstance` (E721); and 396's `temp * FFinv * temp` is elementwise, which is a quadratic form only when `k == 1`, in a class whose docstring at 248 promises it \"Handles both matrix and scalar inputs\". Finally 686-687 puts a backslash continuation inside a string literal, so the figure title reads `Martingale components for many paths of` followed by thirty-two spaces and then `$y_1$`"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 5,
+      "lines": [
+        55,
+        900,
+        906,
+        970,
+        989
+      ],
+      "detail": "$\\phi$ carries three unrelated meanings. At 55 it is the multiplicative functional itself (\"if a process $\\{y_t\\}$ is an additive functional and $\\phi_t = \\exp(y_t)$\"), at 210 it is the autoregressive lag polynomial $\\phi(z)$, and at 202-204 (and `ϕ_1..ϕ_4` in code at 697) it is the four AR coefficients - and the object introduced as $\\phi_t$ at 55 is renamed $M_t$ at 892 without a word, 840 lines later. The tilde macro is inconsistent for the same symbol: `\\widetilde M_t` at 906, 914, 950, 978, 984, 989, 1005-1030 against `\\tilde M_t` at 970 and 1106 and `\\tilde{M}_t` at 1111 and 1258, and `{\\widetilde M}_t` at 989. Case is inconsistent inside a single pair of displays: 900 writes the martingale sum as $\\sum_{j=1}^t H \\cdot Z_j$ with an uppercase $Z$ where 914 and 984 use lowercase $z_j$, and 906 writes $\\tilde e(X_0)/\\tilde e(x_t)$ with an uppercase $X_0$ where every other appearance of the initial state is $x_0$ (103, 735, 881, 900, 920)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        243,
+        871,
+        927,
+        1252
+      ],
+      "detail": "160 lines of implementation arrive before the reader is told what they are for: the `AMF_LSS_VAR` class occupies 243-406 and the three plotting functions 412-690, while the section that explains the class is \"## Code\" at 858-867, which has to open by pointing backwards - \"The class `AMF_LSS_VAR` mentioned {ref}`above <amf_lss>` does all that we want\" - and only then reveals what AMF stands for (865-867). The prose at 871-872 and 927-928 then instructs the reader to do by hand what the executed notebook has already done: \"If you run {ref}`the code that first simulated that example <addfunc_egcode>` again and then the method call you will generate (modulo randomness) the plot\" (also missing a verb) and \"If you run ... again and then the method call in the cell below you'll obtain the graph in the next cell\" - both immediately above cells that run unconditionally. And the same object is named three different things in three consecutive paragraphs: \"population 95% probability coverage sets\" (879), \"population 95% confidence bands\" (935) and \"purple 95 percent frequency coverage interval\" (974), of which the middle one is the wrong term for a population object"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        615,
+        1252,
+        1255
+      ],
+      "detail": "the figure that carries the lecture's headline claim has no axes at all: `plot_martingale_paths` (615-631) draws a shaded band, a horizontal line and 25 paths, with no axis labels, no legend and no tick annotation, and it is the figure used for the $T = 12000$ demonstration of the peculiar property at 964-967 - so the \"purple 95 percent frequency coverage interval collapses around zero\" that 974 asks the reader to see is unlabelled on both axes. Second, the six-panel density figure at 1255-1265 is built without `sharex`/`sharey`, so each panel auto-scales and the leftward collapse claimed at 1270-1272 has to be inferred across six differently scaled axes; and `ldens_to_plot` - the densities of $\\log \\widetilde M_t$, the Gaussian object that 989 says the whole property follows from - is computed at 1252-1253 and then never plotted, so the one panel that would make the argument obvious is constructed and discarded. Third, `plot_given_paths` puts the titles inside the axes (431, 441, 451, 456) and the panels share a $y$ axis (`sharey=True`, 422) even though $y_t$, $m_t$, $s_t$ and $\\tau_t$ have very different scales, which is what forces the martingale panel's band to be read against the trend panel's range"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        124,
+        960,
+        1097,
+        1268
+      ],
+      "detail": "the lecture's named phenomenon is formatted three ways: **peculiar property** in bold at 960 (\"The second is a **peculiar property** noted and proved by Hansen and Sargent\") and again in bold at 1268, but *peculiar property* in italic at 1097. The two growth types are handled the other way round from the two process classes: 50-51 bolds the definitions **additive functionals** and **multiplicative functionals**, while 124 and 55 italicise *arithmetic growth* and, at 51, quote \"geometric growth\" - three treatments for one pair of defined terms. 881 uses italic correctly for emphasis (\"all starting from the *same* non-random initial conditions\"), which is what makes the definitional italics stand out"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        38,
+        862,
+        943
+      ],
+      "detail": "the opening four paragraphs (38-46) take four sentences to say that growth breaks stationarity and that two model classes accommodate it, with 44 running to 33 words and restating 42 (\"But there are good ways to model time series that have persistent growth that still enable statistical learning based on a law of large numbers for an asymptotically stationary and ergodic process\"). 862-867 is three paragraphs and a parenthetical to say that the class also handles multiplicative functionals, one of which is a gloss on the class's own name. And two sentences are missing words: \"It is interesting to how the martingale behaves as $T \\rightarrow +\\infty$\" (943) and \"only the squared norm $H \\cdot H$ and $t$ matters\" (1443)"
+    }
   ],
   "strengths": [
     "The additive functional is built from two named pieces with every dimension stated - the VAR {eq}`old1_additive_functionals` with $x_t$ $n\\times1$, $A$ $n \\times n$ stable, $z_{t+1}$ $m \\times 1$ IID, $B$ $n \\times m$ (99-103), then the increment equation {eq}`old2_additive_functionals` as a function of exactly three listed objects (105-118) - so a reader can check any later matrix against a declared shape",
@@ -35,5 +95,9 @@
     "Run the PEP8 sweep listed under qe-code-001: `range (T)` at 482 and 648, the misaligned continuations at 517-524, 601-609, 683-685, 1314-1316 and 1426-1434, the inert backslashes inside parentheses at 563-593 and 657-676, the `(.5)` literals, the keyword spacing at 572 and 657, and the backslash inside the string literal at 686-687",
     "Finish the mechanical items: the eleven embedded titles (431, 441, 451, 456, 526, 610, 686, 721, 724, 1258, 1261), `mystnb: figure: caption/name` on the ten figure cells, the nine `figsize=`, the 23 `plot()` calls without `lw=2`, the five raw links to `{doc}` (128, 227, 773, 1279, 1285), the four `{\\cal N}`/`{\\mathcal N}` (101, 103, 120, 989 - qe-math-011, proposed), the sixteen `\\mathrm{Var}`/`\\mathrm{Skew}`/`\\mathrm{Kurt}` and bare `E` (qe-math-010, proposed), `{cite}` to `{cite:t}` at 82, and the 21 double spaces"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "69e1fb6052dcb251f360f0aa180fa5779797b86b"
+  }
 }

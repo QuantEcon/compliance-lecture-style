@@ -2,16 +2,58 @@
   "series": "lecture-python.myst",
   "lecture": "kalman_2",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 5, "lines": [41, 220, 277, 399, 607],
-     "detail": "41 is a 45-word sentence with three coordinated clauses; 607 is 52 words and carries the mechanism, the stability caveat and the conclusion together; 220 and 277 are both 36 words. 275-279 says the same thing twice - \"We also plot $\\mathbb{E}[u_0 | y^{t-1}]$, which is the firm's inference about a worker's hard-wired work ethic\" at 277 and \"We can watch how the firm updates its inference $\\mathbb{E}[u_0 | y^{t-1}]$ about the worker's work ethic\" at 279. The largest instance is 399: \"Another way to accomplish the same goal is to use the following code\" introduces a second 22-line cell (401-422) that does exactly what 378-397 already did, so the reader reads two recipes for one two-line task"},
-    {"rule": "qe-code-001", "count": 5, "lines": [179, 211, 297, 535, 566],
-     "detail": "fifteen lines inside code cells consist of whitespace only (PEP8 W293: 179, 189, 193, 268, 347, 350, 357, 364, 502, 509, 517, 521, 540, 544, 634), and 51 lines in the file carry trailing whitespace overall; 211 and 624 write `np.zeros((2,2))` with no space after the comma (E231) where the rest of the file writes `(2, 2)`; 297, 463 and 546 under-indent continuation lines relative to the opening bracket (E128), so `linestyle='dashed'` sits left of `color='grey'`; 535 has a space before the colon in `if diff :` (E203); and 566-567 write `4+2*i` unspaced in both the call and the label"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [232, 308, 672],
-     "detail": "232 says \"Let's code that up now\" and is followed not by code but by three display equations and eleven lines of prose (234-254) before the first cell at 256; \"## Some computational experiments\" at 308 then runs 363 lines to the end of the lecture with six figures, four code recipes and no subheading of any kind, so the table of contents gives the reader no map of the second half; and \"## Future extensions\" (672-675) is a two-line section that says enlightening experiments are possible and names none, which leaves the lecture without a conclusion"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [105, 225, 277],
-     "detail": "the file bolds exactly one term, **innovation** at 242, and uses scare quotes where the others are coined: a worker's \"type\" is introduced in quotes at 105 and used again in quotes at 111 even though $(h_0, u_0)$ is the object the whole lecture is about; \"innovation representation\" appears in quotes at 225 and unquoted as a heading at 227; and hard-wired \"work ethic\" is introduced in quotes at 277 and then used bare at 301, 552, 574 and 578. Quotation marks read as hedging - the terms are the lecture's own vocabulary and want bold"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [74],
-     "detail": "the model at 74-93 is a three-equation chain in which effort drives human capital which drives observed output, with noise entering at two different points, and the whole point of the lecture is which of those arrows exists - 489-491 turns on $\\beta \\neq 0$ and $g \\neq 0$, and 607 on the composite $g\\beta/(1-\\alpha)$. That is a four-box diagram ($u_0 \\to h_t \\to y_t$, with $c\\epsilon_{t+1}$ into $h$ and $v_t$ into $y$, and the firm's information set drawn around $y$ only), and the lecture instead asks the reader to assemble it from a display equation and a six-item bullet list. It is the one structural picture missing from a lecture with six figures"}
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        41,
+        220,
+        277,
+        399,
+        607
+      ],
+      "detail": "41 is a 45-word sentence with three coordinated clauses; 607 is 52 words and carries the mechanism, the stability caveat and the conclusion together; 220 and 277 are both 36 words. 275-279 says the same thing twice - \"We also plot $\\mathbb{E}[u_0 | y^{t-1}]$, which is the firm's inference about a worker's hard-wired work ethic\" at 277 and \"We can watch how the firm updates its inference $\\mathbb{E}[u_0 | y^{t-1}]$ about the worker's work ethic\" at 279. The largest instance is 399: \"Another way to accomplish the same goal is to use the following code\" introduces a second 22-line cell (401-422) that does exactly what 378-397 already did, so the reader reads two recipes for one two-line task"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        179,
+        211,
+        297,
+        535,
+        566
+      ],
+      "detail": "fifteen lines inside code cells consist of whitespace only (PEP8 W293: 179, 189, 193, 268, 347, 350, 357, 364, 502, 509, 517, 521, 540, 544, 634), and 51 lines in the file carry trailing whitespace overall; 211 and 624 write `np.zeros((2,2))` with no space after the comma (E231) where the rest of the file writes `(2, 2)`; 297, 463 and 546 under-indent continuation lines relative to the opening bracket (E128), so `linestyle='dashed'` sits left of `color='grey'`; 535 has a space before the colon in `if diff :` (E203); and 566-567 write `4+2*i` unspaced in both the call and the label"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        232,
+        308,
+        672
+      ],
+      "detail": "232 says \"Let's code that up now\" and is followed not by code but by three display equations and eleven lines of prose (234-254) before the first cell at 256; \"## Some computational experiments\" at 308 then runs 363 lines to the end of the lecture with six figures, four code recipes and no subheading of any kind, so the table of contents gives the reader no map of the second half; and \"## Future extensions\" (672-675) is a two-line section that says enlightening experiments are possible and names none, which leaves the lecture without a conclusion"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        105,
+        225,
+        277
+      ],
+      "detail": "the file bolds exactly one term, **innovation** at 242, and uses scare quotes where the others are coined: a worker's \"type\" is introduced in quotes at 105 and used again in quotes at 111 even though $(h_0, u_0)$ is the object the whole lecture is about; \"innovation representation\" appears in quotes at 225 and unquoted as a heading at 227; and hard-wired \"work ethic\" is introduced in quotes at 277 and then used bare at 301, 552, 574 and 578. Quotation marks read as hedging - the terms are the lecture's own vocabulary and want bold"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        74
+      ],
+      "detail": "the model at 74-93 is a three-equation chain in which effort drives human capital which drives observed output, with noise entering at two different points, and the whole point of the lecture is which of those arrows exists - 489-491 turns on $\\beta \\neq 0$ and $g \\neq 0$, and 607 on the composite $g\\beta/(1-\\alpha)$. That is a four-box diagram ($u_0 \\to h_t \\to y_t$, with $c\\epsilon_{t+1}$ into $h$ and $v_t$ into $y$, and the firm's information set drawn around $y$ only), and the lecture instead asks the reader to assemble it from a display equation and a six-item bullet list. It is the one structural picture missing from a lecture with six figures"
+    }
   ],
   "strengths": [
     "Every one of the six figures carries `mystnb: figure: caption` and `name` metadata (281, 324, 426, 554, 580, 613, 645) - unusual completeness, and it means each experiment in the second half is separately citable",
@@ -32,5 +74,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-001 x7 in `lectures/kalman_2.md` lists lines 64 and 65 with the example \"style override\", but the rule is titled \"Do not set figure size unless necessary\" and those two lines set `mpl.rcParams['text.usetex']` and `mpl.rcParams['text.latex.preamble']` - no figure size is involved. The finding itself is worth keeping (a usetex override is a real build dependency), but it is being reported under a rule whose text does not describe it, so the report tells the author to look for a `figsize=` on line 64. Either the rule's title needs to cover style overrides or these belong under a separate check. The other five hits (339, 563, 587, 620, 653) are genuine `figsize=` calls."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "ae9672be0e17c1f517de071bb861f36413ed8a95"
+  }
 }

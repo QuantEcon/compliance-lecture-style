@@ -2,18 +2,69 @@
   "series": "lecture-python-intro",
   "lecture": "supply_demand_heterogeneity",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 3, "lines": [249, 322, 149],
-     "detail": "the lecture has no figures at all - 438 lines, eight code cells, and every result delivered as a printed vector. This is a two-good, two-consumer pure exchange economy, which is the canonical setting for an Edgeworth box: the endowment point, the two bliss points, the budget line whose slope is the equilibrium price ratio, and the equilibrium allocation all live on one square. Instead the five experiments at 249-320 each print `Competitive equilibrium price vector:` and `Competitive equilibrium allocation:` and the reader is asked to hold five pairs of two-vectors in memory and compare them - symmetric case (249), asymmetric preferences (268), a poorer first consumer (280), autarky (292), and wealth redistribution (307) - where five points in one box, or one figure per experiment, would show each effect directly. The two applications at 322-364 are worse off still: the dynamic economy prints a price vector whose second component is the intertemporal price, and the Arrow-security economy prints one whose components are state prices, and neither is plotted or even discussed. Third, the non-satiation condition $b \\gg \\Pi e$ that 149-150 describes and 188-191 enforces is a geometric condition on where the bliss point sits relative to the endowment, and it is the one thing in the lecture that a picture would make obvious"},
-    {"rule": "qe-writing-003", "count": 5, "lines": [75, 80, 129, 190, 278],
-     "detail": "the five experiments at 249-320 are not the experiments the prose describes, because each cell mutates the previous economy in place rather than building a new one. 269 replaces `EE.bs`, so when 278 says \"Let the first consumer be poorer\" and 281 replaces `EE.es`, the economy being perturbed still carries the asymmetric bliss points from 269, not the symmetric ones of 253-254 - and 292-297 then replaces both again. The prose reads as a sequence of one-change-at-a-time comparisons against a common baseline; the code is a cumulative chain. Worse, assigning to `EE.bs` and `EE.es` bypasses the non-satiation check in `__init__` (188-191), so three of the five economies are never validated. Second, {eq}`eq:old7` at 74-76 gives $\\mu_i$ without a wealth term while 123-124 and the code at 224 both carry $-W_i$; the first is the $W_i = 0$ special case presented as the general formula, and nothing marks the difference even though 314 later sets `Ws = [0.5, -0.5]`. Third, the demand curve is written two ways that are equal only because $\\Pi$ is square and invertible - $(\\Pi^\\top \\Pi)^{-1}(\\Pi^\\top b_i - \\mu_i p)$ at 56 and $\\Pi^{-1}b_{i}-(\\Pi^{\\top}\\Pi)^{-1}\\mu_{i}p$ at 129 and 381 - and the identity $(\\Pi^\\top\\Pi)^{-1}\\Pi^\\top = \\Pi^{-1}$ that connects them is never stated, so a reader checking one form against the other is stopped. Fourth, 149-150 promises \"a test to make sure that $b \\gg \\Pi e$\", an elementwise condition, and 190 implements `np.min(b / np.max(Π @ e)) <= thres`, a single ratio of a minimum to a maximum, which is neither elementwise nor what the docstring at 184 claims. Fifth, the lecture's only exercise (80-103) asks the reader to show that the representative-consumer economy supports the same price vector, has no solution block, and is then answered in full by the final section (366-438) without any cross-reference in either direction"},
-    {"rule": "qe-math-009", "count": 2, "lines": [124, 129],
-     "detail": "the lecture writes the same algebra in two different notational registers. The first half is spaced and uses bare subscripts and `\\top`: $c_i = (\\Pi^\\top \\Pi )^{-1}(\\Pi^\\top b_i -  \\mu_i p )$ (56), {eq}`eq:old6` (69), {eq}`eq:old7` (75). From 123 onwards it switches to unspaced TeX with every subscript braced and every transpose braced: `c_{i}=\\Pi^{-1}b_{i}-(\\Pi^{\\top}\\Pi)^{-1}\\mu_{i}p` (129), and the same style through 381-434. Across the file that is 26 occurrences of `_{i}`-style braced single-character subscripts and 20 of `^{\\top}`, none of which needs the braces, in a lecture whose own first section shows the simpler form. 124 additionally closes its display with `$$` on the same line as the formula, the only display in the file that does. And 87 writes the utility function as `-.5 (\\Pi c -b) ^\\top (\\Pi c -b )` - a leading decimal point with no zero, a space before `^\\top`, and asymmetric spacing inside the two identical factors"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [138, 152, 154, 156, 369],
-     "detail": "the class-design list at 136-164 uses bold as a structural label rather than for definitions, and bolds two of the terms twice: **Preferences** at 138 and again at 154, **Endowments** at 143 and again at 154, plus **A Person** (152), **A Pure Exchange Economy** (156) and **persons** (158). None of these is a definition - each is a heading for a sub-list - and the doubling means the definition marker fires twice on the same term four lines apart. 369 re-bolds **representative consumer**, which 84 has already bolded as the definition. The two genuine definitions are correct (**pure exchange** at 41, **representative consumer** at 84), and no italic appears anywhere in the lecture, so emphasis has no marker at all when it is wanted - for instance at 431, \"In an equilibrium $c=e$\", where the equilibrium condition is the load-bearing word"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [66, 111, 166],
-     "detail": "two derivations are skipped with a phrase rather than shown or deferred to an exercise: \"which, after a line or two of linear algebra, implies that\" (66) and \"which, after a few steps, leads to\" (403). Both sit at the exact point where an introductory reader following the matrix algebra needs the step, and both lead to results the lecture then relies on ({eq}`eq:old6` at 70 and the price formula at 406). 111 restates the heading above it and is then restated again two lines later (\"### Competitive equilibrium\" / \"We'll compute a competitive equilibrium.\" / \"To compute a competitive equilibrium of a pure exchange economy, we use the fact that\"). 166 (\"Now let's proceed to code.\") carries nothing"},
-    {"rule": "qe-code-001", "count": 3, "lines": [193, 294, 297],
-     "detail": "193 compares to None with `==`: `if Ws == None:`. With the list arguments the lecture actually passes this happens to work, but it is the wrong operator and it would break silently on a NumPy array, which is what `Ws` becomes on the other branch (194, `Ws = np.zeros(m)`). 294 and 297 under-indent the second element of two list literals to column 7 (`EE.bs = [np.array([4, 6]),` then `      np.array([6, 4])]`), while the four other identical constructions in the same section align correctly (253-257, 269-270, 281-282, 308-312). The code is otherwise clean, and the class docstring at 176-185 documents all five arguments"}
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        249,
+        322,
+        149
+      ],
+      "detail": "the lecture has no figures at all - 438 lines, eight code cells, and every result delivered as a printed vector. This is a two-good, two-consumer pure exchange economy, which is the canonical setting for an Edgeworth box: the endowment point, the two bliss points, the budget line whose slope is the equilibrium price ratio, and the equilibrium allocation all live on one square. Instead the five experiments at 249-320 each print `Competitive equilibrium price vector:` and `Competitive equilibrium allocation:` and the reader is asked to hold five pairs of two-vectors in memory and compare them - symmetric case (249), asymmetric preferences (268), a poorer first consumer (280), autarky (292), and wealth redistribution (307) - where five points in one box, or one figure per experiment, would show each effect directly. The two applications at 322-364 are worse off still: the dynamic economy prints a price vector whose second component is the intertemporal price, and the Arrow-security economy prints one whose components are state prices, and neither is plotted or even discussed. Third, the non-satiation condition $b \\gg \\Pi e$ that 149-150 describes and 188-191 enforces is a geometric condition on where the bliss point sits relative to the endowment, and it is the one thing in the lecture that a picture would make obvious"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        75,
+        80,
+        129,
+        190,
+        278
+      ],
+      "detail": "the five experiments at 249-320 are not the experiments the prose describes, because each cell mutates the previous economy in place rather than building a new one. 269 replaces `EE.bs`, so when 278 says \"Let the first consumer be poorer\" and 281 replaces `EE.es`, the economy being perturbed still carries the asymmetric bliss points from 269, not the symmetric ones of 253-254 - and 292-297 then replaces both again. The prose reads as a sequence of one-change-at-a-time comparisons against a common baseline; the code is a cumulative chain. Worse, assigning to `EE.bs` and `EE.es` bypasses the non-satiation check in `__init__` (188-191), so three of the five economies are never validated. Second, {eq}`eq:old7` at 74-76 gives $\\mu_i$ without a wealth term while 123-124 and the code at 224 both carry $-W_i$; the first is the $W_i = 0$ special case presented as the general formula, and nothing marks the difference even though 314 later sets `Ws = [0.5, -0.5]`. Third, the demand curve is written two ways that are equal only because $\\Pi$ is square and invertible - $(\\Pi^\\top \\Pi)^{-1}(\\Pi^\\top b_i - \\mu_i p)$ at 56 and $\\Pi^{-1}b_{i}-(\\Pi^{\\top}\\Pi)^{-1}\\mu_{i}p$ at 129 and 381 - and the identity $(\\Pi^\\top\\Pi)^{-1}\\Pi^\\top = \\Pi^{-1}$ that connects them is never stated, so a reader checking one form against the other is stopped. Fourth, 149-150 promises \"a test to make sure that $b \\gg \\Pi e$\", an elementwise condition, and 190 implements `np.min(b / np.max(Π @ e)) <= thres`, a single ratio of a minimum to a maximum, which is neither elementwise nor what the docstring at 184 claims. Fifth, the lecture's only exercise (80-103) asks the reader to show that the representative-consumer economy supports the same price vector, has no solution block, and is then answered in full by the final section (366-438) without any cross-reference in either direction"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        124,
+        129
+      ],
+      "detail": "the lecture writes the same algebra in two different notational registers. The first half is spaced and uses bare subscripts and `\\top`: $c_i = (\\Pi^\\top \\Pi )^{-1}(\\Pi^\\top b_i -  \\mu_i p )$ (56), {eq}`eq:old6` (69), {eq}`eq:old7` (75). From 123 onwards it switches to unspaced TeX with every subscript braced and every transpose braced: `c_{i}=\\Pi^{-1}b_{i}-(\\Pi^{\\top}\\Pi)^{-1}\\mu_{i}p` (129), and the same style through 381-434. Across the file that is 26 occurrences of `_{i}`-style braced single-character subscripts and 20 of `^{\\top}`, none of which needs the braces, in a lecture whose own first section shows the simpler form. 124 additionally closes its display with `$$` on the same line as the formula, the only display in the file that does. And 87 writes the utility function as `-.5 (\\Pi c -b) ^\\top (\\Pi c -b )` - a leading decimal point with no zero, a space before `^\\top`, and asymmetric spacing inside the two identical factors"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        138,
+        152,
+        154,
+        156,
+        369
+      ],
+      "detail": "the class-design list at 136-164 uses bold as a structural label rather than for definitions, and bolds two of the terms twice: **Preferences** at 138 and again at 154, **Endowments** at 143 and again at 154, plus **A Person** (152), **A Pure Exchange Economy** (156) and **persons** (158). None of these is a definition - each is a heading for a sub-list - and the doubling means the definition marker fires twice on the same term four lines apart. 369 re-bolds **representative consumer**, which 84 has already bolded as the definition. The two genuine definitions are correct (**pure exchange** at 41, **representative consumer** at 84), and no italic appears anywhere in the lecture, so emphasis has no marker at all when it is wanted - for instance at 431, \"In an equilibrium $c=e$\", where the equilibrium condition is the load-bearing word"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        66,
+        111,
+        166
+      ],
+      "detail": "two derivations are skipped with a phrase rather than shown or deferred to an exercise: \"which, after a line or two of linear algebra, implies that\" (66) and \"which, after a few steps, leads to\" (403). Both sit at the exact point where an introductory reader following the matrix algebra needs the step, and both lead to results the lecture then relies on ({eq}`eq:old6` at 70 and the price formula at 406). 111 restates the heading above it and is then restated again two lines later (\"### Competitive equilibrium\" / \"We'll compute a competitive equilibrium.\" / \"To compute a competitive equilibrium of a pure exchange economy, we use the fact that\"). 166 (\"Now let's proceed to code.\") carries nothing"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        193,
+        294,
+        297
+      ],
+      "detail": "193 compares to None with `==`: `if Ws == None:`. With the list arguments the lecture actually passes this happens to work, but it is the wrong operator and it would break silently on a NumPy array, which is what `Ws` becomes on the other branch (194, `Ws = np.zeros(m)`). 294 and 297 under-indent the second element of two list literals to column 7 (`EE.bs = [np.array([4, 6]),` then `      np.array([6, 4])]`), while the four other identical constructions in the same section align correctly (253-257, 269-270, 281-282, 308-312). The code is otherwise clean, and the class docstring at 176-185 documents all five arguments"
+    }
   ],
   "strengths": [
     "The lecture states exactly what it adds to the previous one and keeps the comparison live: 22 names the assumption being relaxed (\"all of the agents in the economy are identical\"), 26 names the two dimensions of heterogeneity introduced (preferences and endowments), and 30 promises the representative-consumer construction that the final section delivers",
@@ -37,5 +88,9 @@
     "Fix the code: `Ws == None` to `Ws is None` at 193, the two under-indented list continuations at 294 and 297, and rename `beta` (327) and `prob` (348) to `β` and `π` to clear the three drafted qe-code-002 hits at 327, 330 and 332",
     "Capitalise Arrow in \"arrow securities\" at 243 and in the H3 at 343 - it is a proper noun, and 345 already writes \"Arrow securities\" correctly - and clear the six double-space runs at 90, 115, 140, 345, 437 and 438"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "e3d5fe980e76589c3a6a3617bc932229f950f1f8"
+  }
 }

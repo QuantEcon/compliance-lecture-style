@@ -2,14 +2,43 @@
   "series": "lecture-python.myst",
   "lecture": "aiyagari_egm",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 1, "lines": [258],
-     "detail": "the endogenous grid - the one idea the lecture exists to teach - is never drawn. Section \"The EGM operator\" (256-308) explains in a three-step recipe that the exogenous $a'$ grid is mapped back to an *irregular* implied grid $a_{ij} = (c_{ij} + a_i - w z_j)/(1+r)$ and then interpolated back onto the regular grid, and step 3 mentions \"handling the borrowing constraint where it binds\"; a plot of `a_endo` against `a_grid`, or of the $(a_{endo}, c_{endo})$ points before and after interpolation, would show both the irregular spacing and the binding region that lines 298-303 handle in code"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [51, 647, 654],
-     "detail": "the lecture uses bold for eight different jobs and italic for none. Line 51 bolds **simulation** for contrast, not definition (\"We compute aggregate capital by **simulation** rather than an algebraic technique\"); lines 647 and 654 use `**Advantages:**` and `**Disadvantages:**` as section headings; and line 50 re-bolds **endogenous grid method**, already bolded and defined eight lines earlier at 42"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [634, 650, 651],
-     "detail": "the summary at 629-658 restates the overview rather than closing it. \"avoids costly root-finding by working backwards from the Euler equation\" (634) and \"EGM avoids the root-finding required by value function iteration\" (649) are the third and fourth statements of the claim first made at 258; \"simulation is more flexible (works with continuous shocks, non-linear policies)\" (650) repeats line 406 nearly verbatim; and 651 repeats 641, itself a repeat of 583. The section adds three lists (631-641, 647-658, 662-667) where one would do"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [138, 585],
-     "detail": "the Euler equation at 133-136 is written in terms of $s$, \"the optimal savings policy function\" (138), and $s$ then never appears again - the operator implemented at 276-308 works on a *consumption* policy $\\sigma$ (280-281), and nothing bridges the two, so the reader has to work out for themselves that `σ` is not the $s$ of the display above it. Separately line 585 says \"We reuse the cross-section simulated at equilibrium prices\", but the cell that follows (587-590) re-solves the household problem and re-runs the 50,000-household, 1,000-period simulation from scratch; nothing is reused"}
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        258
+      ],
+      "detail": "the endogenous grid - the one idea the lecture exists to teach - is never drawn. Section \"The EGM operator\" (256-308) explains in a three-step recipe that the exogenous $a'$ grid is mapped back to an *irregular* implied grid $a_{ij} = (c_{ij} + a_i - w z_j)/(1+r)$ and then interpolated back onto the regular grid, and step 3 mentions \"handling the borrowing constraint where it binds\"; a plot of `a_endo` against `a_grid`, or of the $(a_{endo}, c_{endo})$ points before and after interpolation, would show both the irregular spacing and the binding region that lines 298-303 handle in code"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        51,
+        647,
+        654
+      ],
+      "detail": "the lecture uses bold for eight different jobs and italic for none. Line 51 bolds **simulation** for contrast, not definition (\"We compute aggregate capital by **simulation** rather than an algebraic technique\"); lines 647 and 654 use `**Advantages:**` and `**Disadvantages:**` as section headings; and line 50 re-bolds **endogenous grid method**, already bolded and defined eight lines earlier at 42"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        634,
+        650,
+        651
+      ],
+      "detail": "the summary at 629-658 restates the overview rather than closing it. \"avoids costly root-finding by working backwards from the Euler equation\" (634) and \"EGM avoids the root-finding required by value function iteration\" (649) are the third and fourth statements of the claim first made at 258; \"simulation is more flexible (works with continuous shocks, non-linear policies)\" (650) repeats line 406 nearly verbatim; and 651 repeats 641, itself a repeat of 583. The section adds three lists (631-641, 647-658, 662-667) where one would do"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        138,
+        585
+      ],
+      "detail": "the Euler equation at 133-136 is written in terms of $s$, \"the optimal savings policy function\" (138), and $s$ then never appears again - the operator implemented at 276-308 works on a *consumption* policy $\\sigma$ (280-281), and nothing bridges the two, so the reader has to work out for themselves that `σ` is not the $s$ of the display above it. Separately line 585 says \"We reuse the cross-section simulated at equilibrium prices\", but the cell that follows (587-590) re-solves the household problem and re-runs the 50,000-household, 1,000-period simulation from scratch; nothing is reused"
+    }
   ],
   "strengths": [
     "The EGM operator is checked, not assumed: line 361 measures the fixed-point residual `max|K_egm(σ_star) - σ_star|` and prints it, so the reader sees that `solve_household` actually converged rather than just returning",
@@ -29,5 +58,9 @@
   ],
   "scanner_doubts": [
     "aiyagari_egm.md - qe-math-010 (proposed) is reported with count 1 at line 99 (`\\mathbb E` without braces), but line 126 has `\\mathbb{E_z}`, which puts the subscript inside the braces and typesets `E_z` entirely in blackboard bold. That is the same rule's concern - braces around the operator - in a form the check appears not to recognise, so the true count here is probably 2"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "1b9983014428f32b70acbbcf29f8a62086684141"
+  }
 }

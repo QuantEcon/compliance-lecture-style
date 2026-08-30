@@ -2,18 +2,72 @@
   "series": "lecture-dp",
   "lecture": "un_insure",
   "judgment": [
-    {"rule": "qe-code-001", "count": 5, "lines": [512, 554, 744, 759, 836],
-     "detail": "the Python here is a class that was taken apart and not put back together. (1) `class params_instance:` (512) is snake_case where PEP8 asks for CapWords, and it holds only `__init__`. (2) Eight module-level functions take `self` as their first parameter without being methods of anything - `u(self, c)` (554), `u_inv` (558), `Vu_error` (592), `r_error` (609), `calc_c` (671), `calc_a` (682), `iterate_C` (711), `solve_incomplete_info_model` (758) - and are then called as `u(self, 0)` (597) and `solve_incomplete_info_model(params, ...)` (794), so `self` is sometimes an instance and sometimes a parameter named `self` inside another such function. (3) `iterate_C` reads `Vu_min` and `Vu_max` (744) from module scope, and both are defined 45 lines *later* at 789-790, so the function is only callable after a cell further down the page has run; every other quantity it needs comes in through `self`. (4) `iter = 0` (759) shadows the builtin, and `C_init = np.ones(self.n_grid) * 0` (762) is an array of zeros written as ones times zero, with `C_new2` and `V_star2` allocated at 722-723 and never used. (5) `fontSize` (836) is camelCase, and the three docstrings at 672, 683 and 712 use `'''` where the rest of the corpus uses `\"\"\"`"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [395, 700, 705],
-     "detail": "(1) Line 395 is missing its subject: 'The  of benefits on the duration of unemployment is  designed to provide the worker an incentive to search' - the sentence that states the lecture's central conclusion has a word deleted (the *dependence*, or the *decline*), and the double space marks where. (2) The algorithm at 700 says 'Fix a set of grid points $grid_V$ for $V$ and $Vu_{grid}$ for $V^u$', two grids, and the code builds one: `Vu_grid` (791) is passed as both, with `calc_c(self, Vu_grid[Vu_i], Vu_grid[V_i], a_i)` at 732 indexing the same array for the promised value and the continuation value. Either the algorithm should say one grid serves both, or the code should build the second. (3) Step 6 of the same algorithm (705) writes the iteration as $C_{j+1}(V) = \\min \\{c - \\beta [1 - p(a)] C_j(V)\\}$ - a minus where {eq}`eq:hugo23` (489) and the code (734, `c_i + β * (1 - p(a_i, r)) * C_old[Vu_i]`) both have a plus, and $C_j(V)$ where both have $C_j(V^u)$"},
-    {"rule": "qe-writing-002", "count": 8, "lines": [36, 57, 66, 411, 531, 535, 641, 890],
-     "detail": "three kinds of debris, all visible to a reader. (a) Conversion leftovers: `%\\EQN hugo1` at 36 is a LaTeX macro line from the source manuscript, the `{code-cell} ipython3` at 411-413 is empty and will render as an empty input cell in the middle of the theory, and six stray `+++` cell separators sit at 535, 643, 647, 657, 780 and 806 while the other forty cell boundaries in the file have none. (b) One sentence that repeats its predecessor: 'An unemployed worker searches with effort $a$ and with probability $p(a)$ receives a permanent job' (49-52) is followed six lines later by 'The probability of finding a job  is $p(a)$' (57-58). (c) Five sentences that do not parse: 'we'll use assume the same $p(a)$ function' (66), 'an observerd hazard rate --  the probability that an unemployed worker finds a job each  --  in US data' (531, missing the period unit), 'Now that we have calibrated our the parameter $r$' (641), 'search effort rise as the duration' (890), and the missing word at 395 counted above"},
-    {"rule": "qe-math-009", "count": 4, "lines": [111, 224, 471, 702],
-     "detail": "four notations with a simpler spelling, three of them TeX primitives the rest of the corpus does not use. (1) Division is written `{u(w) \\over (1-\\beta)}` (111), `{1 \\over u'(c)}` (224), `{1 \\over \\beta p'(a)}` (225, 364), `{p''(a) \\over p'(a)}` (365-366), `{1 \\over \\beta (V^e - V^u)}` (471), `{\\log[\\ldots] \\over r}` (479) - `\\over` throughout, where `\\frac` is what the rest of the series uses. (2) The two `aligned` blocks separate their rows with `\\cr` (224-227, 363-367) rather than `\\\\`. (3) The autarky value is `V_{\\rm aut}` in eleven places (137, 142, 145, 166, 266, 426, 810, 868, 870, 875) - `\\rm` is a font switch, not a text-mode command, so `V_{\\mathrm{aut}}` or `V_{\\text{aut}}` is the correct spelling of the same thing. (4) The inverse of the derivative is written `p'^{-1}` (471) - a prime carrying its own superscript - where the sibling lecture os_egm writes `(u')^{-1}`; and the two grids at 700-703 are named `$grid_V$` and `$Vu_{grid}$`, one with the word as the base and one with the word as the subscript, in the same sentence"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [268, 269, 272],
-     "detail": "bold is used for emphasis in the one passage where the contrast matters most: 'It **increases** the unemployed worker's consumption $c$ and **decreases** his search effort $a$' (268-269) and 'The prescribed search effort is **higher** than what the worker would choose' (272). The rule reserves bold for definitions, and this file already does that correctly for **insurance agency** / **planner** (78) and **carrot-and-stick** (893, then **carrot** at 896 and **stick** at 899). It also already uses italics for exactly this job elsewhere - *lowering* (296), *both* and *and* (312-313) - so the three bolds are out of step with the file's own two conventions"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [794],
-     "detail": "the lecture's central theoretical result is one plot away from the data it already has and is never drawn. The whole private-information section turns on $V^u < V$ (383) against $V^u = V$ under full information (235), and `solve_incomplete_info_model` returns `V_star` - the continuation-value policy on `Vu_grid` - at 794. Plotting `V_star` against `Vu_grid` with the 45-degree line would show the strict inequality directly, and overlaying the full-information case would show the contrast the theory spends 150 lines establishing. `C_star`, the cost function whose convexity every step of the argument depends on (178-181, 234-235, 341, 383), is also computed and never shown. The file's single figure (835-864) plots the two derived policies, so 780 lines of theory rest on nothing visual"}
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        512,
+        554,
+        744,
+        759,
+        836
+      ],
+      "detail": "the Python here is a class that was taken apart and not put back together. (1) `class params_instance:` (512) is snake_case where PEP8 asks for CapWords, and it holds only `__init__`. (2) Eight module-level functions take `self` as their first parameter without being methods of anything - `u(self, c)` (554), `u_inv` (558), `Vu_error` (592), `r_error` (609), `calc_c` (671), `calc_a` (682), `iterate_C` (711), `solve_incomplete_info_model` (758) - and are then called as `u(self, 0)` (597) and `solve_incomplete_info_model(params, ...)` (794), so `self` is sometimes an instance and sometimes a parameter named `self` inside another such function. (3) `iterate_C` reads `Vu_min` and `Vu_max` (744) from module scope, and both are defined 45 lines *later* at 789-790, so the function is only callable after a cell further down the page has run; every other quantity it needs comes in through `self`. (4) `iter = 0` (759) shadows the builtin, and `C_init = np.ones(self.n_grid) * 0` (762) is an array of zeros written as ones times zero, with `C_new2` and `V_star2` allocated at 722-723 and never used. (5) `fontSize` (836) is camelCase, and the three docstrings at 672, 683 and 712 use `'''` where the rest of the corpus uses `\"\"\"`"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        395,
+        700,
+        705
+      ],
+      "detail": "(1) Line 395 is missing its subject: 'The  of benefits on the duration of unemployment is  designed to provide the worker an incentive to search' - the sentence that states the lecture's central conclusion has a word deleted (the *dependence*, or the *decline*), and the double space marks where. (2) The algorithm at 700 says 'Fix a set of grid points $grid_V$ for $V$ and $Vu_{grid}$ for $V^u$', two grids, and the code builds one: `Vu_grid` (791) is passed as both, with `calc_c(self, Vu_grid[Vu_i], Vu_grid[V_i], a_i)` at 732 indexing the same array for the promised value and the continuation value. Either the algorithm should say one grid serves both, or the code should build the second. (3) Step 6 of the same algorithm (705) writes the iteration as $C_{j+1}(V) = \\min \\{c - \\beta [1 - p(a)] C_j(V)\\}$ - a minus where {eq}`eq:hugo23` (489) and the code (734, `c_i + β * (1 - p(a_i, r)) * C_old[Vu_i]`) both have a plus, and $C_j(V)$ where both have $C_j(V^u)$"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 8,
+      "lines": [
+        36,
+        57,
+        66,
+        411,
+        531,
+        535,
+        641,
+        890
+      ],
+      "detail": "three kinds of debris, all visible to a reader. (a) Conversion leftovers: `%\\EQN hugo1` at 36 is a LaTeX macro line from the source manuscript, the `{code-cell} ipython3` at 411-413 is empty and will render as an empty input cell in the middle of the theory, and six stray `+++` cell separators sit at 535, 643, 647, 657, 780 and 806 while the other forty cell boundaries in the file have none. (b) One sentence that repeats its predecessor: 'An unemployed worker searches with effort $a$ and with probability $p(a)$ receives a permanent job' (49-52) is followed six lines later by 'The probability of finding a job  is $p(a)$' (57-58). (c) Five sentences that do not parse: 'we'll use assume the same $p(a)$ function' (66), 'an observerd hazard rate --  the probability that an unemployed worker finds a job each  --  in US data' (531, missing the period unit), 'Now that we have calibrated our the parameter $r$' (641), 'search effort rise as the duration' (890), and the missing word at 395 counted above"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        111,
+        224,
+        471,
+        702
+      ],
+      "detail": "four notations with a simpler spelling, three of them TeX primitives the rest of the corpus does not use. (1) Division is written `{u(w) \\over (1-\\beta)}` (111), `{1 \\over u'(c)}` (224), `{1 \\over \\beta p'(a)}` (225, 364), `{p''(a) \\over p'(a)}` (365-366), `{1 \\over \\beta (V^e - V^u)}` (471), `{\\log[\\ldots] \\over r}` (479) - `\\over` throughout, where `\\frac` is what the rest of the series uses. (2) The two `aligned` blocks separate their rows with `\\cr` (224-227, 363-367) rather than `\\\\`. (3) The autarky value is `V_{\\rm aut}` in eleven places (137, 142, 145, 166, 266, 426, 810, 868, 870, 875) - `\\rm` is a font switch, not a text-mode command, so `V_{\\mathrm{aut}}` or `V_{\\text{aut}}` is the correct spelling of the same thing. (4) The inverse of the derivative is written `p'^{-1}` (471) - a prime carrying its own superscript - where the sibling lecture os_egm writes `(u')^{-1}`; and the two grids at 700-703 are named `$grid_V$` and `$Vu_{grid}$`, one with the word as the base and one with the word as the subscript, in the same sentence"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        268,
+        269,
+        272
+      ],
+      "detail": "bold is used for emphasis in the one passage where the contrast matters most: 'It **increases** the unemployed worker's consumption $c$ and **decreases** his search effort $a$' (268-269) and 'The prescribed search effort is **higher** than what the worker would choose' (272). The rule reserves bold for definitions, and this file already does that correctly for **insurance agency** / **planner** (78) and **carrot-and-stick** (893, then **carrot** at 896 and **stick** at 899). It also already uses italics for exactly this job elsewhere - *lowering* (296), *both* and *and* (312-313) - so the three bolds are out of step with the file's own two conventions"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        794
+      ],
+      "detail": "the lecture's central theoretical result is one plot away from the data it already has and is never drawn. The whole private-information section turns on $V^u < V$ (383) against $V^u = V$ under full information (235), and `solve_incomplete_info_model` returns `V_star` - the continuation-value policy on `Vu_grid` - at 794. Plotting `V_star` against `Vu_grid` with the 45-degree line would show the strict inequality directly, and overlaying the full-information case would show the contrast the theory spends 150 lines establishing. `C_star`, the cost function whose convexity every step of the argument depends on (178-181, 234-235, 341, 383), is also computed and never shown. The file's single figure (835-864) plots the two derived policies, so 780 lines of theory rest on nothing visual"
+    }
   ],
   "strengths": [
     "The argument is staged as three benchmarks, each ending with the result that forces the next: autarky (94-155) gives $V_{\\rm aut}$ as the reservation value, full information (157-254) shows consumption and effort are fully smoothed within the spell, and '### Incentive problem' (256-313) then shows why the agency cannot simply hand over that consumption and let the worker choose effort - 'Here is why' (263) followed by the actual argument",
@@ -38,5 +92,9 @@
   "scanner_doubts": [
     "qe-ref-001 does not see a hand-written author-year followed by its own `{cite}` role, which renders the reference twice. This lecture does it five times: 'Shavell and Weiss (1979) {cite}`Shavell_Weiss_79`' (17), 'Hopenhayn and Nicolini (1997) {cite}`Hopenhayn_Nicolini_97`' (21 and 348) and 'Judd (1998) {cite}`Judd1998`' (649 and 652), each of which renders as 'Shavell and Weiss (1979) [Shavell and Weiss, 1979]'. The single `{cite:t}` role produces exactly what the author hand-wrote, so this is the same defect the rule already reports as a citation in narrative flow, reached from the other side - and VERIFICATION records the neighbouring blind spot (a bare author-year with no role at all) but not this one. MEASURED corpus-wide with `\\b([A-Z][A-Za-z'-]+(?:\\s*(?:,|and|&|et al\\.?)\\s*[A-Z]?[A-Za-z'-]*)*)\\s*\\((\\d{4}[a-z]?)\\)\\s*\\{cite\\}` over `text` lines: **+33 occurrences, 0 removals, 18 file-paths, and 0 of them land on a line qe-ref-001 already flags**, so nothing is double-counted (291 -> 324 occurrences). All 33 were read: un_insure 5 in each series copy, ak2 3 ('Kotlikoff (1987)' twice, 'Auerbach and Kotlikoff (1987)'), amss 2 in each copy ('Barro (1979)', 'Lucas and Stokey (1983)' on one line), black_litterman 2, hs_recursive_models 2, re_with_feedback 2 on one line, and one each in BCG_incomplete_mkts, cattle_cycles, chow_business_cycles, complex_and_trig, growth_in_dles ('Hansen & Sargent (2013)'), irfs_in_hall_model, lucas_asset_pricing_dles, rosen_schooling_model ('Ryoo and Rosen's (2004)') and smoothing_tax ('Gallatin (1807)'). Every one is an author name; none is a year attached to something else. The `&` and possessive forms have to be admitted for the last two, and `et al.` for none in this corpus but it costs nothing. Detail wording should differ from the existing narrative-flow finding, since the fix is 'delete the hand-written name and use {cite:t}' rather than 'switch the role'.",
     "Line 34 of this lecture, `E \\sum_{t=0}^\\infty \\beta^t [u(c_t) - a_t]`, is the objective of the whole model and is invisible to qe-math-010 - the file's count is 0. This is one instance of the juxtaposed-expectation undercount I measured in full and filed under tax_smoothing_3 (+132 occurrences, 0 removals, 33 file-paths, 12 of them currently scoring 0, un_insure among them). See that overlay's scanner_doubts for the three sub-shapes, the numbers and the two masking traps."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "6843f5d7be110da87ed13ea923dc706b15e5550d"
+  }
 }

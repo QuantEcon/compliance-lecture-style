@@ -61,5 +61,9 @@
     "Cut 404 to its point, delete the double space at 386 (qe-writing-008), and add the missing full stop at 85",
     "Run the code cells through pycodestyle for the three-space indent at 685-688, the bracket spacing at 605 and the trailing whitespace at 112"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "9152f15d57a54f43fb551ab9f9b9f17b522210b9"
+  }
 }

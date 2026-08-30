@@ -2,16 +2,61 @@
   "series": "lecture-python.myst",
   "lecture": "os_time_iter",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [259, 306, 318, 369],
-     "detail": "line 306 says \"We use the same `Model` structure from {doc}`os_stochastic`\" and it is not the same: `os_stochastic`'s `Model` (its lines 480-487) has seven fields `u, f, β, μ, ν, x_grid, shocks`, while this one (309-319) has ten - `α`, `u_prime` and `f_prime` are added and `x_grid` is renamed `grid` - so the ten-name unpackings at 366 and 392 would raise against the tuple the sentence points at, and `Model.f` here takes two arguments (`f(x - c, α)` at 372) where the other lecture's `fcd(s)` closed over α. The two functions the whole lecture depends on default to `None` (318-319, 333-334), so `create_model` happily returns a model that fails only later, inside `euler_diff`, with `'NoneType' object is not callable`. Line 259 promises \"Examples are given below\" for the claim at 250-257 that $K$ is numerically more stable and more efficient than $T$, and no such example ever arrives - 515-517 simply asserts \"Time iteration runs faster than value function iteration, as discussed in {doc}`os_stochastic`\", and the file's only timing is a `%%time` at 562 on the CRRA exercise, with nothing to compare it to. And `σ_func = lambda x: np.interp(x, grid, σ)` at 369 names its parameter `x`, shadowing `euler_diff`'s own `x` argument declared three lines above at 358"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [232, 259, 423, 570],
-     "detail": "line 232 names the figure it wants and then asks the reader to draw it: \"Sketching these curves and using the information above will convince you that they cross exactly once as $c$ ranges over $(0, x)$.\" Both sides of {eq}`cpi_coledef` are one numpy expression each and the argument at 222-230 is entirely about their shapes, so this is the clearest missed figure in the lecture. Second, the conjugacy and stability claims at 239-257 end in \"Examples are given below\" (259) and are never illustrated - no timing, no side-by-side convergence of $T^n v$ against $K^n \\sigma$, though `os_stochastic` supplies the VFI side. Third, the iterate plot at 421-435 encodes iteration order in `plt.cm.jet` colours and neither the prose at 438-439 nor a colorbar says so, where the corresponding figure in `os_stochastic` at least explains the colour scale. Fourth, the CRRA exercise figure at 570-576 plots the approximate policy alone, with no `σ_star` benchmark of the kind 497 supplies for the log case, so the reader has nothing to check it against"},
-    {"rule": "qe-code-001", "count": 5, "lines": [318, 366, 369, 397, 410],
-     "detail": "410-413 assigns four lambdas to module-level names (`u`, `u_prime`, `f`, `f_prime`) and 369 assigns a fifth inside `euler_diff`, all of which PEP8 asks to be `def`s; 318-319 and 333-334 annotate `u_prime: Callable = None`, where the annotation and the default disagree and `Optional[Callable]` is meant; 366 and 392 unpack all ten `Model` fields in both functions when `euler_diff` uses six of them and `K` uses one, leaving four and nine unused names bound; 397 writes `brentq(euler_diff, 1e-10, x-1e-10, args=(σ, x, model))`, dropping the spaces around the minus on a line whose other operators have them; and 546-548 puts `γ = 1.5` immediately against a top-level `def` with no blank line while 284-294 in the same file does leave one. `solve_model_time_iter` also prints on every iteration (467-468) where `os_stochastic`'s `solve_model` took a `print_skip` argument for exactly this"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [43, 217, 504, 515],
-     "detail": "the lecture makes the same point four times. 37-38 defines time iteration as \"iterating on a guess of the optimal policy using the Euler equation\", 40-44 says this differs from the value function iteration of `os_stochastic`, 43-47 says it a third time in two sentences of 37 and 32 words (\"Time iteration exploits the structure of the Euler equation to find the optimal policy directly, rather than computing the value function as an intermediate step\" plus \"we can often solve problems faster than with value function iteration\"), and 515-517 says it a fourth time in almost the same words. Line 217 opens the subsection \"Is the Coleman-Reffett Operator Well Defined?\" with \"In particular, ...\", which has no general statement to particularise - the heading is itself the question. And 504's \"Again, the fit is excellent\" leans on `os_stochastic` for the \"again\" while 438-439 has already told the reader the limit \"resembles the solution we obtained\" there"},
-    {"rule": "qe-math-009", "count": 3, "lines": [109, 181, 278],
-     "detail": "178 refers to \"the set of all $\\sigma \\in \\Sigma$ that are continuous, strictly increasing and interior\" and 181 then introduces a second, differently-fonted symbol for that subset one line later - \"Henceforth we denote this set of policies by $\\mathscr P$\" - so the lecture carries $\\Sigma$ and $\\mathscr P$ for two nested policy sets in adjacent sentences, and $\\mathscr P$ never appears in the code. Line 109 defines the plainer notation in terms of the more decorated one, `(v^*)'(x) = u'(\\sigma^*(x)) := (u' \\circ \\sigma^*)(x)`, and the composition form is then spelled out in full eight more times (144, 145, 153, 154, 190, 210, 354) where $u'(\\sigma(\\cdot))$ would read directly - the sibling lecture `ifp_egm` states the shorthand the other way round at its line 267. And 278 keeps the $\\nu$ of `os_stochastic` for the shock scale in a lecture whose value function is $v^*$ (95, 109, 136), so the two differ by a hairline in the same displays"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        259,
+        306,
+        318,
+        369
+      ],
+      "detail": "line 306 says \"We use the same `Model` structure from {doc}`os_stochastic`\" and it is not the same: `os_stochastic`'s `Model` (its lines 480-487) has seven fields `u, f, β, μ, ν, x_grid, shocks`, while this one (309-319) has ten - `α`, `u_prime` and `f_prime` are added and `x_grid` is renamed `grid` - so the ten-name unpackings at 366 and 392 would raise against the tuple the sentence points at, and `Model.f` here takes two arguments (`f(x - c, α)` at 372) where the other lecture's `fcd(s)` closed over α. The two functions the whole lecture depends on default to `None` (318-319, 333-334), so `create_model` happily returns a model that fails only later, inside `euler_diff`, with `'NoneType' object is not callable`. Line 259 promises \"Examples are given below\" for the claim at 250-257 that $K$ is numerically more stable and more efficient than $T$, and no such example ever arrives - 515-517 simply asserts \"Time iteration runs faster than value function iteration, as discussed in {doc}`os_stochastic`\", and the file's only timing is a `%%time` at 562 on the CRRA exercise, with nothing to compare it to. And `σ_func = lambda x: np.interp(x, grid, σ)` at 369 names its parameter `x`, shadowing `euler_diff`'s own `x` argument declared three lines above at 358"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        232,
+        259,
+        423,
+        570
+      ],
+      "detail": "line 232 names the figure it wants and then asks the reader to draw it: \"Sketching these curves and using the information above will convince you that they cross exactly once as $c$ ranges over $(0, x)$.\" Both sides of {eq}`cpi_coledef` are one numpy expression each and the argument at 222-230 is entirely about their shapes, so this is the clearest missed figure in the lecture. Second, the conjugacy and stability claims at 239-257 end in \"Examples are given below\" (259) and are never illustrated - no timing, no side-by-side convergence of $T^n v$ against $K^n \\sigma$, though `os_stochastic` supplies the VFI side. Third, the iterate plot at 421-435 encodes iteration order in `plt.cm.jet` colours and neither the prose at 438-439 nor a colorbar says so, where the corresponding figure in `os_stochastic` at least explains the colour scale. Fourth, the CRRA exercise figure at 570-576 plots the approximate policy alone, with no `σ_star` benchmark of the kind 497 supplies for the log case, so the reader has nothing to check it against"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        318,
+        366,
+        369,
+        397,
+        410
+      ],
+      "detail": "410-413 assigns four lambdas to module-level names (`u`, `u_prime`, `f`, `f_prime`) and 369 assigns a fifth inside `euler_diff`, all of which PEP8 asks to be `def`s; 318-319 and 333-334 annotate `u_prime: Callable = None`, where the annotation and the default disagree and `Optional[Callable]` is meant; 366 and 392 unpack all ten `Model` fields in both functions when `euler_diff` uses six of them and `K` uses one, leaving four and nine unused names bound; 397 writes `brentq(euler_diff, 1e-10, x-1e-10, args=(σ, x, model))`, dropping the spaces around the minus on a line whose other operators have them; and 546-548 puts `γ = 1.5` immediately against a top-level `def` with no blank line while 284-294 in the same file does leave one. `solve_model_time_iter` also prints on every iteration (467-468) where `os_stochastic`'s `solve_model` took a `print_skip` argument for exactly this"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        43,
+        217,
+        504,
+        515
+      ],
+      "detail": "the lecture makes the same point four times. 37-38 defines time iteration as \"iterating on a guess of the optimal policy using the Euler equation\", 40-44 says this differs from the value function iteration of `os_stochastic`, 43-47 says it a third time in two sentences of 37 and 32 words (\"Time iteration exploits the structure of the Euler equation to find the optimal policy directly, rather than computing the value function as an intermediate step\" plus \"we can often solve problems faster than with value function iteration\"), and 515-517 says it a fourth time in almost the same words. Line 217 opens the subsection \"Is the Coleman-Reffett Operator Well Defined?\" with \"In particular, ...\", which has no general statement to particularise - the heading is itself the question. And 504's \"Again, the fit is excellent\" leans on `os_stochastic` for the \"again\" while 438-439 has already told the reader the limit \"resembles the solution we obtained\" there"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        109,
+        181,
+        278
+      ],
+      "detail": "178 refers to \"the set of all $\\sigma \\in \\Sigma$ that are continuous, strictly increasing and interior\" and 181 then introduces a second, differently-fonted symbol for that subset one line later - \"Henceforth we denote this set of policies by $\\mathscr P$\" - so the lecture carries $\\Sigma$ and $\\mathscr P$ for two nested policy sets in adjacent sentences, and $\\mathscr P$ never appears in the code. Line 109 defines the plainer notation in terms of the more decorated one, `(v^*)'(x) = u'(\\sigma^*(x)) := (u' \\circ \\sigma^*)(x)`, and the composition form is then spelled out in full eight more times (144, 145, 153, 154, 190, 210, 354) where $u'(\\sigma(\\cdot))$ would read directly - the sibling lecture `ifp_egm` states the shorthand the other way round at its line 267. And 278 keeps the $\\nu$ of `os_stochastic` for the shock scale in a lecture whose value function is $v^*$ (95, 109, 136), so the two differ by a hairline in the same displays"
+    }
   ],
   "strengths": [
     "The Euler equation is derived, not quoted: 75-78 adds exactly four assumptions to the model of `os_stochastic` and names the last two as the Inada conditions, 99-109 states the three things they buy, 115-125 proves the envelope condition by rewriting the Bellman equation over $k$ and differentiating, and 129-146 combines it with the first-order condition to reach {eq}`cpi_euler` - with a pointer at 127 to the full proofs in EDTC section 12.1",
@@ -35,5 +80,9 @@
   ],
   "scanner_doubts": [
     "os_time_iter.md:109,144,145,153,154,190,210,354 - qe-math-002 is reported with count 8 and **all eight are false positives**; they are the sole reason this lecture's Math category scores 5/10. Every hit is the `u'` in `(u' \\circ \\sigma)` or `(u' \\circ \\sigma^*)`, i.e. the derivative of the utility function composed with a policy - never a transpose (the lecture has no matrices at all). Two things combine to produce them. (1) `prime_vec` (tools/qestyle_rules.py:437-438) treats a lowercase primed letter as a transpose when it is juxtaposed with a following factor, and its exclusion list `NOT_A_PRODUCT` (378-382) does not contain `circ`, so `u' \\circ` reads as juxtaposition. (2) More fundamentally, that branch only runs at all because the per-file `evident` gate (503-508) decided this lecture uses apostrophes as transposes - and the *only* evidence it found is `DELIM_PRIME` matching `)'` in `(v^*)'(x)` at line 109, which the checker itself already knows is a derivative: `fn_paren` (433-435) exists precisely to exempt \"a parenthesised *function name* - `(v^*)'(x)`, `(p^*)'(s)` - is a derivative\", but that exemption is applied only when counting `prime_paren` hits (517-521), not when computing the evidence gate. So the one site the code recognises as a derivative is what switches the bare-apostrophe branches on for the whole file. I tested both fixes against the whole corpus with a patched copy of `qestyle_rules.py`. Adding `circ` to `NOT_A_PRODUCT`: corpus qe-math-002 total goes 1612 -> 1596, and the only files that change are `lecture-python.myst/lectures/os_time_iter.md` (8 -> 0) and its `lecture-dp` copy (8 -> 0). Applying the `fn_paren` exemption inside the `evident` computation (skip `DELIM_PRIME` matches whose position is a `fn_paren` match): identical result, 1612 -> 1596, same two files. I recommend the second, since it fixes the root cause rather than enumerating operators, and it costs nothing: `grep -rno \"[A-Za-z0-9})\\]]'\\s*\\\\\\\\circ\"` over all five series finds zero cases of a prime-on-a-closing-delimiter before `\\circ`, so no genuine transpose is juxtaposed with a composition anywhere in the corpus. Note also that five sibling lectures use the same `(u' \\circ \\sigma)` notation - `ifp_egm` (3 sites), `ifp_egm_transient_shocks` (3), `os_egm` (2), `ifp_advanced` (6), `odu` (2), each duplicated in `lecture-dp` - and are silent today only because none of them happens to contain a `)'` to trip the evidence gate, so they will start firing the moment one of them gains a `(v^*)'(x)`"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "815e13c4706a1c9d7211db205f07a2a81af15a7e"
+  }
 }

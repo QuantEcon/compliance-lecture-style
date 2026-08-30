@@ -71,5 +71,9 @@
   "scanner_doubts": [
     "cass_fiscal.md:1771 - qe-math-001 reports \"LaTeX `\\mu` outside math delimiters\". The `\\mu` at 1771 is written as `$\\mu$` and is correctly delimited; what is actually wrong is a stray unmatched `$` after `1.025` on line 1770 *and* on 1771, which leaves an odd number of dollars on each line and desynchronises the span parity so the following `\\mu` reads as unenclosed. Something is genuinely broken at those lines, but it is an unclosed-math-span defect, not a naked-LaTeX one",
     "cass_fiscal.md - Math scores 9/10 with only the item above, but two of the file's thirty equation labels are written `$$(label)` with no space before the parenthesis (230, 360) while the other 28 use `$$ (label)`. Spec §5 classes a broken `{eq}` ref as Critical; if the checker does not verify that each `{eq}` target resolves to a label it actually parsed, this class of defect is invisible to it - the same gap noted for cass_koopmans_2.md"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "618549610d49d3e4c1616cc5a866e578593c902e"
+  }
 }

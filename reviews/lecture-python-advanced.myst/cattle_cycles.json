@@ -2,32 +2,62 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "cattle_cycles",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 2, "lines": [26, 100],
-     "detail": "line 100-104 is a 44-word remark with an inverted verb phrase - \"included for technical reasons to make well posed and well behaved the linear quadratic dynamic programming problem solved by the fictitious planner who in effect chooses equilibrium quantities and shadow prices\"; lines 26-27 open the lecture with a 34-word triple-nested sentence (\"another member of a suite of lectures that use the quantecon DLE class to instantiate models within the {cite}`HS2013` class of models described in detail in ...\")"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [56, 100],
-     "detail": "the \"time-to-grow\" cohort structure is the whole point of the model - x_t = (1-delta)x_{t-1} + g x_{t-3} - c_t at 73-75 and y_t = x_t + g x_{t-1} + g x_{t-2} at 83-85 describe a calf/yearling/adult pipeline with a three-year lag - and it is only ever written algebraically; a small flow diagram of the three cohorts would carry it. Separately, the important side note at 100 is typeset as bold **Remark** followed by running prose instead of a `{note}` admonition"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [100],
-     "detail": "**Remark** at line 100 uses bold as a paragraph label rather than to mark a defined term; nothing in the lecture is bolded at its point of definition (the breeding stock and total stock are introduced in plain text at 68-69)"},
-    {"rule": "qe-code-001", "count": 1, "lines": [229],
-     "detail": "line 229 `[0, 0, 1,0]` omits the space after the third comma, breaking the alignment of the surrounding literal. The column padding in the other matrix literals (234-238, 240-242, 257-265, 291-302) is deliberate matrix-like alignment and falls under the rule's own mathematical-notation exception, so it is not counted"}
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        26,
+        100
+      ],
+      "detail": "line 100-104 is a 44-word remark with an inverted verb phrase - \"included for technical reasons to make well posed and well behaved the linear quadratic dynamic programming problem solved by the fictitious planner who in effect chooses equilibrium quantities and shadow prices\"; lines 26-27 open the lecture with a 34-word triple-nested sentence (\"another member of a suite of lectures that use the quantecon DLE class to instantiate models within the {cite}`HS2013` class of models described in detail in ...\")"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        56,
+        100
+      ],
+      "detail": "the \"time-to-grow\" cohort structure is the whole point of the model - x_t = (1-delta)x_{t-1} + g x_{t-3} - c_t at 73-75 and y_t = x_t + g x_{t-1} + g x_{t-2} at 83-85 describe a calf/yearling/adult pipeline with a three-year lag - and it is only ever written algebraically; a small flow diagram of the three cohorts would carry it. Separately, the important side note at 100 is typeset as bold **Remark** followed by running prose instead of a `{note}` admonition"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        100
+      ],
+      "detail": "**Remark** at line 100 uses bold as a paragraph label rather than to mark a defined term; nothing in the lecture is bolded at its point of definition (the breeding stock and total stock are introduced in plain text at 68-69)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 1,
+      "lines": [
+        229
+      ],
+      "detail": "line 229 `[0, 0, 1,0]` omits the space after the third comma, breaking the alignment of the surrounding literal. The column padding in the other matrix literals (234-238, 240-242, 257-265, 291-302) is deliberate matrix-like alignment and falls under the rule's own mathematical-notation exception, so it is not counted"
+    }
   ],
   "strengths": [
-    "Every code variable is the Unicode Greek letter used in the algebra - `\u03d5c`, `\u03d5g`, `\u03d5i`, `\u03b3`, `\u03b4k`, `\u03b8k`, `\u03c11`-`\u03c13`, `\u03b2`, `\u03c0h` - so the code cells at 224-272 can be read straight off the matrix definitions at 143-189",
-    "The HS2013 mapping is given in full (Preferences 114-119, Technology 123-163, Information 167-195): every one of \u0394_k, \u0398_k, \u03a6_c, \u03a6_g, \u03a6_i, \u0393, A_22, C_2, U_b, U_d is written out, so the reader can check the code against the paper rather than trusting it",
-    "The three-persistence experiment is set up once (info1/info2/info3 at 286-304, for \u03c1_3 = 0.6, 1, 0) and then reused for both replicated figures, and the prose at 369-376 reads the economics of each case off the plot instead of just displaying it",
+    "Every code variable is the Unicode Greek letter used in the algebra - `ϕc`, `ϕg`, `ϕi`, `γ`, `δk`, `θk`, `ρ1`-`ρ3`, `β`, `πh` - so the code cells at 224-272 can be read straight off the matrix definitions at 143-189",
+    "The HS2013 mapping is given in full (Preferences 114-119, Technology 123-163, Information 167-195): every one of Δ_k, Θ_k, Φ_c, Φ_g, Φ_i, Γ, A_22, C_2, U_b, U_d is written out, so the reader can check the code against the paper rather than trusting it",
+    "The three-persistence experiment is set up once (info1/info2/info3 at 286-304, for ρ_3 = 0.6, 1, 0) and then reused for both replicated figures, and the prose at 369-376 reads the economics of each case off the plot instead of just displaying it",
     "The two figures are explicitly labelled as replications of Figures 3 and 4 of Rosen, Murphy and Scheinkman (341, 378), which makes the lecture checkable against its source",
     "The namedtuple cell carries a comment saying why namedtuples were chosen (198-199) rather than leaving the reader to guess"
   ],
   "actions": [
     "Convert the ten `\\left[ {\\begin{array}...} \\right]` matrices at 127, 132, 144, 149, 154, 159, 171, 176, 181 and 186 to `bmatrix` - the largest single fix in this lecture (qe-math-003, 10 occurrences)",
-    "Move the five embedded `set_title` calls (337, 358, 364, 391, 395) into figure captions and add `mystnb: figure: caption/name` metadata to the three plotting cells at 331, 347 and 384, so the figures can be captioned and cross-referenced (qe-fig-003 \u00d75, qe-fig-005 \u00d73)",
+    "Move the five embedded `set_title` calls (337, 358, 364, 391, 395) into figure captions and add `mystnb: figure: caption/name` metadata to the three plotting cells at 331, 347 and 384, so the figures can be captioned and cross-referenced (qe-fig-003 ×5, qe-fig-005 ×3)",
     "Fix the notation slips in the mapping section: line 115 sets $\\Pi = \\alpha_1^{-1/2}$ but the demand curve at 106 and the code at 213 use $a_1$, and lines 192-193 write $\\Psi_1, \\Psi_2, \\Psi_3$ for the small quadratic-cost parameters that 93 and 100 call $\\psi_1, \\psi_2, \\psi_3$",
-    "Set `lw=2` on the eleven `plot` calls (335, 355-357, 361-363, 389, 390, 393, 394) and drop the `figsize=(12, 4)` overrides at 354 and 388 (qe-fig-008 \u00d711, qe-fig-001 \u00d72)",
+    "Set `lw=2` on the eleven `plot` calls (335, 355-357, 361-363, 389, 390, 393, 394) and drop the `figsize=(12, 4)` overrides at 354 and 388 (qe-fig-008 ×11, qe-fig-001 ×2)",
     "Rewrite the 44-word remark at 100 as two sentences inside a `{note}` admonition, and fix \"Demand for beef is government by\" at 106 (should read \"governed\")",
     "Recast the citations that stand as the grammatical subject - 27, 206, 325 and also 341 and 378 - as `{cite:t}` (qe-ref-001)",
     "Add a figure showing the calf-yearling-adult pipeline, and close the loop on the lecture's own claim: the closing paragraph at 399-402 refers back to \"the first graph of this lecture\", which is exactly the cross-reference `{numref}` plus figure names would make clickable"
   ],
   "scanner_doubts": [
     "cattle_cycles.md:341,378 - qe-ref-001 is reported with count 3 (27, 206, 325) but the citation stands as the grammatical subject in the same way at 341 (\"In their Figure 3, {cite}`rosen1994cattle` plot the impulse response functions\") and 378 (\"In Figure 4 of their paper, {cite}`rosen1994cattle` plot the response\"). Both are missed because NARRATIVE_TRAIL's verb list has no \"plot\" and NARRATIVE_LEAD does not treat a preceding comma as a lead context. The count looks like 5, not 3"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "fa83551911fbea8990da4fb101ca3e35251ca55c"
+  }
 }

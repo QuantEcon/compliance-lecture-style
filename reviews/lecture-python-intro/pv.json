@@ -2,16 +2,56 @@
   "series": "lecture-python-intro",
   "lecture": "pv",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [276, 480, 530],
-     "detail": "the lecture is built around matrix inversion - 40 lists it as one of two main tools, 87 repeats it, {eq}`eq:apdb_sol` at 221-223 gives $p = A^{-1}(d + b)$, the analytical section displays $A^{-1}$ in full (364-372) and an exercise verifies it (389-409) - and no code cell ever inverts a matrix. 276 says \"Now let's solve for prices using {eq}`eq:apdb_sol`\" directly above a cell whose one substantive line is `p = np.linalg.solve(A, d + b)` (281), which by construction does not form $A^{-1}$; the same substitution happens at 175, 341, 583, 634 and 689. Either the prose should say that `solve` is the numerically preferable way to apply {eq}`eq:apdb_sol`, or one cell should show `np.linalg.inv(A) @ (d + b)` so the reader sees the equation they were given. Second, 480-482 says that with $p_{T+1}^* = 0$ \"a price vector $p$ of all entries zero solves this equation and only the **fundamental** component of our pricing formula {eq}`eq:ptpveq` is present\" - but this is the no-dividend case set up at 450-459, so the fundamental component is itself zero; what is present is nothing, and a reader tracking {eq}`eq:ptpveq` term by term is left to work out that a component of value zero is being called present. Third, the bubble thread is the only claim in the lecture that is never checked. Everything else gets a numerical or graphical confirmation - the matrix multiplication (158-179), the inverse (389-409), the pricing formula (570-594), the perpetuity (618-645), monotonicity in $\\delta$ (673-697) - but $p_t = c\\delta^{-t}$ (497) and $R_t = \\delta^{-1}$ (513), which are given two sections of their own, appear afterwards only as item 4 of pv_ex_a (530) and a one-line answer at 545, with no cell and no figure"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [29, 70, 481, 484],
-     "detail": "70 bolds a single letter inside a word for typographic effect: \"We say equation**s**, plural, because there are $T+1$ equations\" - not a definition, not emphasis, and it renders as a bolded `s`. 29 bolds **time series** as a passing use, two lines before 31 bolds it again as the actual definition (\"A **time series** is a **sequence** indexed by time\"), so the definition marker fires twice with the emphatic use first. 481 and 484 re-bold truncated forms of terms already defined and bolded at 424 and 426 - \"only the **fundamental** component\", \"let's activate the **bubble** component\" - which is bold used for emphasis. The four genuine definitions are correct: **present value model** (18), **difference equation** (80), **fundamental component** / **discounted present value** (424) and **bubble component** (426)"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [21, 35, 82, 524],
-     "detail": "21-26 opens with a four-item list of \"economic decisions\" that asset pricing bears on - consumption, labor supply, education choice, demand for money - and not one of the four is mentioned again in the lecture, so the list costs the reader four lines and returns nothing. 82-83 is a 32-word digression on methods the lecture does not use (\"There are powerful mathematical methods available for solving such systems and they are well worth studying in their own right, being the foundation for the analysis of many interesting economic models\"), followed at 85 by a bare cross-book pointer with no closing punctuation. 35 restates 33 (\"we'll represent a sequence as a vector\" / \"So our analysis will typically boil down to studying relationships among vectors\"). And 524 packs the standing assumptions and the task into one paragraph block, \"Assume that $g >1$ and that $\\delta g \\in (0,1)$. Give analytical expressions for an asset price $p_t$ under the following settings\" - the qe-writing-001 hit, and here the two sentences are doing different jobs and should be separated on content grounds as well"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [282, 496],
-     "detail": "the lecture's subject is the map from a dividend sequence to a price sequence, and it never puts the two on one set of axes. The dividend stream is drawn in its own figure (234-247) and the price in a second (278-287), each a bare `ax.plot(..., 'o')` with `set_xlabel('time')`, no title and no shared axis, so the reader has to hold one plot in memory to read the other; the same split repeats for the cyclical example (297-310 and 328-348), where the payoff sentence - \"The weighted averaging associated with the present value calculation largely eliminates the cycles\" (350-351) - is a claim about two series that are never shown together. Second, the exploding bubble path {eq}`eq:bubble` at 496-498 is the most vivid object in the lecture and is never plotted, although a three-line cell reusing the existing machinery would draw $p_t = c\\delta^{-t}$ against a flat fundamental value and make the constant gross return $R_t = \\delta^{-1}$ of 513 visible as a slope"},
-    {"rule": "qe-code-001", "count": 2, "lines": [267, 347],
-     "detail": "the Python here is otherwise PEP8-clean - flake8 over every code cell reports nothing besides two blank lines left at the end of a cell body, at 267-268 and 347-348, both of which render as an empty final line in the notebook. Naming is consistent and the capitals are the mathematically justified kind the rule allows (`A` for the matrix, `p`, `d`, `b` for the vectors, `p_star`, `p_star_perp`, `p_matrix`, `p_formula`), and `δ` is spelled as the Greek letter throughout as qe-code-002 asks"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        276,
+        480,
+        530
+      ],
+      "detail": "the lecture is built around matrix inversion - 40 lists it as one of two main tools, 87 repeats it, {eq}`eq:apdb_sol` at 221-223 gives $p = A^{-1}(d + b)$, the analytical section displays $A^{-1}$ in full (364-372) and an exercise verifies it (389-409) - and no code cell ever inverts a matrix. 276 says \"Now let's solve for prices using {eq}`eq:apdb_sol`\" directly above a cell whose one substantive line is `p = np.linalg.solve(A, d + b)` (281), which by construction does not form $A^{-1}$; the same substitution happens at 175, 341, 583, 634 and 689. Either the prose should say that `solve` is the numerically preferable way to apply {eq}`eq:apdb_sol`, or one cell should show `np.linalg.inv(A) @ (d + b)` so the reader sees the equation they were given. Second, 480-482 says that with $p_{T+1}^* = 0$ \"a price vector $p$ of all entries zero solves this equation and only the **fundamental** component of our pricing formula {eq}`eq:ptpveq` is present\" - but this is the no-dividend case set up at 450-459, so the fundamental component is itself zero; what is present is nothing, and a reader tracking {eq}`eq:ptpveq` term by term is left to work out that a component of value zero is being called present. Third, the bubble thread is the only claim in the lecture that is never checked. Everything else gets a numerical or graphical confirmation - the matrix multiplication (158-179), the inverse (389-409), the pricing formula (570-594), the perpetuity (618-645), monotonicity in $\\delta$ (673-697) - but $p_t = c\\delta^{-t}$ (497) and $R_t = \\delta^{-1}$ (513), which are given two sections of their own, appear afterwards only as item 4 of pv_ex_a (530) and a one-line answer at 545, with no cell and no figure"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        29,
+        70,
+        481,
+        484
+      ],
+      "detail": "70 bolds a single letter inside a word for typographic effect: \"We say equation**s**, plural, because there are $T+1$ equations\" - not a definition, not emphasis, and it renders as a bolded `s`. 29 bolds **time series** as a passing use, two lines before 31 bolds it again as the actual definition (\"A **time series** is a **sequence** indexed by time\"), so the definition marker fires twice with the emphatic use first. 481 and 484 re-bold truncated forms of terms already defined and bolded at 424 and 426 - \"only the **fundamental** component\", \"let's activate the **bubble** component\" - which is bold used for emphasis. The four genuine definitions are correct: **present value model** (18), **difference equation** (80), **fundamental component** / **discounted present value** (424) and **bubble component** (426)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        21,
+        35,
+        82,
+        524
+      ],
+      "detail": "21-26 opens with a four-item list of \"economic decisions\" that asset pricing bears on - consumption, labor supply, education choice, demand for money - and not one of the four is mentioned again in the lecture, so the list costs the reader four lines and returns nothing. 82-83 is a 32-word digression on methods the lecture does not use (\"There are powerful mathematical methods available for solving such systems and they are well worth studying in their own right, being the foundation for the analysis of many interesting economic models\"), followed at 85 by a bare cross-book pointer with no closing punctuation. 35 restates 33 (\"we'll represent a sequence as a vector\" / \"So our analysis will typically boil down to studying relationships among vectors\"). And 524 packs the standing assumptions and the task into one paragraph block, \"Assume that $g >1$ and that $\\delta g \\in (0,1)$. Give analytical expressions for an asset price $p_t$ under the following settings\" - the qe-writing-001 hit, and here the two sentences are doing different jobs and should be separated on content grounds as well"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        282,
+        496
+      ],
+      "detail": "the lecture's subject is the map from a dividend sequence to a price sequence, and it never puts the two on one set of axes. The dividend stream is drawn in its own figure (234-247) and the price in a second (278-287), each a bare `ax.plot(..., 'o')` with `set_xlabel('time')`, no title and no shared axis, so the reader has to hold one plot in memory to read the other; the same split repeats for the cyclical example (297-310 and 328-348), where the payoff sentence - \"The weighted averaging associated with the present value calculation largely eliminates the cycles\" (350-351) - is a claim about two series that are never shown together. Second, the exploding bubble path {eq}`eq:bubble` at 496-498 is the most vivid object in the lecture and is never plotted, although a three-line cell reusing the existing machinery would draw $p_t = c\\delta^{-t}$ against a flat fundamental value and make the constant gross return $R_t = \\delta^{-1}$ of 513 visible as a slope"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 2,
+      "lines": [
+        267,
+        347
+      ],
+      "detail": "the Python here is otherwise PEP8-clean - flake8 over every code cell reports nothing besides two blank lines left at the end of a cell body, at 267-268 and 347-348, both of which render as an empty final line in the notebook. Naming is consistent and the capitals are the mathematically justified kind the rule allows (`A` for the matrix, `p`, `d`, `b` for the vectors, `p_star`, `p_star_perp`, `p_matrix`, `p_formula`), and `δ` is spelled as the Greek letter throughout as qe-code-002 asks"
+    }
   ],
   "strengths": [
     "The system is introduced three times in three representations that are explicitly identified with each other - the $T+1$ scalar equations {eq}`eq:Euler1` (66-68), the stacked list {eq}`eq:Euler_stack` (104-112), and the single matrix equation {eq}`eq:pvpieq` (116-131) - and 114 states the move plainly (\"Write the system ... as the single matrix equation\") rather than leaving the reader to notice it",
@@ -34,5 +74,9 @@
     "Clear the 39 double-space runs (18, 33, 37, 39, 42, 55, 59, 73, 75, 77 and 29 more) and split the two-sentence block at 524",
     "Tidy the source: replace the seven hand-built loops for `A` with one helper (the main text uses the O(T^2) `for i / for j / if i == j` form at 260-267 and 331-338 while the solutions use the O(T) form at 165-169, 394-398, 576-580, 625-629 and 682-686 - the solutions have it right), drop the trailing blank lines at 268 and 348, make the row separators consistent (`\\cr` at 117-130, 364-371, 453-458, 467-477 versus `\\\\` at 105-111 and 194-216), remove the stray `\\cr` before `\\end{bmatrix}` at 370, close the sentence at 85 with a period, and delete the five bare `+++` markers (91, 98, 133, 446, 461)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "caafde0e1a8fe28a2958165965eb8b3abc01b3fa"
+  }
 }

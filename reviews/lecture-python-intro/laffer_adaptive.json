@@ -2,14 +2,58 @@
   "series": "lecture-python-intro",
   "lecture": "laffer_adaptive",
   "judgment": [
-    {"rule": "qe-code-001", "count": 13, "lines": [183, 243, 250, 302, 329, 344, 381, 459, 483, 525, 535, 557, 559],
-     "detail": "invalid escape sequences in non-raw strings - `'$\\pi_l$'`, `'$\\pi$'` (243, 250), which pycodestyle flags as W605 and which the exercise solutions correctly write as `r'$\\pi_l$'` (541); `eq_g = lambda x: ...` bound to a name instead of a `def`, twice (329, 344); a backslash continuation inside an expression that is already parenthesisable, with a misaligned second line (302-303); two different continuation indents for the same `axes[2].text(...)` call (380-383); a continuation line under-indented relative to the opening paren (183); and alignment padding before `=` that PEP8 rules out (459, 483, 525, 535, 557, 559)"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [20, 31, 44, 94, 282],
-     "detail": "line 20 is a 38-word sentence that cites `{doc}`money_inflation`` twice within itself (\"As in the lecture money_inflation ... in place of the linear demand function used in this lecture money_inflation\"), and lines 18, 20 and 31 all repeat the same cross-reference; 44-46 is a 48-word sentence; and two sentences have lost a word, so the reader has to reconstruct them: \"Equation the expressions for $m_{t+1}$\" (94, for \"Equate\") and \"if we initial $\\pi_{-1}^*, p_{-1}$ appropriately\" (282, for \"initialise\")"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [36, 37, 101, 124],
-     "detail": "bold used for emphasis where the rule asks for italic: **lower** (36), **reduced** and **lower** (two on line 37), **lower** (124); and **Pseudo-code** at 101 is a bolded pseudo-heading rather than a definition - the parallel material at 103-112 is real body text under a real heading"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [158, 261],
-     "detail": "158-160 describes both sides of the same equation the same way - \"The left side of {eq}`eq:ada_steadypi` is steady state revenue raised by printing money\" followed by \"The right side ... is the quantity of time $t$ goods that the government raises by printing money\" - when the right side is $g$, defined at 68 as the part of government *expenditure* financed by printing money; and the initial condition changes index between sections without comment: the claims at 126-130 are stated for $p_0$ and $m_1 - p_0 = -\\alpha\\bar\\pi$, while 261-266 and the code compute $p_{-1} = m_0 + \\alpha\\pi^*$, and the figure caption at 402 calls the same object $\\pi_0$"}
+    {
+      "rule": "qe-code-001",
+      "count": 13,
+      "lines": [
+        183,
+        243,
+        250,
+        302,
+        329,
+        344,
+        381,
+        459,
+        483,
+        525,
+        535,
+        557,
+        559
+      ],
+      "detail": "invalid escape sequences in non-raw strings - `'$\\pi_l$'`, `'$\\pi$'` (243, 250), which pycodestyle flags as W605 and which the exercise solutions correctly write as `r'$\\pi_l$'` (541); `eq_g = lambda x: ...` bound to a name instead of a `def`, twice (329, 344); a backslash continuation inside an expression that is already parenthesisable, with a misaligned second line (302-303); two different continuation indents for the same `axes[2].text(...)` call (380-383); a continuation line under-indented relative to the opening paren (183); and alignment padding before `=` that PEP8 rules out (459, 483, 525, 535, 557, 559)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        20,
+        31,
+        44,
+        94,
+        282
+      ],
+      "detail": "line 20 is a 38-word sentence that cites `{doc}`money_inflation`` twice within itself (\"As in the lecture money_inflation ... in place of the linear demand function used in this lecture money_inflation\"), and lines 18, 20 and 31 all repeat the same cross-reference; 44-46 is a 48-word sentence; and two sentences have lost a word, so the reader has to reconstruct them: \"Equation the expressions for $m_{t+1}$\" (94, for \"Equate\") and \"if we initial $\\pi_{-1}^*, p_{-1}$ appropriately\" (282, for \"initialise\")"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        36,
+        37,
+        101,
+        124
+      ],
+      "detail": "bold used for emphasis where the rule asks for italic: **lower** (36), **reduced** and **lower** (two on line 37), **lower** (124); and **Pseudo-code** at 101 is a bolded pseudo-heading rather than a definition - the parallel material at 103-112 is real body text under a real heading"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        158,
+        261
+      ],
+      "detail": "158-160 describes both sides of the same equation the same way - \"The left side of {eq}`eq:ada_steadypi` is steady state revenue raised by printing money\" followed by \"The right side ... is the quantity of time $t$ goods that the government raises by printing money\" - when the right side is $g$, defined at 68 as the part of government *expenditure* financed by printing money; and the initial condition changes index between sections without comment: the claims at 126-130 are stated for $p_0$ and $m_1 - p_0 = -\\alpha\\bar\\pi$, while 261-266 and the code compute $p_{-1} = m_0 + \\alpha\\pi^*$, and the figure caption at 402 calls the same object $\\pi_0$"
+    }
   ],
   "strengths": [
     "Every equation the argument depends on is labelled and then actually re-used: `eq:ada_msupply` (66) at 70, `eq:ada_msupply2` (74) at 94 and 110, `eq:ada_mdemand` (80) at 94, `eq:adaptex` (88) at 31, 46, 94 and 109, `eq:ada_steadypi` (148) at 158, 160 and 162",
@@ -29,5 +73,9 @@
   ],
   "scanner_doubts": [
     "laffer_adaptive.md - qe-ref-001 is reported with count 6 but lists only lines 23, 49 and 51; those lines hold at most five author-position citations (23 and 51 have two each), and the clear author-position uses at line 20 (\"{cite}`Cagan` used in his classic paper\") and line 42 (\"were studied by {cite}`bruno1990seigniorage`\") are missing from the line list"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "44b219a3fa775bd429c494f4997af8592ce32827"
+  }
 }

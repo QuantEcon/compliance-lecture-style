@@ -2,14 +2,60 @@
   "series": "lecture-dp",
   "lecture": "discrete_dp",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 17, "lines": [139, 144, 164, 165, 171, 172, 173, 175, 177, 179, 195, 228, 230, 239, 258, 300, 711],
-     "detail": "the lecture's formal-definition section does the rule exactly backwards: every defined term is italicised rather than bolded. *policies* (139), *stationary Markov policies* (144), *states* (164), *feasible actions* and *feasible state-action pairs* (165), *reward function* (171), *transition probability function* (172), *discount factor* (173), *action space* (175), *policy* (177), *feasible* (179), *controlled chain* (195), *policy value function* (228), *optimal value function* / *value function* (230), *optimal* (239), *Bellman operator* (258), *Bellman equation* (300). These are the terms the rest of the lecture is written in, and none of them is emphasis. Meanwhile the only bold in the file is `**Notes**` at 711, used as a pseudo-heading. There is no formatting left to distinguish a definition from a stressed word"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [80, 620],
-     "detail": "the H3 at line 80 is just '### Code' and its first sentence is 'Among other things, it offers' - 'it' has no antecedent anywhere in the section; the subject (the QuantEcon.py `DiscreteDP` implementation) was last named at line 58, two sections earlier, and the four bullets that follow describe an object the reader has to guess at. Second, the exercise/solution structure at 614-620 breaks the reader's expectations for the series: '## Exercises' is a single sentence with no `{exercise}` directive and no label, and '## Solutions' immediately follows with 320 lines of fully visible worked solution - a third of the file. There is nothing to attempt, because the answer starts on the next line"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [73, 190, 572, 651],
-     "detail": "line 73 reads 'We use dynamic programming many applied lectures, such as' - a preposition is missing; line 190 ends with a stray closing parenthesis, '$r_{\\sigma}(s) := r(s, \\sigma(s))$)'; line 572 misplaces a comma, 'The `DiscreteDP` class in fact, provides a second interface'; line 651 has unbalanced brackets inside inline code, `grid[a] < f([grid[s])`, which is what the reader is asked to take as the feasibility condition. Line 87's 'minimizing vectorized operators' is a fourth of the same kind - it appears to mean the opposite of what it says, given that line 713-715 warns that vectorization is memory-hungry"},
-    {"rule": "qe-code-001", "count": 3, "lines": [454, 865, 925],
-     "detail": "line 454 writes `self.B, self.M, self.α, self.β  = B, M, α, β` with two spaces before the `=` (E221); lines 865 and 925 write `figsize=(8,5)` with no space after the comma (E231), while line 885 in the same file writes `figsize=(8, 10)` correctly and 751 writes `figsize=(14, 4)` - so the file disagrees with itself four times over on one call"}
+    {
+      "rule": "qe-writing-005",
+      "count": 17,
+      "lines": [
+        139,
+        144,
+        164,
+        165,
+        171,
+        172,
+        173,
+        175,
+        177,
+        179,
+        195,
+        228,
+        230,
+        239,
+        258,
+        300,
+        711
+      ],
+      "detail": "the lecture's formal-definition section does the rule exactly backwards: every defined term is italicised rather than bolded. *policies* (139), *stationary Markov policies* (144), *states* (164), *feasible actions* and *feasible state-action pairs* (165), *reward function* (171), *transition probability function* (172), *discount factor* (173), *action space* (175), *policy* (177), *feasible* (179), *controlled chain* (195), *policy value function* (228), *optimal value function* / *value function* (230), *optimal* (239), *Bellman operator* (258), *Bellman equation* (300). These are the terms the rest of the lecture is written in, and none of them is emphasis. Meanwhile the only bold in the file is `**Notes**` at 711, used as a pseudo-heading. There is no formatting left to distinguish a definition from a stressed word"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        80,
+        620
+      ],
+      "detail": "the H3 at line 80 is just '### Code' and its first sentence is 'Among other things, it offers' - 'it' has no antecedent anywhere in the section; the subject (the QuantEcon.py `DiscreteDP` implementation) was last named at line 58, two sections earlier, and the four bullets that follow describe an object the reader has to guess at. Second, the exercise/solution structure at 614-620 breaks the reader's expectations for the series: '## Exercises' is a single sentence with no `{exercise}` directive and no label, and '## Solutions' immediately follows with 320 lines of fully visible worked solution - a third of the file. There is nothing to attempt, because the answer starts on the next line"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        73,
+        190,
+        572,
+        651
+      ],
+      "detail": "line 73 reads 'We use dynamic programming many applied lectures, such as' - a preposition is missing; line 190 ends with a stray closing parenthesis, '$r_{\\sigma}(s) := r(s, \\sigma(s))$)'; line 572 misplaces a comma, 'The `DiscreteDP` class in fact, provides a second interface'; line 651 has unbalanced brackets inside inline code, `grid[a] < f([grid[s])`, which is what the reader is asked to take as the feasibility condition. Line 87's 'minimizing vectorized operators' is a fourth of the same kind - it appears to mean the opposite of what it says, given that line 713-715 warns that vectorization is memory-hungry"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        454,
+        865,
+        925
+      ],
+      "detail": "line 454 writes `self.B, self.M, self.α, self.β  = B, M, α, β` with two spaces before the `=` (E221); lines 865 and 925 write `figsize=(8,5)` with no space after the comma (E231), while line 885 in the same file writes `figsize=(8, 10)` correctly and 751 writes `figsize=(14, 4)` - so the file disagrees with itself four times over on one call"
+    }
   ],
   "strengths": [
     "The formal definition at 160-181 enumerates all five components of a discrete DP as a numbered list and then derives the working notation from them in place - $A$, $\\Sigma$, $r_\\sigma$, $Q_\\sigma$ - so every symbol in the 800 lines that follow has a numbered home the reader can return to",
@@ -33,5 +79,9 @@
     "discrete_dp.md, lines 247, 264, 273, 305, 319, 419 - all 6 `qe-math-002` hits are false positives, and they show the same 'followed by a factor' leak I reported on `u'` in ifp_egm.md / ifp_advanced.md / ifp_egm_transient_shocks.md, but on a different base. Every one is `s'`, the next-period state, in expressions like `\\sum_{s' \\in S} v(s') Q(s, a, s')` - the base is a scalar state index, as un-matrix-like as it gets, and the file has roughly a dozen other `s'` occurrences (186, 191, 197, 480, 656, 659) that were correctly skipped. What distinguishes the flagged ones is `s')` followed by a space and `Q(`, i.e. juxtaposition. Line 659 states the convention explicitly: 'where $k'$ is the capital stock in the next period'.",
     "discrete_dp.md, lines 933-934 - the 2 `qe-code-002` hits are one genuine and one not. Line 933, `for beta in discount_factors:`, is a real violation: the author chose that loop variable and the file writes `β` in Unicode everywhere else (448, 587, 633). Line 934, `ddp0.beta = beta`, is the `DiscreteDP` class's own attribute name and cannot be renamed - the same keyword/attribute case I flagged in career.md, ifp_opi.md, ifp_discrete.md and cons_news.md. Skipping attribute-access and keyword-argument positions would leave the one true hit standing.",
     "discrete_dp.md, lines 614-620 - a blind spot rather than a miscount. The Admonitions category scores 10/10 with 'no mechanical violations detected', which is literally true and substantively misleading: the lecture has an exercise and a 320-line solution written as plain `## Exercises` / `## Solutions` headings, so there are no `{exercise}` or `{solution-start}` directives for qe-admon-001, -002 or -005 to inspect. As the five admonition checks are all structured as 'given a directive, check X', a lecture that uses no directives at all is indistinguishable from a lecture that uses them perfectly. A presence check - a file with exercise-shaped headings but no exercise directives - would separate the two, and would matter for the category score here."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "845cbaed0a389f806e95d7f951f6ce8126fa7f52"
+  }
 }

@@ -2,16 +2,49 @@
   "series": "lecture-python.myst",
   "lecture": "career",
   "judgment": [
-    {"rule": "qe-math-009", "count": 1, "lines": [117],
-     "detail": "the three continuation values are named $I$, $II$ and $III$ (117, 126-128, 132, 217-218); in math mode `$II$` typesets as two adjacent italic capital I's and `$III$` as three, so each reads as a product of copies of $I$ rather than as a label - $v_1, v_2, v_3$ is both simpler and unambiguous, and the code already calls them `stay_put`, `new_job` and `new_life`"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [359, 508],
-     "detail": "line 359 is a lone bullet (\"Sometimes a good job must be sacrificed...\") dangling two prose paragraphs after the list it belongs to at 349-353, so it reads as a list of one; and the exercise 2 solution at line 508 calls `median_passage_time(cw, greedy_star, ...)` using `cw` and `greedy_star` that are bound inside the exercise 1 solution cell (419-421) and `draw` defined there at 397 - the second solution silently depends on the first, and both are behind `:class: dropdown`"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [508],
-     "detail": "exercise 2 sets up a random variable $T^*$, defines it twice (450, 460), asks for 25,000 draws of it, and then the solution reports a single median at 508 and another at 519; the 25,000 first-passage times are already in `times` at line 504, so the distribution the exercise is about is computed and then thrown away without a histogram - the natural companion to the \"about 7 and 14 respectively\" claim at 522"},
-    {"rule": "qe-code-001", "count": 3, "lines": [231, 244, 504],
-     "detail": "line 231 has a single space before the inline `# III` comment where PEP8 asks for two (and where the two lines above it align theirs); lines 244-245 pad with extra spaces both before `=` and inside the `in_axes` tuples (`_B_j  = jax.vmap(_B,   in_axes=(None, None, None, 0))`), which PEP8 explicitly discourages even for alignment; line 504 is 82 characters"},
-    {"rule": "qe-writing-002", "count": 1, "lines": [303],
-     "detail": "the note at 303-305 is a 43-word sentence that carries the readability claim, the scaling claim, three examples of what it scales to, and the GPU claim in one span"}
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        117
+      ],
+      "detail": "the three continuation values are named $I$, $II$ and $III$ (117, 126-128, 132, 217-218); in math mode `$II$` typesets as two adjacent italic capital I's and `$III$` as three, so each reads as a product of copies of $I$ rather than as a label - $v_1, v_2, v_3$ is both simpler and unambiguous, and the code already calls them `stay_put`, `new_job` and `new_life`"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        359,
+        508
+      ],
+      "detail": "line 359 is a lone bullet (\"Sometimes a good job must be sacrificed...\") dangling two prose paragraphs after the list it belongs to at 349-353, so it reads as a list of one; and the exercise 2 solution at line 508 calls `median_passage_time(cw, greedy_star, ...)` using `cw` and `greedy_star` that are bound inside the exercise 1 solution cell (419-421) and `draw` defined there at 397 - the second solution silently depends on the first, and both are behind `:class: dropdown`"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        508
+      ],
+      "detail": "exercise 2 sets up a random variable $T^*$, defines it twice (450, 460), asks for 25,000 draws of it, and then the solution reports a single median at 508 and another at 519; the 25,000 first-passage times are already in `times` at line 504, so the distribution the exercise is about is computed and then thrown away without a histogram - the natural companion to the \"about 7 and 14 respectively\" claim at 522"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        231,
+        244,
+        504
+      ],
+      "detail": "line 231 has a single space before the inline `# III` comment where PEP8 asks for two (and where the two lines above it align theirs); lines 244-245 pad with extra spaces both before `=` and inside the `in_axes` tuples (`_B_j  = jax.vmap(_B,   in_axes=(None, None, None, 0))`), which PEP8 explicitly discourages even for alignment; line 504 is 82 characters"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 1,
+      "lines": [
+        303
+      ],
+      "detail": "the note at 303-305 is a 43-word sentence that carries the readability claim, the scaling claim, three examples of what it scales to, and the GPU claim in one span"
+    }
   ],
   "strengths": [
     "The three continuation values are coded for a single state first (`_B` at 224-232, with `# I`, `# II`, `# III` marking the correspondence to {eq}`eyes`) and only then vectorised with two `jax.vmap` calls at 244-245 - the code sits next to the equation instead of next to the array shapes, and lines 220-221 say that is the intent",
@@ -29,5 +62,9 @@
     "Set `lw=2` on the three plot calls at 178, 429 and 430 (qe-fig-008, 3 occurrences)",
     "Sweep the small mechanical items: sentence-case the H3 at line 64 to `### Model features` (qe-writing-006), collapse the double space at line 74 (qe-writing-008), delete the two `\\nonumber` commands at 127-128 which do nothing inside `aligned`, fix \"overall feasible\" to \"over all feasible\" at line 111, and tidy the PEP8 spacing at 231 and 244-245"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "e7187d02971e669e361651583ae03b635e98267c"
+  }
 }

@@ -2,18 +2,70 @@
   "series": "lecture-python-intro",
   "lecture": "supply_demand_multiple_goods",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 3, "lines": [849, 1046, 1112],
-     "detail": "a lecture titled \"Supply and Demand with Many Goods\" draws two figures and both are of the single-good case (`plot_competitive_equilibrium` called at 796, 816 and 837; `plot_monopoly` called at 1112). Every multi-good result reaches the reader as printed vectors: the endowment economy (377-381), the dynamic interpretation (367-382), the risk economy (454-469), the three comparative statics of `sdm_ex3` (496-532), the two-good production economy (849-895) and the multi-good monopoly comparison (1069-1090). The worst case is 843-895, whose stated purpose at 847 is \"to study how cross-slopes affect responses of $p$ and $c$ to various shifts in $b$\": it runs four experiments - diagonal $\\Pi$, shifted $b$, non-diagonal $\\Pi$, shifted $b$ again - and delivers eight numbers with no table, no figure and not one sentence of interpretation, so the cross-slope effect the section exists to demonstrate is left for the reader to compute by eye from four separate cell outputs. Second, the monopoly figure (1010-1062) shades consumer and producer surplus at the monopoly quantity but not the deadweight-loss wedge between $q$ and $c$, which is exactly what 923-927 and 967-969 claim - that the monopolist sets output below both the planner's and the competitive quantity. Third, both figures hardcode five hex colours (750-758, 1042-1055) instead of the matplotlib cycle, and the two surplus fills are `#EED1CF` and `#E6E6F5`, a pale-pink/pale-lavender pair with very little contrast between them and against white - for the figure's principal content"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [426, 618, 847, 967],
-     "detail": "426-430 labels the wrong vector: \"A consumer's endowment vector is $c = \\begin{bmatrix} c_1 \\cr c_2 \\end{bmatrix}$\" - that is the consumption vector, and the endowment $e$ was already displayed at 417 four lines earlier. 618 says \"this equation is the counterpart of equilibrium quantity {eq}`eq:old1` for the scalar $n=1$ model with which we began\", but this lecture does not begin with a scalar model - {doc}`intro_supply_demand` does, and that is where `eq:old1` is defined (its line 653). The reference resolves, because `{eq}` labels are project-wide, but it silently lands the reader in a different lecture while the sentence claims the model is this one's. 847 ships a literal `(TODO)` in published prose - \"we can do experiments with a **diagonal** $\\Pi$ and also with a **non-diagonal** $\\Pi$ matrix to study how cross-slopes affect responses of $p$ and $c$ to various shifts in $b$ (TODO)\" - and it is stale, since the four cells immediately below at 849-895 do precisely that. 967 puts the conclusion 145 lines before its evidence: \"the plot indicates that the monopolist sets output lower than the competitive equilibrium quantity\", where `plot_monopoly` is defined at 1010 and first called at 1112. Two smaller ones in the same family: the `{note}` at 177-183 cites {eq}`eq:old2p` a hundred lines before it is written at 281, and 304 promises \"we'll discuss these distinct demand curves more below\", which never happens"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [275, 289, 578, 904],
-     "detail": "bold carries two jobs at once throughout, so it stops distinguishing either. Definitions are bold, correctly and often: **marginal utility of wealth** (152), **numeraire** (283), **compensated** (302), **expected utility** (398), **Arrow securities** (440), **insurance** (444), **marginal costs** (566), **inverse supply curve** (585), **consumer surplus** and **producer surplus** (649-650), **price-taker** (899). But so is plain emphasis: **only** (275), **static** (386), **marginal revenue to marginal costs** (578), **price equals marginal revenue** (583) - a whole clause - **demand curve** and **price** in the contrast at 904, **diagonal** and **non-diagonal** (847), **substitution** and **income** (294, 298), **lower output** (923). Meanwhile italic appears exactly once in 1154 lines, at 313, and there it marks part of a definition (*known probability distribution*), so the lecture has no working emphasis form at all. Three terms are also re-bolded rather than bolded once: **Marshallian** at 144, 182 and 289, **Hicksian** at 182 and 290, **risk** at 313, 388 and 390"},
-    {"rule": "qe-code-001", "count": 5, "lines": [228, 266, 740, 753, 1031],
-     "detail": "twenty lines carry trailing whitespace, and most of them are indentation-only blank lines inside class bodies - 228, 251, 260 in `ExchangeEconomy`, 656, 675 in `ProductionEconomy`, 973, 984 in `Monopoly` - plus the per-parameter signature lines at 229-231, 657-661 and 974-978. Five lambdas are assigned to names where PEP8 asks for a `def`: `supply_inv` and `demand_inv` (740-741), `marg_cost`, `marg_rev` and `demand_inv` (1030-1032). Ten lines exceed 79 characters, four of them past 110: 1047 at 116, 1046 at 113, 753 and 754 at 112. 1031 multiplies by a redundant literal, `-2 * 1 / μ * Π * Π * x`. And 266, 690 and 999 call the built-in `any()` on a NumPy array (`if any(c < 0)`, `if any(Π @ c - b >= 0)`) rather than `np.any()`, which works only because the arrays are one-dimensional and raises on anything else - in a lecture whose whole subject is the $n$-good generalisation. One stray item: 1027 is the comment `# compute` with nothing after it"},
-    {"rule": "qe-math-009", "count": 3, "lines": [91, 360, 1126],
-     "detail": "1126 and 1132 write the area under the inverse supply curve as `h c + \\frac{1}{2} c^\\top J c`, but $h$ and $c$ are both $n \\times 1$ (566, 99), so $hc$ is not defined - the same quantity is written correctly as $h^\\top q$ at 551 and $h^\\top q$ at 912, and the first-order condition at 1141 differentiates as though the transpose were there. The transpose has simply been dropped from the welfare criterion, twice, in the section that states the first welfare theorem. 91-93 introduces $\\Pi$ as $m \\times n$ and $b$ as $m \\times 1$ and then never uses $m$ again: every formula from 106 onward, and every instance in the code, has $\\Pi$ square, and `ExchangeEconomy` inverts it outright at 263 - so the extra dimension is notation the lecture carries and never needs. And 360 defines two symbols in one chained assignment, `(1+r) := R := \\frac{p_1}{p_2}`, of which neither $R$ nor $r$ is used anywhere else in the lecture"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [35, 292, 843],
-     "detail": "35-47 spends thirteen lines on two bulleted lists of eight economists, each a bare Wikipedia link with no accompanying claim about what any of them contributed - the two welfare theorems at 52-54 do the work those names were introduced for. The Marshallian/Hicksian distinction is set up four separate times: named at 144, explained in a `{note}` at 177-183, explained again as a two-bullet contrast at 287-290, and then explained a third time at 292-302 under \"contemplate different mental experiments\", after which 304 says it will be discussed \"more below\" and it is not. And 843-847 is a section heading whose entire body is two bullets in the future tense (\"we'll do some experiments like those above\", plus the stale TODO), followed by four code cells with no narration - contrast the single-good example at 768-840, which states what it will do in four bullets and then says what each experiment showed (\"this raises both the equilibrium price and quantity\", 840). Smaller edits: 390 is ungrammatical (\"our consumer confronts **risk** means in particular that\"), 442 switches to \"his/her\" where 134 and 275 use \"he\" and \"his\", and 646 refers to something \"described above in the main text\" while itself being the main text"}
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        849,
+        1046,
+        1112
+      ],
+      "detail": "a lecture titled \"Supply and Demand with Many Goods\" draws two figures and both are of the single-good case (`plot_competitive_equilibrium` called at 796, 816 and 837; `plot_monopoly` called at 1112). Every multi-good result reaches the reader as printed vectors: the endowment economy (377-381), the dynamic interpretation (367-382), the risk economy (454-469), the three comparative statics of `sdm_ex3` (496-532), the two-good production economy (849-895) and the multi-good monopoly comparison (1069-1090). The worst case is 843-895, whose stated purpose at 847 is \"to study how cross-slopes affect responses of $p$ and $c$ to various shifts in $b$\": it runs four experiments - diagonal $\\Pi$, shifted $b$, non-diagonal $\\Pi$, shifted $b$ again - and delivers eight numbers with no table, no figure and not one sentence of interpretation, so the cross-slope effect the section exists to demonstrate is left for the reader to compute by eye from four separate cell outputs. Second, the monopoly figure (1010-1062) shades consumer and producer surplus at the monopoly quantity but not the deadweight-loss wedge between $q$ and $c$, which is exactly what 923-927 and 967-969 claim - that the monopolist sets output below both the planner's and the competitive quantity. Third, both figures hardcode five hex colours (750-758, 1042-1055) instead of the matplotlib cycle, and the two surplus fills are `#EED1CF` and `#E6E6F5`, a pale-pink/pale-lavender pair with very little contrast between them and against white - for the figure's principal content"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        426,
+        618,
+        847,
+        967
+      ],
+      "detail": "426-430 labels the wrong vector: \"A consumer's endowment vector is $c = \\begin{bmatrix} c_1 \\cr c_2 \\end{bmatrix}$\" - that is the consumption vector, and the endowment $e$ was already displayed at 417 four lines earlier. 618 says \"this equation is the counterpart of equilibrium quantity {eq}`eq:old1` for the scalar $n=1$ model with which we began\", but this lecture does not begin with a scalar model - {doc}`intro_supply_demand` does, and that is where `eq:old1` is defined (its line 653). The reference resolves, because `{eq}` labels are project-wide, but it silently lands the reader in a different lecture while the sentence claims the model is this one's. 847 ships a literal `(TODO)` in published prose - \"we can do experiments with a **diagonal** $\\Pi$ and also with a **non-diagonal** $\\Pi$ matrix to study how cross-slopes affect responses of $p$ and $c$ to various shifts in $b$ (TODO)\" - and it is stale, since the four cells immediately below at 849-895 do precisely that. 967 puts the conclusion 145 lines before its evidence: \"the plot indicates that the monopolist sets output lower than the competitive equilibrium quantity\", where `plot_monopoly` is defined at 1010 and first called at 1112. Two smaller ones in the same family: the `{note}` at 177-183 cites {eq}`eq:old2p` a hundred lines before it is written at 281, and 304 promises \"we'll discuss these distinct demand curves more below\", which never happens"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        275,
+        289,
+        578,
+        904
+      ],
+      "detail": "bold carries two jobs at once throughout, so it stops distinguishing either. Definitions are bold, correctly and often: **marginal utility of wealth** (152), **numeraire** (283), **compensated** (302), **expected utility** (398), **Arrow securities** (440), **insurance** (444), **marginal costs** (566), **inverse supply curve** (585), **consumer surplus** and **producer surplus** (649-650), **price-taker** (899). But so is plain emphasis: **only** (275), **static** (386), **marginal revenue to marginal costs** (578), **price equals marginal revenue** (583) - a whole clause - **demand curve** and **price** in the contrast at 904, **diagonal** and **non-diagonal** (847), **substitution** and **income** (294, 298), **lower output** (923). Meanwhile italic appears exactly once in 1154 lines, at 313, and there it marks part of a definition (*known probability distribution*), so the lecture has no working emphasis form at all. Three terms are also re-bolded rather than bolded once: **Marshallian** at 144, 182 and 289, **Hicksian** at 182 and 290, **risk** at 313, 388 and 390"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        228,
+        266,
+        740,
+        753,
+        1031
+      ],
+      "detail": "twenty lines carry trailing whitespace, and most of them are indentation-only blank lines inside class bodies - 228, 251, 260 in `ExchangeEconomy`, 656, 675 in `ProductionEconomy`, 973, 984 in `Monopoly` - plus the per-parameter signature lines at 229-231, 657-661 and 974-978. Five lambdas are assigned to names where PEP8 asks for a `def`: `supply_inv` and `demand_inv` (740-741), `marg_cost`, `marg_rev` and `demand_inv` (1030-1032). Ten lines exceed 79 characters, four of them past 110: 1047 at 116, 1046 at 113, 753 and 754 at 112. 1031 multiplies by a redundant literal, `-2 * 1 / μ * Π * Π * x`. And 266, 690 and 999 call the built-in `any()` on a NumPy array (`if any(c < 0)`, `if any(Π @ c - b >= 0)`) rather than `np.any()`, which works only because the arrays are one-dimensional and raises on anything else - in a lecture whose whole subject is the $n$-good generalisation. One stray item: 1027 is the comment `# compute` with nothing after it"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        91,
+        360,
+        1126
+      ],
+      "detail": "1126 and 1132 write the area under the inverse supply curve as `h c + \\frac{1}{2} c^\\top J c`, but $h$ and $c$ are both $n \\times 1$ (566, 99), so $hc$ is not defined - the same quantity is written correctly as $h^\\top q$ at 551 and $h^\\top q$ at 912, and the first-order condition at 1141 differentiates as though the transpose were there. The transpose has simply been dropped from the welfare criterion, twice, in the section that states the first welfare theorem. 91-93 introduces $\\Pi$ as $m \\times n$ and $b$ as $m \\times 1$ and then never uses $m$ again: every formula from 106 onward, and every instance in the code, has $\\Pi$ square, and `ExchangeEconomy` inverts it outright at 263 - so the extra dimension is notation the lecture carries and never needs. And 360 defines two symbols in one chained assignment, `(1+r) := R := \\frac{p_1}{p_2}`, of which neither $R$ nor $r$ is used anywhere else in the lecture"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        35,
+        292,
+        843
+      ],
+      "detail": "35-47 spends thirteen lines on two bulleted lists of eight economists, each a bare Wikipedia link with no accompanying claim about what any of them contributed - the two welfare theorems at 52-54 do the work those names were introduced for. The Marshallian/Hicksian distinction is set up four separate times: named at 144, explained in a `{note}` at 177-183, explained again as a two-bullet contrast at 287-290, and then explained a third time at 292-302 under \"contemplate different mental experiments\", after which 304 says it will be discussed \"more below\" and it is not. And 843-847 is a section heading whose entire body is two bullets in the future tense (\"we'll do some experiments like those above\", plus the stale TODO), followed by four code cells with no narration - contrast the single-good example at 768-840, which states what it will do in four bullets and then says what each experiment showed (\"this raises both the equilibrium price and quantity\", 840). Smaller edits: 390 is ungrammatical (\"our consumer confronts **risk** means in particular that\"), 442 switches to \"his/her\" where 134 and 275 use \"he\" and \"his\", and 646 refers to something \"described above in the main text\" while itself being the main text"
+    }
   ],
   "strengths": [
     "The three linear-algebra identities the lecture will actually use are stated up front, once, with their dimensions declared (65-85), and then every derivative in the file is a direct application of one of them - $\\partial L/\\partial c$ at 159-160, $\\partial C(q)/\\partial q$ at 569, $\\partial p^\\top q/\\partial q$ at 580, and the first-order condition of the planning problem at 1141. A reader who takes the three formulas on faith can follow the whole lecture",
@@ -38,5 +90,9 @@
     "Reconcile `H` between the plotting helpers and the classes: `competitive_equilibrium` and `equilibrium_with_monopoly` use `H = .5 * (J + J.T)` (681, 991) while `compute_surplus` and both plot functions use `H = J` (702, 733, 1020) - identical for the 1x1 case they are called with today, and wrong the moment either is used with a non-symmetric two-good `J` like the one at 857",
     "Sweep the mechanical items: the Title Case H2 at 273 (\"Digression: Marshallian and Hicksian demand curves\" - note \"Marshallian\" and \"Hicksian\" are proper adjectives and correct, so only the rest of the heading is at issue), the three spelled-out `beta` identifiers at 368, 371 and 373 which should be `β` (qe-code-002), the four Title Case axis labels at 763-764 and 1060-1061 (qe-fig-006), `lw=2` on the five line plots (750, 751, 1042, 1043, 1044), the ten internal double spaces, the two-sentence paragraph at 482, and the ungrammatical 390 and \"his/her\" at 442"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "cb17e2f143b8af0580a8a0cea2351561940aedff"
+  }
 }

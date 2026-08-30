@@ -2,16 +2,62 @@
   "series": "lecture-dp",
   "lecture": "chang_credible",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 9, "lines": [328, 336, 349, 561, 566, 693, 695, 725, 771],
-     "detail": "every bold in this file is a structural label and every defined term is in italic - the rule inverted twice over. Bold is used for '**Definition:**' (328, 336), '**A credible government policy with a recursive representation**' (349), '**Proposition:**' (561, 566) and '**Step 1**' through '**Step 4**' (693, 695, 725, 771), all of which want headings or `{prf:}` directives. Meanwhile the terms the lecture actually defines are italicised: *credible public policy* / *sustainable plan* (66), *gradual deflation* (103), *value of money* (170), *government policy* / *price system* / *allocation* (330-332), *competitive equilibrium* (339), *credible* (385), *sustainable plan* again (429). So a reader scanning for definitions finds section labels instead"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [399, 625],
-     "detail": "line 399 attaches the wrong function to the continuation value. The five-tuple at 372-376 assigns $w_{t+1} = \\chi(h_t, w_t, \\theta_t)$ and $\\theta_{t+1} = \\Psi(h_t, w_t, \\theta_t)$, but the sentence explaining the credibility inequality says 'a government attains a weakly higher lifetime utility with continuation value $w_{t+1} = \\Psi(h_t, w_t, \\theta_t)$' - $\\Psi$ where $\\chi$ is meant, in the one sentence that says why credibility holds. Line 625 has the matching problem in the other central derivation: the household constraint is $m(h)(u'(f(x(h))) - v'(m(h))) \\leq \\beta\\theta'(h)$ in {eq}`eqn_chang16` (547) and in both Step 2 and Step 3 restatements (717, 757), but at 625 it is written with a plus - and 625 sits inside the passage arguing that $E(Z)$ is 'equivalent to the $\\tilde D(Z)$ operator but simpler to implement', which is exactly where the reader needs to be able to check the two against each other"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [76, 423, 429, 566, 582],
-     "detail": "line 76 ends a bullet with the placeholder 'but $\\ldots$.'; line 423 has a stray word - 'For a credible government plan, we the two-dimensional state vector $(w_t, \\theta_t)$ encodes history dependence'; line 429 ends the definition of a sustainable plan with a full stop where a colon belongs ('are said to constitute a *sustainable plan* (SP) if.'); line 566 reads '**Proposition:**.'; line 582 says 'by iterating on {eq}`chang501`, which we repeat here for convenience' and then reprints the whole five-equation system at 584-592, thirteen lines after the labelled original at 368-378"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [466, 693],
-     "detail": "line 466-467 announces a picture and then does not draw one: 'Now recall the within-period timing protocol, which we can depict $(h,x) \\rightarrow m = qM \\rightarrow y = c$' - an inline arrow chain in math mode standing in for the diagram the sentence promises, and the within-period ordering is what the whole confirm-or-disappoint structure hinges on. Second, the four-step algorithm at 693-780 is a set-shrinking iteration - build a large initial polytope, compute the best deviation value, cut the set back with a subgradient linear program, stop when consecutive sets are close - and the only figure in the 882-line lecture (833-858, called at 860 and 879) shows the converged sets. One panel with $S_0 \\supset S_1 \\supset S_2 \\supset \\cdots \\supset S$, or the subgradient hyperplanes of Step 3, would make the operator concrete; the plotting machinery for polytope extreme points already exists at 838-844"},
-    {"rule": "qe-code-001", "count": 3, "lines": [829, 855, 869],
-     "detail": "line 829 declares `def plot_equilibria(ChangModel):` - a parameter in CapWords that shadows the class of the same name being passed into it (PEP8 asks for lowercase parameter names, and `model` or `ch` would also read better at the call sites 860 and 879). Line 855 under-indents the continuation of `ax.annotate(...)`: `R[1]), fontsize=18)` sits below the `xytext=(` opening paren rather than aligned with it (E128). Line 869 indents the continuation of the `ChangModel(...)` call by four spaces instead of aligning it with the opening delimiter, and writes `h_max=1/0.8` unspaced where the same argument at 818 is `h_max=2`"}
+    {
+      "rule": "qe-writing-005",
+      "count": 9,
+      "lines": [
+        328,
+        336,
+        349,
+        561,
+        566,
+        693,
+        695,
+        725,
+        771
+      ],
+      "detail": "every bold in this file is a structural label and every defined term is in italic - the rule inverted twice over. Bold is used for '**Definition:**' (328, 336), '**A credible government policy with a recursive representation**' (349), '**Proposition:**' (561, 566) and '**Step 1**' through '**Step 4**' (693, 695, 725, 771), all of which want headings or `{prf:}` directives. Meanwhile the terms the lecture actually defines are italicised: *credible public policy* / *sustainable plan* (66), *gradual deflation* (103), *value of money* (170), *government policy* / *price system* / *allocation* (330-332), *competitive equilibrium* (339), *credible* (385), *sustainable plan* again (429). So a reader scanning for definitions finds section labels instead"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        399,
+        625
+      ],
+      "detail": "line 399 attaches the wrong function to the continuation value. The five-tuple at 372-376 assigns $w_{t+1} = \\chi(h_t, w_t, \\theta_t)$ and $\\theta_{t+1} = \\Psi(h_t, w_t, \\theta_t)$, but the sentence explaining the credibility inequality says 'a government attains a weakly higher lifetime utility with continuation value $w_{t+1} = \\Psi(h_t, w_t, \\theta_t)$' - $\\Psi$ where $\\chi$ is meant, in the one sentence that says why credibility holds. Line 625 has the matching problem in the other central derivation: the household constraint is $m(h)(u'(f(x(h))) - v'(m(h))) \\leq \\beta\\theta'(h)$ in {eq}`eqn_chang16` (547) and in both Step 2 and Step 3 restatements (717, 757), but at 625 it is written with a plus - and 625 sits inside the passage arguing that $E(Z)$ is 'equivalent to the $\\tilde D(Z)$ operator but simpler to implement', which is exactly where the reader needs to be able to check the two against each other"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        76,
+        423,
+        429,
+        566,
+        582
+      ],
+      "detail": "line 76 ends a bullet with the placeholder 'but $\\ldots$.'; line 423 has a stray word - 'For a credible government plan, we the two-dimensional state vector $(w_t, \\theta_t)$ encodes history dependence'; line 429 ends the definition of a sustainable plan with a full stop where a colon belongs ('are said to constitute a *sustainable plan* (SP) if.'); line 566 reads '**Proposition:**.'; line 582 says 'by iterating on {eq}`chang501`, which we repeat here for convenience' and then reprints the whole five-equation system at 584-592, thirteen lines after the labelled original at 368-378"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        466,
+        693
+      ],
+      "detail": "line 466-467 announces a picture and then does not draw one: 'Now recall the within-period timing protocol, which we can depict $(h,x) \\rightarrow m = qM \\rightarrow y = c$' - an inline arrow chain in math mode standing in for the diagram the sentence promises, and the within-period ordering is what the whole confirm-or-disappoint structure hinges on. Second, the four-step algorithm at 693-780 is a set-shrinking iteration - build a large initial polytope, compute the best deviation value, cut the set back with a subgradient linear program, stop when consecutive sets are close - and the only figure in the 882-line lecture (833-858, called at 860 and 879) shows the converged sets. One panel with $S_0 \\supset S_1 \\supset S_2 \\supset \\cdots \\supset S$, or the subgradient hyperplanes of Step 3, would make the operator concrete; the plotting machinery for polytope extreme points already exists at 838-844"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        829,
+        855,
+        869
+      ],
+      "detail": "line 829 declares `def plot_equilibria(ChangModel):` - a parameter in CapWords that shadows the class of the same name being passed into it (PEP8 asks for lowercase parameter names, and `model` or `ch` would also read better at the call sites 860 and 879). Line 855 under-indents the continuation of `ax.annotate(...)`: `R[1]), fontsize=18)` sits below the `xytext=(` opening paren rather than aligned with it (E128). Line 869 indents the continuation of the `ChangModel(...)` call by four spaces instead of aligning it with the opening delimiter, and writes `h_max=1/0.8` unspaced where the same argument at 818 is `h_max=2`"
+    }
   ],
   "strengths": [
     "The lecture states its exact delta from its companion in one line - 'The only change -- and it is a substantial one -- is the timing protocol for making government decisions' (41) - and then itemises precisely what $\\tilde D(Z)$ adds to the $D(Z)$ of {doc}`chang_ramsey`: all of the old restrictions plus the sustainability requirement, glossed as 'the government wants to implement it at all times after all histories' (75-79)",
@@ -35,5 +81,9 @@
     "chang_credible.md, line 568 - both `qe-math-002` hits are false positives. The line is 'Monotonicity of $\\tilde D$: $Z \\subset Z'$ implies $\\tilde D(Z) \\subset \\tilde D(Z')$' - `Z'` is a second *set*, not a transpose of the first, and the prime here means 'another one of these' exactly as $\\theta'$, $w'$, $m(h)$ / $m'$ do throughout this lecture. This is the third distinct base on which the 'apostrophe followed by a factor' guard has leaked in this series (`u'` in the ifp files, `s'` in discrete_dp.md, `Z'` here); in each case the base is a scalar or a set, never matrix-like.",
     "chang_credible.md - a missing check that this file makes the case for. Three of its central definitions open a `\\Bigl\\{` in one display block and close the matching `\\Bigr\\}` in a later, separate one (the space $S$ at 447-457, the operator $\\tilde D(Z)$ at 504-552, and $E(Z)$ from 647), and line 625 carries an unmatched `\\}`. None of it is visible to any current rule, and all of it is mechanically detectable: per display block, count `\\left`/`\\right`, `\\Bigl`/`\\Bigr`, `\\bigl`/`\\bigr` and brace pairs and require balance. amss.md 402-413 has the same defect in a different form (a `\\Bigl[` closed by a `\\biggr\\}`), so this is not a one-off. Given that qe-math-006 already exists to catch a build-risk in display math, a delimiter-balance check would sit naturally beside it.",
     "chang_credible.md, lines 328-336 and 561-566 - the Admonitions category is reported N/A ('no admonitions, exercises or solutions'), which is accurate and hides something. The lecture states two definitions and two propositions, as bold labels rather than `{prf:definition}` / `{prf:proposition}` directives, so `qe-admon-004` ('prf: prefix for proof directives') has nothing to inspect and the category drops out of the score entirely. This is the same shape as the blind spot I reported for discrete_dp.md, where a plain-heading exercise left Admonitions at a clean 10/10. A presence check - bold or heading text matching Definition/Proposition/Theorem/Lemma/Proof with no corresponding `prf:` directive in the file - would separate 'no theorem-like content' from 'theorem-like content written by hand'."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "7d37c2a8df6c5ba00f9e60a1fef13af9497f30f7"
+  }
 }

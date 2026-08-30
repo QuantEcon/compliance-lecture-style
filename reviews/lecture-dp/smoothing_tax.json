@@ -2,18 +2,73 @@
   "series": "lecture-dp",
   "lecture": "smoothing_tax",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [452, 861, 232, 921],
-     "detail": "three statements about the same quantity contradict each other, and one of them is printed to the reader as program output. The `msg` string at 452-456 says 'Our assumptions imply that the government always purchases 0 units of the Arrow peace security'; the code comment at 460-461 says 'since the spending on Arrow peace security is not 0 anymore after we change b0 to 1'; and the prose at 501-502 says 'the government always purchase $1$ units of the Arrow security that pays off in peace time'. The comment is the only one that admits the change, and the wrong statement is the one that renders. Second, Example 5 is short a state: `g_ex5` has seven entries and `P_ex5` is 7x7 (852-859), 847 says 'the seven states', but `states_ex5` lists six (861), and `display` loops `for i in range(len(self.states))` at 628, 634 and 642-643 - so the seventh state's expenditure, tax and return figures are silently dropped from every printout. Third, the only `{eq}` reference in the file (232, '`consumption_incomplete()` that uses {eq}`cs_12` and {eq}`cs_13`') points at labels defined in `smoothing.md`; this file defines no equation labels at all, so a reader is sent to two numbered equations with no indication that they are in a different lecture. Fourth, 921-928 is four consecutive sentences about the same two lectures, each giving them a differently-worded label: 'optimal taxation in an LQ economy <lqramsey>' (921) and 'Optimal Taxation in an LQ Economy <lqramsey>' (924, 928), 'recursive optimal taxation <opt_tax_recur>' (921) and 'Optimal Taxation with State-Contingent Debt <opt_tax_recur>' (926, 928) - and 872 and 904 do the same to `<smoothing>`, which 37, 75 and 98 label in Title Case"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [78, 82, 26, 425, 501, 515],
-     "detail": "78 collapses into fragments: 'the government's holdings of one-period risk-free bonds coming maturing at the due at the beginning of time $t$' - three prepositional starts and no finish. 82 has 'We'll spend most of this lecture studying acquire finite-state Markov specification'. 26 promises a library and does not name it: 'this lecture uses the  library:', where the double space is the gap the word `quantecon` fell out of (the cell below installs it). 425 has 'Here's code that itinitializes government assets'. 501 has 'the government always purchase $1$ units'. 515-516 ends a section with 'We recommend plugging the quantities computed above into the government budget constraints in the two Markov states and staring.' Also 336 ('the government has sold an Arrow securities paying off'), 722 ('followed by a  permanent peace .') and 808 ('We ssume that $b_0 = 1$')"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [42, 333, 416, 73, 371],
-     "detail": "the two terms the lecture is organised around are bolded where they are mentioned and italicised where they are defined - '**complete markets** tradition' and '**incomplete markets** tradition' at 39-40, then '*Complete markets* allow a government to buy or sell claims contingent on all possible Markov states' at 42 and '*Incomplete markets* allow a government to buy or sell only a limited set of securities' at 44, which are the actual definitions. Bold then does emphasis duty: 'it means the government **is owed** $b_i$ or **owes** $-b_i$' (333), 'we'll feed in a **particular** assumed path' (416), '**complete-markets** models' and '**incomplete-markets** model' (921, 930). Meanwhile the genuine definitions are italic - 'a consumer's *debt* as a government's *assets*' (73), '$b_i$ is the government's level of *assets*' (329), 'claims *owed to the government*' (331) - and 371 and 907 use bold as a run-in label (`**Convention:**`, `**Returns:**`) where a `{note}` directive is what is wanted"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [579, 682, 515],
-     "detail": "fifteen figures are produced by one `display` method (579-615) called five times, and not one of them can be referred to: they carry no `:name:`, three embedded `set_title`/`plt.title` calls each (585, 593, 604), and the checker cannot even see twelve of them because they come from a helper. The third of the three - the cumulative-return path on a twin axis against government expenditures (603-615) - is the lecture's one original exhibit, showing exactly the point 511-513 makes about high wartime returns on war insurance, and it arrives unlabelled after two other figures with no caption to say what to look for. Second, each of the five examples is specified by a Markov matrix given only as an array (682-688, 727-733, 761-768, 795-802, 835-844) with a state-name list in the code (705, 745, 782, 818, 861); the examples exist to trace paths like peace to war to postwar, and a small transition diagram per example would make that legible in a way a 5x5 or 7x7 matrix of $1-\\lambda$ and $\\phi$ entries does not. Third, 515-516 substitutes an instruction to the reader for a figure - 'We recommend plugging the quantities computed above into the government budget constraints in the two Markov states and staring' - where the budget identity $T_i + b_i = G_i + \\sum_j Q_{ij}b_j$ (317) checked in one bar chart or one printed table would settle it"},
-    {"rule": "qe-code-001", "count": 5, "lines": [584, 641, 572, 484, 213],
-     "detail": "the `display` method builds three figures three different ways: 584-591 opens with `plt.figure()` and the `plt.` global interface, 593-601 opens with `plt.title` and no `plt.figure()` at all (relying on the previous `plt.show()` having closed the last one), and 603-615 uses `fig, ax = plt.subplots()`. 641 is an f-string with no placeholders, `print(f\"Ex-post returns to purchase of Arrow securities:\")` (F541). 572-573 uses a backslash continuation where parentheses would wrap the tuple assignment. 484-485 binds `Π = np.reciprocal(Q)` - taking the symbol this series uses for the Markov transition matrix (`Π` in `tax_smoothing_1` line 459 and `tax_smoothing_2` line 462) and giving it to a matrix of gross returns while `P`, the actual transition matrix, sits in the same cell at 434 - and then aliases it once more as `exret` for no gain. And 780 has a space before a closing bracket, `[θ,    0,    0,  1-θ ]`. Note that the aligned multiple spaces in the five `P_ex*` literals (701-703, 741-743, 777-780, 812-816, 853-859) are the matrix-notation exemption and must be left alone"},
-    {"rule": "qe-math-009", "count": 2, "lines": [364, 910],
-     "detail": "364 writes the $T$-period compounded return as $R^T(s_{t+T}, \\ldots, s_t)$, loading a third meaning onto the letter $T$ in a lecture where $T_i$ and $T_t$ are tax collections (317, 342, 441, 623) and $T$ is also the horizon inside the same expression's own subscripts; the code calls the object `RT_path` (399) and computes it with `np.cumprod`, so $R_T$ or $R^{(T)}$ - or naming it something other than $R$ - would remove the collision. It also makes the expression indistinguishable from a transpose, which is why the checker miscounts it (see scanner_doubts). 910 puts the conditioning bar outside the operator: `R(x_{t+1} | x_t) = \\frac{b(x_{t+1})}{\\beta E b(x_{t+1})| x_t}` should be `\\beta \\mathbb{E}[ b(x_{t+1}) \\mid x_t ]`; as written the $| x_t$ dangles after the expectation's argument, and the bare `E` is inconsistent with the `\\mathbb E` used at 877, 884, 892 and 898"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        452,
+        861,
+        232,
+        921
+      ],
+      "detail": "three statements about the same quantity contradict each other, and one of them is printed to the reader as program output. The `msg` string at 452-456 says 'Our assumptions imply that the government always purchases 0 units of the Arrow peace security'; the code comment at 460-461 says 'since the spending on Arrow peace security is not 0 anymore after we change b0 to 1'; and the prose at 501-502 says 'the government always purchase $1$ units of the Arrow security that pays off in peace time'. The comment is the only one that admits the change, and the wrong statement is the one that renders. Second, Example 5 is short a state: `g_ex5` has seven entries and `P_ex5` is 7x7 (852-859), 847 says 'the seven states', but `states_ex5` lists six (861), and `display` loops `for i in range(len(self.states))` at 628, 634 and 642-643 - so the seventh state's expenditure, tax and return figures are silently dropped from every printout. Third, the only `{eq}` reference in the file (232, '`consumption_incomplete()` that uses {eq}`cs_12` and {eq}`cs_13`') points at labels defined in `smoothing.md`; this file defines no equation labels at all, so a reader is sent to two numbered equations with no indication that they are in a different lecture. Fourth, 921-928 is four consecutive sentences about the same two lectures, each giving them a differently-worded label: 'optimal taxation in an LQ economy <lqramsey>' (921) and 'Optimal Taxation in an LQ Economy <lqramsey>' (924, 928), 'recursive optimal taxation <opt_tax_recur>' (921) and 'Optimal Taxation with State-Contingent Debt <opt_tax_recur>' (926, 928) - and 872 and 904 do the same to `<smoothing>`, which 37, 75 and 98 label in Title Case"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        78,
+        82,
+        26,
+        425,
+        501,
+        515
+      ],
+      "detail": "78 collapses into fragments: 'the government's holdings of one-period risk-free bonds coming maturing at the due at the beginning of time $t$' - three prepositional starts and no finish. 82 has 'We'll spend most of this lecture studying acquire finite-state Markov specification'. 26 promises a library and does not name it: 'this lecture uses the  library:', where the double space is the gap the word `quantecon` fell out of (the cell below installs it). 425 has 'Here's code that itinitializes government assets'. 501 has 'the government always purchase $1$ units'. 515-516 ends a section with 'We recommend plugging the quantities computed above into the government budget constraints in the two Markov states and staring.' Also 336 ('the government has sold an Arrow securities paying off'), 722 ('followed by a  permanent peace .') and 808 ('We ssume that $b_0 = 1$')"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        42,
+        333,
+        416,
+        73,
+        371
+      ],
+      "detail": "the two terms the lecture is organised around are bolded where they are mentioned and italicised where they are defined - '**complete markets** tradition' and '**incomplete markets** tradition' at 39-40, then '*Complete markets* allow a government to buy or sell claims contingent on all possible Markov states' at 42 and '*Incomplete markets* allow a government to buy or sell only a limited set of securities' at 44, which are the actual definitions. Bold then does emphasis duty: 'it means the government **is owed** $b_i$ or **owes** $-b_i$' (333), 'we'll feed in a **particular** assumed path' (416), '**complete-markets** models' and '**incomplete-markets** model' (921, 930). Meanwhile the genuine definitions are italic - 'a consumer's *debt* as a government's *assets*' (73), '$b_i$ is the government's level of *assets*' (329), 'claims *owed to the government*' (331) - and 371 and 907 use bold as a run-in label (`**Convention:**`, `**Returns:**`) where a `{note}` directive is what is wanted"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        579,
+        682,
+        515
+      ],
+      "detail": "fifteen figures are produced by one `display` method (579-615) called five times, and not one of them can be referred to: they carry no `:name:`, three embedded `set_title`/`plt.title` calls each (585, 593, 604), and the checker cannot even see twelve of them because they come from a helper. The third of the three - the cumulative-return path on a twin axis against government expenditures (603-615) - is the lecture's one original exhibit, showing exactly the point 511-513 makes about high wartime returns on war insurance, and it arrives unlabelled after two other figures with no caption to say what to look for. Second, each of the five examples is specified by a Markov matrix given only as an array (682-688, 727-733, 761-768, 795-802, 835-844) with a state-name list in the code (705, 745, 782, 818, 861); the examples exist to trace paths like peace to war to postwar, and a small transition diagram per example would make that legible in a way a 5x5 or 7x7 matrix of $1-\\lambda$ and $\\phi$ entries does not. Third, 515-516 substitutes an instruction to the reader for a figure - 'We recommend plugging the quantities computed above into the government budget constraints in the two Markov states and staring' - where the budget identity $T_i + b_i = G_i + \\sum_j Q_{ij}b_j$ (317) checked in one bar chart or one printed table would settle it"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        584,
+        641,
+        572,
+        484,
+        213
+      ],
+      "detail": "the `display` method builds three figures three different ways: 584-591 opens with `plt.figure()` and the `plt.` global interface, 593-601 opens with `plt.title` and no `plt.figure()` at all (relying on the previous `plt.show()` having closed the last one), and 603-615 uses `fig, ax = plt.subplots()`. 641 is an f-string with no placeholders, `print(f\"Ex-post returns to purchase of Arrow securities:\")` (F541). 572-573 uses a backslash continuation where parentheses would wrap the tuple assignment. 484-485 binds `Π = np.reciprocal(Q)` - taking the symbol this series uses for the Markov transition matrix (`Π` in `tax_smoothing_1` line 459 and `tax_smoothing_2` line 462) and giving it to a matrix of gross returns while `P`, the actual transition matrix, sits in the same cell at 434 - and then aliases it once more as `exret` for no gain. And 780 has a space before a closing bracket, `[θ,    0,    0,  1-θ ]`. Note that the aligned multiple spaces in the five `P_ex*` literals (701-703, 741-743, 777-780, 812-816, 853-859) are the matrix-notation exemption and must be left alone"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        364,
+        910
+      ],
+      "detail": "364 writes the $T$-period compounded return as $R^T(s_{t+T}, \\ldots, s_t)$, loading a third meaning onto the letter $T$ in a lecture where $T_i$ and $T_t$ are tax collections (317, 342, 441, 623) and $T$ is also the horizon inside the same expression's own subscripts; the code calls the object `RT_path` (399) and computes it with `np.cumprod`, so $R_T$ or $R^{(T)}$ - or naming it something other than $R$ - would remove the collision. It also makes the expression indistinguishable from a transpose, which is why the checker miscounts it (see scanner_doubts). 910 puts the conditioning bar outside the operator: `R(x_{t+1} | x_t) = \\frac{b(x_{t+1})}{\\beta E b(x_{t+1})| x_t}` should be `\\beta \\mathbb{E}[ b(x_{t+1}) \\mid x_t ]`; as written the $| x_t$ dangles after the expectation's argument, and the bare `E` is inconsistent with the `\\mathbb E` used at 877, 884, 892 and 898"
+    }
   ],
   "strengths": [
     "The isomorphism is not asserted but executed. 68-78 gives the relabelling as a four-item dictionary (consumption to tax collections, utility to loss, nonfinancial income to purchases, consumer debt to government assets) with the substitutions written out as $c_t = T_t$, $y_t = G_t$, $-b_t = a_t$; 98 then reuses the code from `smoothing` unchanged; and 281-301 re-plots the identical arrays with tax labels, so the reader sees the same numbers carrying two economic readings",
@@ -40,5 +95,9 @@
   ],
   "scanner_doubts": [
     "smoothing_tax.md line 364 - qe-math-002 is reported with count 1 and the single hit is a false positive. The line is `R^T(s_{t+T}, s_{t+T-1}, \\ldots, s_t) \\equiv R(s_{t+1} | s_t) R (s_{t+2} | s_{t+1} ) \\cdots R(s_{t+T} | s_{t+T-1} )`, and the lecture's own prose two lines above says what it is: 'The cumulative return earned from putting $1$ unit of time $t$ goods into the government portfolio ... and then rolling over the proceeds into the government portfolio each period thereafter' (360-361). The superscript is a repetition count, the parenthesis is an argument list of the same shape as $R(j \\mid i)$ at 357, and the code names the object `RT_path` and builds it with `np.cumprod` (399-401). The `supT` branch of check_math_002 (tools/qestyle_rules.py:463-470) admits `(` into its trailing-factor lookahead, so a capital base applied to an argument list reads as a transpose applied to a parenthesised factor. I tested three fixes and measured each over all five series at the pinned snapshot; the `supT` branch fires 37 times corpus-wide and qe-math-002 totals 1599. (a) Drop `(` from the lookahead: 37 -> 25. (b) Skip `(` when the base is a single capital that also appears as `BASE(` elsewhere in the file's math: 37 -> 31. Both are WRONG and I recommend against them: the extra hits they remove are all in `calvo_machine_learn.md` (both copies), where `\\vec{\\mu}^T (\\frac{c}{2} \\cdot \\vec{\\beta} \\cdot \\mathbf{I}) \\vec{\\mu}` at its line 870, `\\vec{\\mu}^T (M - F) \\vec{\\mu}` at 880 and `B^T (h_2 \\cdot \\vec{\\beta} \\cdot \\mathbf{I})` at 865 and 867 are genuine transposes of a vector against a parenthesised factor - variant (a) silences 5 of them and variant (b) silences 2. (c) The narrow form works: skip only when the base is an undecorated single capital, the next character is `(`, and the balanced group it opens contains a top-level comma or a conditioning bar - i.e. it is an argument list, not a factor. That gives 37 -> 35 on the branch and 1599 -> 1597 on the rule, and the only two hits removed anywhere in the corpus are this line in the two byte-identical copies of `smoothing_tax.md`; `calvo_machine_learn` is untouched at 14, and no other file's count changes. I recommend (c), and I recommend recording (a) and (b) as tested and rejected, since the obvious fix here is the one that breaks the quadratic forms."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "9f8c37c0997605cfac52c3faa797c9b40723370c"
+  }
 }

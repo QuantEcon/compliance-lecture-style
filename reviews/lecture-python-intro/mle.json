@@ -2,15 +2,55 @@
   "series": "lecture-python-intro",
   "lecture": "mle",
   "judgment": [
-    {"rule": "qe-code-001", "count": 14,
-     "lines": [97, 254, 255, 258, 325, 345, 374, 385, 404, 407, 428, 432, 433, 484],
-     "detail": "spaces around `=` in keyword arguments, which PEP8 rules out: `scale = exp(μ_hat)` (254, 404), `pareto(b = b_hat, scale = xm_hat)` (325, 428), `expon(scale = 1/λ_hat)` (484), `bins= 500` (433); missing space after commas in `np.linspace(0,50,10000)` (255), `set_xlim(-1,20)` (258), `set_ylim(0,1.75)` (345), `set_xlim(0,50)` (385, 407), `set_ylim(0,0.65)` (432); and whitespace before a closing bracket plus a comment with no space after the hash in `df.loc[df['n_wealth'] > 1 ]   #restrcting data...` (97, repeated at 374)"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [146, 191, 202],
-     "detail": "the lecture contains no bold and no italic anywhere, so all three terms it defines are introduced in plain text with only an external hyperlink to carry the weight: maximum likelihood estimation (146), the likelihood function (191) and the log likelihood function (202)"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [363, 440],
-     "detail": "line 363 states \"The plots above suggested that the lognormal distribution is optimal\" four lines after 359 states \"There is no 'best' distribution\", and two sections later the lognormal is rejected for the tail (414); and the H3 at 440, \"So what is the best distribution?\", repeats the text of the H2 at 357 that contains it, so the table of contents shows the same question nested inside itself"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [214, 442],
-     "detail": "line 214 drops into the abbreviation \"wrt\" in the one sentence that sets up the two derivations that follow; and 442-445 restates 359-361 almost word for word (\"there is no 'best' distribution --- each choice is an assumption\") thirty lines after the original"}
+    {
+      "rule": "qe-code-001",
+      "count": 14,
+      "lines": [
+        97,
+        254,
+        255,
+        258,
+        325,
+        345,
+        374,
+        385,
+        404,
+        407,
+        428,
+        432,
+        433,
+        484
+      ],
+      "detail": "spaces around `=` in keyword arguments, which PEP8 rules out: `scale = exp(μ_hat)` (254, 404), `pareto(b = b_hat, scale = xm_hat)` (325, 428), `expon(scale = 1/λ_hat)` (484), `bins= 500` (433); missing space after commas in `np.linspace(0,50,10000)` (255), `set_xlim(-1,20)` (258), `set_ylim(0,1.75)` (345), `set_xlim(0,50)` (385, 407), `set_ylim(0,0.65)` (432); and whitespace before a closing bracket plus a comment with no space after the hash in `df.loc[df['n_wealth'] > 1 ]   #restrcting data...` (97, repeated at 374)"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        146,
+        191,
+        202
+      ],
+      "detail": "the lecture contains no bold and no italic anywhere, so all three terms it defines are introduced in plain text with only an external hyperlink to carry the weight: maximum likelihood estimation (146), the likelihood function (191) and the log likelihood function (202)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        363,
+        440
+      ],
+      "detail": "line 363 states \"The plots above suggested that the lognormal distribution is optimal\" four lines after 359 states \"There is no 'best' distribution\", and two sections later the lognormal is rejected for the tail (414); and the H3 at 440, \"So what is the best distribution?\", repeats the text of the H2 at 357 that contains it, so the table of contents shows the same question nested inside itself"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        214,
+        442
+      ],
+      "detail": "line 214 drops into the abbreviation \"wrt\" in the one sentence that sets up the two derivations that follow; and 442-445 restates 359-361 almost word for word (\"there is no 'best' distribution --- each choice is an assumption\") thirty lines after the original"
+    }
   ],
   "strengths": [
     "The lecture is framed around a question a policymaker would actually ask - how much revenue does this wealth tax raise - and the answer changes by an order of magnitude when the distributional assumption changes (330-336), which makes the point about assumptions land",
@@ -28,5 +68,9 @@
     "Bold the three defined terms at their point of definition, cut the restatement at 442-445, and give the H3 at 440 a distinct heading",
     "Put the two derivations at 218-223 and 227-235 in `aligned` environments - as written they use bare `\\\\` line breaks inside `$$`, and settle the `\\hat{x_m}` versus `\\hat{x}_m` inconsistency at 304 and 306"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "a740b035526ad6e3abeae4a887431ce4bc699898"
+  }
 }

@@ -2,14 +2,46 @@
   "series": "lecture-python.myst",
   "lecture": "lq_robust_bewley",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 2, "lines": [128, 505],
-     "detail": "the two quantitative claims most in need of a picture get printed tables instead. The observational-equivalence locus $\\hat\\beta(\\sigma)$ (128) is the central object of the lecture and is never drawn, although the lecture computes $\\underline\\sigma$ at 255 and a table of four types at 300-307 - a plot of $\\hat\\beta$ over $(\\underline\\sigma, 0]$ with the breakdown point and the four types marked would carry the whole argument in one frame. Likewise the cross-section check at 505-509 prints four rows of variance against $t\\alpha^2$, where the companion lecture lq_bewley_complete_markets plots exactly this comparison"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [404, 46],
-     "detail": "line 404 bolds **its own** for emphasis - 'simulate each type using **its own** solved rule' - while line 314 italicises the identical phrase for the identical purpose, *its own*, ninety lines earlier; and line 46 bolds **same consumption-saving rule** in a bullet where the emphasis is on 'same', not on a term being defined. The lecture's genuine definitions are bolded correctly (**Bewley observational-equivalence locus** 125, **worst-case expected consumption path** 227) and its other emphases are italic (*do* / *believe* 213, *drift away* 235, *not* 528, 615)"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [188, 199],
-     "detail": "line 188 is a 45-word sentence inside the proof that states two market-clearing conditions, asserts they are the benchmark conditions, gives the rate at which they hold, and defers the reason to another lecture - four moves in one sentence, in the one place a reader is checking each step; line 199 runs to 38 words with a three-way disjunction at the end. Everywhere else the lecture holds to one claim per paragraph, which is what makes these two visible"},
-    {"rule": "qe-code-001", "count": 6, "lines": [268, 273, 283, 290, 327, 351],
-     "detail": "six one-line docstrings are written with a single pair of double quotes rather than triple quotes (PEP 257, referenced by PEP 8): `\"Worst-case persistence ζ(σ) of marginal utility, eq:rbew-zeta.\"` (268) and similarly at 273, 283, 290, 327 and 351. The one multi-line docstring in the lecture, at 712-717, does use triple quotes, so the file is inconsistent with itself"}
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        128,
+        505
+      ],
+      "detail": "the two quantitative claims most in need of a picture get printed tables instead. The observational-equivalence locus $\\hat\\beta(\\sigma)$ (128) is the central object of the lecture and is never drawn, although the lecture computes $\\underline\\sigma$ at 255 and a table of four types at 300-307 - a plot of $\\hat\\beta$ over $(\\underline\\sigma, 0]$ with the breakdown point and the four types marked would carry the whole argument in one frame. Likewise the cross-section check at 505-509 prints four rows of variance against $t\\alpha^2$, where the companion lecture lq_bewley_complete_markets plots exactly this comparison"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        404,
+        46
+      ],
+      "detail": "line 404 bolds **its own** for emphasis - 'simulate each type using **its own** solved rule' - while line 314 italicises the identical phrase for the identical purpose, *its own*, ninety lines earlier; and line 46 bolds **same consumption-saving rule** in a bullet where the emphasis is on 'same', not on a term being defined. The lecture's genuine definitions are bolded correctly (**Bewley observational-equivalence locus** 125, **worst-case expected consumption path** 227) and its other emphases are italic (*do* / *believe* 213, *drift away* 235, *not* 528, 615)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        188,
+        199
+      ],
+      "detail": "line 188 is a 45-word sentence inside the proof that states two market-clearing conditions, asserts they are the benchmark conditions, gives the rate at which they hold, and defers the reason to another lecture - four moves in one sentence, in the one place a reader is checking each step; line 199 runs to 38 words with a three-way disjunction at the end. Everywhere else the lecture holds to one claim per paragraph, which is what makes these two visible"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        268,
+        273,
+        283,
+        290,
+        327,
+        351
+      ],
+      "detail": "six one-line docstrings are written with a single pair of double quotes rather than triple quotes (PEP 257, referenced by PEP 8): `\"Worst-case persistence ζ(σ) of marginal utility, eq:rbew-zeta.\"` (268) and similarly at 273, 283, 290, 327 and 351. The one multi-line docstring in the lecture, at 712-717, does use triple quotes, so the file is inconsistent with itself"
+    }
   ],
   "strengths": [
     "The computation is a test rather than a demonstration, and the lecture says so: 317-319 state that assuming the common rule would establish nothing, so each type's robust problem is solved separately at 380-381, and then 390-402 move each discount factor one percent off the locus to show the comparison has power",
@@ -27,5 +59,9 @@
     "Settle the subscript on the marginal-utility state: {eq}`eq:rbew-zeta` writes both $\\mu_{s,t+1}^i$ and $\\mu_{st}^i$ inside the same display (220), and 215 and 227 differ again - pick one form and use it in all four places",
     "Split the two long sentences at 188 and 199, change the two emphasis-bolds at 46 and 404 to italic, and give the six one-line docstrings triple quotes"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "d420315e23bfee2c18e9d625a6e29eac9bce7d4e"
+  }
 }

@@ -2,22 +2,107 @@
   "series": "lecture-python.myst",
   "lecture": "prob_matrix",
   "judgment": [
-    {"rule": "qe-math-014", "count": 12, "lines": [104, 149, 210, 453, 607, 1296, 1353],
-     "detail": "the lecture writes the same events both ways. Braces are used correctly in most of the file - $\\textrm{Prob}\\{X\\leq x\\}$ (213), $\\{X\\in B\\}$ (220), $\\{X=i\\}$ (257, 316), $\\{x_0=i_0,\\ldots\\}$ (174), $\\{X=i,Y=j\\}$ (366), $\\{Y=j\\vert X=i\\}$ (487) - but twelve events are parenthesised: $\\textrm{Prob}(X \\in A)$ at 104, 110 and 210, ${\\rm Prob}(X = i)$ at 149 (the identical event that 257 and 316 write with braces), $\\textrm{Prob}(X=i)$ and $\\textrm{Prob}(Y=j)$ at 607-608 (the identical marginals that 380 and 384 write with braces), $\\text{Prob}(X = 0)$ through $\\text{Prob}(Y = 1)$ at 1296-1299, and $\\textrm{Prob}(X=i,Y=j)$ at 1353. Line 453 gets it exactly inverted, $\\textrm{Prob}({X=i})$ - the braces are typed inside the parentheses rather than instead of them. The one legitimate parenthesised argument in the file is $\\mu(\\mathcal{G})$ at 89, a measure applied to a named set, which is what the rule reserves parentheses for"},
-    {"rule": "qe-writing-003", "count": 6, "lines": [235, 281, 299, 517, 607, 953],
-     "detail": "235 has the logic backwards: the bullet list is about a **discrete-valued** random variable, whose second item says \"we replace a **density** with a **probability mass function**\", and the third then says \"when a density exists, we replace integration with summation in formulas like {eq}`eq:CDFfromdensity`\" - the substitution is needed when a density does *not* exist. 281 introduces a term with no antecedent: \"Such a 'non-parametric' distribution has as many 'parameters' as...\" is the first appearance of the word non-parametric anywhere in the lecture. 295-307 is a thirteen-line digression - statistical models, sufficient statistics, information, \"key tools that AI uses\" (305), a Fisher-information link (307) - dropped between the parameters of a distribution (284-292) and the geometric-distribution example (311); 299 defines \"A **statistic** is a nonlinear function of a data set\", which contradicts 135 (\"A **statistic** defined as a function of a sequence of samples\") and is false as written, and \"sufficient statistics as data summaries\", promised in the overview list at 34, never gets a section, an example or a line of code. 517-541 \"Application: forecasting a time series\" restates 468-513 with $f_{ij}$ for $\\rho_{ij}$ and $X(0),X(1)$ for $X,Y$ and adds only the sentence at 541. The marginals are renamed three times - $\\mu_i,\\nu_j$ at 380-384, $u_i,v_j$ at 607-608, back to $\\mu_i,\\nu_j$ at 1177-1178 - and 596 calls the display that follows it \"The table below\" when 598-603 is a matrix. And the 145 lines from 953 to 1097 are nine plotting cells with almost no prose between them: 991-998 and 1000-1007 sit adjacent with no sentence at all between the two histograms"},
-    {"rule": "qe-writing-005", "count": 7, "lines": [137, 196, 202, 953, 978, 1165, 1575],
-     "detail": "bold is used for both jobs and italic for neither. The definitions are correctly bolded - **probability space**, **probability measure**, **random variable** (68), **events** (85), **probability mass function** (234), **statistical model** (295), **coupling** (1171), **copula function** (1262) and about twenty more - but bold then does the emphasis too: **relative frequencies** is re-bolded at 137 after its definition at 136 and **anticipated relative frequencies** with it; **all** at 202 (\"is **all** that a probability distribution means\"); **rate** at 196; the contrast **population** (953) against **sample** (978); **unique** at 1165; **independent** at 1686 after the definition at 546. The five exercise titles (1575, 1626, 1684, 1738, 1784) are bold-as-heading rather than definitions. Across 1844 lines the file contains exactly one italic - the book title *Risk, Uncertainty, and Values* at 78 - so no emphasis anywhere is italicised"},
-    {"rule": "qe-code-001", "count": 7, "lines": [748, 751, 926, 981, 1074, 1648, 1719],
-     "detail": "748 declares `class discrete_bijoint:` - PEP8 asks for CapWords for class names and there is no mathematical reading of `discrete_bijoint` that requires lower case. All six docstrings in that class use `'''` instead of `\"\"\"` (751, 757, 761, 774, 778, 799, 826), against PEP 257. 926 names the bivariate normal density `func`, which says nothing, where the surrounding prose calls it $f(x,y)$. 981-982 omit the space before the assignment operator, `μ= np.array([0, 5])` and `σ= np.array(...)` (E225). 1074 and 1080 omit the space after a comma, `plt.plot(y,z)` and `np.dot(y,z)` (E231), where 1041 and 1058 have it. 1648, 1654, 1655, 1662 and 1663 put two spaces before `=` (`F  = np.array(...)`, `E_X  = xs @ μ`, `var_X  = ...`, E221). 1719-1720 pads a call argument with ten spaces to align two columns, `ax.bar(z_vals - 0.2, h,          0.4, ...)` (E241). And five lines carry trailing whitespace: 1708, 1710, 1823, 1825, with 1706-1711 also indenting the closing paren and the `for` clause of one comprehension at three different depths"},
-    {"rule": "qe-math-009", "count": 5, "lines": [89, 154, 487, 696, 1793],
-     "detail": "three displays fake a table inside a matrix environment: 696-703, 711-717 and 723-729 use `\\vdots` as column rules, `\\cdots\\cdots\\cdots` as row rules and `\\quad` for padding, and set the header cells `var`, `var_1`, `var_2`, `x`, `y` as italic math (712) - the lecture already imports `prettytable` (55) and uses it eleven times for exactly this display. The conditioning bar is spelled three ways: `\\vert` (487, 1049, 1050), `|` (431, 440, 447, 464, 494) and `\\mid` (423, 1015, 1585, 1746). The weak inequality is spelled three ways: `\\geqslant` (154, 481), `\\geq` (366, 402, 481) and `\\ge` (324, 332, 556). $\\mathcal{G}$ is used for a single event at 89, 98 and 110 while plain $A$ and $B$ are used for events at 423-426 - the same object under two conventions, and the plain letters win on simplicity. And 1793 writes the likelihood $\\mathcal{L}(\\theta \\mid \\text{data})$, the only script letter in the exercises, where plain $L$ would do"},
-    {"rule": "qe-math-015", "count": 4, "lines": [213, 360, 599, 1258],
-     "detail": "$F$ carries two incompatible meanings inside one lecture. 213 defines it as the CDF, $F_X(x) = \\textrm{Prob}\\{X\\leq x\\}$, and 224 repeats that, $F(x)=\\int_{-\\infty}^x f(t)dt$, against the lowercase density $f$ - which is exactly the case convention proposed qe-math-015 asks for. Then 360 makes $F_{I\\times J}=[f_{ij}]$ the *joint probability mass matrix*, and that is the meaning used at 390, 599, 1580, 1601 and 1648 - an uppercase letter for a mass function whose own elements are the lowercase $f_{ij}$. By 1258 the copula section needs the first meaning back (\"their marginal distributions are $F_1(x_1),\\ldots,F_N(x_N)$\", used as CDFs at 1265 and 1273), so a reader arriving there from 599 has to re-learn the symbol. Either the joint matrix or the CDF has to be renamed"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [696, 955, 992, 1200],
-     "detail": "the three objects that carry the lecture's own thesis - \"a matrix to represent a bivariate ... distribution\" (36) - are the worst-rendered things in the file: the hand-drawn `array` tables at 696-703, 711-717 and 723-729. Second, the 3-d joint density at 955-963 has no axis labels, no colorbar, no caption and no sentence after it, and the contour that follows at 965-976 mixes `plt.ylabel('y')` with `ax.set_zlabel('f')` and then hides the x axis with `ax.set_xticks([])`. Third, 991-998 overlays a fitted normal on the sample histogram but omits `density=True` from both calls, while the matching cell at 1000-1007 includes it in both, and neither figure has a legend distinguishing the sample from the fit - so the reader cannot tell which histogram is which, in the one place the lecture is checking a fit. Fourth, the whole coupling argument (1140-1250) is algebra with no picture: the two couplings at 1200-1206 and 1224-1231 differ in a structural zero, which a pair of 2x2 heatmaps would show instantly, and the discretized conditional plots at 1037-1043 and 1071-1076 never draw the analytic normal of 1015-1016 on top of the approximation they are meant to validate - that check is left to four printed numbers at 1091-1096"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [137, 613, 1250, 1279, 1290],
-     "detail": "137 is a 46-word bullet containing two sentences (\"The idea that a population probability distribution is what we anticipate **relative frequencies** will be in a long sequence of i.i.d. draws. Here the following mathematical machinery makes precise what is meant by **anticipated relative frequencies**\"). 613 is 37 words restating 611: \"The code lets us check whether the 'sampling' distribution agrees with the 'population' distribution -- confirming that the population distribution correctly tells us the relative frequencies that we should expect in a large sample\". 1278-1279 spells the argument list $F_1(x_1), F_2(x_2),\\dots,F_N(x_N)$ three times inside one 43-word sentence. 1246-1250 spends three consecutive paragraphs on one point (\"our two proposed joint distributions have the same marginal distributions\" / \"But the joint distributions differ\" / \"Thus, multiple joint distributions $[f_{ij}]$ can have the same marginals\"). And 1290 and 1303 are the same sentence thirteen lines apart - \"for two given marginal distributions there can be more than one coupling\" and \"For these two random variables there can be more than one coupling\" - with only a display between them"}
+    {
+      "rule": "qe-math-014",
+      "count": 12,
+      "lines": [
+        104,
+        149,
+        210,
+        453,
+        607,
+        1296,
+        1353
+      ],
+      "detail": "the lecture writes the same events both ways. Braces are used correctly in most of the file - $\\textrm{Prob}\\{X\\leq x\\}$ (213), $\\{X\\in B\\}$ (220), $\\{X=i\\}$ (257, 316), $\\{x_0=i_0,\\ldots\\}$ (174), $\\{X=i,Y=j\\}$ (366), $\\{Y=j\\vert X=i\\}$ (487) - but twelve events are parenthesised: $\\textrm{Prob}(X \\in A)$ at 104, 110 and 210, ${\\rm Prob}(X = i)$ at 149 (the identical event that 257 and 316 write with braces), $\\textrm{Prob}(X=i)$ and $\\textrm{Prob}(Y=j)$ at 607-608 (the identical marginals that 380 and 384 write with braces), $\\text{Prob}(X = 0)$ through $\\text{Prob}(Y = 1)$ at 1296-1299, and $\\textrm{Prob}(X=i,Y=j)$ at 1353. Line 453 gets it exactly inverted, $\\textrm{Prob}({X=i})$ - the braces are typed inside the parentheses rather than instead of them. The one legitimate parenthesised argument in the file is $\\mu(\\mathcal{G})$ at 89, a measure applied to a named set, which is what the rule reserves parentheses for"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        235,
+        281,
+        299,
+        517,
+        607,
+        953
+      ],
+      "detail": "235 has the logic backwards: the bullet list is about a **discrete-valued** random variable, whose second item says \"we replace a **density** with a **probability mass function**\", and the third then says \"when a density exists, we replace integration with summation in formulas like {eq}`eq:CDFfromdensity`\" - the substitution is needed when a density does *not* exist. 281 introduces a term with no antecedent: \"Such a 'non-parametric' distribution has as many 'parameters' as...\" is the first appearance of the word non-parametric anywhere in the lecture. 295-307 is a thirteen-line digression - statistical models, sufficient statistics, information, \"key tools that AI uses\" (305), a Fisher-information link (307) - dropped between the parameters of a distribution (284-292) and the geometric-distribution example (311); 299 defines \"A **statistic** is a nonlinear function of a data set\", which contradicts 135 (\"A **statistic** defined as a function of a sequence of samples\") and is false as written, and \"sufficient statistics as data summaries\", promised in the overview list at 34, never gets a section, an example or a line of code. 517-541 \"Application: forecasting a time series\" restates 468-513 with $f_{ij}$ for $\\rho_{ij}$ and $X(0),X(1)$ for $X,Y$ and adds only the sentence at 541. The marginals are renamed three times - $\\mu_i,\\nu_j$ at 380-384, $u_i,v_j$ at 607-608, back to $\\mu_i,\\nu_j$ at 1177-1178 - and 596 calls the display that follows it \"The table below\" when 598-603 is a matrix. And the 145 lines from 953 to 1097 are nine plotting cells with almost no prose between them: 991-998 and 1000-1007 sit adjacent with no sentence at all between the two histograms"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 7,
+      "lines": [
+        137,
+        196,
+        202,
+        953,
+        978,
+        1165,
+        1575
+      ],
+      "detail": "bold is used for both jobs and italic for neither. The definitions are correctly bolded - **probability space**, **probability measure**, **random variable** (68), **events** (85), **probability mass function** (234), **statistical model** (295), **coupling** (1171), **copula function** (1262) and about twenty more - but bold then does the emphasis too: **relative frequencies** is re-bolded at 137 after its definition at 136 and **anticipated relative frequencies** with it; **all** at 202 (\"is **all** that a probability distribution means\"); **rate** at 196; the contrast **population** (953) against **sample** (978); **unique** at 1165; **independent** at 1686 after the definition at 546. The five exercise titles (1575, 1626, 1684, 1738, 1784) are bold-as-heading rather than definitions. Across 1844 lines the file contains exactly one italic - the book title *Risk, Uncertainty, and Values* at 78 - so no emphasis anywhere is italicised"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        748,
+        751,
+        926,
+        981,
+        1074,
+        1648,
+        1719
+      ],
+      "detail": "748 declares `class discrete_bijoint:` - PEP8 asks for CapWords for class names and there is no mathematical reading of `discrete_bijoint` that requires lower case. All six docstrings in that class use `'''` instead of `\"\"\"` (751, 757, 761, 774, 778, 799, 826), against PEP 257. 926 names the bivariate normal density `func`, which says nothing, where the surrounding prose calls it $f(x,y)$. 981-982 omit the space before the assignment operator, `μ= np.array([0, 5])` and `σ= np.array(...)` (E225). 1074 and 1080 omit the space after a comma, `plt.plot(y,z)` and `np.dot(y,z)` (E231), where 1041 and 1058 have it. 1648, 1654, 1655, 1662 and 1663 put two spaces before `=` (`F  = np.array(...)`, `E_X  = xs @ μ`, `var_X  = ...`, E221). 1719-1720 pads a call argument with ten spaces to align two columns, `ax.bar(z_vals - 0.2, h,          0.4, ...)` (E241). And five lines carry trailing whitespace: 1708, 1710, 1823, 1825, with 1706-1711 also indenting the closing paren and the `for` clause of one comprehension at three different depths"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 5,
+      "lines": [
+        89,
+        154,
+        487,
+        696,
+        1793
+      ],
+      "detail": "three displays fake a table inside a matrix environment: 696-703, 711-717 and 723-729 use `\\vdots` as column rules, `\\cdots\\cdots\\cdots` as row rules and `\\quad` for padding, and set the header cells `var`, `var_1`, `var_2`, `x`, `y` as italic math (712) - the lecture already imports `prettytable` (55) and uses it eleven times for exactly this display. The conditioning bar is spelled three ways: `\\vert` (487, 1049, 1050), `|` (431, 440, 447, 464, 494) and `\\mid` (423, 1015, 1585, 1746). The weak inequality is spelled three ways: `\\geqslant` (154, 481), `\\geq` (366, 402, 481) and `\\ge` (324, 332, 556). $\\mathcal{G}$ is used for a single event at 89, 98 and 110 while plain $A$ and $B$ are used for events at 423-426 - the same object under two conventions, and the plain letters win on simplicity. And 1793 writes the likelihood $\\mathcal{L}(\\theta \\mid \\text{data})$, the only script letter in the exercises, where plain $L$ would do"
+    },
+    {
+      "rule": "qe-math-015",
+      "count": 4,
+      "lines": [
+        213,
+        360,
+        599,
+        1258
+      ],
+      "detail": "$F$ carries two incompatible meanings inside one lecture. 213 defines it as the CDF, $F_X(x) = \\textrm{Prob}\\{X\\leq x\\}$, and 224 repeats that, $F(x)=\\int_{-\\infty}^x f(t)dt$, against the lowercase density $f$ - which is exactly the case convention proposed qe-math-015 asks for. Then 360 makes $F_{I\\times J}=[f_{ij}]$ the *joint probability mass matrix*, and that is the meaning used at 390, 599, 1580, 1601 and 1648 - an uppercase letter for a mass function whose own elements are the lowercase $f_{ij}$. By 1258 the copula section needs the first meaning back (\"their marginal distributions are $F_1(x_1),\\ldots,F_N(x_N)$\", used as CDFs at 1265 and 1273), so a reader arriving there from 599 has to re-learn the symbol. Either the joint matrix or the CDF has to be renamed"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        696,
+        955,
+        992,
+        1200
+      ],
+      "detail": "the three objects that carry the lecture's own thesis - \"a matrix to represent a bivariate ... distribution\" (36) - are the worst-rendered things in the file: the hand-drawn `array` tables at 696-703, 711-717 and 723-729. Second, the 3-d joint density at 955-963 has no axis labels, no colorbar, no caption and no sentence after it, and the contour that follows at 965-976 mixes `plt.ylabel('y')` with `ax.set_zlabel('f')` and then hides the x axis with `ax.set_xticks([])`. Third, 991-998 overlays a fitted normal on the sample histogram but omits `density=True` from both calls, while the matching cell at 1000-1007 includes it in both, and neither figure has a legend distinguishing the sample from the fit - so the reader cannot tell which histogram is which, in the one place the lecture is checking a fit. Fourth, the whole coupling argument (1140-1250) is algebra with no picture: the two couplings at 1200-1206 and 1224-1231 differ in a structural zero, which a pair of 2x2 heatmaps would show instantly, and the discretized conditional plots at 1037-1043 and 1071-1076 never draw the analytic normal of 1015-1016 on top of the approximation they are meant to validate - that check is left to four printed numbers at 1091-1096"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        137,
+        613,
+        1250,
+        1279,
+        1290
+      ],
+      "detail": "137 is a 46-word bullet containing two sentences (\"The idea that a population probability distribution is what we anticipate **relative frequencies** will be in a long sequence of i.i.d. draws. Here the following mathematical machinery makes precise what is meant by **anticipated relative frequencies**\"). 613 is 37 words restating 611: \"The code lets us check whether the 'sampling' distribution agrees with the 'population' distribution -- confirming that the population distribution correctly tells us the relative frequencies that we should expect in a large sample\". 1278-1279 spells the argument list $F_1(x_1), F_2(x_2),\\dots,F_N(x_N)$ three times inside one 43-word sentence. 1246-1250 spends three consecutive paragraphs on one point (\"our two proposed joint distributions have the same marginal distributions\" / \"But the joint distributions differ\" / \"Thus, multiple joint distributions $[f_{ij}]$ can have the same marginals\"). And 1290 and 1303 are the same sentence thirteen lines apart - \"for two given marginal distributions there can be more than one coupling\" and \"For these two random variables there can be more than one coupling\" - with only a display between them"
+    }
   ],
   "strengths": [
     "Every population object computed by matrix algebra has a simulated counterpart printed beside it: the 2x2 joint at 599 against a million draws at 617-637, the population marginals at 607-608 against the `PrettyTable` marginals at 644-663, the population conditionals at 722-740 against the sampled conditionals at 665-691, and 742 closes the loop - \"These population objects closely resemble the sample counterparts computed above\"",
@@ -43,5 +128,9 @@
     "prob_matrix.md:835,836,837 - qe-code-002 x4 is a false positive, and all four hits are the same local variable. 835 is `xi = x[0, x[1, :] == ys[i]]`, 836 is `idx = xi.reshape(len(xi), 1) == xs.reshape(1, len(xs))` (two hits) and 837 is `xcp[i, :] = np.sum(idx, 0)/len(xi)`. `xi` here is `x` sliced at index `i`, the partner of `yi` on the very next line (839) and of `idx`/`idy` at 836 and 840 - not the Greek letter xi. Renaming it to `ξ` would make the block unreadable and would break the parallel with `yi`. The known-left note records that `GREEK_RE` misses suffixed names like `mu_m`; this is the converse case - a single-letter variable followed by an index letter that happens to spell a Greek name. `xi`, `pi`, `nu`, `mu` and `chi` are all `<letter><letter>` forms that arise as indexed variables, so a guard on a matching sibling name in the same cell (`yi` beside `xi`) or on the letter being a known array in scope would be more precise than the spelling alone.",
     "prob_matrix.md:43 - qe-code-003 x1 reports \"non-Anaconda import with no install cell: ['matplotlib_inline']\", but line 43 *is* the install cell, tagged `hide-output`, and it installs the one genuinely third-party package the lecture uses (`prettytable`, 47). The flagged package `matplotlib_inline` (imported at 59) is a dependency of IPython, ships with Jupyter and is present in Anaconda - it needs no install line, and adding one would be wrong. The check's Anaconda package list appears not to include it.",
     "prob_matrix.md:579,588,1050 - qe-math-010 (proposed) is reported x81, which is right for the `\\textrm{Prob}` family, but the variance operator is missed three times. 579 and 588 write $\\sigma_X^2 \\equiv \\mathbb{D}[X]$ and 1050 writes $\\mathbb{D}[X\\vert Y=y]$ - blackboard bold, correctly braced, but on the wrong letter: spec section 2.2 reserves `\\mathbb{V}` for variance. In `tools/qestyle_rules.py` the `bare_mathbb` branch is `\\\\(?:mathbb|Bbb)\\s+[PEV](?![A-Za-z])`, which only fires when the braces are *missing*, and the `other` branch covers Roman and calligraphic spellings; there is no branch for a braced blackboard letter that is not one of P, E or V. So `\\mathbb{D}` for variance (and, by the same gap, any other wrong braced letter) passes. Three sites here, and `\\mathbb{D}` is common enough in the Russian-notation lectures that it is probably not confined to this file."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "b29820c2016427d6e21ecf821cd2930cc24ed691"
+  }
 }

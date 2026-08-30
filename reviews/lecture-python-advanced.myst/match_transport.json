@@ -2,18 +2,74 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "match_transport",
   "judgment": [
-    {"rule": "qe-code-001", "count": 52, "lines": [316, 1151, 1521, 1756, 2189, 2334],
-     "detail": "52 spacing and idiom items across the 30 code cells, in four countable classes: (i) 28 lines put a space before a comma, several of them with none after, e.g. 316 `np.minimum(self.n_x[perfect_pairs_x] ,self.m_y[perfect_pairs_y])`, 329, 335, 412, 706, 1471, 1510, 2189, 2431, 2457; (ii) the keyword `title=` is written `title = ` on 12 lines and `figsize=` as `figsize = ` on 10 (1521-1525, 1561, 1616-1618, 1757, 2439), against `figsize=(15, 8)` correctly spelled at 241, 578 and 704 - so the same two keywords are written both ways in the same file; (iii) 1151 and 1165 test `if unmatched[k] == True:` where PEP8 asks for `if unmatched[k]:`. Beyond the counted classes: 2334 writes a module-level assignment with no spaces, `num_agents=1500`, four `def`s omit the space after a comma in `(self,layer)` (206, 841, 1046, 1120), 1756 writes `add_labels = True if num_agents < 16 else False` for `num_agents < 16`, 1757 passes `title = f'Composite Sorting'` - an f-string with no placeholder - `iter` shadows the builtin at 980 and 1311, 2350 writes `- var_workers/ 2`, eight expressions are joined with backslash continuations where parentheses are already open (164-165, 1093, 1180, 1220, 1253, 2366, 2461, 2466), and `off_diagoff_diagonal` (15 uses from 1209) names the object that is `off_diagonal` at 419 and `example_off_diag` at 435"},
-    {"rule": "qe-writing-003", "count": 5, "lines": [610, 824, 2246, 2486, 2523],
-     "detail": "(i) The central object of the layer decomposition is named only in a plot title: $H(z) := F(z) - G(z)$ is introduced at 570 with no name, 610 titles its figure `'Underqualification Measure (Off-Diagonal)'`, and 2420 then tells the reader \"we plot the histograms and the measure of underqualification\" - a term the prose never defines. (ii) 820 defines $V_{ij}$ for $j-i \\in \\{1,3,\\dots\\}$ and 1041 repeats \"$j-i$ odd\", but 824 and 826 invert it to $i-j \\in \\{1,3,\\dots,t-2\\}$ and $i-j = t$, so the recursion at 829 appears to run over pairs with $i > j$. (iii) The caption at 2246 is a copy of the one at 2288: it says \"Average wage for each Standard Occupational Classification (SOC) code\" over the figure that plots `std_Earnings` (2257) with y-axis \"Wage Dispersion\" (2274), which 2240 introduces as \"the wage standard deviation\". (iv) 2486 labels the horizontal axis \"Occupations\" for a plot of sorted *worker* wages $w_x$ (2474, 2519). (v) The lecture ends at 2523 on a bar chart of model wage dispersion, with no sentence comparing it to the two data figures at 2242-2316 that the Application section was built to match - the empirical payoff the Overview promises at 34 is never stated"},
-    {"rule": "qe-writing-005", "count": 11, "lines": [55, 94, 290, 529, 1685],
-     "detail": "the convention inverts at line 65. The Overview and Setup define terms in bold, correctly - **coupling** (22), **positive assortative** / **negative assortative** / **composite assortative** (30), **cost function** and **optimal transport problem** (65) - and from there on every defined term is italicised instead: *marginals* (55), *balanced* (63), *strictly concave* / *strictly increasing* / *grounded* (89), *assignment problem* (536), *layers* (558), *mass* (644), *unitary* (646), *hidden* (1026), *composite sorting* (1415), *positive assortative matching* (1419), *dual problem* (1685), *Complementary Slackness* (1734). Bold is meanwhile used for structural labels that are neither definitions nor emphasis: `**Lemma.**` (94) paired with `*Proof.*` (100) - the statement bolded and its proof italicised - `**Theorem (DSS)**` (1030), and the four pseudo-headings `**Maximal number of perfect pairs**` (290), `**No intersecting pairs property**` (454), `**Layering**` (529) and `**Policy evaluation**` (892), which restate the numbered list already given at 282-286"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [53, 521, 533, 1101, 1454, 2420],
-     "detail": "three sentences are long enough to lose their thread - 1101 is 95 words with two nested parentheticals and three subscripted indices, 521 is 75 words that state a case analysis twice (\"the number of intersections between pairs $(x,y), (x',y')$ and the pair $(x'',y'')$ (i.e., after uncrossing) is not larger than the number of intersections between pairs $(x,y'), (x',y)$ and the pair $(x'',y'')$ (i.e., before uncrossing)\"), and 657 is 60 words explaining an indexing choice - and four are broken outright: 53 \"let a positive integer $m_y$ be the agents of agents of type $y \\in Y$\", 229 \"Notice that we not normalizing the measures\", 533 \"When we introduce the off diagonal matching, to stress that the types sets are disjoint now.\" (no main clause), 1013 \"We refer {cite}`boerma2023composite` and {cite}`delon2011minimum` for proofs\", and 1454 \"the matching with two medium side displacement\". A dozen spelling slips run through the prose and comments: \"lenght\" (198), \"semicirles\" (448, 458, 1274), \"cain\" (466), \"therby\" (482), \"umatched\" (1115, 1162), \"resitual\" (1242), \"correponding\" (1454), \"resemblence\" (1495)"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [94, 470, 1026],
-     "detail": "2524 lines, 20 figures, and not one admonition or `{prf:}` directive: the subadditivity lemma and its proof (94-102) and the DSS theorem (1030) are plain bold and italic text, so nothing in the built page distinguishes a proved statement from surrounding prose, and the three properties that the algorithm rests on (290, 454, 529) are bold lines rather than callouts. More striking, the two arguments in the lecture that are purely geometric are the two with no picture. The no-intersecting-pairs proof (448-523) asks the reader to hold two configurations in mind - $x < y < y' < x'$ (473) and $x < x' < y' < y$ (487) - and to see that reallocating mass \"uncrosses\" the semicircles, and the lecture already owns the routine that draws exactly this picture (`plot_layer_matching`, 962-998, and the arcs at 980-986); two four-point diagrams, before and after uncrossing, would replace 60 lines of case analysis. The same applies to the definition of a *hidden* pair at 1026-1028, whose whole content is that \"the arc joining $(i',j')$ surmounts the arc joining $(i,j)$\""},
-    {"rule": "qe-math-009", "count": 1, "lines": [1700],
-     "detail": "1700 introduces $y_{xy} = \\alpha_x + \\gamma_y - c_{xy}$ as \"the output generated by matching $x$ and $y$\", but $y$ has denoted a member of the type set $Y$ since line 49 and is used that way in the same displays - 1708 reads $\\sum_{(x,y) \\in X \\times Y} \\mu_{xy} y_{xy}$ and 1717 reads $u_x + v_y \\geq y_{xy}$, where $v_y$ is indexed by the type $y$ and $y_{xy}$ is not. Any unused letter (the lecture has no $s$ or $o$) removes the collision at no cost"}
+    {
+      "rule": "qe-code-001",
+      "count": 52,
+      "lines": [
+        316,
+        1151,
+        1521,
+        1756,
+        2189,
+        2334
+      ],
+      "detail": "52 spacing and idiom items across the 30 code cells, in four countable classes: (i) 28 lines put a space before a comma, several of them with none after, e.g. 316 `np.minimum(self.n_x[perfect_pairs_x] ,self.m_y[perfect_pairs_y])`, 329, 335, 412, 706, 1471, 1510, 2189, 2431, 2457; (ii) the keyword `title=` is written `title = ` on 12 lines and `figsize=` as `figsize = ` on 10 (1521-1525, 1561, 1616-1618, 1757, 2439), against `figsize=(15, 8)` correctly spelled at 241, 578 and 704 - so the same two keywords are written both ways in the same file; (iii) 1151 and 1165 test `if unmatched[k] == True:` where PEP8 asks for `if unmatched[k]:`. Beyond the counted classes: 2334 writes a module-level assignment with no spaces, `num_agents=1500`, four `def`s omit the space after a comma in `(self,layer)` (206, 841, 1046, 1120), 1756 writes `add_labels = True if num_agents < 16 else False` for `num_agents < 16`, 1757 passes `title = f'Composite Sorting'` - an f-string with no placeholder - `iter` shadows the builtin at 980 and 1311, 2350 writes `- var_workers/ 2`, eight expressions are joined with backslash continuations where parentheses are already open (164-165, 1093, 1180, 1220, 1253, 2366, 2461, 2466), and `off_diagoff_diagonal` (15 uses from 1209) names the object that is `off_diagonal` at 419 and `example_off_diag` at 435"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        610,
+        824,
+        2246,
+        2486,
+        2523
+      ],
+      "detail": "(i) The central object of the layer decomposition is named only in a plot title: $H(z) := F(z) - G(z)$ is introduced at 570 with no name, 610 titles its figure `'Underqualification Measure (Off-Diagonal)'`, and 2420 then tells the reader \"we plot the histograms and the measure of underqualification\" - a term the prose never defines. (ii) 820 defines $V_{ij}$ for $j-i \\in \\{1,3,\\dots\\}$ and 1041 repeats \"$j-i$ odd\", but 824 and 826 invert it to $i-j \\in \\{1,3,\\dots,t-2\\}$ and $i-j = t$, so the recursion at 829 appears to run over pairs with $i > j$. (iii) The caption at 2246 is a copy of the one at 2288: it says \"Average wage for each Standard Occupational Classification (SOC) code\" over the figure that plots `std_Earnings` (2257) with y-axis \"Wage Dispersion\" (2274), which 2240 introduces as \"the wage standard deviation\". (iv) 2486 labels the horizontal axis \"Occupations\" for a plot of sorted *worker* wages $w_x$ (2474, 2519). (v) The lecture ends at 2523 on a bar chart of model wage dispersion, with no sentence comparing it to the two data figures at 2242-2316 that the Application section was built to match - the empirical payoff the Overview promises at 34 is never stated"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 11,
+      "lines": [
+        55,
+        94,
+        290,
+        529,
+        1685
+      ],
+      "detail": "the convention inverts at line 65. The Overview and Setup define terms in bold, correctly - **coupling** (22), **positive assortative** / **negative assortative** / **composite assortative** (30), **cost function** and **optimal transport problem** (65) - and from there on every defined term is italicised instead: *marginals* (55), *balanced* (63), *strictly concave* / *strictly increasing* / *grounded* (89), *assignment problem* (536), *layers* (558), *mass* (644), *unitary* (646), *hidden* (1026), *composite sorting* (1415), *positive assortative matching* (1419), *dual problem* (1685), *Complementary Slackness* (1734). Bold is meanwhile used for structural labels that are neither definitions nor emphasis: `**Lemma.**` (94) paired with `*Proof.*` (100) - the statement bolded and its proof italicised - `**Theorem (DSS)**` (1030), and the four pseudo-headings `**Maximal number of perfect pairs**` (290), `**No intersecting pairs property**` (454), `**Layering**` (529) and `**Policy evaluation**` (892), which restate the numbered list already given at 282-286"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        53,
+        521,
+        533,
+        1101,
+        1454,
+        2420
+      ],
+      "detail": "three sentences are long enough to lose their thread - 1101 is 95 words with two nested parentheticals and three subscripted indices, 521 is 75 words that state a case analysis twice (\"the number of intersections between pairs $(x,y), (x',y')$ and the pair $(x'',y'')$ (i.e., after uncrossing) is not larger than the number of intersections between pairs $(x,y'), (x',y)$ and the pair $(x'',y'')$ (i.e., before uncrossing)\"), and 657 is 60 words explaining an indexing choice - and four are broken outright: 53 \"let a positive integer $m_y$ be the agents of agents of type $y \\in Y$\", 229 \"Notice that we not normalizing the measures\", 533 \"When we introduce the off diagonal matching, to stress that the types sets are disjoint now.\" (no main clause), 1013 \"We refer {cite}`boerma2023composite` and {cite}`delon2011minimum` for proofs\", and 1454 \"the matching with two medium side displacement\". A dozen spelling slips run through the prose and comments: \"lenght\" (198), \"semicirles\" (448, 458, 1274), \"cain\" (466), \"therby\" (482), \"umatched\" (1115, 1162), \"resitual\" (1242), \"correponding\" (1454), \"resemblence\" (1495)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        94,
+        470,
+        1026
+      ],
+      "detail": "2524 lines, 20 figures, and not one admonition or `{prf:}` directive: the subadditivity lemma and its proof (94-102) and the DSS theorem (1030) are plain bold and italic text, so nothing in the built page distinguishes a proved statement from surrounding prose, and the three properties that the algorithm rests on (290, 454, 529) are bold lines rather than callouts. More striking, the two arguments in the lecture that are purely geometric are the two with no picture. The no-intersecting-pairs proof (448-523) asks the reader to hold two configurations in mind - $x < y < y' < x'$ (473) and $x < x' < y' < y$ (487) - and to see that reallocating mass \"uncrosses\" the semicircles, and the lecture already owns the routine that draws exactly this picture (`plot_layer_matching`, 962-998, and the arcs at 980-986); two four-point diagrams, before and after uncrossing, would replace 60 lines of case analysis. The same applies to the definition of a *hidden* pair at 1026-1028, whose whole content is that \"the arc joining $(i',j')$ surmounts the arc joining $(i,j)$\""
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        1700
+      ],
+      "detail": "1700 introduces $y_{xy} = \\alpha_x + \\gamma_y - c_{xy}$ as \"the output generated by matching $x$ and $y$\", but $y$ has denoted a member of the type set $Y$ since line 49 and is used that way in the same displays - 1708 reads $\\sum_{(x,y) \\in X \\times Y} \\mu_{xy} y_{xy}$ and 1717 reads $u_x + v_y \\geq y_{xy}$, where $v_y$ is indexed by the type $y$ and $y_{xy}$ is not. Any unused letter (the lecture has no $s$ or $o$) removes the collision at no cost"
+    }
   ],
   "strengths": [
     "The algorithm is derived from three named structural properties (282-286) and each one is proved and then immediately implemented: maximal perfect pairs by the subadditivity argument at 292-306 and `match_perfect_pairs` at 311-331; no intersecting pairs by the two uncrossing cases at 462-523; layering by the equal-count argument at 544-562 and `find_layers` at 662-685 - so no method appears before the mathematics that justifies it",
@@ -36,5 +92,9 @@
   ],
   "scanner_doubts": [
     "match_transport.md:1421 - qe-ref-001 is reported with count 4 (34, 1015, 1630, 1732), all of them citations used in author position. Line 1421 is the opposite failure and is not counted: \"See Santambrogio 2015, Ch. 2.2.\" is a bare textual reference with no `{cite}` at all, and there is no rule in the registry that catches an uncited author-year string. If the reference rules are meant to cover citation hygiene, this is the more serious of the two cases, and a check for `[A-Z][a-z]+ (19|20)\\d\\d` outside a `{cite}` role would find it"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "4c6555ecec859b909a893335ac3bd088f5f8e53e"
+  }
 }

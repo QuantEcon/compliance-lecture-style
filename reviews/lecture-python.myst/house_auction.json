@@ -2,16 +2,69 @@
   "series": "lecture-python.myst",
   "lecture": "house_auction",
   "judgment": [
-    {"rule": "qe-code-001", "count": 90, "lines": [295, 298, 340, 343, 390, 457, 459, 849, 939, 1088, 1097, 1277],
-     "detail": "PEP8 spacing is ignored across the whole file: 90 distinct lines carry violations, of which the twelve listed are representative. The counts by kind are 140 missing spaces after a comma or dict colon (`v[:,ii]`, `zip(bid_info.keys(),winner_list)`, `np.array([[8,5,9,4],...])`), 19 missing spaces around an operator (`result=[]` 295, `V==np.max(V)` 1097, `len(i)>1` 1254), 16 spaces around a keyword-argument equals (`any(axis = 0)` 343, 383, 471, 535, 720, 730, 784, 795), 3 unspaced `%` format operators (849, 855, 1280), 3 under-indented continuations (1387, 1400, 1411), 2 single-space inline comments (1088, 1089), 2 double spaces after `=` (390, 736), and a blank line at end of file (1288). None of this is the mathematical-notation exception: the numeric literals at 939, 967, 977, 987 and 998 are data, not matrix notation, and `axis = 0` has no defence"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [117, 161, 964],
-     "detail": "the auction's rules are stated three times over 180 lines. Lines 52-83 give them as the auctioneer's protocol, '### Basic Setting' (117-151) restates the same setting as the seller's problem ($n$ houses, at most one per buyer, $v_{ij}$ private, surplus $v_{ij}-p_i$, outputs $p$, $Q$, $S$), and '## Pseudocode' (161-199) gives them a third time as inputs, protocols and outputs - with the $S$ and $Q$ definitions at 197-199 copied verbatim from 148-151. The five robustness cases at 964-1006 then repeat the parameter-matrix construction five times with no shared helper"},
-    {"rule": "qe-writing-005", "count": 10, "lines": [37, 60, 176, 189, 192, 964, 974, 984, 995, 1006],
-     "detail": "bold does two jobs it should not. It carries emphasis at 37 ('**at most** one house'), 60 ('**simultaneously**'), 176 and 189 ('**plus** $\\epsilon$') and 192 ('**any** house'), where italic is the convention; and it substitutes for headings in '## Robustness Checks', where the five cases are marked '**1. number of houses = number of buyers**' (964), '**2. multilple excess buyers**' (974), '**3. more houses than buyers**' (984), '**4. some houses have extremely high reservation prices**' (995) and '**5. reservation prices are so high that the auction can't start**' (1006) instead of `###` subheadings that the TOC could pick up"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [351],
-     "detail": "1412 lines with no figure at all, for a mechanism whose whole content is a price path: five rounds are worked through by hand at 351-657, each printing a price vector and a bid table, and the class then reports the same thing as text (849-921). One chart of the $n$ house prices against round number, with the temporary winner marked, would show convergence - 'the auction ends when the price of no house changes from one round to the next' (76) - in a way that reading six successive printed vectors cannot"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [114, 1344],
-     "detail": "'## Ascending Bid Auction' at 114 opens a section on the mechanism that '## Ascending Bids Auction for Multiple Goods' at 52 has already described under a near-identical title, so the reader cannot tell from the headings which section is the overview and which the specification. Line 1344 asserts that 'the generalized second-price auction described in our pseudo code above does indeed satisfy (1)' - a bare numeric reference to {eq}`eq:GC1`, which the same paragraph cites properly by label two lines earlier"}
+    {
+      "rule": "qe-code-001",
+      "count": 90,
+      "lines": [
+        295,
+        298,
+        340,
+        343,
+        390,
+        457,
+        459,
+        849,
+        939,
+        1088,
+        1097,
+        1277
+      ],
+      "detail": "PEP8 spacing is ignored across the whole file: 90 distinct lines carry violations, of which the twelve listed are representative. The counts by kind are 140 missing spaces after a comma or dict colon (`v[:,ii]`, `zip(bid_info.keys(),winner_list)`, `np.array([[8,5,9,4],...])`), 19 missing spaces around an operator (`result=[]` 295, `V==np.max(V)` 1097, `len(i)>1` 1254), 16 spaces around a keyword-argument equals (`any(axis = 0)` 343, 383, 471, 535, 720, 730, 784, 795), 3 unspaced `%` format operators (849, 855, 1280), 3 under-indented continuations (1387, 1400, 1411), 2 single-space inline comments (1088, 1089), 2 double spaces after `=` (390, 736), and a blank line at end of file (1288). None of this is the mathematical-notation exception: the numeric literals at 939, 967, 977, 987 and 998 are data, not matrix notation, and `axis = 0` has no defence"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        117,
+        161,
+        964
+      ],
+      "detail": "the auction's rules are stated three times over 180 lines. Lines 52-83 give them as the auctioneer's protocol, '### Basic Setting' (117-151) restates the same setting as the seller's problem ($n$ houses, at most one per buyer, $v_{ij}$ private, surplus $v_{ij}-p_i$, outputs $p$, $Q$, $S$), and '## Pseudocode' (161-199) gives them a third time as inputs, protocols and outputs - with the $S$ and $Q$ definitions at 197-199 copied verbatim from 148-151. The five robustness cases at 964-1006 then repeat the parameter-matrix construction five times with no shared helper"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 10,
+      "lines": [
+        37,
+        60,
+        176,
+        189,
+        192,
+        964,
+        974,
+        984,
+        995,
+        1006
+      ],
+      "detail": "bold does two jobs it should not. It carries emphasis at 37 ('**at most** one house'), 60 ('**simultaneously**'), 176 and 189 ('**plus** $\\epsilon$') and 192 ('**any** house'), where italic is the convention; and it substitutes for headings in '## Robustness Checks', where the five cases are marked '**1. number of houses = number of buyers**' (964), '**2. multilple excess buyers**' (974), '**3. more houses than buyers**' (984), '**4. some houses have extremely high reservation prices**' (995) and '**5. reservation prices are so high that the auction can't start**' (1006) instead of `###` subheadings that the TOC could pick up"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        351
+      ],
+      "detail": "1412 lines with no figure at all, for a mechanism whose whole content is a price path: five rounds are worked through by hand at 351-657, each printing a price vector and a bid table, and the class then reports the same thing as text (849-921). One chart of the $n$ house prices against round number, with the temporary winner marked, would show convergence - 'the auction ends when the price of no house changes from one round to the next' (76) - in a way that reading six successive printed vectors cannot"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        114,
+        1344
+      ],
+      "detail": "'## Ascending Bid Auction' at 114 opens a section on the mechanism that '## Ascending Bids Auction for Multiple Goods' at 52 has already described under a near-identical title, so the reader cannot tell from the headings which section is the overview and which the specification. Line 1344 asserts that 'the generalized second-price auction described in our pseudo code above does indeed satisfy (1)' - a bare numeric reference to {eq}`eq:GC1`, which the same paragraph cites properly by label two lines earlier"
+    }
   ],
   "strengths": [
     "The pseudocode section (161-227) is unusually complete for this corpus - inputs, auction protocols, outputs and the buyer's strategy - and it closes by naming the two ambiguities the protocol leaves open (219-223) and saying exactly how the code resolves them, which is why the custom argmax and `np.random.choice` appear later without explanation needed",
@@ -29,5 +82,9 @@
     "Fix the errors in the prose and the strategy statement: 'if not prospective buyer offers more that $r_i$' (80), 'The mechanism provide' (95), 'for both mechanism' (106), 'rules for the auction it terms of' (155), 'randomize among such winner' (221), 'multilple' (974), 'decribe' (1024), 'mechanims' (1033), 'mechanim' (1340), and 'person $j$ bids ... on house $j$' at 216, where the house index should be $\\hat i_t$",
     "Tidy the tail: split the seven multi-sentence paragraphs at 221, 1077, 1101, 1109, 1126, 1137 and 1344 (qe-writing-001), replace the bare '(1)' at 1344 with {eq}`eq:GC1`, fold the three near-identical social-cost cells (1385-1411) into one loop, drop the no-op expression statements at 1378, 1395 and 1406, and sweep the 97 double-space runs"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "6dc8eb9a780f836e9c0a21c03bd130d9c3747858"
+  }
 }

@@ -66,5 +66,9 @@
   ],
   "scanner_doubts": [
     "Cleared, not filed. (1) qe-math-014 and qe-math-015 (proposed) have nothing to score: the lecture is a deterministic ODE model - there is no `\\mathbb{P}`, no expectation, no density and no CDF anywhere, which is also why References is legitimately N/A. (2) The three qe-math-001 hits (103, 105) are genuine and the internal evidence makes them unusually clear-cut: the same `aligned` block writes `\\beta(t)` in LaTeX at 101 and `σ`, `γ` in Unicode at 103 and 105, and the prose two lines later writes `$\\sigma$` and `$\\gamma$` correctly at 112-113 - so the file establishes the convention and then breaks it inside one display. (3) All five qe-writing-006 hits are genuine Title-Case headings; the flagged words are 'Model', 'Path', 'Case', 'Mitigation' and 'Lockdown', all common nouns. Note separately that the H1 at line 20 is `# {index}`Modeling COVID 19 <single: Modeling COVID 19>``, and per the known `_heading_words` behaviour an `{index}`-role heading is dropped entirely, so nothing checks it - which is how \"COVID 19\" survives unhyphenated in the title while the body writes \"COVID-19\". I am recording that rather than filing it, since the `{index}`-heading gap is already on the known list. (4) The Code score of 10/10 is a fair mechanical result and flake8 finds only seven items here, the fewest of any lecture in this batch; the substantive code problems are the stale default argument at 211 and the four bindings of `R0`, neither of which any linter can see. (5) qe-writing-005 is satisfied rather than unreported: four bold spans (111, 112, 113, 144), all definitions on first use, and no italic emphasis in the file at all"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "5b0c5305cb226081f19d8e9a8215e2ebe3d944a8"
+  }
 }

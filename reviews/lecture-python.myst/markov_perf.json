@@ -2,12 +2,35 @@
   "series": "lecture-python.myst",
   "lecture": "markov_perf",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [444, 476, 446],
-     "detail": "three sentences describe a document that is not the one in front of the reader. Line 444, 'Running the code produces the following output', is followed by nothing - the `:load:` cell at 438-442 has already executed and shown its output above the sentence. Line 476 says 'The following program imports $F1$ and $F2$ from the previous program along with all parameters', describing a two-file structure the notebook does not have: the cell at 480 imports nothing and depends on names the loaded cell left in the namespace. And line 446 writes '$F_i$ is indeed optimal for firm $i$ taking $F_2$ as given', mixing the generic index with the specific one inside a single clause, where the next sentence at 448 says F2 and F1 plainly"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [492],
-     "detail": "the body's only generated figure (492-497) puts total output and price on a single un-labelled axis, distinguished only by a legend and an embedded title, even though the two series measure different things on different scales. The exercise solution at 629-643 plots exactly this comparison correctly - two stacked panels, each with `xlabel` and `ylabel` - so the lecture already contains the better version of its own figure, 140 lines later and inside a dropdown"},
-    {"rule": "qe-code-001", "count": 4, "lines": [548, 623, 636, 642],
-     "detail": "the $R_1$ literal at 548-550 writes the same entry three different ways in three adjacent rows - `-a0/2` (548), `-a0 / 2.` (549), `-a0 / 2` (552 in $R_2$) - and mixes integer and float zeros within one row (`0` and `0.` at 550); `float(x.item())` at 623 casts a value `.item()` has already returned as a Python float; and `frameon=0` at 636 and 642 passes an integer where the same lecture writes `frameon=False` at 496. The space-aligned matrix literals themselves are fine - laying them out to look like matrices is the mathematical-notation exemption qe-code-001 allows"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        444,
+        476,
+        446
+      ],
+      "detail": "three sentences describe a document that is not the one in front of the reader. Line 444, 'Running the code produces the following output', is followed by nothing - the `:load:` cell at 438-442 has already executed and shown its output above the sentence. Line 476 says 'The following program imports $F1$ and $F2$ from the previous program along with all parameters', describing a two-file structure the notebook does not have: the cell at 480 imports nothing and depends on names the loaded cell left in the namespace. And line 446 writes '$F_i$ is indeed optimal for firm $i$ taking $F_2$ as given', mixing the generic index with the specific one inside a single clause, where the next sentence at 448 says F2 and F1 plainly"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        492
+      ],
+      "detail": "the body's only generated figure (492-497) puts total output and price on a single un-labelled axis, distinguished only by a legend and an embedded title, even though the two series measure different things on different scales. The exercise solution at 629-643 plots exactly this comparison correctly - two stacked panels, each with `xlabel` and `ylabel` - so the lecture already contains the better version of its own figure, 140 lines later and inside a dropdown"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        548,
+        623,
+        636,
+        642
+      ],
+      "detail": "the $R_1$ literal at 548-550 writes the same entry three different ways in three adjacent rows - `-a0/2` (548), `-a0 / 2.` (549), `-a0 / 2` (552 in $R_2$) - and mixes integer and float zeros within one row (`0` and `0.` at 550); `float(x.item())` at 623 casts a value `.item()` has already returned as a Python float; and `frameon=0` at 636 and 642 passes an integer where the same lecture writes `frameon=False` at 496. The space-aligned matrix literals themselves are fine - laying them out to look like matrices is the mathematical-notation exemption qe-code-001 allows"
+    }
   ],
   "strengths": [
     "The `prf:definition` at 143-156 does more than state the fixed point: it unpacks both words of the name, saying what 'Markov' restricts (dependence on the current state only) and what 'Perfect' buys (optimizing behaviour at all future states), and then makes the point that this includes states never reached on the equilibrium path",
@@ -27,5 +50,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 x5 in markov_perf.md is largely false positives. The hits at 455 (`beta=beta`, twice), 562 (`beta=β`) and 614 (`beta=β`) are the keyword argument of QuantEcon's own API, `qe.LQ(..., beta=...)` and `qe.nnash(..., beta=...)` - the author cannot rename another library's parameter, and at 562 and 614 the value passed is already `β`. Only line 453, `beta = 0.96`, is an author-chosen identifier and a genuine violation. Same root cause as the qe-code-002 hit in lq_inventories.md: the check does not exclude identifiers appearing immediately before `=` inside a call."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "acab74c3bb4907d78d48285f555a104fd068a245"
+  }
 }

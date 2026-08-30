@@ -61,5 +61,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-008 x1 (python_advanced_features.md:377): the call is `ax[idx].plot(*generate_data(*βs), **line_kargs)` and `line_kargs` is `{'lw': 1.5, 'alpha': 0.7}` (360), raised to 2 at 389 - so the line width is set, just not as a literal keyword the check can see. The real finding is 'lw is 1.5, not 2', which is a much smaller point, and it lands in the one cell whose entire subject is passing keyword arguments through `**`."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "daf3439891eddf75d876da88b8e28474236c9a61"
+  }
 }

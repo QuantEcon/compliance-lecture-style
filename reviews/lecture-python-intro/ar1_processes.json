@@ -2,14 +2,40 @@
   "series": "lecture-python-intro",
   "lecture": "ar1_processes",
   "judgment": [
-    {"rule": "qe-code-001", "count": 3, "lines": [46, 186, 540],
-     "detail": "line 46 `#set default figure size` has no space after the hash; line 186 `ax.legend(bbox_to_anchor=[1.05,1],loc=2,borderaxespad=1)` omits the space after every comma; line 540 `parameter_pairs= (2, 2), ...` has a space after `=` but not before"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [288],
-     "detail": "line 288 is a definition sentence - 'A stationary distribution is a distribution that is a \"fixed point\" of the update rule' - with the defined term left unbolded, four lines before the same lecture correctly bolds **stationary** at line 292"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [447],
-     "detail": "exercise ar1p_ex2 (lines 447-490) asks the reader to build a kernel density estimator and test it on three beta distributions; nothing connects it to AR(1) processes, and its real purpose - supplying the KDE class that exercise ar1p_ex3 needs at line 628 - is never stated"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [310],
-     "detail": "the Ergodicity section (lines 310-359) asserts that time-series averages converge to expectations under the stationary distribution and never plots it, although the neighbouring stability claims each get a figure (lines 171, 209, 228, 263)"}
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        46,
+        186,
+        540
+      ],
+      "detail": "line 46 `#set default figure size` has no space after the hash; line 186 `ax.legend(bbox_to_anchor=[1.05,1],loc=2,borderaxespad=1)` omits the space after every comma; line 540 `parameter_pairs= (2, 2), ...` has a space after `=` but not before"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        288
+      ],
+      "detail": "line 288 is a definition sentence - 'A stationary distribution is a distribution that is a \"fixed point\" of the update rule' - with the defined term left unbolded, four lines before the same lecture correctly bolds **stationary** at line 292"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        447
+      ],
+      "detail": "exercise ar1p_ex2 (lines 447-490) asks the reader to build a kernel density estimator and test it on three beta distributions; nothing connects it to AR(1) processes, and its real purpose - supplying the KDE class that exercise ar1p_ex3 needs at line 628 - is never stated"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        310
+      ],
+      "detail": "the Ergodicity section (lines 310-359) asserts that time-series averages converge to expectations under the stationary distribution and never plots it, although the neighbouring stability claims each get a figure (lines 171, 209, 228, 263)"
+    }
   ],
   "strengths": [
     "Every labelled display equation is actually used: can_ar1, ar1_ma, dyn_tm, mu_sig_star and ar1_ergo are each cited later with {eq}, so no label is dead weight",
@@ -28,5 +54,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 in ar1_processes.md lists lines 537 and 542, but the identifier there is `beta` from `from scipy.stats import beta` (line 537) and its call `plot_kde(beta(alpha, beta))` (line 542) - an imported SciPy distribution name, not an author-chosen variable, so the spelled-out-Greek rule cannot apply. Two of the 12 hits look like false positives."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "9d669d59ea2bf33e03f938ea6e96695741c069bc"
+  }
 }

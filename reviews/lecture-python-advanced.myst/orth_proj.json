@@ -2,14 +2,50 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "orth_proj",
   "judgment": [
-    {"rule": "qe-math-009", "count": 5, "lines": [259, 377, 402, 567, 617],
-     "detail": "the book already defines the macros this lecture writes out by hand: `_config.yml` sets `Span: span` and `col: col`, yet the file writes `\\mathop{\\mathrm{span}}` twelve times (259, 274, 397 twice, 412, 471, 475, 478, 648, 649, 659) and `\\mathop{\\mathrm{col}}` four times (397 twice, 412, 683), and it brackets the operator three different ways - bare (`\\mathop{\\mathrm{span}} X` at 397, 412), with braces (274, 648, 659) and with parentheses (471, 475, 478). The number of regressors changes case inside a single proof: the theorem at 348 declares $X$ to be $n \\times k$, its own proof writes $b \\in \\mathbb R^K$ at 377 and 380, 437-482 returns to lowercase $k$, and the whole regression section (498, 522, 585, 586) uses uppercase $K$ for the same quantity. 402 drops the distinction between the operator and its value: \"$P = X (X' X)^{-1} X' y$ projects $y$ onto $S$\" has a spurious $y$ inside the definition of the matrix, which 351, 356, 598 and 740 all state correctly as $P = X(X'X)^{-1}X'$. 567 writes `:=:` between the two representations of $X$. And 617-619 sets three definitions as \"The **total sum of squares** is $:= \\| y \\|^2$\", so the sentence reads \"is := ...\" three times over"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [216, 655, 838, 883],
-     "detail": "the orthogonal complement is defined twice, and the second definition is weaker than the first: 83 gives it correctly as $S^{\\perp} := \\{x \\in \\mathbb R^n : x \\perp S\\}$, and 216-217 re-introduces the same bold term as \"the linear subspace $S^{\\perp}$ that satisfies $x_1 \\perp x_2$ for every $x_1 \\in S$ and $x_2 \\in S^{\\perp}$\" - a property that $\\{0\\}$ also satisfies, so as written it does not pin down $S^\\perp$ at all. 655 breaks the index: the theorem at 642-652 and the algorithm at 659-663 both run to $k$, and the sentence between them says the procedure \"constructs an orthogonal set $\\{u_1, u_2, \\ldots, u_n\\}$\". The comment at 838 is off by one - `Z = X[:, :i]` is the first $i$ columns, not the \"First i-1 columns of X\" - in the one line of the Gram-Schmidt implementation a reader has to trust. And the exercise's three-way verification is settled by eye: 866-893 prints `Py1`, `Py2` and `Py3` as three bare arrays and the prose then asserts \"This is the same answer\" (883) and \"Again, we obtain the same answer\" (896), where one `np.max(np.abs(Py1 - Py2))` would say it"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [73, 595, 639],
-     "detail": "every one of the six figures is a static PNG (73, 79, 85, 154, 195, 249) with an empty directive body - no caption, no `:name:` - in a lecture whose entire subject is two- and three-dimensional geometry that matplotlib draws directly, and the prose consequently has to point at them by position (\"The next figure provides some intuition\" at 152, \"The next figure illustrates\" at 247) instead of by `{numref}`. Second, the six that exist all illustrate the abstract definitions of §Key definitions, and the section where a picture would carry the most - least squares regression, 595-629, where $y = \\hat y + \\hat u$ with $\\hat u \\perp \\hat y$ gives TSS = ESS + SSR by the Pythagorean law - has no figure at all, even though it is the same right triangle the earlier PNGs already draw abstractly. Third, Gram-Schmidt (639-667) is a sequential geometric construction described in three bullets - project $x_i$ onto $S_{i-1}^{\\perp}$, normalise, repeat - and the natural picture, the first two or three steps in $\\mathbb R^3$, is neither drawn in the exposition nor in the exercise that implements it"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [158, 490, 631, 883],
-     "detail": "158-162 sits under a heading that already says what it does: the section is titled \"### Proof of sufficiency\" and opens \"We'll omit the full proof.\" / \"But we will prove sufficiency of the asserted conditions.\" 490-494 spends three paragraphs announcing the next section (\"Let's apply the theory of orthogonal projection to least squares regression.\" / \"This approach provides insights about many geometric properties of linear regression.\" / \"We treat only some examples.\"). 631-637 does the same again in three more (\"Let's return to the connection ... touched on above.\" / \"A result of much interest is a famous algorithm ...\" / \"The next section gives details.\") immediately before the heading that gives the details. And the exercise solution's commentary is filler where a number belongs: \"This is the same answer. So far so good.\" (883) and \"Again, we obtain the same answer.\" (896)"}
+    {
+      "rule": "qe-math-009",
+      "count": 5,
+      "lines": [
+        259,
+        377,
+        402,
+        567,
+        617
+      ],
+      "detail": "the book already defines the macros this lecture writes out by hand: `_config.yml` sets `Span: span` and `col: col`, yet the file writes `\\mathop{\\mathrm{span}}` twelve times (259, 274, 397 twice, 412, 471, 475, 478, 648, 649, 659) and `\\mathop{\\mathrm{col}}` four times (397 twice, 412, 683), and it brackets the operator three different ways - bare (`\\mathop{\\mathrm{span}} X` at 397, 412), with braces (274, 648, 659) and with parentheses (471, 475, 478). The number of regressors changes case inside a single proof: the theorem at 348 declares $X$ to be $n \\times k$, its own proof writes $b \\in \\mathbb R^K$ at 377 and 380, 437-482 returns to lowercase $k$, and the whole regression section (498, 522, 585, 586) uses uppercase $K$ for the same quantity. 402 drops the distinction between the operator and its value: \"$P = X (X' X)^{-1} X' y$ projects $y$ onto $S$\" has a spurious $y$ inside the definition of the matrix, which 351, 356, 598 and 740 all state correctly as $P = X(X'X)^{-1}X'$. 567 writes `:=:` between the two representations of $X$. And 617-619 sets three definitions as \"The **total sum of squares** is $:= \\| y \\|^2$\", so the sentence reads \"is := ...\" three times over"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        216,
+        655,
+        838,
+        883
+      ],
+      "detail": "the orthogonal complement is defined twice, and the second definition is weaker than the first: 83 gives it correctly as $S^{\\perp} := \\{x \\in \\mathbb R^n : x \\perp S\\}$, and 216-217 re-introduces the same bold term as \"the linear subspace $S^{\\perp}$ that satisfies $x_1 \\perp x_2$ for every $x_1 \\in S$ and $x_2 \\in S^{\\perp}$\" - a property that $\\{0\\}$ also satisfies, so as written it does not pin down $S^\\perp$ at all. 655 breaks the index: the theorem at 642-652 and the algorithm at 659-663 both run to $k$, and the sentence between them says the procedure \"constructs an orthogonal set $\\{u_1, u_2, \\ldots, u_n\\}$\". The comment at 838 is off by one - `Z = X[:, :i]` is the first $i$ columns, not the \"First i-1 columns of X\" - in the one line of the Gram-Schmidt implementation a reader has to trust. And the exercise's three-way verification is settled by eye: 866-893 prints `Py1`, `Py2` and `Py3` as three bare arrays and the prose then asserts \"This is the same answer\" (883) and \"Again, we obtain the same answer\" (896), where one `np.max(np.abs(Py1 - Py2))` would say it"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        73,
+        595,
+        639
+      ],
+      "detail": "every one of the six figures is a static PNG (73, 79, 85, 154, 195, 249) with an empty directive body - no caption, no `:name:` - in a lecture whose entire subject is two- and three-dimensional geometry that matplotlib draws directly, and the prose consequently has to point at them by position (\"The next figure provides some intuition\" at 152, \"The next figure illustrates\" at 247) instead of by `{numref}`. Second, the six that exist all illustrate the abstract definitions of §Key definitions, and the section where a picture would carry the most - least squares regression, 595-629, where $y = \\hat y + \\hat u$ with $\\hat u \\perp \\hat y$ gives TSS = ESS + SSR by the Pythagorean law - has no figure at all, even though it is the same right triangle the earlier PNGs already draw abstractly. Third, Gram-Schmidt (639-667) is a sequential geometric construction described in three bullets - project $x_i$ onto $S_{i-1}^{\\perp}$, normalise, repeat - and the natural picture, the first two or three steps in $\\mathbb R^3$, is neither drawn in the exposition nor in the exercise that implements it"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        158,
+        490,
+        631,
+        883
+      ],
+      "detail": "158-162 sits under a heading that already says what it does: the section is titled \"### Proof of sufficiency\" and opens \"We'll omit the full proof.\" / \"But we will prove sufficiency of the asserted conditions.\" 490-494 spends three paragraphs announcing the next section (\"Let's apply the theory of orthogonal projection to least squares regression.\" / \"This approach provides insights about many geometric properties of linear regression.\" / \"We treat only some examples.\"). 631-637 does the same again in three more (\"Let's return to the connection ... touched on above.\" / \"A result of much interest is a famous algorithm ...\" / \"The next section gives details.\") immediately before the heading that gives the details. And the exercise solution's commentary is filler where a number belongs: \"This is the same answer. So far so good.\" (883) and \"Again, we obtain the same answer.\" (896)"
+    }
   ],
   "strengths": [
     "Bold-for-definitions is applied without a single exception across twenty-two defined terms - law of cosines (69), orthogonal (71), orthogonal to (77), orthogonal complement (83), orthogonal set (102), Pythagorean Law (104), orthogonal projection (149), wide-sense expectations operator (191), orthogonal projection mapping onto (193), orthonormal set (255), orthonormal basis (259), projection matrix (404), annihilator matrix (406), overdetermined (439), risk (499), empirical risk (507), empirical risk minimization (513), linear least squares problem (526), vector of fitted values (603), vector of residuals (609), the three sums of squares (617-619) and Gram-Schmidt orthogonalization (655) - with italic reserved for emphasis",
@@ -31,5 +67,9 @@
     "Cut the three announcement paragraphs at 490-494 and 631-637, and the two sentences at 158-162 that restate the heading they sit under",
     "Finish the mechanical items: the six `array` displays recast as `bmatrix` (535, 545, 560, 569, 777, 791 - qe-math-003), the 52 apostrophe transposes to `\\top` (all genuine: $X'$, $X'X$, $b'$, $x_n'$, $(Xb)'$, $Q'$, $R'$, $U'$), the two raw links to `{doc}` (53, 665), the 16 double spaces, \"Theory\" and \"Law\" mid-sentence (55, 104), the stray `\\quad` at the end of the display at 783, and the `is $:=$` constructions at 617-619"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "f9a882988902fe84f964eaf69265026bd6eef7f2"
+  }
 }

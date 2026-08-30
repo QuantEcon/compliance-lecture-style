@@ -69,5 +69,9 @@
   ],
   "scanner_doubts": [
     "Cleared, not filed. (1) qe-math-014 and qe-math-015 (proposed) have nothing to score: the lecture is fully deterministic - no `\\mathbb{P}`, no expectation, no density and no CDF anywhere - which is also why References is legitimately N/A and Math scores 10/10. (2) qe-writing-005 is satisfied rather than unreported: I enumerated every bold span in the file (88, 90, 108, 118, 430; the hit at 81 is a `**` exponent in code, not markup) and all five are terms defined on first use, and the file has no italic emphasis to mis-assign. (3) qe-writing-002 is close enough to satisfied that I have not scored it: the longest paragraph in the file is 25 words, every paragraph holds one sentence, and the only prose defect I found is the \"It's/Its\" slip at 316, which is in the actions. (4) All five qe-writing-006 hits are genuine Title-Case section headings ('Reviewing the Model' 55, 'Value Function Iteration' 86, 'The Bellman Operator' 106, 'Fitted Value Function Iteration' 125, 'Policy Function' 411) - no proper-noun false positives here, unlike the phillips family in this batch. (5) The Code score of 10/10 is a correct mechanical result - Unicode Greek is used throughout (`β`, `γ`, `α`, `σ`), there is no non-Anaconda import to install and no timing code - but flake8 finds eleven real items, which is why qe-code-001 carries a count of 6 covering them. (6) I checked whether the E121/E125 continuation-indent hits at 196, 232, 258, 325 and 443 (the `    ):` closing a hanging signature) should be counted; they should not - both codes are in pycodestyle's default ignore set, and the style is used consistently in all five signatures"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "b20769f1170610cb45ad88f62fd99325312424b5"
+  }
 }

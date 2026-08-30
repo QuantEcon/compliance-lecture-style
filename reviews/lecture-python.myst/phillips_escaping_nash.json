@@ -2,18 +2,68 @@
   "series": "lecture-python.myst",
   "lecture": "phillips_escaping_nash",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [362, 446, 454, 505],
-     "detail": "four places where the argument skips a step. (a) 362 states the selection criterion as \"the dominant escape is the one that reaches the boundary fastest\", but 364 then computes something else - \"the instantaneous velocity of each candidate at the self-confirming equilibrium\" - and 386 reads the ranking straight off those four norms. Instantaneous speed at one point is not time-to-boundary, and the lecture never says why they agree here (they need not: the second and third candidates have a different direction and so a different path length). The exercise machinery to settle it already exists - `left_circle` at 303-307 returns the exit time - so integrating all four and printing four exit times would make 362 literally true. (b) 446 and 448 say the escape *steepens* the perceived Phillips curve until it is *vertical*, while 352 and 494 say the slope $\\gamma_1$ *rises* from $-1$ *toward zero*. Both are correct - steep/vertical in the traditional diagram with inflation on the vertical axis, flat in the regression $U_n = \\gamma_1 \\pi_n + \\gamma_{-1}$ that this lecture actually writes at 88 - but the lecture never draws or names the traditional diagram, so a reader tracking $\\gamma_1 \\to 0$ through five sections meets \"steepen\" and \"vertical\" at 446-448 with nothing to reconcile them against. (c) 454-460 makes three quantitative claims about the minimized action - the mean escape time grows like $\\exp(\\bar S/\\varepsilon)$, the dynamic model has \"a much smaller $\\bar S$\", escapes are therefore \"*more frequent*\" - and $\\bar S$ is never computed, nor is $Q$ (243, 248), nor $\\varepsilon$, which appears in no code cell in the lecture. (d) the Ellison-Yates section adds a third shock $W_3$ with standard deviation $\\sigma_3$, but $\\sigma_3$ is not a field of `EscapeModel` (120); 505 hard-codes `σ3 = 0.9` outside the class and 506 applies {eq}`en_vol` to `slope`, the belief path integrated from the *two-shock* escape ODE at 310. 496 is honest that this is what it does, but the escape path in the extended model is not the one plotted, and 528-530 then reasons about how $\\sigma_3$ changes escape *timing* - an effect the figure at 508-521 cannot show"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [239, 434, 446, 528],
-     "detail": "239 is a 45-word sentence that introduces three objects at once - \"one defines a log-moment-generating (H-) functional of the least-squares innovations, its Legendre transform $L$, and an **action functional** $S(T, \\gamma) = \\int_0^T L\\,ds$ that measures how \\\"costly\\\" - how improbable - the path is\" - of which only the action is used again ($L$ never reappears, and the H-functional only obliquely at 243). 446 is 42 words with three chained clauses, 528 is 45 words with the payload behind a colon and two negations (\"must now offset not only the control errors but also...\"), and 436 is 45 words. Separately the same conclusion is stated three times in nearly the same words: 434 \"The escape dynamics only need to *start* the departure; the mean dynamics finish the job\", 436 \"the mean dynamics eventually carry beliefs back to Nash\", 450 \"rekindling the mean dynamics that carry it back to Nash\", and then 621 again \"the escape dynamics only need to nudge beliefs out of it, after which the mean dynamics finish the job\". 396 and 432 likewise say the same thing twice (\"Near the self-confirming equilibrium the mean dynamics point *toward* it\" / \"Near the self-confirming equilibrium the arrows push back toward Nash\")"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [51, 55, 44],
-     "detail": "the lecture's central object is italicised where it is coined and bolded 190 lines later: 51 introduces it as \"the escape has a *dominant path*\" and 241 then writes \"The **dominant escape path** minimizes the action\" - italic for the definition, bold for the restatement, which is the rule inverted in both directions at once. 55 uses bold for pure emphasis, \"We work with the analytically tractable **static** model\", where the lecture's own emphasis elsewhere is correctly italic (*rare* 235, *most likely* 237, *perturbed* 251, *dominant* 51, *globally stable* 199). 44 bolds \"**theory of large deviations**\", the name of an existing field that the lecture uses but does not define, alongside genuine definitions in the same idiom (**mean dynamics** 48, **escape dynamics** 49, **action functional** 239, **experimentation trap** 444, **induction hypothesis** 352) - so bold carries two jobs"},
-    {"rule": "qe-code-001", "count": 4, "lines": [512, 517, 173, 118],
-     "detail": "512-513 and 517-518 put two statements on one line with a semicolon - `axes[0].set_xlabel('time'); axes[0].set_ylabel('inflation level')` and three more - which PEP8 forbids (E702); the structurally identical two-panel cell at 326-340 writes exactly these calls one per line, so the file contradicts itself in the space of 180 lines. Eight code lines run past 79 characters (E501): 118 (93), 159 (81), 173 (94), 328 (81), 347 (86), 349 (99), 382 (81), 516 (87). The LaTeX labels are quoted two ways in adjacent cells - raw strings at 173, 425, 426 and 516 (`label=r'$\\gamma_{-1} = u(1+\\gamma_1^2)$'`) but escaped backslashes at 326, 327 and 328 (`label='intercept $\\\\gamma_{-1}$'`). And the four one-line docstrings at 118, 128, 133 and 304 use single double-quotes rather than the triple quotes PEP 257 asks for"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [383, 448],
-     "detail": "the section named after a race prints its result as four aligned numbers rather than drawing it. 366-383 computes a belief velocity for each of the four shock pairs and prints `|velocity|`; 386-390 then explains that two of the four tie on speed and the winner is picked by *direction* - which is exactly what a plot cannot help but show and a table of norms hides. The vector-field cell at 402-429 is already drawing arrows in the same belief space, so four labelled arrows at $\\bar\\gamma$, two of them equal in length and opposite in sign, would settle 362-390 in one glance. Second, the natural-rate claim at 442-448 is about the *shape of the perceived Phillips curve* - dispersion in inflation steepens it until it is vertical - and no figure in the lecture is drawn in the $(\\text{unemployment}, \\text{inflation})$ plane; two fitted lines, one at $\\gamma_1 = -\\theta$ and one at $\\gamma_1 \\approx 0$, over a scatter of the data the government generates, would make both the trap and the escape visible and would remove the steepen-versus-rise ambiguity noted under qe-writing-003"},
-    {"rule": "qe-math-009", "count": 3, "lines": [76, 146, 489],
-     "detail": "76 introduces $\\hat x_n$ in the statement of the true model only to set it equal to $x_n$ in the same display (`\\hat x_n = x_n`); the symbol never appears again, so the truth could be written $U_n = u - \\theta(\\pi_n - x_n) + \\sigma_1 W_{1n}$ with one sentence about rational expectations and one fewer decorated letter. The second-moment matrix is written three ways for one object: $\\bar M$ with no argument at 146, $\\bar M(\\gamma)$ at 196 and 258, and `M` in the code (127, 130, 213, 417). And the expectation operator takes square brackets at 146 (`\\mathbb{E}\\left[\\Phi(U - \\Phi^\\top \\gamma)\\right]`, matching the style guide) but parentheses at 489 (`\\mathbb{E}(\\sigma_\\pi \\mid \\gamma)`)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        362,
+        446,
+        454,
+        505
+      ],
+      "detail": "four places where the argument skips a step. (a) 362 states the selection criterion as \"the dominant escape is the one that reaches the boundary fastest\", but 364 then computes something else - \"the instantaneous velocity of each candidate at the self-confirming equilibrium\" - and 386 reads the ranking straight off those four norms. Instantaneous speed at one point is not time-to-boundary, and the lecture never says why they agree here (they need not: the second and third candidates have a different direction and so a different path length). The exercise machinery to settle it already exists - `left_circle` at 303-307 returns the exit time - so integrating all four and printing four exit times would make 362 literally true. (b) 446 and 448 say the escape *steepens* the perceived Phillips curve until it is *vertical*, while 352 and 494 say the slope $\\gamma_1$ *rises* from $-1$ *toward zero*. Both are correct - steep/vertical in the traditional diagram with inflation on the vertical axis, flat in the regression $U_n = \\gamma_1 \\pi_n + \\gamma_{-1}$ that this lecture actually writes at 88 - but the lecture never draws or names the traditional diagram, so a reader tracking $\\gamma_1 \\to 0$ through five sections meets \"steepen\" and \"vertical\" at 446-448 with nothing to reconcile them against. (c) 454-460 makes three quantitative claims about the minimized action - the mean escape time grows like $\\exp(\\bar S/\\varepsilon)$, the dynamic model has \"a much smaller $\\bar S$\", escapes are therefore \"*more frequent*\" - and $\\bar S$ is never computed, nor is $Q$ (243, 248), nor $\\varepsilon$, which appears in no code cell in the lecture. (d) the Ellison-Yates section adds a third shock $W_3$ with standard deviation $\\sigma_3$, but $\\sigma_3$ is not a field of `EscapeModel` (120); 505 hard-codes `σ3 = 0.9` outside the class and 506 applies {eq}`en_vol` to `slope`, the belief path integrated from the *two-shock* escape ODE at 310. 496 is honest that this is what it does, but the escape path in the extended model is not the one plotted, and 528-530 then reasons about how $\\sigma_3$ changes escape *timing* - an effect the figure at 508-521 cannot show"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        239,
+        434,
+        446,
+        528
+      ],
+      "detail": "239 is a 45-word sentence that introduces three objects at once - \"one defines a log-moment-generating (H-) functional of the least-squares innovations, its Legendre transform $L$, and an **action functional** $S(T, \\gamma) = \\int_0^T L\\,ds$ that measures how \\\"costly\\\" - how improbable - the path is\" - of which only the action is used again ($L$ never reappears, and the H-functional only obliquely at 243). 446 is 42 words with three chained clauses, 528 is 45 words with the payload behind a colon and two negations (\"must now offset not only the control errors but also...\"), and 436 is 45 words. Separately the same conclusion is stated three times in nearly the same words: 434 \"The escape dynamics only need to *start* the departure; the mean dynamics finish the job\", 436 \"the mean dynamics eventually carry beliefs back to Nash\", 450 \"rekindling the mean dynamics that carry it back to Nash\", and then 621 again \"the escape dynamics only need to nudge beliefs out of it, after which the mean dynamics finish the job\". 396 and 432 likewise say the same thing twice (\"Near the self-confirming equilibrium the mean dynamics point *toward* it\" / \"Near the self-confirming equilibrium the arrows push back toward Nash\")"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        51,
+        55,
+        44
+      ],
+      "detail": "the lecture's central object is italicised where it is coined and bolded 190 lines later: 51 introduces it as \"the escape has a *dominant path*\" and 241 then writes \"The **dominant escape path** minimizes the action\" - italic for the definition, bold for the restatement, which is the rule inverted in both directions at once. 55 uses bold for pure emphasis, \"We work with the analytically tractable **static** model\", where the lecture's own emphasis elsewhere is correctly italic (*rare* 235, *most likely* 237, *perturbed* 251, *dominant* 51, *globally stable* 199). 44 bolds \"**theory of large deviations**\", the name of an existing field that the lecture uses but does not define, alongside genuine definitions in the same idiom (**mean dynamics** 48, **escape dynamics** 49, **action functional** 239, **experimentation trap** 444, **induction hypothesis** 352) - so bold carries two jobs"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        512,
+        517,
+        173,
+        118
+      ],
+      "detail": "512-513 and 517-518 put two statements on one line with a semicolon - `axes[0].set_xlabel('time'); axes[0].set_ylabel('inflation level')` and three more - which PEP8 forbids (E702); the structurally identical two-panel cell at 326-340 writes exactly these calls one per line, so the file contradicts itself in the space of 180 lines. Eight code lines run past 79 characters (E501): 118 (93), 159 (81), 173 (94), 328 (81), 347 (86), 349 (99), 382 (81), 516 (87). The LaTeX labels are quoted two ways in adjacent cells - raw strings at 173, 425, 426 and 516 (`label=r'$\\gamma_{-1} = u(1+\\gamma_1^2)$'`) but escaped backslashes at 326, 327 and 328 (`label='intercept $\\\\gamma_{-1}$'`). And the four one-line docstrings at 118, 128, 133 and 304 use single double-quotes rather than the triple quotes PEP 257 asks for"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        383,
+        448
+      ],
+      "detail": "the section named after a race prints its result as four aligned numbers rather than drawing it. 366-383 computes a belief velocity for each of the four shock pairs and prints `|velocity|`; 386-390 then explains that two of the four tie on speed and the winner is picked by *direction* - which is exactly what a plot cannot help but show and a table of norms hides. The vector-field cell at 402-429 is already drawing arrows in the same belief space, so four labelled arrows at $\\bar\\gamma$, two of them equal in length and opposite in sign, would settle 362-390 in one glance. Second, the natural-rate claim at 442-448 is about the *shape of the perceived Phillips curve* - dispersion in inflation steepens it until it is vertical - and no figure in the lecture is drawn in the $(\\text{unemployment}, \\text{inflation})$ plane; two fitted lines, one at $\\gamma_1 = -\\theta$ and one at $\\gamma_1 \\approx 0$, over a scatter of the data the government generates, would make both the trap and the escape visible and would remove the steepen-versus-rise ambiguity noted under qe-writing-003"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        76,
+        146,
+        489
+      ],
+      "detail": "76 introduces $\\hat x_n$ in the statement of the true model only to set it equal to $x_n$ in the same display (`\\hat x_n = x_n`); the symbol never appears again, so the truth could be written $U_n = u - \\theta(\\pi_n - x_n) + \\sigma_1 W_{1n}$ with one sentence about rational expectations and one fewer decorated letter. The second-moment matrix is written three ways for one object: $\\bar M$ with no argument at 146, $\\bar M(\\gamma)$ at 196 and 258, and `M` in the code (127, 130, 213, 417). And the expectation operator takes square brackets at 146 (`\\mathbb{E}\\left[\\Phi(U - \\Phi^\\top \\gamma)\\right]`, matching the style guide) but parentheses at 489 (`\\mathbb{E}(\\sigma_\\pi \\mid \\gamma)`)"
+    }
   ],
   "strengths": [
     "The note at 93-100 declares the coefficient-ordering convention and names the sibling lecture that reverses it - \"The slope comes first here, and the regressors are $\\Phi = (\\pi, 1)$ ... {doc}`phillips_priors` studies the same model with the intercept first; see the warning there for the translation\" - so the one cross-lecture notation hazard in this family is signposted from both ends instead of being left to trap the reader",
@@ -35,5 +85,9 @@
   ],
   "scanner_doubts": [
     "`qe-fig-008` fires on marker-only `plot()` calls, which are scatter plots the rule cannot mean. `check_fig_008` in `tools/qestyle_rules.py:1308-1339` assembles the whole argument list and reports any `plot(...)` lacking `lw=`/`linewidth=`; it has no test for whether the call draws a line. In this lecture that costs 3 of 9 hits: 175 `ax.plot(γ_sce[0], γ_sce[1], 'ko', ms=8)`, 422 `ax.plot(*γ_sce, 'ko', ms=8, label='SCE (Nash)')`, 423 `ax.plot(0, model.u, 'C2s', ms=8, label='Ramsey belief')`. Candidate fix: skip a call whose first *positional* string literal is a matplotlib format string containing at least one marker character and no line-style substring (`-`, `--`, `-.`, `:`), or which pairs `marker=` with `ls`/`linestyle` set to `''`/`'none'`. Measured over the pinned snapshot with `tools/qestyle_lex.lex` plus the exact regex and paren-walk from `check_fig_008` (script at `scratchpad/fig008.py`): total hits **1382**, which matches `lectures/data/rule_reach.csv` exactly; marker-only hits **140**; after the fix **1242** - a 10.1% reduction, none of it a genuine line chart. The largest concentrations are `lecture-python-intro/french_rev.md` (the `'o'`/`'+'`/`'*'` scatter of inflation against balances, repeated across seven figures), `input_output.md:222,477` (`ax.plot(250, 120, \"*\", color=\"black\")`, a single labelled point) and `lake_model.md:343`. Restricting the format-string test to positional arguments matters: an earlier draft that matched any quoted string in the call also swallowed `color='C1'`, since `C1` is all format characters and `1` is a valid marker, and that inflated the exemption from 140 to 174 - the extra 34 were genuine line charts and the exemption was narrowed to reject them"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "19efa82a10b8df0d785f4dc1cae441da9fc47420"
+  }
 }

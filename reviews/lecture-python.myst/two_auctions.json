@@ -2,20 +2,89 @@
   "series": "lecture-python.myst",
   "lecture": "two_auctions",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 6, "lines": [149, 285, 287, 363, 425, 543],
-     "detail": "543-682 \"Code summary\" is not a summary - it is a verbatim second copy of the working code. `evaluate_largest` (576-593) repeats 407-422 line for line, `compute_optimal_bid_FPSB` (595-625) repeats 470-501, and `plot_winner_payment_distribution` (627-662) repeats 507-541; then 665-681 runs the class on the same $\\chi^2$ case, with the same seed 1337, that 456-541 has already worked through cell by cell - so the last four cells redraw three figures the reader has just seen, identically. 287 says \"Above we computed that the CDF is $F_n(y) = y^n$ and the PDF is $f_n = ny^{n-1}$\", but what was computed above (165-171) is $\\tilde F_{n-1}(y) = y^{n-1}$ and $\\tilde f_{n-1}(y) = (n-1)y^{n-2}$, the distribution of the maximum of the *other* $n-1$ bidders; the distribution of the maximum of all $n$ never appears. 149-155 is an H2 \"Setup\" whose entire content is \"There are $n$ bidders\" and \"Each bidder knows that there are $n-1$ other bidders\", after 66 has already established $n>2$ buyers. The heading structure doubles back on itself: 51 and 116 open sections on FPSB and SPSB, then 157 and 184 open two more with the same names spelled differently (\"First-price sealed-bid auction (FPSB)\" against \"First price sealed bid auction\"), and 122 \"Characterization of SPSB auction\" is an H2 where its twin at 94 is an H3. 363-376 re-displays {eq}`eq:optbid1` unlabelled and re-defines $v_i$ and $y_i$ that 104-108 already defined, with a stray colon at 376 (\"$y_{i} = $: maximum value\"). And 425-427 announces the conclusion before the evidence: \"We find that the `evaluate_largest` method functions well\" precedes the figure that shows it (437-446)"},
-    {"rule": "qe-math-014", "count": 9, "lines": [165, 166, 303, 356],
-     "detail": "every probability in the lecture takes an event as its argument and every one of them is written with parentheses. 165 has $\\mathbf{P}(y_i \\leq y)$ and $\\mathbf{P}(\\max_{j\\neq i} v_j \\leq y)$, 166 has $\\prod_{j\\neq i}\\mathbf{P}(v_j \\leq y)$, 303 has $\\mathbf{P}(y_i < v_i)$ and $\\mathbf{P}(y_i > v_i)$, and 356 has four more, $\\mathbf{P}(y_i < v_i)$ and $\\mathbf{P}(y_i \\ge v_i)$ twice each. All nine are logical conditions on random variables, which is exactly the case proposed qe-math-014 assigns to braces - and there is no named set anywhere in the file, so nothing here should be parenthesised. Written $\\mathbb{P}\\{y_i \\leq y\\}$ they would also pick up the blackboard operator the same lines need for qe-math-010"},
-    {"rule": "qe-writing-007", "count": 5, "lines": [200, 266, 323, 332, 488],
-     "detail": "the clearest object in the lecture, the FPSB/SPSB comparison table at 334-341, is captioned by wrapping a raw `<center>` HTML tag in bold (332) instead of using a MyST table caption, so it cannot be numbered or cross-referenced, and no sentence in the lecture refers to it. 323-324 draws the two mean lines of the revenue-equivalence figure in green and red and labels *both* of them `'Mean'`, so the legend has two identical entries in the one figure whose point is that the two means coincide. 266-267 plots 100,000 SPSB payments at `alpha=0.05` with `markersize=0.1`, so the payment cloud that 253 exists to explain (\"there is a frequency distribution of payments for each valuation\") is close to invisible and its legend marker cannot be seen at all - a 2-d histogram or a subsample would show the distribution the sentence describes. 200 sets `text.usetex: True` globally, which makes every figure in the lecture depend on a LaTeX installation, and `sns.despine()` at 272, 329, 446, 501, 540, 623 and 660 strips the spines from all seven. And six of the ten figures are duplicates: 488-501 is redrawn at 614-623, 525-541 at 646-660, and 459-461 at 569-572"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [73, 79, 116, 145, 253],
-     "detail": "73-81 is a seven-item list under \"Evidently,\" whose first and third items state the same fact from opposite sides, and whose fifth item carries a nested sub-bullet. Item 79 also misnames the central object: \"buyer $i$ wants to know the probability that she wins the auction as a function of her bid $v_i$\" - $v_i$ is her valuation, not her bid, and the whole lecture turns on the two being different. 116-129 and 184-186 say the SPSB result three times in three places (\"In a SPSB auction bidders optimally choose to bid their values\" / \"Formally, a dominant strategy profile ... has each bidder bidding its value\" / \"In a **SPSB**, it is optimal for bidder $i$ to bid $v_i$\"), and 92 duplicates bullet 76 in the same way for FPSB. 253 is a 44-word bullet. Four typos: \"Wikepedia\" (145), \"Equibrium\" (345), \"biders\" (389), and 297 mixes prose and math mode in \"The expected revenue equals n $\\times$ expected payment of a bidder\""},
-    {"rule": "qe-code-001", "count": 6, "lines": [219, 220, 407, 550, 567, 607],
-     "detail": "219 binds a lambda to a name, `b_star = lambda vi, N: ((N-1)/N) * vi` (E731), with a parameter `vi` that matches neither the `v_hat` of 387 nor the `v_grid` of 430; 220 then calls it as `b_star(v,N)` with no space after the comma (E231). 550 declares `class bid_price_solution:` in snake_case where PEP8 asks for CapWords. Nine lines carry trailing whitespace - 266, 407, 409, 417, 420, 495, 580, 582, 617. Four methods end with a bare `return None` (567, 574, 625, 662), including `__init__`. 607-608 indents a continuation one column past the opening parenthesis (E127) and 617-618 and 495-496 indent theirs to a column that matches nothing (E128), while the identical construction at 528-529 is aligned correctly. And the duplicated method at 576 silently drops the docstring that documents its `order` parameter at 388-403, so the copy is undocumented while the original is documented (with \"(N,R)\" at 396 missing the comma space that 561 gets right)"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [159, 248, 283, 332, 345],
-     "detail": "the definitions are bolded correctly - **surplus** (70), **payoffs** (86), **Bayesian game** and **Bayesian Nash equilibrium** (88), **Revenue Equivalence Theorem** (143), **payment** (351) - but bold then does two other jobs. It labels six pseudo-headings that should be markdown headings: **Protocols:** (55, 120), **Detailed Setting:** (64), **Expected Revenue FPSB:** (283), **Expected Revenue SPSB:** (295), **Detour: Computing a Bayesian Nash Equibrium for FPSB** (345), and at 332 it wraps a raw `<center>` tag to fake a table caption. And it is applied to the two acronyms inconsistently - **FPSB** bolded at 159 and 173 and **SPSB** at 186, but plain at 139, 141, 223, 279, 313, 318 and 347. The file's only italic is `_winning_` at 248, written with underscores rather than the asterisks used everywhere else in the corpus"},
-    {"rule": "qe-math-009", "count": 3, "lines": [137, 179, 292],
-     "detail": "292 and 303 give the same quantity two names in adjacent displays: $\\mathbf{R}$ is \"expected revenue\" for FPSB and $\\mathbf{TR}$ is the SPSB total, both evaluating to $\\frac{n-1}{n+1}$, which is the section's whole point - one symbol would make the equality visible instead of requiring the reader to match two. The subscripted expectation operators at 303-306 put the subscript inside the command, $\\mathbf{E_{v_i}}$ and $\\mathbf{E_{y_i}}$, so the conditioning variable is bolded along with the operator. 179 writes the evaluation bar as `\\bigg{|}` with braces around it rather than `\\bigg|`, and applies it to $\\frac{n-1}{n}y_i$ after the ratio on the previous line has already cancelled the integrals, so the bar has nothing left to evaluate. And 137 writes the IID marker as `\\stackrel{\\text{i.i.d.}}{\\sim}` where `\\overset{\\text{IID}}{\\sim}` is both the simpler command and the corpus spelling"}
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        149,
+        285,
+        287,
+        363,
+        425,
+        543
+      ],
+      "detail": "543-682 \"Code summary\" is not a summary - it is a verbatim second copy of the working code. `evaluate_largest` (576-593) repeats 407-422 line for line, `compute_optimal_bid_FPSB` (595-625) repeats 470-501, and `plot_winner_payment_distribution` (627-662) repeats 507-541; then 665-681 runs the class on the same $\\chi^2$ case, with the same seed 1337, that 456-541 has already worked through cell by cell - so the last four cells redraw three figures the reader has just seen, identically. 287 says \"Above we computed that the CDF is $F_n(y) = y^n$ and the PDF is $f_n = ny^{n-1}$\", but what was computed above (165-171) is $\\tilde F_{n-1}(y) = y^{n-1}$ and $\\tilde f_{n-1}(y) = (n-1)y^{n-2}$, the distribution of the maximum of the *other* $n-1$ bidders; the distribution of the maximum of all $n$ never appears. 149-155 is an H2 \"Setup\" whose entire content is \"There are $n$ bidders\" and \"Each bidder knows that there are $n-1$ other bidders\", after 66 has already established $n>2$ buyers. The heading structure doubles back on itself: 51 and 116 open sections on FPSB and SPSB, then 157 and 184 open two more with the same names spelled differently (\"First-price sealed-bid auction (FPSB)\" against \"First price sealed bid auction\"), and 122 \"Characterization of SPSB auction\" is an H2 where its twin at 94 is an H3. 363-376 re-displays {eq}`eq:optbid1` unlabelled and re-defines $v_i$ and $y_i$ that 104-108 already defined, with a stray colon at 376 (\"$y_{i} = $: maximum value\"). And 425-427 announces the conclusion before the evidence: \"We find that the `evaluate_largest` method functions well\" precedes the figure that shows it (437-446)"
+    },
+    {
+      "rule": "qe-math-014",
+      "count": 9,
+      "lines": [
+        165,
+        166,
+        303,
+        356
+      ],
+      "detail": "every probability in the lecture takes an event as its argument and every one of them is written with parentheses. 165 has $\\mathbf{P}(y_i \\leq y)$ and $\\mathbf{P}(\\max_{j\\neq i} v_j \\leq y)$, 166 has $\\prod_{j\\neq i}\\mathbf{P}(v_j \\leq y)$, 303 has $\\mathbf{P}(y_i < v_i)$ and $\\mathbf{P}(y_i > v_i)$, and 356 has four more, $\\mathbf{P}(y_i < v_i)$ and $\\mathbf{P}(y_i \\ge v_i)$ twice each. All nine are logical conditions on random variables, which is exactly the case proposed qe-math-014 assigns to braces - and there is no named set anywhere in the file, so nothing here should be parenthesised. Written $\\mathbb{P}\\{y_i \\leq y\\}$ they would also pick up the blackboard operator the same lines need for qe-math-010"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 5,
+      "lines": [
+        200,
+        266,
+        323,
+        332,
+        488
+      ],
+      "detail": "the clearest object in the lecture, the FPSB/SPSB comparison table at 334-341, is captioned by wrapping a raw `<center>` HTML tag in bold (332) instead of using a MyST table caption, so it cannot be numbered or cross-referenced, and no sentence in the lecture refers to it. 323-324 draws the two mean lines of the revenue-equivalence figure in green and red and labels *both* of them `'Mean'`, so the legend has two identical entries in the one figure whose point is that the two means coincide. 266-267 plots 100,000 SPSB payments at `alpha=0.05` with `markersize=0.1`, so the payment cloud that 253 exists to explain (\"there is a frequency distribution of payments for each valuation\") is close to invisible and its legend marker cannot be seen at all - a 2-d histogram or a subsample would show the distribution the sentence describes. 200 sets `text.usetex: True` globally, which makes every figure in the lecture depend on a LaTeX installation, and `sns.despine()` at 272, 329, 446, 501, 540, 623 and 660 strips the spines from all seven. And six of the ten figures are duplicates: 488-501 is redrawn at 614-623, 525-541 at 646-660, and 459-461 at 569-572"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        73,
+        79,
+        116,
+        145,
+        253
+      ],
+      "detail": "73-81 is a seven-item list under \"Evidently,\" whose first and third items state the same fact from opposite sides, and whose fifth item carries a nested sub-bullet. Item 79 also misnames the central object: \"buyer $i$ wants to know the probability that she wins the auction as a function of her bid $v_i$\" - $v_i$ is her valuation, not her bid, and the whole lecture turns on the two being different. 116-129 and 184-186 say the SPSB result three times in three places (\"In a SPSB auction bidders optimally choose to bid their values\" / \"Formally, a dominant strategy profile ... has each bidder bidding its value\" / \"In a **SPSB**, it is optimal for bidder $i$ to bid $v_i$\"), and 92 duplicates bullet 76 in the same way for FPSB. 253 is a 44-word bullet. Four typos: \"Wikepedia\" (145), \"Equibrium\" (345), \"biders\" (389), and 297 mixes prose and math mode in \"The expected revenue equals n $\\times$ expected payment of a bidder\""
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        219,
+        220,
+        407,
+        550,
+        567,
+        607
+      ],
+      "detail": "219 binds a lambda to a name, `b_star = lambda vi, N: ((N-1)/N) * vi` (E731), with a parameter `vi` that matches neither the `v_hat` of 387 nor the `v_grid` of 430; 220 then calls it as `b_star(v,N)` with no space after the comma (E231). 550 declares `class bid_price_solution:` in snake_case where PEP8 asks for CapWords. Nine lines carry trailing whitespace - 266, 407, 409, 417, 420, 495, 580, 582, 617. Four methods end with a bare `return None` (567, 574, 625, 662), including `__init__`. 607-608 indents a continuation one column past the opening parenthesis (E127) and 617-618 and 495-496 indent theirs to a column that matches nothing (E128), while the identical construction at 528-529 is aligned correctly. And the duplicated method at 576 silently drops the docstring that documents its `order` parameter at 388-403, so the copy is undocumented while the original is documented (with \"(N,R)\" at 396 missing the comma space that 561 gets right)"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        159,
+        248,
+        283,
+        332,
+        345
+      ],
+      "detail": "the definitions are bolded correctly - **surplus** (70), **payoffs** (86), **Bayesian game** and **Bayesian Nash equilibrium** (88), **Revenue Equivalence Theorem** (143), **payment** (351) - but bold then does two other jobs. It labels six pseudo-headings that should be markdown headings: **Protocols:** (55, 120), **Detailed Setting:** (64), **Expected Revenue FPSB:** (283), **Expected Revenue SPSB:** (295), **Detour: Computing a Bayesian Nash Equibrium for FPSB** (345), and at 332 it wraps a raw `<center>` tag to fake a table caption. And it is applied to the two acronyms inconsistently - **FPSB** bolded at 159 and 173 and **SPSB** at 186, but plain at 139, 141, 223, 279, 313, 318 and 347. The file's only italic is `_winning_` at 248, written with underscores rather than the asterisks used everywhere else in the corpus"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        137,
+        179,
+        292
+      ],
+      "detail": "292 and 303 give the same quantity two names in adjacent displays: $\\mathbf{R}$ is \"expected revenue\" for FPSB and $\\mathbf{TR}$ is the SPSB total, both evaluating to $\\frac{n-1}{n+1}$, which is the section's whole point - one symbol would make the equality visible instead of requiring the reader to match two. The subscripted expectation operators at 303-306 put the subscript inside the command, $\\mathbf{E_{v_i}}$ and $\\mathbf{E_{y_i}}$, so the conditioning variable is bolded along with the operator. 179 writes the evaluation bar as `\\bigg{|}` with braces around it rather than `\\bigg|`, and applies it to $\\frac{n-1}{n}y_i$ after the ratio on the previous line has already cancelled the integrals, so the bar has nothing left to evaluate. And 137 writes the IID marker as `\\stackrel{\\text{i.i.d.}}{\\sim}` where `\\overset{\\text{IID}}{\\sim}` is both the simpler command and the corpus spelling"
+    }
   ],
   "strengths": [
     "The density/CDF case convention is followed exactly, which is rarer in this corpus than it should be: $\\tilde F_{n-1}(y) = y^{n-1}$ for the CDF of the maximum rival valuation and $\\tilde f_{n-1}(y) = (n-1)y^{n-2}$ for its density (161-171), and the same pairing at 287 - so the derivation at 177-181 can be read without checking which object is which",
@@ -37,5 +106,9 @@
     "Code cleanup: turn the lambda at 219 into a `def`, add the comma space at 220, rename `bid_price_solution` to CapWords, strip the trailing whitespace on 266, 407, 409, 417, 420, 495, 580, 582 and 617, drop the four `return None` statements, and align the continuations at 495, 607, 617 and 648",
     "Sweep the remainder: the 64 double spaces, the two \"i.i.d.\" spellings (137, 161), the three `*` multiplications (285, 356), the four mid-sentence capitalisations (96, 143, 347, 368), the stray colon at 376, and the typos \"Wikepedia\" (145), \"Equibrium\" (345) and \"biders\" (389)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "dd8c40215177c78a386c3409f93f0a1d5f3d815c"
+  }
 }

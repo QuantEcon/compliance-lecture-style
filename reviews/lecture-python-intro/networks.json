@@ -2,16 +2,68 @@
   "series": "lecture-python-intro",
   "lecture": "networks",
   "judgment": [
-    {"rule": "qe-code-001", "count": 14, "lines": [110, 115, 368, 372, 410, 591, 593, 646, 808, 834, 967, 1251, 1300, 1306],
-     "detail": "PEP8 spacing is violated systematically, and the violations cluster in the hand-written networkx cells rather than the imported-helper ones. Missing space after a comma in an argument list: `normalise_weights(node_total_exports,10000)` and `normalise_weights(edge_weights,10)` (109-110), `colorise_weights(list(centrality.values()),color_palette=cm.viridis)` (112), `dict(zip(DG.nodes,node_colors))` (113, 426), `for src,_ in DG.edges` (115, 428), `normalise_weights(node_total_exports,3000)` (421-422), `node_color='none',node_size=500` (808), `print(i+1,e[i])` (967), `def is_accessible(G,i,j)` (1300), and the whole edge list at 1236-1243. Spaces around a keyword-argument `=`, which PEP8 forbids: `with_labels = True` (368, 383), `node_color = 'none',node_size = 500` (591, 594, 646, 649), `linewidths= 0.5, edgecolors = 'black'` (593, 648) - and the identical call at 806-808 gets it right, so the file disagrees with itself. Missing space before `=` in `Z_visual= ch1_data[...]` (410). Missing space after the dict colon in `'centrality':centrality_measures` (834). Inline comments with no space after the hash: `#checking if above graph is strongly connected` (372, 387), `#find adjacency matrix associated with G` (1251). No spaces around a comparison: `if result[i,j]>0` (1306)"},
-    {"rule": "qe-math-009", "count": 4, "lines": [545, 904, 916, 1026],
-     "detail": "545 writes the three-element state set as `$\\{$poor, middle, rich$\\}$` - three separate maths spans and two of them containing nothing but a brace - where `$\\{\\text{poor}, \\text{middle}, \\text{rich}\\}$` is one span and one idea; 903-907 and 915-919 each wrap a single unaligned line in `\\begin{aligned} ... \\end{aligned}` inside `$$`, an environment that buys nothing when there is no `&` to align on (contrast 1091-1093 and 1102-1104, which write the same kind of one-line display bare and read better for it); and the lecture uses two different index bases for the same node set - 896-897 and 917 say the nodes are `$1, \\ldots, n$` and sum `$\\sum_{1 \\leq j \\leq n}$`, while the Katz definition twenty lines later indexes `$i \\in \\{0, \\ldots, n-1\\}$` and sums `$\\sum_{j=0}^{n-1}$` (1025-1026), so a reader comparing {eq}`eq_eicen` with {eq}`katz_central` has to re-base the subscripts to see that they are the same recursion"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [1009, 1142, 1219],
-     "detail": "1142 is a truncated sentence: \"We apply the ideas discussed in this lecture to:\" ends on a colon and is followed not by a list but by a paragraph about textbooks, so the promised forward reference is simply missing from the Further reading section. 1009 contradicts the argument the lecture just spent twenty-five lines building: 863-889 shows that degree centrality is exactly the wrong measure for ranking web pages (page A has twice the inbound links and is still less important), and then 1009 says PageRank's \"main principle is that links from important nodes (as measured by degree centrality) are worth more\" - the parenthetical should say eigenvector centrality. And exercise 2 asks for three measures - \"in-degree centrality, out-degree centrality and eigenvector centrality\" (1219-1220) - while the solution computes out-degree (1256-1261) under the comment `# computing in-degree centrality`, and eigenvector (1263-1268); in-degree is never computed and the one thing that is computed is mislabelled"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [241, 847, 1012],
-     "detail": "847-848 fakes a y-axis label with an invisible legend entry - `mpatches.Patch(color=None, label='in degree', visible=False)` followed by `ax.legend(handles=[patch], handlelength=0, frameon=False)` - where `ax.set_ylabel('in degree')` is the one-line version; worse, the pattern is copied to 992-993 and 1128-1129 with the `label` argument dropped, so those two charts draw an empty invisible legend and end up with no axis label at all, which is why the three centrality bar charts cannot be read against one another. Katz centrality (1012-1057) is the only one of the four centrality measures the lecture defines that is never computed or plotted, even though the credit-network matrix `Z` and the `eigenvector_centrality` helper (943-953) are both already in scope and {eq}`katz_central_vec` reduces to one `np.linalg.solve`. And three of the five static figures carry no usable label: 241 and 251 give two *different* three-node graphs the identical caption \"Poverty Trap\", so {numref}`poverty_trap_1` and {numref}`poverty_trap_2` render indistinguishably in the reader's figure list, and the `{image}` at 714-717 that illustrates {prf:theorem}`graph_theory_property2` has an empty body where its caption should be"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [189, 855, 1039],
-     "detail": "187-197 is four sentences of throat-clearing before the section reaches its first definition, and 189 - \"This theory will allow us to better organize our thoughts\" - carries no information a reader can act on. 855-861 restates 481-489 almost verbatim: 481-486 already said that an edge exists for almost every pair in the credit network and that \"the existence of an edge from one node to another is not particularly informative\", and 858-859 says it again, followed by \"This can be seen in the above graph as well\" (861), which names neither figure and cannot use {numref} because the bar chart at 840 has no name. And the recursive-importance idea is stated five separate times - 878-889 (four sentences), 922-924, 1005, 1009 and 1039-1041 - by the fifth pass it is padding even for an introductory audience"}
+    {
+      "rule": "qe-code-001",
+      "count": 14,
+      "lines": [
+        110,
+        115,
+        368,
+        372,
+        410,
+        591,
+        593,
+        646,
+        808,
+        834,
+        967,
+        1251,
+        1300,
+        1306
+      ],
+      "detail": "PEP8 spacing is violated systematically, and the violations cluster in the hand-written networkx cells rather than the imported-helper ones. Missing space after a comma in an argument list: `normalise_weights(node_total_exports,10000)` and `normalise_weights(edge_weights,10)` (109-110), `colorise_weights(list(centrality.values()),color_palette=cm.viridis)` (112), `dict(zip(DG.nodes,node_colors))` (113, 426), `for src,_ in DG.edges` (115, 428), `normalise_weights(node_total_exports,3000)` (421-422), `node_color='none',node_size=500` (808), `print(i+1,e[i])` (967), `def is_accessible(G,i,j)` (1300), and the whole edge list at 1236-1243. Spaces around a keyword-argument `=`, which PEP8 forbids: `with_labels = True` (368, 383), `node_color = 'none',node_size = 500` (591, 594, 646, 649), `linewidths= 0.5, edgecolors = 'black'` (593, 648) - and the identical call at 806-808 gets it right, so the file disagrees with itself. Missing space before `=` in `Z_visual= ch1_data[...]` (410). Missing space after the dict colon in `'centrality':centrality_measures` (834). Inline comments with no space after the hash: `#checking if above graph is strongly connected` (372, 387), `#find adjacency matrix associated with G` (1251). No spaces around a comparison: `if result[i,j]>0` (1306)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        545,
+        904,
+        916,
+        1026
+      ],
+      "detail": "545 writes the three-element state set as `$\\{$poor, middle, rich$\\}$` - three separate maths spans and two of them containing nothing but a brace - where `$\\{\\text{poor}, \\text{middle}, \\text{rich}\\}$` is one span and one idea; 903-907 and 915-919 each wrap a single unaligned line in `\\begin{aligned} ... \\end{aligned}` inside `$$`, an environment that buys nothing when there is no `&` to align on (contrast 1091-1093 and 1102-1104, which write the same kind of one-line display bare and read better for it); and the lecture uses two different index bases for the same node set - 896-897 and 917 say the nodes are `$1, \\ldots, n$` and sum `$\\sum_{1 \\leq j \\leq n}$`, while the Katz definition twenty lines later indexes `$i \\in \\{0, \\ldots, n-1\\}$` and sums `$\\sum_{j=0}^{n-1}$` (1025-1026), so a reader comparing {eq}`eq_eicen` with {eq}`katz_central` has to re-base the subscripts to see that they are the same recursion"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        1009,
+        1142,
+        1219
+      ],
+      "detail": "1142 is a truncated sentence: \"We apply the ideas discussed in this lecture to:\" ends on a colon and is followed not by a list but by a paragraph about textbooks, so the promised forward reference is simply missing from the Further reading section. 1009 contradicts the argument the lecture just spent twenty-five lines building: 863-889 shows that degree centrality is exactly the wrong measure for ranking web pages (page A has twice the inbound links and is still less important), and then 1009 says PageRank's \"main principle is that links from important nodes (as measured by degree centrality) are worth more\" - the parenthetical should say eigenvector centrality. And exercise 2 asks for three measures - \"in-degree centrality, out-degree centrality and eigenvector centrality\" (1219-1220) - while the solution computes out-degree (1256-1261) under the comment `# computing in-degree centrality`, and eigenvector (1263-1268); in-degree is never computed and the one thing that is computed is mislabelled"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        241,
+        847,
+        1012
+      ],
+      "detail": "847-848 fakes a y-axis label with an invisible legend entry - `mpatches.Patch(color=None, label='in degree', visible=False)` followed by `ax.legend(handles=[patch], handlelength=0, frameon=False)` - where `ax.set_ylabel('in degree')` is the one-line version; worse, the pattern is copied to 992-993 and 1128-1129 with the `label` argument dropped, so those two charts draw an empty invisible legend and end up with no axis label at all, which is why the three centrality bar charts cannot be read against one another. Katz centrality (1012-1057) is the only one of the four centrality measures the lecture defines that is never computed or plotted, even though the credit-network matrix `Z` and the `eigenvector_centrality` helper (943-953) are both already in scope and {eq}`katz_central_vec` reduces to one `np.linalg.solve`. And three of the five static figures carry no usable label: 241 and 251 give two *different* three-node graphs the identical caption \"Poverty Trap\", so {numref}`poverty_trap_1` and {numref}`poverty_trap_2` render indistinguishably in the reader's figure list, and the `{image}` at 714-717 that illustrates {prf:theorem}`graph_theory_property2` has an empty body where its caption should be"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        189,
+        855,
+        1039
+      ],
+      "detail": "187-197 is four sentences of throat-clearing before the section reaches its first definition, and 189 - \"This theory will allow us to better organize our thoughts\" - carries no information a reader can act on. 855-861 restates 481-489 almost verbatim: 481-486 already said that an edge exists for almost every pair in the credit network and that \"the existence of an edge from one node to another is not particularly informative\", and 858-859 says it again, followed by \"This can be seen in the above graph as well\" (861), which names neither figure and cannot use {numref} because the bar chart at 840 has no name. And the recursive-importance idea is stated five separate times - 878-889 (four sentences), 922-924, 1005, 1009 and 1039-1041 - by the fifth pass it is padding even for an introductory audience"
+    }
   ],
   "strengths": [
     "Bold marks definitions and nothing else, across nineteen terms, each bolded exactly once at the point it is introduced: nodes/vertices and edges/links (147, 149), directed graph (215), vertices/nodes (220), edges (222), direct predecessor/successor (259-260), in-degree/out-degree (264-265), accessible (337), communicate (351), strongly connected (353), weighted directed graph and weight function (498-499), adjacency matrix (527), centrality measure (770), eigenvector centrality (901), Katz centrality (1020), hub and authority centrality (1065, 1068), authority-based eigenvector centrality (1088) - and italic is reserved for genuine emphasis (*recursive* 878, *it links to* 887, *rates of flow* 924, *suppliers* 935), so no term appears in both forms",
@@ -36,5 +88,9 @@
     "qe-code-003 - `networks.md:16` is a false positive, and the same defect produces three more corpus-wide. `tools/qestyle_rules.py` `check_code_003` decides whether an import was installed with `missing = {e for e in extra if not any(e.lower() in p.lower() for p in installed)}`. The import name is a Python module name and the install argument is a PyPI distribution name, and PEP 503 makes `-`, `_` and `.` equivalent in the latter - so `quantecon_book_networks` (imported at 60-61) is not found inside `quantecon-book-networks==1.6` (installed at 20) and is reported as uninstalled. I copied `tools/` to a scratch dir, replaced that test with `_norm = lambda t: re.sub(r\"[-_.]+\", \"-\", t.lower())` on both sides, and ran `check_code_003` over all five series before and after: 36 hits -> 32, nothing added. The four suppressed hits are all genuine false positives - `lecture-python-intro/networks.md:16` (`quantecon-book-networks` / `quantecon_book_networks`), `lecture-python-intro/business_cycle.md:28` (installs `pandas-datareader` at 32, imports `pandas_datareader.data` at 42), and `mccall_model_with_separation.md:37` in both `lecture-dp` and `lecture-python.myst` (installs `myst-nb` at 40, imports `from myst_nb import glue` at 68 - the synced pair, so the one fix clears both). Nothing else in the corpus moves, so this looks safe to apply",
     "qe-fig-004 - the rule cannot see a caption written the ordinary MyST way, as the `{figure}` directive's body, so the three Title Case captions in this file at 241, 251 and 510 (\"Poverty Trap\", \"Poverty Trap\", \"Weighted Poverty Trap\") are missed and the reported count of 3 (89, 401, 786) covers only the mystnb `caption:` options. The cause is in the lexer, not the rule: `tools/qestyle_lex.py` accumulates a directive block's body only under `if in_code_fence:` (`if open_blocks: open_blocks[-1][4].append(raw)`), and a `{figure}` is not a code directive, so `doc.blocks` reports `body == []` for every figure and image directive in the corpus - I confirmed this by printing the blocks for `networks.md`, where all five figure/image blocks come back with an empty body. `check_fig_004` then reads captions only from `opts.get(\"caption\")`. I measured the gap by extracting the first body paragraph of every `{figure}`/`{image}` fence straight from the raw source and applying fig-004's existing word-count and Title-Case predicates: 12 directives corpus-wide carry a body caption, and they yield 13 new hits in 4 files - fig-004 would go from 183 to 196. Three are these `networks.md` captions; the other ten are in `lecture-python-advanced.myst` (`entropy` at 115, 519, 526, 535; `risk_aversion_or_mistaken_beliefs` at 885, 1193; `stationary_densities` at 696), mostly over-long captions of 8 to 31 words. Two of the 13 are spurious, both on the same cause: the Title-Case branch flags `Under` at the start of the second sentence of a two-sentence caption (entropy 526, 535), so a fix should restrict the Title-Case test to the first sentence. The 11 remaining are real",
     "qe-fig-005 - the count of 5 (312, 575, 631, 840, 1229) misses the two cells at 360-369 and 375-384, which each call `fig, ax = plt.subplots()` and then `nx.draw_networkx(...)` and so render a figure with no mystnb metadata. `_cell_makes_figure` gates on `PLOT_CALL` (`tools/qestyle_rules.py:1200`), whose networkx coverage is accidental: every other networkx figure cell in this lecture happens to end in `plt.show()`, which is what matches, and these two do not. I added `|\\bnx\\.draw\\w*\\s*\\(` to `PLOT_CALL` and re-ran every `qe-fig-*` check plus `qe-code-002` (which shares `PLOT_CALL` for its matplotlib `alpha=` exemption) over all five series: qe-fig-005 goes 1115 -> 1117, both new hits are these two cells, and no other rule count moves at all. A narrow, safe addition"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "dbecb6e3cda6f7e300e8b9fd0ddc1f7e4e871850"
+  }
 }

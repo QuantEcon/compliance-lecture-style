@@ -2,15 +2,62 @@
   "series": "lecture-python.myst",
   "lecture": "mccall_model",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 4, "lines": [150, 155, 152, 955],
-     "detail": "line 150 ends with a dangling fragment left over from an edit - '$v^*(w)$ denotes the total sum of expected discounted earnings when an agent always behaves in an optimal way. points in time.' - in the sentence that defines the lecture's central object; line 155 contains two typos in one clause, 'If we don't know what opimal choices are, it feels imposible to calculate $v^*(w)$'; lines 152-160 then make the same point three times in a row (we cannot compute $v^*$ yet, it feels impossible to compute $v^*$, let us set that aside), where one paragraph would do; and the numbered list at 952-956 runs '1.' then '3.'"},
-    {"rule": "qe-code-001", "count": 22,
-     "lines": [368, 391, 456, 457, 458, 459, 462, 464, 470, 552, 553, 554, 557, 559, 571, 710, 711, 712, 804, 1009, 1130, 1155],
-     "detail": "trailing whitespace on seven code lines (391, 462, 464, 470, 557, 559, 571; 464 and 470 are whitespace-only); six annotated parameters written without spaces around `=` - `tol: float=1e-6` and `max_iter: int=500` at 456-457, 552-553 and 710-711 - where PEP8 asks for `tol: float = 1e-6` and where the same file writes `c: float = 25` correctly at 390; four closing brackets parked at column 4 under an 8-space hanging indent (458, 554, 712, 804); `jnp.linspace(w_min, w_max, n+1)` at 368 with no spaces around `+`; `β ** periods` spaced at 1009 where 915 correctly writes `σ**2`; a single-quoted one-line docstring at 459 where the other five docstrings use triple quotes (968, 1017, 1091, 1131, 1167); and two code lines at 84 characters (1130, 1155)"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [739],
-     "detail": "`compute_reservation_wage_two` is derived over forty lines of algebra (636-675), stated as an algorithm (679-699), implemented (708-736), and then never called - by the lecture or by the exercise. Line 739 says 'You can use this code to solve the exercise below', but the exercise at 1065 is about unemployment duration under a *continuous* distribution and its solution (1089-1182) uses `compute_reservation_wage_continuous` instead. So the whole point of '## Computing an Optimal Policy: Take 2' - that iterating on a scalar beats iterating on an $n$-vector - is never demonstrated, and the one sentence that promises a payoff points at the wrong place"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [409],
-     "detail": "the lecture contains no admonition at all, and four substantive asides are carried in inline parentheses instead: the broadcasting clarification at 409-410 ('The first term inside the max is an array and the second is just a number -- here we mean that the max comparison against this number is done element-by-element'), the scope note at 91, the offer-in-hand clarification at 147, and the reading instruction for $Tv$ at 335-336. The one at 409 is the most important - it is the only place the array form of the Bellman operator is explained - and it is the easiest to skip in its current form"}
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        150,
+        155,
+        152,
+        955
+      ],
+      "detail": "line 150 ends with a dangling fragment left over from an edit - '$v^*(w)$ denotes the total sum of expected discounted earnings when an agent always behaves in an optimal way. points in time.' - in the sentence that defines the lecture's central object; line 155 contains two typos in one clause, 'If we don't know what opimal choices are, it feels imposible to calculate $v^*(w)$'; lines 152-160 then make the same point three times in a row (we cannot compute $v^*$ yet, it feels impossible to compute $v^*$, let us set that aside), where one paragraph would do; and the numbered list at 952-956 runs '1.' then '3.'"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 22,
+      "lines": [
+        368,
+        391,
+        456,
+        457,
+        458,
+        459,
+        462,
+        464,
+        470,
+        552,
+        553,
+        554,
+        557,
+        559,
+        571,
+        710,
+        711,
+        712,
+        804,
+        1009,
+        1130,
+        1155
+      ],
+      "detail": "trailing whitespace on seven code lines (391, 462, 464, 470, 557, 559, 571; 464 and 470 are whitespace-only); six annotated parameters written without spaces around `=` - `tol: float=1e-6` and `max_iter: int=500` at 456-457, 552-553 and 710-711 - where PEP8 asks for `tol: float = 1e-6` and where the same file writes `c: float = 25` correctly at 390; four closing brackets parked at column 4 under an 8-space hanging indent (458, 554, 712, 804); `jnp.linspace(w_min, w_max, n+1)` at 368 with no spaces around `+`; `β ** periods` spaced at 1009 where 915 correctly writes `σ**2`; a single-quoted one-line docstring at 459 where the other five docstrings use triple quotes (968, 1017, 1091, 1131, 1167); and two code lines at 84 characters (1130, 1155)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        739
+      ],
+      "detail": "`compute_reservation_wage_two` is derived over forty lines of algebra (636-675), stated as an algorithm (679-699), implemented (708-736), and then never called - by the lecture or by the exercise. Line 739 says 'You can use this code to solve the exercise below', but the exercise at 1065 is about unemployment duration under a *continuous* distribution and its solution (1089-1182) uses `compute_reservation_wage_continuous` instead. So the whole point of '## Computing an Optimal Policy: Take 2' - that iterating on a scalar beats iterating on an $n$-vector - is never demonstrated, and the one sentence that promises a payoff points at the wrong place"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        409
+      ],
+      "detail": "the lecture contains no admonition at all, and four substantive asides are carried in inline parentheses instead: the broadcasting clarification at 409-410 ('The first term inside the max is an array and the second is just a number -- here we mean that the max comparison against this number is done element-by-element'), the scope note at 91, the offer-in-hand clarification at 147, and the reading instruction for $Tv$ at 335-336. The one at 409 is the most important - it is the only place the array form of the Bellman operator is explained - and it is the easiest to skip in its current form"
+    }
   ],
   "strengths": [
     "The lecture states its method before using it - 'dynamic programming can be thought of as a two-step procedure that first assigns values to states and then deduces optimal actions given those values' (126-129) - and then the next two subsections are exactly those two steps, in that order",
@@ -31,5 +78,9 @@
   "scanner_doubts": [
     "qe-math-002 x12 in mccall_model.md (lines 170, 228, 293, 644, 647, 648, 654, 655, 661, 662, 671, 690) are all false positives, and there is not a single transpose in the lecture. Eleven are the next-period prime in `\\sum_{w' \\in \\mathbb W}` and one (293) is the updated vector in 'compute a new vector $v' \\in \\mathbb R^n$'. The `prime_vec` branch of check_math_002 fires on a lowercase letter followed by a prime and then a backslash command, which `w' \\in` and `v' \\in` both satisfy, and the derivative exception `(?!\\s*\\()` does not cover it. Grepping `' \\in` in this file returns exactly the 12 flagged lines. Same defect as mccall_model_with_separation.md (5 hits); it will recur wherever a dynamic-programming lecture sums over next-period states, which is most of them.",
     "qe-math-008 x1 at line 226 of mccall_model.md is a false positive for two independent reasons. The symbol is an indicator, not a ones vector - its argument `\\left\\{ ... \\right\\}` begins on line 227, and check_math_008's own indicator exception would have excluded it if the math span were not evaluated one line at a time (the identical construct at 238, where symbol and brace share a line, is correctly excluded). And the prose does explain it, at 233: 'Here $\\mathbf{1}\\{ P \\} = 1$ if statement $P$ is true and equals 0 otherwise' - the check only looks for the phrase 'vector of ones'."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "1521d7397dc2faf9b91b46e7b3fd7daba5f81514"
+  }
 }

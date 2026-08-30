@@ -2,10 +2,24 @@
   "series": "lecture-dp",
   "lecture": "career",
   "judgment": [
-    {"rule": "qe-code-001", "count": 3, "lines": [168, 410, 485],
-     "detail": "line 485 writes `i, j  = qe.random.draw(F), qe.random.draw(G)` with two spaces before the `=` (pycodestyle E221); the identical line at 414 has one. Line 168 `np.zeros(n+1)` and line 179 `list(range(0, n+1))` omit the spaces around `+` that the rest of the file uses (`k + a`, `n - k + b` at 170). Line 410 is the substantive one: inside `gen_path` the branch reads `elif greedy_star[i, j] == 2` - the module-level array - where the sibling branch at 407 reads the `optimal_policy` parameter, so the function silently ignores its own argument"},
-    {"rule": "qe-math-009", "count": 1, "lines": [113],
-     "detail": "the three continuation values are named with Roman numerals - `$v(\\theta, \\epsilon) = \\max\\{I, II, III\\}$` at 113, defined at 121-124, and referred to again at 128 and 219-220. $I$ is the conventional symbol for an identity matrix, and $II$ / $III$ read as products of it. The lecture's own code writes the same three quantities as `v1`, `v2`, `v3` (244-246, 259-261), so $v_1, v_2, v_3$ in the math would be both simpler and a direct match to the implementation"}
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        168,
+        410,
+        485
+      ],
+      "detail": "line 485 writes `i, j  = qe.random.draw(F), qe.random.draw(G)` with two spaces before the `=` (pycodestyle E221); the identical line at 414 has one. Line 168 `np.zeros(n+1)` and line 179 `list(range(0, n+1))` omit the spaces around `+` that the rest of the file uses (`k + a`, `n - k + b` at 170). Line 410 is the substantive one: inside `gen_path` the branch reads `elif greedy_star[i, j] == 2` - the module-level array - where the sibling branch at 407 reads the `optimal_policy` parameter, so the function silently ignores its own argument"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        113
+      ],
+      "detail": "the three continuation values are named with Roman numerals - `$v(\\theta, \\epsilon) = \\max\\{I, II, III\\}$` at 113, defined at 121-124, and referred to again at 128 and 219-220. $I$ is the conventional symbol for an identity matrix, and $II$ / $III$ read as products of it. The lecture's own code writes the same three quantities as `v1`, `v2`, `v3` (244-246, 259-261), so $v_1, v_2, v_3$ in the math would be both simpler and a direct match to the implementation"
+    }
   ],
   "strengths": [
     "The three regimes are named once and then labelled identically everywhere: 'stay put' / 'new job' / 'new life' at 81-85, in the interpretation at 128, as `ax.text` annotations placed inside the policy regions at 341-343, and as the trailing comments on the code branches at 244-246 and 407-413 - so the math, the figure and the code use one vocabulary",
@@ -26,5 +40,9 @@
   "scanner_doubts": [
     "career.md, lines 55 and 170 - the 3 `qe-code-002` hits are false positives. All three are the SciPy special function `beta`, imported at line 55 (`from scipy.special import binom, beta`) and called twice at line 170 (`beta(k + a, n - k + b) / beta(a, b)`). qe-code-002 is about Greek-letter *variable names* in code, and this lecture already writes every one of those in Unicode (`θ`, `ϵ`, `β`, `σ` at 203-204, 232, 255). A library function's name is not the author's to spell differently - renaming it would break the import. The check needs to skip names bound by an `import`/`from ... import` statement, or at minimum allowlist `scipy.special.beta` / `scipy.stats.beta`.",
     "career.md, lines 123-124 - rule-scope question rather than a miscount. `qe-math-007` (automatic equation numbering, not manual tags) reports 0 for this file, correctly, since it matches `\\tag{`. But lines 123 and 124 carry `\\nonumber` inside an `aligned` block in a `{math}` directive labelled `:label: eyes`. That is manual numbering control of the same family as `\\tag{}`, and here it is also inert - `aligned` does not number its rows, so the markers only mislead a future editor. Worth deciding once whether `qe-math-007` should also fire on `\\nonumber` / `\\notag`."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "c8fed126871680b3a0fdce2383fd7ea15c3eefc5"
+  }
 }

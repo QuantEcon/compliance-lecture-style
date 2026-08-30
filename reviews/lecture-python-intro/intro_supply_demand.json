@@ -2,14 +2,49 @@
   "series": "lecture-python-intro",
   "lecture": "intro_supply_demand",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 6, "lines": [36, 136, 144, 402, 853, 898],
-     "detail": "four sentences of 33-47 words (36, 136 at 47 words, 144 at 43, 402) and two copies of a sentence that has lost its main verb: \"Our [SciPy] lecture has a section on [Optimization] is a useful resource to find out more\" (853-855, repeated verbatim at 898-900)"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [260, 461],
-     "detail": "the `prf:example` block at 260-283 is not an example: it opens with a \\$10/\\$20 illustration but then carries the general definition of the inverse supply curve (272-274), the formula for total producer surplus (267-270) and a forward reference to a figure that lives outside the block (\"We show an example below\", 276; \"The shaded area is...\", 282, with the figure at 285); and the lecture has two sections called \"Consumer surplus\" (H2 at 63, H3 at 461) and two called \"Producer surplus\" (H2 at 227, H3 at 528), so the table of contents gives the reader no way to tell the discrete/continuous treatment from the affine-model treatment"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [247],
-     "detail": "the discrete producer figure plots willingness to sell only, while its consumer counterpart at 118-120 overlays the surplus in orange on top of the black paid-portion; producer surplus $\\max\\{p - v_i, 0\\}$ is defined at 258 and never shown for the discrete case, and the figure does not even mark the price line"},
-    {"rule": "qe-code-001", "count": 6, "lines": [114, 243, 407, 408, 409, 410],
-     "detail": "inline comments separated from the code by a single space where PEP8 asks for two - `consumers = range(1, 11) # consumers 1,..., 10` (114), the same at 243, and the four field comments in the `Market` namedtuple declaration (407-410)"}
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        36,
+        136,
+        144,
+        402,
+        853,
+        898
+      ],
+      "detail": "four sentences of 33-47 words (36, 136 at 47 words, 144 at 43, 402) and two copies of a sentence that has lost its main verb: \"Our [SciPy] lecture has a section on [Optimization] is a useful resource to find out more\" (853-855, repeated verbatim at 898-900)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        260,
+        461
+      ],
+      "detail": "the `prf:example` block at 260-283 is not an example: it opens with a \\$10/\\$20 illustration but then carries the general definition of the inverse supply curve (272-274), the formula for total producer surplus (267-270) and a forward reference to a figure that lives outside the block (\"We show an example below\", 276; \"The shaded area is...\", 282, with the figure at 285); and the lecture has two sections called \"Consumer surplus\" (H2 at 63, H3 at 461) and two called \"Producer surplus\" (H2 at 227, H3 at 528), so the table of contents gives the reader no way to tell the discrete/continuous treatment from the affine-model treatment"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        247
+      ],
+      "detail": "the discrete producer figure plots willingness to sell only, while its consumer counterpart at 118-120 overlays the surplus in orange on top of the black paid-portion; producer surplus $\\max\\{p - v_i, 0\\}$ is defined at 258 and never shown for the discrete case, and the figure does not even mark the price line"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        114,
+        243,
+        407,
+        408,
+        409,
+        410
+      ],
+      "detail": "inline comments separated from the code by a single space where PEP8 asks for two - `consumers = range(1, 11) # consumers 1,..., 10` (114), the same at 243, and the four field comments in the `Market` namedtuple declaration (407-410)"
+    }
   ],
   "strengths": [
     "The discrete-then-continuous pairing is genuinely well built: each concept gets a bar chart of ten agents and then the matching shaded-area figure, and every one of those figures has a caption and a `name`",
@@ -27,5 +62,9 @@
     "Show producer surplus on the discrete producer figure (247) the way the consumer figure does at 118-120, and add the price line",
     "Make the differentials consistent - lines 603, 777 and 796 write `dx` while the surrounding equations write `\\mathrm{d} x` - lower-case 'Market' at 414 and 899, drop the trailing period from the heading at 140, and separate the inline comments listed above by two spaces"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "446cb8bac3d7d830052376af20a35382c211699e"
+  }
 }

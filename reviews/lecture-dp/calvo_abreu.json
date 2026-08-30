@@ -2,16 +2,60 @@
   "series": "lecture-dp",
   "lecture": "calvo_abreu",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [213, 679],
-     "detail": "line 213 contains two broken links in one clause: 'described in equation {eq}`eq_old6` in quantecon lecture {cite}`Calvo1978`'. `eq_old6` is a label in calvo.md and does not exist in this file (its labels are `eq_old1_new`, `eq_old2_new`, `eq_old3_new`, `eq_old10`, `eq_old100a`, `eq_old11`), so the reference resolves to nothing - and per spec §5 a broken `{eq}` ref is Critical. The same sentence then uses a bibliography citation, `{cite}`Calvo1978``, where the text plainly means the quantecon lecture, i.e. {doc}`calvo`. The government's one-period return function is the object the entire enforcement argument rests on, and the reader cannot reach its definition. Second, the lecture stops mid-section: lines 679-687 are a summary ('We have also computed **credible plans** for a government or sequence of governments...') sitting under the heading 'Whose plan is it?', with no conclusion heading and nothing after it, so a conceptual discussion ends by summarising a different part of the lecture"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [40, 45, 86, 262, 521, 602],
-     "detail": "lines 40 and 42 carry the same 30-word clause twice - 'what government authorities who set $\\mu_t$ at time $t$ believe how future government authorities who set $\\mu_{t+j}$ for $j > 0$ will respond to their decisions' - and both are ungrammatical ('believe how' for 'believe about how'). Line 45 is repeated almost verbatim at 149, and line 47 at 151, both times without a full stop the second time; both also read 'there is sequence of' for 'there is a sequence of'. Line 86 is an ungrammatical parenthetical ('an assumption of **rational expectations** that becomes equivalent to **perfect foresight**') where the parallel passage in {doc}`calvo` line 122 is correct. Line 262 reads 'That credible plans come in pairs threaten to bring an explosion'. Line 521 says 'We have computed outcomes for this plan' sixty lines before the computation. Line 602 introduces a new term by accident - 'the inequalities required for $\\vec \\mu^A$ to be **self-confirming**' - where 'self-enforcing' is the term used at 269, 292, 300, 317 and 589"},
-    {"rule": "qe-writing-005", "count": 7, "lines": [117, 151, 238, 292, 300, 589, 684],
-     "detail": "the file re-bolds terms it has already defined, which is the 'overuse of emphasis formatting' arm of the rule. '**self-enforcing**' is bolded on first definition at 269 and then again at 292, 300, 589 and 684; '**sustainable**' / '**credible**' are bolded at 47, then again at 151, 153, 238 and 323; '**Ramsey plan**' at 35 and again at 519. After the fifth bolding of the same word the formatting no longer marks anything. Line 117 also uses '**Insight:**' as a bold pseudo-label where a real heading or plain text would do"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [262],
-     "detail": "lines 255-271 describe a branching structure and then its collapse, entirely in prose: credible plans 'come in pairs' (one continuation if the government confirms, one if it disappoints), 'each credible plan itself consists of two credible plans', 'therefore, the number of plans underlying one plan is unbounded' - and then Abreu's insight is that a single self-enforcing plan can stand in for the whole tree. That is a binary tree collapsing to a loop, and it is the conceptual pivot of the lecture. The file's one figure (571-584) plots $\\theta^A$, $\\mu^A$ and $V^A$ paths; the structure that makes those paths meaningful is never drawn"},
-    {"rule": "qe-code-001", "count": 3, "lines": [453, 549, 622],
-     "detail": "the file spaces its exponentiation operator where the rule asks for the tight `a**b` form, and disagrees with itself about it: `(clq.α / (1 + clq.α)) ** np.arange(T)` at 549, `clq.β ** np.arange(T)` at 556, `(-clq.θ_A) ** 2` and `clq.μ_A ** 2` at 558, `clq.β ** t` at 561 and `** 2` at 566 are all spaced, while line 415 writes `self.α**2` and line 622 writes `)**2` tight. Line 453 assigns a lambda (E731) with a space after the unary minus and a backslash continuation the enclosing parentheses make unnecessary; line 622-623 over-indents a backslash continuation that is likewise inside parentheses"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        213,
+        679
+      ],
+      "detail": "line 213 contains two broken links in one clause: 'described in equation {eq}`eq_old6` in quantecon lecture {cite}`Calvo1978`'. `eq_old6` is a label in calvo.md and does not exist in this file (its labels are `eq_old1_new`, `eq_old2_new`, `eq_old3_new`, `eq_old10`, `eq_old100a`, `eq_old11`), so the reference resolves to nothing - and per spec §5 a broken `{eq}` ref is Critical. The same sentence then uses a bibliography citation, `{cite}`Calvo1978``, where the text plainly means the quantecon lecture, i.e. {doc}`calvo`. The government's one-period return function is the object the entire enforcement argument rests on, and the reader cannot reach its definition. Second, the lecture stops mid-section: lines 679-687 are a summary ('We have also computed **credible plans** for a government or sequence of governments...') sitting under the heading 'Whose plan is it?', with no conclusion heading and nothing after it, so a conceptual discussion ends by summarising a different part of the lecture"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        40,
+        45,
+        86,
+        262,
+        521,
+        602
+      ],
+      "detail": "lines 40 and 42 carry the same 30-word clause twice - 'what government authorities who set $\\mu_t$ at time $t$ believe how future government authorities who set $\\mu_{t+j}$ for $j > 0$ will respond to their decisions' - and both are ungrammatical ('believe how' for 'believe about how'). Line 45 is repeated almost verbatim at 149, and line 47 at 151, both times without a full stop the second time; both also read 'there is sequence of' for 'there is a sequence of'. Line 86 is an ungrammatical parenthetical ('an assumption of **rational expectations** that becomes equivalent to **perfect foresight**') where the parallel passage in {doc}`calvo` line 122 is correct. Line 262 reads 'That credible plans come in pairs threaten to bring an explosion'. Line 521 says 'We have computed outcomes for this plan' sixty lines before the computation. Line 602 introduces a new term by accident - 'the inequalities required for $\\vec \\mu^A$ to be **self-confirming**' - where 'self-enforcing' is the term used at 269, 292, 300, 317 and 589"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 7,
+      "lines": [
+        117,
+        151,
+        238,
+        292,
+        300,
+        589,
+        684
+      ],
+      "detail": "the file re-bolds terms it has already defined, which is the 'overuse of emphasis formatting' arm of the rule. '**self-enforcing**' is bolded on first definition at 269 and then again at 292, 300, 589 and 684; '**sustainable**' / '**credible**' are bolded at 47, then again at 151, 153, 238 and 323; '**Ramsey plan**' at 35 and again at 519. After the fifth bolding of the same word the formatting no longer marks anything. Line 117 also uses '**Insight:**' as a bold pseudo-label where a real heading or plain text would do"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        262
+      ],
+      "detail": "lines 255-271 describe a branching structure and then its collapse, entirely in prose: credible plans 'come in pairs' (one continuation if the government confirms, one if it disappoints), 'each credible plan itself consists of two credible plans', 'therefore, the number of plans underlying one plan is unbounded' - and then Abreu's insight is that a single self-enforcing plan can stand in for the whole tree. That is a binary tree collapsing to a loop, and it is the conceptual pivot of the lecture. The file's one figure (571-584) plots $\\theta^A$, $\\mu^A$ and $V^A$ paths; the structure that makes those paths meaningful is never drawn"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        453,
+        549,
+        622
+      ],
+      "detail": "the file spaces its exponentiation operator where the rule asks for the tight `a**b` form, and disagrees with itself about it: `(clq.α / (1 + clq.α)) ** np.arange(T)` at 549, `clq.β ** np.arange(T)` at 556, `(-clq.θ_A) ** 2` and `clq.μ_A ** 2` at 558, `clq.β ** t` at 561 and `** 2` at 566 are all spaced, while line 415 writes `self.α**2` and line 622 writes `)**2` tight. Line 453 assigns a lambda (E731) with a space after the unary minus and a backslash continuation the enclosing parentheses make unnecessary; line 622-623 over-indents a backslash continuation that is likewise inside parentheses"
+    }
   ],
   "strengths": [
     "The within-period timing protocol is spelled out as six ordered steps (185-208) that state exactly what the private sector expects entering $t$, what the government is free to do, and which continuation beliefs each of the two branches produces - including that a deviation resets expectations to $\\vec \\mu^A$ and hence to $\\theta_0^A$. This is what makes the model well defined, and it is written out rather than gestured at",
@@ -33,5 +77,9 @@
   "scanner_doubts": [
     "calvo_abreu.md, line 422 - the single `qe-code-002` hit is the keyword-argument false positive again (`LQ(..., beta=self.β)`), now the sixth file in this series after career.md, ifp_opi.md, ifp_discrete.md, cons_news.md, discrete_dp.md and calvo.md. Note also that this hit and calvo.md's are literally the same line of duplicated source, so the corpus-level qe-code-002 total is double-counting one authored line.",
     "calvo_abreu.md, line 213 - a missing check, and the second instance in this series after ifp_egm.md line 180. `{eq}`eq_old6`` is syntactically valid and resolves to nothing, because the label lives in calvo.md. Nothing fires: qe-math-013 checks reference syntax, not resolution. Both cases arose the same way - text copied from a sibling lecture, carrying a reference to a label that stayed behind. Since the scanner already collects every `:label:` per file, a same-file resolution check would catch this class, and the amss.md label survey I noted separately suggests the orphan-label direction is worth reporting too."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "3d78bafc554f343f8d3dc00b0e1b0808b8786302"
+  }
 }

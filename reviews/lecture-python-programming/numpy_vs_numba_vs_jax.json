@@ -68,5 +68,9 @@
   ],
   "scanner_doubts": [
     "qe-writing-001 ×1 at numpy_vs_numba_vs_jax.md:405 is the body of a `{note}` (404-409), not running prose. tools/qestyle_rules.py:_paragraph_blocks (line 214) excludes headings, list items, tables, targets and option lines from qe-writing-001 but not the bodies of directives; no rule in tools/ mentions `note`, `tip`, `admonition` or `epigraph`."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "d73a12459fb695d3e01c6a5ab129f72d3d959ce8"
+  }
 }

@@ -2,16 +2,67 @@
   "series": "lecture-dp",
   "lecture": "amss3",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [676, 529],
-     "detail": "the Execution section does not follow the seven steps it is executing. Its headings run Step 1 (538), Step 2 (560), Step 3 (636), Step 4 (662), Step 6 (676) - Step 5 and Step 7 have no headings at all, and the contents are shifted: `min_J` at 665 is what Step 5 describes ('put ${\\rm var}(J({\\mathcal B}))$ into a Python function minimizer', 483-484) but sits under 'Step 4', while the `minimize` call at 679 sits under 'Step 6' and Step 7's divisor and $\\hat b$ (688-696) sit under it too, unlabelled. A reader working the description at 409-513 against the code cannot line them up. Separately, lines 528-530 are broken: a sentence begins in lower case mid-thought and the next line opens with a stray colon ('so while the approximation circumvents the chicken and egg problem that surrounds / : the much better approximation...'), which MyST will render as a definition-list fragment"},
-    {"rule": "qe-writing-005", "count": 13, "lines": [54, 60, 97, 232, 299, 379, 383, 389, 390, 394, 423, 454, 519],
-     "detail": "bold carrying emphasis: **as close as possible** (54), **three** (97), **before** (232), **effective** twice at 299 where the terms being defined are 'effective government deficit' and 'effective government debt' - so the bold lands on the adjective and not the term, **in advance** (379), **confirms** (383), **first** / **then** (389, 390), **without** (394), **minus** / **plus** (423), **surplus** (454), **constant** (519). Line 60 uses '**Warning:**' as a bold label inside a `{note}`, where the admonition's own title would do. The real definitional bolds - **fiscal risks** (311), **fiscal-risk minimization problem** (384), **effective return** / **effective government deficit** (443-444) - are the minority"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [54, 379, 521, 545, 659],
-     "detail": "line 54 reads 'comes as close as possible to providing full spanning in a precise a sense defined by BEGS'; line 379 opens 'Therefor,' for 'Therefore'; line 521 says the formula 'supports full fiscal insurance via fluctuating interest parameters' where 'interest rates' is meant; line 545's comment reads '# Initial guess of τ (to displays calcs along the way)'. Line 659 states 'Note that 0.2 is the initial value for $\\tau$ in the root-finding algorithm' immediately after line 652 passes `.1` - and the same routine is called with `.5` at 667, `0.05` at 699 and `.5` at 679, each time under a comment saying the result is 'Very sensitive to initial value', so the one number the reader is told is the one number that is wrong"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [226, 679],
-     "detail": "the lecture's central figure exists only as a bitmap and its own computations are never drawn onto it. The histogram at 226 - the ergodic distribution of par debt with three vertical lines, described in detail at 229-232 - has no generating code anywhere in the file, so a reader cannot see how the sample mean, ${\\mathcal B}^*/E u_c$ and the BEGS $\\hat b$ were placed, nor move them. Then the Execution section computes `B_star` (679), `B_hat` (694) and `rate` (709) and prints them as bare scalars: ${\\rm var}(J({\\mathcal B}))$ against ${\\mathcal B}$ is never plotted even though `min_J` at 665 evaluates exactly that function, and $\\hat b$ is never overlaid on the histogram it is said at 531 to be the red line of. Two figures the code is already one line away from producing would replace the entire 'stare and digest' instruction at 400-401"},
-    {"rule": "qe-code-001", "count": 4, "lines": [202, 587, 688, 694],
-     "detail": "line 202 uses `id` as a loop variable, shadowing the builtin. The `div` expression at 587-589 packs three spacing faults into one statement - a backslash continuation inside parentheses where PEP8 asks for implicit continuation, two spaces before that backslash, and two spaces after each `+` on the continuation lines - and it is repeated verbatim at 688-690. Line 694 writes `B_star/div` unspaced while line 709 writes `1 / (1 + u.β**2 * variance(R_star, s))` spaced"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        676,
+        529
+      ],
+      "detail": "the Execution section does not follow the seven steps it is executing. Its headings run Step 1 (538), Step 2 (560), Step 3 (636), Step 4 (662), Step 6 (676) - Step 5 and Step 7 have no headings at all, and the contents are shifted: `min_J` at 665 is what Step 5 describes ('put ${\\rm var}(J({\\mathcal B}))$ into a Python function minimizer', 483-484) but sits under 'Step 4', while the `minimize` call at 679 sits under 'Step 6' and Step 7's divisor and $\\hat b$ (688-696) sit under it too, unlabelled. A reader working the description at 409-513 against the code cannot line them up. Separately, lines 528-530 are broken: a sentence begins in lower case mid-thought and the next line opens with a stray colon ('so while the approximation circumvents the chicken and egg problem that surrounds / : the much better approximation...'), which MyST will render as a definition-list fragment"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 13,
+      "lines": [
+        54,
+        60,
+        97,
+        232,
+        299,
+        379,
+        383,
+        389,
+        390,
+        394,
+        423,
+        454,
+        519
+      ],
+      "detail": "bold carrying emphasis: **as close as possible** (54), **three** (97), **before** (232), **effective** twice at 299 where the terms being defined are 'effective government deficit' and 'effective government debt' - so the bold lands on the adjective and not the term, **in advance** (379), **confirms** (383), **first** / **then** (389, 390), **without** (394), **minus** / **plus** (423), **surplus** (454), **constant** (519). Line 60 uses '**Warning:**' as a bold label inside a `{note}`, where the admonition's own title would do. The real definitional bolds - **fiscal risks** (311), **fiscal-risk minimization problem** (384), **effective return** / **effective government deficit** (443-444) - are the minority"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        54,
+        379,
+        521,
+        545,
+        659
+      ],
+      "detail": "line 54 reads 'comes as close as possible to providing full spanning in a precise a sense defined by BEGS'; line 379 opens 'Therefor,' for 'Therefore'; line 521 says the formula 'supports full fiscal insurance via fluctuating interest parameters' where 'interest rates' is meant; line 545's comment reads '# Initial guess of τ (to displays calcs along the way)'. Line 659 states 'Note that 0.2 is the initial value for $\\tau$ in the root-finding algorithm' immediately after line 652 passes `.1` - and the same routine is called with `.5` at 667, `0.05` at 699 and `.5` at 679, each time under a comment saying the result is 'Very sensitive to initial value', so the one number the reader is told is the one number that is wrong"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        226,
+        679
+      ],
+      "detail": "the lecture's central figure exists only as a bitmap and its own computations are never drawn onto it. The histogram at 226 - the ergodic distribution of par debt with three vertical lines, described in detail at 229-232 - has no generating code anywhere in the file, so a reader cannot see how the sample mean, ${\\mathcal B}^*/E u_c$ and the BEGS $\\hat b$ were placed, nor move them. Then the Execution section computes `B_star` (679), `B_hat` (694) and `rate` (709) and prints them as bare scalars: ${\\rm var}(J({\\mathcal B}))$ against ${\\mathcal B}$ is never plotted even though `min_J` at 665 evaluates exactly that function, and $\\hat b$ is never overlaid on the histogram it is said at 531 to be the red line of. Two figures the code is already one line away from producing would replace the entire 'stare and digest' instruction at 400-401"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        202,
+        587,
+        688,
+        694
+      ],
+      "detail": "line 202 uses `id` as a loop variable, shadowing the builtin. The `div` expression at 587-589 packs three spacing faults into one statement - a backslash continuation inside parentheses where PEP8 asks for implicit continuation, two spaces before that backslash, and two spaces after each `+` on the continuation lines - and it is repeated verbatim at 688-690. Line 694 writes `B_star/div` unspaced while line 709 writes `1 / (1 + u.β**2 * variance(R_star, s))` spaced"
+    }
   ],
   "strengths": [
     "The lecture corrects its source and says exactly where: a `{note}` up front warns that 'Key equations in {cite}`BEGS1` section III.D carry typos that we correct below' (59-61), then two 'typo alert' paragraphs identify the sign error in BEGS equation (42) at 422-425 and the sign on the left side of equation (46) at 456-459, each stating that the displayed version is the corrected one",
@@ -33,5 +84,9 @@
   "scanner_doubts": [
     "amss3.md, line 422 - the single `qe-math-013` hit is a false positive. The flagged text is 'there is a sign error in equation (42) of BEGS {cite}`BEGS1`' - a reference to equation 42 of *another paper*, which cannot be written as a `{eq}` label because it is not an equation in this book. The file has four more of the same legitimate kind that were not flagged (301 'Equation (44) of {cite}`BEGS1`', 366 'the equation above equation (47) in BEGS', 456 'equation (46) of BEGS', and amss2.md line 622), so the check both over-fires here and is inconsistent about it. The distinguishing feature is easy to test for: a numeric equation reference adjacent to a `{cite}` role is a reference to the cited work, not a manual internal reference.",
     "amss3.md, lines 40, 60, 231, 301, 398 - the 5 `qe-ref-001` hits are all genuine, and the interesting part is what is missed. This file cites {cite}`BEGS1` 19 times, and in 10 of them the author name is written out immediately before the citation - 'BEGS {cite}`BEGS1`' at 219, 272, 278, 280, 299, 366, 370, 405, 423, 456. That is the rule's own '❌ Incorrect: Manual formatting instead of citation' example, and none of the ten fired. Line 52 ('Nevertheless, {cite}`BEGS1` (BEGS) establish that...') is a plain author-as-subject case and also did not fire. So for this file the check catches five of roughly fifteen. A pattern for 'a capitalised name or acronym immediately preceding a {cite} role' would catch the dominant failure mode in the amss series, which uses this construction throughout."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "4a2b1a1aa3612a5610c9d0f7a0770a98b548ef27"
+  }
 }

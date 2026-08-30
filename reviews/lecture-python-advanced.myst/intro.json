@@ -12,5 +12,9 @@
     "Consider two or three more sentences of orientation before `{tableofcontents}`: what background the series assumes, and how it relates to `lecture-python.myst` and `lecture-python-programming`; one sentence is thin for the front door of a 60-lecture series",
     "Otherwise leave this file alone - it needs no style remediation and is a useful reference for what a clean MyST page looks like"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "9d2adf81dcc5c2b75b1efa723452b17796a032e3"
+  }
 }

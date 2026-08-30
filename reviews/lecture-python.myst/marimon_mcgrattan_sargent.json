@@ -1,100 +1,104 @@
 {
- "series": "lecture-python.myst",
- "lecture": "marimon_mcgrattan_sargent",
- "judgment": [
-  {
-   "rule": "qe-writing-003",
-   "count": 3,
-   "lines": [
-    1259,
-    1583,
-    954
-   ],
-   "detail": "(1) Two economies quietly change learning parameters that the prose says nothing about, and one of them is the economy whose result the lecture then cannot reproduce. Economy B.1 sets `b_trade=(0.25, 0.25)` at 1259 - ten times the `(0.025, 0.025)` that 586 documents as the default and that every other economy uses - and Economy C sets `b_consume=(0.025, 0.25)` at 1607 against the default `(0.25, 0.25)` at 587. The B.1 text (1244-1250) describes only the change in the production pattern and storage costs, and then 1293-1308 reports that \"the paper reports one further feature that our run does not reproduce\", concluding that \"the transient is evidently sensitive to details of the implementation\" - with a tenfold change in the bid parameters sitting undisclosed in the cell above. (2) 1583 introduces fiat money as \"a fourth object, good 0\", but the implementation makes it the *last* good: 572 says \"Fiat money, when present, is the last good\", `storage_costs` puts its zero cost last (1602), `Economy.fiat` tests `n_goods > n_types` (607), and `consume_and_produce` blocks `good == econ.n_goods - 1` (805). Prose and code disagree about which index the money is. (3) 954-956 is a sentence fragment doing a paragraph's work (\"Two figures: the time path of holdings, which corresponds to the paper's figures 6-9, and a diagram of the exchange pattern that the system discovers, which corresponds to its figures 2, 4, 9 and 11.\")"
-  },
-  {
-   "rule": "qe-math-009",
-   "count": 4,
-   "lines": [
-    295,
-    300,
-    915,
-    1357
-   ],
-   "detail": "(1) The strength of a classifier is written three ways: $S^a_e(t)$ when it is introduced (295), $S^a_{e,\\tau_e(t)}$ and $S^a_{c,\\tau_c(t)}$ in the laws of motion (354-364), and bare $S_e$, $S_c$ in the stationarity conditions of the note (402-404) - two indices are silently dropped between one display and the next, and the code carries a fourth form, `T.strength[e]` (677). Since $\\tau$ is a deterministic function of the history, indexing the strength by the date alone would do throughout. (2) 300 defines the matched set as $M_e(z_{at}) = \\{e : z_{at} \\text{ matches the condition part of } e\\}$, in which $e$ is simultaneously the subscript of $M$ and the bound variable inside the braces; and 210 puts a whole English sentence inside display math via `\\text{probability that a type } i \\text{ agent holds good } k \\text{ at } t`, where prose plus a short definition would read better. (3) $\\tilde\\pi^e_{it}(jk|j)$ is used in the prose at 1120 and defined nowhere in the lecture text - its only definition is inside a function docstring at 915, which the reader of the rendered page never sees. (4) $f$ is the production map $f(a) = i^*$ (162, 169, 178) and the specialization probability $f_s(t) = 1/(2\\sqrt t)$ (1357), and `f` in the code is a frequency array (905, 987, 1729)"
-  },
-  {
-   "rule": "qe-writing-007",
-   "count": 3,
-   "lines": [
-    213,
-    338,
-    1401
-   ],
-   "detail": "the lecture draws the trading pattern the agents discover, five times, with a purpose-built graph helper (`plot_flows`, 980-1017) - and never draws the three things the reader is asked to compare it against. (1) The fundamental and speculative equilibria (213-231) are given as prose plus a table of holding probabilities (222-226), so at 1106-1108 the reader has to hold a table of numbers in mind while looking at a picture of arrows. `plot_flows` takes an exchange-frequency array; feeding it the theoretical equilibrium instead of a simulation would put the prediction and the outcome side by side in the same visual language, which is the whole claim of the lecture. (2) §\"The bucket brigade\" (315-389) is the hardest part of the file - the lecture says so itself at 369 (\"The timing in {eq}`mms_strengthc` is worth reading carefully\") - and its content is a payment chain across two periods, given as three bullets (340-344), a prose paragraph (372-377) and one inline arrow diagram at 382. A timing figure with the two auctions per period and the two payment arrows would carry it. (3) 1401-1405 describes the generalizing crossover and then says it is \"the operator described in section 6 of the paper and illustrated in its figure 5\" - the lecture points at a figure that would help, in a paper the reader may not have, and declines to reproduce it, although the operator is the eight lines at 1474-1483 and one worked pair of parent strings would do it"
-  },
-  {
-   "rule": "qe-writing-002",
-   "count": 3,
-   "lines": [
-    954,
-    1218,
-    1060
-   ],
-   "detail": "the prose is disciplined - one sentence per paragraph throughout, and qe-writing-001 reports nothing in 2033 lines - so the items are local. 954-956 is a fragment rather than a sentence. 1218-1221 is a 44-word sentence carrying three clauses and the paper's diagnosis at once (\"As the paper puts it, the winning consumption classifiers of type 1 agents are too general -- they have too many $\\#$'s to distinguish among stored goods -- so type 1 agents overconsume good 3, and the information that would make speculation pay never reaches the exchange classifiers\"), immediately before the block quote at 1225-1231 that says the same thing in the authors' words. And the fundamental equilibrium's three-line holding pattern is restated four times in nearly identical words - 216-218, 1060-1062, 1106-1108 and 1858-1859 - where 1060-1062 and 1106-1108 are forty lines apart"
-  },
-  {
-   "rule": "qe-writing-005",
-   "count": 3,
-   "lines": [
-    317,
-    408,
-    1398
-   ],
-   "detail": "the file bolds its definitions almost without exception - **medium of exchange** (40), **artificially intelligent agents** (48), **classifier system** (58), **genetic algorithm** (62), **fiat money** (74), **pre-trade state** (126), **long-run average** (194), **fundamental equilibrium** (213), **speculative equilibrium** (230), **population of candidate rules** (254), **condition** and **action** (257), **exchange classifier** (274), **consumption classifier** (288), **strength** (295), **Creation** and **Diversification** (527, 531), **Specialization** (1354), **Generalization** (1387) - which makes the three italicised ones stand out as slips rather than choices. 317 introduces the term that names its own section (\"a system of internal payments that Holland calls a *bucket brigade*\", under the H3 `### The bucket brigade` at 315); 407-408 defines the paper's technical sense of *stationary* strengths in italic; and 1398 defines *crowding* in italic (\"a device known as *crowding* that preserves diversity\"). Bold also does duty as structural labelling rather than definition at 134 and 153 (**First**, **Second**) and in the four bolded lead-in sentences of the concluding bullets (1790, 1792, 1799, 1801)"
-  },
-  {
-   "rule": "qe-code-001",
-   "count": 5,
-   "lines": [
-    674,
-    746,
-    1423,
-    634,
-    1497
-   ],
-   "detail": "flake8 (90-character limit) finds one long line (634, 92 characters; 35 code lines exceed PEP8's own 79), so the rest is naming. 674 and 687 spell the same counter two ways twelve lines apart in one method - `τ = T.used[e]` and then `tau_p = C.used[p]` - in a file that otherwise has no Greek identifiers at all. 746 binds `A, B = self.agents[ia], self.agents[ib]`, so `A` is an agent in the code while $A$ is the *number* of agents in the algebra (118, 696), and `A` is then reused as the agent loop variable at 782, 824, 830, 920, 936 and 981; 669 has the matching problem for `T`, which is a rule population there (`T, C = self.trade, self.consume`) and the horizon in `run(self, T, ...)` at 722. 1423 names a similarity score `sim` inside `crowding_victim`, while `sim` is the name of the `Simulation` object in every reporting function and every economy cell (887, 896, 913, 959, 980, 1046, ...). 1497 writes `for k, parent in zip(range(2), (mum, dad))` where `enumerate((mum, dad))` is the idiom, and 768 and 772 add a comparison to an integer without parentheses (`n_eaten += pa == ia`)"
+  "series": "lecture-python.myst",
+  "lecture": "marimon_mcgrattan_sargent",
+  "judgment": [
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        1259,
+        1583,
+        954
+      ],
+      "detail": "(1) Two economies quietly change learning parameters that the prose says nothing about, and one of them is the economy whose result the lecture then cannot reproduce. Economy B.1 sets `b_trade=(0.25, 0.25)` at 1259 - ten times the `(0.025, 0.025)` that 586 documents as the default and that every other economy uses - and Economy C sets `b_consume=(0.025, 0.25)` at 1607 against the default `(0.25, 0.25)` at 587. The B.1 text (1244-1250) describes only the change in the production pattern and storage costs, and then 1293-1308 reports that \"the paper reports one further feature that our run does not reproduce\", concluding that \"the transient is evidently sensitive to details of the implementation\" - with a tenfold change in the bid parameters sitting undisclosed in the cell above. (2) 1583 introduces fiat money as \"a fourth object, good 0\", but the implementation makes it the *last* good: 572 says \"Fiat money, when present, is the last good\", `storage_costs` puts its zero cost last (1602), `Economy.fiat` tests `n_goods > n_types` (607), and `consume_and_produce` blocks `good == econ.n_goods - 1` (805). Prose and code disagree about which index the money is. (3) 954-956 is a sentence fragment doing a paragraph's work (\"Two figures: the time path of holdings, which corresponds to the paper's figures 6-9, and a diagram of the exchange pattern that the system discovers, which corresponds to its figures 2, 4, 9 and 11.\")"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        295,
+        300,
+        915,
+        1357
+      ],
+      "detail": "(1) The strength of a classifier is written three ways: $S^a_e(t)$ when it is introduced (295), $S^a_{e,\\tau_e(t)}$ and $S^a_{c,\\tau_c(t)}$ in the laws of motion (354-364), and bare $S_e$, $S_c$ in the stationarity conditions of the note (402-404) - two indices are silently dropped between one display and the next, and the code carries a fourth form, `T.strength[e]` (677). Since $\\tau$ is a deterministic function of the history, indexing the strength by the date alone would do throughout. (2) 300 defines the matched set as $M_e(z_{at}) = \\{e : z_{at} \\text{ matches the condition part of } e\\}$, in which $e$ is simultaneously the subscript of $M$ and the bound variable inside the braces; and 210 puts a whole English sentence inside display math via `\\text{probability that a type } i \\text{ agent holds good } k \\text{ at } t`, where prose plus a short definition would read better. (3) $\\tilde\\pi^e_{it}(jk|j)$ is used in the prose at 1120 and defined nowhere in the lecture text - its only definition is inside a function docstring at 915, which the reader of the rendered page never sees. (4) $f$ is the production map $f(a) = i^*$ (162, 169, 178) and the specialization probability $f_s(t) = 1/(2\\sqrt t)$ (1357), and `f` in the code is a frequency array (905, 987, 1729)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        213,
+        338,
+        1401
+      ],
+      "detail": "the lecture draws the trading pattern the agents discover, five times, with a purpose-built graph helper (`plot_flows`, 980-1017) - and never draws the three things the reader is asked to compare it against. (1) The fundamental and speculative equilibria (213-231) are given as prose plus a table of holding probabilities (222-226), so at 1106-1108 the reader has to hold a table of numbers in mind while looking at a picture of arrows. `plot_flows` takes an exchange-frequency array; feeding it the theoretical equilibrium instead of a simulation would put the prediction and the outcome side by side in the same visual language, which is the whole claim of the lecture. (2) §\"The bucket brigade\" (315-389) is the hardest part of the file - the lecture says so itself at 369 (\"The timing in {eq}`mms_strengthc` is worth reading carefully\") - and its content is a payment chain across two periods, given as three bullets (340-344), a prose paragraph (372-377) and one inline arrow diagram at 382. A timing figure with the two auctions per period and the two payment arrows would carry it. (3) 1401-1405 describes the generalizing crossover and then says it is \"the operator described in section 6 of the paper and illustrated in its figure 5\" - the lecture points at a figure that would help, in a paper the reader may not have, and declines to reproduce it, although the operator is the eight lines at 1474-1483 and one worked pair of parent strings would do it"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        954,
+        1218,
+        1060
+      ],
+      "detail": "the prose is disciplined - one sentence per paragraph throughout, and qe-writing-001 reports nothing in 2033 lines - so the items are local. 954-956 is a fragment rather than a sentence. 1218-1221 is a 44-word sentence carrying three clauses and the paper's diagnosis at once (\"As the paper puts it, the winning consumption classifiers of type 1 agents are too general -- they have too many $\\#$'s to distinguish among stored goods -- so type 1 agents overconsume good 3, and the information that would make speculation pay never reaches the exchange classifiers\"), immediately before the block quote at 1225-1231 that says the same thing in the authors' words. And the fundamental equilibrium's three-line holding pattern is restated four times in nearly identical words - 216-218, 1060-1062, 1106-1108 and 1858-1859 - where 1060-1062 and 1106-1108 are forty lines apart"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        317,
+        408,
+        1398
+      ],
+      "detail": "the file bolds its definitions almost without exception - **medium of exchange** (40), **artificially intelligent agents** (48), **classifier system** (58), **genetic algorithm** (62), **fiat money** (74), **pre-trade state** (126), **long-run average** (194), **fundamental equilibrium** (213), **speculative equilibrium** (230), **population of candidate rules** (254), **condition** and **action** (257), **exchange classifier** (274), **consumption classifier** (288), **strength** (295), **Creation** and **Diversification** (527, 531), **Specialization** (1354), **Generalization** (1387) - which makes the three italicised ones stand out as slips rather than choices. 317 introduces the term that names its own section (\"a system of internal payments that Holland calls a *bucket brigade*\", under the H3 `### The bucket brigade` at 315); 407-408 defines the paper's technical sense of *stationary* strengths in italic; and 1398 defines *crowding* in italic (\"a device known as *crowding* that preserves diversity\"). Bold also does duty as structural labelling rather than definition at 134 and 153 (**First**, **Second**) and in the four bolded lead-in sentences of the concluding bullets (1790, 1792, 1799, 1801)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        674,
+        746,
+        1423,
+        634,
+        1497
+      ],
+      "detail": "flake8 (90-character limit) finds one long line (634, 92 characters; 35 code lines exceed PEP8's own 79), so the rest is naming. 674 and 687 spell the same counter two ways twelve lines apart in one method - `τ = T.used[e]` and then `tau_p = C.used[p]` - in a file that otherwise has no Greek identifiers at all. 746 binds `A, B = self.agents[ia], self.agents[ib]`, so `A` is an agent in the code while $A$ is the *number* of agents in the algebra (118, 696), and `A` is then reused as the agent loop variable at 782, 824, 830, 920, 936 and 981; 669 has the matching problem for `T`, which is a rule population there (`T, C = self.trade, self.consume`) and the horizon in `run(self, T, ...)` at 722. 1423 names a similarity score `sim` inside `crowding_victim`, while `sim` is the name of the `Simulation` object in every reporting function and every economy cell (887, 896, 913, 959, 980, 1046, ...). 1497 writes `for k, parent in zip(range(2), (mum, dad))` where `enumerate((mum, dad))` is the idiom, and 768 and 772 add a comparison to an integer without parentheses (`n_eaten += pa == ia`)"
+    }
+  ],
+  "strengths": [
+    "Every economy is checked against the paper numerically rather than by eye: 1067-1078 defines both the theoretical fundamental equilibrium and the paper's own table at $t = 1000$ and prints two maximum absolute deviations; 1279-1284 does the same for Economy B.1; and 1624-1626 quotes the paper's Economy C table for comparison with the run above it",
+    "The lecture reports where it fails to reproduce the paper instead of quietly matching. 1293-1308 states the discrepancy (the authors see a speculative phase at $t = 500$, this implementation is past it within fifty periods), quotes the paper's own description, and draws the right conclusion - \"the transient is evidently sensitive to details of the implementation in a way that the limit is not\" - then explains at 1310-1318 why the observation still matters for reading Economy A2",
+    "The `{warning}` at 1568-1579 is the honest kind: it says convergence is not guaranteed run by run with random initial rules, tells the reader to change the seed and see it, and connects the failure to the paper's own admission of \"too little experimentation\"",
+    "The `{note}` at 857-869 handles the one structural awkwardness in the file head on: four genetic-algorithm functions are referenced before they are defined, and the note says which four, where they are ({ref}`mms_ga`), why deferring them is safe (\"Python looks names up when a function runs rather than when it is defined\") and what a reader who dislikes it should do instead",
+    "Economy A2's negative result is diagnosed from the output, not asserted: 1189-1204 prints the winning exchange actions, the winning consumption actions and the four strongest consumption rules, and 1208-1216 then reads the culprit off them - `## -> 1`, \"eat whatever you are holding\", a maximally general rule with strength barely above zero that nonetheless wins every state except \"holding good 1\" - before the authors' own diagnosis is quoted at 1225-1231",
+    "The classifier population is implemented as parallel arrays precisely so that matching is one vectorized comparison (417-418, `np.all((self.cond == WILD) | (self.cond == state), axis=1)` at 476), and the `Rules` docstring (446-455) names every array and ties it to the algebra ($S_i$, $\\tau_i$)",
+    "Two figure helpers are written once and applied to five economies (1084, 1103, 1275, 1321, 1539, 1565, 1631, 1635, 1704, 1763, 1855, 1910), so every economy's holdings panel and exchange graph are directly comparable; `plot_flows` encodes trade frequency as arrow width (1007) and drops flows below a cutoff, which is what makes the discovered pattern legible at a glance",
+    "Exercise 3 is a real experiment with an honestly reported weak result: it removes the specificity premium holding $b_{11} + b_{12}$ fixed, averages over eight seeds (1990-1999), tabulates seed by seed (2005-2007), and then says the effect \"is modest and does not show up in every run. That is worth knowing rather than glossing over\" (2016-2019) before explaining why the tilt matters more where it is harder to see",
+    "The one-third of Economy D's trades that do not fit the paper's pattern is explained rather than buried: 1751-1760 works through a type 1 agent swapping good 3 for good 5, consuming it for zero utility, reproducing good 3, and ending the period exactly where he began - so the trades are payoff-neutral and nothing in the accounting system removes the rules that generate them",
+    "The bucket brigade's timing, which is the subtlest part of the algorithm, is stated in the prose (369-386), restated in the code where it is implemented (679-682, `Its update waits a period because only now is the second of its two receipts known`), and the reason strengths are running averages rather than totals is given its own `{note}` with the stochastic-approximation limit conditions (391-410)"
+  ],
+  "actions": [
+    "**Do not \"fix\" the eight qe-writing-004 findings (1311, 1316, 1554, 1819, 1874, 1880, 1944, 2028).** All eight are the word `Economy` in the paper's own labels for its model economies - Economy A1.1, A2, A2.2, B, B.1, B.2 - which are proper names and must keep the capital. See scanner_doubts for the measured exemption",
+    "**The qe-writing-006 hit at 89 is also a false positive**: `## The Kiyotaki-Wright environment` is already sentence case, and the offender the checker names is the hyphenated surname pair `Kiyotaki-Wright`. Leave the heading as it is",
+    "Disclose the two undocumented parameter changes: `b_trade=(0.25, 0.25)` in Economy B.1 (1259), ten times the documented default, and `b_consume=(0.025, 0.25)` in Economy C (1607). One sentence each. This matters most for B.1, whose transient is the one the lecture reports it cannot reproduce (1293-1308)",
+    "Fix the fiat-money index at 1583: the prose says \"a fourth object, good 0\" while 572, 607, 717, 805 and 1602 all make it the last good. Either call it good 4 in the prose or reindex the code",
+    "Settle the strength notation on one form. $S^a_e(t)$ (295), $S^a_{e,\\tau_e(t)}$ (362) and $S_e$ (404) are the same object, and the reader has to notice that the counter subscript and the agent superscript come and go between consecutive displays",
+    "Define $\\tilde\\pi^e_{it}(jk|j)$ in the text. It is used in the prose at 1120 and its only definition is inside the `winning_actions` docstring (914-916), which does not appear in the rendered lecture. Same for $\\pi^e_{it}(jk)$, defined only at 897-900",
+    "Draw the theoretical equilibrium with the same `plot_flows` helper used for the simulations, so the prediction of 213-231 and the outcome of 1103 can be compared as pictures rather than a table against a graph. While there, add a timing diagram for the bucket brigade (338-386) and reproduce the generalizing-crossover example the lecture points to at 1404 (\"illustrated in its figure 5\")",
+    "Cite the authors once, not twice. 34 (\"Kiyotaki and Wright {cite}`KiyotakiWright1989` studied\"), 46 (\"Marimon, McGrattan and Sargent {cite}`MarimonMcGrattanSargent1990` asked\"), 57 (\"John Holland's **classifier system** {cite}`Holland1975,...`\") and 259 (\"{cite}`Goldberg1989` is a book-length treatment\") all name the authors in prose *and* cite them parenthetically, so the surnames print twice; `{cite:t}` fixes all four. qe-ref-001 sees only 34 and 259",
+    "Figures: the four qe-fig-003 hits are two pairs of the same two calls - `ax.set_title(f\"type {i+1}\")` at 969 and 1009, and `fig.suptitle(title)` at 975 and 1015. The panel titles label the types and should move into the caption, and the `suptitle` should become the `mystnb` caption, which would also remove the `title=` argument threaded through every one of the twelve call sites. The two `figsize` values (964, 992) scale with the number of types and are defensible under \"unless necessary\"; add `lw=2` at 996",
+    "Cite or drop the three orphan equation labels `mms_posttrade` (146), `mms_lom` (166) and `mms_payoff` (174), which are never referenced - unlike `mms_fundcond`, `mms_auction`, `mms_strengthc` and `mms_strengthe`, which are",
+    "Code: give the counter one spelling (`τ` at 674 against `tau_p` at 687), rename `A`/`B` at 746 so they do not clash with $A$ = the number of agents (118, 696) and `T` at 669 so it does not clash with the horizon at 722, rename the local `sim` at 1423, use `enumerate` at 1497, and bring 634 under 90 characters",
+    "Trim the fourfold restatement of the fundamental holding pattern (216-218, 1060-1062, 1106-1108, 1858-1859), split the 44-word sentence at 1218 that the block quote at 1225 then repeats, and turn the fragment at 954-956 into a sentence"
+  ],
+  "scanner_doubts": [
+    "marimon_mcgrattan_sargent.md:1311,1316,1554,1819,1874,1880,1944,2028 - all eight qe-writing-004 hits are the word `Economy` in a label (\"Economy A2\", \"Economy B\", \"Economy A1.1\", \"Economy A2.2\", \"Economy B.1\", \"Economy B.2\"), which is the already-filed \"Example N\"/\"Step N\" family, so I am **recording a measurement rather than re-filing** - but the measurement disagrees with the earlier rejection enough to be worth one look, because the variant I tested is wider than `Example`/`Step` and still looks clean. The variant: in `check_writing_004` (qestyle_rules.py:292-295), skip a hit when the text immediately after the capitalised word matches `^\\s+(?:[A-Z](?:\\.\\d+)*|\\d+(?:\\.\\d+)*)\\b` - i.e. the word is followed by a label token, either a bare capital with optional dotted numerals (`A2.1`, `B`, `I`, `II`) or a numeral (`1`, `10.1.11`). Measured over all five series (348 files): 339 hits -> 260, so 79 suppressed. I read every one of the 79 and none is a genuine capitalisation error: they are `Step 1`-`Step 4` (chang_credible, chang_ramsey, repeat_mh, merging_of_opinions, rs_inventory_q, subjective_beliefs_business_cycles), `Example 1`-`Example 3` (growth_in_dles, irfs_in_hall_model, lp_intro, var_subsets, von_neumann_model), `Case 1`/`Case 2` (subjective_beliefs_business_cycles), `Model 1`/`Model 2` (measurement_models x9), `Representation 1`-`3` (var_dmd x6), `Theorem 9.10`/`Theorem 10.1.11`/`Theorem 5.3`, `Assumption 4.1`/`Assumption 6.1`, `Type I and Type II` (wald_friedman, likelihood_ratio_process), `Method 1` (money_inflation), the title `Optimal Savings I` inside a link label (permanent_income_dles.md:40) and this file's eight `Economy` labels. So if the earlier test was specifically an `Example N`/`Step N` string exemption, the general label form may be worth re-testing; if it was this same form, the rejection stands and the eight hits here have to be lived with.",
+    "marimon_mcgrattan_sargent.md:89 - the single qe-writing-006 hit is `## The Kiyotaki-Wright environment`, offender `Kiyotaki-Wright`. This is the already-filed surname-in-heading gap, so not re-filed, but the specific missing names are worth recording because the fix is a word list: `PROPER_NOUNS` lacks `kiyotaki` and `wright`, and `_is_proper` needs *both* parts of a hyphenated word allowlisted before it will pass `Kiyotaki-Wright`. Adding the pair removes this hit and nothing else in the corpus - I measured qe-writing-006 at 780 hits before and 779 after, with the diff being exactly this line. It joins `bray`, `savin`, `ljung`, `marcet` (filed from the ls_learning overlay) and `miller`, `modigliani`, `litterman`, `backus`, `chernov`, `zin`, `gorman`, `eckart` (measured in the newton_method overlay) on the list of surnames the heading and caption checks need.",
+    "Cleared, not filed. (1) qe-math-014 (proposed) has one candidate site and it is correct as written: 210 defines $\\pi^h_{it}(k)$ as a probability in words rather than with an operator, and no `\\mathbb{P}` appears anywhere, so there is no event-versus-set choice to judge. (2) qe-math-015 (proposed) has nothing to score - the distributional objects are the frequency matrices $\\pi^h$, $\\pi^e$ and $\\tilde\\pi^e$, none of which is a density or a CDF. (3) The four qe-fig-003 hits (969, 975, 1009, 1015) are genuine and come from just two helper functions, so one edit in each clears all four. (4) flake8 with `--extend-select=E226,E228` at a 90-character limit reports exactly one finding (E501 at 634) across a 2033-line file with roughly 700 lines of code, so the drafted Code 10/10 is not an artefact of a lenient extractor - note that the plain ``` fence at 280-283 holds classifier strings rather than Python and has to be excluded before linting."
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "c09115200072413e0e4a11c76d38b6ac12e6bb5c"
   }
- ],
- "strengths": [
-  "Every economy is checked against the paper numerically rather than by eye: 1067-1078 defines both the theoretical fundamental equilibrium and the paper's own table at $t = 1000$ and prints two maximum absolute deviations; 1279-1284 does the same for Economy B.1; and 1624-1626 quotes the paper's Economy C table for comparison with the run above it",
-  "The lecture reports where it fails to reproduce the paper instead of quietly matching. 1293-1308 states the discrepancy (the authors see a speculative phase at $t = 500$, this implementation is past it within fifty periods), quotes the paper's own description, and draws the right conclusion - \"the transient is evidently sensitive to details of the implementation in a way that the limit is not\" - then explains at 1310-1318 why the observation still matters for reading Economy A2",
-  "The `{warning}` at 1568-1579 is the honest kind: it says convergence is not guaranteed run by run with random initial rules, tells the reader to change the seed and see it, and connects the failure to the paper's own admission of \"too little experimentation\"",
-  "The `{note}` at 857-869 handles the one structural awkwardness in the file head on: four genetic-algorithm functions are referenced before they are defined, and the note says which four, where they are ({ref}`mms_ga`), why deferring them is safe (\"Python looks names up when a function runs rather than when it is defined\") and what a reader who dislikes it should do instead",
-  "Economy A2's negative result is diagnosed from the output, not asserted: 1189-1204 prints the winning exchange actions, the winning consumption actions and the four strongest consumption rules, and 1208-1216 then reads the culprit off them - `## -> 1`, \"eat whatever you are holding\", a maximally general rule with strength barely above zero that nonetheless wins every state except \"holding good 1\" - before the authors' own diagnosis is quoted at 1225-1231",
-  "The classifier population is implemented as parallel arrays precisely so that matching is one vectorized comparison (417-418, `np.all((self.cond == WILD) | (self.cond == state), axis=1)` at 476), and the `Rules` docstring (446-455) names every array and ties it to the algebra ($S_i$, $\\tau_i$)",
-  "Two figure helpers are written once and applied to five economies (1084, 1103, 1275, 1321, 1539, 1565, 1631, 1635, 1704, 1763, 1855, 1910), so every economy's holdings panel and exchange graph are directly comparable; `plot_flows` encodes trade frequency as arrow width (1007) and drops flows below a cutoff, which is what makes the discovered pattern legible at a glance",
-  "Exercise 3 is a real experiment with an honestly reported weak result: it removes the specificity premium holding $b_{11} + b_{12}$ fixed, averages over eight seeds (1990-1999), tabulates seed by seed (2005-2007), and then says the effect \"is modest and does not show up in every run. That is worth knowing rather than glossing over\" (2016-2019) before explaining why the tilt matters more where it is harder to see",
-  "The one-third of Economy D's trades that do not fit the paper's pattern is explained rather than buried: 1751-1760 works through a type 1 agent swapping good 3 for good 5, consuming it for zero utility, reproducing good 3, and ending the period exactly where he began - so the trades are payoff-neutral and nothing in the accounting system removes the rules that generate them",
-  "The bucket brigade's timing, which is the subtlest part of the algorithm, is stated in the prose (369-386), restated in the code where it is implemented (679-682, `Its update waits a period because only now is the second of its two receipts known`), and the reason strengths are running averages rather than totals is given its own `{note}` with the stochastic-approximation limit conditions (391-410)"
- ],
- "actions": [
-  "**Do not \"fix\" the eight qe-writing-004 findings (1311, 1316, 1554, 1819, 1874, 1880, 1944, 2028).** All eight are the word `Economy` in the paper's own labels for its model economies - Economy A1.1, A2, A2.2, B, B.1, B.2 - which are proper names and must keep the capital. See scanner_doubts for the measured exemption",
-  "**The qe-writing-006 hit at 89 is also a false positive**: `## The Kiyotaki-Wright environment` is already sentence case, and the offender the checker names is the hyphenated surname pair `Kiyotaki-Wright`. Leave the heading as it is",
-  "Disclose the two undocumented parameter changes: `b_trade=(0.25, 0.25)` in Economy B.1 (1259), ten times the documented default, and `b_consume=(0.025, 0.25)` in Economy C (1607). One sentence each. This matters most for B.1, whose transient is the one the lecture reports it cannot reproduce (1293-1308)",
-  "Fix the fiat-money index at 1583: the prose says \"a fourth object, good 0\" while 572, 607, 717, 805 and 1602 all make it the last good. Either call it good 4 in the prose or reindex the code",
-  "Settle the strength notation on one form. $S^a_e(t)$ (295), $S^a_{e,\\tau_e(t)}$ (362) and $S_e$ (404) are the same object, and the reader has to notice that the counter subscript and the agent superscript come and go between consecutive displays",
-  "Define $\\tilde\\pi^e_{it}(jk|j)$ in the text. It is used in the prose at 1120 and its only definition is inside the `winning_actions` docstring (914-916), which does not appear in the rendered lecture. Same for $\\pi^e_{it}(jk)$, defined only at 897-900",
-  "Draw the theoretical equilibrium with the same `plot_flows` helper used for the simulations, so the prediction of 213-231 and the outcome of 1103 can be compared as pictures rather than a table against a graph. While there, add a timing diagram for the bucket brigade (338-386) and reproduce the generalizing-crossover example the lecture points to at 1404 (\"illustrated in its figure 5\")",
-  "Cite the authors once, not twice. 34 (\"Kiyotaki and Wright {cite}`KiyotakiWright1989` studied\"), 46 (\"Marimon, McGrattan and Sargent {cite}`MarimonMcGrattanSargent1990` asked\"), 57 (\"John Holland's **classifier system** {cite}`Holland1975,...`\") and 259 (\"{cite}`Goldberg1989` is a book-length treatment\") all name the authors in prose *and* cite them parenthetically, so the surnames print twice; `{cite:t}` fixes all four. qe-ref-001 sees only 34 and 259",
-  "Figures: the four qe-fig-003 hits are two pairs of the same two calls - `ax.set_title(f\"type {i+1}\")` at 969 and 1009, and `fig.suptitle(title)` at 975 and 1015. The panel titles label the types and should move into the caption, and the `suptitle` should become the `mystnb` caption, which would also remove the `title=` argument threaded through every one of the twelve call sites. The two `figsize` values (964, 992) scale with the number of types and are defensible under \"unless necessary\"; add `lw=2` at 996",
-  "Cite or drop the three orphan equation labels `mms_posttrade` (146), `mms_lom` (166) and `mms_payoff` (174), which are never referenced - unlike `mms_fundcond`, `mms_auction`, `mms_strengthc` and `mms_strengthe`, which are",
-  "Code: give the counter one spelling (`τ` at 674 against `tau_p` at 687), rename `A`/`B` at 746 so they do not clash with $A$ = the number of agents (118, 696) and `T` at 669 so it does not clash with the horizon at 722, rename the local `sim` at 1423, use `enumerate` at 1497, and bring 634 under 90 characters",
-  "Trim the fourfold restatement of the fundamental holding pattern (216-218, 1060-1062, 1106-1108, 1858-1859), split the 44-word sentence at 1218 that the block quote at 1225 then repeats, and turn the fragment at 954-956 into a sentence"
- ],
- "scanner_doubts": [
-  "marimon_mcgrattan_sargent.md:1311,1316,1554,1819,1874,1880,1944,2028 - all eight qe-writing-004 hits are the word `Economy` in a label (\"Economy A2\", \"Economy B\", \"Economy A1.1\", \"Economy A2.2\", \"Economy B.1\", \"Economy B.2\"), which is the already-filed \"Example N\"/\"Step N\" family, so I am **recording a measurement rather than re-filing** - but the measurement disagrees with the earlier rejection enough to be worth one look, because the variant I tested is wider than `Example`/`Step` and still looks clean. The variant: in `check_writing_004` (qestyle_rules.py:292-295), skip a hit when the text immediately after the capitalised word matches `^\\s+(?:[A-Z](?:\\.\\d+)*|\\d+(?:\\.\\d+)*)\\b` - i.e. the word is followed by a label token, either a bare capital with optional dotted numerals (`A2.1`, `B`, `I`, `II`) or a numeral (`1`, `10.1.11`). Measured over all five series (348 files): 339 hits -> 260, so 79 suppressed. I read every one of the 79 and none is a genuine capitalisation error: they are `Step 1`-`Step 4` (chang_credible, chang_ramsey, repeat_mh, merging_of_opinions, rs_inventory_q, subjective_beliefs_business_cycles), `Example 1`-`Example 3` (growth_in_dles, irfs_in_hall_model, lp_intro, var_subsets, von_neumann_model), `Case 1`/`Case 2` (subjective_beliefs_business_cycles), `Model 1`/`Model 2` (measurement_models x9), `Representation 1`-`3` (var_dmd x6), `Theorem 9.10`/`Theorem 10.1.11`/`Theorem 5.3`, `Assumption 4.1`/`Assumption 6.1`, `Type I and Type II` (wald_friedman, likelihood_ratio_process), `Method 1` (money_inflation), the title `Optimal Savings I` inside a link label (permanent_income_dles.md:40) and this file's eight `Economy` labels. So if the earlier test was specifically an `Example N`/`Step N` string exemption, the general label form may be worth re-testing; if it was this same form, the rejection stands and the eight hits here have to be lived with.",
-  "marimon_mcgrattan_sargent.md:89 - the single qe-writing-006 hit is `## The Kiyotaki-Wright environment`, offender `Kiyotaki-Wright`. This is the already-filed surname-in-heading gap, so not re-filed, but the specific missing names are worth recording because the fix is a word list: `PROPER_NOUNS` lacks `kiyotaki` and `wright`, and `_is_proper` needs *both* parts of a hyphenated word allowlisted before it will pass `Kiyotaki-Wright`. Adding the pair removes this hit and nothing else in the corpus - I measured qe-writing-006 at 780 hits before and 779 after, with the diff being exactly this line. It joins `bray`, `savin`, `ljung`, `marcet` (filed from the ls_learning overlay) and `miller`, `modigliani`, `litterman`, `backus`, `chernov`, `zin`, `gorman`, `eckart` (measured in the newton_method overlay) on the list of surnames the heading and caption checks need.",
-  "Cleared, not filed. (1) qe-math-014 (proposed) has one candidate site and it is correct as written: 210 defines $\\pi^h_{it}(k)$ as a probability in words rather than with an operator, and no `\\mathbb{P}` appears anywhere, so there is no event-versus-set choice to judge. (2) qe-math-015 (proposed) has nothing to score - the distributional objects are the frequency matrices $\\pi^h$, $\\pi^e$ and $\\tilde\\pi^e$, none of which is a density or a CDF. (3) The four qe-fig-003 hits (969, 975, 1009, 1015) are genuine and come from just two helper functions, so one edit in each clears all four. (4) flake8 with `--extend-select=E226,E228` at a 90-character limit reports exactly one finding (E501 at 634) across a 2033-line file with roughly 700 lines of code, so the drafted Code 10/10 is not an artefact of a lenient extractor - note that the plain ``` fence at 280-283 holds classifier strings rather than Python and has to be excluded before linting."
- ]
 }

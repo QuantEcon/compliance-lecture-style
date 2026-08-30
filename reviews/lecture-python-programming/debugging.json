@@ -40,5 +40,9 @@
   ],
   "scanner_doubts": [
     "qe-writing-001 ×1 at debugging.md:27 is the body of an `{epigraph}` - a verbatim three-sentence quotation from Brian Kernighan. Quotations cannot be re-punctuated one sentence per paragraph, and `{epigraph}` is not excluded in tools/ (grep for \"epigraph\" over tools/*.py returns nothing). Same defect in about_py.md:27 and numpy.md:27."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "a935686622fc6383bf28d99ec6e913a177c89cea"
+  }
 }

@@ -50,5 +50,9 @@
   "scanner_doubts": [
     "qe-fig-002 is suppressed for the whole `/about_py/` path by the NOT_A_PLOT exclusion in tools/qestyle_rules.py:911, but `qs.png` (about_py.md:411), `bn_density1.png` (417) and `career_vf.png` (423) are code-generable plots, not screenshots or photographs - the lecture itself calls them \"Example 2D plot\", \"Example contour plot\" and \"Example 3D plot\". Three real qe-fig-002 occurrences are being hidden by a directory-level exclusion.",
     "qe-writing-001 ×1 at about_py.md:27 is the body of an `{epigraph}` - a verbatim quotation from Chris Wiggins. A quotation cannot be re-punctuated into one sentence per paragraph, and `{epigraph}` is not excluded anywhere in tools/ (grep finds no mention). Same defect in debugging.md:27 and numpy.md:27."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "9dd8851c8e6257afe559115aedcb1dec3ec5f4ad"
+  }
 }

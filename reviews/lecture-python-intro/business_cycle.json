@@ -2,15 +2,53 @@
   "series": "lecture-python-intro",
   "lecture": "business_cycle",
   "judgment": [
-    {"rule": "qe-code-001", "count": 15,
-     "lines": [84, 110, 193, 194, 195, 339, 386, 499, 500, 501, 513, 587, 652, 673, 730],
-     "detail": "three distinct PEP8 spacing patterns. (a) Missing space after the colon in dict literals, inconsistent within a single line - `{'color':'grey', 'alpha': 0.2}` at lines 193, 194, 195 and the duplicated block at 499, 500, 501. (b) `nber['USREC']==1` with no spaces around the comparison at lines 386, 652, 673, 730. (c) Continuation lines that do not reach the visual-indent column - 12 spaces instead of 31 for `wb.data.DataFrame(` at lines 84, 110, 513, 4 spaces at 587, and 16 instead of 22 at line 339"},
-    {"rule": "qe-writing-002", "count": 1, "lines": [601],
-     "detail": "line 601 is a single 64-word paragraph holding two sentences: a 36-word causal claim about French labour unions, employment protection, firing costs and wage rigidity, then a 28-word consequence clause. It is also the only unsourced institutional argument in a lecture that is otherwise purely descriptive"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [20, 22],
-     "detail": "the lecture's central terms are defined in plain text: 'Business cycles are fluctuations in economic activity over time' (line 20) and the four names introduced at line 22 - expansions, booms, contractions, recessions - all of which are used throughout. No bold appears anywhere in the file"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [417],
-     "detail": "line 417 says 'In our previous discussion, we found that developed economies have had relatively synchronized periods of recession', and line 420 adds that this synchronization did not appear in Argentina until the 2000s. The GDP growth section it points to (lines 101-321) plots the five countries in five separate figures on separate axes and never makes either claim, so the Synchronization section opens by treating an unstated conclusion as established"}
+    {
+      "rule": "qe-code-001",
+      "count": 15,
+      "lines": [
+        84,
+        110,
+        193,
+        194,
+        195,
+        339,
+        386,
+        499,
+        500,
+        501,
+        513,
+        587,
+        652,
+        673,
+        730
+      ],
+      "detail": "three distinct PEP8 spacing patterns. (a) Missing space after the colon in dict literals, inconsistent within a single line - `{'color':'grey', 'alpha': 0.2}` at lines 193, 194, 195 and the duplicated block at 499, 500, 501. (b) `nber['USREC']==1` with no spaces around the comparison at lines 386, 652, 673, 730. (c) Continuation lines that do not reach the visual-indent column - 12 spaces instead of 31 for `wb.data.DataFrame(` at lines 84, 110, 513, 4 spaces at 587, and 16 instead of 22 at line 339"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 1,
+      "lines": [
+        601
+      ],
+      "detail": "line 601 is a single 64-word paragraph holding two sentences: a 36-word causal claim about French labour unions, employment protection, firing costs and wage rigidity, then a 28-word consequence clause. It is also the only unsourced institutional argument in a lecture that is otherwise purely descriptive"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        20,
+        22
+      ],
+      "detail": "the lecture's central terms are defined in plain text: 'Business cycles are fluctuations in economic activity over time' (line 20) and the four names introduced at line 22 - expansions, booms, contractions, recessions - all of which are used throughout. No bold appears anywhere in the file"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        417
+      ],
+      "detail": "line 417 says 'In our previous discussion, we found that developed economies have had relatively synchronized periods of recession', and line 420 adds that this synchronization did not appear in Argentina until the 2000s. The GDP growth section it points to (lines 101-321) plots the five countries in five separate figures on separate axes and never makes either claim, so the Synchronization section opens by treating an unstated conclusion as established"
+    }
   ],
   "strengths": [
     "The plotting helper defined at line 129 carries a full numpy-style docstring (Parameters and Returns sections, lines 131-158) and is reused for every country panel, which is why all twelve figures share one axis convention and one recession-shading treatment",
@@ -31,5 +69,9 @@
   "scanner_doubts": [
     "qe-fig-008 reports 7 missing-`lw` plot calls in business_cycle.md, but 5 are false positives: lines 375, 378, 381, 648 and 726 each open an `ax.plot(` whose `linewidth=2` argument sits on the following physical line (377, 380, 382, 650, 728). The check appears to look only at the line where `plot(` occurs. Lines 162 and 471 are true hits.",
     "qe-writing-004 flags mid-sentence 'Consumer' at line 623 of business_cycle.md, but the phrase is 'the University of Michigan Consumer Sentiment Index' - the proper name of a published series - so the capital is correct."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "c1fa6ce0cea5f577b3bfe31ddad11095172be755"
+  }
 }

@@ -2,18 +2,71 @@
   "series": "lecture-dp",
   "lecture": "tax_smoothing_1",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [500, 320, 453, 382],
-     "detail": "the lecture's final claim is made against an incomparable figure. 492-496 says 'Simulating a large number of such economies over time reveals interesting dynamics. Debt tends to stay low and stable but recurrently surges' - a comparison with the constant-interest-rate debt figure at 385-392 - but the cell that draws it changes two inputs at once without saying so: `x0` goes from `[[100, 1, 25]]` (329) to `[[1000, 1, 25]]` (500), a tenfold increase in initial debt, and `T` goes from 500 (386) to 2000 (499). The 'low and stable' level and the 'recurrent surges' are therefore being read off a different initial condition and a horizon four times as long. Second, the no-Ponzi penalty exists only as a code comment: `# Small penalty on the debt required to implement the no-Ponzi scheme` at 320 followed by `R[0, 0] = R[0, 0] + 1e-9` at 321, with no mention anywhere in the prose that the objective has been perturbed or why. Third, 453-455 asserts that 'If we were to set $p_{t,t+1} = 0.9515$ in the version of the model with a constant interest rate, government debt would explode' - the one falsifiable prediction in the lecture, and it is never run, though the machinery to run it is three lines. Fourth, 382-383 invites a comparison ('We can see a similar, but a smoother pattern, if we plot government debt over time') between two figures drawn from two independent unseeded runs of 250 simulations each (374-376, 387-389), so the taxation paths and the debt paths are not the same paths"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [43, 60, 95, 404, 447],
-     "detail": "five sentences are broken as written. 43: '{cite}`Barro1979` m is about a government that borrows and lends' - a stray 'm'. 41 and 61 both end '{cite}`barro2003religion`).' with a closing parenthesis that was never opened. 153: 'A {doc}`sequel to this lecture <tax_smoothing_2>` describes applies Markov LQ control to settings' - two verbs. 404: 'Markov jump linear quandratic control problems'. 447: 'there is are equal chances of moving from one state to the other'. Separately, the same fact is stated three times in the first eighty lines: 'The extensions are modified versions of his 1979 model suggested by {cite}`barro1999determinants` and {cite}`barro2003religion`)' (40-41), 'By doing these two things we extend {cite}`Barro1979` along lines he suggested in {cite}`barro1999determinants` and {cite}`barro2003religion`)' (60-61), and 'Partly inspired by {cite}`barro1999determinants` and {cite}`barro2003religion`, our generalizations of {cite}`Barro1979`, assume' (82-83) - which is also where most of the nine qe-ref-001 hits come from. And what Markov jump LQ programming is gets explained three more times after 30-31 has already named it and linked the lecture that covers it: 95-101, 110-114, 116-119"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [52, 223, 65, 93],
-     "detail": "the same phrase is bold in three places and italic in a fourth: '**Markov jump linear quadratic dynamic programming**' at 30 and 111 and '**Markov jump linear quadratic dynamic program**' at 95-96, against '*Markov jump linear quadratic dynamic programming*' at 52-53. The one place a term is actually being defined uses italic - 'The variables $T_t, b_{t, t+1}$ are *control* variables chosen at $t$' (223) - while bold is doing emphasis duty at 65 ('an **exogenous sequence** of expenditures') and 93 ('are **time-varying** and **stochastic**'). Bold appears nine times in the first 120 lines and never again in the remaining 390, so the convention is not so much inconsistent as abandoned partway through"},
-    {"rule": "qe-code-001", "count": 5, "lines": [373, 300, 479, 291, 376],
-     "detail": "373, 386 and 499 bind `T` to the simulation horizon, in a lecture whose central variable is $T_t$, total tax collections (184, 203, 256, 262, 341, 354) - the collision is direct and `ts_length` or `n_periods` is available. 300-301 name the two row blocks of the state-transition matrix `A_t` and `A_b` ('top' and 'bottom'), which read as $A_t$ and $A_b$, i.e. time- or state-indexed matrices, in the one lecture in the series that is entirely about matrices indexed by a Markov state. 479 ends a statement with a semicolon to suppress notebook output, `lqm.stationary_values();` (E703). 291-292 leaves a stray trailing comma inside the outer bracket, `[Gbar, ρ],])`. And 376, 389 and 503 wrap the x-axis in a redundant `list(...)`: `plt.plot(list(range(T+1)), ...)` - matplotlib accepts the range object. Note that the aligned spacing at 291 (`[[1,    0],`) is the matrix-notation exemption and should be left alone"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [485, 444, 372],
-     "detail": "the payoff of the extension is dumped as two raw arrays. 482 says 'The decision rules are now dependent on the Markov state' and then 485 and 489 print `lqm.Fs[0]` and `lqm.Fs[1]` in separate cells, leaving the reader to diff two 1x3 float arrays by eye in order to see the one thing the whole Markov-jump apparatus was built to show. Second, the two-state interest-rate process - $p^1 = 0.97$, $p^2 = 0.933$, $\\Pi = \\begin{bmatrix} 0.8 & 0.2 \\\\ 0.2 & 0.8 \\end{bmatrix}$ (429-445) - is never drawn, and 447-455 then reasons about its stationary distribution and unconditional mean in prose; a two-node diagram, or a single simulated path of the Markov state plotted under the debt path, would make 'recurrently surges' (495-496) legible as surges *in the high-interest state*. Third, all three figures (372, 385, 498) are drawn with the `plt.` global interface, carry no `:name:`, and are referred to positionally, and the lecture contains no admonitions at all in 508 lines - the no-Ponzi penalty at 320-321 and the explosion claim at 453-455 are both natural `{note}`s"},
-    {"rule": "qe-math-009", "count": 2, "lines": [248, 262],
-     "detail": "248 and 282-283 use `\\hspace{2mm}` as a display separator - `G_t = S_G x_t \\hspace{2mm}, \\hspace{2mm} b_{t-1,t} = S_1 x_t` - where `\\quad` is the standard one-token form, and the comma sits before the space at 248 and after it at 282, so the hand-tuning is not even self-consistent. 262 runs every symbol together with no spacing at all: `T_t^2 = x_t'S'Sx_t + u_t'M_t'M_tu_t + 2 u_t'M_t'S x_t`, in which `S'S`, `Sx_t` and `M_tu_t` are each two symbols the reader has to separate unaided - and this single line carries all 11 of the file's qe-math-002 apostrophe transposes, so it will be rewritten anyway"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        500,
+        320,
+        453,
+        382
+      ],
+      "detail": "the lecture's final claim is made against an incomparable figure. 492-496 says 'Simulating a large number of such economies over time reveals interesting dynamics. Debt tends to stay low and stable but recurrently surges' - a comparison with the constant-interest-rate debt figure at 385-392 - but the cell that draws it changes two inputs at once without saying so: `x0` goes from `[[100, 1, 25]]` (329) to `[[1000, 1, 25]]` (500), a tenfold increase in initial debt, and `T` goes from 500 (386) to 2000 (499). The 'low and stable' level and the 'recurrent surges' are therefore being read off a different initial condition and a horizon four times as long. Second, the no-Ponzi penalty exists only as a code comment: `# Small penalty on the debt required to implement the no-Ponzi scheme` at 320 followed by `R[0, 0] = R[0, 0] + 1e-9` at 321, with no mention anywhere in the prose that the objective has been perturbed or why. Third, 453-455 asserts that 'If we were to set $p_{t,t+1} = 0.9515$ in the version of the model with a constant interest rate, government debt would explode' - the one falsifiable prediction in the lecture, and it is never run, though the machinery to run it is three lines. Fourth, 382-383 invites a comparison ('We can see a similar, but a smoother pattern, if we plot government debt over time') between two figures drawn from two independent unseeded runs of 250 simulations each (374-376, 387-389), so the taxation paths and the debt paths are not the same paths"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        43,
+        60,
+        95,
+        404,
+        447
+      ],
+      "detail": "five sentences are broken as written. 43: '{cite}`Barro1979` m is about a government that borrows and lends' - a stray 'm'. 41 and 61 both end '{cite}`barro2003religion`).' with a closing parenthesis that was never opened. 153: 'A {doc}`sequel to this lecture <tax_smoothing_2>` describes applies Markov LQ control to settings' - two verbs. 404: 'Markov jump linear quandratic control problems'. 447: 'there is are equal chances of moving from one state to the other'. Separately, the same fact is stated three times in the first eighty lines: 'The extensions are modified versions of his 1979 model suggested by {cite}`barro1999determinants` and {cite}`barro2003religion`)' (40-41), 'By doing these two things we extend {cite}`Barro1979` along lines he suggested in {cite}`barro1999determinants` and {cite}`barro2003religion`)' (60-61), and 'Partly inspired by {cite}`barro1999determinants` and {cite}`barro2003religion`, our generalizations of {cite}`Barro1979`, assume' (82-83) - which is also where most of the nine qe-ref-001 hits come from. And what Markov jump LQ programming is gets explained three more times after 30-31 has already named it and linked the lecture that covers it: 95-101, 110-114, 116-119"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        52,
+        223,
+        65,
+        93
+      ],
+      "detail": "the same phrase is bold in three places and italic in a fourth: '**Markov jump linear quadratic dynamic programming**' at 30 and 111 and '**Markov jump linear quadratic dynamic program**' at 95-96, against '*Markov jump linear quadratic dynamic programming*' at 52-53. The one place a term is actually being defined uses italic - 'The variables $T_t, b_{t, t+1}$ are *control* variables chosen at $t$' (223) - while bold is doing emphasis duty at 65 ('an **exogenous sequence** of expenditures') and 93 ('are **time-varying** and **stochastic**'). Bold appears nine times in the first 120 lines and never again in the remaining 390, so the convention is not so much inconsistent as abandoned partway through"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        373,
+        300,
+        479,
+        291,
+        376
+      ],
+      "detail": "373, 386 and 499 bind `T` to the simulation horizon, in a lecture whose central variable is $T_t$, total tax collections (184, 203, 256, 262, 341, 354) - the collision is direct and `ts_length` or `n_periods` is available. 300-301 name the two row blocks of the state-transition matrix `A_t` and `A_b` ('top' and 'bottom'), which read as $A_t$ and $A_b$, i.e. time- or state-indexed matrices, in the one lecture in the series that is entirely about matrices indexed by a Markov state. 479 ends a statement with a semicolon to suppress notebook output, `lqm.stationary_values();` (E703). 291-292 leaves a stray trailing comma inside the outer bracket, `[Gbar, ρ],])`. And 376, 389 and 503 wrap the x-axis in a redundant `list(...)`: `plt.plot(list(range(T+1)), ...)` - matplotlib accepts the range object. Note that the aligned spacing at 291 (`[[1,    0],`) is the matrix-notation exemption and should be left alone"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        485,
+        444,
+        372
+      ],
+      "detail": "the payoff of the extension is dumped as two raw arrays. 482 says 'The decision rules are now dependent on the Markov state' and then 485 and 489 print `lqm.Fs[0]` and `lqm.Fs[1]` in separate cells, leaving the reader to diff two 1x3 float arrays by eye in order to see the one thing the whole Markov-jump apparatus was built to show. Second, the two-state interest-rate process - $p^1 = 0.97$, $p^2 = 0.933$, $\\Pi = \\begin{bmatrix} 0.8 & 0.2 \\\\ 0.2 & 0.8 \\end{bmatrix}$ (429-445) - is never drawn, and 447-455 then reasons about its stationary distribution and unconditional mean in prose; a two-node diagram, or a single simulated path of the Markov state plotted under the debt path, would make 'recurrently surges' (495-496) legible as surges *in the high-interest state*. Third, all three figures (372, 385, 498) are drawn with the `plt.` global interface, carry no `:name:`, and are referred to positionally, and the lecture contains no admonitions at all in 508 lines - the no-Ponzi penalty at 320-321 and the explosion claim at 453-455 are both natural `{note}`s"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        248,
+        262
+      ],
+      "detail": "248 and 282-283 use `\\hspace{2mm}` as a display separator - `G_t = S_G x_t \\hspace{2mm}, \\hspace{2mm} b_{t-1,t} = S_1 x_t` - where `\\quad` is the standard one-token form, and the comma sits before the space at 248 and after it at 282, so the hand-tuning is not even self-consistent. 262 runs every symbol together with no spacing at all: `T_t^2 = x_t'S'Sx_t + u_t'M_t'M_tu_t + 2 u_t'M_t'S x_t`, in which `S'S`, `Sx_t` and `M_tu_t` are each two symbols the reader has to separate unaided - and this single line carries all 11 of the file's qe-math-002 apostrophe transposes, so it will be rewritten anyway"
+    }
   ],
   "strengths": [
     "The mapping from Barro's problem into the LQ framework is built in the right order and every piece is justified as it appears: the primitives are listed with units (182-190), the state and control are chosen and the reason given (233-235), the transition law is written in block form (239-241), $G_t$ and $b_{t-1,t}$ are expressed as selector matrices on the state (247-249), the budget constraint is used to get taxation as a function of state and control (251-257), and only then is $T_t^2$ expanded to read off $(R, Q, W)$ (259-263) - so the code at 300-318 is a transcription the reader can check line by line",
@@ -35,5 +88,9 @@
     "Figures: lowercase the six axis labels (377, 378, 390, 391, 504, 505) and expand 'Govt Debt' to 'government debt', add `lw=2` and an `alpha` to the three overplotted loops (376, 389, 503), and add `mystnb` figure metadata with names to the three cells (372, 385, 498) so 369, 382 and 492 can cite them. Note that this file is byte-identical to `lecture-python-advanced.myst/lectures/tax_smoothing_1.md`, so every fix should be made once, upstream, and both series clear - as with `tax_smoothing_2` and `smoothing_tax`",
     "Clear the 36 double and triple spaces, and normalise the ragged bullet indentation at 182-190 (` * `, ` *  `), which is where several of them are"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "fa7e60380679f0ff7e803b45acb57f5ca479cb14"
+  }
 }

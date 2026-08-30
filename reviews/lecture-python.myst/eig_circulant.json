@@ -2,16 +2,56 @@
   "series": "lecture-python.myst",
   "lecture": "eig_circulant",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [207, 294, 313, 368],
-     "detail": "line 207 concludes 'Thus, **singular values** of the permutation matrix $P$ ... all equal $1$' from the eigenvalue magnitudes at 205, but the fact that licenses that step - $P P^\\top = I$ - is only stated two lines later at 209-213. The matrix $F_8$ is introduced at 294, called 'a Discrete Fourier Transform' at 309 and used continuously to 366, while the section that defines the DFT is at 445. Line 313 is a one-item bullet, 'stare at the first column of $F_8$ above to convince yourself of this fact', whose antecedent - the normalisation sentence at 311 - is not something the first column demonstrates. '## Associated Permutation Matrix' at 368 reopens material already presented at 286-290 and repeats its display at 375"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [137, 153, 207, 451],
-     "detail": "bold is used for emphasis and for repetition, not only for definitions: 153 bolds 'matrix' and 'permutation' in a sentence that merely announces the order of the two definitions to come; 207 bolds 'singular values', a term the lecture uses but never defines; 137 re-bolds '**convolution**', already defined in bold at 129; 451 re-bolds '**Discrete Fourier Transform**', already defined in bold at 447"},
-    {"rule": "qe-math-009", "count": 3, "lines": [199, 205, 456],
-     "detail": "line 199 writes `\\textrm{det}(P - \\lambda I)` where `\\det` is the standard operator; line 205 uses the relation macro `\\mid \\lambda_i \\mid` as absolute-value delimiters where `|\\lambda_i|` would do; and the imaginary unit changes symbol mid-lecture - $j$ at 258 and 292, then $i$ at 456 and 541 - in a file where $i$ and $j$ are already carrying duty as row and column indices (132, 268, 351-361)"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [153, 205],
-     "detail": "line 153 spends a sentence announcing which definition comes first rather than giving it, and the sentence that follows at 155 contains the doubled phrase 'a permutation of a set of the set of non-negative integers' and is then partly re-given for a different index set at 157. Line 205 names the same object twice in nine words: 'Magnitudes $\\mid \\lambda_i \\mid$ of these eigenvalues $\\lambda_i$ all equal $1$'"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [129, 180],
-     "detail": "the two ideas in this lecture that are pictures rather than formulas get no figure. Line 180 describes the action of $P$ in words - 'shifts entries in rows $2$ through $N$ up one row and shifts the entry in row $1$ to row $N$' - where a single arrow diagram would show it; and the convolution defined at 129-133 is presented only as a summation index formula. The lecture is otherwise willing to draw (263-285, 504-533), so both are within reach"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        207,
+        294,
+        313,
+        368
+      ],
+      "detail": "line 207 concludes 'Thus, **singular values** of the permutation matrix $P$ ... all equal $1$' from the eigenvalue magnitudes at 205, but the fact that licenses that step - $P P^\\top = I$ - is only stated two lines later at 209-213. The matrix $F_8$ is introduced at 294, called 'a Discrete Fourier Transform' at 309 and used continuously to 366, while the section that defines the DFT is at 445. Line 313 is a one-item bullet, 'stare at the first column of $F_8$ above to convince yourself of this fact', whose antecedent - the normalisation sentence at 311 - is not something the first column demonstrates. '## Associated Permutation Matrix' at 368 reopens material already presented at 286-290 and repeats its display at 375"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        137,
+        153,
+        207,
+        451
+      ],
+      "detail": "bold is used for emphasis and for repetition, not only for definitions: 153 bolds 'matrix' and 'permutation' in a sentence that merely announces the order of the two definitions to come; 207 bolds 'singular values', a term the lecture uses but never defines; 137 re-bolds '**convolution**', already defined in bold at 129; 451 re-bolds '**Discrete Fourier Transform**', already defined in bold at 447"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        199,
+        205,
+        456
+      ],
+      "detail": "line 199 writes `\\textrm{det}(P - \\lambda I)` where `\\det` is the standard operator; line 205 uses the relation macro `\\mid \\lambda_i \\mid` as absolute-value delimiters where `|\\lambda_i|` would do; and the imaginary unit changes symbol mid-lecture - $j$ at 258 and 292, then $i$ at 456 and 541 - in a file where $i$ and $j$ are already carrying duty as row and column indices (132, 268, 351-361)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        153,
+        205
+      ],
+      "detail": "line 153 spends a sentence announcing which definition comes first rather than giving it, and the sentence that follows at 155 contains the doubled phrase 'a permutation of a set of the set of non-negative integers' and is then partly re-given for a different index set at 157. Line 205 names the same object twice in nine words: 'Magnitudes $\\mid \\lambda_i \\mid$ of these eigenvalues $\\lambda_i$ all equal $1$'"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        129,
+        180
+      ],
+      "detail": "the two ideas in this lecture that are pictures rather than formulas get no figure. Line 180 describes the action of $P$ in words - 'shifts entries in rows $2$ through $N$ up one row and shifts the entry in row $1$ to row $N$' - where a single arrow diagram would show it; and the convolution defined at 129-133 is presented only as a summation index formula. The lecture is otherwise willing to draw (263-285, 504-533), so both are within reach"
+    }
   ],
   "strengths": [
     "Every result that gets reused carries an equation label and every later reference goes through it: `eqn:circulant` (63) cited at 143 and 371, `eqn:conv` (133) cited at 137, `eqn:exampleP` (178) cited at 183 and 207 - no 'see equation (2)' anywhere",
@@ -29,5 +69,9 @@
     "Add the two missing pictures: an arrow diagram for the cyclic shift at 180 and an overlap sketch for the convolution at 129",
     "Tidy the notation - `\\det` at 199, `|\\lambda_i|` at 205, one symbol for the imaginary unit - and sweep the 44 double-space runs in the prose (46, 129, 143, 180, 183, 203, 205, 207, 249, 253, ...)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "9225f85945e31b2b7ad564c502d89584fbf1114f"
+  }
 }

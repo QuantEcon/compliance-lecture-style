@@ -2,11 +2,35 @@
   "series": "lecture-dp",
   "lecture": "mccall_persist_trans",
   "judgment": [
-    {"rule": "qe-code-001", "count": 14,
-     "lines": [185, 191, 194, 195, 238, 250, 255, 259, 265, 269, 274, 318, 319, 364],
-     "detail": "trailing whitespace on five code lines - `# transient shock log variance  ` (185), `z_grid: jnp.ndarray ` (191), the `def create_job_search_model(...c=5.0, ` continuation break (194), `@jax.jit  ` (250) and `ax.plot(model.z_grid, res_wage_function, ` (318) - plus six whitespace-only lines inside function bodies (238, 255, 259, 265, 269, 274), which is pycodestyle W291/W293; and three misaligned continuation lines: 195 is indented 27 against a visual indent of 28 (E128, one short), 319 is indented 16 against 12 (E127, four over) and 364 is indented 28 against 26 (E127, two over)"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [71],
-     "detail": "the lecture's whole premise is that a wage decomposes into a persistent and a transitory piece - it is in the title (22) and stated at 74-87 - and there is no figure of that decomposition anywhere. All four figures (289, 309, 416, 455) plot the reservation wage or mean duration. One simulated path showing $W_t$ against its two components $\\exp(Z_t)$ and $Y_t$ would show at a glance why $z$ has to enter the Bellman equation as a state (106) and why the transitory piece does not; the machinery to draw it already exists in `draw_duration` (354-355)"}
+    {
+      "rule": "qe-code-001",
+      "count": 14,
+      "lines": [
+        185,
+        191,
+        194,
+        195,
+        238,
+        250,
+        255,
+        259,
+        265,
+        269,
+        274,
+        318,
+        319,
+        364
+      ],
+      "detail": "trailing whitespace on five code lines - `# transient shock log variance  ` (185), `z_grid: jnp.ndarray ` (191), the `def create_job_search_model(...c=5.0, ` continuation break (194), `@jax.jit  ` (250) and `ax.plot(model.z_grid, res_wage_function, ` (318) - plus six whitespace-only lines inside function bodies (238, 255, 259, 265, 269, 274), which is pycodestyle W291/W293; and three misaligned continuation lines: 195 is indented 27 against a visual indent of 28 (E128, one short), 319 is indented 16 against 12 (E127, four over) and 364 is indented 28 against 26 (E127, two over)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        71
+      ],
+      "detail": "the lecture's whole premise is that a wage decomposes into a persistent and a transitory piece - it is in the title (22) and stated at 74-87 - and there is no figure of that decomposition anywhere. All four figures (289, 309, 416, 455) plot the reservation wage or mean duration. One simulated path showing $W_t$ against its two components $\\exp(Z_t)$ and $Y_t$ would show at a glance why $z$ has to enter the Bellman equation as a state (106) and why the transitory piece does not; the machinery to draw it already exists in `draw_duration` (354-355)"
+    }
   ],
   "strengths": [
     "The dimensionality reduction is derived rather than asserted, one display per step with one sentence between: the two-state Bellman equation (96-102), the definition of $f^*$ (115-117), the Bellman equation rewritten in terms of it (121-123), the functional equation for $f^*$ alone (128-130), and only then the operator $Q$ (135-137) - a reader can follow the collapse from $(w,z)$ to $z$ without re-reading",
@@ -26,5 +50,9 @@
   ],
   "scanner_doubts": [
     "mccall_persist_trans.md, lines 100, 104, 116, 129, 136 - qe-math-010 (proposed) is reported as 0 for this lecture and the Math category scores 10/10, but all five of these lines write `\\mathbb E_z`, which is exactly the 'missing braces' case the rule targets. The cause is a word-boundary bug in `check_math_010` (tools/qestyle_rules.py:547): the pattern is `\\\\(?:mathbb|Bbb)\\s+[PEV]\\b`, and `\\b` cannot match between `E` and `_` because `_` is a word character. So `\\mathbb E` and `\\mathbb E[X]` are caught while `\\mathbb E_t`, `\\mathbb E_z` and `\\mathbb P_t` are silently missed. This is not local to one file: `grep -rE '\\\\(mathbb|Bbb)[[:space:]]+[PEV]_'` matches 98 lines across the five series, 44 of them in lecture-dp (amss 16, smoothing 11, mccall_persist_trans 5, ifp_advanced 4, smoothing_tax 4, lqramsey 3, opt_tax_recur 1). Replacing `\\b` with `(?![A-Za-z])` fixes it and would move several lectures' Math scores."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "9cf4b3dca2ef930ee4a8454c5f6437beb2a88a4a"
+  }
 }

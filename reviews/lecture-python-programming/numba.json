@@ -60,5 +60,9 @@
   ],
   "scanner_doubts": [
     "qe-writing-001 ×2 at numba.md:69 and 211 - 69 is the body of a `{note}` (68-75) and 211 the body of an `{admonition} Remark` (210-214), neither of which is running prose. tools/qestyle_rules.py:_paragraph_blocks (line 214) excludes headings, list items, tables, targets and option lines from qe-writing-001 but not the bodies of directives; no rule in tools/ mentions `note`, `tip`, `admonition` or `epigraph`."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "477e2af5959d4e2dcf79c8a51fe7d141022d56a9"
+  }
 }

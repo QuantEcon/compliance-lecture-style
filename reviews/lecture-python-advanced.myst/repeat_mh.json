@@ -2,16 +2,57 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "repeat_mh",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [777, 349],
-     "detail": "the constraint labels collide. The static problem numbers its constraints C1 (promise keeping), C2 (output law) and C3 (probabilities) at 316-326 and adds C4 (incentive compatibility) at 336. The two-step algorithm then starts again at C5: step 1 uses C5 for promise keeping, C6 for the output law, C7 for probabilities and C8 for incentive compatibility (746-763) - but step 2, twelve lines later, labels *its* promise-keeping constraint **C5** (777) and *its* probability constraint **C7** (780), so both labels name two different constraints in the same subsection, and step 2 has no C6 at all. Nothing ties either block back to C1-C3, although step 2's C5 is C1's role and its C7 is C3's. Second, the utility function appears in four forms and no two agree: $U(a,c) = 2\\sqrt{c} + 2\\sqrt{1-a}$ at 349, the same terms in the opposite order at 726 and 748, `c**0.5 / 0.5 + (1 - a)**0.5 / 0.5` in the code at 377 and again at 1022, and `2*c**0.5 + β*wp` at 835 - so a reader checking the code against the display has to recognise that dividing by 0.5 is multiplying by 2, in one of the two places where it is written that way and not the other"},
-    {"rule": "qe-code-001", "count": 8, "lines": [377, 475, 835, 1004, 1033, 1057, 1845, 1022],
-     "detail": "the rule asks for PEP8 unless the code gets closer to the mathematics, and 377 does neither: `c**0.5 / 0.5 + (1 - a)**0.5 / 0.5` for $2\\sqrt c + 2\\sqrt{1-a}$, where `2 * c**0.5` is both shorter and the displayed formula. 835 writes the same term as `2*c**0.5 + β*wp`, dropping the spaces around the multiplications that the rule reserves for `**`. 1021-1022 then defines the utility a third time, as a closure `u_fn` inside `solve_multi_period_economy`, duplicating the module-level `u` at 376-377 so the two can silently drift apart. 1004-1008 gives `A`, `Q`, `C`, `P` and `problem_type` defaults of `None` although all five are required - 1024 immediately calls `problem_type.lower()` and 1026 calls `A.max()`, so a call that omits them raises `AttributeError` rather than the clear message that 1018-1019 gives for a bad `β`. Continuation lines are indented two columns past their opening parenthesis at 475-476, 477-478, 1033-1034 and 1838-1839. 1845 and 1853 pad after a comma to align (`s_W_flat,  label=`), and 1057 writes `t1-t0` without spaces. The `problem_type` dispatch at 437 and 1025 compares against the literals \"full information\" and \"unobserved-actions\", so a misspelling at either call site (475-478, 1838) silently selects the other model rather than failing"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [124, 716],
-     "detail": "the lecture's motivating example is a picture that is not drawn: 124-172 shows the deterministic incentive-compatible set is non-convex by checking that $(c_H, c_L) = (1,0)$ and $(9,4)$ both satisfy $\\sqrt{c_H} - \\sqrt{c_L} \\geq 1$ while their midpoint $(5,2)$ does not, and asks the reader to verify $\\sqrt 5 - \\sqrt 2 \\approx 0.82 < 1$ arithmetically - where the region, the two points, the chord between them and the midpoint outside the region is five lines of matplotlib and is the whole reason lotteries appear in the rest of the lecture (the example is also `:class: dropdown`, so it is collapsed by default). Second, the two-step algorithm (716-797) subdivides a single period, and the object it turns on is a timing distinction stated only in prose: $w^m$ is \"the **intermediate promised utility** after the output is observed but before consumption is allocated\" and \"includes the utility from current consumption and the discounted next-period promise, but not the current effort utility\" (732-737). A one-line timeline - $w \\to (a, q) \\to w^m \\to (c, w') \\to$ next period, with which utility term is settled at each arrow - would carry that in a glance, and would also show why C5 in step 1 subtracts the effort term while C5 in step 2 adds the consumption term"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [292, 809],
-     "detail": "the reason for using `highspy` instead of CVXPY is given five times in twenty lines and once more two hundred lines later: 801-802 states the choice, 809-810 says \"It lets us keep the same LP model in memory and change only the small parts that differ across grid points\", 812-814 says the same in terms of the promise-keeping right-hand side and the objective, 816-817 says re-building CVXPY objects \"adds substantial overhead and can leak memory\", 819-820 says \"we build each LP once and then mutate the objective and one row bound between solves\", and 993-996 repeats that last sentence almost verbatim. Two of those six would do. On a smaller scale, 292-296 makes one claim twice: \"A one-period economy is the cleanest place to isolate the informational friction.\" followed by \"This isolates the static informational friction before the dynamic promised-utility channel is introduced.\""},
-    {"rule": "qe-math-009", "count": 2, "lines": [205, 1755],
-     "detail": "sums over the same product set are written two ways in the same problem: 205-216 spells the indices out, `\\sum_{c \\in C}\\sum_{w' \\in W'}` and `\\sum_{a \\in A}\\sum_{q \\in Q}\\sum_{c \\in C}\\sum_{w' \\in W'}`, and 228-253 then compresses them to `\\sum_{A \\times Q \\times C \\times W'}`, which names no summation variable at all even though the summand $\\{u(c,a) + \\beta w'\\}\\Pi^w(a,q,c,w')$ depends on all four - and 319-321 uses a third form, `\\sum_C` and `\\sum_{Q \\times C}`. One convention for the whole lecture would remove the need to re-read each display to see what is being summed over. Separately, multi-letter subscripts are set in maths italic rather than as text: $W_{static}$ (1755, 1758, 1819) and $P_{flat}$ (1808, 1816, 1865) render as products of italic letters, where `W_{\\text{static}}` and `P_{\\text{flat}}` are both correct and simpler to read"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        777,
+        349
+      ],
+      "detail": "the constraint labels collide. The static problem numbers its constraints C1 (promise keeping), C2 (output law) and C3 (probabilities) at 316-326 and adds C4 (incentive compatibility) at 336. The two-step algorithm then starts again at C5: step 1 uses C5 for promise keeping, C6 for the output law, C7 for probabilities and C8 for incentive compatibility (746-763) - but step 2, twelve lines later, labels *its* promise-keeping constraint **C5** (777) and *its* probability constraint **C7** (780), so both labels name two different constraints in the same subsection, and step 2 has no C6 at all. Nothing ties either block back to C1-C3, although step 2's C5 is C1's role and its C7 is C3's. Second, the utility function appears in four forms and no two agree: $U(a,c) = 2\\sqrt{c} + 2\\sqrt{1-a}$ at 349, the same terms in the opposite order at 726 and 748, `c**0.5 / 0.5 + (1 - a)**0.5 / 0.5` in the code at 377 and again at 1022, and `2*c**0.5 + β*wp` at 835 - so a reader checking the code against the display has to recognise that dividing by 0.5 is multiplying by 2, in one of the two places where it is written that way and not the other"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        377,
+        475,
+        835,
+        1004,
+        1033,
+        1057,
+        1845,
+        1022
+      ],
+      "detail": "the rule asks for PEP8 unless the code gets closer to the mathematics, and 377 does neither: `c**0.5 / 0.5 + (1 - a)**0.5 / 0.5` for $2\\sqrt c + 2\\sqrt{1-a}$, where `2 * c**0.5` is both shorter and the displayed formula. 835 writes the same term as `2*c**0.5 + β*wp`, dropping the spaces around the multiplications that the rule reserves for `**`. 1021-1022 then defines the utility a third time, as a closure `u_fn` inside `solve_multi_period_economy`, duplicating the module-level `u` at 376-377 so the two can silently drift apart. 1004-1008 gives `A`, `Q`, `C`, `P` and `problem_type` defaults of `None` although all five are required - 1024 immediately calls `problem_type.lower()` and 1026 calls `A.max()`, so a call that omits them raises `AttributeError` rather than the clear message that 1018-1019 gives for a bad `β`. Continuation lines are indented two columns past their opening parenthesis at 475-476, 477-478, 1033-1034 and 1838-1839. 1845 and 1853 pad after a comma to align (`s_W_flat,  label=`), and 1057 writes `t1-t0` without spaces. The `problem_type` dispatch at 437 and 1025 compares against the literals \"full information\" and \"unobserved-actions\", so a misspelling at either call site (475-478, 1838) silently selects the other model rather than failing"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        124,
+        716
+      ],
+      "detail": "the lecture's motivating example is a picture that is not drawn: 124-172 shows the deterministic incentive-compatible set is non-convex by checking that $(c_H, c_L) = (1,0)$ and $(9,4)$ both satisfy $\\sqrt{c_H} - \\sqrt{c_L} \\geq 1$ while their midpoint $(5,2)$ does not, and asks the reader to verify $\\sqrt 5 - \\sqrt 2 \\approx 0.82 < 1$ arithmetically - where the region, the two points, the chord between them and the midpoint outside the region is five lines of matplotlib and is the whole reason lotteries appear in the rest of the lecture (the example is also `:class: dropdown`, so it is collapsed by default). Second, the two-step algorithm (716-797) subdivides a single period, and the object it turns on is a timing distinction stated only in prose: $w^m$ is \"the **intermediate promised utility** after the output is observed but before consumption is allocated\" and \"includes the utility from current consumption and the discounted next-period promise, but not the current effort utility\" (732-737). A one-line timeline - $w \\to (a, q) \\to w^m \\to (c, w') \\to$ next period, with which utility term is settled at each arrow - would carry that in a glance, and would also show why C5 in step 1 subtracts the effort term while C5 in step 2 adds the consumption term"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        292,
+        809
+      ],
+      "detail": "the reason for using `highspy` instead of CVXPY is given five times in twenty lines and once more two hundred lines later: 801-802 states the choice, 809-810 says \"It lets us keep the same LP model in memory and change only the small parts that differ across grid points\", 812-814 says the same in terms of the promise-keeping right-hand side and the objective, 816-817 says re-building CVXPY objects \"adds substantial overhead and can leak memory\", 819-820 says \"we build each LP once and then mutate the objective and one row bound between solves\", and 993-996 repeats that last sentence almost verbatim. Two of those six would do. On a smaller scale, 292-296 makes one claim twice: \"A one-period economy is the cleanest place to isolate the informational friction.\" followed by \"This isolates the static informational friction before the dynamic promised-utility channel is introduced.\""
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        205,
+        1755
+      ],
+      "detail": "sums over the same product set are written two ways in the same problem: 205-216 spells the indices out, `\\sum_{c \\in C}\\sum_{w' \\in W'}` and `\\sum_{a \\in A}\\sum_{q \\in Q}\\sum_{c \\in C}\\sum_{w' \\in W'}`, and 228-253 then compresses them to `\\sum_{A \\times Q \\times C \\times W'}`, which names no summation variable at all even though the summand $\\{u(c,a) + \\beta w'\\}\\Pi^w(a,q,c,w')$ depends on all four - and 319-321 uses a third form, `\\sum_C` and `\\sum_{Q \\times C}`. One convention for the whole lecture would remove the need to re-read each display to see what is being summed over. Separately, multi-letter subscripts are set in maths italic rather than as text: $W_{static}$ (1755, 1758, 1819) and $P_{flat}$ (1808, 1816, 1865) render as products of italic letters, where `W_{\\text{static}}` and `P_{\\text{flat}}` are both correct and simpler to read"
+    }
   ],
   "strengths": [
     "All thirteen figures are captioned and named (510, 542, 575, 621, 1146, 1204, 1239, 1290, 1335, 1467, 1496, 1563, 1596), and the one the concluding section appeals to is cited by label - \"the gain visible in {numref}`fig-rmh-surplus-compare`\" (1637-1639) - so the summary points at evidence the reader can jump to",
@@ -33,5 +74,9 @@
     "Convert the five bare expectations to `\\mathbb{E}` (559, 597, 1266, 1315, 1821) and replace the `time()` readings at 1046 and 1054 with the `quantecon` Timer",
     "Sweep the remaining items: `mystnb` captions and names on the two solution figure cells (1770, 1832), the four two-sentence paragraphs (128, 146, 247, 1803), lowercase \"Step\" mid-sentence (822, 824, 852, 993), the alignment padding at 1845 and 1853, the off-by-two continuations at 475, 477, 1033 and 1838, `t1 - t0` at 1057, and the repeated literal 80 at 1444-1447 and 1469"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "a0cfc1a42d4ad6e809441f53852003a517dd6b8a"
+  }
 }

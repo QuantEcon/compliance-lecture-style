@@ -2,16 +2,54 @@
   "series": "lecture-python.myst",
   "lecture": "mccall_persist_trans",
   "judgment": [
-    {"rule": "qe-code-001", "count": 4, "lines": [360, 271, 185, 318],
-     "detail": "`draw_duration` computes the unemployment duration twice and returns the wrong one. 360 binds `τ = jnp.where(accept, t, t_max)` and never reads it; the function instead returns `jnp.where(unemployed_final, t_max, t_final)` at 376, where `t_final` is the post-increment `t + 1` produced by the accepting iteration (`t_new = t + 1` at 365, returned at 368). So a worker who accepts the very first offer is recorded as unemployed for 1 period rather than 0, and every number behind the two duration figures (418, 457) carries that offset. The discarded `τ` is precisely the expression that would have given 0, so the dead line documents the intended semantics and the live one contradicts it - one of the two has to go. Second, `compute_fixed_point` unpacks three values from `jax.lax.while_loop` at 271-273 and uses one: `iterations` and `final_error` are dropped, so the `qe.Timer()` block at 283 reports how long the solve took while the iteration count it computed is thrown away. Third, eleven lines carry trailing whitespace (185, 191, 194, 238, 250, 255, 259, 265, 269, 274, 318). Fourth, the continuation at 319 is indented twelve spaces past the `ax.plot(` it continues (E127) and 195 falls one space short of aligning with the open parenthesis on 194; `i` is bound and never used in both loops (407, 448); and 448 rebinds the module-level `β` as a loop variable"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [49, 110],
-     "detail": "the lecture is named after a decomposition it never examines. The title (22), the opening sentence (41, \"decomposing wage offers into **persistent** and **transitory** components\") and the closing promise of the Overview (54, \"we can focus on understanding how persistent and transitory wage shocks affect search behavior and reservation wages\") all put the two components at the centre. There are four figures - reservation wage against $z$ (289-298), the same for three values of $c$ (309-323), mean duration against $c$ (416-421), mean duration against $\\beta$ (455-460) - and every one of them varies $c$ or $\\beta$. Neither is new here: both are studied in {doc}`mccall_model` and {doc}`mccall_fitted_vfi`. The parameters that *are* the subject - $s$, the transitory scale, and $\\rho$ and $\\sigma$, the persistence and its volatility - appear only as defaults at 194 and are never changed, so a reader finishes the lecture having seen nothing that the previous two lectures in the series did not already show. Second, 110 motivates the lecture's main technical device on an unmeasured claim: the reduction to a one-dimensional state \"greatly accelerates computation\". The `qe.Timer()` at 283 times the reduced problem and there is no two-dimensional baseline anywhere, so the speed-up is asserted and the reader has nothing to compare"},
-    {"rule": "qe-math-009", "count": 3, "lines": [80, 185, 97],
-     "detail": "80 uses a distributional symbol for a deterministic identity: $Y_t \\sim \\exp(\\mu + s \\zeta_t)$, where the right-hand side is a function of the standard normal $\\zeta_t$ rather than the name of a distribution. The code writes the same relation as an equality, `y_next = jnp.exp(μ + s * e2)` (234), and the neighbouring half of the same display uses `=` for the AR(1). The two correct forms are $Y_t = \\exp(\\mu + s\\zeta_t)$ or $\\log Y_t \\sim N(\\mu, s^2)$; as written it reads as though $\\exp$ were a distribution family. Second, the same quantity is mislabelled in the `Model` definition: 185's comment calls `s` the \"transient shock log variance\" when 80 makes it the log *standard deviation* - the log variance is $s^2$ - and the default `s=1.0` makes the two numerically identical, which is why the error survives; 184-185 also say \"transient\" where the prose says \"transitory\" throughout (41, 47, 49, 54, 87). Third, the model is stated in $(W_t, Y_t, Z_t)$ at 74-87 and solved in $(w, z, w', z')$ from 97 onward with no sentence bridging the two, so $w$ makes its first appearance inside $v^*(w, z)$ having never been introduced"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [74, 416],
-     "detail": "the wage process is never drawn. $W_t = \\exp(Z_t) + Y_t$ (74) is the object the lecture is named after, and one panel showing a simulated $\\{W_t\\}$ path with $\\exp(Z_t)$ and $Y_t$ plotted separately beneath it would make the persistent-transitory split visible in about five lines - `create_job_search_model` already generates the shock draws at 207, and `draw_duration` already simulates the state at 354-364. As it stands the reader is told which component is which at 87 and never shown. Second, the two duration figures (416-421, 455-460) report Monte Carlo averages of 10,000 simulated durations (409, 450) as single unadorned lines, with no measure of simulation error and no check on the censoring: `draw_duration` returns `t_max = 10_000` whenever the loop exhausts its budget (337, 376), which would silently inflate a mean, and nothing anywhere reports how often that happens. A shaded band across replications, or a printed count of censored draws, would tell the reader how much of the curvature in those two curves to believe"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [47, 41],
-     "detail": "47 is a 43-word sentence carrying the lecture's entire modelling choice in one breath, with the contrast to the previous lecture parenthesised at the end: \"Here we take a different approach: we model wage dynamics through an AR(1) process for the persistent component plus a transitory shock, while returning to the assumption that jobs are permanent (as in the {doc}`baseline model <mccall_model>`).\" The Overview also links to the same document three times in seven lines under two different labels - \"McCall job search model\" at 41, \"baseline model\" at 43 and again at 47 - so the reader meets three links that all go to one place. And the third item of the bulleted list at 49-52, \"Simple enough to analyze while capturing key features of wage dynamics\", asserts something the reader has no way to check and that the lecture never returns to"}
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        360,
+        271,
+        185,
+        318
+      ],
+      "detail": "`draw_duration` computes the unemployment duration twice and returns the wrong one. 360 binds `τ = jnp.where(accept, t, t_max)` and never reads it; the function instead returns `jnp.where(unemployed_final, t_max, t_final)` at 376, where `t_final` is the post-increment `t + 1` produced by the accepting iteration (`t_new = t + 1` at 365, returned at 368). So a worker who accepts the very first offer is recorded as unemployed for 1 period rather than 0, and every number behind the two duration figures (418, 457) carries that offset. The discarded `τ` is precisely the expression that would have given 0, so the dead line documents the intended semantics and the live one contradicts it - one of the two has to go. Second, `compute_fixed_point` unpacks three values from `jax.lax.while_loop` at 271-273 and uses one: `iterations` and `final_error` are dropped, so the `qe.Timer()` block at 283 reports how long the solve took while the iteration count it computed is thrown away. Third, eleven lines carry trailing whitespace (185, 191, 194, 238, 250, 255, 259, 265, 269, 274, 318). Fourth, the continuation at 319 is indented twelve spaces past the `ax.plot(` it continues (E127) and 195 falls one space short of aligning with the open parenthesis on 194; `i` is bound and never used in both loops (407, 448); and 448 rebinds the module-level `β` as a loop variable"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        49,
+        110
+      ],
+      "detail": "the lecture is named after a decomposition it never examines. The title (22), the opening sentence (41, \"decomposing wage offers into **persistent** and **transitory** components\") and the closing promise of the Overview (54, \"we can focus on understanding how persistent and transitory wage shocks affect search behavior and reservation wages\") all put the two components at the centre. There are four figures - reservation wage against $z$ (289-298), the same for three values of $c$ (309-323), mean duration against $c$ (416-421), mean duration against $\\beta$ (455-460) - and every one of them varies $c$ or $\\beta$. Neither is new here: both are studied in {doc}`mccall_model` and {doc}`mccall_fitted_vfi`. The parameters that *are* the subject - $s$, the transitory scale, and $\\rho$ and $\\sigma$, the persistence and its volatility - appear only as defaults at 194 and are never changed, so a reader finishes the lecture having seen nothing that the previous two lectures in the series did not already show. Second, 110 motivates the lecture's main technical device on an unmeasured claim: the reduction to a one-dimensional state \"greatly accelerates computation\". The `qe.Timer()` at 283 times the reduced problem and there is no two-dimensional baseline anywhere, so the speed-up is asserted and the reader has nothing to compare"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        80,
+        185,
+        97
+      ],
+      "detail": "80 uses a distributional symbol for a deterministic identity: $Y_t \\sim \\exp(\\mu + s \\zeta_t)$, where the right-hand side is a function of the standard normal $\\zeta_t$ rather than the name of a distribution. The code writes the same relation as an equality, `y_next = jnp.exp(μ + s * e2)` (234), and the neighbouring half of the same display uses `=` for the AR(1). The two correct forms are $Y_t = \\exp(\\mu + s\\zeta_t)$ or $\\log Y_t \\sim N(\\mu, s^2)$; as written it reads as though $\\exp$ were a distribution family. Second, the same quantity is mislabelled in the `Model` definition: 185's comment calls `s` the \"transient shock log variance\" when 80 makes it the log *standard deviation* - the log variance is $s^2$ - and the default `s=1.0` makes the two numerically identical, which is why the error survives; 184-185 also say \"transient\" where the prose says \"transitory\" throughout (41, 47, 49, 54, 87). Third, the model is stated in $(W_t, Y_t, Z_t)$ at 74-87 and solved in $(w, z, w', z')$ from 97 onward with no sentence bridging the two, so $w$ makes its first appearance inside $v^*(w, z)$ having never been introduced"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        74,
+        416
+      ],
+      "detail": "the wage process is never drawn. $W_t = \\exp(Z_t) + Y_t$ (74) is the object the lecture is named after, and one panel showing a simulated $\\{W_t\\}$ path with $\\exp(Z_t)$ and $Y_t$ plotted separately beneath it would make the persistent-transitory split visible in about five lines - `create_job_search_model` already generates the shock draws at 207, and `draw_duration` already simulates the state at 354-364. As it stands the reader is told which component is which at 87 and never shown. Second, the two duration figures (416-421, 455-460) report Monte Carlo averages of 10,000 simulated durations (409, 450) as single unadorned lines, with no measure of simulation error and no check on the censoring: `draw_duration` returns `t_max = 10_000` whenever the loop exhausts its budget (337, 376), which would silently inflate a mean, and nothing anywhere reports how often that happens. A shaded band across replications, or a printed count of censored draws, would tell the reader how much of the curvature in those two curves to believe"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        47,
+        41
+      ],
+      "detail": "47 is a 43-word sentence carrying the lecture's entire modelling choice in one breath, with the contrast to the previous lecture parenthesised at the end: \"Here we take a different approach: we model wage dynamics through an AR(1) process for the persistent component plus a transitory shock, while returning to the assumption that jobs are permanent (as in the {doc}`baseline model <mccall_model>`).\" The Overview also links to the same document three times in seven lines under two different labels - \"McCall job search model\" at 41, \"baseline model\" at 43 and again at 47 - so the reader meets three links that all go to one place. And the third item of the bulleted list at 49-52, \"Simple enough to analyze while capturing key features of wage dynamics\", asserts something the reader has no way to check and that the lecture never returns to"
+    }
   ],
   "strengths": [
     "Emphasis is used exactly once and used correctly: the lecture contains two emphasis spans in 466 lines - **persistent** and **transitory** at 41 - both bold, both marking the definition of a central term, with no bolded emphasis and no italicised definition anywhere in the file",
@@ -32,5 +70,9 @@
     "Either measure the speed-up claimed at 110 or soften the claim - as written the lecture's main technical device is motivated by an acceleration nothing in the file demonstrates",
     "Sweep the mechanical items: add `mystnb: figure: caption`/`name` metadata to all four figure cells (289, 309, 416, 455) and `lw=2` to the four line plots (293, 318, 418, 457); add braces to the five `\\mathbb E` operators (100, 104, 116, 129, 136) for `qe-math-010`; strip the trailing whitespace on eleven lines (185, 191, 194, 238, 250, 255, 259, 265, 269, 274, 318); fix the continuation indents at 195 and 319; drop the unused loop index `i` at 407 and 448; and use the three values `iterations`, `final_error` unpacked at 271 or stop unpacking them"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "6f55a97d89501b851340ccfe721bfae08f28a28e"
+  }
 }

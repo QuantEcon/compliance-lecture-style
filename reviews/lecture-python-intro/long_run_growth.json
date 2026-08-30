@@ -2,14 +2,50 @@
   "series": "lecture-python-intro",
   "lecture": "long_run_growth",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [38, 258, 348],
-     "detail": "line 38 tells the reader the opening PNG \"is just a copy of our figure {numref}`gdp1`\", but `gdp1` (486-500) plots CHN, SUN, JPN, GBR, USA while the PNG is written by the un-named cell at 525-537, which plots DEU, USA, SUN, BEM, FRA, JPN - the reader is pointed at the wrong figure; line 258 says \"As you can see from this chart\" immediately after a cell that defines the `draw_interp_plots` function and produces no chart at all, the nearest figure being 50 lines earlier; and the bullet at 348, \"how the Self-Strengthening Movement seemed mostly to help China to grow\", contradicts line 342 and the figure it describes, both of which show GDP per capita declining across 1861-1895"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [29, 42, 539, 566],
-     "detail": "sentences of 36-48 words at 29 (41w), 539 (48w) and 566 (36w), plus a sentence at 42-43 that keeps the subordinate structure of the sentence before it and so has no main clause: \"By the end of the nineteenth century, US GDP had caught up with GDP of the British Empire, and how during the first half of the 20th century, US GDP surpassed that of the British Empire\""},
-    {"rule": "qe-code-001", "count": 8, "lines": [177, 280, 285, 287, 364, 370, 425, 577],
-     "detail": "a statement terminated with a semicolon to suppress notebook output (177), which PEP8 rules out; missing space after the comma in `'international dollars','year'` (280, 364, 425) and in `header=(0,1,2)` (577); missing space after the dict colons in `{'color':'grey', ...}` and `{'va':'center', 'ha':'center'}` (285, 287); and the `events` list literal at 369-394 with its elements flush at column zero, where the identical literal at 431-456 indents them by four"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [181],
-     "detail": "the lecture contains no bold and no italic anywhere, so the one term it stops to define - international dollars, defined in the `{note}` at 181 along with its alias Geary-Khamis dollars - is introduced in plain text"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        38,
+        258,
+        348
+      ],
+      "detail": "line 38 tells the reader the opening PNG \"is just a copy of our figure {numref}`gdp1`\", but `gdp1` (486-500) plots CHN, SUN, JPN, GBR, USA while the PNG is written by the un-named cell at 525-537, which plots DEU, USA, SUN, BEM, FRA, JPN - the reader is pointed at the wrong figure; line 258 says \"As you can see from this chart\" immediately after a cell that defines the `draw_interp_plots` function and produces no chart at all, the nearest figure being 50 lines earlier; and the bullet at 348, \"how the Self-Strengthening Movement seemed mostly to help China to grow\", contradicts line 342 and the figure it describes, both of which show GDP per capita declining across 1861-1895"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        29,
+        42,
+        539,
+        566
+      ],
+      "detail": "sentences of 36-48 words at 29 (41w), 539 (48w) and 566 (36w), plus a sentence at 42-43 that keeps the subordinate structure of the sentence before it and so has no main clause: \"By the end of the nineteenth century, US GDP had caught up with GDP of the British Empire, and how during the first half of the 20th century, US GDP surpassed that of the British Empire\""
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        177,
+        280,
+        285,
+        287,
+        364,
+        370,
+        425,
+        577
+      ],
+      "detail": "a statement terminated with a semicolon to suppress notebook output (177), which PEP8 rules out; missing space after the comma in `'international dollars','year'` (280, 364, 425) and in `header=(0,1,2)` (577); missing space after the dict colons in `{'color':'grey', ...}` and `{'va':'center', 'ha':'center'}` (285, 287); and the `events` list literal at 369-394 with its elements flush at column zero, where the identical literal at 431-456 indents them by four"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        181
+      ],
+      "detail": "the lecture contains no bold and no italic anywhere, so the one term it stops to define - international dollars, defined in the `{note}` at 181 along with its alias Geary-Khamis dollars - is introduced in plain text"
+    }
   ],
   "strengths": [
     "`draw_interp_plots` (219-256) is the right abstraction for this lecture: it draws observed data solid and interpolated data dashed, so every one of the six country figures distinguishes real observations from filled gaps in the same visual language",
@@ -27,5 +63,9 @@
     "Convert the two narrative-position citations to `{cite:t}` (40, 504) and break the four long or broken sentences listed above",
     "Fix the PEP8 items above, set `lw=2` on the four remaining plots (199, 204, 236, 243), and drop `figsize=(10, 6)` where `dpi=300` already controls the output size (275, 359, 420)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "b999eedfa8052092efb6edf46ecd1a7520834b3e"
+  }
 }

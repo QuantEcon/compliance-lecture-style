@@ -2,12 +2,41 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "supply_demand_var",
   "judgment": [
-    {"rule": "qe-code-001", "count": 9, "lines": [614, 618, 765, 803, 844, 480, 495, 1158, 1214],
-     "detail": "compound statements are used systematically to build the state-space blocks - `B = np.zeros((n, 1)); B[0, 0] = 1.0` at 614 and the same pattern at 615, 620, 621, 765-770, 797, 799, 800, 805, 806 and 844, seventeen lines in all - and 618 and 803 pack three statements including a `return` onto one line (`e = np.zeros(n); e[k - 1] = 1.0; return e`), which PEP8 asks to be split. Top-level `def`s are separated by a single blank line rather than two throughout (480, 488, 495, 505, 592, and the same at 439, 669, 761, 792, 1158), while the one-line docstrings at 481, 489, 496, 506, 587, 670, 762, 793 and 1159 use single double-quotes against the triple quotes of the multi-line docstring at 593-601. `make_ar_price` at 1158 declares a parameter `nX_extra=0` that its body never uses. And 1214 rebinds the module-level `scale` set at 514, inside an exercise solution, so a reader who runs the exercises and then re-runs an earlier cell gets different numbers"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [447, 966],
-     "detail": "the lecture computes roots four times and never draws them. The supplier's two roots (203-204), the demander's eight (278-281) and the market operator's eight (447-448) are the geometric heart of the whole construction - four reciprocal pairs $(\\lambda_i, \\beta/\\lambda_i)$ split by the circle of radius $\\sqrt\\beta$ - and every one of them reaches the reader only as a printed list of moduli (206-208, 283-284, 457). One complex-plane scatter with the unit circle and the $\\sqrt\\beta$ circle drawn would make \"collect the four stable roots\" (253, 387) visible instead of arithmetic. Second, and more consequential: 963-966 asserts that \"some of the zeros do lie inside\" the unit circle, which is the single fact the entire second half of the lecture rests on, and the zeros of $G_z(I - A_F L)^{-1}C$ are never computed, printed or plotted - the reader is asked to take the invertibility failure on trust and then shown its consequences at 988-1053"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [890, 1104, 1110],
-     "detail": "the lecture's two conclusions are each stated three or four times, twice in near-identical words. \"Today's suppliers and today's demanders both react to supply *and* demand shocks, through their common effect on the prospective path of prices\" (891-893) reappears 210 lines later as \"Today's suppliers and today's demanders each react to supply *and* demand shocks, through their common effect on the expected future path of prices\" (1104-1105), and the same point was already made in full in its own subsection at 321-334. The shock-invertibility conclusion likewise appears at 948-952, at 1064-1065, again in the `{admonition}` at 1067-1078, and a fourth time at 1112-1118 - where 1110 introduces it as \"Finally, an aside\" although it is one of the four things the Overview promises at 40-43. A Summary that restates is legitimate; three of these four are not in the Summary"}
+    {
+      "rule": "qe-code-001",
+      "count": 9,
+      "lines": [
+        614,
+        618,
+        765,
+        803,
+        844,
+        480,
+        495,
+        1158,
+        1214
+      ],
+      "detail": "compound statements are used systematically to build the state-space blocks - `B = np.zeros((n, 1)); B[0, 0] = 1.0` at 614 and the same pattern at 615, 620, 621, 765-770, 797, 799, 800, 805, 806 and 844, seventeen lines in all - and 618 and 803 pack three statements including a `return` onto one line (`e = np.zeros(n); e[k - 1] = 1.0; return e`), which PEP8 asks to be split. Top-level `def`s are separated by a single blank line rather than two throughout (480, 488, 495, 505, 592, and the same at 439, 669, 761, 792, 1158), while the one-line docstrings at 481, 489, 496, 506, 587, 670, 762, 793 and 1159 use single double-quotes against the triple quotes of the multi-line docstring at 593-601. `make_ar_price` at 1158 declares a parameter `nX_extra=0` that its body never uses. And 1214 rebinds the module-level `scale` set at 514, inside an exercise solution, so a reader who runs the exercises and then re-runs an earlier cell gets different numbers"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        447,
+        966
+      ],
+      "detail": "the lecture computes roots four times and never draws them. The supplier's two roots (203-204), the demander's eight (278-281) and the market operator's eight (447-448) are the geometric heart of the whole construction - four reciprocal pairs $(\\lambda_i, \\beta/\\lambda_i)$ split by the circle of radius $\\sqrt\\beta$ - and every one of them reaches the reader only as a printed list of moduli (206-208, 283-284, 457). One complex-plane scatter with the unit circle and the $\\sqrt\\beta$ circle drawn would make \"collect the four stable roots\" (253, 387) visible instead of arithmetic. Second, and more consequential: 963-966 asserts that \"some of the zeros do lie inside\" the unit circle, which is the single fact the entire second half of the lecture rests on, and the zeros of $G_z(I - A_F L)^{-1}C$ are never computed, printed or plotted - the reader is asked to take the invertibility failure on trust and then shown its consequences at 988-1053"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        890,
+        1104,
+        1110
+      ],
+      "detail": "the lecture's two conclusions are each stated three or four times, twice in near-identical words. \"Today's suppliers and today's demanders both react to supply *and* demand shocks, through their common effect on the prospective path of prices\" (891-893) reappears 210 lines later as \"Today's suppliers and today's demanders each react to supply *and* demand shocks, through their common effect on the expected future path of prices\" (1104-1105), and the same point was already made in full in its own subsection at 321-334. The shock-invertibility conclusion likewise appears at 948-952, at 1064-1065, again in the `{admonition}` at 1067-1078, and a fourth time at 1112-1118 - where 1110 introduces it as \"Finally, an aside\" although it is one of the four things the Overview promises at 40-43. A Summary that restates is legitimate; three of these four are not in the Summary"
+    }
   ],
   "strengths": [
     "The Overview commits to four deliverables as a bulleted list (31-43) and the lecture delivers them in that order and says so as it goes - the two dynamic curves at 167-334, the Big-$X$-little-$x$ recasting at 719-756, and the vector-autoregression difficulty at 897-1078 - with 45-46 naming the organising distinction (representations *outside* and *inside* a rational expectations equilibrium) that the Summary at 1085-1095 then closes on",
@@ -30,5 +59,9 @@
     "Sweep the figures: `lw=2` on the ten `plot` calls (529, 530, 697, 699, 701, 703, 1039, 1040, 1046, 1047), move the four `set_title` calls (532, 706, 1041, 1048) into `mystnb: figure: caption/name` metadata on the three figure cells (526, 694, 1026), add y-axis labels to all three, and drop the `figsize=(12, 4)` overrides at 527, 695 and 1038",
     "Document the coupling between `q_response(M, T=27)` at 495 and `p_response(q, s_path, T=25)` at 505 - the latter reads `q[t + 1]` up to `q[25]`, so the two magic lengths have to stay two apart, and nothing in the code says so"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "3ec719d310bb76c8e5ed4791416df8ca5299108c"
+  }
 }

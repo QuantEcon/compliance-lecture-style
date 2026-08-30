@@ -13,5 +13,9 @@
     "Reconcile the five series' copies of this page: `lecture-python-programming` and `lecture-python.myst` carry a 47-line version with GPU and JAX-backend probes, while this file, `lecture-python-intro` and `lecture-dp` carry a 33-line one - the page is hand-maintained in five places and has already diverged",
     "Drop the trailing space at the end of line 21. This copy is the 33-line variant plus a newline at end of file, so it differs from `lecture-python-intro` and `lecture-python-advanced.myst` in exactly that one character - the other two already lack the newline, so fixing it in all three is the smaller change"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "6b3e67a937a1741e4ca397b0355efcb8af446935"
+  }
 }

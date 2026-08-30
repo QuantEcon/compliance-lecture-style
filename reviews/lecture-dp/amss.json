@@ -2,18 +2,70 @@
   "series": "lecture-dp",
   "lecture": "amss",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [815, 688],
-     "detail": "the displayed government-expenditure vector contradicts the code. Line 794 orders the six states as $(0,g_l), (1,g_l), (2,g_l), (3,g_l), (3,g_h), (t \\geq 4, g_l)$ and line 815 accordingly displays $g = (0.1, 0.1, 0.1, 0.1, 0.2, 0.1)$ - war in the fifth slot. The code at 846 sets `g = np.array([0.1, 0.1, 0.1, 0.2, 0.1, 0.1])` - war in the fourth - and the simulated histories at 891-892 follow the code (`s_hist_h` visits state 3, `s_hist_l` visits state 4). The code is self-consistent; the display is not consistent with it, so a reader matching the algebra to the program is misled at exactly the point where the war experiment is set up. Separately, the gated exercise `amss_ex1` at 688-696 asks the reader to verify that $\\check\\Pi$ is a valid transition density and no solution appears anywhere in the file"},
-    {"rule": "qe-writing-005", "count": 8, "lines": [33, 245, 920, 921, 930, 932, 949, 950],
-     "detail": "bold doing emphasis work: **without** (33), **purchases** / **sells** (920, 921), **low** twice in one sentence (930) and **low** / **lower** again (932), **increase** (949), **reduction** (950). Line 245 sets an entire sentence in bold as a pseudo-heading - '**This is what it means for one-period government debt to be risk-free**'. All of these want italic (or, for 245, ordinary text). The file uses bold correctly for its real definitions - **natural debt limit** (221), **measurability constraints** (249), **marketable subspace** (327), **continuation Ramsey planner** (601), **state variable degeneracy** (710) - which is precisely why the emphasis bolds blunt it"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [327, 368, 470, 922, 924],
-     "detail": "line 327 is a single 52-word sentence with three nested qualifiers ('it can be said that the AMSS model requires that at each $(t, s^t)$ what would be the present value of ... must belong to the marketable subspace'); line 368 runs 44 words before reaching its main verb. Line 470-471 trails off ungrammatically - 'code from an earlier lecture on optimal taxation with state-contingent debt sequential allocation implementation:'. Line 922 has a duplicated word, 'the Ramsey planner designs these purchases and sales designed so that'; line 924 reads 'This pattern facilities smoothing tax rates' for 'facilitates'. The heading at 645 has a fifth of the same kind, 'supercedes' for 'supersedes'"},
-    {"rule": "qe-math-009", "count": 2, "lines": [612, 624],
-     "detail": "`{\\cal S}` at 612 and 624 for the state space - the deprecated `\\cal` form of calligraphic, used twice and nowhere else in the file. The same object is a plain $S$ in the code (`S = len(Π)` at 856, 995) and is written $s$ / $s_-$ / $\\tilde s$ everywhere in the surrounding displays, so a plain $S$ both simplifies and matches"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [799],
-     "detail": "the six-state construction at 790-810 is a small directed graph described only as a $6 \\times 6$ matrix of zeros, ones and two 0.5s: states 1-3 advance deterministically, state 3 branches with probability one half to the peace node and the war node, and both then absorb into the perpetual-peace node. A four-node diagram would take one figure and would make the war experiment legible at a glance - and would very likely have caught the ordering mismatch between the $g$ vector at 815 and the code at 846, since in a picture the war node is unmistakable. As it stands the reader has to reconstruct the chain by eye from the matrix"},
-    {"rule": "qe-code-001", "count": 4, "lines": [866, 996, 1081, 1087],
-     "detail": "line 866 writes `-get_grid_nodes(x_grid[0]) ** 2` with spaces around the exponentiation operator, and 999 does the same - the rule asks for the tight `a**b` form. Line 996 has a space before a closing bracket, `np.hstack([1 - g, np.ones(S)]) ].T` (E202). Line 1081 breaks a `zip(...)` call with a backslash continuation although the call is already inside parentheses, where PEP8 asks for implicit continuation - the equivalent call at 904-906 does it correctly. Line 1087 writes `legend(('Complete Markets','Incomplete Markets'))` with no space after the comma while line 1043 writes the identical call with one"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        815,
+        688
+      ],
+      "detail": "the displayed government-expenditure vector contradicts the code. Line 794 orders the six states as $(0,g_l), (1,g_l), (2,g_l), (3,g_l), (3,g_h), (t \\geq 4, g_l)$ and line 815 accordingly displays $g = (0.1, 0.1, 0.1, 0.1, 0.2, 0.1)$ - war in the fifth slot. The code at 846 sets `g = np.array([0.1, 0.1, 0.1, 0.2, 0.1, 0.1])` - war in the fourth - and the simulated histories at 891-892 follow the code (`s_hist_h` visits state 3, `s_hist_l` visits state 4). The code is self-consistent; the display is not consistent with it, so a reader matching the algebra to the program is misled at exactly the point where the war experiment is set up. Separately, the gated exercise `amss_ex1` at 688-696 asks the reader to verify that $\\check\\Pi$ is a valid transition density and no solution appears anywhere in the file"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        33,
+        245,
+        920,
+        921,
+        930,
+        932,
+        949,
+        950
+      ],
+      "detail": "bold doing emphasis work: **without** (33), **purchases** / **sells** (920, 921), **low** twice in one sentence (930) and **low** / **lower** again (932), **increase** (949), **reduction** (950). Line 245 sets an entire sentence in bold as a pseudo-heading - '**This is what it means for one-period government debt to be risk-free**'. All of these want italic (or, for 245, ordinary text). The file uses bold correctly for its real definitions - **natural debt limit** (221), **measurability constraints** (249), **marketable subspace** (327), **continuation Ramsey planner** (601), **state variable degeneracy** (710) - which is precisely why the emphasis bolds blunt it"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        327,
+        368,
+        470,
+        922,
+        924
+      ],
+      "detail": "line 327 is a single 52-word sentence with three nested qualifiers ('it can be said that the AMSS model requires that at each $(t, s^t)$ what would be the present value of ... must belong to the marketable subspace'); line 368 runs 44 words before reaching its main verb. Line 470-471 trails off ungrammatically - 'code from an earlier lecture on optimal taxation with state-contingent debt sequential allocation implementation:'. Line 922 has a duplicated word, 'the Ramsey planner designs these purchases and sales designed so that'; line 924 reads 'This pattern facilities smoothing tax rates' for 'facilitates'. The heading at 645 has a fifth of the same kind, 'supercedes' for 'supersedes'"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        612,
+        624
+      ],
+      "detail": "`{\\cal S}` at 612 and 624 for the state space - the deprecated `\\cal` form of calligraphic, used twice and nowhere else in the file. The same object is a plain $S$ in the code (`S = len(Π)` at 856, 995) and is written $s$ / $s_-$ / $\\tilde s$ everywhere in the surrounding displays, so a plain $S$ both simplifies and matches"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        799
+      ],
+      "detail": "the six-state construction at 790-810 is a small directed graph described only as a $6 \\times 6$ matrix of zeros, ones and two 0.5s: states 1-3 advance deterministically, state 3 branches with probability one half to the peace node and the war node, and both then absorb into the perpetual-peace node. A four-node diagram would take one figure and would make the war experiment legible at a glance - and would very likely have caught the ordering mismatch between the $g$ vector at 815 and the code at 846, since in a picture the war node is unmistakable. As it stands the reader has to reconstruct the chain by eye from the matrix"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        866,
+        996,
+        1081,
+        1087
+      ],
+      "detail": "line 866 writes `-get_grid_nodes(x_grid[0]) ** 2` with spaces around the exponentiation operator, and 999 does the same - the rule asks for the tight `a**b` form. Line 996 has a space before a closing bracket, `np.hstack([1 - g, np.ones(S)]) ].T` (E202). Line 1081 breaks a `zip(...)` call with a backslash continuation although the call is already inside parentheses, where PEP8 asks for implicit continuation - the equivalent call at 904-906 does it correctly. Line 1087 writes `legend(('Complete Markets','Incomplete Markets'))` with no space after the comma while line 1043 writes the identical call with one"
+    }
   ],
   "strengths": [
     "The one idea the whole lecture turns on is made concrete as an index comparison rather than described: lines 242-249 point out that the right side of {eq}`TS_gov_wo2` depends on $s^t$ while the left side must depend only on $s^{t-1}$, name the consequence ('measurability constraints'), and line 275-276 says it again for {eq}`TS_gov_wo3` - 'Notice how the conditioning sets differ'",
@@ -35,5 +87,9 @@
   "scanner_doubts": [
     "amss.md, lines 688-696 - `qe-admon-005` ('Link solutions to exercises') reports 0 violations, but the gated exercise `amss_ex1` at 688-696 has no `{solution-start} amss_ex1` block anywhere in the file (`grep -c solution-start amss.md` is 0). If the check is implemented as 'for each solution, find its exercise', it will miss every orphan exercise; the reverse direction - for each exercise label, require a solution referencing it - is the one that catches this. Worth confirming which direction is implemented, since an exercise with no solution is the more common failure.",
     "amss.md - a missing check rather than a wrong count, and the same family as the broken `{eq}` reference I reported in ifp_egm.md. Ten of this file's labels are defined and never referenced, one (`eqn:AMMSSapp101`, line 640) is misspelled with a doubled M, and three carry stray semicolons (`AMSS_lagr;` 419, `AMSS_foc;a` 434, `AMSS_foc;b` 449). None of this is visible to any current rule: qe-math-013 checks reference syntax, not label hygiene. Since the scanner already parses every `:label:` and every `{eq}` in the corpus, reporting orphan labels and unresolved references would be nearly free and would catch a class of copy-paste damage that is otherwise invisible until someone tries to cite the equation."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "b386729c3a8b33bc22ec0a94ef3ba115c0690469"
+  }
 }

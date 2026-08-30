@@ -2,14 +2,48 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "rosen_schooling_model",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [145, 26, 271],
-     "detail": "the algebra and the code disagree about $C_2$. The display at 143-146 sets $C_2 = \\begin{bmatrix} 0 & 0 \\\\ 1 & 0 \\\\ 0 & 1\\end{bmatrix}$, but every code cell writes `c2 = np.array([[0, 0], [10, 0], [0, 10]])` (214, 416, 510) - a factor of ten on the shock loadings, so a reader who checks the impulse responses against the stated matrix gets answers ten times too small. Second, the lecture has no overview: 26-27 opens with \"This lecture is yet another part of a suite of lectures that use the quantecon DLE class\" and then goes straight to equations at 49, so nothing states the question the Ryoo-Rosen model answers - and the mechanism that in fact explains every figure, the $(\\beta\\rho_d)^k$ discount on a wage premium that has to survive $k$ years of schooling, is developed only at 366-386, inside a dropdown solution most readers will not open. Third, 271-290 gives six paragraphs interpreting \"the first figure\" before the cell that draws it at 292-303, so the reader is told what to see well before there is anything to see"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [292, 310],
-     "detail": "none of the eight panels in the four figures (292-303, 310-323, 425-441, 519-536) carries an axis label. The horizontal axis is time in periods and the vertical is the impulse response, and neither is stated anywhere - which matters more here than usual because the lecture's whole subject is a $k$-period delay. The second figure (310-323) compares $k=4$, $k=7$ and $k=10$ precisely to show that delay, and nothing marks $t=4$, $t=7$ or $t=10$ on the axis, so the one feature the figure exists to display has to be counted off by eye against an unlabelled tick sequence. A labelled time axis plus a vertical rule at each $k$ would make the point the prose asserts at 326-332 directly visible"},
-    {"rule": "qe-code-001", "count": 8, "lines": [161, 244, 248, 294, 295, 318, 319, 320],
-     "detail": "comma spacing is applied inconsistently within the same file: 161 writes `['a22', 'c2','ub','ud']` with no space after two of three commas while 162 and 163 space theirs; 294 and 295 write `ax1.plot(econ1.c_irf,label=...)` with no space before the keyword argument, where 299, 300, 312-314 and 434-435 do have it; and 318-320 index `econ1.h_irf[:,0]` where 299, 300, 435 and 530 write `[:, 0]`. 244 writes `np.zeros((1, k+1))` where the identical expression at 192, 256, 404 and 498 is `k + 1`. 248 names a variable `Pref3` in CapWords among `pref1`, `pref2` and `pref4`, and 249 then passes `Pref3` where its three siblings pass lowercase names"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [343],
-     "detail": "343 sets **persistence of the demand shock** in bold as emphasis (\"Now investigate how the **persistence of the demand shock** matters\") where the rule asks for italic - and the same exercise uses italic correctly for emphasis three times, at 353 (*why*), 377 (*survives the $k$ periods of schooling*) and 385 (*no*), so the bold is the odd one out rather than a consistent house style"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        145,
+        26,
+        271
+      ],
+      "detail": "the algebra and the code disagree about $C_2$. The display at 143-146 sets $C_2 = \\begin{bmatrix} 0 & 0 \\\\ 1 & 0 \\\\ 0 & 1\\end{bmatrix}$, but every code cell writes `c2 = np.array([[0, 0], [10, 0], [0, 10]])` (214, 416, 510) - a factor of ten on the shock loadings, so a reader who checks the impulse responses against the stated matrix gets answers ten times too small. Second, the lecture has no overview: 26-27 opens with \"This lecture is yet another part of a suite of lectures that use the quantecon DLE class\" and then goes straight to equations at 49, so nothing states the question the Ryoo-Rosen model answers - and the mechanism that in fact explains every figure, the $(\\beta\\rho_d)^k$ discount on a wage premium that has to survive $k$ years of schooling, is developed only at 366-386, inside a dropdown solution most readers will not open. Third, 271-290 gives six paragraphs interpreting \"the first figure\" before the cell that draws it at 292-303, so the reader is told what to see well before there is anything to see"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        292,
+        310
+      ],
+      "detail": "none of the eight panels in the four figures (292-303, 310-323, 425-441, 519-536) carries an axis label. The horizontal axis is time in periods and the vertical is the impulse response, and neither is stated anywhere - which matters more here than usual because the lecture's whole subject is a $k$-period delay. The second figure (310-323) compares $k=4$, $k=7$ and $k=10$ precisely to show that delay, and nothing marks $t=4$, $t=7$ or $t=10$ on the axis, so the one feature the figure exists to display has to be counted off by eye against an unlabelled tick sequence. A labelled time axis plus a vertical rule at each $k$ would make the point the prose asserts at 326-332 directly visible"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        161,
+        244,
+        248,
+        294,
+        295,
+        318,
+        319,
+        320
+      ],
+      "detail": "comma spacing is applied inconsistently within the same file: 161 writes `['a22', 'c2','ub','ud']` with no space after two of three commas while 162 and 163 space theirs; 294 and 295 write `ax1.plot(econ1.c_irf,label=...)` with no space before the keyword argument, where 299, 300, 312-314 and 434-435 do have it; and 318-320 index `econ1.h_irf[:,0]` where 299, 300, 435 and 530 write `[:, 0]`. 244 writes `np.zeros((1, k+1))` where the identical expression at 192, 256, 404 and 498 is `k + 1`. 248 names a variable `Pref3` in CapWords among `pref1`, `pref2` and `pref4`, and 249 then passes `Pref3` where its three siblings pass lowercase names"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        343
+      ],
+      "detail": "343 sets **persistence of the demand shock** in bold as emphasis (\"Now investigate how the **persistence of the demand shock** matters\") where the rule asks for italic - and the same exercise uses italic correctly for emphasis three times, at 353 (*why*), 377 (*survives the $k$ periods of schooling*) and 385 (*no*), so the bold is the odd one out rather than a consistent house style"
+    }
   ],
   "strengths": [
     "The exercise solution at 360-386 supplies the analytical spine the body lacks: it isolates $(\\beta\\rho_d)^k$ as \"the decisive term\" (376-377), explains it in one sentence - what matters is how much of the wage premium survives the $k$ periods of schooling - and then takes the limit $\\rho_d \\to 0$ to show the response vanishes entirely, which is the sharpest possible statement of the time-to-build mechanism",
@@ -32,5 +66,9 @@
   ],
   "scanner_doubts": [
     "rosen_schooling_model.md:27 - qe-ref-001 fires here because the source line happens to begin with `{cite}`, not because the citation begins a sentence. `check_ref_001` runs per source line (`tools/qestyle_rules.py:1297-1300`) and `NARRATIVE_LEAD` (1284-1286) treats `^\\s*\\{cite\\}` as a sentence-initial position. Here the sentence starts on line 26 (\"...to instantiate models within the\") and merely wraps, so the citation is mid-sentence. Verified: `NARRATIVE_LEAD` matches at offset 0 of line 27 via the `^\\s*` alternative. To be fair to the check, the flag is defensible on the merits at this particular site - \"within the {cite}`HS2013` class of models\" is author-position usage that would read better as `{cite:t}` - but the mechanism is wrong and will misfire wherever a wrapped paragraph puts a genuinely parenthetical citation at the head of a continuation line. There are 75 files in the corpus with at least one line-initial `{cite}`. A cheap fix is to treat `^\\s*\\{cite\\}` as sentence-initial only when the previous narrative line ends in `.`, `!`, `?` or is blank"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "459d1c321e65c89e1f20daf3fe49c0b33f4a0304"
+  }
 }

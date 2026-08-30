@@ -2,18 +2,60 @@
   "series": "lecture-python.myst",
   "lecture": "hoist_failure",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 1, "lines": [481],
-     "detail": "'## Fault tree analysis' promises at 485 to 'describe the model that connects constituent events to the *top* end whose failure rate we seek to quantify' - that model is a tree, and no tree is drawn. The lecture reproduces the source paper's Figure 5 (the CDF) and Table 11, but not its fault tree, so the fourteen components, the seven identically distributed pairs (599-601) and the top event $F$ exist only as a list of parameter tuples at 609-617. Eight figures elsewhere in the lecture show the author is willing to draw"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [352, 571, 591],
-     "detail": "lines 591-595 repeat 583-587 across the '### Model specification' heading almost word for word: '$n = 14$', 'estimates the annual failure rate of a critical hoist at a nuclear waste facility', 'a regulatory agency wants/requires the system to be designed so that the top event failure rate is small with high probability'. Line 571 ('The analyst assumes that the random variables $P(A_i)$ are statistically mutually independent') repeats 565, in a passage where nine consecutive sentences open with 'The analyst'. Line 352 repeats what 194-196 established, that `fftconvolve` is faster and will be used throughout"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [797],
-     "detail": "exercise `hoist_ex2` asks the reader to judge the rare event approximation by comparing the expected system failure rate with the sum of component expected values - and its own solution says at 832 that 'the expected value of the sum equals the sum of the expected values (by linearity of expectation), so these should match closely regardless of the rare event approximation'. The exercise as posed cannot answer the question it asks, and the solution says so rather than fixing the question"},
-    {"rule": "qe-math-014", "count": 2, "lines": [168, 174],
-     "detail": "$f_j = \\Pr(X = j)$ (168) and $g_j = \\Pr(Y = j)$ (174) put an event - a condition on a random variable - inside parentheses, where the proposed convention asks for braces: $\\mathbb{P}\\{X = j\\}$. The set-valued arguments later in the lecture, $P(A \\cup B)$ and $P(A \\cap B)$ at 498-510, are correctly parenthesised, so the two cases are already distinguished in the file - just the wrong way round for the event"},
-    {"rule": "qe-math-009", "count": 2, "lines": [383, 498],
-     "detail": "the Fourier transform is defined at 363 as $x(\\omega_j)$ - the same letter as the sequence, with the argument carrying the meaning - and then written as $F(\\omega)$, $G(\\omega)$, $H(\\omega)$ at 383-385 for the transforms of $\\{f_k\\}$ and $\\{g_k\\}$, which is a different convention two paragraphs later. Similarly the probability operator is `\\Pr` at 168 and 174 and plain `P` from 498 onward"},
-    {"rule": "qe-code-001", "count": 3, "lines": [285, 616, 777],
-     "detail": "line 284-285 wraps the density with a backslash continuation and then over-indents the second line (E127) where parentheses would do; line 616 leaves one space before the inline comment `# Component type 7 (appears 8 times)` where PEP8 asks two (E261); line 777 under-indents the continuation of the `results.append([...])` call (E128). Trailing whitespace at 607 and 712"}
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        481
+      ],
+      "detail": "'## Fault tree analysis' promises at 485 to 'describe the model that connects constituent events to the *top* end whose failure rate we seek to quantify' - that model is a tree, and no tree is drawn. The lecture reproduces the source paper's Figure 5 (the CDF) and Table 11, but not its fault tree, so the fourteen components, the seven identically distributed pairs (599-601) and the top event $F$ exist only as a list of parameter tuples at 609-617. Eight figures elsewhere in the lecture show the author is willing to draw"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        352,
+        571,
+        591
+      ],
+      "detail": "lines 591-595 repeat 583-587 across the '### Model specification' heading almost word for word: '$n = 14$', 'estimates the annual failure rate of a critical hoist at a nuclear waste facility', 'a regulatory agency wants/requires the system to be designed so that the top event failure rate is small with high probability'. Line 571 ('The analyst assumes that the random variables $P(A_i)$ are statistically mutually independent') repeats 565, in a passage where nine consecutive sentences open with 'The analyst'. Line 352 repeats what 194-196 established, that `fftconvolve` is faster and will be used throughout"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        797
+      ],
+      "detail": "exercise `hoist_ex2` asks the reader to judge the rare event approximation by comparing the expected system failure rate with the sum of component expected values - and its own solution says at 832 that 'the expected value of the sum equals the sum of the expected values (by linearity of expectation), so these should match closely regardless of the rare event approximation'. The exercise as posed cannot answer the question it asks, and the solution says so rather than fixing the question"
+    },
+    {
+      "rule": "qe-math-014",
+      "count": 2,
+      "lines": [
+        168,
+        174
+      ],
+      "detail": "$f_j = \\Pr(X = j)$ (168) and $g_j = \\Pr(Y = j)$ (174) put an event - a condition on a random variable - inside parentheses, where the proposed convention asks for braces: $\\mathbb{P}\\{X = j\\}$. The set-valued arguments later in the lecture, $P(A \\cup B)$ and $P(A \\cap B)$ at 498-510, are correctly parenthesised, so the two cases are already distinguished in the file - just the wrong way round for the event"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        383,
+        498
+      ],
+      "detail": "the Fourier transform is defined at 363 as $x(\\omega_j)$ - the same letter as the sequence, with the argument carrying the meaning - and then written as $F(\\omega)$, $G(\\omega)$, $H(\\omega)$ at 383-385 for the transforms of $\\{f_k\\}$ and $\\{g_k\\}$, which is a different convention two paragraphs later. Similarly the probability operator is `\\Pr` at 168 and 174 and plain `P` from 498 onward"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        285,
+        616,
+        777
+      ],
+      "detail": "line 284-285 wraps the density with a backslash continuation and then over-indents the second line (E127) where parentheses would do; line 616 leaves one space before the inline comment `# Component type 7 (appears 8 times)` where PEP8 asks two (E261); line 777 under-indents the continuation of the `results.append([...])` call (E128). Trailing whitespace at 607 and 712"
+    }
   ],
   "strengths": [
     "All eight figure cells carry mystnb `caption` and `name` metadata (206-212, 235-241, 250-256, 314-320, 420-426, 442-448, 672-678), so every exhibit is addressable",
@@ -34,5 +76,9 @@
   ],
   "scanner_doubts": [
     "qe-math-010 is counted twice in hoist_failure.md (168, 174, both `\\Pr`), but plain `P` is used as the probability operator about twenty-five more times without being counted - `P(A \\cup B)`, `P(A \\cap B)`, `P(A_i)`, `P(F)` at 498-579, with line 538 stating in words that '$P(F)$ is the system failure probability'. The documented design restricts the bare-letter branch to `E` because `P` is usually a transition matrix, which is right in general but leaves probability-heavy lectures like this one substantially under-counted"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "a991b426c86e38daea416a7eae8024977a6ffea3"
+  }
 }

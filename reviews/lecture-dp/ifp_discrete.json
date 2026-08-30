@@ -2,12 +2,33 @@
   "series": "lecture-dp",
   "lecture": "ifp_discrete",
   "judgment": [
-    {"rule": "qe-math-009", "count": 3, "lines": [106, 110, 113],
-     "detail": "`\\mathsf` used decoratively where plain letters would do: $\\mathsf Y$ for the income support at 106, $\\mathsf S := \\mathbb{R}_+ \\times \\mathsf Y$ at 110, and $V \\colon \\mathsf S \\to \\mathbb{R}$ at 113. Both symbols appear only in these three lines and neither reaches the code, so nothing is gained by the sans-serif face - $Y$ and $S$ carry the same meaning and match how the lecture writes every other set and space"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [130, 412],
-     "detail": "line 113 defines the value function as $V$ and equation `eqvfs` at 118 states it in $V$; then the Bellman equation at 130 switches to lowercase $v$ and everything downstream - the display at 145, the operator $T$ at 232, `B`, `T`, `get_greedy` and every code cell - stays lowercase. The switch is never mentioned, $V$ is never used again, and `eqvfs` is never cited, so the reader has to guess that $v$ and $V$ are the same object. Separately, exercise step 2 at line 412 says to 'use staged vmap as shown in earlier examples' - there are no earlier vmap examples in this lecture; the staged-vmap idiom first appears in this file at 447-449, inside the solution to that very exercise"},
-    {"rule": "qe-code-001", "count": 1, "lines": [438],
-     "detail": "line 438 writes `a, y, ap  = a_grid[i], y_grid[j], a_grid[ip]` with two spaces before the `=` (pycodestyle E221). The aligned assignment blocks at 210-212 and 447-449 are a separate matter and should stay: the reshape comments and the `in_axes` tuples are column-aligned so the index mapping reads as a table, which is the 'closer to mathematical notation' latitude the rule allows"}
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        106,
+        110,
+        113
+      ],
+      "detail": "`\\mathsf` used decoratively where plain letters would do: $\\mathsf Y$ for the income support at 106, $\\mathsf S := \\mathbb{R}_+ \\times \\mathsf Y$ at 110, and $V \\colon \\mathsf S \\to \\mathbb{R}$ at 113. Both symbols appear only in these three lines and neither reaches the code, so nothing is gained by the sans-serif face - $Y$ and $S$ carry the same meaning and match how the lecture writes every other set and space"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        130,
+        412
+      ],
+      "detail": "line 113 defines the value function as $V$ and equation `eqvfs` at 118 states it in $V$; then the Bellman equation at 130 switches to lowercase $v$ and everything downstream - the display at 145, the operator $T$ at 232, `B`, `T`, `get_greedy` and every code cell - stays lowercase. The switch is never mentioned, $V$ is never used again, and `eqvfs` is never cited, so the reader has to guess that $v$ and $V$ are the same object. Separately, exercise step 2 at line 412 says to 'use staged vmap as shown in earlier examples' - there are no earlier vmap examples in this lecture; the staged-vmap idiom first appears in this file at 447-449, inside the solution to that very exercise"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 1,
+      "lines": [
+        438
+      ],
+      "detail": "line 438 writes `a, y, ap  = a_grid[i], y_grid[j], a_grid[ip]` with two spaces before the `=` (pycodestyle E221). The aligned assignment blocks at 210-212 and 447-449 are a separate matter and should stay: the reshape comments and the `in_axes` tuples are column-aligned so the index mapping reads as a table, which is the 'closer to mathematical notation' latitude the rule allows"
+    }
   ],
   "strengths": [
     "The `{note}` at 49-59 answers the question the reader is actually forming - why learn the slow method first - and answers it with a general principle ('less robust precisely because they exploit more structure'), so the ordering of the whole series is justified rather than just asserted",
@@ -29,5 +50,9 @@
   "scanner_doubts": [
     "ifp_discrete.md, line 130 - the 1 `qe-math-002` hit is a false positive. The flagged apostrophe is in `\\max_{0 \\leq a' \\leq Ra + y}`, where `a'` is next-period assets, not a transpose: $a$ is a scalar asset level, the same prime appears throughout the file for the same purpose (132, 145), and the code spells it `ap` and `a′` (210-212, 438). §9 says the heuristic counts an apostrophe as transpose 'only on a matrix-like base', but `Ra + y` on the right of the inequality apparently supplied the 'followed by a factor' signal. Applying the rule here would turn next-period assets into a transpose. Every other `a'` in the file was correctly skipped, so this looks like one leak in the guard rather than a broken check.",
     "ifp_discrete.md, line 182 - the 2 `qe-code-002` hits are the same false positive I flagged in career.md and ifp_opi.md: `qe.tauchen(n=y_size, rho=ρ, sigma=ν)`. `rho` and `sigma` are the library function's keyword-parameter names, not identifiers the author picked, and the author's own variables are already Unicode `ρ` and `ν` (line 175). Skipping identifiers in keyword-argument position would clear all three files."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "f6d91bdaf3c94e855b7db8f9aa64d91e8d4d078a"
+  }
 }

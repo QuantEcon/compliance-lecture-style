@@ -2,15 +2,83 @@
   "series": "lecture-python.myst",
   "lecture": "imp_sample",
   "judgment": [
-    {"rule": "qe-math-009", "count": 38,
-     "lines": [31, 58, 61, 68, 71, 74, 76, 80, 147, 151, 155, 157, 159, 169, 175, 180, 188, 196, 231, 238, 244, 245, 250, 300, 318, 344, 345, 346, 349, 353, 381, 403, 405, 494, 501, 563, 566, 575],
-     "detail": "`\\left(\\omega\\right)` is used in place of plain `(\\omega)` on 38 lines - `\\ell \\left(\\omega_t\\right)`, `f\\left(\\omega\\right)`, `L\\left(\\omega^t\\right)` - where the argument is a single symbol and the delimiters have nothing to size themselves to. It roughly doubles the length of every expression in the file, and it is not even self-consistent: line 196 writes `\\ell\\left(\\omega\\right)` and `\\ell(\\omega)` in the same display, and line 501 does the same with `\\frac{g(\\omega)}{f(\\omega)}` against `\\frac{g\\left(\\omega_i^f\\right)}{f\\left(\\omega_i^f\\right)}`"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [27, 82, 155, 157, 484],
-     "detail": "line 155 is a 52-word sentence chaining four steps of the Monte Carlo procedure (\"would repeatedly draw ... form the product ... for each such sequence, then average these products across independently drawn sequences\") and reads as a paragraph compressed into one line; 157 is 45 words and pads with \"in order to do a good job of approximating\"; 27 is 41 words with a parenthetical aside plus a trailing relative clause; 484 is 48 words carrying three separate claims (the median falls, the variance is infinite, a different seed moves the mean); and 82 has its adverbs in the wrong place - \"makes it difficult efficiently and accurately to estimate the mean\""},
-    {"rule": "qe-writing-003", "count": 3, "lines": [233, 488, 545],
-     "detail": "line 233 says \"our plan is to draw sequences $\\omega^t$ from $q$\" and 238 puts $p$ and $q$ into a display equation, but neither symbol is introduced until 252 (\"given any beta distributions $p$, $q$\") - the reader has to guess that $p$ generalises $g$ and $q$ generalises $h$; the two section headings \"## Selecting a sampling distribution\" (199) and \"## Choosing a sampling distribution\" (488) are near-synonyms 289 lines apart, so the table of contents gives no hint which is which; and 545-559 introduces $h_1$, $h_2$ and $h_3$ after the figure at 523-543 has already plotted and labelled all three"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [165, 339, 571],
-     "detail": "165 italicises the term being named (\"a _change of distribution_ called **importance sampling**\") where the rule asks for bold on a definition; 339 and 571 use bold for pure emphasis - \"has **infinite variance**\" and \"diverges at **both** endpoints\" - which the rule reserves for italic"}
+    {
+      "rule": "qe-math-009",
+      "count": 38,
+      "lines": [
+        31,
+        58,
+        61,
+        68,
+        71,
+        74,
+        76,
+        80,
+        147,
+        151,
+        155,
+        157,
+        159,
+        169,
+        175,
+        180,
+        188,
+        196,
+        231,
+        238,
+        244,
+        245,
+        250,
+        300,
+        318,
+        344,
+        345,
+        346,
+        349,
+        353,
+        381,
+        403,
+        405,
+        494,
+        501,
+        563,
+        566,
+        575
+      ],
+      "detail": "`\\left(\\omega\\right)` is used in place of plain `(\\omega)` on 38 lines - `\\ell \\left(\\omega_t\\right)`, `f\\left(\\omega\\right)`, `L\\left(\\omega^t\\right)` - where the argument is a single symbol and the delimiters have nothing to size themselves to. It roughly doubles the length of every expression in the file, and it is not even self-consistent: line 196 writes `\\ell\\left(\\omega\\right)` and `\\ell(\\omega)` in the same display, and line 501 does the same with `\\frac{g(\\omega)}{f(\\omega)}` against `\\frac{g\\left(\\omega_i^f\\right)}{f\\left(\\omega_i^f\\right)}`"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        27,
+        82,
+        155,
+        157,
+        484
+      ],
+      "detail": "line 155 is a 52-word sentence chaining four steps of the Monte Carlo procedure (\"would repeatedly draw ... form the product ... for each such sequence, then average these products across independently drawn sequences\") and reads as a paragraph compressed into one line; 157 is 45 words and pads with \"in order to do a good job of approximating\"; 27 is 41 words with a parenthetical aside plus a trailing relative clause; 484 is 48 words carrying three separate claims (the median falls, the variance is infinite, a different seed moves the mean); and 82 has its adverbs in the wrong place - \"makes it difficult efficiently and accurately to estimate the mean\""
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        233,
+        488,
+        545
+      ],
+      "detail": "line 233 says \"our plan is to draw sequences $\\omega^t$ from $q$\" and 238 puts $p$ and $q$ into a display equation, but neither symbol is introduced until 252 (\"given any beta distributions $p$, $q$\") - the reader has to guess that $p$ generalises $g$ and $q$ generalises $h$; the two section headings \"## Selecting a sampling distribution\" (199) and \"## Choosing a sampling distribution\" (488) are near-synonyms 289 lines apart, so the table of contents gives no hint which is which; and 545-559 introduces $h_1$, $h_2$ and $h_3$ after the figure at 523-543 has already plotted and labelled all three"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        165,
+        339,
+        571
+      ],
+      "detail": "165 italicises the term being named (\"a _change of distribution_ called **importance sampling**\") where the rule asks for bold on a definition; 339 and 571 use bold for pure emphasis - \"has **infinite variance**\" and \"diverges at **both** endpoints\" - which the rule reserves for italic"
+    }
   ],
   "strengths": [
     "Every one of the seven figures carries `mystnb: figure: caption` and `name` metadata, and the prose actually uses them: 147 and 149 refer to `fig-imp-densities` and `fig-imp-likelihood-ratio` by `{numref}` rather than saying \"the figure above\"",
@@ -31,5 +99,9 @@
   "scanner_doubts": [
     "qe-code-002 x9 in `lectures/imp_sample.md` (48, 101, 104, 221, 274, 275, 534, 536, 538) looks like a false positive, and it is currently the lecture's top High-severity finding. Every hit is the identifier `beta`, which is `jax.scipy.stats.beta` - the SciPy Beta-distribution object imported at 48 and then called as `beta.pdf(...)`. It is not a spelled-out Greek variable name and renaming it to `β` would break the import. The check appears to match the bare token `beta` without asking whether it is an imported module or an assigned variable.",
     "qe-fig-004 x1 at `lectures/imp_sample.md`:460, reported as \"Title Case caption (Carlo)\". The caption is 'Monte Carlo and importance sampling estimates', which is already sentence case - \"Monte Carlo\" is a proper noun. The proper-noun list behind the caption check needs \"Monte Carlo\" added; the same caption text recurs at 464 and in several other lectures in this series."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "3a86ba2bffbb5076b217ccbc46c945f4386d3bd0"
+  }
 }

@@ -15,5 +15,9 @@
   ],
   "scanner_doubts": [
     "lecture-dp/lectures/intro.md, line 14 - qe-writing-004 is reported as 0 for this file, but 'for Economists using Python' capitalises a common noun in mid-sentence position, which is precisely what the rule targets. This is a curated-list gap rather than a logic bug: `COMMON_NOUNS` in tools/qestyle_rules.py (lines 110-150) does not contain 'economist'/'economists', and check_writing_004 fires only on that set. Corpus-wide this is the single occurrence of a mid-sentence capitalised 'Economists', so the miss costs one finding - but 'economist' belongs in the list alongside 'household', 'consumer' and 'firm', which are already there."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "f6222ea438821dd39ea63eb8f651dd6076a6d649"
+  }
 }

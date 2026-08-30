@@ -1,106 +1,110 @@
 {
- "series": "lecture-python.myst",
- "lecture": "util_rand_resp",
- "judgment": [
-  {
-   "rule": "qe-math-009",
-   "count": 4,
-   "lines": [
-    42,
-    263,
-    381,
-    441
-   ],
-   "detail": "the lecture names its own simpler notation and then never uses it: line 290 says \"writing $p$ for $\\text{Pr}(A|r_i)$\", the figure legends at 307-311 use it (`$U_i = -p + f(\\phi_i)$`), and every one of the 113 mathematical occurrences afterwards spells the operator out in full. The cost is visible at 263, a single display running past 230 characters that writes `\\text{Pr}(A|\\text{yes})` and `\\text{Pr}(A|\\text{no})` five times inside a fraction of fractions of partial derivatives; the same display with $p$ and $q$ would be two lines. The operator itself is spelled three ways - `\\text{Pr}` (41, 50, ...), `\\text{ Pr}` with a leading space inside the braces (381, 385, 477, 483, 489, 509), and bare `Pr(` in the axis labels (315, 350, 426, 549, 642). The complement of $A$ is written `A^{'}` with braced prime throughout (42, 50, 60, 66, 82, 84, 95, 153, 158, 167, 663, 677, 692) where $A^c$ is both shorter and unambiguous - and 119 quotes Lanke using the plain `A'` for the same set. And 441 introduces \"$\\pi=0.3$\" for the parameter the rest of the lecture calls $\\pi_A$"
-  },
-  {
-   "rule": "qe-writing-003",
-   "count": 5,
-   "lines": [
-    390,
-    481,
-    522,
-    546,
-    658
-   ],
-   "detail": "line 390 says variance falls with \"the distance of $\\text{Pr}(A|\\text{yes})$ and/or $\\text{Pr}(A|\\text{no})$ from $r_A$\", but $r_A$ is never defined anywhere in the lecture - the symbol wanted is $\\pi_A$ (50, 64, 66, 73, 243, 370), and $r$ is already the response variable (47, 60), so $r_A$ reads as A's response. The Greenberg material at 652-678 repeats 140-170 almost verbatim - four displays and three sentences - with duplicate labels distinguished only by doubling the last letter (`eq:util-rand-seven-a` versus `-seven-aa`, `-seven-b`/`-seven-bb`, `-eight-a`/`-eight-aa`, `-eight-b`/`-eight-bb`), and Lanke's criterion is likewise displayed twice under `eq:util-rand-five-a` (125) and `eq:util-rand-five-b` (507). Line 481 calls {eq}`eq:util-rand-nine-b` \"Assumption\" and 286 calls 9a and 9b \"Assumptions\", in a lecture that has two real `{prf:assumption}` directives with `{prf:ref}` labels at 178 and 184 - so \"assumption\" points at two different kinds of object. And the twenty lines of `plot_iso_variance_curves` (407-431) are pasted inline twice more with small edits (522-554, 615-647) rather than parameterised, so the magic array `nv` and the iso-variance expression exist in three places; the three punchline points $X$, $Z$ and $Q$ that carry the lecture's whole argument are hard-coded scatter coordinates (546-547, 640) rather than solved from the truth border and the variance formula"
-  },
-  {
-   "rule": "qe-writing-007",
-   "count": 4,
-   "lines": [
-    54,
-    400,
-    465,
-    572
-   ],
-   "detail": "the optimal design is defined at 465-471 as the point where \"the intersection of areas above *all* truth borders\" touches the lowest iso-variance curve, and 473 says the estimator is \"pinned down by an individual who is the least willing to volunteer a truthful answer\" - and no figure ever shows more than one respondent. `fig-truth-borders` (292-319) draws three curves, but they are three functional forms of one utility function, not three individuals, so the binding-constraint argument that the whole \"Optimal survey\" section rests on has no picture. Second, {eq}`eq:util-rand-one` maps a design $(\\text{Pr}(\\text{yes}|A), \\text{Pr}(\\text{yes}|A'))$ into the posterior pair that every figure plots, and the design space is never drawn - so when 400-404 claims Warner's model \"is less flexible than the unrelated question model\" the reader has only the magenta curve at 417 and no account of what it is the boundary of. Third, the \"Zoo of concepts\" (54-170) lists five competing privacy measures as five bare displays with no comparison, and the criticisms section 495 lines later has to re-derive each one before attacking it; one table with a row per measure would carry both halves. And the lecture uses `{prf:assumption}` twice at the start (178, 184) and then no admonition in the remaining 520 lines, though 572, 594-598 and 696-702 are each a one-line verdict that a `{note}` would set off"
-  },
-  {
-   "rule": "qe-code-001",
-   "count": 6,
-   "lines": [
-    302,
-    412,
-    421,
-    526,
-    603,
-    604
-   ],
-   "detail": "412-413 build constant arrays with a comprehension whose loop variable is never used, `y1 = [π for i in x0]`, where `np.full_like(x0, π)` is meant - and its `i` shadows the loop index used nine lines later at 421; the same two lines recur at 530-531 and 623-624. 421-424, 542-545 and 636-639 iterate `for i in range(len(nv))` where `enumerate` is idiomatic, and their expression contains `n * (nv[i] / n)`, in which the `n` cancels. 526-527 binds `y` to the truth border and then the loop at 543 rebinds `y` to each iso-variance curve, so `ax.fill_between(x, y, z, ...)` at 538 works only because it happens to run before the loop - the same pattern at 619 and 637. 603 names a module-level function `f`, which is also the utility shifter $f(\\phi_i)$ in the maths at 325 and in the legends at 307-311, and 604 gives it a single-quoted docstring where the file's only other docstring convention is absent entirely. 302-304 reach for `pow(x2, 0.5)` and `pow(x3**2 - 0.4, 0.5)` where 605 uses `np.sqrt` and 302 also uses `**2` in the same expression. Line 422 is 88 characters, and 522-524 and 615-617 redefine `π`, `n` and `nv` at module scope, shadowing the parameters of `plot_iso_variance_curves`"
-  },
-  {
-   "rule": "qe-writing-002",
-   "count": 5,
-   "lines": [
-    24,
-    56,
-    396,
-    698,
-    702
-   ],
-   "detail": "line 24 is a 45-word sentence whose second half is seven consecutive citations; 56 is filler (\"At this point, we describe some concepts proposed by various researchers\") under a heading that already says \"Zoo of concepts\"; and the same announcement is made three times - \"We use Python code to draw iso-variance curves\" (396), \"We'll enlist Python code to help us\" (499), \"We can use Python to show the optimal model design\" (600). Line 698 substitutes an adverb for the argument (\"under a utilitarian framework, this is obviously contradictory\") where 700-702 then supplies the actual reason, and 702 opens with an \"It\" whose nearest antecedent is \"the randomized response design\" rather than the privacy measure being criticised"
-  },
-  {
-   "rule": "qe-writing-005",
-   "count": 3,
-   "lines": [
-    158,
-    258,
-    680
-   ],
-   "detail": "the lecture's defined terms are in quotation marks rather than bold: 258 defines the central object of the whole lecture as 'Equation {eq}`eq:util-rand-eleven` defines a \"truth border\"', and \"limited hazard\" (158, 668), \"private protection\" (133), \"optimal survey design\" (461) and \"reluctant\" (493) all follow suit - only **expected utility** at 22 is bolded. Conversely 680 uses bold for pure emphasis, \"a respondent commits himself or herself to answer truthfully ... **before** randomly selecting the question\", where the lecture's own correct instance of emphasis-in-italic is at 723"
-  },
-  {
-   "rule": "qe-math-014",
-   "count": 2,
-   "lines": [
-    41,
-    50
-   ],
-   "detail": "every probability in the lecture is written with parentheses, and the arguments are of two different kinds. `\\text{Pr}(\\text{yes}|A)` and `\\text{Pr}(\\text{no}|A^{'})` (41-42, 89, 108, 147, 153, 161, 167, 563, 657, 663, 671, 677, 694) condition on the set but the argument is the *event* that the respondent answers yes or no, which the rule asks to be written in braces - $\\mathbb{P}\\{\\text{yes} \\mid A\\}$. `\\text{Pr}(A|r)` and `\\text{Pr}(A|\\text{yes})` (50, 64, 66, 114, 124, 136, 197, 216, 243, 719) have the named set $A$ as their argument, which the rule asks to keep parentheses. So the lecture happens to be right for half of its 113 occurrences and wrong for the other half, with no signal that the two are different kinds of statement - and the same display at 73 puts one of each on either side of the equals sign"
+  "series": "lecture-python.myst",
+  "lecture": "util_rand_resp",
+  "judgment": [
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        42,
+        263,
+        381,
+        441
+      ],
+      "detail": "the lecture names its own simpler notation and then never uses it: line 290 says \"writing $p$ for $\\text{Pr}(A|r_i)$\", the figure legends at 307-311 use it (`$U_i = -p + f(\\phi_i)$`), and every one of the 113 mathematical occurrences afterwards spells the operator out in full. The cost is visible at 263, a single display running past 230 characters that writes `\\text{Pr}(A|\\text{yes})` and `\\text{Pr}(A|\\text{no})` five times inside a fraction of fractions of partial derivatives; the same display with $p$ and $q$ would be two lines. The operator itself is spelled three ways - `\\text{Pr}` (41, 50, ...), `\\text{ Pr}` with a leading space inside the braces (381, 385, 477, 483, 489, 509), and bare `Pr(` in the axis labels (315, 350, 426, 549, 642). The complement of $A$ is written `A^{'}` with braced prime throughout (42, 50, 60, 66, 82, 84, 95, 153, 158, 167, 663, 677, 692) where $A^c$ is both shorter and unambiguous - and 119 quotes Lanke using the plain `A'` for the same set. And 441 introduces \"$\\pi=0.3$\" for the parameter the rest of the lecture calls $\\pi_A$"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        390,
+        481,
+        522,
+        546,
+        658
+      ],
+      "detail": "line 390 says variance falls with \"the distance of $\\text{Pr}(A|\\text{yes})$ and/or $\\text{Pr}(A|\\text{no})$ from $r_A$\", but $r_A$ is never defined anywhere in the lecture - the symbol wanted is $\\pi_A$ (50, 64, 66, 73, 243, 370), and $r$ is already the response variable (47, 60), so $r_A$ reads as A's response. The Greenberg material at 652-678 repeats 140-170 almost verbatim - four displays and three sentences - with duplicate labels distinguished only by doubling the last letter (`eq:util-rand-seven-a` versus `-seven-aa`, `-seven-b`/`-seven-bb`, `-eight-a`/`-eight-aa`, `-eight-b`/`-eight-bb`), and Lanke's criterion is likewise displayed twice under `eq:util-rand-five-a` (125) and `eq:util-rand-five-b` (507). Line 481 calls {eq}`eq:util-rand-nine-b` \"Assumption\" and 286 calls 9a and 9b \"Assumptions\", in a lecture that has two real `{prf:assumption}` directives with `{prf:ref}` labels at 178 and 184 - so \"assumption\" points at two different kinds of object. And the twenty lines of `plot_iso_variance_curves` (407-431) are pasted inline twice more with small edits (522-554, 615-647) rather than parameterised, so the magic array `nv` and the iso-variance expression exist in three places; the three punchline points $X$, $Z$ and $Q$ that carry the lecture's whole argument are hard-coded scatter coordinates (546-547, 640) rather than solved from the truth border and the variance formula"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        54,
+        400,
+        465,
+        572
+      ],
+      "detail": "the optimal design is defined at 465-471 as the point where \"the intersection of areas above *all* truth borders\" touches the lowest iso-variance curve, and 473 says the estimator is \"pinned down by an individual who is the least willing to volunteer a truthful answer\" - and no figure ever shows more than one respondent. `fig-truth-borders` (292-319) draws three curves, but they are three functional forms of one utility function, not three individuals, so the binding-constraint argument that the whole \"Optimal survey\" section rests on has no picture. Second, {eq}`eq:util-rand-one` maps a design $(\\text{Pr}(\\text{yes}|A), \\text{Pr}(\\text{yes}|A'))$ into the posterior pair that every figure plots, and the design space is never drawn - so when 400-404 claims Warner's model \"is less flexible than the unrelated question model\" the reader has only the magenta curve at 417 and no account of what it is the boundary of. Third, the \"Zoo of concepts\" (54-170) lists five competing privacy measures as five bare displays with no comparison, and the criticisms section 495 lines later has to re-derive each one before attacking it; one table with a row per measure would carry both halves. And the lecture uses `{prf:assumption}` twice at the start (178, 184) and then no admonition in the remaining 520 lines, though 572, 594-598 and 696-702 are each a one-line verdict that a `{note}` would set off"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        302,
+        412,
+        421,
+        526,
+        603,
+        604
+      ],
+      "detail": "412-413 build constant arrays with a comprehension whose loop variable is never used, `y1 = [π for i in x0]`, where `np.full_like(x0, π)` is meant - and its `i` shadows the loop index used nine lines later at 421; the same two lines recur at 530-531 and 623-624. 421-424, 542-545 and 636-639 iterate `for i in range(len(nv))` where `enumerate` is idiomatic, and their expression contains `n * (nv[i] / n)`, in which the `n` cancels. 526-527 binds `y` to the truth border and then the loop at 543 rebinds `y` to each iso-variance curve, so `ax.fill_between(x, y, z, ...)` at 538 works only because it happens to run before the loop - the same pattern at 619 and 637. 603 names a module-level function `f`, which is also the utility shifter $f(\\phi_i)$ in the maths at 325 and in the legends at 307-311, and 604 gives it a single-quoted docstring where the file's only other docstring convention is absent entirely. 302-304 reach for `pow(x2, 0.5)` and `pow(x3**2 - 0.4, 0.5)` where 605 uses `np.sqrt` and 302 also uses `**2` in the same expression. Line 422 is 88 characters, and 522-524 and 615-617 redefine `π`, `n` and `nv` at module scope, shadowing the parameters of `plot_iso_variance_curves`"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        24,
+        56,
+        396,
+        698,
+        702
+      ],
+      "detail": "line 24 is a 45-word sentence whose second half is seven consecutive citations; 56 is filler (\"At this point, we describe some concepts proposed by various researchers\") under a heading that already says \"Zoo of concepts\"; and the same announcement is made three times - \"We use Python code to draw iso-variance curves\" (396), \"We'll enlist Python code to help us\" (499), \"We can use Python to show the optimal model design\" (600). Line 698 substitutes an adverb for the argument (\"under a utilitarian framework, this is obviously contradictory\") where 700-702 then supplies the actual reason, and 702 opens with an \"It\" whose nearest antecedent is \"the randomized response design\" rather than the privacy measure being criticised"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        158,
+        258,
+        680
+      ],
+      "detail": "the lecture's defined terms are in quotation marks rather than bold: 258 defines the central object of the whole lecture as 'Equation {eq}`eq:util-rand-eleven` defines a \"truth border\"', and \"limited hazard\" (158, 668), \"private protection\" (133), \"optimal survey design\" (461) and \"reluctant\" (493) all follow suit - only **expected utility** at 22 is bolded. Conversely 680 uses bold for pure emphasis, \"a respondent commits himself or herself to answer truthfully ... **before** randomly selecting the question\", where the lecture's own correct instance of emphasis-in-italic is at 723"
+    },
+    {
+      "rule": "qe-math-014",
+      "count": 2,
+      "lines": [
+        41,
+        50
+      ],
+      "detail": "every probability in the lecture is written with parentheses, and the arguments are of two different kinds. `\\text{Pr}(\\text{yes}|A)` and `\\text{Pr}(\\text{no}|A^{'})` (41-42, 89, 108, 147, 153, 161, 167, 563, 657, 663, 671, 677, 694) condition on the set but the argument is the *event* that the respondent answers yes or no, which the rule asks to be written in braces - $\\mathbb{P}\\{\\text{yes} \\mid A\\}$. `\\text{Pr}(A|r)` and `\\text{Pr}(A|\\text{yes})` (50, 64, 66, 114, 124, 136, 197, 216, 243, 719) have the named set $A$ as their argument, which the rule asks to keep parentheses. So the lecture happens to be right for half of its 113 occurrences and wrong for the other half, with no signal that the two are different kinds of statement - and the same display at 73 puts one of each on either side of the equals sign"
+    }
+  ],
+  "strengths": [
+    "The lecture is organised as claim and rebuttal, and the pairing is explicit: each privacy measure gets a subsection in \"Zoo of concepts\" (58-170) and a matching subsection in \"Criticisms of proposed privacy measures\" (501-702) - Lanke, Leysieffer-Warner, Chaudhuri-Mukerjee, Greenberg - so a reader can hold one measure at a time",
+    "The two behavioural premises are hoisted into named `{prf:assumption}` directives at 178-191 with `:label:` fields, and the second one cross-references the first with `{prf:ref}` rather than restating it - so \"the cost is the discomfort\" is a link, not a duplicate",
+    "The positive slope of the truth border is derived rather than assumed: {eq}`eq:util-rand-twelve` at 262-264 differentiates the indifference condition, and 266-274 then gives the economic reading in three steps - a rise in $\\text{Pr}(A|\\text{yes})$ lowers the utility of truth, so $\\text{Pr}(A|\\text{no})$ must rise to lower the utility of lying",
+    "The shape restrictions on the iso-variance curves are stated as the first and second derivatives {eq}`eq:util-rand-fourteen-a` and {eq}`eq:util-rand-fourteen-b` (380-386) with their signs, and 390-392 reads exactly the two conclusions those signs give - upward-sloping and concave - before any curve is drawn",
+    "The Lanke criticism is made geometrically and is checkable: 509-513 says Lanke's criterion drives the design to point $X$ with $\\text{Pr}(A|\\text{no})$ pinned at 0, and `fig-lanke-analysis` (515-554) puts $X$ and $Z$ on the same axes as the truth border and the iso-variance family, so the reader can see that $Z$ is inside the truth-telling region and on a lower curve",
+    "All five figures carry `mystnb` `caption` and `name` metadata (293-297, 331-335, 448-452, 516-520, 609-613) and every one is cited from the prose with `{numref}` (290, 328, 445, 511, 650) - the lecture is the cleanest in this batch on qe-fig-005",
+    "The Greenberg criticism at 684-702 is the sharpest argument in the lecture: it takes the \"limited hazard\" measure at face value, constructs the design that makes it arbitrarily small (\"Say the word 'no'\"), and then shows that the same design forces a truthful member of $A$ to reveal themselves completely - so the measure is minimised exactly where privacy is destroyed"
+  ],
+  "actions": [
+    "Define or correct $r_A$ at 390 - the symbol used everywhere else for the population fraction is $\\pi_A$, and $r$ is already the response",
+    "Delete the duplicated Greenberg block at 652-678 and the duplicated Lanke display at 505-507, replacing them with `{eq}` references to 146-168 and 123-125, which also removes the four doubled-letter label pairs (`-seven-aa`, `-seven-bb`, `-eight-aa`, `-eight-bb`)",
+    "Adopt the $p$ and $q$ abbreviations the lecture already announces at 290 for $\\text{Pr}(A|\\text{yes})$ and $\\text{Pr}(A|\\text{no})$, at least in the displays at 263, 370, 381 and 385; convert `\\text{Pr}` to `\\mathbb{P}` throughout (qe-math-010, 113 occurrences) with braces for the event-argument cases (41-42, 89, 108, 147, 153, 161, 167) and parentheses for the set-argument cases (qe-math-014); drop the stray spaces in `\\text{ Pr}` (381, 385, 477, 483, 489, 509); and write the complement as $A^c$ rather than `A^{'}`",
+    "Draw the figure the \"Optimal survey\" section describes: several individuals' truth borders superimposed on the iso-variance mapping with the binding one marked, which is what 465-473 says the design problem is - and compute the points $X$, $Z$ and $Q$ from the truth border and {eq}`eq:util-rand-thirteen` instead of hard-coding (0.498, 0.1), (0.4, 0) and (0.61, 0.146)",
+    "Parameterise the plotting code once: `plot_iso_variance_curves` (407-431) already exists, and 522-554 and 615-647 paste it back inline; give it a truth-border argument and a list of points to mark, which also removes the three copies of `nv` and of the iso-variance expression",
+    "Bold the terms the lecture defines instead of quoting them - \"truth border\" (258), \"limited hazard\" (158), \"private protection\" (133) - and italicise the emphasis bolded at 680",
+    "Fix the code items: the unused-variable comprehensions at 412-413, 530-531 and 623-624, the `n * (nv[i] / n)` no-op and `range(len(...))` loops at 421, 542 and 636, the `y` rebinding at 526/543, the single-letter function `f` and its single-quoted docstring at 603-604, the `pow` calls at 302-304, the 88-character line 422, the three `plot()` calls missing `lw=2` (423, 544, 638), the module-level shadowing at 522-524 and 615-617, 723's `{cite}` to `{cite:t}`, and the thirteen double spaces (376, 390, 465, 467, 469, 479, 666)"
+  ],
+  "scanner_doubts": [
+    "util_rand_resp.md:58,501,557,574,652 - qe-writing-006 is reported with count 5 and I believe all five are false positives, which matters because they are the entire basis of this lecture's 5.5/10 Writing note. Every flagged word is an author surname in an author-year section heading: 'Warner' (58), 'Lanke' (501), 'Leysieffer' and 'Warner' (557), 'Chaudhuri' and 'Mukerjee' (574), 'Greenberg' (652) - all correctly capitalised proper nouns, and all of them bibliography authors cited by `{cite:t}` in the body of the very same subsections (119, 131, 503, 559, 576, 654). `check_writing_006` (tools/qestyle_rules.py:198-208) flags any `[A-Z][a-z]+` word after the first that is not in `PROPER_NOUNS`, and these six surnames are not in that allowlist. Verified by running run_all over the file: the five hits are exactly the five author-year headings, and no other heading in the file is flagged. Corpus reach is small but the pattern is clean - I re-ran `check_writing_006` over all five series (780 hits total) and filtered to hits whose heading contains a parenthesised four-digit year: 6 hits in 2 files, these five plus `lecture-python-advanced.myst/lectures/growth_in_dles.md:463` ('Example 3: a Jones-Manuelli (1990) economy'), and all six are surnames. A narrow fix that covers all six: in the offender loop, exempt a capitalised word that precedes a `(YYYY)` token in the same heading (allowing intervening 'and', 'et al.', and other capitalised words), i.e. treat 'Surname(s) (year)' as an author-year citation rather than Title Case prose. Note `_heading_words` leaves the parenthesised year in place, so the year is available to test against",
+    "util_rand_resp.md:315,350,426,549,642 - same qe-fig-006 gap I filed under `odu` (the check's pattern at tools/qestyle_rules.py:1249-1250 matches only `set_xlabel(`/`set_ylabel(`, not the keyword form `ax.set(xlabel=..., ylabel=...)`), noted here because this file supplies ten of the 39 corpus-wide misses and they are the awkward case for any fix: the labels are `Pr(A|yes)` and `Pr(A|no)`, which are operator names rather than Title Case prose, so a patch that simply widens the pattern would add ten hits here that a reviewer would then have to dismiss. If the pattern is widened, the label filter at 1253-1262 probably wants a companion exemption for a leading capitalised operator abbreviation followed immediately by `(` - `Pr(`, `Prob(`, `Var(`, `Cov(`, `E[` - distinct from the existing all-caps acronym exemption at 1258, which does not catch mixed-case `Pr`"
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "f2c96e2f419ea16d594d7484be544ce1bb519287"
   }
- ],
- "strengths": [
-  "The lecture is organised as claim and rebuttal, and the pairing is explicit: each privacy measure gets a subsection in \"Zoo of concepts\" (58-170) and a matching subsection in \"Criticisms of proposed privacy measures\" (501-702) - Lanke, Leysieffer-Warner, Chaudhuri-Mukerjee, Greenberg - so a reader can hold one measure at a time",
-  "The two behavioural premises are hoisted into named `{prf:assumption}` directives at 178-191 with `:label:` fields, and the second one cross-references the first with `{prf:ref}` rather than restating it - so \"the cost is the discomfort\" is a link, not a duplicate",
-  "The positive slope of the truth border is derived rather than assumed: {eq}`eq:util-rand-twelve` at 262-264 differentiates the indifference condition, and 266-274 then gives the economic reading in three steps - a rise in $\\text{Pr}(A|\\text{yes})$ lowers the utility of truth, so $\\text{Pr}(A|\\text{no})$ must rise to lower the utility of lying",
-  "The shape restrictions on the iso-variance curves are stated as the first and second derivatives {eq}`eq:util-rand-fourteen-a` and {eq}`eq:util-rand-fourteen-b` (380-386) with their signs, and 390-392 reads exactly the two conclusions those signs give - upward-sloping and concave - before any curve is drawn",
-  "The Lanke criticism is made geometrically and is checkable: 509-513 says Lanke's criterion drives the design to point $X$ with $\\text{Pr}(A|\\text{no})$ pinned at 0, and `fig-lanke-analysis` (515-554) puts $X$ and $Z$ on the same axes as the truth border and the iso-variance family, so the reader can see that $Z$ is inside the truth-telling region and on a lower curve",
-  "All five figures carry `mystnb` `caption` and `name` metadata (293-297, 331-335, 448-452, 516-520, 609-613) and every one is cited from the prose with `{numref}` (290, 328, 445, 511, 650) - the lecture is the cleanest in this batch on qe-fig-005",
-  "The Greenberg criticism at 684-702 is the sharpest argument in the lecture: it takes the \"limited hazard\" measure at face value, constructs the design that makes it arbitrarily small (\"Say the word 'no'\"), and then shows that the same design forces a truthful member of $A$ to reveal themselves completely - so the measure is minimised exactly where privacy is destroyed"
- ],
- "actions": [
-  "Define or correct $r_A$ at 390 - the symbol used everywhere else for the population fraction is $\\pi_A$, and $r$ is already the response",
-  "Delete the duplicated Greenberg block at 652-678 and the duplicated Lanke display at 505-507, replacing them with `{eq}` references to 146-168 and 123-125, which also removes the four doubled-letter label pairs (`-seven-aa`, `-seven-bb`, `-eight-aa`, `-eight-bb`)",
-  "Adopt the $p$ and $q$ abbreviations the lecture already announces at 290 for $\\text{Pr}(A|\\text{yes})$ and $\\text{Pr}(A|\\text{no})$, at least in the displays at 263, 370, 381 and 385; convert `\\text{Pr}` to `\\mathbb{P}` throughout (qe-math-010, 113 occurrences) with braces for the event-argument cases (41-42, 89, 108, 147, 153, 161, 167) and parentheses for the set-argument cases (qe-math-014); drop the stray spaces in `\\text{ Pr}` (381, 385, 477, 483, 489, 509); and write the complement as $A^c$ rather than `A^{'}`",
-  "Draw the figure the \"Optimal survey\" section describes: several individuals' truth borders superimposed on the iso-variance mapping with the binding one marked, which is what 465-473 says the design problem is - and compute the points $X$, $Z$ and $Q$ from the truth border and {eq}`eq:util-rand-thirteen` instead of hard-coding (0.498, 0.1), (0.4, 0) and (0.61, 0.146)",
-  "Parameterise the plotting code once: `plot_iso_variance_curves` (407-431) already exists, and 522-554 and 615-647 paste it back inline; give it a truth-border argument and a list of points to mark, which also removes the three copies of `nv` and of the iso-variance expression",
-  "Bold the terms the lecture defines instead of quoting them - \"truth border\" (258), \"limited hazard\" (158), \"private protection\" (133) - and italicise the emphasis bolded at 680",
-  "Fix the code items: the unused-variable comprehensions at 412-413, 530-531 and 623-624, the `n * (nv[i] / n)` no-op and `range(len(...))` loops at 421, 542 and 636, the `y` rebinding at 526/543, the single-letter function `f` and its single-quoted docstring at 603-604, the `pow` calls at 302-304, the 88-character line 422, the three `plot()` calls missing `lw=2` (423, 544, 638), the module-level shadowing at 522-524 and 615-617, 723's `{cite}` to `{cite:t}`, and the thirteen double spaces (376, 390, 465, 467, 469, 479, 666)"
- ],
- "scanner_doubts": [
-  "util_rand_resp.md:58,501,557,574,652 - qe-writing-006 is reported with count 5 and I believe all five are false positives, which matters because they are the entire basis of this lecture's 5.5/10 Writing note. Every flagged word is an author surname in an author-year section heading: 'Warner' (58), 'Lanke' (501), 'Leysieffer' and 'Warner' (557), 'Chaudhuri' and 'Mukerjee' (574), 'Greenberg' (652) - all correctly capitalised proper nouns, and all of them bibliography authors cited by `{cite:t}` in the body of the very same subsections (119, 131, 503, 559, 576, 654). `check_writing_006` (tools/qestyle_rules.py:198-208) flags any `[A-Z][a-z]+` word after the first that is not in `PROPER_NOUNS`, and these six surnames are not in that allowlist. Verified by running run_all over the file: the five hits are exactly the five author-year headings, and no other heading in the file is flagged. Corpus reach is small but the pattern is clean - I re-ran `check_writing_006` over all five series (780 hits total) and filtered to hits whose heading contains a parenthesised four-digit year: 6 hits in 2 files, these five plus `lecture-python-advanced.myst/lectures/growth_in_dles.md:463` ('Example 3: a Jones-Manuelli (1990) economy'), and all six are surnames. A narrow fix that covers all six: in the offender loop, exempt a capitalised word that precedes a `(YYYY)` token in the same heading (allowing intervening 'and', 'et al.', and other capitalised words), i.e. treat 'Surname(s) (year)' as an author-year citation rather than Title Case prose. Note `_heading_words` leaves the parenthesised year in place, so the year is available to test against",
-  "util_rand_resp.md:315,350,426,549,642 - same qe-fig-006 gap I filed under `odu` (the check's pattern at tools/qestyle_rules.py:1249-1250 matches only `set_xlabel(`/`set_ylabel(`, not the keyword form `ax.set(xlabel=..., ylabel=...)`), noted here because this file supplies ten of the 39 corpus-wide misses and they are the awkward case for any fix: the labels are `Pr(A|yes)` and `Pr(A|no)`, which are operator names rather than Title Case prose, so a patch that simply widens the pattern would add ten hits here that a reviewer would then have to dismiss. If the pattern is widened, the label filter at 1253-1262 probably wants a companion exemption for a leading capitalised operator abbreviation followed immediately by `(` - `Pr(`, `Prob(`, `Var(`, `Cov(`, `E[` - distinct from the existing all-caps acronym exemption at 1258, which does not catch mixed-case `Pr`"
- ]
 }

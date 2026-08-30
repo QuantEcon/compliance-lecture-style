@@ -2,14 +2,50 @@
   "series": "lecture-python.myst",
   "lecture": "sargent_surico",
   "judgment": [
-    {"rule": "qe-code-001", "count": 6, "lines": [87, 88, 112, 625, 967, 1702],
-     "detail": "87 is `warnings.filterwarnings('ignore')` at module scope, which silences everything for the remaining 2000 lines - and this lecture leans harder on numerical warnings than most: `ordqz` (636), `solve_discrete_lyapunov`, `svd` (647, 660), two `optimize.minimize` calls (1702-1705, and the earlier mode search), a hand-written Kalman filter, and NUTS. Its own headline finding is that sampler diagnostics led to a second and better posterior mode (1897-1899), so globally suppressing the other diagnostic channel is at odds with the lecture's method. 1702-1706 compounds it: the bimodality claim rests on a Powell run followed by an L-BFGS-B run whose `res_a.success` is never inspected, and the printed comparison at 1708-1713 reports the log posteriors as if both had converged. 88-90 sets `figure.figsize`, `axes.grid` and `grid.alpha` in `plt.rcParams`, so all sixteen figures are 10x6 whether or not that suits them (this is what the three `qe-fig-001` \"style override\" hits at 88-90 are). 112-120 implements a filter that is not the one displayed at 98-100: the equation truncates at $\\pm n$ with the explicit normalizing constant $a$, while `lucas_filter` weights every observation and renormalizes, so $a$ and $n$ appear in the lecture's first equation and are used by nothing - and the loop rebuilds a length-$T$ weight vector $T$ times where one Toeplitz construction would do. 625 and 695 give one matrix two names in adjacent cells - `gensys(g0, g1, psi, pi, ...)` takes it as `pi` while `toy_nk` returns it as `pie`, presumably to dodge `np.pi`. And exponentiation is written `s ** 2` at all seven sites (967, 972, 976 and four more) where the rule asks for `a**b`; 660 uses `SMALL * n` as a tolerance three lines after using bare `SMALL` at 648, with no note on why the two differ"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [506, 870, 1226, 1687],
-     "detail": "the four results the lecture is proudest of are all delivered as printed numbers. \"$\\tau$ is not identified\" (506-524) is the cleanest correction in the file and is verified by four lines of output at 870-874 showing $h_\\pi$ unchanged as $(\\tau, \\sigma_e)$ scale together - a flat ridge in the log posterior that one panel would show as a horizontal line, and 516-520 makes a further quantitative claim about the paper's Table 2 posterior for $\\tau$ being prior-driven (\"the data want $\\sigma_e/\\tau \\approx 0.31$, while the inverse gamma prior on $\\sigma_e$ has mean $0.3$\") that prior and posterior densities on one axis would settle. The verification of {prf:ref}`ss_prop` at 877-884 prints five random draws in which $h_\\pi$ is one to twelve decimals while $h_R$ \"moves all over the place\" (895) - a scatter of $h_R(0)$ against $h_\\pi(0)$ over a few hundred such draws collapses to a vertical line at one, which *is* the asymmetry the concluding remarks build to at 1923-1927. \"Two modes\" (1687-1764) establishes the lecture's most surprising result from two optimizer runs and a nine-number table (1708-1713), where 1673-1682 has already named the two parameters that separate the stories - a contour of the log posterior in $(\\alpha_\\pi, \\rho_e)$, or a slice along the segment joining the two modes, would show two peaks and how deep the valley between them is. And 1217-1228 prints a nine-row slice through the $(\\phi_\\pi, \\phi_x)$ surface that the figure at 1196-1200 already draws"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [1215, 1911, 1931],
-     "detail": "the lecture ends twice. \"What to take away\" (1886-1909) and \"Concluding remarks\" (1911-1943) make the same four points in the same order: the obstacle is the solver and not the statistics (1888 against 1935), a fixed point that uses only linear algebra buys exact gradients (1891-1893 against 1937), cheap chains and their diagnostics found a second mode (1895-1899 against 1939-1941), and the caveat about efficiency being posterior-specific (1908-1909 against 1937). Twenty-five lines apart, that is a whole section restated. 1215 announces three deliverables in one sentence (\"Here is where the slopes bottom out, a slice through the grid at the posterior mean of $\\phi_x$, and the fraction of the grid the stationarity test removes\") and then delivers all three as printed text. 1931 is 37 words whose subject and verb are eleven words apart: \"driving it to the near-zero values that the post-1984 data display takes a money growth rule far more anti-inflationary than the one those same data select\""},
-    {"rule": "qe-writing-005", "count": 3, "lines": [1334, 1615, 1716],
-     "detail": "three bold spans are emphasis rather than definition: **sorts** at 1334 (\"the standard solver ... **sorts** eigenvalues\"), **four chains** at 1615, and **higher** at 1716 (\"the low-indexation one has the **higher** posterior density\") - the last being the lecture's key claim, so it is the one place the emphasis matters and it is set in the definition marker. The file's italics are all correct emphasis (*not* 56, *only* 60, *sum* 125, *first*/*second* 575/581, *local* 1036 and 1720, *negative* 1209, *ordered* 1333, *between* 1821, *identity* 1923, *lower* 1941) and its other six bold spans are correct definitions (**effective sample size** 1282, **Hamiltonian Monte Carlo** 1315, **No-U-Turn sampler** 1323, **dense mass matrix** 1609, **Intrinsic persistence** 1676, **Inherited persistence** 1679), so the three above are the whole finding"}
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        87,
+        88,
+        112,
+        625,
+        967,
+        1702
+      ],
+      "detail": "87 is `warnings.filterwarnings('ignore')` at module scope, which silences everything for the remaining 2000 lines - and this lecture leans harder on numerical warnings than most: `ordqz` (636), `solve_discrete_lyapunov`, `svd` (647, 660), two `optimize.minimize` calls (1702-1705, and the earlier mode search), a hand-written Kalman filter, and NUTS. Its own headline finding is that sampler diagnostics led to a second and better posterior mode (1897-1899), so globally suppressing the other diagnostic channel is at odds with the lecture's method. 1702-1706 compounds it: the bimodality claim rests on a Powell run followed by an L-BFGS-B run whose `res_a.success` is never inspected, and the printed comparison at 1708-1713 reports the log posteriors as if both had converged. 88-90 sets `figure.figsize`, `axes.grid` and `grid.alpha` in `plt.rcParams`, so all sixteen figures are 10x6 whether or not that suits them (this is what the three `qe-fig-001` \"style override\" hits at 88-90 are). 112-120 implements a filter that is not the one displayed at 98-100: the equation truncates at $\\pm n$ with the explicit normalizing constant $a$, while `lucas_filter` weights every observation and renormalizes, so $a$ and $n$ appear in the lecture's first equation and are used by nothing - and the loop rebuilds a length-$T$ weight vector $T$ times where one Toeplitz construction would do. 625 and 695 give one matrix two names in adjacent cells - `gensys(g0, g1, psi, pi, ...)` takes it as `pi` while `toy_nk` returns it as `pie`, presumably to dodge `np.pi`. And exponentiation is written `s ** 2` at all seven sites (967, 972, 976 and four more) where the rule asks for `a**b`; 660 uses `SMALL * n` as a tolerance three lines after using bare `SMALL` at 648, with no note on why the two differ"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        506,
+        870,
+        1226,
+        1687
+      ],
+      "detail": "the four results the lecture is proudest of are all delivered as printed numbers. \"$\\tau$ is not identified\" (506-524) is the cleanest correction in the file and is verified by four lines of output at 870-874 showing $h_\\pi$ unchanged as $(\\tau, \\sigma_e)$ scale together - a flat ridge in the log posterior that one panel would show as a horizontal line, and 516-520 makes a further quantitative claim about the paper's Table 2 posterior for $\\tau$ being prior-driven (\"the data want $\\sigma_e/\\tau \\approx 0.31$, while the inverse gamma prior on $\\sigma_e$ has mean $0.3$\") that prior and posterior densities on one axis would settle. The verification of {prf:ref}`ss_prop` at 877-884 prints five random draws in which $h_\\pi$ is one to twelve decimals while $h_R$ \"moves all over the place\" (895) - a scatter of $h_R(0)$ against $h_\\pi(0)$ over a few hundred such draws collapses to a vertical line at one, which *is* the asymmetry the concluding remarks build to at 1923-1927. \"Two modes\" (1687-1764) establishes the lecture's most surprising result from two optimizer runs and a nine-number table (1708-1713), where 1673-1682 has already named the two parameters that separate the stories - a contour of the log posterior in $(\\alpha_\\pi, \\rho_e)$, or a slice along the segment joining the two modes, would show two peaks and how deep the valley between them is. And 1217-1228 prints a nine-row slice through the $(\\phi_\\pi, \\phi_x)$ surface that the figure at 1196-1200 already draws"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        1215,
+        1911,
+        1931
+      ],
+      "detail": "the lecture ends twice. \"What to take away\" (1886-1909) and \"Concluding remarks\" (1911-1943) make the same four points in the same order: the obstacle is the solver and not the statistics (1888 against 1935), a fixed point that uses only linear algebra buys exact gradients (1891-1893 against 1937), cheap chains and their diagnostics found a second mode (1895-1899 against 1939-1941), and the caveat about efficiency being posterior-specific (1908-1909 against 1937). Twenty-five lines apart, that is a whole section restated. 1215 announces three deliverables in one sentence (\"Here is where the slopes bottom out, a slice through the grid at the posterior mean of $\\phi_x$, and the fraction of the grid the stationarity test removes\") and then delivers all three as printed text. 1931 is 37 words whose subject and verb are eleven words apart: \"driving it to the near-zero values that the post-1984 data display takes a money growth rule far more anti-inflationary than the one those same data select\""
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        1334,
+        1615,
+        1716
+      ],
+      "detail": "three bold spans are emphasis rather than definition: **sorts** at 1334 (\"the standard solver ... **sorts** eigenvalues\"), **four chains** at 1615, and **higher** at 1716 (\"the low-indexation one has the **higher** posterior density\") - the last being the lecture's key claim, so it is the one place the emphasis matters and it is set in the definition marker. The file's italics are all correct emphasis (*not* 56, *only* 60, *sum* 125, *first*/*second* 575/581, *local* 1036 and 1720, *negative* 1209, *ordered* 1333, *between* 1821, *identity* 1923, *lower* 1941) and its other six bold spans are correct definitions (**effective sample size** 1282, **Hamiltonian Monte Carlo** 1315, **No-U-Turn sampler** 1323, **dense mass matrix** 1609, **Intrinsic persistence** 1676, **Inherited persistence** 1679), so the three above are the whole finding"
+    }
   ],
   "strengths": [
     "The lecture states three specific problems with the published paper's statement of its own model and then checks all three numerically in one cell: that $\\tau$ enters only through $\\sigma_e/\\tau$ (506-524, verified at 871-874), that the first unit slope is an identity when $\\phi_\\pi = \\phi_x = 0$ (526-585, verified on five random parameter draws at 877-884), and that the paper's posterior for $\\alpha_x$ terminating at exactly 0.5000 is a constraint rather than a determinacy boundary (587-595, verified on both sides at 886-888). 891-893 then says which held",
@@ -32,5 +68,9 @@
     "Move the 16 `set_title`/`suptitle` strings (265, 267, 300, 303, 426, 428, 1102, 1103, 1140, 1143 and the rest) into `mystnb: figure: caption` metadata on the six uncaptioned figure cells (254, 404, 1095, 1132, 1787, 1860), drop the three `rcParams` overrides at 88-90 in favour of per-figure sizing, and shorten the ten-word caption at 1724",
     "Sweep the rest: the 13 apostrophe transposes to `\\top` (181-184, 190, 202, 204, 782, 929), `\\frac` for the six `\\tfrac` in display math (533-534 and elsewhere), the Title Case heading at 1269, the two double spaces at 585, and the three bold emphases at 1334, 1615 and 1716 set in italic instead"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "7b0534c13575d9ae0979416381c34a72b92f0499"
+  }
 }

@@ -2,18 +2,79 @@
   "series": "lecture-python.myst",
   "lecture": "wald_friedman_2",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 6, "lines": [254, 454, 532, 603, 631, 750],
-     "detail": "631 and 635 state specific numbers - \"The average number of draws is around 6.6\" and \"the decision-maker is correct 80% of the time\" - about a figure produced by an unseeded simulation: the file contains no `seed` or `default_rng` call anywhere, and 424-425, 436 and 439 all call `np.random.beta` directly, so both figures and both numbers change on every build. 603-604 draws the two cutoff markers at the wrong heights: with $\\pi$ the probability that $f=f_1$ (131), the binding cost at $\\pi=B$ is $B L_0$ and at $\\pi=A$ is $(1-A)L_1$ - as 613-614 says - but the code writes `plt.vlines(B, 0, (1 - B) * wf.L1)` and `plt.vlines(A, 0, A * wf.L0)`, i.e. each line is drawn to the other branch's cost. The sibling lecture `navy_captain` has the same figure with the assignment the other way round at its lines 585-586. 531-537 plots the two densities with no x data - `ax.plot(wf.f0(wf.π_grid))` - so the axis runs over grid indices 0 to 199 while 534 labels it \"$z_k$\", and it reuses `π_grid`, a grid of *beliefs*, as the grid of $z$ values; the equivalent cell at 184-202 does it correctly with its own `grid`. 454 and 753-757 call the object a \"value function\" where the rest of the lecture, its headings and its code call it a cost function (267, 500, 540, 556, 607, 613). 750-759 invites four investigations and one of them turns on \"the number of points and linear functions $m$\", where $m$ is never defined in the lecture - the grid parameter is `π_grid_size` - and the same passage says \"piecewise linear approximation\" at 754 and \"piecewise continuous approximation\" at 757 for the same thing. And the `{figure}` at 254-256 has an empty body: no caption, no `:name:`, no alt text, for the picture 252 introduces as \"the following figure\""},
-    {"rule": "qe-writing-002", "count": 6, "lines": [46, 57, 59, 109, 122, 343],
-     "detail": "57 is a single sentence of about 75 words running from \"In this lecture, we reformulate...\" to \"...sampling from that joint distribution\", carrying two scare-quoted terms, a cross-reference and three relative clauses. 46 is 48 words. 59-62 argues in a circle across two sentences - the prior lets the statistician form the joint distribution, and the joint distribution lets him \"calculate the conditional distributions that he wants\", which are the conditionals he started from. 109-113 is two four-line sentences differing only in a subscript. 122-123 restates 107 and 120 for the third time (\"He (or she) wants to know which of two probability distributions $f_0$ or $f_1$ governs $z$\" / \"The observer has something to learn, namely, whether the observations are drawn from $f_0$ or from $f_1$\" / \"The decision maker wants to decide which of the two distributions is generating outcomes\"). And 343-381 displays the same integral three times in forty lines - as the third line of {eq}`optdec2`, again as {eq}`funceq`, and again as $Qh(\\pi)$ - with only the left-hand side changing. The two bulleted idea lists at 70-84 also overlap: all four items of the second list are already in 64-68"},
-    {"rule": "qe-code-001", "count": 6, "lines": [182, 473, 567, 597, 645, 663],
-     "detail": "three lambdas are bound to names (E731): `f0` and `f1` at 182-183 and `h_func` at 473, whose parameter `p` also shadows the module-level function `p` defined at 178 and used inside `f0`/`f1`. 645-648 assigns five locals in `simulate` - `f0`, `f1`, `f0_rvs`, `f1_rvs`, `π_grid` - and uses none of them, because 651 and 653 re-fetch `wf.f0` and `wf.f0_rvs` directly (F841 x5). 663 tests `while decision_made is False:` where `while not decision_made:` is the idiom. 575 and 583 use `assert False, \"...\"` to signal an error condition; `assert` is stripped under `python -O`, so `raise ValueError` is the correct form. 597 omits the space after a comma, `np.column_stack([...]),axis=1` (E231). Five lines carry trailing whitespace (567, 571, 576, 577, 579), including a comment ending in two spaces at 577. And the decorators are inconsistent: 462 writes `@jit(nopython=True, parallel=True)` where `nopython=True` is now the default, while 177, 497 and 552 use a bare `@jit`. The docstrings at 640, 555 and 690 are also separated from their `def` by a blank line, against PEP 257"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [254, 715, 728, 750],
-     "detail": "the lecture's most important picture - the $[0,B]$, $(B,A)$, $[A,1]$ partition that *is* the answer - is a static PNG dropped in at 254 with an empty directive body, no caption and no name. It is also schematic, so it shows invented cutoffs rather than the ones computed at 587, even though drawing three intervals on a line with the real $A$ and $B$ is a handful of matplotlib calls. 728-748 sets up a comparative static, asks the reader to predict two outcomes (736-737), and then produces a *new* pair of histograms at 741 with independently auto-scaled axes 15 lines below the baseline pair at 725 - so the comparison the section exists to make has to be done from memory across two figures. 715-721 positions both annotations by arithmetic on the data (`xy=(max(tdist)/2, max(np.histogram(tdist, bins=max(tdist))[0])/2)`), which will land on top of the bars for other parameter settings, and the right-hand panel is a two-bin histogram of a boolean - a bar chart of two numbers, one of which is also printed as the annotation beside it. And 750-759 hands the reader four investigations as a plain bulleted list rather than an `{exercise}`, so none of them is numbered, linkable or answerable; the lecture has no exercise at all"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [48, 57, 103, 269, 762],
-     "detail": "103 sets a book title in bold - **Dynamic Programming and Stochastic Control** - where a title takes italic; 269 re-bolds **dynamic programming** 226 lines after the definition at 43. Emphasis is carried by single quotes rather than italic in five places: 'hypothesis' (48), 'conditions on the parameters' (53), and 'objective' and 'subjective' at 57. The one italic in the file is *exchangeable* at 762, which is a term being introduced and so belongs in bold - and the definitions the lecture does bold (**sequential probability ratio test** 75, **power** 76, **critical region** 77, **uniformly most powerful test** 78, **functional equation** 367, **stopping times** 629) show the convention is otherwise understood"},
-    {"rule": "qe-math-009", "count": 4, "lines": [131, 156, 318, 349],
-     "detail": "131 puts prose inside a probability - $\\mathbb P \\{ f = f_1 \\mid \\textrm{ no observations} \\}$, with a leading space inside the braces - to say that $\\pi_{-1}$ is the prior, which the surrounding sentence already says. 156 writes the mixture as $f_{{\\pi}_k}(v)$, with a redundant brace group inside the subscript, where 291 writes the same object as $f_{\\pi}(v)$. 318 says \"two numbers $A, B \\in (0,1) \\times (0,1)$\", which asserts that each of $A$ and $B$ lies in a product of two intervals; $A, B \\in (0,1)$ is what is meant. And 349-350 writes the same expectation two ways one line apart, $\\mathbb E [J(\\pi')]$ then $\\mathbb E_{\\pi'} \\min\\{\\cdots\\}$, with spaces inserted inside the delimiters throughout ($J (\\pi')$ at 278)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        254,
+        454,
+        532,
+        603,
+        631,
+        750
+      ],
+      "detail": "631 and 635 state specific numbers - \"The average number of draws is around 6.6\" and \"the decision-maker is correct 80% of the time\" - about a figure produced by an unseeded simulation: the file contains no `seed` or `default_rng` call anywhere, and 424-425, 436 and 439 all call `np.random.beta` directly, so both figures and both numbers change on every build. 603-604 draws the two cutoff markers at the wrong heights: with $\\pi$ the probability that $f=f_1$ (131), the binding cost at $\\pi=B$ is $B L_0$ and at $\\pi=A$ is $(1-A)L_1$ - as 613-614 says - but the code writes `plt.vlines(B, 0, (1 - B) * wf.L1)` and `plt.vlines(A, 0, A * wf.L0)`, i.e. each line is drawn to the other branch's cost. The sibling lecture `navy_captain` has the same figure with the assignment the other way round at its lines 585-586. 531-537 plots the two densities with no x data - `ax.plot(wf.f0(wf.π_grid))` - so the axis runs over grid indices 0 to 199 while 534 labels it \"$z_k$\", and it reuses `π_grid`, a grid of *beliefs*, as the grid of $z$ values; the equivalent cell at 184-202 does it correctly with its own `grid`. 454 and 753-757 call the object a \"value function\" where the rest of the lecture, its headings and its code call it a cost function (267, 500, 540, 556, 607, 613). 750-759 invites four investigations and one of them turns on \"the number of points and linear functions $m$\", where $m$ is never defined in the lecture - the grid parameter is `π_grid_size` - and the same passage says \"piecewise linear approximation\" at 754 and \"piecewise continuous approximation\" at 757 for the same thing. And the `{figure}` at 254-256 has an empty body: no caption, no `:name:`, no alt text, for the picture 252 introduces as \"the following figure\""
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        46,
+        57,
+        59,
+        109,
+        122,
+        343
+      ],
+      "detail": "57 is a single sentence of about 75 words running from \"In this lecture, we reformulate...\" to \"...sampling from that joint distribution\", carrying two scare-quoted terms, a cross-reference and three relative clauses. 46 is 48 words. 59-62 argues in a circle across two sentences - the prior lets the statistician form the joint distribution, and the joint distribution lets him \"calculate the conditional distributions that he wants\", which are the conditionals he started from. 109-113 is two four-line sentences differing only in a subscript. 122-123 restates 107 and 120 for the third time (\"He (or she) wants to know which of two probability distributions $f_0$ or $f_1$ governs $z$\" / \"The observer has something to learn, namely, whether the observations are drawn from $f_0$ or from $f_1$\" / \"The decision maker wants to decide which of the two distributions is generating outcomes\"). And 343-381 displays the same integral three times in forty lines - as the third line of {eq}`optdec2`, again as {eq}`funceq`, and again as $Qh(\\pi)$ - with only the left-hand side changing. The two bulleted idea lists at 70-84 also overlap: all four items of the second list are already in 64-68"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        182,
+        473,
+        567,
+        597,
+        645,
+        663
+      ],
+      "detail": "three lambdas are bound to names (E731): `f0` and `f1` at 182-183 and `h_func` at 473, whose parameter `p` also shadows the module-level function `p` defined at 178 and used inside `f0`/`f1`. 645-648 assigns five locals in `simulate` - `f0`, `f1`, `f0_rvs`, `f1_rvs`, `π_grid` - and uses none of them, because 651 and 653 re-fetch `wf.f0` and `wf.f0_rvs` directly (F841 x5). 663 tests `while decision_made is False:` where `while not decision_made:` is the idiom. 575 and 583 use `assert False, \"...\"` to signal an error condition; `assert` is stripped under `python -O`, so `raise ValueError` is the correct form. 597 omits the space after a comma, `np.column_stack([...]),axis=1` (E231). Five lines carry trailing whitespace (567, 571, 576, 577, 579), including a comment ending in two spaces at 577. And the decorators are inconsistent: 462 writes `@jit(nopython=True, parallel=True)` where `nopython=True` is now the default, while 177, 497 and 552 use a bare `@jit`. The docstrings at 640, 555 and 690 are also separated from their `def` by a blank line, against PEP 257"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        254,
+        715,
+        728,
+        750
+      ],
+      "detail": "the lecture's most important picture - the $[0,B]$, $(B,A)$, $[A,1]$ partition that *is* the answer - is a static PNG dropped in at 254 with an empty directive body, no caption and no name. It is also schematic, so it shows invented cutoffs rather than the ones computed at 587, even though drawing three intervals on a line with the real $A$ and $B$ is a handful of matplotlib calls. 728-748 sets up a comparative static, asks the reader to predict two outcomes (736-737), and then produces a *new* pair of histograms at 741 with independently auto-scaled axes 15 lines below the baseline pair at 725 - so the comparison the section exists to make has to be done from memory across two figures. 715-721 positions both annotations by arithmetic on the data (`xy=(max(tdist)/2, max(np.histogram(tdist, bins=max(tdist))[0])/2)`), which will land on top of the bars for other parameter settings, and the right-hand panel is a two-bin histogram of a boolean - a bar chart of two numbers, one of which is also printed as the annotation beside it. And 750-759 hands the reader four investigations as a plain bulleted list rather than an `{exercise}`, so none of them is numbered, linkable or answerable; the lecture has no exercise at all"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        48,
+        57,
+        103,
+        269,
+        762
+      ],
+      "detail": "103 sets a book title in bold - **Dynamic Programming and Stochastic Control** - where a title takes italic; 269 re-bolds **dynamic programming** 226 lines after the definition at 43. Emphasis is carried by single quotes rather than italic in five places: 'hypothesis' (48), 'conditions on the parameters' (53), and 'objective' and 'subjective' at 57. The one italic in the file is *exchangeable* at 762, which is a term being introduced and so belongs in bold - and the definitions the lecture does bold (**sequential probability ratio test** 75, **power** 76, **critical region** 77, **uniformly most powerful test** 78, **functional equation** 367, **stopping times** 629) show the convention is otherwise understood"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        131,
+        156,
+        318,
+        349
+      ],
+      "detail": "131 puts prose inside a probability - $\\mathbb P \\{ f = f_1 \\mid \\textrm{ no observations} \\}$, with a leading space inside the braces - to say that $\\pi_{-1}$ is the prior, which the surrounding sentence already says. 156 writes the mixture as $f_{{\\pi}_k}(v)$, with a redundant brace group inside the subscript, where 291 writes the same object as $f_{\\pi}(v)$. 318 says \"two numbers $A, B \\in (0,1) \\times (0,1)$\", which asserts that each of $A$ and $B$ lies in a product of two intervals; $A, B \\in (0,1)$ is what is meant. And 349-350 writes the same expectation two ways one line apart, $\\mathbb E [J(\\pi')]$ then $\\mathbb E_{\\pi'} \\min\\{\\cdots\\}$, with spaces inserted inside the delimiters throughout ($J (\\pi')$ at 278)"
+    }
   ],
   "strengths": [
     "The `{note}` at 134-137 flags a notational departure from the source the lecture is following: Bertsekas attaches the belief to $f_0$, this lecture attaches it to $f_1$, and the note says so and gives the reason - to match the frequentist lecture it is paired with. A reader holding the book open is told exactly where the two differ",
@@ -37,5 +98,9 @@
   ],
   "scanner_doubts": [
     "wald_friedman_2.md:97,179 - qe-code-002 x4 is the `gamma` false positive again: line 97 is `from math import gamma` and line 179 is `r = gamma(a + b) / (gamma(a) * gamma(b))`, the standard-library gamma *function* normalising the beta density at 177-180. It is an imported name that cannot be renamed to `γ` without breaking the import. This is the same code, character for character, as `navy_captain.md`:33,115, and the same defect class as `likelihood_bayes.md`:56,152, `imp_sample.md` and `lagrangian_lqdp.md`:476 - five lectures now. An exemption keyed on the name being bound by an `import`/`from ... import` statement anywhere in the file would clear all of them at once and cannot produce a false negative, since a genuinely spelled-out Greek variable is never imported."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "075eb05890d3acc9195b6a9a4cfae3e330506bed"
+  }
 }

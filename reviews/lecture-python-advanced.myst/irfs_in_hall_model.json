@@ -5,37 +5,63 @@
     {
       "rule": "qe-writing-007",
       "count": 3,
-      "lines": [121, 125, 192],
+      "lines": [
+        121,
+        125,
+        192
+      ],
       "detail": "the lecture is a three-way comparison and none of the three comparisons can be read off its figures. All six are built identically - `plt.plot(econ.c[0], label='Cons.')` and `plt.plot(econ.i[0], label='Inv.')` at 126-127, 176-177, 270-271, and the same pair of `_irf` series at 145-146, 185-186, 285-286 - with no title, no axis labels, no caption, no `name`, no `fig, ax`, and on six independently autoscaled pairs of axes in six separate cells. Every claim the lecture makes is then comparative: \"Investment is much more responsive to the endowment shock at shorter time horizons\" (155-156), \"In contrast to Hall's original model of Example 1, it is now investment that is much smoother than consumption\" (276-277), \"consumption is now much more responsive to an endowment shock (and investment less so) than in Example 1\" (291-293), \"As in Example 2, the endowment shock has permanent effects on neither variable\" (295-296). Two figures - three consumption-investment pairs on one, three IRF pairs on the other - would carry the entire lecture. The `# This is the right panel of Fig 5.7.1 from p.105 of HS2013` comments at 125, 144, 175, 184, 269 and 284 are both the captions the figures lack and evidence that HS2013 itself puts each simulation next to its IRF, which the lecture splits into separate cells. Third, four separate claims turn on where the largest endogenous eigenvalue sits relative to one (151-153, 164-165, 203-205, 210-211) and `econ.endo` is displayed for exactly one of the three economies, as a bare unlabelled cell at 192, so \"the decrease in the largest endogenous eigenvalue from unity in the earlier economy\" has nothing to be checked against"
     },
     {
       "rule": "qe-writing-003",
       "count": 5,
-      "lines": [52, 192, 200, 207, 261],
+      "lines": [
+        52,
+        192,
+        200,
+        207,
+        261
+      ],
       "detail": "207-208 writes computed numbers into the prose: \"The present economy has a nonstochastic steady state value of 5 for consumption and 0 for both capital and investment\" - which is a reading of `print(econ2.css, econ2.iss, econ2.kss)` at 197, and states them in an order (consumption, capital, investment) that is not the order printed. Second, `x01 = np.array([[150], [100], [1], [0], [0]])` at 261 is a different initial condition from the $x_0$ displayed at 75-81 and used everywhere else - the first two entries are swapped and changed, 5 and 150 becoming 150 and 100 - and neither the display nor any sentence records the change; 248-249 only claims it \"makes consumption begin near around its non-stochastic steady state\", which cannot be checked because Example 3's steady state is never computed (only Example 2's, at 196-197). Third, 192 puts `econ2.endo` in a cell with no sentence saying what it is or that the reader should look at it, and Example 1's eigenvalues - the \"unity\" that 164-165 and 203-205 compare against - are never printed. Fourth, 200's \"The first graph\" is four cells and two output cells back (167-180). And 52 refers to a companion lecture by quoted title only, 'See the lecture \"Growth in Dynamic Linear Economies\" for more details', where 27 uses a `{doc}` link for a different lecture in the same suite"
     },
     {
       "rule": "qe-code-001",
       "count": 5,
-      "lines": [85, 168, 173, 183, 261],
+      "lines": [
+        85,
+        168,
+        173,
+        183,
+        261
+      ],
       "detail": "the Example 2 cell breaks the spacing conventions the other two cells keep: 173 writes `ts_length = 300` with spaces around a keyword-argument `=` where 123 and 267 write `ts_length=300`, and 183, 185 and 186 omit the space after the comma (`irf(ts_length=40,shock=None)`, `plt.plot(econ2.c_irf,label='Cons.')`) where the identical calls at 143, 145-146, 283, 285-286 all have it. The names then read as other symbols: `γ` at 85 is the technology *matrix* $\\Gamma$ assembled from the scalar `γ_1`, and Example 3 pairs `γ_12 = 0.15` (255, a scalar that looks like $\\gamma_{12}$) with `γ_2` (256, the matrix built from it), exactly as `ϕ_12 = 0.2` (168) and `ϕ_13 = 1` (252) are Example 2's and Example 3's values of the single parameter $\\phi_1$; 97-105 also downcases $A_{22}$, $C_2$, $U_d$ and $U_b$ to `a22`, `c2`, `ud`, `ub` where the rule permits capitals for matrices. And 261 names the third example's initial condition `x01`, one off from the `x0` of 106, so the suffix numbers the variable rather than the example"
     },
     {
       "rule": "qe-writing-002",
       "count": 4,
-      "lines": [26, 65, 161, 248],
+      "lines": [
+        26,
+        65,
+        161,
+        248
+      ],
       "detail": "65-68 opens a parenthesis in one paragraph and closes it in the next - \"(In this example $\\delta_h$ and $\\theta_h$ are arbitrary ...\" ends at 66, a blank line follows, and \"We set them to values that will become useful in Example 3)\" closes the bracket at 68 - so on the built page the reader meets an unmatched `(` and, a paragraph later, an unmatched `)`. 161-162 loses the space before an inline formula in the sentence that defines the whole of Example 2: \"the cost of adjusting capital,$\\phi_1$, from 0.00001 to 0.2\", and calls the other changed parameter only \"the production function parameter\" at 220 rather than naming the $\\gamma_1$ of 62 and 84. 248-249 has \"begin near around its non-stochastic steady state\". And 26-27 opens with the suite's standard 34-word triple-nested sentence (\"another member of a suite of lectures that use the quantecon DLE class to instantiate models within the {cite}`HS2013` class of models described in detail in {doc}`...`\")"
     },
     {
       "rule": "qe-math-009",
       "count": 2,
-      "lines": [62, 242],
+      "lines": [
+        62,
+        242
+      ],
       "detail": "242 hangs the conditioning information set outside every delimiter, $-\\frac{1}{2}\\mathbb{E}\\sum_{t=0}^\\infty \\beta^t[(\\lambda h_{t-1} - b_t)^2 + l_t^2]|J_0$, so the bar reads as applying to the whole expression rather than as conditioning the expectation, where $\\mathbb{E}_0$ says it in one symbol - the same construction appears in the two sibling lectures. $l_t$ in that display is also its only appearance in the file: nothing connects it to the $g_t$ of the technology, so the second term of the objective is an undefined symbol. And 61-63 sets a comma-separated list of six parameter assignments as a display equation, with $\\phi_1 = 0.00001$ spelled as a decimal string that the code writes `1e-5` (88) and that 162 then spells out again"
     },
     {
       "rule": "qe-writing-005",
       "count": 1,
-      "lines": [224],
+      "lines": [
+        224
+      ],
       "detail": "the file's single piece of emphasis is on the term it is defining: \"We also change the specification of preferences to make the consumption good *durable*\" (223-224), where durability is the subject of the whole of Example 3 and is formalised in the three displays that follow at 229, 236 and 242 - the rule assigns that job to bold. Nothing else in the lecture is bolded or italicised, and the companion lecture title at 52 is set in quotation marks rather than as a link"
     }
   ],
@@ -62,5 +88,9 @@
   ],
   "scanner_doubts": [
     "irfs_in_hall_model.md:68,161,164,276,295 - qe-writing-004 is reported with count 7 across lines 52, 68, 161, 164, 276 and 295, and all seven look like false positives of two kinds. Six are the phrase \"Example N\" used as a cross-reference to a numbered section of this lecture - \"useful in Example 3\" (68), \"of Example 1\" (161 and 276), \"unity in Example 1\" (164), \"As in Example 2\" (295) - where the capital is correct because it names a labelled division of the document, exactly as \"Figure 3\", \"Table 2\" or \"Chapter 5\" would. The seventh is inside a quoted lecture title, 'See the lecture \"Growth in Dynamic Linear Economies\"' (52), which is the quoted-title case I flagged on `permanent_income_dles`. The narrative text of this lecture has no unnecessary capitalisation I can find. Suggested fix: add `Example|Figure|Table|Section|Chapter|Proposition|Lemma|Exercise|Appendix` followed by a numeral to the curated exempt list, alongside skipping text in double quotes. This is worth doing beyond this file - \"Example 1/2/3\" is the standard sectioning of the whole DLE suite (`growth_in_dles`, `cattle_cycles`, `lucas_asset_pricing_dles`), so the same false positives will recur across it, and here they are what sets Writing to 6/10 in an otherwise clean lecture"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "8b4cd1fa9f2766747f97dad90f56db64ba384e0e"
+  }
 }

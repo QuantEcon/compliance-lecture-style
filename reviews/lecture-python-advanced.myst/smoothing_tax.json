@@ -2,18 +2,78 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "smoothing_tax",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [452, 861, 869, 913],
-     "detail": "Example 5 does not describe the chain it runs. 848 says \"government expenditure levels for the seven states\", 852 gives seven levels and 853-859 gives a seven-state $P$, but 861 names only six: `states_ex5 = ['peace1', 'peace2', 'war1', 'war2', 'war3', 'permanent peace']`. Every print in `display` is driven by `self.states`, so 622 prints six labels against seven numbers, 624 prints \"Govt debt in 6 states\", and the loops at 628-636 and 642-645 silently skip the seventh state - the deterministic example, the one whose whole point (828-830) is that complete and incomplete markets must agree, is the one reported incompletely. Second, the message printed at 452-456 tells the reader \"Our assumptions imply that the government always purchases 0 units of the Arrow peace security\", which the comment five lines below contradicts (\"since the spending on Arrow peace security is not 0 anymore after we change b0 to 1\", 461) and which the Explanation section then contradicts again (\"the government always purchase $1$ units of the Arrow security that pays off in peace time\", 501-502) - and unlike a comment, this one is printed into the built page. Third, the heading tree does not match the content: \"### Continuous-state Gaussian model\" (869) and \"#### Related lectures\" (913) are filed as subsections of \"## More finite Markov chain tax-smoothing examples\" (537), so the continuous-state model and the lecture's closing roadmap are nested under a finite-Markov heading; \"## Returns on state-contingent debt\" (348) is promoted to H2 although it continues \"## Tax smoothing with complete markets\" (303), which leaves \"### An example of tax smoothing\" (406) filed under Returns; and \"#### Link to history\" (85) jumps two levels down from the H3 above it"},
-    {"rule": "qe-writing-002", "count": 9, "lines": [26, 78, 82, 425, 501, 808],
-     "detail": "the text has not been proofread and in several places the sentence no longer carries its meaning. 26 is missing the package name: \"In addition to what's in Anaconda, this lecture uses the  library:\". 78 collapses three phrasings into one: \"$a_t$ is the government's holdings of one-period risk-free bonds coming maturing at the due at the beginning of time $t$\". 82 does the same: \"We'll spend most of this lecture studying acquire finite-state Markov specification\". 425: \"Here's code that itinitializes government assets to be unity\". 808: \"We ssume that $b_0 = 1$\". Agreement errors in 336 (\"the government has sold an Arrow securities paying off\"), 419 (\"The government then experiences 3 time periods of war and come back to peace again\") and 501 (\"the government always purchase $1$ units\"), a stray space before the full stop at 722, and missing terminal periods at 88, 105, 337 and 425"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [371, 620, 682],
-     "detail": "the object the whole lecture turns on is a peace-war Markov chain, and it is given six times as a matrix of symbols (524, 682, 727, 761, 795, 835) and never once as a diagram. By Example 3 the matrix is $4\\times 4$, by Example 5 it is $7\\times 7$ and lower-shift, and the distinctions the prose draws - \"one of the states is a war state with no hope of peace next period, while another state is a war state with a positive probability of peace next period\" (755-756) - are exactly what a four-node directed graph shows at a glance and a symbolic matrix does not. Second, `display` emits about twenty lines of bare `print` output per example (620-657) and is called five times, so roughly a hundred lines of unformatted text sit between the figures where a small per-example table of $g$, $\\bar T$, $b$ and the ex-post returns would be read rather than skipped. Third, the lecture uses no admonition anywhere, although 371 (\"**Convention:** In this code, when $P_{ij}=0$, we arbitrarily set $R(j | i)$ to be $0$\") is a `{note}` a reader must not miss, and 907 (\"**Returns:**\") and the \"Link to history\" aside at 85-88 are the same shape"},
-    {"rule": "qe-code-001", "count": 7, "lines": [115, 213, 392, 556, 572, 641, 780],
-     "detail": "213 reshapes the caller's array in place, `y.shape = (n, 1)`, so calling `consumption_incomplete` permanently changes `cp.y` from a length-$n$ vector to an $n\\times 1$ matrix - which is why `display` has to write `self.cp.y.flatten()` at 622 and `self.cp.y[i, 0]` at 635, and why the function is not safe to call twice; `y = np.asarray(y).reshape(n, 1)` says the same thing without the side effect. 115 and 117 give mutable objects as default arguments (`y=[2, 1.5]`, `P=[[.8, .2], [.4, .6]]`). 392 puts one blank line before a top-level `def` where 151 and 197 in the same cell use two. 556 puts one space before an inline comment (`self.states = states # state names`) where PEP8 asks for two. 572 uses a backslash continuation for an assignment that parentheses would wrap. 641 is an f-string with no placeholder. And the matrix literals are padded by hand to columns that do not line up - 777-780 reads `[0,  1-ϕ,   ϕ,     0]` against `[0,    0,  1-ψ,    ψ]`, and 780 leaves a space before the closing bracket, `1-θ ]`"},
-    {"rule": "qe-math-009", "count": 6, "lines": [684, 729, 763, 797, 837, 910],
-     "detail": "rows inside `bmatrix` are separated with the plain-TeX `\\cr` in all five example chains (684-686, 729-731, 763-766, 797-801, 837-843) while the exercise at 524-527 separates them with `\\\\` - one file, two spellings, and `\\\\` is both the AMS form and the one the rest of the corpus uses. The conditional expectation is written two ways as well: `\\mathbb E_t` in the continuous-state section (877, 884, 892, 898), then at 910 as `\\frac{b(x_{t+1})}{\\beta E b(x_{t+1})| x_t}` - a bare $E$ with the conditioning bar left outside the operator's argument, so the denominator renders as $\\beta E b(x_{t+1})$ followed by a dangling $| x_t$ rather than $\\beta \\mathbb{E}_t[b(x_{t+1})]$"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [39, 333, 371, 416],
-     "detail": "the two terms the lecture is organised around are marked both ways within four lines of each other: 39-40 introduces them in bold (\"the **complete markets** tradition of Lucas and Stokey\", \"the **incomplete markets** tradition of Barro\") and 42-44 then defines them in italic (\"*Complete markets* allow a government to buy or sell claims contingent on all possible Markov states\", \"*Incomplete markets* allow ...\"), with bold returning for the same pair at 921 and 930. Bold is also used for plain emphasis, which the rule assigns to italic - \"the government **is owed** $b_i$ or **owes** $-b_i$\" (333), \"a **particular** assumed path\" (416) - while italic does that job correctly elsewhere in the file (73, 329, 509-510, 545, 880). And 371 and 907 use bold as a run-in heading (\"**Convention:**\", \"**Returns:**\")"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        452,
+        861,
+        869,
+        913
+      ],
+      "detail": "Example 5 does not describe the chain it runs. 848 says \"government expenditure levels for the seven states\", 852 gives seven levels and 853-859 gives a seven-state $P$, but 861 names only six: `states_ex5 = ['peace1', 'peace2', 'war1', 'war2', 'war3', 'permanent peace']`. Every print in `display` is driven by `self.states`, so 622 prints six labels against seven numbers, 624 prints \"Govt debt in 6 states\", and the loops at 628-636 and 642-645 silently skip the seventh state - the deterministic example, the one whose whole point (828-830) is that complete and incomplete markets must agree, is the one reported incompletely. Second, the message printed at 452-456 tells the reader \"Our assumptions imply that the government always purchases 0 units of the Arrow peace security\", which the comment five lines below contradicts (\"since the spending on Arrow peace security is not 0 anymore after we change b0 to 1\", 461) and which the Explanation section then contradicts again (\"the government always purchase $1$ units of the Arrow security that pays off in peace time\", 501-502) - and unlike a comment, this one is printed into the built page. Third, the heading tree does not match the content: \"### Continuous-state Gaussian model\" (869) and \"#### Related lectures\" (913) are filed as subsections of \"## More finite Markov chain tax-smoothing examples\" (537), so the continuous-state model and the lecture's closing roadmap are nested under a finite-Markov heading; \"## Returns on state-contingent debt\" (348) is promoted to H2 although it continues \"## Tax smoothing with complete markets\" (303), which leaves \"### An example of tax smoothing\" (406) filed under Returns; and \"#### Link to history\" (85) jumps two levels down from the H3 above it"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 9,
+      "lines": [
+        26,
+        78,
+        82,
+        425,
+        501,
+        808
+      ],
+      "detail": "the text has not been proofread and in several places the sentence no longer carries its meaning. 26 is missing the package name: \"In addition to what's in Anaconda, this lecture uses the  library:\". 78 collapses three phrasings into one: \"$a_t$ is the government's holdings of one-period risk-free bonds coming maturing at the due at the beginning of time $t$\". 82 does the same: \"We'll spend most of this lecture studying acquire finite-state Markov specification\". 425: \"Here's code that itinitializes government assets to be unity\". 808: \"We ssume that $b_0 = 1$\". Agreement errors in 336 (\"the government has sold an Arrow securities paying off\"), 419 (\"The government then experiences 3 time periods of war and come back to peace again\") and 501 (\"the government always purchase $1$ units\"), a stray space before the full stop at 722, and missing terminal periods at 88, 105, 337 and 425"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        371,
+        620,
+        682
+      ],
+      "detail": "the object the whole lecture turns on is a peace-war Markov chain, and it is given six times as a matrix of symbols (524, 682, 727, 761, 795, 835) and never once as a diagram. By Example 3 the matrix is $4\\times 4$, by Example 5 it is $7\\times 7$ and lower-shift, and the distinctions the prose draws - \"one of the states is a war state with no hope of peace next period, while another state is a war state with a positive probability of peace next period\" (755-756) - are exactly what a four-node directed graph shows at a glance and a symbolic matrix does not. Second, `display` emits about twenty lines of bare `print` output per example (620-657) and is called five times, so roughly a hundred lines of unformatted text sit between the figures where a small per-example table of $g$, $\\bar T$, $b$ and the ex-post returns would be read rather than skipped. Third, the lecture uses no admonition anywhere, although 371 (\"**Convention:** In this code, when $P_{ij}=0$, we arbitrarily set $R(j | i)$ to be $0$\") is a `{note}` a reader must not miss, and 907 (\"**Returns:**\") and the \"Link to history\" aside at 85-88 are the same shape"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        115,
+        213,
+        392,
+        556,
+        572,
+        641,
+        780
+      ],
+      "detail": "213 reshapes the caller's array in place, `y.shape = (n, 1)`, so calling `consumption_incomplete` permanently changes `cp.y` from a length-$n$ vector to an $n\\times 1$ matrix - which is why `display` has to write `self.cp.y.flatten()` at 622 and `self.cp.y[i, 0]` at 635, and why the function is not safe to call twice; `y = np.asarray(y).reshape(n, 1)` says the same thing without the side effect. 115 and 117 give mutable objects as default arguments (`y=[2, 1.5]`, `P=[[.8, .2], [.4, .6]]`). 392 puts one blank line before a top-level `def` where 151 and 197 in the same cell use two. 556 puts one space before an inline comment (`self.states = states # state names`) where PEP8 asks for two. 572 uses a backslash continuation for an assignment that parentheses would wrap. 641 is an f-string with no placeholder. And the matrix literals are padded by hand to columns that do not line up - 777-780 reads `[0,  1-ϕ,   ϕ,     0]` against `[0,    0,  1-ψ,    ψ]`, and 780 leaves a space before the closing bracket, `1-θ ]`"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 6,
+      "lines": [
+        684,
+        729,
+        763,
+        797,
+        837,
+        910
+      ],
+      "detail": "rows inside `bmatrix` are separated with the plain-TeX `\\cr` in all five example chains (684-686, 729-731, 763-766, 797-801, 837-843) while the exercise at 524-527 separates them with `\\\\` - one file, two spellings, and `\\\\` is both the AMS form and the one the rest of the corpus uses. The conditional expectation is written two ways as well: `\\mathbb E_t` in the continuous-state section (877, 884, 892, 898), then at 910 as `\\frac{b(x_{t+1})}{\\beta E b(x_{t+1})| x_t}` - a bare $E$ with the conditioning bar left outside the operator's argument, so the denominator renders as $\\beta E b(x_{t+1})$ followed by a dangling $| x_t$ rather than $\\beta \\mathbb{E}_t[b(x_{t+1})]$"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        39,
+        333,
+        371,
+        416
+      ],
+      "detail": "the two terms the lecture is organised around are marked both ways within four lines of each other: 39-40 introduces them in bold (\"the **complete markets** tradition of Lucas and Stokey\", \"the **incomplete markets** tradition of Barro\") and 42-44 then defines them in italic (\"*Complete markets* allow a government to buy or sell claims contingent on all possible Markov states\", \"*Incomplete markets* allow ...\"), with bold returning for the same pair at 921 and 930. Bold is also used for plain emphasis, which the rule assigns to italic - \"the government **is owed** $b_i$ or **owes** $-b_i$\" (333), \"a **particular** assumed path\" (416) - while italic does that job correctly elsewhere in the file (73, 329, 509-510, 545, 880). And 371 and 907 use bold as a run-in heading (\"**Convention:**\", \"**Returns:**\")"
+    }
   ],
   "strengths": [
     "The isomorphism is carried out rather than asserted: 68-74 lists the four relabelings, 75-78 writes the substitution $c_t = T_t$, $y_t = G_t$, $-b_t = a_t$, and the code then reuses the consumption-smoothing functions unchanged, renaming outputs at the call site with the reason attached - \"# change notation y to g in the tax-smoothing example\" (431) and \"# change notation c_bar to T_bar in the tax-smoothing example\" (440)",
@@ -35,5 +95,9 @@
   ],
   "scanner_doubts": [
     "smoothing_tax.md:364 - qe-math-002 is reported ×1 at line 364 with example \"`^T` transpose in `R^T`\", and this is a false positive: $T$ there is the holding horizon, not a transpose. The display reads `R^T(s_{t+T}, s_{t+T-1}, \\ldots, s_t) \\equiv R(s_{t+1} | s_t) R (s_{t+2} | s_{t+1} ) \\cdots R(s_{t+T} | s_{t+T-1} )`, i.e. the $T$-fold product of one-period returns, and 360-361 says so in words (\"The cumulative return earned from ... rolling over the proceeds into the government portfolio each period thereafter\"). `supT` fires because the base `R` is a capital and the superscript is followed by `(`, which the lookahead treats as a factor - but here the parenthesis is a function argument list, and the same span applies the same symbol without a superscript, `R(s_{t+1} | s_t)`, three times. Two cheap discriminators: `^T` immediately followed by `(` where the same base also appears applied to a parenthesised argument list in the same span is a function iterate, not a transpose; and `T` appearing as an index inside that span (`s_{t+T}`, and `R^T` in the code as `RT_path` at 399) marks $T$ as a horizon. Nothing else in the file uses `^T`, so the count for this lecture should be 0"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "9f8c37c0997605cfac52c3faa797c9b40723370c"
+  }
 }

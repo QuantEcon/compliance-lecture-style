@@ -2,16 +2,60 @@
   "series": "lecture-python-intro",
   "lecture": "linear_equations",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 3, "lines": [1010, 1024, 1245],
-     "detail": "three definitions are set in italic where the rule asks for bold - \"then we say that $A$ is *nonsingular*\" (1010), \"it possesses an *inverse matrix* $A^{-1}$\" (1024) and \"$Ax = b$ is called an _inconsistent_ system of equations\" (1245, which also switches to underscore emphasis) - while the lecture's other definitions are correctly bolded (**vector** 135, **inner product** 375, **norm** 392, **least squares solution** 1259)"},
-    {"rule": "qe-code-001", "count": 9, "lines": [170, 258, 268, 328, 915, 1077, 1081, 1217, 1330],
-     "detail": "continuation lines inside `arrowprops=dict(...)` indented to the outer call rather than the opening paren (170, 258, 268, 328); `plt.plot`/`plt.xlabel` used on the pyplot state machine right after `fig, ax = plt.subplots()`, with f-strings that have no placeholders (915-916, 1374-1375); `h.shape = 2,1` with no space after the comma (1077, against `(3, 1)` at 1210); and imports scattered through the body instead of the imports cell at 44-47 (1081, 1107, 1202-1203, 1217, 1227, 1330-1331) - the cell at 1215 imports `det` for the second time and then calls `inv`, which it never imports"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [525, 947, 1017, 1259],
-     "detail": "two 36-38 word sentences (525, 1259) and two sentences that do not parse: \"the $2^{nd}$ row of matrix $A = (2, 6)$ is just a scalar multiple of the $1^{st}$ row of matrix $A = (1, 3)$\" (947, where $A$ is the matrix, not the row, and the ordinals are set in math mode) and \"You can check yourself that the in {eq}`no_soln` and {eq}`many_solns` with linearly dependent rows are singular matrices\" (1017, missing the noun)"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [800, 1384],
-     "detail": "the equilibrium condition changes sign convention between adjacent sections without comment - $(C - D)p = h$ in the two-good case (752, 763), $(D - C)p = e - h$ in the general case (800, 806), then back to $(C-D)^{-1}h$ at 1047 - so the reader has to re-derive which matrix is subtracted from which; and \"### Further reading\" at 1384 is an H3 placed after the \"## Exercises\" H2, so it renders as a subsection of the exercises"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [963],
-     "detail": "\"### No solution\" (897) plots the two parallel lines so the reader can see why no intersection exists, but the parallel section \"### Many solutions\" (963) asks \"can you see why?\" (989) about linearly dependent rows with no figure at all - the same two-line plot, with the lines coincident, is the obvious counterpart"}
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        1010,
+        1024,
+        1245
+      ],
+      "detail": "three definitions are set in italic where the rule asks for bold - \"then we say that $A$ is *nonsingular*\" (1010), \"it possesses an *inverse matrix* $A^{-1}$\" (1024) and \"$Ax = b$ is called an _inconsistent_ system of equations\" (1245, which also switches to underscore emphasis) - while the lecture's other definitions are correctly bolded (**vector** 135, **inner product** 375, **norm** 392, **least squares solution** 1259)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 9,
+      "lines": [
+        170,
+        258,
+        268,
+        328,
+        915,
+        1077,
+        1081,
+        1217,
+        1330
+      ],
+      "detail": "continuation lines inside `arrowprops=dict(...)` indented to the outer call rather than the opening paren (170, 258, 268, 328); `plt.plot`/`plt.xlabel` used on the pyplot state machine right after `fig, ax = plt.subplots()`, with f-strings that have no placeholders (915-916, 1374-1375); `h.shape = 2,1` with no space after the comma (1077, against `(3, 1)` at 1210); and imports scattered through the body instead of the imports cell at 44-47 (1081, 1107, 1202-1203, 1217, 1227, 1330-1331) - the cell at 1215 imports `det` for the second time and then calls `inv`, which it never imports"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        525,
+        947,
+        1017,
+        1259
+      ],
+      "detail": "two 36-38 word sentences (525, 1259) and two sentences that do not parse: \"the $2^{nd}$ row of matrix $A = (2, 6)$ is just a scalar multiple of the $1^{st}$ row of matrix $A = (1, 3)$\" (947, where $A$ is the matrix, not the row, and the ordinals are set in math mode) and \"You can check yourself that the in {eq}`no_soln` and {eq}`many_solns` with linearly dependent rows are singular matrices\" (1017, missing the noun)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        800,
+        1384
+      ],
+      "detail": "the equilibrium condition changes sign convention between adjacent sections without comment - $(C - D)p = h$ in the two-good case (752, 763), $(D - C)p = e - h$ in the general case (800, 806), then back to $(C-D)^{-1}h$ at 1047 - so the reader has to re-derive which matrix is subtracted from which; and \"### Further reading\" at 1384 is an H3 placed after the \"## Exercises\" H2, so it renders as a subsection of the exercises"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        963
+      ],
+      "detail": "\"### No solution\" (897) plots the two parallel lines so the reader can see why no intersection exists, but the parallel section \"### Many solutions\" (963) asks \"can you see why?\" (989) about linearly dependent rows with no figure at all - the same two-line plot, with the lines coincident, is the obvious counterpart"
+    }
   ],
   "strengths": [
     "Every one of the eleven labelled equations is cited by `{eq}` somewhere else in the lecture (`two_eq_demand` at 109 and 695, `two_equilibrium` at 689, `la_se` at 836 and 883, `la_se2` at 890/893/991, `la_se_inv` at 1052, `inconsistent` at 1259, `n_eq_sys_la` at 859) - there are no orphan labels and no manual \"equation (3)\" references",
@@ -29,5 +73,9 @@
     "Convert the five raw `python-programming.quantecon.org` and `python.quantecon.org` URLs (352, 660, 666, 955, 1388) to `{doc}` cross-series references",
     "Move the scattered `numpy.linalg` imports into the top imports cell, fix the mislabelled third arrow in the vector-addition figure (254 reads `(x1+x2, y1+y2)` where it should be `(x1+y1, x2+y2)`), settle the $(C-D)$ versus $(D-C)$ convention, and promote \"Further reading\" at 1384 to an H2"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "c674372148ac2bbe43c3b64e318362fb4bf29eeb"
+  }
 }

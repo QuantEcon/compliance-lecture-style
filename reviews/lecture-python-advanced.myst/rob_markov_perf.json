@@ -2,16 +2,66 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "rob_markov_perf",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 6, "lines": [155, 296, 438, 744, 826, 636],
-     "detail": "six disagreements, two of them between the algebra and the code that implements it. (i) The closed-loop system {eq}`rmp-eq_mpe_cle` at 438 reads $x_{t+1} = (A - B_1 F_1 - B_1 F_2)x_t$, with $B_1$ twice; 759 and the code at 802 and 814 both use $A - B_1F_1 - B_2F_2$. (ii) The worst-case shock formula at 296 has last factor $(A - B_1 F_{it} - B_2 F_{2t})$, mixing the generic index $i$ with a literal 2, so for $i=2$ it reads $A - B_1F_{2t} - B_2F_{2t}$. (iii) The implementation of that formula at 826-828 and 830-832 uses `P1` and `P2`, which are the *non-robust* value functions returned by `qe.nnash` at 734, where the formula calls for the robust ones computed at 795 (`P1r`, `P2r`); and it forms `AOCK1 = AO + C.T @ K1`, where 927-928 states the worst-case transition as $A^o + CK_1$ - with `C` of shape (3,1) the code's `K1` comes out (3,3) rather than the (1,3) that $v_{it} = K_{it}x_t$ requires at 289-291, and `C.T @ K1` is (1,3), which NumPy then broadcasts onto the (3,3) `AO` without error. The three matrices printed at 940-944 and the two belief paths plotted at 947-968 are downstream of this. (iv) Two of the four consistency checks at 743-746 test the wrong pair: `print('F2 and F2r should be the same: ', np.allclose(F1, F1r))` and `print('P2 and P2r should be the same: ', np.allclose(P1, P1r))`, so the conclusion at 749 that \"the results are consistent across the two functions\" rests on F1 and P1 being compared twice each. (v) The \"Some details\" section restates firm $i$'s objective at 636-648 without the $-\\theta_i v_{it}'v_{it}$ entropy term that {eq}`rmp-orig-1` carries at 127, after robustness has been introduced. (vi) 155 reads `$\\theta_i < _\\infty$`, a subscript attached to nothing"},
-    {"rule": "qe-code-001", "count": 8, "lines": [559, 590, 628, 715, 791, 941],
-     "detail": "791 binds `n = 20` to the number of simulation periods, in a file where $n$ is the state dimension in the theory (141), in the docstring (505) and in the function body (567) - and where the loops that use it are written `range(n - 1)` (805, 817, 837). 559 and 788 build matrices with `np.asmatrix`, whose `np.matrix` type NumPy discourages and whose broadcasting rules are what let the dimension error at 828 pass silently. Four assignments have a double space after `=` (`D1P1 =  P1 + ...` at 590, 595, and `K1 =  P1 @ ...` at 827, 831). Five expressions use backslash continuations while a bracket is already open (604-605, 617-618, 619-620, 628-629, 941-944), and the two at 941-944 leave the continuation unindented at column 0 inside an open `print(...)`. 628-629 puts the continuation inside an f-string, so the raised message reads \"Iteration limit of 1000             reached in nnash\" - a twelve-space run, and the wrong function name inside `nnash_robust`. 715-721 pads the two `R` literals to align columns and mixes literal styles inside a single matrix: `0` beside `0.` and `-a0 / 2` beside `-a0 / 2.`. And the docstring's parameter block indents its descriptions at four different depths (504-541: 4, 8, 9 and 10 spaces)"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [68, 311, 490, 762, 900],
-     "detail": "the two bullets at 68-69 are reproduced verbatim as the first two of the three at 76-80, eight lines later, so the characterisation of the equilibrium is half restated before the new third bullet arrives. Four sentences are broken: 309-311 \"the function nnash_robust to compute a Markov perfect equilibrium ... with robust planers\"; 490 \"The player i also concerns about the model misspecification, and maximizes\"; 762 \"the firms' robust decision rules within the robust markov_perfect equilibrium\", which leaks a label into prose; and 900 \"firm 1's output path is substantially lower when firms are robust firms\". The docstring at 476-496 also states a different problem from the lecture: it writes the matrices in lower case ($r_i$, $w_i$, $q_i$, $s_i$, $m_i$), calls the distortion $w_{it+1}$ where the lecture calls it $v_{it}$ (110, 142), puts a stray index on the state (`x_{it+1}`), and gives the entropy term as something the player *maximizes* with a positive sign, which as written is unbounded"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [863, 940, 947],
-     "detail": "three of the four panels fix their vertical range by hand - `ylim=(2, 4)` at 863 and 957, `ylim=(1, 2)` at 889 and 895 - and those are exactly the panels whose content the text asks the reader to compare: \"the price path is higher with the Markov perfect equilibrium robust decision rules\" (874-875), \"firm 1's output path is substantially lower\" (900-901), and the three-way belief comparison at 971-976. A hard limit that clips a path leaves the claim unfalsifiable, and nothing in the code guarantees the simulated series stay inside those windows. Second, the object the whole lecture builds toward - the difference between the baseline transition law and the two firms' worst-case laws - is presented at 940-944 as three 3-by-3 arrays printed with `np.round(..., 3)`, which is the least legible form available; the same three matrices as a small table, or the difference $CK_i$ alone, would show what 930-933 says in words. Third, there is no admonition anywhere in 983 lines, including at 588 and 593 where the code carries the warning \"Note: INV1 may not be solved if the matrix is singular\" - a condition on $\\theta_i$ that the theory at 151 alludes to as $\\underline\\theta_i$ and that belongs in a `{warning}` beside it"},
-    {"rule": "qe-writing-005", "count": 6, "lines": [109, 161, 756, 978, 980],
-     "detail": "the two conventions are exactly inverted. The lecture's only two defined terms are italicised - the *volatility matrix* $C$ (109) and *admissibility* (982) - while every use of bold is emphasis: a \"large **set** of alternative models\" (161), the \"**closed-loop** transition matrix\" (756), beliefs that \"**rationalize**\" the decision rules (978), and \"the unique **optimal** rules\" (980). The rule asks for the opposite assignment in all six cases, and the lecture already uses italic correctly for emphasis at 912-914 (*ex-post*, *after*), so the two markers are doing one job each in the wrong direction"}
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        155,
+        296,
+        438,
+        744,
+        826,
+        636
+      ],
+      "detail": "six disagreements, two of them between the algebra and the code that implements it. (i) The closed-loop system {eq}`rmp-eq_mpe_cle` at 438 reads $x_{t+1} = (A - B_1 F_1 - B_1 F_2)x_t$, with $B_1$ twice; 759 and the code at 802 and 814 both use $A - B_1F_1 - B_2F_2$. (ii) The worst-case shock formula at 296 has last factor $(A - B_1 F_{it} - B_2 F_{2t})$, mixing the generic index $i$ with a literal 2, so for $i=2$ it reads $A - B_1F_{2t} - B_2F_{2t}$. (iii) The implementation of that formula at 826-828 and 830-832 uses `P1` and `P2`, which are the *non-robust* value functions returned by `qe.nnash` at 734, where the formula calls for the robust ones computed at 795 (`P1r`, `P2r`); and it forms `AOCK1 = AO + C.T @ K1`, where 927-928 states the worst-case transition as $A^o + CK_1$ - with `C` of shape (3,1) the code's `K1` comes out (3,3) rather than the (1,3) that $v_{it} = K_{it}x_t$ requires at 289-291, and `C.T @ K1` is (1,3), which NumPy then broadcasts onto the (3,3) `AO` without error. The three matrices printed at 940-944 and the two belief paths plotted at 947-968 are downstream of this. (iv) Two of the four consistency checks at 743-746 test the wrong pair: `print('F2 and F2r should be the same: ', np.allclose(F1, F1r))` and `print('P2 and P2r should be the same: ', np.allclose(P1, P1r))`, so the conclusion at 749 that \"the results are consistent across the two functions\" rests on F1 and P1 being compared twice each. (v) The \"Some details\" section restates firm $i$'s objective at 636-648 without the $-\\theta_i v_{it}'v_{it}$ entropy term that {eq}`rmp-orig-1` carries at 127, after robustness has been introduced. (vi) 155 reads `$\\theta_i < _\\infty$`, a subscript attached to nothing"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        559,
+        590,
+        628,
+        715,
+        791,
+        941
+      ],
+      "detail": "791 binds `n = 20` to the number of simulation periods, in a file where $n$ is the state dimension in the theory (141), in the docstring (505) and in the function body (567) - and where the loops that use it are written `range(n - 1)` (805, 817, 837). 559 and 788 build matrices with `np.asmatrix`, whose `np.matrix` type NumPy discourages and whose broadcasting rules are what let the dimension error at 828 pass silently. Four assignments have a double space after `=` (`D1P1 =  P1 + ...` at 590, 595, and `K1 =  P1 @ ...` at 827, 831). Five expressions use backslash continuations while a bracket is already open (604-605, 617-618, 619-620, 628-629, 941-944), and the two at 941-944 leave the continuation unindented at column 0 inside an open `print(...)`. 628-629 puts the continuation inside an f-string, so the raised message reads \"Iteration limit of 1000             reached in nnash\" - a twelve-space run, and the wrong function name inside `nnash_robust`. 715-721 pads the two `R` literals to align columns and mixes literal styles inside a single matrix: `0` beside `0.` and `-a0 / 2` beside `-a0 / 2.`. And the docstring's parameter block indents its descriptions at four different depths (504-541: 4, 8, 9 and 10 spaces)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        68,
+        311,
+        490,
+        762,
+        900
+      ],
+      "detail": "the two bullets at 68-69 are reproduced verbatim as the first two of the three at 76-80, eight lines later, so the characterisation of the equilibrium is half restated before the new third bullet arrives. Four sentences are broken: 309-311 \"the function nnash_robust to compute a Markov perfect equilibrium ... with robust planers\"; 490 \"The player i also concerns about the model misspecification, and maximizes\"; 762 \"the firms' robust decision rules within the robust markov_perfect equilibrium\", which leaks a label into prose; and 900 \"firm 1's output path is substantially lower when firms are robust firms\". The docstring at 476-496 also states a different problem from the lecture: it writes the matrices in lower case ($r_i$, $w_i$, $q_i$, $s_i$, $m_i$), calls the distortion $w_{it+1}$ where the lecture calls it $v_{it}$ (110, 142), puts a stray index on the state (`x_{it+1}`), and gives the entropy term as something the player *maximizes* with a positive sign, which as written is unbounded"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        863,
+        940,
+        947
+      ],
+      "detail": "three of the four panels fix their vertical range by hand - `ylim=(2, 4)` at 863 and 957, `ylim=(1, 2)` at 889 and 895 - and those are exactly the panels whose content the text asks the reader to compare: \"the price path is higher with the Markov perfect equilibrium robust decision rules\" (874-875), \"firm 1's output path is substantially lower\" (900-901), and the three-way belief comparison at 971-976. A hard limit that clips a path leaves the claim unfalsifiable, and nothing in the code guarantees the simulated series stay inside those windows. Second, the object the whole lecture builds toward - the difference between the baseline transition law and the two firms' worst-case laws - is presented at 940-944 as three 3-by-3 arrays printed with `np.round(..., 3)`, which is the least legible form available; the same three matrices as a small table, or the difference $CK_i$ alone, would show what 930-933 says in words. Third, there is no admonition anywhere in 983 lines, including at 588 and 593 where the code carries the warning \"Note: INV1 may not be solved if the matrix is singular\" - a condition on $\\theta_i$ that the theory at 151 alludes to as $\\underline\\theta_i$ and that belongs in a `{warning}` beside it"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        109,
+        161,
+        756,
+        978,
+        980
+      ],
+      "detail": "the two conventions are exactly inverted. The lecture's only two defined terms are italicised - the *volatility matrix* $C$ (109) and *admissibility* (982) - while every use of bold is emphasis: a \"large **set** of alternative models\" (161), the \"**closed-loop** transition matrix\" (756), beliefs that \"**rationalize**\" the decision rules (978), and \"the unique **optimal** rules\" (980). The rule asks for the opposite assignment in all six cases, and the lecture already uses italic correctly for emphasis at 912-914 (*ex-post*, *after*), so the two markers are doing one job each in the wrong direction"
+    }
   ],
   "strengths": [
     "The lecture states its answer before deriving it: 74-80 says a robust Markov perfect equilibrium is characterised by three pairs of equations - Bellman equations, decision rules, and worst-case shock rules - and 163-297 then produces exactly those three pairs, with the third (285-297) being the one new object relative to the non-robust lecture it builds on",
@@ -35,5 +85,9 @@
   ],
   "scanner_doubts": [
     "rob_markov_perf.md:453 - the figure and code counts for this lecture exclude a whole code cell. Line 452-454 is `{code-cell} python3` with `:load: _static/lecture_specific/markov_perf/duopoly_mpe.py`, so the non-robust MPE that every later comparison is measured against is executed from a file the scanner never reads. Whatever that file contains - plotting calls, spelled-out Greek, `figsize` overrides - is invisible to qe-code-* and qe-fig-*, and the file is not in the sparse checkout either, so a reviewer cannot audit it. No reported count is wrong; the coverage gap is worth recording, since a `:load:` cell can hide arbitrary code from the entire mechanical layer"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "fcbf219a954549c9f6d7bec2df8e0dbdf501aabf"
+  }
 }

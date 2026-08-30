@@ -2,16 +2,63 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "tax_smoothing_1",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [321, 329, 366, 499],
-     "detail": "the three figures the lecture builds to are not comparable, and the text treats them as if they were. The constant-interest-rate simulations start from $x_0 = (100, 1, 25)$ and run 500 periods (329, 373, 386); the time-varying-interest-rate simulation starts from $x_0 = (1000, 1, 25)$ and runs 2000 (499-500), a tenfold change in initial debt and a fourfold change in horizon that no line of prose mentions - so the claim at 492-496 that \"debt tends to stay low and stable but recurrently surges\" is read off a different experiment from the one at 382-383, which promises \"a similar, but a smoother pattern\". Second, the model actually solved is not the model derived: 320-321 adds `R[0, 0] = R[0, 0] + 1e-9` with the comment \"Small penalty on the debt required to implement the no-Ponzi scheme\", a modification to the objective {eq} at 203 that the prose never mentions, though it is what keeps the solution well defined. Third, the martingale property that 357-361 states as the condition $(S-MF)(A-BF) = (S-MF)$ is \"checked\" at 365-367 by printing two matrices as a bare tuple and leaving the reader to compare them entry by entry, where `np.allclose` would state the result the text claims"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [41, 43, 95, 152, 404, 447],
-     "detail": "the same attribution is made three times in fifty lines - \"modified versions of his 1979 model suggested by {cite}`barro1999determinants` and {cite}`barro2003religion`)\" (40-41), \"we extend {cite}`Barro1979` along lines he suggested in {cite}`barro1999determinants` and {cite}`barro2003religion`)\" (60-61), and \"Partly inspired by {cite}`barro1999determinants` and {cite}`barro2003religion`\" (82) - and two of the three end with a stray closing parenthesis that has no opening. The description of what a Markov jump LQ program is also appears twice, at 95-101 and again at 110-119. Four sentences are broken: 43 \"{cite}`Barro1979` m is about a government that borrows and lends\"; 82-83 \"our generalizations of {cite}`Barro1979`,  assume\"; 152-154 \"A {doc}`sequel to this lecture <tax_smoothing_2>` describes applies Markov LQ control\"; and 447 \"each Markov state is persistent, and there is are equal chances of moving from one state to the other\". 404 has \"quandratic\""},
-    {"rule": "qe-writing-005", "count": 5, "lines": [30, 52, 93, 111],
-     "detail": "the lecture's own subject term is set both ways within twenty lines: **Markov jump linear quadratic dynamic programming** in bold at 30, 95-96 and 111, and *Markov jump linear quadratic dynamic programming* in italic at 52-53. 93 uses bold for plain emphasis - matrices that are \"**time-varying** and **stochastic**\" - as does 65, \"an **exogenous sequence** of expenditures\", where the surrounding bullets state the same kind of assumption without emphasis. Meanwhile genuine definitions are italicised: *control* variables at 223, *portfolio management* at 138. The three bolded terms at 98-101 (**linear quadratic dynamic programming**, **finite state Markov chains**) are then bolded again at 111-113, so the same two terms are marked as new definitions twice"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [320, 374, 501],
-     "detail": "all three figures are 250 paths drawn one `plt.plot` call at a time inside a `for` loop (374-379, 387-392, 501-506), so matplotlib assigns each path the next colour in the default property cycle - 250 lines in ten rotating colours, at full opacity, with no alpha. The text asks the reader to see a distribution in them: \"the fanning out of the conditional empirical distribution of taxation across time\" (369) and \"debt tends to stay low and stable but recurrently surges\" (492-496). A fan chart of simulated percentiles, or a single colour at low alpha with the median overlaid, would show exactly those two claims; the rainbow of overlaid lines shows neither, and at 2000 periods and 250 paths the third figure is a solid block. The lecture also has no admonition anywhere, which is where the no-Ponzi penalty of 320-321 belongs - it is a substantive modelling choice currently living in a code comment - and the two-state interest-rate process introduced at 428-451 is never drawn, though its whole point is that the mean price 0.9515 exceeds $\\beta$"},
-    {"rule": "qe-code-001", "count": 6, "lines": [291, 300, 321, 373, 479],
-     "detail": "`T` is bound to the simulation length at 373, 386 and 499, in a lecture whose central variable $T_t$ is tax collections (184, 203, 262, 341) - the one name in the file that should not have been reused, and `ts_length` is already the keyword it is passed to. 291-292 pads an array literal to align columns, `[[1,    0], [Gbar, ρ],]`, and leaves a trailing comma before the closing bracket; 300-302 names the two blocks of the state-transition matrix `A_t` and `A_b`, where `A_t` reads as a time subscript on $A$; 321 writes `R[0, 0] = R[0, 0] + 1e-9` for `+=`; 479 ends `lqm.stationary_values();` with a semicolon to suppress notebook output, which PEP8 rules out; and 372-379 and 385-392 are the same eight-line simulation loop twice, re-running 250 paths of 500 periods to plot a different row of the same `x` that the first loop already computed"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        321,
+        329,
+        366,
+        499
+      ],
+      "detail": "the three figures the lecture builds to are not comparable, and the text treats them as if they were. The constant-interest-rate simulations start from $x_0 = (100, 1, 25)$ and run 500 periods (329, 373, 386); the time-varying-interest-rate simulation starts from $x_0 = (1000, 1, 25)$ and runs 2000 (499-500), a tenfold change in initial debt and a fourfold change in horizon that no line of prose mentions - so the claim at 492-496 that \"debt tends to stay low and stable but recurrently surges\" is read off a different experiment from the one at 382-383, which promises \"a similar, but a smoother pattern\". Second, the model actually solved is not the model derived: 320-321 adds `R[0, 0] = R[0, 0] + 1e-9` with the comment \"Small penalty on the debt required to implement the no-Ponzi scheme\", a modification to the objective {eq} at 203 that the prose never mentions, though it is what keeps the solution well defined. Third, the martingale property that 357-361 states as the condition $(S-MF)(A-BF) = (S-MF)$ is \"checked\" at 365-367 by printing two matrices as a bare tuple and leaving the reader to compare them entry by entry, where `np.allclose` would state the result the text claims"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        41,
+        43,
+        95,
+        152,
+        404,
+        447
+      ],
+      "detail": "the same attribution is made three times in fifty lines - \"modified versions of his 1979 model suggested by {cite}`barro1999determinants` and {cite}`barro2003religion`)\" (40-41), \"we extend {cite}`Barro1979` along lines he suggested in {cite}`barro1999determinants` and {cite}`barro2003religion`)\" (60-61), and \"Partly inspired by {cite}`barro1999determinants` and {cite}`barro2003religion`\" (82) - and two of the three end with a stray closing parenthesis that has no opening. The description of what a Markov jump LQ program is also appears twice, at 95-101 and again at 110-119. Four sentences are broken: 43 \"{cite}`Barro1979` m is about a government that borrows and lends\"; 82-83 \"our generalizations of {cite}`Barro1979`,  assume\"; 152-154 \"A {doc}`sequel to this lecture <tax_smoothing_2>` describes applies Markov LQ control\"; and 447 \"each Markov state is persistent, and there is are equal chances of moving from one state to the other\". 404 has \"quandratic\""
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        30,
+        52,
+        93,
+        111
+      ],
+      "detail": "the lecture's own subject term is set both ways within twenty lines: **Markov jump linear quadratic dynamic programming** in bold at 30, 95-96 and 111, and *Markov jump linear quadratic dynamic programming* in italic at 52-53. 93 uses bold for plain emphasis - matrices that are \"**time-varying** and **stochastic**\" - as does 65, \"an **exogenous sequence** of expenditures\", where the surrounding bullets state the same kind of assumption without emphasis. Meanwhile genuine definitions are italicised: *control* variables at 223, *portfolio management* at 138. The three bolded terms at 98-101 (**linear quadratic dynamic programming**, **finite state Markov chains**) are then bolded again at 111-113, so the same two terms are marked as new definitions twice"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        320,
+        374,
+        501
+      ],
+      "detail": "all three figures are 250 paths drawn one `plt.plot` call at a time inside a `for` loop (374-379, 387-392, 501-506), so matplotlib assigns each path the next colour in the default property cycle - 250 lines in ten rotating colours, at full opacity, with no alpha. The text asks the reader to see a distribution in them: \"the fanning out of the conditional empirical distribution of taxation across time\" (369) and \"debt tends to stay low and stable but recurrently surges\" (492-496). A fan chart of simulated percentiles, or a single colour at low alpha with the median overlaid, would show exactly those two claims; the rainbow of overlaid lines shows neither, and at 2000 periods and 250 paths the third figure is a solid block. The lecture also has no admonition anywhere, which is where the no-Ponzi penalty of 320-321 belongs - it is a substantive modelling choice currently living in a code comment - and the two-state interest-rate process introduced at 428-451 is never drawn, though its whole point is that the mean price 0.9515 exceeds $\\beta$"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        291,
+        300,
+        321,
+        373,
+        479
+      ],
+      "detail": "`T` is bound to the simulation length at 373, 386 and 499, in a lecture whose central variable $T_t$ is tax collections (184, 203, 262, 341) - the one name in the file that should not have been reused, and `ts_length` is already the keyword it is passed to. 291-292 pads an array literal to align columns, `[[1,    0], [Gbar, ρ],]`, and leaves a trailing comma before the closing bracket; 300-302 names the two blocks of the state-transition matrix `A_t` and `A_b`, where `A_t` reads as a time subscript on $A$; 321 writes `R[0, 0] = R[0, 0] + 1e-9` for `+=`; 479 ends `lqm.stationary_values();` with a semicolon to suppress notebook output, which PEP8 rules out; and 372-379 and 385-392 are the same eight-line simulation loop twice, re-running 250 paths of 500 periods to plot a different row of the same `x` that the first loop already computed"
+    }
   ],
   "strengths": [
     "The mapping from Barro's problem into the LQ framework is done step by step and every matrix is accounted for: the state and control are named (233-235), the transition law gives $(A,B,C)$ (239-241), $G_t$ and $b_{t-1,t}$ are written as selections from the state (247-249), the budget constraint turns taxation into $T_t = Sx_t + M_tu_t$ (251-257), and squaring that expression exhibits $(R,Q,W)$ (259-263) - so the reader can check the code at 299-318 line against line",
@@ -32,5 +79,9 @@
   ],
   "scanner_doubts": [
     "tax_smoothing_1.md:70,354 - qe-math-010 (proposed) is reported with count 0, but the lecture writes the expectation operator as a plain letter twice: $E_0 \\sum_{t=0}^{\\infty} \\beta^t T_t^2$ at 70 (and again at 203) and $E_t T_{t+1}$ at 354. Neither is caught, for two separate reasons. The `bare_E` branch of `check_math_010` requires a delimiter (`[`, `\\{` or `(`) after the optional subscript, and both of these are followed by a symbol; and the `e_is_operator` gate that enables that branch at all is computed from the same delimiter pattern, so in a file where every expectation is written without brackets the branch never fires. The related `\\mathbb E_t` gap - `bare_mathbb` uses `[PEV]\\b` and `_` is a word character, so a subscripted `\\mathbb E_t` never matches - is documented in the smoothing.md overlay; together the two gaps mean a lecture can use an unbraced plain `E` throughout and score 0 on a Very-High-weight rule"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "fa7e60380679f0ff7e803b45acb57f5ca479cb14"
+  }
 }

@@ -2,18 +2,66 @@
   "series": "lecture-python-intro",
   "lecture": "complex_and_trig",
   "judgment": [
-    {"rule": "qe-code-001", "count": 10, "lines": [100, 103, 143, 146, 152, 153, 347, 351, 416, 418],
-     "detail": "line 100 `#set default figure size` has no space after the hash; lines 143, 347 and 351 leave a single space before an inline comment where two are required; lines 103 and 146 under-indent a continuation line (18 spaces against a visual-indent target of 19; 4 against 13); lines 152 and 153 put a space before a comma (`r+0.01 ,` and `1 ,`); lines 416 and 418 space the same product two ways in one expression (`cos(ω)*cos(θ) - sin(ω) * sin(θ)`)"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [161, 358],
-     "detail": "a lecture titled 'Complex Numbers and Trigonometry' has two figures. De Moivre's theorem (lines 161-177) is about what raising re^{i theta} to a power does in the complex plane - a rotation and a rescaling - and is presented as three lines of algebra with 'and compute'. The angle-sum identities (lines 358-404) are the canonical unit-circle picture and get none either, although the polar diagram at line 122 shows the lecture can draw exactly that"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [215, 254],
-     "detail": "line 215 is a sentence fragment - 'For each element of a sequence of integers $n = 0, 1, 2, \\ldots, $.' - that never says what is being computed, and then the display at line 223 introduces x_n as if it had been defined. Line 254 reads 'has roots $z_1, z_1$', a clause with no subject dangling off the display above it, with the second root's subscript wrong"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [66, 376],
-     "detail": "two redundancies. Lines 66-67 redefine the real and imaginary parts of z twenty lines after line 46 already defined them in the same bold form. Lines 373-381 present cos(omega+theta) and sin(omega+theta) via the exponential formulas, which is only the definition restated; line 383 then says 'We can also obtain the trigonometric identities as follows' and gives the actual derivation, so the earlier block adds nothing"},
-    {"rule": "qe-math-009", "count": 1, "lines": [191],
-     "detail": "line 191 writes the negated angle as `\\cos{(\\text{-}\\theta)}` and `\\sin{(\\text{-}\\theta)}`, using a `\\text{}` box to produce a character that a plain minus sign already gives"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [204],
-     "detail": "line 204 bolds a name for emphasis - 'We recognize this as a theorem of **Pythagoras**' - where the rest of the file reserves bold for the eleven terms it defines"}
+    {
+      "rule": "qe-code-001",
+      "count": 10,
+      "lines": [
+        100,
+        103,
+        143,
+        146,
+        152,
+        153,
+        347,
+        351,
+        416,
+        418
+      ],
+      "detail": "line 100 `#set default figure size` has no space after the hash; lines 143, 347 and 351 leave a single space before an inline comment where two are required; lines 103 and 146 under-indent a continuation line (18 spaces against a visual-indent target of 19; 4 against 13); lines 152 and 153 put a space before a comma (`r+0.01 ,` and `1 ,`); lines 416 and 418 space the same product two ways in one expression (`cos(ω)*cos(θ) - sin(ω) * sin(θ)`)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        161,
+        358
+      ],
+      "detail": "a lecture titled 'Complex Numbers and Trigonometry' has two figures. De Moivre's theorem (lines 161-177) is about what raising re^{i theta} to a power does in the complex plane - a rotation and a rescaling - and is presented as three lines of algebra with 'and compute'. The angle-sum identities (lines 358-404) are the canonical unit-circle picture and get none either, although the polar diagram at line 122 shows the lecture can draw exactly that"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        215,
+        254
+      ],
+      "detail": "line 215 is a sentence fragment - 'For each element of a sequence of integers $n = 0, 1, 2, \\ldots, $.' - that never says what is being computed, and then the display at line 223 introduces x_n as if it had been defined. Line 254 reads 'has roots $z_1, z_1$', a clause with no subject dangling off the display above it, with the second root's subscript wrong"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        66,
+        376
+      ],
+      "detail": "two redundancies. Lines 66-67 redefine the real and imaginary parts of z twenty lines after line 46 already defined them in the same bold form. Lines 373-381 present cos(omega+theta) and sin(omega+theta) via the exponential formulas, which is only the definition restated; line 383 then says 'We can also obtain the trigonometric identities as follows' and gives the actual derivation, so the earlier block adds nothing"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        191
+      ],
+      "detail": "line 191 writes the negated angle as `\\cos{(\\text{-}\\theta)}` and `\\sin{(\\text{-}\\theta)}`, using a `\\text{}` box to produce a character that a plain minus sign already gives"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        204
+      ],
+      "detail": "line 204 bolds a name for emphasis - 'We recognize this as a theorem of **Pythagoras**' - where the rest of the file reserves bold for the eleven terms it defines"
+    }
   ],
   "strengths": [
     "Every symbolic claim in the lecture is checked with sympy rather than asserted: the angle-sum identities at lines 410-419, the double-angle identities at 581-596, the product identities at 656-668, and the full 3x3 orthogonality table at 713-724",
@@ -31,5 +79,9 @@
     "Fix the numeric-versus-symbolic pi collision: line 124 binds `π` to `np.pi` (a float) and line 510 imports sympy's exact `pi`, and the symbolic integral at line 483 is then evaluated with the float bounds `(ω, -π, π)` while the equivalent integrals at lines 517 and 524 correctly use `pi`",
     "Fix the ten PEP8 sites listed above, the typo 'at the heard of' at line 234, the bullet list collapsed onto one line at lines 288-290, the double spaces at lines 234 and 256, the two-sentence paragraphs at lines 406 and 563, and settle on one delimiter-sizing macro - the file currently mixes `\\Big(` (85), `\\big(` (174) and `\\bigg(` (449)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "002a888b5ae0638f40251fc75601ca9ff3ed6f25"
+  }
 }

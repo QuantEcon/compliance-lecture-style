@@ -2,16 +2,60 @@
   "series": "lecture-python.myst",
   "lecture": "pandas_panel",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [416, 434, 465, 553],
-     "detail": "419 does more than the prose says. 416 announces \"We will drop Australia as a continent for plotting purposes\", but `merged = merged.drop('Australia', level='Continent', axis=1)` rebinds `merged` for the rest of the lecture, so every later cell silently excludes Australia: the `.describe()` at 431, the `grouped` object at 449, and `grouped.size()` at 462 - which 456-457 introduces as \"the number of countries in our dataset for each continent\", and it is no longer the dataset - and the closing kernel-density figure at 472-481, which 51 promised as \"kernel density estimates of wages by continent\". Second, 465-467 says the density estimate is \"of real minimum wages in 2016\", while the code at 476 selects `.loc['2015']` and the title at 478 says 2015. Third, 434 (\"This is a simplified way to use `groupby`\") sits directly under the `.describe()` cell at 430-432, so \"This\" reads as `.describe()`, which is not a use of `groupby` at all; the intended antecedent is the `merged.T.groupby(...)` calls twenty lines earlier at 403 and 409. Fourth, the second exercise describes its own filter three incompatible ways: 553-554 asks for \"employment as a percentage of 'active population'\", 592-593 says \"percentage employed in the active population\", and 596-598 selects `UNIT='Percentage of total population'` with `INDIC_EM='Active population'` - which is the active population as a percentage of the *total* population, the reciprocal framing - and the figure is then titled \"Employment in Europe (2015)\" at 614"},
-    {"rule": "qe-code-001", "count": 6, "lines": [302, 365, 375, 528, 610, 620],
-     "detail": "302-304 loops over continent names in a variable called `country`: `replace = ['Central America', 'North America', 'South America']` then `for country in replace:` - the name says country, the values are continents, and the list is named after the method being called on it. The whole loop is one call, `merged.Continent.replace(replace, 'America')`, and its continuation at 304 is indented to column 36 under an opening delimiter at column 48. `matplotlib.pyplot` and `seaborn` are imported at 365-366, three hundred lines after `pandas` at 72 and immediately before their first use, so the file has module-level imports in two places rather than one cell at the top. 371 and 375 both compute `merged.mean().sort_values(ascending=False)`, and 375 runs to 103 characters. Comma spacing is inconsistent within single lines - `columns=['UNIT','AGE', 'SEX', 'INDIC_EM', 'GEO']` at 527 has the space after four of five commas, `swaplevel(0,-1)` at 576, `bbox_to_anchor=(1,0.5)` at 615 - and 528 leaves one space before an inline comment where PEP8 asks for two. 610 writes `palette=(\"husl\")`, which is a parenthesised string rather than the tuple the parentheses suggest, and plots `y=0`, naming the value column by the integer label `reset_index()` happened to give it. And the file's last line, 620, is a closing fence with a leading space, ` ``` `"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [232, 408, 472],
-     "detail": "the figures at 408-414 and 418-425 are the same four lines of code and carry the *identical* title, `plt.title('Average real minimum wage')` at 410 and 421, differing only in whether Australia is in the frame - so two adjacent figures are indistinguishable on the page and the one sentence between them (416) is all that tells them apart. The Venn diagram at 234 is a static PNG with an empty `{figure}` body, introduced by \"This is illustrated by the red shading in the following diagram\" (232): the red region is the entire content of the figure, and nothing in the page text or a caption says which set it is, so a reader who cannot see the image gets nothing. And the kernel-density figure at 472-481 is the lecture's headline deliverable, promised at 51, yet it is the only figure with no interpretive sentence after it - 465-467 explains how it is built and the lecture then moves to \"## Final Remarks\", so the reader is shown four overlapping densities and told nothing about what they show"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [104, 161, 228],
-     "detail": "104 misspells a pandas class and misplaces a comma in the same sentence: \"To more easily filter our time series data, later on, we will convert the index into a `DateTimeIndex`\" - the class is `DatetimeIndex`, which is how the lecture spells it correctly at 151, 320, 328 and 336, and the parenthetical commas around \"later on\" detach it from the clause it modifies. 161 reads \"For the rest of lecture\", dropping the article. And 228-230 loses a preposition in the sentence that explains the join the whole section turns on: \"Here we will pass `how='left'` to keep all countries in `realwage_f`, but discard countries in `worlddata` that do not have a corresponding data entry `realwage_f`\" - it should be \"entry in `realwage_f`\""},
-    {"rule": "qe-writing-005", "count": 3, "lines": [89, 91, 436],
-     "detail": "there is not one bold or italic span in the file, and three terms are introduced that the rule would put in bold. 89 introduces \"long format\" (\"The data is currently in long format, which is difficult to analyze when there are several dimensions to the data\") and 91 its counterpart \"wide format\", and these two are the axis the entire first half of the lecture turns on. 436 introduces the `groupby` idiom with single quotes - \"Using `groupby` generally follows a 'split-apply-combine' process\" - and then defines each of the three steps in the list at 438-440, so it is a definition being marked as a quotation. The same single-quote-for-a-term habit appears at 44 ('panel' and 'data'), 197 ('Country'), 242-246 ('left' / 'right' dataframe) and 240 ('on')"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        416,
+        434,
+        465,
+        553
+      ],
+      "detail": "419 does more than the prose says. 416 announces \"We will drop Australia as a continent for plotting purposes\", but `merged = merged.drop('Australia', level='Continent', axis=1)` rebinds `merged` for the rest of the lecture, so every later cell silently excludes Australia: the `.describe()` at 431, the `grouped` object at 449, and `grouped.size()` at 462 - which 456-457 introduces as \"the number of countries in our dataset for each continent\", and it is no longer the dataset - and the closing kernel-density figure at 472-481, which 51 promised as \"kernel density estimates of wages by continent\". Second, 465-467 says the density estimate is \"of real minimum wages in 2016\", while the code at 476 selects `.loc['2015']` and the title at 478 says 2015. Third, 434 (\"This is a simplified way to use `groupby`\") sits directly under the `.describe()` cell at 430-432, so \"This\" reads as `.describe()`, which is not a use of `groupby` at all; the intended antecedent is the `merged.T.groupby(...)` calls twenty lines earlier at 403 and 409. Fourth, the second exercise describes its own filter three incompatible ways: 553-554 asks for \"employment as a percentage of 'active population'\", 592-593 says \"percentage employed in the active population\", and 596-598 selects `UNIT='Percentage of total population'` with `INDIC_EM='Active population'` - which is the active population as a percentage of the *total* population, the reciprocal framing - and the figure is then titled \"Employment in Europe (2015)\" at 614"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        302,
+        365,
+        375,
+        528,
+        610,
+        620
+      ],
+      "detail": "302-304 loops over continent names in a variable called `country`: `replace = ['Central America', 'North America', 'South America']` then `for country in replace:` - the name says country, the values are continents, and the list is named after the method being called on it. The whole loop is one call, `merged.Continent.replace(replace, 'America')`, and its continuation at 304 is indented to column 36 under an opening delimiter at column 48. `matplotlib.pyplot` and `seaborn` are imported at 365-366, three hundred lines after `pandas` at 72 and immediately before their first use, so the file has module-level imports in two places rather than one cell at the top. 371 and 375 both compute `merged.mean().sort_values(ascending=False)`, and 375 runs to 103 characters. Comma spacing is inconsistent within single lines - `columns=['UNIT','AGE', 'SEX', 'INDIC_EM', 'GEO']` at 527 has the space after four of five commas, `swaplevel(0,-1)` at 576, `bbox_to_anchor=(1,0.5)` at 615 - and 528 leaves one space before an inline comment where PEP8 asks for two. 610 writes `palette=(\"husl\")`, which is a parenthesised string rather than the tuple the parentheses suggest, and plots `y=0`, naming the value column by the integer label `reset_index()` happened to give it. And the file's last line, 620, is a closing fence with a leading space, ` ``` `"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        232,
+        408,
+        472
+      ],
+      "detail": "the figures at 408-414 and 418-425 are the same four lines of code and carry the *identical* title, `plt.title('Average real minimum wage')` at 410 and 421, differing only in whether Australia is in the frame - so two adjacent figures are indistinguishable on the page and the one sentence between them (416) is all that tells them apart. The Venn diagram at 234 is a static PNG with an empty `{figure}` body, introduced by \"This is illustrated by the red shading in the following diagram\" (232): the red region is the entire content of the figure, and nothing in the page text or a caption says which set it is, so a reader who cannot see the image gets nothing. And the kernel-density figure at 472-481 is the lecture's headline deliverable, promised at 51, yet it is the only figure with no interpretive sentence after it - 465-467 explains how it is built and the lecture then moves to \"## Final Remarks\", so the reader is shown four overlapping densities and told nothing about what they show"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        104,
+        161,
+        228
+      ],
+      "detail": "104 misspells a pandas class and misplaces a comma in the same sentence: \"To more easily filter our time series data, later on, we will convert the index into a `DateTimeIndex`\" - the class is `DatetimeIndex`, which is how the lecture spells it correctly at 151, 320, 328 and 336, and the parenthetical commas around \"later on\" detach it from the clause it modifies. 161 reads \"For the rest of lecture\", dropping the article. And 228-230 loses a preposition in the sentence that explains the join the whole section turns on: \"Here we will pass `how='left'` to keep all countries in `realwage_f`, but discard countries in `worlddata` that do not have a corresponding data entry `realwage_f`\" - it should be \"entry in `realwage_f`\""
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        89,
+        91,
+        436
+      ],
+      "detail": "there is not one bold or italic span in the file, and three terms are introduced that the rule would put in bold. 89 introduces \"long format\" (\"The data is currently in long format, which is difficult to analyze when there are several dimensions to the data\") and 91 its counterpart \"wide format\", and these two are the axis the entire first half of the lecture turns on. 436 introduces the `groupby` idiom with single quotes - \"Using `groupby` generally follows a 'split-apply-combine' process\" - and then defines each of the three steps in the list at 438-440, so it is a definition being marked as a quotation. The same single-quote-for-a-term habit appears at 44 ('panel' and 'data'), 197 ('Country'), 242-246 ('left' / 'right' dataframe) and 240 ('on')"
+    }
   ],
   "strengths": [
     "Every transformation is shown one step at a time with its own cell and its own `head()`, so the reader can see the frame change shape: long to wide by `pivot_table` (97-102), the index to datetime (106-109), the `MultiIndex` levels named and inspected (118-124), a top-level selection (129-131), `.stack()` with and without an explicit level (140-149), a year selected and the two lower levels stacked into a cross-section (157-159), and finally `.xs` down to the hourly 2015-dollar frame (169-173)",
@@ -34,5 +78,9 @@
   ],
   "scanner_doubts": [
     "Cleared, not filed. (1) The file's last line is a closing fence with one leading space (` ``` ` at 620, closing the `{solution-end}` at 619), which looked like a `qe-admon-003` miss - it is not: CommonMark permits a closing fence to be indented up to three spaces, the lexer's `FENCE_RE` accepts it, and `doc.unclosed_gated` is correctly empty, so the measured 0 is right and the leading space is cosmetic. (2) `qe-fig-001` at 1 (line 367) is `sns.set_theme()` rather than a `figsize=`; that is a global style override and the rule's own detail text says \"style override\", so it is a correct hit under a rule whose title reads as being about figure size - worth knowing when reading the report, but the count needs no change. (3) The Math, References and JAX categories are genuinely `N/A` here, so `qe-math-009`, `qe-math-014` and `qe-math-015` are omitted rather than scored: the file contains no math environment, no `$...$`, and no citations. (4) `qe-code-003` at 0 is right - `pandas`, `matplotlib` and `seaborn` are all in Anaconda, so no install cell is required, and the three data URLs are read over HTTP rather than installed"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "5683dc422c9f9169de27bde517079e7e66441236"
+  }
 }

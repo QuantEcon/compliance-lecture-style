@@ -2,18 +2,70 @@
   "series": "lecture-python-intro",
   "lecture": "simple_linear_regression",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [195, 207, 252, 324],
-     "detail": "the two \"how does error change\" figures plot the wrong objective. 177-187 defines the cost function as the sum of *squared* residuals, $C = \\sum (y_i - \\alpha - \\beta x_i)^2$, and says OLS **minimizes** it; the cells at 205-207 and 226-228 then compute `abs((α_optimal + β * df['X']) - df['Y']).sum()` - the sum of *absolute* residuals - and 220 and 241 draw `plt.axvline(β_optimal)` / `plt.axvline(α_optimal)`, the OLS minimisers, on top of a curve that OLS does not minimise. The absolute-value objective is precisely the *alternative* method `slr-ex2` (569-577) asks the reader to consider as a different estimator, so the section that motivates OLS is quietly plotting its competitor. Second, that whole section (191-242) needs an answer it has not derived: 195 says \"we know from [the next section](slr:optimal-values) the optimal values ... are\" and hardcodes `β_optimal = 64.38`, `α_optimal = -14.72` (198-199), which the next section then recomputes at 357-365 and never compares against. Third, the two central derivative displays are malformed: 252 writes `\\frac{\\partial C}{\\partial \\alpha}[\\sum_{i=1}^{N}{(y_i - \\alpha - \\beta x_i)^2}]`, and since $C$ *is* that sum (186), the expression reads as the derivative of $C$ applied to $C$ rather than $\\partial C/\\partial\\alpha = \\ldots$; 294 repeats it for $\\beta$. Fourth, 324 loses a sign: expanding 318 gives $x_i y_i - \\bar y x_i + \\beta \\bar x x_i - \\beta x_i^2$, and 324 prints $- \\beta \\bar{x_i} x_i$; the next line, 330, silently restores the correct sign by writing $+\\beta \\sum(\\bar{x_i} x_i - x_i^2)$, so a reader following the algebra step by step is stopped between the two"},
-    {"rule": "qe-code-001", "count": 5, "lines": [51, 67, 99, 220, 501],
-     "detail": "the space after a comma is missing at nineteen sites and the file is inconsistent about it within single lines: `y = [2000,1000,1500,2500,500,900,1100,1500,1800, 250]` (51) puts one in only before the last element, and `df.plot(x='X',y='Y', kind='scatter', ax=ax)` (99, and identically at 100, 121, 122, 139, 140, 171, 172, 381, 382, 561, 562) omits it after the first argument and supplies it after the rest. Also `np.arange(20,100,0.5)` (206), `np.arange(-500,500,5)` (227), `df[['X','Y']]` (344), `pow(df['X'],2)` (356, 544). 67-70 carry trailing whitespace on four consecutive keyword-argument lines. Six statements are terminated with a semicolon to suppress Jupyter output (220, 241, 383, 489, 501, 514), which is E703 - assigning to `_` or calling `plt.show()` does the same job. Eight lines exceed 79 characters, four of them past 100: 416 at 122, 514 at 127, 501 at 117, 466 at 109. And `pow(df['X'], 2)` at 356 and 544 spells exponentiation as a function call where the rule's own preferred form is `df['X']**2`"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [146, 177, 183, 572],
-     "detail": "bold is used three times for emphasis and never for a definition, and italic is not used anywhere in the file. 177 bolds a verb - \"chooses $\\alpha$ and $\\beta$ in such a way that **minimizes** the sum of the squared residuals\" - which is emphasis and belongs in italic; 572 bolds \"is not the **only** way\" and 574 bolds \"the sum of the **absolute values**\", both emphasis. Meanwhile four terms are defined with no emphasis at all: \"which we will call the residuals\" (146), \"Ordinary Least Squares (OLS)\" in the same sentence as the bolded verb (177), \"Let's call this a cost function\" (183), and \"line of best fit\", which appears in scare quotes rather than bold at 30, 77, 106 and 368. The result is that a reader scanning for bold finds the three words the lecture wants stressed and none of the four terms it wants remembered"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [113, 212, 407],
-     "detail": "the guess-and-iterate sequence draws three separate figures for three values of $\\beta$ (91, 113, 131) from three verbatim copies of the same four-line cell, with captions \"Scatter plot with a line of fit\", \"... #2\" and \"... #3\" - so the progression the reader is meant to see happens across three page-widths instead of on one set of axes, where three labelled lines and a legend would show the whole search at once. The two error figures (212, 233) each take a one-dimensional slice through an objective the lecture has just written as a function of two parameters (186); a contour plot of $C(\\alpha, \\beta)$ would show the joint minimum and would also make visible the thing the slices leave implicit - that each is taken holding the other parameter at its optimum. And 407-409 embeds an `{raw} html` iframe pointing at an interactive chart on ourworldindata.org, so the figure the exercise's data step depends on is a live third-party page: it will not render in the PDF build, it cannot be reproduced from the lecture's own code, and the download link two lines later (411) is the reproducible path that is offered only \"if you get stuck\". The five figures in the solution (482, 488, 500, 513, 556) carry no mystnb metadata and no captions"},
-    {"rule": "qe-math-009", "count": 3, "lines": [25, 80, 285],
-     "detail": "the sample means are written $\\bar{y_i}$ and $\\bar{x_i}$ - a bar over a *subscripted* symbol, which reads as the mean of the $i$-th observation rather than the mean over $i$ - at 285, 288, 318, 324, 330 and 336, i.e. in {eq}`eq:optimal-alpha` and {eq}`eq:optimal-beta`, the two results the lecture exists to produce, and in the two `{eq}` references at 396 and 527. The hat is placed inconsistently in the same way and only two displays apart: $\\hat{y_i}$ at 80 puts it over the whole subscripted symbol, $\\hat{y}_i$ at 151 puts it over the letter alone. And 25 crams the index range into the model display as `y_i = \\alpha + \\beta x_i + \\epsilon_i, i = 1,2,...,N`, with `...` instead of `\\ldots` and no separator before the range"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [75, 106, 459],
-     "detail": "three paragraphs begin in lower case as if continuing a sentence interrupted by a figure - \"as you can see the data suggests that more ice-cream is typically sold on hotter days\" (75), \"now substituting for $\\alpha$\" and its neighbours in the derivation (315, 321, 327, 333, and 261, 267, 273, 279 above it) - which is a defensible running-commentary style for a derivation but reads as a fragment when a figure or a display intervenes. 106-142 says the same thing three times in three copied cells (the guess-and-iterate figures). And the exercise-1 solution carries four sentences of generic advice that state a principle without applying it: \"It is often a good idea to at first import a few lines of data from a csv\" (426), \"Sometimes it can be useful to rename your columns\" (438), \"It is always a good idea to spend a bit of time understanding what data you actually have\" (459), \"For example, you may want to explore this data to see if there is consistent reporting\" (461) - of which 459 and 461 add nothing that 461-489 does not then demonstrate directly"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        195,
+        207,
+        252,
+        324
+      ],
+      "detail": "the two \"how does error change\" figures plot the wrong objective. 177-187 defines the cost function as the sum of *squared* residuals, $C = \\sum (y_i - \\alpha - \\beta x_i)^2$, and says OLS **minimizes** it; the cells at 205-207 and 226-228 then compute `abs((α_optimal + β * df['X']) - df['Y']).sum()` - the sum of *absolute* residuals - and 220 and 241 draw `plt.axvline(β_optimal)` / `plt.axvline(α_optimal)`, the OLS minimisers, on top of a curve that OLS does not minimise. The absolute-value objective is precisely the *alternative* method `slr-ex2` (569-577) asks the reader to consider as a different estimator, so the section that motivates OLS is quietly plotting its competitor. Second, that whole section (191-242) needs an answer it has not derived: 195 says \"we know from [the next section](slr:optimal-values) the optimal values ... are\" and hardcodes `β_optimal = 64.38`, `α_optimal = -14.72` (198-199), which the next section then recomputes at 357-365 and never compares against. Third, the two central derivative displays are malformed: 252 writes `\\frac{\\partial C}{\\partial \\alpha}[\\sum_{i=1}^{N}{(y_i - \\alpha - \\beta x_i)^2}]`, and since $C$ *is* that sum (186), the expression reads as the derivative of $C$ applied to $C$ rather than $\\partial C/\\partial\\alpha = \\ldots$; 294 repeats it for $\\beta$. Fourth, 324 loses a sign: expanding 318 gives $x_i y_i - \\bar y x_i + \\beta \\bar x x_i - \\beta x_i^2$, and 324 prints $- \\beta \\bar{x_i} x_i$; the next line, 330, silently restores the correct sign by writing $+\\beta \\sum(\\bar{x_i} x_i - x_i^2)$, so a reader following the algebra step by step is stopped between the two"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        51,
+        67,
+        99,
+        220,
+        501
+      ],
+      "detail": "the space after a comma is missing at nineteen sites and the file is inconsistent about it within single lines: `y = [2000,1000,1500,2500,500,900,1100,1500,1800, 250]` (51) puts one in only before the last element, and `df.plot(x='X',y='Y', kind='scatter', ax=ax)` (99, and identically at 100, 121, 122, 139, 140, 171, 172, 381, 382, 561, 562) omits it after the first argument and supplies it after the rest. Also `np.arange(20,100,0.5)` (206), `np.arange(-500,500,5)` (227), `df[['X','Y']]` (344), `pow(df['X'],2)` (356, 544). 67-70 carry trailing whitespace on four consecutive keyword-argument lines. Six statements are terminated with a semicolon to suppress Jupyter output (220, 241, 383, 489, 501, 514), which is E703 - assigning to `_` or calling `plt.show()` does the same job. Eight lines exceed 79 characters, four of them past 100: 416 at 122, 514 at 127, 501 at 117, 466 at 109. And `pow(df['X'], 2)` at 356 and 544 spells exponentiation as a function call where the rule's own preferred form is `df['X']**2`"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        146,
+        177,
+        183,
+        572
+      ],
+      "detail": "bold is used three times for emphasis and never for a definition, and italic is not used anywhere in the file. 177 bolds a verb - \"chooses $\\alpha$ and $\\beta$ in such a way that **minimizes** the sum of the squared residuals\" - which is emphasis and belongs in italic; 572 bolds \"is not the **only** way\" and 574 bolds \"the sum of the **absolute values**\", both emphasis. Meanwhile four terms are defined with no emphasis at all: \"which we will call the residuals\" (146), \"Ordinary Least Squares (OLS)\" in the same sentence as the bolded verb (177), \"Let's call this a cost function\" (183), and \"line of best fit\", which appears in scare quotes rather than bold at 30, 77, 106 and 368. The result is that a reader scanning for bold finds the three words the lecture wants stressed and none of the four terms it wants remembered"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        113,
+        212,
+        407
+      ],
+      "detail": "the guess-and-iterate sequence draws three separate figures for three values of $\\beta$ (91, 113, 131) from three verbatim copies of the same four-line cell, with captions \"Scatter plot with a line of fit\", \"... #2\" and \"... #3\" - so the progression the reader is meant to see happens across three page-widths instead of on one set of axes, where three labelled lines and a legend would show the whole search at once. The two error figures (212, 233) each take a one-dimensional slice through an objective the lecture has just written as a function of two parameters (186); a contour plot of $C(\\alpha, \\beta)$ would show the joint minimum and would also make visible the thing the slices leave implicit - that each is taken holding the other parameter at its optimum. And 407-409 embeds an `{raw} html` iframe pointing at an interactive chart on ourworldindata.org, so the figure the exercise's data step depends on is a live third-party page: it will not render in the PDF build, it cannot be reproduced from the lecture's own code, and the download link two lines later (411) is the reproducible path that is offered only \"if you get stuck\". The five figures in the solution (482, 488, 500, 513, 556) carry no mystnb metadata and no captions"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        25,
+        80,
+        285
+      ],
+      "detail": "the sample means are written $\\bar{y_i}$ and $\\bar{x_i}$ - a bar over a *subscripted* symbol, which reads as the mean of the $i$-th observation rather than the mean over $i$ - at 285, 288, 318, 324, 330 and 336, i.e. in {eq}`eq:optimal-alpha` and {eq}`eq:optimal-beta`, the two results the lecture exists to produce, and in the two `{eq}` references at 396 and 527. The hat is placed inconsistently in the same way and only two displays apart: $\\hat{y_i}$ at 80 puts it over the whole subscripted symbol, $\\hat{y}_i$ at 151 puts it over the letter alone. And 25 crams the index range into the model display as `y_i = \\alpha + \\beta x_i + \\epsilon_i, i = 1,2,...,N`, with `...` instead of `\\ldots` and no separator before the range"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        75,
+        106,
+        459
+      ],
+      "detail": "three paragraphs begin in lower case as if continuing a sentence interrupted by a figure - \"as you can see the data suggests that more ice-cream is typically sold on hotter days\" (75), \"now substituting for $\\alpha$\" and its neighbours in the derivation (315, 321, 327, 333, and 261, 267, 273, 279 above it) - which is a defensible running-commentary style for a derivation but reads as a fragment when a figure or a display intervenes. 106-142 says the same thing three times in three copied cells (the guess-and-iterate figures). And the exercise-1 solution carries four sentences of generic advice that state a principle without applying it: \"It is often a good idea to at first import a few lines of data from a csv\" (426), \"Sometimes it can be useful to rename your columns\" (438), \"It is always a good idea to spend a bit of time understanding what data you actually have\" (459), \"For example, you may want to explore this data to see if there is consistent reporting\" (461) - of which 459 and 461 add nothing that 461-489 does not then demonstrate directly"
+    }
   ],
   "strengths": [
     "The lecture teaches OLS by making the reader feel the problem first: 83-142 guesses $\\beta = 10$, then 100, then 65, each time plotting the fit and saying what is wrong with it, and only at 144 turns to \"formalizing this guessing process by thinking of this problem as an optimization problem\". For an introductory audience meeting least squares for the first time, that ordering is worth the space it takes",
@@ -38,5 +90,9 @@
     "Sweep the code style: the nineteen missing spaces after commas (51, 52, 99, 100, 121, 122, 139, 140, 171, 172, 206, 227, 344, 356, 381, 382, 544, 561, 562), the trailing whitespace at 67-70, the six output-suppressing semicolons (220, 241, 383, 489, 501, 514), the eight over-long lines (416 at 122 characters, 514 at 127, 501 at 117, 466 at 109, plus 433, 489, 543, 563), and `pow(df['X'], 2)` in favour of `df['X']**2` at 356 and 544",
     "Finish the mechanical items: mystnb `caption`/`name` metadata on the five solution figures (482, 488, 500, 513, 556), `:class: dropdown` on the `{solution-start}` at 402 (qe-admon-002), `\\cdot` or juxtaposition instead of `N*\\alpha` at 276 (qe-math-012, proposed), the three over-long captions at 91, 113 and 131, the three double spaces at 195, 396 and 527, and the thirteen prose lines with trailing whitespace (30, 37-43, 75, 144, 177, 279, 459, 572, 574). The three `qe-writing-004` hits at 424 and 463 are \"Our World in Data\" and \"Life Expectancy Data\" - the first is the proper name of the source and should be left alone; the second is a real over-capitalisation"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "d8962d6abcb0c5e1014b724b6d72c3947e440cf6"
+  }
 }

@@ -2,18 +2,70 @@
   "series": "lecture-python.myst",
   "lecture": "phillips_priors",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [419, 129, 541, 153],
-     "detail": "(1) The section that carries the lecture's cleanest result introduces two undefined symbols in one sentence. 419 reads \"it is the eigenvector associated with the largest eigenvalue of the belief-innovation covariance $Q(\\bar\\gamma, \\bar P) = \\hat V$ - the prior itself\": $Q$ appears here and nowhere else in the file, $\\hat V$ appears only here and at 677, and neither is defined, so the reader cannot tell whether $\\hat V$ is $V$, $\\sigma^{-2}V$ or something else - while the code two lines later simply uses `V_star` (422). (2) `StaticPhillips.__init__` hard-codes `self.σ = σ1` with the comment `# govt regression error std = σ1` (129), i.e. the class asserts the government has the variance right - and the whole of §\"Sims's nonconvergence\" (440-480) is about the case where it does not. `effective_gain` and `simulate` therefore take a separate `σ_govt` argument (467, 487) while `V_star` (230), `P_star` (231) and every `solve_riccati` call outside them (325, 345, 652) keep using `model.σ`. Nothing says whether the baseline prior is meant to be held fixed across the two specifications. (3) 541-542 says \"Three seeds make the point without any cherry-picking: seed 0 never escapes, seed 4 escapes repeatedly and is pulled back each time, and seed 6 escapes and stays away for a long spell\" - but the figure at 551-568 plots all three seeds in *both* panels, so it never says which specification each description belongs to, and the per-seed narrative sits awkwardly beside 538's claim that under Sims's misallocation \"*every* path escapes\". (4) Belief 3 is named at 153 (\"in a dynamic version, coefficients on current and lagged inflation summing to zero\") and never used again; the lecture is static throughout, as 59 says, so the third of the three \"belief vectors worth naming\" is content the reader has to carry and never spend"},
-    {"rule": "qe-math-009", "count": 4, "lines": [419, 219, 187, 115],
-     "detail": "four places where a symbol could simply be dropped. (1) $Q(\\bar\\gamma, \\bar P) = \\hat V$ at 419 gives two new names to an object the lecture has called $V$ for two hundred lines and the sentence itself calls \"the prior itself\"; 677 then uses $\\hat V$ again in the exercise. Writing $V$ would be shorter and correct. (2) The gain is `\\epsilon` at 219 (three times, including $V^* \\equiv \\epsilon^2 \\sigma^2 M(\\bar\\gamma)^{-1}$) and `\\varepsilon` at 480 and 482 - the same parameter in two different glyphs, which render as visibly different characters, and the code calls it `ε` (320) and `ε_common` (474). (3) $\\Lambda_n$ is the drift innovation at 187 and $\\lambda$ is the prior-tightening parameter from 297 onward, so upper- and lower-case lambda name unrelated objects in one file; `λ` in the code (314-326, 343, 650) is only ever the second. (4) 115 introduces $\\hat{\\mathbb{E}}$ for the government's subjective expectation, uses it once, and never explains the hat - the only decorated operator in a file that otherwise writes $\\mathbb{V}$ and $\\operatorname{cov}$ plainly (161, 189)"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [219, 40, 438, 587, 615],
-     "detail": "the file is otherwise well-paced - one sentence per paragraph, no qe-writing-001 hits at all - and the cost is concentrated in five long sentences. 219 is 63 words carrying three equation references and two definitions (\"Constant-gain recursive least squares is the special case in which the government's prior is $V = V^* \\equiv \\epsilon^2\\sigma^2 M(\\bar\\gamma)^{-1}$ and $\\sigma = \\sigma_1$; then {eq}`pp_riccati` gives ... and {eq}`pp_kalman` reduces to ... with gain $\\epsilon$\") - the sentence that establishes the link to the previous lecture is the hardest one in the file to read. 40 is 39 words and four references; 438 is 40 words with a parenthesis nested inside an em-dash aside; 587 is 57 words ending in an appositive that names another lecture; 615 is 45 words. Splitting each at its semicolon or dash would cost nothing"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [413, 336, 466],
-     "detail": "the lecture draws its mean dynamics well and then stops drawing exactly where the geometry gets interesting. (1) §\"Escape dynamics and the direction of escape\" (413-438) is the section with the prettiest result - the escape direction is the dominant eigenvector of the prior - and its entire output is two `print` lines (430-431). The figure is already half-built: 375-380 plots belief space with the self-confirming point marked `kx`, so adding the eigenvector as an arrow from $(2u, -1)$ to $(u, 0)$, with the Ramsey line $b = 0$, would show the claim rather than assert it, and would let the exercise-2 comparison of two priors (699-702) be drawn on the same axes. (2) The Hopf bifurcation is described at 336-338 and split across two figures that are never combined: 307-333 plots the maximum real part against $\\lambda$, 359-383 plots one cycle at $\\lambda = 0.7$. The standard picture - cycle amplitude against $\\lambda$, going to zero at the bifurcation point - would join them and is a three-line loop over the existing `solve_ivp` call. (3) The mechanism at 456-464 (understating the error variance inflates the steady-state $P$ and hence the gain) is quantified by exactly two printed numbers at 474-476; the effective gain plotted against $\\sigma$ over $[\\,0.05, 0.5\\,]$, with $\\sigma_1$ marked, would carry it in one panel"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [289, 59, 338],
-     "detail": "the file's convention is clear and almost always followed - bold for definitions (**mean dynamics** and **escape dynamics** 50-51, **learning cycle** 55, **prior about parameter drift** 194, **E-stability** 275, **stable limit cycle** 295) and italic for emphasis (*any* 48, *toward*/*away* 50-51, *unstable* 55, *forever* 57, *joint* 238, *general* 287, *typical*/*rare* 409-411, *right* 448, *too little* 456, *every* 538) - which makes the three deviations stand out. 289 sets an emphatic negation in bold, \"the $P$ block does **not** decouple\", where 631 writes the identical construction in italic, \"does *not* destabilize the self-confirming equilibrium\". 59 bolds the bare adjective **static** as emphasis and 90 then bolds **static model** as a definition, so the same term is bolded twice for two different reasons while 70, 159 and 487 leave it plain. And 338 introduces a named concept in italic - \"what {cite}`Bullard1994` calls a *learning equilibrium*\" - which is a definition, not emphasis"},
-    {"rule": "qe-code-001", "count": 3, "lines": [267, 472, 560],
-     "detail": "flake8 (90-character limit) finds two things in the whole file and both are real: 267 puts two statements on one line with a semicolon, `gp[j] += h; gm[j] -= h` (E702), the only semicolon in the lecture; and 560 is 95 characters. The third item is a naming one a linter cannot see: `effective_gain` (467-472) returns `(P @ Φ)[0] / (σ_govt**2 + Φ @ P @ Φ)`, the *first component* of the Kalman gain vector, under a name that promises the gain - the number printed at 476 and quoted at 479 (\"multiplies the effective gain by more than twenty\") is the intercept's gain, not the gain. `gain_intercept` would say what it is. Otherwise the code matches the algebra unusually closely: Unicode Greek throughout (`γ`, `σ1`, `σ2`, `ε`, `λ`, `Φ`, `Λ` absent only because the drift is never simulated), `γ_sce`, `M_sce`, `V_star`, `P_star` all named after their symbols, and no long lines apart from 560"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        419,
+        129,
+        541,
+        153
+      ],
+      "detail": "(1) The section that carries the lecture's cleanest result introduces two undefined symbols in one sentence. 419 reads \"it is the eigenvector associated with the largest eigenvalue of the belief-innovation covariance $Q(\\bar\\gamma, \\bar P) = \\hat V$ - the prior itself\": $Q$ appears here and nowhere else in the file, $\\hat V$ appears only here and at 677, and neither is defined, so the reader cannot tell whether $\\hat V$ is $V$, $\\sigma^{-2}V$ or something else - while the code two lines later simply uses `V_star` (422). (2) `StaticPhillips.__init__` hard-codes `self.σ = σ1` with the comment `# govt regression error std = σ1` (129), i.e. the class asserts the government has the variance right - and the whole of §\"Sims's nonconvergence\" (440-480) is about the case where it does not. `effective_gain` and `simulate` therefore take a separate `σ_govt` argument (467, 487) while `V_star` (230), `P_star` (231) and every `solve_riccati` call outside them (325, 345, 652) keep using `model.σ`. Nothing says whether the baseline prior is meant to be held fixed across the two specifications. (3) 541-542 says \"Three seeds make the point without any cherry-picking: seed 0 never escapes, seed 4 escapes repeatedly and is pulled back each time, and seed 6 escapes and stays away for a long spell\" - but the figure at 551-568 plots all three seeds in *both* panels, so it never says which specification each description belongs to, and the per-seed narrative sits awkwardly beside 538's claim that under Sims's misallocation \"*every* path escapes\". (4) Belief 3 is named at 153 (\"in a dynamic version, coefficients on current and lagged inflation summing to zero\") and never used again; the lecture is static throughout, as 59 says, so the third of the three \"belief vectors worth naming\" is content the reader has to carry and never spend"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        419,
+        219,
+        187,
+        115
+      ],
+      "detail": "four places where a symbol could simply be dropped. (1) $Q(\\bar\\gamma, \\bar P) = \\hat V$ at 419 gives two new names to an object the lecture has called $V$ for two hundred lines and the sentence itself calls \"the prior itself\"; 677 then uses $\\hat V$ again in the exercise. Writing $V$ would be shorter and correct. (2) The gain is `\\epsilon` at 219 (three times, including $V^* \\equiv \\epsilon^2 \\sigma^2 M(\\bar\\gamma)^{-1}$) and `\\varepsilon` at 480 and 482 - the same parameter in two different glyphs, which render as visibly different characters, and the code calls it `ε` (320) and `ε_common` (474). (3) $\\Lambda_n$ is the drift innovation at 187 and $\\lambda$ is the prior-tightening parameter from 297 onward, so upper- and lower-case lambda name unrelated objects in one file; `λ` in the code (314-326, 343, 650) is only ever the second. (4) 115 introduces $\\hat{\\mathbb{E}}$ for the government's subjective expectation, uses it once, and never explains the hat - the only decorated operator in a file that otherwise writes $\\mathbb{V}$ and $\\operatorname{cov}$ plainly (161, 189)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        219,
+        40,
+        438,
+        587,
+        615
+      ],
+      "detail": "the file is otherwise well-paced - one sentence per paragraph, no qe-writing-001 hits at all - and the cost is concentrated in five long sentences. 219 is 63 words carrying three equation references and two definitions (\"Constant-gain recursive least squares is the special case in which the government's prior is $V = V^* \\equiv \\epsilon^2\\sigma^2 M(\\bar\\gamma)^{-1}$ and $\\sigma = \\sigma_1$; then {eq}`pp_riccati` gives ... and {eq}`pp_kalman` reduces to ... with gain $\\epsilon$\") - the sentence that establishes the link to the previous lecture is the hardest one in the file to read. 40 is 39 words and four references; 438 is 40 words with a parenthesis nested inside an em-dash aside; 587 is 57 words ending in an appositive that names another lecture; 615 is 45 words. Splitting each at its semicolon or dash would cost nothing"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        413,
+        336,
+        466
+      ],
+      "detail": "the lecture draws its mean dynamics well and then stops drawing exactly where the geometry gets interesting. (1) §\"Escape dynamics and the direction of escape\" (413-438) is the section with the prettiest result - the escape direction is the dominant eigenvector of the prior - and its entire output is two `print` lines (430-431). The figure is already half-built: 375-380 plots belief space with the self-confirming point marked `kx`, so adding the eigenvector as an arrow from $(2u, -1)$ to $(u, 0)$, with the Ramsey line $b = 0$, would show the claim rather than assert it, and would let the exercise-2 comparison of two priors (699-702) be drawn on the same axes. (2) The Hopf bifurcation is described at 336-338 and split across two figures that are never combined: 307-333 plots the maximum real part against $\\lambda$, 359-383 plots one cycle at $\\lambda = 0.7$. The standard picture - cycle amplitude against $\\lambda$, going to zero at the bifurcation point - would join them and is a three-line loop over the existing `solve_ivp` call. (3) The mechanism at 456-464 (understating the error variance inflates the steady-state $P$ and hence the gain) is quantified by exactly two printed numbers at 474-476; the effective gain plotted against $\\sigma$ over $[\\,0.05, 0.5\\,]$, with $\\sigma_1$ marked, would carry it in one panel"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        289,
+        59,
+        338
+      ],
+      "detail": "the file's convention is clear and almost always followed - bold for definitions (**mean dynamics** and **escape dynamics** 50-51, **learning cycle** 55, **prior about parameter drift** 194, **E-stability** 275, **stable limit cycle** 295) and italic for emphasis (*any* 48, *toward*/*away* 50-51, *unstable* 55, *forever* 57, *joint* 238, *general* 287, *typical*/*rare* 409-411, *right* 448, *too little* 456, *every* 538) - which makes the three deviations stand out. 289 sets an emphatic negation in bold, \"the $P$ block does **not** decouple\", where 631 writes the identical construction in italic, \"does *not* destabilize the self-confirming equilibrium\". 59 bolds the bare adjective **static** as emphasis and 90 then bolds **static model** as a definition, so the same term is bolded twice for two different reasons while 70, 159 and 487 leave it plain. And 338 introduces a named concept in italic - \"what {cite}`Bullard1994` calls a *learning equilibrium*\" - which is a definition, not emphasis"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        267,
+        472,
+        560
+      ],
+      "detail": "flake8 (90-character limit) finds two things in the whole file and both are real: 267 puts two statements on one line with a semicolon, `gp[j] += h; gm[j] -= h` (E702), the only semicolon in the lecture; and 560 is 95 characters. The third item is a naming one a linter cannot see: `effective_gain` (467-472) returns `(P @ Φ)[0] / (σ_govt**2 + Φ @ P @ Φ)`, the *first component* of the Kalman gain vector, under a name that promises the gain - the number printed at 476 and quoted at 479 (\"multiplies the effective gain by more than twenty\") is the intercept's gain, not the gain. `gain_intercept` would say what it is. Otherwise the code matches the algebra unusually closely: Unicode Greek throughout (`γ`, `σ1`, `σ2`, `ε`, `λ`, `Φ`, `Λ` absent only because the drift is never simulated), `γ_sce`, `M_sce`, `V_star`, `P_star` all named after their symbols, and no long lines apart from 560"
+    }
   ],
   "strengths": [
     "The `{warning}` at 100-113 is the single most useful block in the file: it records that the sibling lecture {doc}`phillips_escaping_nash` orders the belief vector the other way round, gives the exact translation ($a = \\gamma_{-1}$, $b = \\gamma_1$, $(2u,-1)$ here is $(-1, u(1+\\theta^2))$ there with $\\theta = 1$) and notes that $M$, $V$ and $P$ transpose correspondingly - a coordinate clash between two lectures in the same suite, declared rather than left to bite",
@@ -43,5 +95,9 @@
   "scanner_doubts": [
     "Nothing to file. The three checks I expected to misfire here do not: qe-math-002 is silent despite $\\Phi_n^\\top$, $W_n = (W_{1n}, W_{2n})^\\top$ and $\\Phi = (1, \\pi)^\\top$ (202, 84, 196) all being genuine transposes written correctly with `^\\top`, and despite `E[ΦΦ']` appearing inside a docstring at 137 - the lexer types that line as code, which is why it is not counted, and it would be a false positive if it were. qe-writing-004's single hit (615, 'Inflation' in 'the Great Inflation') is the already-filed `inflation`-as-proper-name case, so I am not re-filing it, but note that here it is unambiguous: 'the Great Inflation' is the standard name of the episode and the capital is required.",
     "Cleared, not filed. (1) qe-math-014 (proposed) has nothing to score: the only probability-like operators are $\\mathbb{V}[\\pi]$ (161), $\\operatorname{cov}$ (189) and $\\hat{\\mathbb{E}}$ (115), and no event or set is ever an argument to $\\mathbb{P}$. (2) qe-math-015 (proposed) likewise: no density, mass function or CDF is named. (3) All three qe-fig-003 hits are genuine (372, 379, 564) and two of them, 'Figure 5a' and 'Figure 5b', additionally carry the source paper's figure numbering into the lecture. (4) flake8 with `--extend-select=E226,E228` at a 90-character limit reports only E702 at 267 and E501 at 560, so the drafted Code 10/10 is not an artefact of a lenient extractor."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "2a2c8a0abc18d9c8796621b4908160922266b514"
+  }
 }

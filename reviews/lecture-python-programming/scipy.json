@@ -68,5 +68,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 x4 (scipy.md:131, 134, 174, 179) flags `beta`, but every hit is `scipy.stats.beta` - the imported Beta-distribution object (`from scipy.stats import beta`, `q = beta(5, 5)`, `beta.rvs`, `beta.pdf`), not a spelled-out Greek parameter. Renaming it to `β` would break the import. The lecture does use Unicode Greek where the symbol really is a parameter (`μ, σ, β, n, K = ...` at 515, and 518, 580), so the honest count for this rule is 0; the check needs to skip names bound by an import or used as an attribute owner."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "fec66033a1c5d7e30cd42d3e785623086a751f32"
+  }
 }

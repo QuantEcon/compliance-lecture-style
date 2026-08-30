@@ -66,5 +66,9 @@
     "Shorten the four seven-word-plus captions at 567, 782, 958 and 1324 (qe-fig-004, 4 occurrences), set `lw=2` on the two plot calls at 594 and 805 (qe-fig-008, 2 occurrences), and give the y-axis label at 1367 a single-symbol name - `$\\hat{tp}/tp^\\star$` renders as products of italic $t$ and $p$",
     "Sweep the small items: strip the multi-space `=` alignment at 552-558, 577-578 and 762-765 and fix the four mis-indented continuation blocks; write \"IID\" at 110 (qe-writing-009, proposed); move the mid-narrative `{cite}` at 63 (qe-ref-001); split the two-sentence paragraphs at 652 and 680 (qe-writing-001); and collapse the double spaces at 51, 54, 653 and 680 (qe-writing-008)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "b740f36c1c9fef305558a8d21f8514efc56e7212"
+  }
 }

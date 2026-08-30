@@ -2,18 +2,70 @@
   "series": "lecture-python.myst",
   "lecture": "phillips_lost_conquest",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [110, 297, 364, 385],
-     "detail": "the third of the lecture's three announced elements is never delivered. 61 says \"Three drifting beliefs turn out to rationalize the slow response\", 65 names the third as **Real-time output-gap mismeasurement**, 104-108 sources it to {cite}`Orphanides2001` and states the claim (\"Through 2020-2023 the real-time gap was persistently *below* the later-revised measure\"), and 110 then defers it: \"We use current-vintage data below and return to the real-time distinction in the conclusion.\" There is no conclusion - the headings run Overview, The three elements, The Fed's drifting-coefficients beliefs, The Fed's Phelps problem, Why the Fed was slow, A self-confirming equilibrium, ### The trap, Exercises - and 428-430, the only closing prose, is about the *next* lecture. Second, {prf:ref}`lc_prop2` (364-368) is stated as one of two propositions the paper proves, 370 says \"Let's reproduce {prf:ref}`lc_prop1`\", and prop2 is then never reproduced or mentioned again, although the cubic solver at 379-385 is most of what a population-OLS-slope version would need. Third, the numbers in the prose are hard-coded against data downloaded live from FRED: 297 says \"correlation about 0.95\" one line after 293-294 computes and prints the same correlation, 328 says the counterfactual rate goes \"well above 4%\", and 397 says measured persistence \"falls from near one toward one-half\" - all three can drift out of agreement with the figure on any rebuild after a data revision. Fourth, {prf:ref}`lc_prop1` is explicitly conditioned on being \"In the determinacy region\" (361), but `measured_persistence` (379-385) filters roots to $|\\lambda| < 1$ and then returns the smallest-modulus one with `stable[np.argmin(np.abs(stable))]` - it neither checks that exactly one stable root exists nor warns when it does not, so the figure at 390-394 is drawn without the hypothesis the proposition needs being tested"},
-    {"rule": "qe-math-009", "count": 3, "lines": [132, 236, 352],
-     "detail": "$X_t$ names two different vectors seventy lines apart: 132 sets $X_t = (1, \\pi_{t-1}, x_t)^\\top$, the three-element RLS regressor, and 208 sets $X_t = (1, \\pi_t, x_t, i_{t-1})^\\top$, the four-element LQ state - and both are live in the same loop at 263-272, where the code has to call them `X` (266) and `state` (271) to keep them apart. $\\beta$ likewise carries two values: 236 sets `\\u03b2 = 0.95` as the Fed's LQ discount factor, and 346 and 379 use $\\beta$ for nature's New Keynesian discount factor, defaulted to `0.99`, with nothing said about the change. And $\\kappa$ does double duty at exactly the point where the distinction is the argument: 119-122 makes $\\kappa_t$ the Fed's *perceived* slope, 346-352 makes bare $\\kappa$ the *structural* slope, and 367-399 is entirely about how the two differ - a subscript is carrying the whole weight of the lecture's main claim, where a separate letter would carry it for free"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [44, 417, 490, 198],
-     "detail": "417 is a 69-word sentence with three clauses, two `{doc}` links, an em-dash aside and a nested quotation - \"This is a modern replay of the *Conquest*'s recurrent dynamics, one level up: the mechanism now works through the perceived slope and persistence of the Phillips curve and the policy-rate instrument, and the misspecification is not about expectations but about the *policy endogeneity* of the reduced-form Phillips curve that the Fed treats as structural - ignoring the Lucas Critique in just the way the \\\"vindication\\\" story of {doc}`phillips_two_stories` describes\" - and it is the paragraph that states what the lecture is finally about. 44 opens the lecture with a 40-word sentence carrying a five-item em-dash list of terms the reader has not met yet (*anticipated-utility*, *drifting-coefficients*, *constant-gain recursive least squares*, *self-confirming equilibrium*) plus three cross-references. 490 is a 54-word single-sentence exercise instruction with four sequenced steps that would read better as a numbered list, as `lc_ex1` at 438-442 already does. And 198 is 48 words tracking $\\rho_t$ through four separate time periods in one breath"},
-    {"rule": "qe-code-001", "count": 5, "lines": [139, 157, 238, 259, 269],
-     "detail": "the constant-gain RLS loop is written out three times - inside `estimate_beliefs` (162-168), again at module level to capture `\\u03b8_2000` (263-272), and a third time inside `recommend` (456-460) - so the same six lines have to be kept in step in three places, and only the first is a function with arguments. Assignments are padded to align at 140-142 (`gdp   = ...`, `pot   = ...`, `ff    = ...`), which PEP8 lists under extraneous whitespace. Four one-line docstrings use single quotes rather than triple (157, 239, 380, 453). `phelps_rate` is declared `def phelps_rate(\\u03b8, state, \\u03b7=\\u03b7)` at 238, whose default argument reads the module global of the same name - it works, and the exercise at 461-462 depends on it, but it makes `\\u03b7` the one loss parameter that is settable while `\\u03b2`, `\\u03c0_star`, `\\u03bb_x`, `b0`, `b1` and `g` are all read from globals inside the same function. 259-262 then re-initialises `\\u03b8` and `R` at module level, duplicating 159-160, and packs two unrelated initialisations onto one line (`opt, \\u03b8_2000 = [], None`). 269 re-reads `data.index[t].year` when 264 has already stored it in `yr`. Two names also clash with the mathematics: `R` is the RLS second-moment matrix at 160 and 267 but the LQ control cost at 251, and `g` is the IS-curve interest sensitivity at 234 but the per-period RLS gain at 163 - and 504-506 prints \"measured \\u03c1\" and names the variable `\\u03c1_meas` for the quantity the display at 354 calls $\\lambda$"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [104, 364, 401],
-     "detail": "\"### The trap\" (401-417) describes a closed loop in five paragraphs of prose - aggressive policy generates data in which inflation looks transitory and the curve looks flat, the Fed estimates that, the estimate counsels patience, patience is never tested because the Fed has no reason to experiment - and a four-node cycle diagram would carry it at a glance; this is the section the whole lecture builds to and it is the only substantive section with no figure of its own. Second, {prf:ref}`lc_prop2` at 364-368 (\"Aggressive policy flattens the measured slope\") is the twin of the proposition that *does* get a figure at 372-394, and the asymmetry is unexplained - the reader sees one comparative static plotted and the other only asserted. Third, the real-time claim at 104-108 is the one empirical statement in the lecture with no chart, in a lecture that already pulls series from FRED in code (136-150): the vintage-versus-revised output gap for 2020-2023 is precisely a two-line plot, and it is the evidence for the third of the three elements"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [198, 200, 409],
-     "detail": "198 and 200 bold words that are emphasis, not definitions - \"Perceived **persistence** $\\rho_t$ is near one\" and \"Perceived **slope** $\\kappa_t$ trends toward zero\" - and both terms were already introduced at 122, so this is emphasis on a re-mention where italic is what the rule asks for. 409 bolds **self-confirming equilibrium** a second time, having correctly bolded its definition at 338 seventy lines earlier. Separately, the same three elements are set in bold twice in forty lines and in two different shapes: as numbered-list labels at 63-65 (**Declining inflation persistence**, **A flatter Phillips curve**, **Real-time output-gap mismeasurement**) and again as run-in paragraph headings at 84, 90 and 104 (**Declining persistence.**, **A flatter Phillips curve.**, **Real-time uncertainty.**) - and the second set would be better as `###` headings, since they are the structure of the section"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        110,
+        297,
+        364,
+        385
+      ],
+      "detail": "the third of the lecture's three announced elements is never delivered. 61 says \"Three drifting beliefs turn out to rationalize the slow response\", 65 names the third as **Real-time output-gap mismeasurement**, 104-108 sources it to {cite}`Orphanides2001` and states the claim (\"Through 2020-2023 the real-time gap was persistently *below* the later-revised measure\"), and 110 then defers it: \"We use current-vintage data below and return to the real-time distinction in the conclusion.\" There is no conclusion - the headings run Overview, The three elements, The Fed's drifting-coefficients beliefs, The Fed's Phelps problem, Why the Fed was slow, A self-confirming equilibrium, ### The trap, Exercises - and 428-430, the only closing prose, is about the *next* lecture. Second, {prf:ref}`lc_prop2` (364-368) is stated as one of two propositions the paper proves, 370 says \"Let's reproduce {prf:ref}`lc_prop1`\", and prop2 is then never reproduced or mentioned again, although the cubic solver at 379-385 is most of what a population-OLS-slope version would need. Third, the numbers in the prose are hard-coded against data downloaded live from FRED: 297 says \"correlation about 0.95\" one line after 293-294 computes and prints the same correlation, 328 says the counterfactual rate goes \"well above 4%\", and 397 says measured persistence \"falls from near one toward one-half\" - all three can drift out of agreement with the figure on any rebuild after a data revision. Fourth, {prf:ref}`lc_prop1` is explicitly conditioned on being \"In the determinacy region\" (361), but `measured_persistence` (379-385) filters roots to $|\\lambda| < 1$ and then returns the smallest-modulus one with `stable[np.argmin(np.abs(stable))]` - it neither checks that exactly one stable root exists nor warns when it does not, so the figure at 390-394 is drawn without the hypothesis the proposition needs being tested"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        132,
+        236,
+        352
+      ],
+      "detail": "$X_t$ names two different vectors seventy lines apart: 132 sets $X_t = (1, \\pi_{t-1}, x_t)^\\top$, the three-element RLS regressor, and 208 sets $X_t = (1, \\pi_t, x_t, i_{t-1})^\\top$, the four-element LQ state - and both are live in the same loop at 263-272, where the code has to call them `X` (266) and `state` (271) to keep them apart. $\\beta$ likewise carries two values: 236 sets `\\u03b2 = 0.95` as the Fed's LQ discount factor, and 346 and 379 use $\\beta$ for nature's New Keynesian discount factor, defaulted to `0.99`, with nothing said about the change. And $\\kappa$ does double duty at exactly the point where the distinction is the argument: 119-122 makes $\\kappa_t$ the Fed's *perceived* slope, 346-352 makes bare $\\kappa$ the *structural* slope, and 367-399 is entirely about how the two differ - a subscript is carrying the whole weight of the lecture's main claim, where a separate letter would carry it for free"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        44,
+        417,
+        490,
+        198
+      ],
+      "detail": "417 is a 69-word sentence with three clauses, two `{doc}` links, an em-dash aside and a nested quotation - \"This is a modern replay of the *Conquest*'s recurrent dynamics, one level up: the mechanism now works through the perceived slope and persistence of the Phillips curve and the policy-rate instrument, and the misspecification is not about expectations but about the *policy endogeneity* of the reduced-form Phillips curve that the Fed treats as structural - ignoring the Lucas Critique in just the way the \\\"vindication\\\" story of {doc}`phillips_two_stories` describes\" - and it is the paragraph that states what the lecture is finally about. 44 opens the lecture with a 40-word sentence carrying a five-item em-dash list of terms the reader has not met yet (*anticipated-utility*, *drifting-coefficients*, *constant-gain recursive least squares*, *self-confirming equilibrium*) plus three cross-references. 490 is a 54-word single-sentence exercise instruction with four sequenced steps that would read better as a numbered list, as `lc_ex1` at 438-442 already does. And 198 is 48 words tracking $\\rho_t$ through four separate time periods in one breath"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        139,
+        157,
+        238,
+        259,
+        269
+      ],
+      "detail": "the constant-gain RLS loop is written out three times - inside `estimate_beliefs` (162-168), again at module level to capture `\\u03b8_2000` (263-272), and a third time inside `recommend` (456-460) - so the same six lines have to be kept in step in three places, and only the first is a function with arguments. Assignments are padded to align at 140-142 (`gdp   = ...`, `pot   = ...`, `ff    = ...`), which PEP8 lists under extraneous whitespace. Four one-line docstrings use single quotes rather than triple (157, 239, 380, 453). `phelps_rate` is declared `def phelps_rate(\\u03b8, state, \\u03b7=\\u03b7)` at 238, whose default argument reads the module global of the same name - it works, and the exercise at 461-462 depends on it, but it makes `\\u03b7` the one loss parameter that is settable while `\\u03b2`, `\\u03c0_star`, `\\u03bb_x`, `b0`, `b1` and `g` are all read from globals inside the same function. 259-262 then re-initialises `\\u03b8` and `R` at module level, duplicating 159-160, and packs two unrelated initialisations onto one line (`opt, \\u03b8_2000 = [], None`). 269 re-reads `data.index[t].year` when 264 has already stored it in `yr`. Two names also clash with the mathematics: `R` is the RLS second-moment matrix at 160 and 267 but the LQ control cost at 251, and `g` is the IS-curve interest sensitivity at 234 but the per-period RLS gain at 163 - and 504-506 prints \"measured \\u03c1\" and names the variable `\\u03c1_meas` for the quantity the display at 354 calls $\\lambda$"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        104,
+        364,
+        401
+      ],
+      "detail": "\"### The trap\" (401-417) describes a closed loop in five paragraphs of prose - aggressive policy generates data in which inflation looks transitory and the curve looks flat, the Fed estimates that, the estimate counsels patience, patience is never tested because the Fed has no reason to experiment - and a four-node cycle diagram would carry it at a glance; this is the section the whole lecture builds to and it is the only substantive section with no figure of its own. Second, {prf:ref}`lc_prop2` at 364-368 (\"Aggressive policy flattens the measured slope\") is the twin of the proposition that *does* get a figure at 372-394, and the asymmetry is unexplained - the reader sees one comparative static plotted and the other only asserted. Third, the real-time claim at 104-108 is the one empirical statement in the lecture with no chart, in a lecture that already pulls series from FRED in code (136-150): the vintage-versus-revised output gap for 2020-2023 is precisely a two-line plot, and it is the evidence for the third of the three elements"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        198,
+        200,
+        409
+      ],
+      "detail": "198 and 200 bold words that are emphasis, not definitions - \"Perceived **persistence** $\\rho_t$ is near one\" and \"Perceived **slope** $\\kappa_t$ trends toward zero\" - and both terms were already introduced at 122, so this is emphasis on a re-mention where italic is what the rule asks for. 409 bolds **self-confirming equilibrium** a second time, having correctly bolded its definition at 338 seventy lines earlier. Separately, the same three elements are set in bold twice in forty lines and in two different shapes: as numbered-list labels at 63-65 (**Declining inflation persistence**, **A flatter Phillips curve**, **Real-time output-gap mismeasurement**) and again as run-in paragraph headings at 84, 90 and 104 (**Declining persistence.**, **A flatter Phillips curve.**, **Real-time uncertainty.**) - and the second set would be better as `###` headings, since they are the structure of the section"
+    }
   ],
   "strengths": [
     "The lecture is built as claim, reproduction, counterfactual, mechanism, and each heading says which stage it is: the beliefs are estimated at 112-202, fed into the Fed's own optimization at 204-299, isolated by freezing them at their year-2000 values at 301-332, and then explained structurally at 334-417 - so the reader always knows whether they are looking at a measurement, a simulation or a theory",
@@ -37,5 +89,9 @@
   ],
   "scanner_doubts": [
     "Cleared, not filed. (1) `qe-math-014` and `qe-math-015` (proposed) do not apply here: the only blackboard operator in the file is `\\mathbb E` (221, 346, 347, 354), there is no `\\mathbb{P}` and no density or CDF is named, so both are omitted rather than scored. (2) `qe-math-002` at zero is right - every transpose is `^\\top` (127, 129, 132, 208) and the file contains no apostrophe primes at all. (3) `qe-code-002` at zero is right and deserves noting as the opposite of a miss: the code already uses Unicode Greek throughout (`\\u03b8`, `\\u03b2`, `\\u03c0_star`, `\\u03bb_x`, `\\u03b7`, `\\u03c6_\\u03c0`, `\\u03ba`, `\\u03c3`, `\\u03b3_b`, `\\u03c1_meas` at 159, 236-260, 379-388, 452-468), including in f-string labels at 468 and 504. (4) I checked whether the two embedded titles at 186 and 192 might be exempt as sub-panel labels rather than figure titles, since the cell already has a `mystnb` caption at 179 - they are not: they restate the caption's two halves, so the measured count of 2 is right and the fix is to delete them, not to exempt the shape"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "9fc63bcbbb4c6f5e63ed455f3435342f7795b959"
+  }
 }

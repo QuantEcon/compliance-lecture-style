@@ -74,5 +74,9 @@
     "qe-fig-005 is reported as 0 for lq_inventories.md, but the lecture renders twelve figures and not one has a name or a caption. All of them are drawn inside `SmoothingExample.simulate` (304-340) and rendered by calls like `ex1.simulate(x0)` (388, 532, 551, 601, 611, 647, 681, 689, 694, 699, 754, 782, 789, 814, 818). `_cell_makes_figure` requires a plotting call at column zero, so the class-definition cell is excluded (its plotting is indented) and the calling cells are excluded (they contain no plotting call). The same cell's `set_title` and `plot` calls *are* counted by qe-fig-003 and qe-fig-008, which look inside defs, so the three figure rules disagree about whether this cell makes a figure. The plot-inside-a-helper idiom is common in the older lectures, so this is likely a corpus-wide undercount of qe-fig-005.",
     "qe-code-002 x1 at line 278 of lq_inventories.md looks like a false positive: the flagged `beta` is the keyword argument of the QuantEcon API call `qe.LQ(Q, R, A, B, C, N, beta=β)`, not an author-chosen identifier - the value passed is already the unicode `β`. The author cannot rename another library's parameter.",
     "qe-math-010 (proposed) is reported as 0 for lq_inventories.md, but line 195 writes the objective as `E_0 \\sum_{t=0}^\\infty \\beta^t \\pi_t` - a plain `E` used as the expectation operator. check_math_010's bare-letter branch requires the operator to be applied to a bracketed argument (`[`, `\\{` or `(`) and gates the whole branch on the same pattern appearing somewhere in the file, so the very common `E_0 \\sum` and `E_t x_{t+1}` forms are never counted. One occurrence here; the gate makes the miss silent rather than partial."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "e9b23aef9b8cd3372187f75aefef3b7dbd57d046"
+  }
 }

@@ -72,12 +72,22 @@ def applicability(doc):
     }
 
 
-def scan_series(corpus, series):
+def lecture_files(corpus, series):
+    """Every lecture ``.md`` in one series, as paths, in a stable order.
+
+    One list, used by both the scan and the blob stamping, so the two cannot
+    disagree about which files the pass looked at.
+    """
     root = os.path.join(corpus, series, "lectures")
-    files = sorted(f for f in os.listdir(root) if f.endswith(".md"))
+    return [os.path.join(root, f)
+            for f in sorted(os.listdir(root)) if f.endswith(".md")]
+
+
+def scan_series(corpus, series, files=None):
+    files = lecture_files(corpus, series) if files is None else files
     out = []
-    for fn in files:
-        path = os.path.join(root, fn)
+    for path in files:
+        fn = os.path.basename(path)
         doc = lex(path, series)
         hits = run_all(doc)
         cites, cites_t = count_citations(doc)
@@ -118,6 +128,110 @@ def git_snapshot(corpus, series):
         return {"commit": "", "date": ""}
 
 
+def git_blobs(corpus, series, commit):
+    """Git blob SHA of every lecture ``.md`` in one series at the pinned commit.
+
+    What the *commit* holds — not necessarily what was scanned. Used only to
+    check the working tree against the pin (see ``working_blobs``); the SHA
+    written to ``lecture_blobs.csv`` is the one hashed from the scanned file.
+    One ``ls-tree`` per series, not one per file.
+
+    Returns ``{stem: sha}``, empty if git or the tree cannot be read.
+    """
+    if not commit:
+        return {}
+    try:
+        out = subprocess.run(
+            ["git", "-C", os.path.join(corpus, series), "ls-tree", "-z",
+             commit, "--", "lectures/"],
+            capture_output=True, text=True, check=True).stdout
+    except Exception as exc:
+        print(f"warning: no blob SHAs for {series}: {exc}", file=sys.stderr)
+        return {}
+    blobs = {}
+    for entry in out.split("\0"):
+        if not entry:
+            continue
+        meta, _, name = entry.partition("\t")
+        fields = meta.split()
+        if len(fields) != 3 or fields[1] != "blob" or not name.endswith(".md"):
+            continue
+        blobs[os.path.basename(name)[:-3]] = fields[2]
+    return blobs
+
+
+def _names(stems, limit=6):
+    return ", ".join(stems[:limit]) + (" ..." if len(stems) > limit else "")
+
+
+def warn_if_dirty(series, commit, working, committed):
+    """Warn when the text that was scanned is not the text the pin holds.
+
+    Not fatal — the blob table is still correct, because it now describes the
+    scanned text — but a dirty corpus means the pass no longer reproduces from
+    ``snapshot.json`` alone, which is worth knowing before the numbers are
+    published.
+    """
+    if not committed:
+        return
+    changed = sorted(s for s, sha in working.items()
+                     if s in committed and committed[s] != sha)
+    extra = sorted(set(working) - set(committed))
+    gone = sorted(set(committed) - set(working))
+    if not (changed or extra or gone):
+        return
+    parts = []
+    if changed:
+        parts.append(f"{len(changed)} modified ({_names(changed)})")
+    if extra:
+        parts.append(f"{len(extra)} not in the commit ({_names(extra)})")
+    if gone:
+        parts.append(f"{len(gone)} in the commit but not on disk ({_names(gone)})")
+    print(f"warning: {series} working tree differs from pinned commit "
+          f"{commit[:8]}: " + "; ".join(parts) + " — the blob SHAs written for this "
+          "series describe the text that was scanned, not the commit",
+          file=sys.stderr)
+
+
+def working_blobs(corpus, series, files, commit):
+    """Git blob SHA of the working-tree text of every lecture in one series.
+
+    The scan lexes the file on disk, so the SHA stamped beside its counts has to
+    describe *that* text. Reading it from the pinned commit is right only while
+    the checkout is clean, and wrong silently when it is not: the overlay would
+    name a version the reviewer never read, and — because the stamp matches the
+    commit the next scan also reports — ``qestyle_status.py`` would call that
+    review fresh forever, which is the one wrong answer this table must never
+    give. So hash what was actually read.
+
+    ``git hash-object`` computes the object name git itself would store,
+    applying the same clean filters, so on a clean checkout this is identical to
+    ``ls-tree`` at the pin — verified over all 348 lectures. One subprocess per
+    series, not one per file.
+
+    Returns ``{stem: sha}``, empty if git cannot be run; the caller warns and
+    writes the rows it does have rather than losing the scan.
+    """
+    root = os.path.join(corpus, series)
+    rel = [os.path.relpath(p, root) for p in files]
+    if not rel:
+        return {}
+    try:
+        out = subprocess.run(["git", "-C", root, "hash-object", "--"] + rel,
+                             capture_output=True, text=True, check=True).stdout
+    except Exception as exc:
+        print(f"warning: no blob SHAs for {series}: {exc}", file=sys.stderr)
+        return {}
+    shas = out.split()
+    if len(shas) != len(rel):
+        print(f"warning: no blob SHAs for {series}: git hash-object returned "
+              f"{len(shas)} SHAs for {len(rel)} files", file=sys.stderr)
+        return {}
+    blobs = {os.path.basename(p)[:-3]: sha for p, sha in zip(files, shas)}
+    warn_if_dirty(series, commit, blobs, git_blobs(corpus, series, commit))
+    return blobs
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--corpus", required=True,
@@ -134,10 +248,15 @@ def main():
     args = ap.parse_args()
 
     os.makedirs(args.out, exist_ok=True)
-    records, snapshot = [], {}
+    records, snapshot, blobs = [], {}, {}
     for series in SERIES:
         snapshot[series] = git_snapshot(args.corpus, series)
-        recs = scan_series(args.corpus, series)
+        # One file list, hashed and scanned — the SHA describes the text lexed
+        # on the line below it, whatever state the checkout is in.
+        files = lecture_files(args.corpus, series)
+        blobs[series] = working_blobs(args.corpus, series, files,
+                                      snapshot[series]["commit"])
+        recs = scan_series(args.corpus, series, files)
         records.extend(recs)
         print(f"{series:32s} {len(recs):4d} lectures", file=sys.stderr)
 
@@ -231,6 +350,31 @@ def main():
                             "total_occurrences": total[rule],
                             "share_pct": round(reach[rule] / n * 100, 1)})
         print(f"appended {args.period} to {path}", file=sys.stderr)
+
+    # --- lecture provenance ------------------------------------------------
+    # One row per scanned lecture, naming the blob of the exact text this pass
+    # lexed — hashed from that file, not read from the pinned commit. A
+    # review overlay records the blob it judged (see
+    # ``tools/qestyle_backfill_provenance.py``), so the next pass can ask which
+    # lectures actually changed instead of re-reviewing all 348 — the review
+    # queue then scales with corpus churn rather than corpus size.
+    # A lecture whose SHA could not be read is left out rather than written with
+    # an empty one: an empty blob would compare equal to an unstamped overlay and
+    # read as fresh, which is the one wrong answer this file must never give.
+    missing = []
+    with open(os.path.join(args.out, "lecture_blobs.csv"), "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["series", "lecture", "blob"])
+        for r in sorted(records, key=lambda r: (r["series"], r["lecture"])):
+            sha = blobs.get(r["series"], {}).get(r["lecture"], "")
+            if not sha:
+                missing.append(f"{r['series']}/{r['lecture']}")
+                continue
+            w.writerow([r["series"], r["lecture"], sha])
+    if missing:
+        print(f"warning: no blob SHA for {len(missing)} of {len(records)} lectures: "
+              + ", ".join(missing[:6]) + (" ..." if len(missing) > 6 else ""),
+              file=sys.stderr)
 
     # --- rule titles -------------------------------------------------------
     rules_dir = args.rules or os.path.join(

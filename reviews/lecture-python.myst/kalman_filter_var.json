@@ -2,18 +2,67 @@
   "series": "lecture-python.myst",
   "lecture": "kalman_filter_var",
   "judgment": [
-    {"rule": "qe-math-009", "count": 3, "lines": [463, 638, 853],
-     "detail": "three letters carry two or three meanings each. $L$ is introduced at 173-200 as the population regression coefficient and filtering gain ($L_0 = \\Sigma_0 G^\\top(G\\Sigma_0 G^\\top + R)^{-1}$, and $K_0 = AL_0$) and then re-introduced at 463 as the lag operator (\"Letting $L$ denote the lag operator, so that $L x_t = x_{t-1}$\"), used that way through 572-595. $H$ is the closed linear span $H(y^t)$, $H(a^t)$ at 305-317 and the measurement-noise factor with $R = HH^\\top$ at 638-639, 654 and in every code cell after it. And $S_y$ is the spectral density of $\\{y_t\\}$ at 529-556 and the selector matrix in \"$y_t = S_y Y_t$\" at 853. Renaming the lag operator, the linear span and the selector costs three characters and removes all three collisions"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [54, 492, 564, 843],
-     "detail": "\"### Wold and autoregressive representations\" (564-607) re-derives what section 423-469 already derived: the display at 575 is character-for-character the display at 467, the VAR at 594-596 is the VAR at 451, and 598 concedes it (\"which is the vector autoregression already stated in {eq}`eq:var1`\"). The lecture also ends twice - \"## Where this leads\" (843-858) and \"## Summary\" (861-880) both close the lecture and both hand off to {doc}`var_subsets`, which the Overview at 70-72 has already announced, so the sequel is introduced three times. On top of that, 54-56 is a 37-word sentence with an appositive definition inside it and 492-494 is 34 words"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [287, 503],
-     "detail": "the theory runs from 74 to 607 with no figure at all, and two sections in it are asking for one. \"## The Gram-Schmidt process\" (287-326) establishes that $[a_t, \\ldots, a_0]$ is an orthogonal basis for the same space as $[y_t, \\ldots, y_0]$ - the canonical orthogonalization picture, and the lecture even sets up the geometry with $H(y^t)$, $H(a^t)$ and $a_{t+1} \\perp H(y^t)$ at 304-318 without drawing it; the code later computes the whitening numerically (748-753) but plots nothing. \"## Spectral factorization identity\" (503-607) derives two different formulas for $S_y(z)$ and equates them, which is a numerical check the lecture is fully equipped to run: evaluate {eq}`eq:sf_original` and {eq}`eq:sf_innov` on the unit circle from the same $(A, C, G, R)$ and $K = $ `kf.stationary_values()`, and plot them on one axis"},
-    {"rule": "qe-code-001", "count": 5, "lines": [656, 709, 828, 996, 1104],
-     "detail": "continuation-line indentation is inconsistent from cell to cell: 656 indents two spaces under the opening bracket, 709-713 indent eight where visual alignment would be thirteen (PEP8 E128), while 717-718 and 724-725 in the same cell do align, and 996-998 and 1084-1085 over-indent past the opening paren (E127); 828 binds `sign, logdet = np.linalg.slogdet(Omega)` and never uses `sign` (F841); 1104 has three spaces after a comma inside `ax.axvline(ρ_true, color='k',   ls='--', ...)` (E241). Separately, the same four matrices are disambiguated three different ways across cells - `H_`, `lss_`, `kf_`, `T_`, `m_` at 812-819, `A_`, `C_`, `G_`, `R_` at 938-941, `A_t`, `C_t`, `G_t`, `R_t` at 1078-1082 - and 1105 and 1108 escape LaTeX inside plain f-strings where the rest of the file uses `r''` and `rf''`"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [58, 411, 512],
-     "detail": "the Overview bullet list at 58-68 bolds a term in six of its seven bullets, two of them in the same bullet (\"the **innovations representation** and the **Gram-Schmidt** whitening property\"), and every one of those terms is bolded again where it is actually defined (279, 323, 330, 346, 387) - so the bold on first mention is emphasis, not definition, and the density of it dulls the marker for the whole lecture; 411 bolds the adjective in \"a **time-invariant** matrix $\\Sigma$\", which is emphasis; and 512 italicises the term as it is coined (\"yields the *spectral factorization identity*\") before bolding the same phrase at 549"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [463, 609],
-     "detail": "463 and 519 use two different operator conventions for the same operation 56 lines apart - the lag operator $L$ with $Lx_t = x_{t-1}$ at 463, then the $z$-transform with $z^{-1}x_t = x_{t-1}$ at 519-523 - and 572 switches back to $L$, so the reader has to translate between them mid-derivation with no note that they are the same thing; and the lecture's first code cell is at 616, after 535 lines of algebra, so the Riccati equation (269-285), the whitening property (287-326) and the spectral factorization (503-556) are each stated, and then illustrated only in a block of numerical work 100 to 350 lines later, if at all"}
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        463,
+        638,
+        853
+      ],
+      "detail": "three letters carry two or three meanings each. $L$ is introduced at 173-200 as the population regression coefficient and filtering gain ($L_0 = \\Sigma_0 G^\\top(G\\Sigma_0 G^\\top + R)^{-1}$, and $K_0 = AL_0$) and then re-introduced at 463 as the lag operator (\"Letting $L$ denote the lag operator, so that $L x_t = x_{t-1}$\"), used that way through 572-595. $H$ is the closed linear span $H(y^t)$, $H(a^t)$ at 305-317 and the measurement-noise factor with $R = HH^\\top$ at 638-639, 654 and in every code cell after it. And $S_y$ is the spectral density of $\\{y_t\\}$ at 529-556 and the selector matrix in \"$y_t = S_y Y_t$\" at 853. Renaming the lag operator, the linear span and the selector costs three characters and removes all three collisions"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        54,
+        492,
+        564,
+        843
+      ],
+      "detail": "\"### Wold and autoregressive representations\" (564-607) re-derives what section 423-469 already derived: the display at 575 is character-for-character the display at 467, the VAR at 594-596 is the VAR at 451, and 598 concedes it (\"which is the vector autoregression already stated in {eq}`eq:var1`\"). The lecture also ends twice - \"## Where this leads\" (843-858) and \"## Summary\" (861-880) both close the lecture and both hand off to {doc}`var_subsets`, which the Overview at 70-72 has already announced, so the sequel is introduced three times. On top of that, 54-56 is a 37-word sentence with an appositive definition inside it and 492-494 is 34 words"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        287,
+        503
+      ],
+      "detail": "the theory runs from 74 to 607 with no figure at all, and two sections in it are asking for one. \"## The Gram-Schmidt process\" (287-326) establishes that $[a_t, \\ldots, a_0]$ is an orthogonal basis for the same space as $[y_t, \\ldots, y_0]$ - the canonical orthogonalization picture, and the lecture even sets up the geometry with $H(y^t)$, $H(a^t)$ and $a_{t+1} \\perp H(y^t)$ at 304-318 without drawing it; the code later computes the whitening numerically (748-753) but plots nothing. \"## Spectral factorization identity\" (503-607) derives two different formulas for $S_y(z)$ and equates them, which is a numerical check the lecture is fully equipped to run: evaluate {eq}`eq:sf_original` and {eq}`eq:sf_innov` on the unit circle from the same $(A, C, G, R)$ and $K = $ `kf.stationary_values()`, and plot them on one axis"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        656,
+        709,
+        828,
+        996,
+        1104
+      ],
+      "detail": "continuation-line indentation is inconsistent from cell to cell: 656 indents two spaces under the opening bracket, 709-713 indent eight where visual alignment would be thirteen (PEP8 E128), while 717-718 and 724-725 in the same cell do align, and 996-998 and 1084-1085 over-indent past the opening paren (E127); 828 binds `sign, logdet = np.linalg.slogdet(Omega)` and never uses `sign` (F841); 1104 has three spaces after a comma inside `ax.axvline(ρ_true, color='k',   ls='--', ...)` (E241). Separately, the same four matrices are disambiguated three different ways across cells - `H_`, `lss_`, `kf_`, `T_`, `m_` at 812-819, `A_`, `C_`, `G_`, `R_` at 938-941, `A_t`, `C_t`, `G_t`, `R_t` at 1078-1082 - and 1105 and 1108 escape LaTeX inside plain f-strings where the rest of the file uses `r''` and `rf''`"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        58,
+        411,
+        512
+      ],
+      "detail": "the Overview bullet list at 58-68 bolds a term in six of its seven bullets, two of them in the same bullet (\"the **innovations representation** and the **Gram-Schmidt** whitening property\"), and every one of those terms is bolded again where it is actually defined (279, 323, 330, 346, 387) - so the bold on first mention is emphasis, not definition, and the density of it dulls the marker for the whole lecture; 411 bolds the adjective in \"a **time-invariant** matrix $\\Sigma$\", which is emphasis; and 512 italicises the term as it is coined (\"yields the *spectral factorization identity*\") before bolding the same phrase at 549"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        463,
+        609
+      ],
+      "detail": "463 and 519 use two different operator conventions for the same operation 56 lines apart - the lag operator $L$ with $Lx_t = x_{t-1}$ at 463, then the $z$-transform with $z^{-1}x_t = x_{t-1}$ at 519-523 - and 572 switches back to $L$, so the reader has to translate between them mid-derivation with no note that they are the same thing; and the lecture's first code cell is at 616, after 535 lines of algebra, so the Riccati equation (269-285), the whitening property (287-326) and the spectral factorization (503-556) are each stated, and then illustrated only in a block of numerical work 100 to 350 lines later, if at all"
+    }
   ],
   "strengths": [
     "Every display equation in the file is labelled with the `$$ ... $$ (eq:name)` form and the labels are used: `eq:statespace` is cited at 106, 113, 330, 477, 486, 496 and 508, `eq:riccati` at 279, 410, 414, 892 and 908, `eq:kalf10` at 256, 299, 314, 382 and 677, `eq:innovti` at 426, 438, 447, 492, 509, 534 and 566 - 25 labelled displays and no orphans, which is what lets the second half refer back precisely instead of restating",
@@ -32,5 +81,9 @@
     "Bring one convention for the lag/z-transform operator into the whole of 405-607, and either move some numerical illustration forward into the theory sections or say at 74 that the code all lives in section 609 onward",
     "Trim the bold in the Overview bullets (58-68) to the two or three terms not defined later, switch 411 to plain text and 512 to bold, drop the unused `sign` at 828, and standardise the continuation indentation and the `H_`/`A_`/`A_t` suffix conventions across the four code cells"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "52a61a773bc02dab57f9c5295cff4567b01cb61c"
+  }
 }

@@ -2,12 +2,34 @@
   "series": "lecture-python.myst",
   "lecture": "endogenous_lake",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [385, 388],
-     "detail": "the welfare criterion at 385 is built from $V$ and $U$, and 388 says 'the notation $V$ and $U$ is as defined above' - but they are never defined above in prose. They first appear as arguments of `T` inside the code cell at 181-191, and the Bellman equations that define them are given only in Python (188-189), never in mathematics, in a lecture whose central object is the reservation wage those equations determine"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [47, 75],
-     "detail": "the setup is stated three times. Line 45 says the lecture continues {doc}`lake_model` and 47 then says to read that lecture first; 49-52 says the previous lecture had exogenous transition rates and this one makes the job finding rate endogenous; 73-77 says it again ('The basic structure ... will be as discussed in the lake model lecture. The only difference is that the hiring rate is endogenous'), re-citing McCall1970 already cited at 54. Line 75 is also the file's longest sentence at 34 words"},
-    {"rule": "qe-code-001", "count": 3, "lines": [104, 427, 649],
-     "detail": "line 104 closes a hanging-indent signature with `    ):` at 4 spaces - matching neither column 0 nor the 8-space argument indent, and leaving the arguments at the same indent as the body (E121/E125); the same pattern recurs at 165, 254, 423, 442 and 476. Lines 427-429 over-indent the continuation of `return Economy(...)` past the visual indent set by the opening parenthesis (E127). Lines 649-650 wrap a division with a backslash continuation where PEP8 asks for parentheses, and then over-indent the second line"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        385,
+        388
+      ],
+      "detail": "the welfare criterion at 385 is built from $V$ and $U$, and 388 says 'the notation $V$ and $U$ is as defined above' - but they are never defined above in prose. They first appear as arguments of `T` inside the code cell at 181-191, and the Bellman equations that define them are given only in Python (188-189), never in mathematics, in a lecture whose central object is the reservation wage those equations determine"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        47,
+        75
+      ],
+      "detail": "the setup is stated three times. Line 45 says the lecture continues {doc}`lake_model` and 47 then says to read that lecture first; 49-52 says the previous lecture had exogenous transition rates and this one makes the job finding rate endogenous; 73-77 says it again ('The basic structure ... will be as discussed in the lake model lecture. The only difference is that the hiring rate is endogenous'), re-citing McCall1970 already cited at 54. Line 75 is also the file's longest sentence at 34 words"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        104,
+        427,
+        649
+      ],
+      "detail": "line 104 closes a hanging-indent signature with `    ):` at 4 spaces - matching neither column 0 nor the 8-space argument indent, and leaving the arguments at the same indent as the body (E121/E125); the same pattern recurs at 165, 254, 423, 442 and 476. Lines 427-429 over-indent the continuation of `return Economy(...)` past the visual indent set by the opening parenthesis (E127). Lines 649-650 wrap a division with a backslash continuation where PEP8 asks for parentheses, and then over-indent the second line"
+    }
   ],
   "strengths": [
     "The event in the job-finding-rate definition is written with braces - $\\gamma \\mathbb P \\{ w_t \\geq \\bar w\\}$ at 319 - so the proposed qe-math-014 convention holds, and the wage offer distribution is lowercase $p$ at 320 and 326 against uppercase $V$, $U$, $W$ for the value functions, matching proposed qe-math-015",
@@ -27,5 +49,9 @@
   ],
   "scanner_doubts": [
     "qe-math-002 x1 at endogenous_lake.md:320 flags the apostrophe in `\\sum_{w' \\geq \\bar w} p(w')`, but this is $w$-prime as a summation dummy over wage values, not a transpose - the base is a lowercase scalar, not matrix-like, so the documented matrix-like-base guard appears not to have applied here"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "526352cdb85599dcfa0b46a6036f831c9592fac9"
+  }
 }

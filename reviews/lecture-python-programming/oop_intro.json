@@ -56,5 +56,9 @@
     "Add the missing blank lines after the code cells at 272 and 324, so the prose at 273 and 325 is not glued to the closing fence",
     "Replace the double-backtick ``imag`` at 195 with single backticks, and delete the double space at 342 (qe-writing-008)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "21787a1d2dd5c141ef7f523abc50a1fcc979e72b"
+  }
 }

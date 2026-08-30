@@ -2,16 +2,62 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "chang_credible",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 8, "lines": [170, 328, 330, 339, 385, 429, 561, 679],
-     "detail": "the two uses are exactly inverted throughout this lecture. Every term is defined in *italic* where the rule asks for bold - *value of money* (170), *government policy* / *price system* / *allocation* (330-332), *competitive equilibrium* (339), *credible* (385), *sustainable plan* (429), *outer hyperplane approximation algorithm* (679), and earlier *Ramsey planner* (43), *sustainable plan* (53), *credible public policy* (54), *sustainable* (78-79) - while bold is used for the block labels that should be `{prf:definition}` / `{prf:proposition}` directives instead: **Definition:** (328, 336), **A credible government policy with a recursive representation** (349), **Proposition:** (561, 566), **Step 1**-**Step 4** (693, 695, 725, 771)"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [435, 447, 594],
-     "detail": "$CE_\\pi$ is used at 435 and $CE_\\pi^0$ at 477, 509, 528 and 638 without being defined anywhere in this lecture, as are $\\Omega$ (459) and $\\Theta$ (441 defines $\\Theta$ but in terms of the undefined $CE$); each set-builder definition is then split across separate display blocks with prose wedged between the braces - $S$ opens `\\Bigl\\{` at 448 and closes `\\Bigr\\}` at 456 with \"with value\" in between, $\\tilde D(Z)$ opens at 508 and closes at 551 across six independently-labelled `{math}` blocks, and $E(Z)$ opens at 648 and closes at 672 across eight; and because of that fragmentation the sentence at 598, \"Chang (1998) provides a method for dealing with the final three constraints\", refers to constraints the reader cannot count"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [319, 403, 423, 725],
-     "detail": "319-321 delays its verb for twenty words (\"The observation that the one dimensional promised marginal utility of real balances $\\theta_{t+1}$ functions in this way is an important step in ...\"); 403-405 spends 33 words asking the reader to \"note the subtle change in arguments\" without saying what the change is, which the next paragraph then does; 423-424 is garbled - \"For a credible government plan, we the two-dimensional state vector $(w_t, \\theta_t)$ encodes history dependence\"; and 725-728 packs two sentences and 40 words into one paragraph, the second restating the first"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [242, 768],
-     "detail": "the lecture improvises a diagram in math mode at 467 - `$(h,x) \\rightarrow m=q M \\rightarrow y = c$` - which is the tell that the within-period timing protocol described at 242-259 wants a real figure; that protocol is the one thing this lecture changes relative to {doc}`chang_ramsey`, and it is the only mechanism here with no picture. Second, 768-769 says the algorithm \"constructs a sequence of progressively smaller sets $S_{t+1} \\subset S_t \\subset S_{t-1} \\cdots \\subset S_0$\" and the reader is shown only the final set at 860 and 879; one plot of two or three successive iterates would show the outer hyperplane approximation actually working"},
-    {"rule": "qe-code-001", "count": 4, "lines": [829, 855, 868, 869],
-     "detail": "line 829 names a function parameter `ChangModel` - CapWords for a parameter, and it shadows the class of the same name that the calls at 818 and 868 instantiate; 855's continuation (`R[1]), fontsize=18)`) is indented to the `xytext` line rather than to the open paren it continues (E128); 868 writes `h_max=1/0.8` with no spaces around the operator while the same call spaces nothing else ambiguously; and 869 continues that call at a flat 4-space indent instead of aligning under the opening paren"}
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        170,
+        328,
+        330,
+        339,
+        385,
+        429,
+        561,
+        679
+      ],
+      "detail": "the two uses are exactly inverted throughout this lecture. Every term is defined in *italic* where the rule asks for bold - *value of money* (170), *government policy* / *price system* / *allocation* (330-332), *competitive equilibrium* (339), *credible* (385), *sustainable plan* (429), *outer hyperplane approximation algorithm* (679), and earlier *Ramsey planner* (43), *sustainable plan* (53), *credible public policy* (54), *sustainable* (78-79) - while bold is used for the block labels that should be `{prf:definition}` / `{prf:proposition}` directives instead: **Definition:** (328, 336), **A credible government policy with a recursive representation** (349), **Proposition:** (561, 566), **Step 1**-**Step 4** (693, 695, 725, 771)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        435,
+        447,
+        594
+      ],
+      "detail": "$CE_\\pi$ is used at 435 and $CE_\\pi^0$ at 477, 509, 528 and 638 without being defined anywhere in this lecture, as are $\\Omega$ (459) and $\\Theta$ (441 defines $\\Theta$ but in terms of the undefined $CE$); each set-builder definition is then split across separate display blocks with prose wedged between the braces - $S$ opens `\\Bigl\\{` at 448 and closes `\\Bigr\\}` at 456 with \"with value\" in between, $\\tilde D(Z)$ opens at 508 and closes at 551 across six independently-labelled `{math}` blocks, and $E(Z)$ opens at 648 and closes at 672 across eight; and because of that fragmentation the sentence at 598, \"Chang (1998) provides a method for dealing with the final three constraints\", refers to constraints the reader cannot count"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        319,
+        403,
+        423,
+        725
+      ],
+      "detail": "319-321 delays its verb for twenty words (\"The observation that the one dimensional promised marginal utility of real balances $\\theta_{t+1}$ functions in this way is an important step in ...\"); 403-405 spends 33 words asking the reader to \"note the subtle change in arguments\" without saying what the change is, which the next paragraph then does; 423-424 is garbled - \"For a credible government plan, we the two-dimensional state vector $(w_t, \\theta_t)$ encodes history dependence\"; and 725-728 packs two sentences and 40 words into one paragraph, the second restating the first"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        242,
+        768
+      ],
+      "detail": "the lecture improvises a diagram in math mode at 467 - `$(h,x) \\rightarrow m=q M \\rightarrow y = c$` - which is the tell that the within-period timing protocol described at 242-259 wants a real figure; that protocol is the one thing this lecture changes relative to {doc}`chang_ramsey`, and it is the only mechanism here with no picture. Second, 768-769 says the algorithm \"constructs a sequence of progressively smaller sets $S_{t+1} \\subset S_t \\subset S_{t-1} \\cdots \\subset S_0$\" and the reader is shown only the final set at 860 and 879; one plot of two or three successive iterates would show the outer hyperplane approximation actually working"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        829,
+        855,
+        868,
+        869
+      ],
+      "detail": "line 829 names a function parameter `ChangModel` - CapWords for a parameter, and it shadows the class of the same name that the calls at 818 and 868 instantiate; 855's continuation (`R[1]), fontsize=18)`) is indented to the `xytext` line rather than to the open paren it continues (E128); 868 writes `h_max=1/0.8` with no spaces around the operator while the same call spaces nothing else ambiguously; and 869 continues that call at a flat 4-space indent instead of aligning under the opening paren"
+    }
   ],
   "strengths": [
     "The lecture states its own delta precisely: 34-51 says it assumes the environment of {doc}`chang_ramsey` and that the *only* change is the within-period timing protocol, and 554-559 then says exactly what the new operator adds - $\\tilde D$ is $D$ plus the deterrence condition {eq}`eqn_chang14`",
@@ -32,5 +78,9 @@
   "scanner_doubts": [
     "chang_credible.md:568 - qe-math-002 is reported with count 2 on this line, but `$Z \\subset Z'$ implies $\\tilde D(Z) \\subset \\tilde D(Z')$` uses the prime to name a *second set*, not a transpose. The same convention runs through the lecture for $w'$, $\\theta'$, $m(h)$ (481, 493, 499, 615, 629, 648, 702, 708, 734, 740) as next-period or alternative values. There is no transpose in this lecture, so the count of 2 looks like 0, and the Math score of 7.5 should be higher",
     "chang_credible.md:828,878 - qe-fig-005 is reported with no violations, but both figure-producing cells lack mystnb figure metadata. `_cell_makes_figure` requires a recognised plot call at column zero, and here the plotting lives inside `def plot_equilibria` (829-858) while the column-zero calls are `plot_equilibria(ch1)` at 860 and `plot_equilibria(ch2)` at 879 - a bare helper call that `PLOT_CALL` cannot match. The documented limitation is that the figure \"appears where the helper is called\", which is exactly what happens here, so this pattern (define-a-plotting-helper, then call it) escapes the check. The count looks like 2, not 0"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "7d37c2a8df6c5ba00f9e60a1fef13af9497f30f7"
+  }
 }

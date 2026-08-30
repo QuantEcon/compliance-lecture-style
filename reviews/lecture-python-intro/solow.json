@@ -2,18 +2,67 @@
   "series": "lecture-python-intro",
   "lecture": "solow",
   "judgment": [
-    {"rule": "qe-code-001", "count": 16, "lines": [150, 249, 250, 358, 461, 493, 591, 616],
-     "detail": "the exponentiation spacing the rule names explicitly is done both ways in the same lecture: `k**α` at 131 and 602 is right, but 461, 474 and 525 write `A * k_star ** α` / `A * k ** α` with spaces around `**`. Beyond that: 150 has a double space after a comma inside `ax.plot(xgrid, g_values,  lw=2, ...)`; 249 and 616 write `%x_init` with no space around the `%` operator (`label=r'$k_0=%g$' %x_init`); 250 and 358 omit the space after a comma (`np.full(ts_length,k_star)`, `ax.set_xlabel(\"$k$\",fontsize=10)`); 493 leaves a space before a closing bracket, `(s_star_max, )`, immediately beside a correctly written `(c_star_max,)`; 591 uses one space before an inline comment; the three `ax.annotate(...)` calls at 158-164, 348-354 and 495-501 all under-indent their continuation lines relative to the opening delimiter; and 348 and 624 put two blank lines inside a function body while 601 puts only one between two top-level defs"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [312, 570, 587],
-     "detail": "the continuous-time section reuses the symbol $g$ for a different function. {eq}`solow` at 98-99 defines $g(k) := s f(k) + (1 - \\delta) k$, cited at 116 and drawn as the 45-degree map; then 312-313 writes \"$k'_t = g(k_t)$ with $g(k) = s Ak^\\alpha - \\delta k$\", which is a different mapping with a different fixed-point interpretation, and the reader has no signal that the name has been recycled. The code does not make that mistake - it names the two functions `g` (130) and `g_con` (329) - so the prose is out of step with its own implementation. Second, the stochastic exercise contradicts itself: 565 says \"$(A_t)$ is IID and lognormal\", then 570 says \"Consider $A=2.0, s=0.6, \\alpha=0.3,$ and $\\delta=0.5$\" without saying what a single value of $A$ now means; the solution silently reinterprets it as a mean (585-586, `μ = np.log(2) - σ**2 / 2`) and 587's `A = 2.0` is then dead - `k_next` at 601-602 calls `lgnorm()` and never reads `A`"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [544, 595],
-     "detail": "595 sets a code identifier in italic - \"Let's define the function *k_next* to find the next value of $k$\" - where italic is reserved for emphasis and inline code is the right markup; the parallel sentence at 465 gets it right with `` `minimize_scalar` ``. And 544 uses bold as a pseudo-heading, `**Stochastic Productivity**`, on its own line at the top of the exercise body; it is neither a definition nor emphasis, and it is the only bold in the lecture that is not a definition (49, 59, 61, 187 and 298 all are)"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [295, 316, 511],
-     "detail": "316-318 says the same thing twice inside one sentence: \"high marginal returns to savings at low levels of capital combined with low rates of return at high levels of capital combine to yield global stability\" - `combined with ... combine to` in 27 words. 511 loses its parallelism and its point: \"One can also try to solve this mathematically by differentiating $c^*(s)$ and solve for $\\frac{d}{ds}c^*(s)=0$\" - `differentiating ... and solve`, plus \"try to solve this mathematically\" where \"solve this symbolically\" is what is meant and what the cell does. And 295-296 repeats 102-103 almost verbatim (\"Our aim is to learn about the evolution of $k_t$ over time, given an exogenous initial capital stock $k_0$\" / \"given an initial stock $k_0$\") 190 lines later without acknowledging the repetition"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [333, 408],
-     "detail": "the continuous-time figure (333-364) plots $g(k) = sAk^\\alpha - \\delta k$ against the zero line and marks $k^*$, but omits the one device that makes a phase line carry the argument: arrows on the $k$-axis showing the direction of motion either side of $k^*$. Lines 312-318 spell that direction out in prose (\"values of $k$ with $g(k) > 0$ imply $k'_t > 0$, so capital is increasing ... When $g(k) < 0$, the opposite occurs\") - exactly the content a phase diagram exists to show. Second, {eq}`ssivs` at 408-419 gives the entire capital path in closed form and it is never plotted; overlaying it on the discrete-time simulation at 260-262, for the same parameters, would show the reader in one figure why the continuous-time detour was worth taking (271-272 promises that \"the smoothing provided by continuous time can simplify our analysis\")"},
-    {"rule": "qe-math-009", "count": 1, "lines": [61],
-     "detail": "the CES function at 61 is written $F(K, L) = \\left\\{ a K^\\rho + b L^\\rho \\right\\}^{1/\\rho}$ - curly braces used as a plain grouping delimiter, where parentheses are both the conventional choice and the simpler one, and where the same lecture reserves braces for nothing else (curly braces are the series convention for sequences, qe-math-005). The rest of the notation is commendably plain: no calligraphic or blackboard letters anywhere, and the algebra runs on $k$, $f$, $g$, $A$, $s$, $\\alpha$, $\\delta$"}
+    {
+      "rule": "qe-code-001",
+      "count": 16,
+      "lines": [
+        150,
+        249,
+        250,
+        358,
+        461,
+        493,
+        591,
+        616
+      ],
+      "detail": "the exponentiation spacing the rule names explicitly is done both ways in the same lecture: `k**α` at 131 and 602 is right, but 461, 474 and 525 write `A * k_star ** α` / `A * k ** α` with spaces around `**`. Beyond that: 150 has a double space after a comma inside `ax.plot(xgrid, g_values,  lw=2, ...)`; 249 and 616 write `%x_init` with no space around the `%` operator (`label=r'$k_0=%g$' %x_init`); 250 and 358 omit the space after a comma (`np.full(ts_length,k_star)`, `ax.set_xlabel(\"$k$\",fontsize=10)`); 493 leaves a space before a closing bracket, `(s_star_max, )`, immediately beside a correctly written `(c_star_max,)`; 591 uses one space before an inline comment; the three `ax.annotate(...)` calls at 158-164, 348-354 and 495-501 all under-indent their continuation lines relative to the opening delimiter; and 348 and 624 put two blank lines inside a function body while 601 puts only one between two top-level defs"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        312,
+        570,
+        587
+      ],
+      "detail": "the continuous-time section reuses the symbol $g$ for a different function. {eq}`solow` at 98-99 defines $g(k) := s f(k) + (1 - \\delta) k$, cited at 116 and drawn as the 45-degree map; then 312-313 writes \"$k'_t = g(k_t)$ with $g(k) = s Ak^\\alpha - \\delta k$\", which is a different mapping with a different fixed-point interpretation, and the reader has no signal that the name has been recycled. The code does not make that mistake - it names the two functions `g` (130) and `g_con` (329) - so the prose is out of step with its own implementation. Second, the stochastic exercise contradicts itself: 565 says \"$(A_t)$ is IID and lognormal\", then 570 says \"Consider $A=2.0, s=0.6, \\alpha=0.3,$ and $\\delta=0.5$\" without saying what a single value of $A$ now means; the solution silently reinterprets it as a mean (585-586, `μ = np.log(2) - σ**2 / 2`) and 587's `A = 2.0` is then dead - `k_next` at 601-602 calls `lgnorm()` and never reads `A`"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        544,
+        595
+      ],
+      "detail": "595 sets a code identifier in italic - \"Let's define the function *k_next* to find the next value of $k$\" - where italic is reserved for emphasis and inline code is the right markup; the parallel sentence at 465 gets it right with `` `minimize_scalar` ``. And 544 uses bold as a pseudo-heading, `**Stochastic Productivity**`, on its own line at the top of the exercise body; it is neither a definition nor emphasis, and it is the only bold in the lecture that is not a definition (49, 59, 61, 187 and 298 all are)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        295,
+        316,
+        511
+      ],
+      "detail": "316-318 says the same thing twice inside one sentence: \"high marginal returns to savings at low levels of capital combined with low rates of return at high levels of capital combine to yield global stability\" - `combined with ... combine to` in 27 words. 511 loses its parallelism and its point: \"One can also try to solve this mathematically by differentiating $c^*(s)$ and solve for $\\frac{d}{ds}c^*(s)=0$\" - `differentiating ... and solve`, plus \"try to solve this mathematically\" where \"solve this symbolically\" is what is meant and what the cell does. And 295-296 repeats 102-103 almost verbatim (\"Our aim is to learn about the evolution of $k_t$ over time, given an exogenous initial capital stock $k_0$\" / \"given an initial stock $k_0$\") 190 lines later without acknowledging the repetition"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        333,
+        408
+      ],
+      "detail": "the continuous-time figure (333-364) plots $g(k) = sAk^\\alpha - \\delta k$ against the zero line and marks $k^*$, but omits the one device that makes a phase line carry the argument: arrows on the $k$-axis showing the direction of motion either side of $k^*$. Lines 312-318 spell that direction out in prose (\"values of $k$ with $g(k) > 0$ imply $k'_t > 0$, so capital is increasing ... When $g(k) < 0$, the opposite occurs\") - exactly the content a phase diagram exists to show. Second, {eq}`ssivs` at 408-419 gives the entire capital path in closed form and it is never plotted; overlaying it on the discrete-time simulation at 260-262, for the same parameters, would show the reader in one figure why the continuous-time detour was worth taking (271-272 promises that \"the smoothing provided by continuous time can simplify our analysis\")"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        61
+      ],
+      "detail": "the CES function at 61 is written $F(K, L) = \\left\\{ a K^\\rho + b L^\\rho \\right\\}^{1/\\rho}$ - curly braces used as a plain grouping delimiter, where parentheses are both the conventional choice and the simpler one, and where the same lecture reserves braces for nothing else (curly braces are the series convention for sequences, qe-math-005). The rest of the notation is commendably plain: no calligraphic or blackboard letters anywhere, and the algebra runs on $k$, $f$, $g$, $A$, $s$, $\\alpha$, $\\delta$"
+    }
   ],
   "strengths": [
     "The one-sentence-per-paragraph discipline holds across 632 lines with a single measured lapse (316): the whole model is built at 34-103 as a chain of one-sentence paragraphs that each add exactly one assumption - savings (34-35), the capital identity (39-40), the simplification (42), the production function (44-46), homogeneity (48-55), the saving rate (69-70), depreciation (72-73)",
@@ -38,5 +87,9 @@
   "scanner_doubts": [
     "qe-writing-001 misses every two-sentence paragraph whose first sentence ends in a markdown link. In solow.md the block at 464-465 (\"Let's find the value of $s$ that maximizes $c^*$ using [scipy.optimize.minimize_scalar](...).\" / \"We will use $-c^*(s)$ since `minimize_scalar` finds the minimum value.\") is two sentences and is not reported; only 316 is. Mechanism, verified: `_count_sentences` (tools/qestyle_rules.py:267) rewrites links and roles to the single-character placeholder \"X\" (lines 270-271), and the abbreviation guard at 281 then discards any sentence boundary whose preceding token is a single letter (`len(word) == 1 and word.isalpha()`) as an initial - so the placeholder swallows the boundary it was meant to preserve. I lexed all 348 corpus files and ran check_writing_001 with the placeholder changed from \"X\" to \"Xx\" and nothing else: 442 -> 448 occurrences, +6, across 5 files (solow.md 1->2, lecture-dp/os.md and lecture-python.myst/os.md 2->3 - the known dp sync duplicate, hansen_singleton_1982.md and hansen_singleton_1983.md 0->1, newton_method.md 2->3). No file's count fell and no new hit is a false positive: I printed all six paragraphs and each is genuinely two sentences with a link ending the first",
     "qe-fig-008 counts marker-only scatter calls as line charts that are missing `lw=`. The rule is \"line charts should use lw=2\"; `ax.plot(fps, fps, 'go', ms=10, alpha=0.6)` (solow.md:156, 345, 493) draws markers and no line, so `lw` would change nothing. Measured: baseline `check_fig_008` over all 348 corpus files gives 1382 occurrences. Adding one exclusion - skip the hit when a *positional* argument is a quoted format string made only of marker and colour characters with no line-style character (`-`, `--`, `-.`, `:`), or when `ls`/`linestyle` is set to `''`/`'none'` - gives 1248, i.e. -134 across 42 files. I sampled 30 of the 134 suppressed sites by hand and all are marker-only scatter (`'go'`, `'ko'`, `'o'`, `'+'`, `'*'`, `linestyle='', marker='o'`); nothing else moved. Two wrong ways to implement this that I tried and rejected: matching quoted strings anywhere in the call suppresses `ax.plot(x, y, marker='o')` (inequality.md:636, additive_functionals.md:1088, mle.md:239), which does draw a solid line and is a true positive, and it also matches unrelated strings such as `beliefs['rho']` (phillips_lost_conquest.md:183) and `label='p'` (time_series_with_matrices.md:674) - so the positional-argument split is the load-bearing part, not the marker regex. In my batch this touches solow (10->7), prob_dist (4->0), msy_fishery (4->0), schelling (3->0) and pv (6->4)"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "80aa2924d7dddc440df679b1fc9f93dd778d7fcb"
+  }
 }

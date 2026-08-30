@@ -97,5 +97,9 @@
   ],
   "scanner_doubts": [
     "lqramsey.md:387,393 - qe-math-002 is reported with count 8 over lines 401, 404, 408, 410, 411 and 430, and every one of those is a genuine transpose, but four more on lines 387 and 393 are missed, and this is a new gap rather than the known `\\]`/`DECORATED` one. Both lines are $\\frac{1}{2} x_t' (S_b - S_d + S_g)' (S_g + S_s) x_t$ and $\\frac{1}{2} x_t' (S_b - S_d - S_s)' (S_b - S_d - S_s) x_t$ - four primes, all unambiguously transposes of a matrix product, and all four immediately followed by a space and an opening parenthesis. The `prime` regex in `check_math_002` (tools/qestyle_rules.py) ends `'(?!'|\\s*\\()`, a guard added to keep `u'(c)` and `f'(x)` out, and here it fires on `x_t' (` and `)' (` and drops them. The `lprime` branch in the same function has already learned the right rule and records it in a comment - \"the base decides\": a command, a capital, or a closing delimiter is a transpose even when a factor follows, and only a plain lowercase name with an argument is a derivative. Applying that same split to `prime` - keep `(?!\\s*\\()` on the `[A-Za-z](?:_...)` lowercase alternative, drop it from the `[A-Z]...`, `\\)`, `\\}` and `\\\\top` alternatives - would pick up all four. Two of the four bases here are `)`, which is exactly the case the `lprime` comment says is a transpose"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "74705df385c8fadcc9ffdabe5978ac5504c980c5"
+  }
 }

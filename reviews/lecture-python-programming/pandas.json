@@ -69,5 +69,9 @@
     "Fix the broken sentences at 230, 334 and 592, and replace \"of our interests\" (184, 212)",
     "Replace the bold pseudo-headings at 272 and 387 with real headings and the bold numerals at 353-380 with an ordered list; extract the 600-character FRED URL to one variable instead of pasting it twice (525, 543)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "858db6a436ec79d742d1ffd70d42b9c3fc028914"
+  }
 }

@@ -2,16 +2,58 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "estspec",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 5, "lines": [76, 114, 157, 374],
-     "detail": "the lecture contains no bold at all, and every definition it makes is italicised instead: the *periodogram* at 76 (\"the *periodogram* of $X_0,\\ldots,X_{n-1}$, which is defined as\"), the *Fourier frequencies* at 114, and *pre-filtering*, *pre-whitening* and *recoloring* at 374 - the three names for the steps of the recipe just given at 369-372, and the ones a reader will scan back for. The remaining defined term, \"plug-in estimator\", is set in double quotes at 157 and 159 rather than in either. Since italic is never used for emphasis anywhere in the file, the fix is a straight substitution of bold at these five sites"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [365, 436, 331],
-     "detail": "the symbol $I$ is redefined mid-lecture. It is introduced at 81-84 as the periodogram of the raw data $X_0,\\ldots,X_{n-1}$, and used that way through 164-169, 274-286 and 385-393; then 436-439 writes \"the recoloring step, which constructs an estimate $I$ of $f$ from $I_0$\" and sets $I(\\omega) = |1/(1-\\hat\\phi e^{i\\omega})|^2 I_0(\\omega)$ - a different object, and one that is precisely *not* the periodogram of the data. With $I_S$ already taken at 286 for the smoothed version, the section that most needs distinct names for three estimators reuses the first one. Second, 365 promises \"First, we describe the basic idea, and after that we give the code\", but no code follows in that section - 444 only links out to GitHub, as 209, 321 and 361 already had. Third, 331 says \"the next three figures\", 335 says \"from the top figure to bottom\" and 342-346 refers to \"the middle figure\" and \"the first window length\", but 337-340 is a single `{figure}` of three stacked panels, which 455 then calls \"the three subfigures\""},
-    {"rule": "qe-code-001", "count": 6, "lines": [301, 488, 540, 547, 551, 555],
-     "detail": "301 mixes spacing conventions inside one expression - `0.5 - 0.5 * np.cos(2 * np.pi * n/(M-1))` spaces every operator except the `/` and the `-` in the subscript arithmetic - and binds the comprehension variable to `n`, the name the whole lecture uses for the sample size (224, 489). 488 writes `## Data` with a doubled hash. 540 writes `figsize=(10,12)` with no space after the comma, where the identical call at 495 has `figsize=(10, 12)`. And the three `semilogy` calls at 547-548, 551-552 and 555-556 break their argument list onto a continuation line indented to a flat 8 spaces rather than aligned to the opening parenthesis, so `label=` sits under the middle of the call"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [376],
-     "detail": "the pre-filtering section (361-395) makes an entirely visual argument in words and never draws it: the claim is that the residual periodogram $I_0$ is flat enough that heavy smoothing costs little bias (384-395), and that recoloring by $|1/(1-\\hat\\phi e^{i\\omega})|^2$ recovers $f$ (436-439). Nothing in the lecture shows $I_0$, so the reader sees the smoothed and AR-smoothed results side by side at 458 without ever seeing the flat intermediate object that makes the trick work - the one plot that would justify the whole section. The Hanning window figure at 299-311 is exactly the right instinct applied one section earlier"},
-    {"rule": "qe-math-009", "count": 3, "lines": [129, 190, 199],
-     "detail": "the same complex exponential is written two ways, sometimes within one display: 82 and 136-138 use `e^{i t \\omega}` / `e^{i t \\omega_j}`, while 129 writes both forms side by side (`\\sum e^{i t \\omega_j} = \\sum \\exp\\left\\{ i 2\\pi j \\frac{t}{n}\\right\\}`), and 190 and 199 use only the longer `\\exp\\left\\{\\cdot\\right\\}` form. Since $\\omega_j := 2\\pi j/n$ is defined at 117, the displays at 190 and 199 could carry the shorter `e^{i t \\omega_j}` that the reader has already been trained on"}
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        76,
+        114,
+        157,
+        374
+      ],
+      "detail": "the lecture contains no bold at all, and every definition it makes is italicised instead: the *periodogram* at 76 (\"the *periodogram* of $X_0,\\ldots,X_{n-1}$, which is defined as\"), the *Fourier frequencies* at 114, and *pre-filtering*, *pre-whitening* and *recoloring* at 374 - the three names for the steps of the recipe just given at 369-372, and the ones a reader will scan back for. The remaining defined term, \"plug-in estimator\", is set in double quotes at 157 and 159 rather than in either. Since italic is never used for emphasis anywhere in the file, the fix is a straight substitution of bold at these five sites"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        365,
+        436,
+        331
+      ],
+      "detail": "the symbol $I$ is redefined mid-lecture. It is introduced at 81-84 as the periodogram of the raw data $X_0,\\ldots,X_{n-1}$, and used that way through 164-169, 274-286 and 385-393; then 436-439 writes \"the recoloring step, which constructs an estimate $I$ of $f$ from $I_0$\" and sets $I(\\omega) = |1/(1-\\hat\\phi e^{i\\omega})|^2 I_0(\\omega)$ - a different object, and one that is precisely *not* the periodogram of the data. With $I_S$ already taken at 286 for the smoothed version, the section that most needs distinct names for three estimators reuses the first one. Second, 365 promises \"First, we describe the basic idea, and after that we give the code\", but no code follows in that section - 444 only links out to GitHub, as 209, 321 and 361 already had. Third, 331 says \"the next three figures\", 335 says \"from the top figure to bottom\" and 342-346 refers to \"the middle figure\" and \"the first window length\", but 337-340 is a single `{figure}` of three stacked panels, which 455 then calls \"the three subfigures\""
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        301,
+        488,
+        540,
+        547,
+        551,
+        555
+      ],
+      "detail": "301 mixes spacing conventions inside one expression - `0.5 - 0.5 * np.cos(2 * np.pi * n/(M-1))` spaces every operator except the `/` and the `-` in the subscript arithmetic - and binds the comprehension variable to `n`, the name the whole lecture uses for the sample size (224, 489). 488 writes `## Data` with a doubled hash. 540 writes `figsize=(10,12)` with no space after the comma, where the identical call at 495 has `figsize=(10, 12)`. And the three `semilogy` calls at 547-548, 551-552 and 555-556 break their argument list onto a continuation line indented to a flat 8 spaces rather than aligned to the opening parenthesis, so `label=` sits under the middle of the call"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        376
+      ],
+      "detail": "the pre-filtering section (361-395) makes an entirely visual argument in words and never draws it: the claim is that the residual periodogram $I_0$ is flat enough that heavy smoothing costs little bias (384-395), and that recoloring by $|1/(1-\\hat\\phi e^{i\\omega})|^2$ recovers $f$ (436-439). Nothing in the lecture shows $I_0$, so the reader sees the smoothed and AR-smoothed results side by side at 458 without ever seeing the flat intermediate object that makes the trick work - the one plot that would justify the whole section. The Hanning window figure at 299-311 is exactly the right instinct applied one section earlier"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        129,
+        190,
+        199
+      ],
+      "detail": "the same complex exponential is written two ways, sometimes within one display: 82 and 136-138 use `e^{i t \\omega}` / `e^{i t \\omega_j}`, while 129 writes both forms side by side (`\\sum e^{i t \\omega_j} = \\sum \\exp\\left\\{ i 2\\pi j \\frac{t}{n}\\right\\}`), and 190 and 199 use only the longer `\\exp\\left\\{\\cdot\\right\\}` form. Since $\\omega_j := 2\\pi j/n$ is defined at 117, the displays at 190 and 199 could carry the shorter `e^{i t \\omega_j}` that the reader has already been trained on"
+    }
   ],
   "strengths": [
     "The algebra from the definition of the periodogram to \"$I(\\omega_j)$ is just a sample analog of $f(\\omega_j)$\" is carried out in full and signposted at both ends: 121-123 asks the question and warns it \"does involve some algebra\", 125-166 does it in five displays, and 168-169 lands it against the expression for $f$ given at 68, with an explicit `{ref}` back to it",
@@ -32,5 +74,9 @@
   ],
   "scanner_doubts": [
     "estspec.md:51 - qe-ref-001 flags `For supplementary reading, see {cite}`Sargent1987` or {cite}`CryerChan2008`.` as \"{cite} in narrative flow\". The check already intends to exempt this: `tools/qestyle_rules.py:1310-1313` carries the comment \"is a list, not an author position\" and tests for `include|includes|including|see|e.g.|cf.` before the citation. But it tests `s[:m.start() + 1]`, and `m.start()` is the start of the NARRATIVE_LEAD match itself - for the `\\b(?:by|of|in|to|from|following|see|and|with|per|after|via)\\s+` alternative the cue word is inside the match, so the slice ends one character into \"see\" (verified: the slice is `'For supplementary reading, s'`) and the `see\\s*$` test can never fire. The exemption only ever works for the `[.!?]\\s+` alternative, which is how `e.g.` and `cf.` are caught. Testing `m.group(0)` or `s[:m.end()]` instead would fix it. The `include ... and {cite}` case named in the comment is broken the same way, since `and` is likewise consumed by the match. qe-ref-001 fires on 110 lectures corpus-wide, so this is worth re-running"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "a11254215e4cd522a7774b3d62d02e2bcdbf4c2a"
+  }
 }

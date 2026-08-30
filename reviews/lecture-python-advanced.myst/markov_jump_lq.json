@@ -2,16 +2,61 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "markov_jump_lq",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 8, "lines": [115, 205, 219, 302, 474],
-     "detail": "the review section and the extension it feeds do not agree with each other, and the central Bellman equation is broken in four ways at once. (i) 203-210 opens `\\max_u` for the problem that 94 and 163 both state as a `\\min`; keeps $u' Q_i u$ and $2u'W_ix$ positive while $x'R_ix$ is negated, so the three terms of the same loss carry two different signs; leaves a stray `x` inside the expectation, `(A_i x + B_i u + C_i w)' P_j (A_i x + B_i u + C_i w) x + \\rho_j`; and carries a stray `&` alignment marker in a single-row `aligned`. (ii) The Riccati equation at 113-116 writes `(Q + \\beta B P B )^{-1} (\\beta B P A + W)` with the transposes on $B$ dropped, where the same equation at 128 has `B' P B` and `B' P A`. (iii) 219 writes $(Q + \\beta B_i' P_j B_i)^{-1}$ with no Markov-state subscript on $Q$, though every other matrix in the display carries one and 231 has $Q_i$. (iv) 200-201 and 212-213 index the value functions \"for $i = 1, \\ldots, n$\", but $n$ is the dimension of $x_t$ (57, 72) and the number of Markov states is $N$ (54, 145); 213 also leaves the symbol outside the math, \"$\\rho_i, i = 1, \\ldots$, n\". (v) 302 adds the adjustment-cost term, $\\ldots x_t + \\underbrace{d_{s_t}}u_t{}^2$, where 298 subtracts it and the Example 2 counterpart at 809-816 wraps the whole quadratic in one minus sign. (vi) 262 asks the reader to maximise $r$ where 94 and 163 minimise it. (vii) 474 states the comparison the paragraph exists to make as $|u_{t,2}| > |u_{t,2}|$. (viii) Every figure label uses an overbar state, $\\overline{s}_1$ and $\\overline{s}_2$ (443-444, 545-546, 655-656, 673-675) and $F(\\overline{s}_t)$ (659, 715), that appears nowhere in the text - which writes $s_t \\in [1,2,\\ldots,N]$ - and the same axis is labelled $F_{s_t}$ at 549 and 618"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [608, 895, 925],
-     "detail": "the last section of the lecture is six identical stanzas - 892-925 - each a one-line header (\"Only $d_{s_t}$ depends on $s_t$.\", \"Only $f_{1,{s_t}}$ depends on $s_t$.\", and so on) followed by a single `run(...)` call, and each `run` emits five figures (three 2-D panels and two 3-D surfaces, 652-717). That is roughly thirty figures with no caption, no `name:`, titles that read only \"coefficient on k\" or \"coefficient on constant term\", and not one sentence of prose after 776 saying what changes between them; the lecture's own model for how to do this is 459-476 and 555-561, where two figures are read carefully. The 3-D panels are also drawn in a way that cannot be read: 613-615 and 711-712 call `plot_surface` twice with `color=\"b\"` and `color=\"r\"` and no `alpha`, so the nearer surface hides the farther one and the reader cannot see the crossing that the surfaces exist to show, and there is no colour bar or legend to say which is the high-adjustment-cost state. Nothing in the lecture is an admonition, including the parenthetical convention at 156-158 about switching between $s_t$ and $i$, which governs every equation that follows"},
-    {"rule": "qe-code-001", "count": 40, "lines": [319, 411, 506, 673, 766],
-     "detail": "40 items in four countable classes. (i) Eight statements end in a semicolon to suppress notebook output - `ex1_a.stationary_values();` at 411, 510, 520, 537, 579, 603, 648, 704 - which PEP8 rules out (E703); assigning the result or calling it in its own cell does the same job. (ii) Fourteen lines write a binary minus with no surrounding spaces inside the transition matrices, `np.array([[1-λ, λ], [λ, 1-λ]])` at 506-507, 516-517, 533-534, 575-576, 599-600, 644-645 and 700-701. (iii) Eight dictionary literals omit the space after the colon, `{\"f1_vals\":[0.5, 1.]}` at 766, 776, 895, 901, 907, 913, 919, 925. (iv) 319 and 844 write `f1_vals=[1. ,1.]`, with the space before the comma rather than after. Beyond the count: both `construct_arrays` functions take mutable lists as default arguments (319-321, 844-849); 341-342 and 866-867 write `- f1_vals[i] / 2` with a space after the unary minus; 673-675 concatenate label strings with unspaced `+`; 683 writes `min(k_star)+(max(k_star)-min(k_star))/20`; 505 and 515 use a single space before an inline comment; and quote style alternates between `'3d'` (611, 710) and `\"b\"`/`\"r\"` (613-615) throughout. 447 also hard-codes `ax.scatter([0.5, 0.5], [0.5, 0.5])` for the fixed point that `k_star` already holds and that line 448 reads from `k_star[0]`"},
-    {"rule": "qe-math-009", "count": 3, "lines": [281, 298, 785],
-     "detail": "the same six parameters are written two ways throughout. Example 1 introduces them as subscripts, $f_{1,s_t}$, $f_{2,s_t}$, $d_{s_t}$ (268, 298-302, 373-390, 721-737), then 281-282 states their signs as $f_1(s_t) > 0$, $f_2(s_t) > 0$, $d(s_t) > 0$, and Example 2 switches wholesale to the function form with `\\left(\\right)` armour - $f_{1}\\left(s_{t}\\right)$, $\\alpha_{0}\\left(s_{t}\\right)$, $\\rho\\left(s_{t}\\right)$, $\\sigma\\left(s_{t}\\right)$ at 785 and 808-840 - while the prose immediately around it (892-925) reverts to $d_{s_t}$, $f_{1,{s_t}}$, $\\rho_{s_t}$, $\\sigma_{s_t}$. The code has one name for each (`f1_vals`, `α0_vals`, `ρ_vals`), so the second notation buys nothing. 298 and 302 also write the square as `u_{t}{}^{2}`, with an empty group before the superscript, where 795 writes $k_t^2$ plainly; and the Gaussian is `{\\cal N}(0,I)` at 180 but plain $N\\left(0,1\\right)$ at 785, so the lecture already contains the spelling that qe-math-011 (proposed) asks for"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [469, 736, 750, 762],
-     "detail": "469-471 names the same state twice in one sentence: \"the optimal decision rule in Markov state $2$, in which the adjustment cost is lower, makes $k_{t+1}$ a flatter function of $k_t$ in Markov state $2$\". Three further sentences drop words: 736-737 \"So there are different $s_t$-dependent optimal static $k$ level in different states\"; 749-750 \"each Markov state becomes close to absorbing state\"; 761-762 \"optimal $k$ levels in the two states Markov jump state\". 473-476 then explains the mechanism through the broken inequality at 474, so the paragraph's conclusion rests on a comparison that is not stated"}
+    {
+      "rule": "qe-writing-003",
+      "count": 8,
+      "lines": [
+        115,
+        205,
+        219,
+        302,
+        474
+      ],
+      "detail": "the review section and the extension it feeds do not agree with each other, and the central Bellman equation is broken in four ways at once. (i) 203-210 opens `\\max_u` for the problem that 94 and 163 both state as a `\\min`; keeps $u' Q_i u$ and $2u'W_ix$ positive while $x'R_ix$ is negated, so the three terms of the same loss carry two different signs; leaves a stray `x` inside the expectation, `(A_i x + B_i u + C_i w)' P_j (A_i x + B_i u + C_i w) x + \\rho_j`; and carries a stray `&` alignment marker in a single-row `aligned`. (ii) The Riccati equation at 113-116 writes `(Q + \\beta B P B )^{-1} (\\beta B P A + W)` with the transposes on $B$ dropped, where the same equation at 128 has `B' P B` and `B' P A`. (iii) 219 writes $(Q + \\beta B_i' P_j B_i)^{-1}$ with no Markov-state subscript on $Q$, though every other matrix in the display carries one and 231 has $Q_i$. (iv) 200-201 and 212-213 index the value functions \"for $i = 1, \\ldots, n$\", but $n$ is the dimension of $x_t$ (57, 72) and the number of Markov states is $N$ (54, 145); 213 also leaves the symbol outside the math, \"$\\rho_i, i = 1, \\ldots$, n\". (v) 302 adds the adjustment-cost term, $\\ldots x_t + \\underbrace{d_{s_t}}u_t{}^2$, where 298 subtracts it and the Example 2 counterpart at 809-816 wraps the whole quadratic in one minus sign. (vi) 262 asks the reader to maximise $r$ where 94 and 163 minimise it. (vii) 474 states the comparison the paragraph exists to make as $|u_{t,2}| > |u_{t,2}|$. (viii) Every figure label uses an overbar state, $\\overline{s}_1$ and $\\overline{s}_2$ (443-444, 545-546, 655-656, 673-675) and $F(\\overline{s}_t)$ (659, 715), that appears nowhere in the text - which writes $s_t \\in [1,2,\\ldots,N]$ - and the same axis is labelled $F_{s_t}$ at 549 and 618"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        608,
+        895,
+        925
+      ],
+      "detail": "the last section of the lecture is six identical stanzas - 892-925 - each a one-line header (\"Only $d_{s_t}$ depends on $s_t$.\", \"Only $f_{1,{s_t}}$ depends on $s_t$.\", and so on) followed by a single `run(...)` call, and each `run` emits five figures (three 2-D panels and two 3-D surfaces, 652-717). That is roughly thirty figures with no caption, no `name:`, titles that read only \"coefficient on k\" or \"coefficient on constant term\", and not one sentence of prose after 776 saying what changes between them; the lecture's own model for how to do this is 459-476 and 555-561, where two figures are read carefully. The 3-D panels are also drawn in a way that cannot be read: 613-615 and 711-712 call `plot_surface` twice with `color=\"b\"` and `color=\"r\"` and no `alpha`, so the nearer surface hides the farther one and the reader cannot see the crossing that the surfaces exist to show, and there is no colour bar or legend to say which is the high-adjustment-cost state. Nothing in the lecture is an admonition, including the parenthetical convention at 156-158 about switching between $s_t$ and $i$, which governs every equation that follows"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 40,
+      "lines": [
+        319,
+        411,
+        506,
+        673,
+        766
+      ],
+      "detail": "40 items in four countable classes. (i) Eight statements end in a semicolon to suppress notebook output - `ex1_a.stationary_values();` at 411, 510, 520, 537, 579, 603, 648, 704 - which PEP8 rules out (E703); assigning the result or calling it in its own cell does the same job. (ii) Fourteen lines write a binary minus with no surrounding spaces inside the transition matrices, `np.array([[1-λ, λ], [λ, 1-λ]])` at 506-507, 516-517, 533-534, 575-576, 599-600, 644-645 and 700-701. (iii) Eight dictionary literals omit the space after the colon, `{\"f1_vals\":[0.5, 1.]}` at 766, 776, 895, 901, 907, 913, 919, 925. (iv) 319 and 844 write `f1_vals=[1. ,1.]`, with the space before the comma rather than after. Beyond the count: both `construct_arrays` functions take mutable lists as default arguments (319-321, 844-849); 341-342 and 866-867 write `- f1_vals[i] / 2` with a space after the unary minus; 673-675 concatenate label strings with unspaced `+`; 683 writes `min(k_star)+(max(k_star)-min(k_star))/20`; 505 and 515 use a single space before an inline comment; and quote style alternates between `'3d'` (611, 710) and `\"b\"`/`\"r\"` (613-615) throughout. 447 also hard-codes `ax.scatter([0.5, 0.5], [0.5, 0.5])` for the fixed point that `k_star` already holds and that line 448 reads from `k_star[0]`"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        281,
+        298,
+        785
+      ],
+      "detail": "the same six parameters are written two ways throughout. Example 1 introduces them as subscripts, $f_{1,s_t}$, $f_{2,s_t}$, $d_{s_t}$ (268, 298-302, 373-390, 721-737), then 281-282 states their signs as $f_1(s_t) > 0$, $f_2(s_t) > 0$, $d(s_t) > 0$, and Example 2 switches wholesale to the function form with `\\left(\\right)` armour - $f_{1}\\left(s_{t}\\right)$, $\\alpha_{0}\\left(s_{t}\\right)$, $\\rho\\left(s_{t}\\right)$, $\\sigma\\left(s_{t}\\right)$ at 785 and 808-840 - while the prose immediately around it (892-925) reverts to $d_{s_t}$, $f_{1,{s_t}}$, $\\rho_{s_t}$, $\\sigma_{s_t}$. The code has one name for each (`f1_vals`, `α0_vals`, `ρ_vals`), so the second notation buys nothing. 298 and 302 also write the square as `u_{t}{}^{2}`, with an empty group before the superscript, where 795 writes $k_t^2$ plainly; and the Gaussian is `{\\cal N}(0,I)` at 180 but plain $N\\left(0,1\\right)$ at 785, so the lecture already contains the spelling that qe-math-011 (proposed) asks for"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        469,
+        736,
+        750,
+        762
+      ],
+      "detail": "469-471 names the same state twice in one sentence: \"the optimal decision rule in Markov state $2$, in which the adjustment cost is lower, makes $k_{t+1}$ a flatter function of $k_t$ in Markov state $2$\". Three further sentences drop words: 736-737 \"So there are different $s_t$-dependent optimal static $k$ level in different states\"; 749-750 \"each Markov state becomes close to absorbing state\"; 761-762 \"optimal $k$ levels in the two states Markov jump state\". 473-476 then explains the mechanism through the broken inequality at 474, so the paragraph's conclusion rests on a comparison that is not stated"
+    }
   ],
   "strengths": [
     "The lecture front-loads exactly what the reader needs to check the extension against: 67-129 restates the ordinary LQ problem - the two triples $(R,Q,W)$ and $(A,B,C)$, the objective, the decision rule, the Riccati equation, the constant $\\rho$ and the gain $F$ - and then 133-233 rebuilds each of those five objects with Markov-state subscripts, in the same order, so the extension can be read line against line",
@@ -35,5 +80,9 @@
   "scanner_doubts": [
     "markov_jump_lq.md:122,153,225 - qe-math-010 (proposed) is reported with count 1, at line 288, where the probability operator is written `\\Pr`. The identical operator at line 153 is written `{\\rm Prob}(s_{t+1} = j |s_t = i)` and is not counted, and the two `{\\rm trace}(\\cdot)` operators at 122 and 225 are not counted either. The `other` branch of `check_math_010` matches `\\\\(Pr|Var|Cov|Prob)\\b` and `\\\\(?:text|mathrm|operatorname)\\{...\\}`, so it sees `\\Pr` but not the `{\\rm ...}` spelling, which this series uses interchangeably with it - the same gap the amss overlay notes for amss2 and amss3, and the one that hides both probability operators in entropy.md (44, 92). Adding `rm|textrm|bf|it` to the wrapper alternation would make the count for this file 2 for `Prob` alone",
     "markov_jump_lq.md:298,302 - qe-math-002 is reported with count 45, which is right for the apostrophe transposes, but the two occurrences of `u_{t}{}^{2}` at 298 and 302 are worth a look from whichever check owns superscript hygiene: the empty group `{}` before the superscript is a plain-TeX artifact with no effect, and a regex that expects `[A-Za-z]\\^` will not see the exponent at all. No count is wrong here; I note it because a future `^T`-style check on this corpus will need to look through `{}` groups"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "92c27dccc44b4f2deb5bd680803848a371495592"
+  }
 }

@@ -12,5 +12,9 @@
     "If that orientation is added, keep each sentence in its own paragraph block so the page stays qe-writing-001 clean",
     "Otherwise leave the file untouched; it needs no style remediation and is a useful reference for what a clean MyST page looks like"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "e8b4556a50d935e78be2cc0a763b776f295fbd25"
+  }
 }

@@ -2,18 +2,82 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "calvo_machine_learn",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [1163, 1350, 1416, 1075],
-     "detail": "the numbers that carry the lecture's conclusion are typed into the prose rather than read from the cells: 1347-1361 states the three fitted relations as $\\mu_t = .0645 + 1.5995 \\theta_t$, $\\theta_{t+1} = -.0645 + .4005 \\theta_t$ and $v_t = 6.8052 - .7580\\theta_t - 4.6991\\theta_t^2$, all six coefficients hard-coded, while the cells at 1195-1290 recompute them from `μs`, `θs` and `v_t` - change $\\beta$, $c$ or $T$ anywhere above and the summary section silently goes stale. Second, 1416-1418 says \"compute the parameters $d_0, d_1$ for the decision rule for $\\mu_t$ and the parameters $d_0, d_1$ in the updating rule for $\\theta_{t+1}$\" - the first pair is $b_0, b_1$ in {eq}`eq_old9101` at 1375, and the cell at 1430 prints `-(b_0, b_1)`, negated, with nothing said about why the sign flips before 1440 concludes that \"these agree\". Third, 1163 says the two sequences \"converge from above to the same constant $\\vec \\mu$\", using the sequence symbol for the scalar limit that 320 called $\\bar \\mu$; the same slip appears at 311, where the pair is written `(\\vec mu, \\vec \\theta)` and the missing backslash makes it render as $\\vec m u$. Fourth, two code comments point at section numbers from a different build: \"# Compute g0, g1, and g2 (41.16)\" (457) and \"# Define function for s and U in section 41.3\" (1075) - this lecture has no section 41.3, and 1191's reference to {eq}`eq_grad_old3` is the kind of pointer that would work"},
-    {"rule": "qe-writing-002", "count": 12, "lines": [46, 311, 367, 391, 417, 726, 1058, 1328, 1364, 1401],
-     "detail": "the lecture has not been proofread, and eight of the breaks are inside sentences the reader needs. 311: \"the government's problem is **static** in the sense that it chooses treats that time-series as a single object\". 367: \"Having specified a truncated vector $\\tilde \\mu$ and and having computed\". 391: \"We hope that answers will agree with those found obtained by other more structured methods\". 417: \"We'll eventually want to compare the results we obtain here to those that we obtain in those obtained in this quantecon lecture\". 726: \"We start by recalling that the Ramsey problem that chooses $\\vec \\mu$ to maximize the government's value function {eq}`eq:Ramseyvalue`subject to equation {eq}`eq:inflation101`\" - two relative clauses and a citation run into the next word. 1328: \"appears at the peak of the function quadratic function\". 1364-1366: \"Assembling these regressions, we have discovered run for our single Ramsey outcome path ... that along a Ramsey plan\". 1191: \"inflation at time $t$ is determined $\\{\\mu_s\\}_{s=t}^\\infty$\" is missing its preposition. Plus single-word typos at 46 (\"money growh rates\"), 1058 (\"For subsquent analysis\"), 1401 (\"represenative agent's\") and 1184 (\"the reasoning that let Chang ... to choose\")"},
-    {"rule": "qe-writing-005", "count": 9, "lines": [18, 24, 48, 59, 72, 1058, 1167, 1412],
-     "detail": "prose phrases are wrapped in double backticks, which is reStructuredText quoting and renders in MyST as inline code: ``machine learning`` (18, 389, 724), ``dynamic programming squared`` (24), ``gradient descent`` (59), ``artificial intelligence`` (72) and ``continuation values`` (1058) all come out as code spans on the page. The same two terms are also given as bold - **machine learning** (48), **human intelligence** and **artificial intelligence** (1167) - so \"machine learning\" appears as code at 18, as bold at 48 and as plain text at 56 and 63, and \"artificial intelligence\" as code at 72 and bold at 1167. Meanwhile the double-backtick form is used correctly for a genuine identifier at 1412, 1414 and 1420 (``ChangLQ``), which is what makes the prose cases read as code to a reader. Italic is available and used once, for *liquidity* at 82, which is the treatment the scare-quoted phrases want; bold should be kept for the terms actually being defined, as at 77 (**time inconsistency**), 122 and 302"},
-    {"rule": "qe-code-001", "count": 6, "lines": [569, 602, 1078, 1082, 1089, 1131],
-     "detail": "161 lines carry trailing whitespace, most of them inside the code cells (554, 557, 561, 564, 567, 575, 577, 581, 583, 586, 590, 611-613, 631, 636, 638, 1084, 1087, 1091, 1094, 1098, 1131, 1133, 1313, 1317). Top-level definitions are separated by one blank line where PEP8 asks for two, at 569-570 and 577-578, and the file uses two elsewhere. `T` is defined two different ways for the same object: `T = len(μ) - 1` in `compute_θ` (552) and `compute_V` (584), matching the mathematics where $\\tilde\\mu$ has $T+1$ components (345), but `T = len(μ)` in `compute_vt` (1082), which is why the line that the comment calls \"# Define v_T\" has to be written `v_t[T-1]` (1093). 1089-1090 gives the wrapper lambda the same parameter names as the enclosing scope, `s_p = lambda θ, μ: s(θ, μ, ...)`, shadowing the θ and μ that the surrounding function is iterating over. Operator spacing is mixed inside single expressions: `U(-α*θ) - (c / 2) * μ**2` at 1078, `λ**(T - jnp.arange(T)) * μbar` at 563. And 602 leaves a note to the author in the output cell, `print(f'deviation = {np.abs(V_val - clq.J_series[0])}') # good!`"},
-    {"rule": "qe-math-009", "count": 3, "lines": [851, 865, 878],
-     "detail": "865, 867, 870 and 872 write the diagonal matrix of discount factors as `\\vec{\\beta} \\cdot \\mathbf{I}` - a $(T+1)$-vector \"times\" an identity matrix, which is not a defined product and which the code implements as a diagonal; $\\mathrm{diag}(\\vec\\beta)$ says it in fewer symbols and is what the reader already knows. The vector itself is named $\\vec\\beta$ (851-855) although $\\beta$ is the discount factor throughout, so $\\vec\\beta$, $\\beta$ and $\\beta^t$ appear in the same three lines meaning three different things. And the truncated vector has two names: 345 and 353 introduce it as $\\tilde\\mu$ and $\\tilde\\theta$, which is what makes the truncation visible, but from 860 to 899 the same objects revert to $\\vec\\mu$ and $\\vec\\theta$ - the symbols 45-46 and 299 use for the infinite sequences - so the reader has to infer from context whether $\\vec\\mu$ has $T+1$ components or infinitely many"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [664, 1201, 1221],
-     "detail": "the three regressions that are the point of the lecture print full `statsmodels` OLS summaries (1201, 1247, 1290) - about twenty-five lines each of dependent-variable headers, F-statistics, AIC, BIC, skew, kurtosis and Durbin-Watson - when what the text then quotes is four coefficients and the $R^2$ of unity (1347-1361, 1389); a three-row table of coefficient, standard error and $R^2$ would carry the argument and leave the condition-number warning that 1297-1300 discusses visible instead of buried. Second, the comparisons against the sister lecture's `ChangLQ` baseline are scattered across six bare cells that print a norm - 602, 669, 673, 677, 710, 719, 1111 - four of them consecutive and with no prose between them (664-678), so the reader meets four unexplained numbers in a row; one table of the three methods against $\\bar\\mu$, $V$ and the deviation would do the whole job. Third, only one of the five figures is named (`continuation_values`, 1121) and it is the only one the text can cross-reference with `{numref}` (1142); the three regression figures at 1221, 1262 and 1308 carry the punchline and cannot be referenced at all"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        1163,
+        1350,
+        1416,
+        1075
+      ],
+      "detail": "the numbers that carry the lecture's conclusion are typed into the prose rather than read from the cells: 1347-1361 states the three fitted relations as $\\mu_t = .0645 + 1.5995 \\theta_t$, $\\theta_{t+1} = -.0645 + .4005 \\theta_t$ and $v_t = 6.8052 - .7580\\theta_t - 4.6991\\theta_t^2$, all six coefficients hard-coded, while the cells at 1195-1290 recompute them from `μs`, `θs` and `v_t` - change $\\beta$, $c$ or $T$ anywhere above and the summary section silently goes stale. Second, 1416-1418 says \"compute the parameters $d_0, d_1$ for the decision rule for $\\mu_t$ and the parameters $d_0, d_1$ in the updating rule for $\\theta_{t+1}$\" - the first pair is $b_0, b_1$ in {eq}`eq_old9101` at 1375, and the cell at 1430 prints `-(b_0, b_1)`, negated, with nothing said about why the sign flips before 1440 concludes that \"these agree\". Third, 1163 says the two sequences \"converge from above to the same constant $\\vec \\mu$\", using the sequence symbol for the scalar limit that 320 called $\\bar \\mu$; the same slip appears at 311, where the pair is written `(\\vec mu, \\vec \\theta)` and the missing backslash makes it render as $\\vec m u$. Fourth, two code comments point at section numbers from a different build: \"# Compute g0, g1, and g2 (41.16)\" (457) and \"# Define function for s and U in section 41.3\" (1075) - this lecture has no section 41.3, and 1191's reference to {eq}`eq_grad_old3` is the kind of pointer that would work"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 12,
+      "lines": [
+        46,
+        311,
+        367,
+        391,
+        417,
+        726,
+        1058,
+        1328,
+        1364,
+        1401
+      ],
+      "detail": "the lecture has not been proofread, and eight of the breaks are inside sentences the reader needs. 311: \"the government's problem is **static** in the sense that it chooses treats that time-series as a single object\". 367: \"Having specified a truncated vector $\\tilde \\mu$ and and having computed\". 391: \"We hope that answers will agree with those found obtained by other more structured methods\". 417: \"We'll eventually want to compare the results we obtain here to those that we obtain in those obtained in this quantecon lecture\". 726: \"We start by recalling that the Ramsey problem that chooses $\\vec \\mu$ to maximize the government's value function {eq}`eq:Ramseyvalue`subject to equation {eq}`eq:inflation101`\" - two relative clauses and a citation run into the next word. 1328: \"appears at the peak of the function quadratic function\". 1364-1366: \"Assembling these regressions, we have discovered run for our single Ramsey outcome path ... that along a Ramsey plan\". 1191: \"inflation at time $t$ is determined $\\{\\mu_s\\}_{s=t}^\\infty$\" is missing its preposition. Plus single-word typos at 46 (\"money growh rates\"), 1058 (\"For subsquent analysis\"), 1401 (\"represenative agent's\") and 1184 (\"the reasoning that let Chang ... to choose\")"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 9,
+      "lines": [
+        18,
+        24,
+        48,
+        59,
+        72,
+        1058,
+        1167,
+        1412
+      ],
+      "detail": "prose phrases are wrapped in double backticks, which is reStructuredText quoting and renders in MyST as inline code: ``machine learning`` (18, 389, 724), ``dynamic programming squared`` (24), ``gradient descent`` (59), ``artificial intelligence`` (72) and ``continuation values`` (1058) all come out as code spans on the page. The same two terms are also given as bold - **machine learning** (48), **human intelligence** and **artificial intelligence** (1167) - so \"machine learning\" appears as code at 18, as bold at 48 and as plain text at 56 and 63, and \"artificial intelligence\" as code at 72 and bold at 1167. Meanwhile the double-backtick form is used correctly for a genuine identifier at 1412, 1414 and 1420 (``ChangLQ``), which is what makes the prose cases read as code to a reader. Italic is available and used once, for *liquidity* at 82, which is the treatment the scare-quoted phrases want; bold should be kept for the terms actually being defined, as at 77 (**time inconsistency**), 122 and 302"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        569,
+        602,
+        1078,
+        1082,
+        1089,
+        1131
+      ],
+      "detail": "161 lines carry trailing whitespace, most of them inside the code cells (554, 557, 561, 564, 567, 575, 577, 581, 583, 586, 590, 611-613, 631, 636, 638, 1084, 1087, 1091, 1094, 1098, 1131, 1133, 1313, 1317). Top-level definitions are separated by one blank line where PEP8 asks for two, at 569-570 and 577-578, and the file uses two elsewhere. `T` is defined two different ways for the same object: `T = len(μ) - 1` in `compute_θ` (552) and `compute_V` (584), matching the mathematics where $\\tilde\\mu$ has $T+1$ components (345), but `T = len(μ)` in `compute_vt` (1082), which is why the line that the comment calls \"# Define v_T\" has to be written `v_t[T-1]` (1093). 1089-1090 gives the wrapper lambda the same parameter names as the enclosing scope, `s_p = lambda θ, μ: s(θ, μ, ...)`, shadowing the θ and μ that the surrounding function is iterating over. Operator spacing is mixed inside single expressions: `U(-α*θ) - (c / 2) * μ**2` at 1078, `λ**(T - jnp.arange(T)) * μbar` at 563. And 602 leaves a note to the author in the output cell, `print(f'deviation = {np.abs(V_val - clq.J_series[0])}') # good!`"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        851,
+        865,
+        878
+      ],
+      "detail": "865, 867, 870 and 872 write the diagonal matrix of discount factors as `\\vec{\\beta} \\cdot \\mathbf{I}` - a $(T+1)$-vector \"times\" an identity matrix, which is not a defined product and which the code implements as a diagonal; $\\mathrm{diag}(\\vec\\beta)$ says it in fewer symbols and is what the reader already knows. The vector itself is named $\\vec\\beta$ (851-855) although $\\beta$ is the discount factor throughout, so $\\vec\\beta$, $\\beta$ and $\\beta^t$ appear in the same three lines meaning three different things. And the truncated vector has two names: 345 and 353 introduce it as $\\tilde\\mu$ and $\\tilde\\theta$, which is what makes the truncation visible, but from 860 to 899 the same objects revert to $\\vec\\mu$ and $\\vec\\theta$ - the symbols 45-46 and 299 use for the infinite sequences - so the reader has to infer from context whether $\\vec\\mu$ has $T+1$ components or infinitely many"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        664,
+        1201,
+        1221
+      ],
+      "detail": "the three regressions that are the point of the lecture print full `statsmodels` OLS summaries (1201, 1247, 1290) - about twenty-five lines each of dependent-variable headers, F-statistics, AIC, BIC, skew, kurtosis and Durbin-Watson - when what the text then quotes is four coefficients and the $R^2$ of unity (1347-1361, 1389); a three-row table of coefficient, standard error and $R^2$ would carry the argument and leave the condition-number warning that 1297-1300 discusses visible instead of buried. Second, the comparisons against the sister lecture's `ChangLQ` baseline are scattered across six bare cells that print a norm - 602, 669, 673, 677, 710, 719, 1111 - four of them consecutive and with no prose between them (664-678), so the reader meets four unexplained numbers in a row; one table of the three methods against $\\bar\\mu$, $V$ and the deviation would do the whole job. Third, only one of the five figures is named (`continuation_values`, 1121) and it is the only one the text can cross-reference with `{numref}` (1142); the three regression figures at 1221, 1262 and 1308 carry the punchline and cannot be referenced at all"
+    }
   ],
   "strengths": [
     "The lecture names the weakness of its own method in the introduction and then keeps the comparison running: 48 explains why \"machine learning\" is the right label - the approach ignores the structure that dynamic programming squared supplies and \"proliferates parameters\" - 52-54 casts the sister lecture as a laboratory for judging \"promises and limits of machine learning approaches more generally\", and every computed object is checked against `ChangLQ` (602, 665-669, 710, 1440)",
@@ -37,5 +101,9 @@
   ],
   "scanner_doubts": [
     "calvo_machine_learn.md:454 - qe-code-002 is reported ×1 at 454 for \"spelled-out `beta`\", and the line is `lq = LQ(self.Q, self.R, self.A, self.B, beta=self.β)`: `beta` is the keyword in `quantecon.LQ`'s signature and cannot be renamed, while the value passed is already the unicode `self.β`. This is the third instance of the same pattern in this batch - `scipy.stats.beta` in `stationary_densities` (77, 476, 879, 915) and `beta=econ.beta` in `gorman_heterogeneous_households` (1270, 1374) - and in all three the reported hits are names owned by a third-party API, not by the lecture. `GREEK_RE` already refuses a dotted attribute via `(?<![\\w.])`, so `self.β` is safe; the missing exemption is a Greek word used as a keyword argument in a call to an imported callable, which is the same shape as the existing `STYLE_KWARG` exemption for `alpha=` in drawing calls. With that exemption this lecture's qe-code-002 count would be 0, which is right: every parameter the lecture itself names is unicode"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "ef41a369fb543274c178f3780abb6723a0caac8c"
+  }
 }

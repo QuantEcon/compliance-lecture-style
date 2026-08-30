@@ -2,14 +2,50 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "matsuyama",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 2, "lines": [277, 750],
-     "detail": "the law of motion at 273-284 is piecewise over four regions of the unit square - $D_{LL}$, $D_{HH}$, $D_{HL}$, $D_{LH}$, defined at 288-295 by the cutoff $s_1(\\rho)$ and the implicit curve $h_j(n_k)$ - and that partition is never drawn, even though the lecture already plots on exactly that square (`pcolormesh(unitrange, unitrange, ...)` at 750). One panel showing the two curves cutting $[0,1]^2$ into four labelled regions would make both the `cases` display and the four-branch `if/elif` chain at 394-405 legible at a glance; without it the reader has to hold four inequalities in their head. Second, the attraction-basis figures (709, 741-787) carry no axis labels at all, so nothing says the axes are the initial conditions $n_{1,0}$ and $n_{2,0}$ - and 706 describes the encoding as \"dark colors indicate synchronization, while light colors indicate failure\" while the colorbar at 773-774 is actually a periods-to-synchronize scale with no label of its own"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [216, 314, 324],
-     "detail": "$N_{j,t}^c$ and $N_{j,t}^m$ are used in the display at 216 ($M_{j,t} := N_{j,t}^c + N_{j,t}^m/\\theta$) and only defined afterwards, at 219 (\"The symbols $N_{j,t}^c$ and $N_{j,t}^m$ will denote the measures of $\\Omega^c$ and $\\Omega^m$\"), so the reader meets the composite before either of its parts. Second, 310-314 promises the root and never shows it: \"Since we know $h_j(n_k) > 0$ then we can just solve the quadratic equation and return the positive root\" followed by \"This gives us\" - and what follows at 317 is the quadratic itself, not its root; the closed form only ever appears as `root = (-b + np.sqrt(b*b - 4*a*c)) / (2*a)` at 362. Third, the whole simulation section turns on whether cycles \"synchronize\" (324-329, 689-692, 706, 713), but the criterion is never stated in the prose - it lives only in a docstring and a code branch (427-431, 470-480: $|n_{1,t} - n_{2,t}| < 10^{-8}$ sustained for `npers` consecutive periods), so a reader of the rendered page cannot say what the dark regions of the figure mean"},
-    {"rule": "qe-code-001", "count": 8, "lines": [366, 371, 377, 382, 387, 409, 421, 484],
-     "detail": "top-level definitions in the main cell are separated by a single blank line throughout - 365/366, 370/371, 376/377, 381/382, 386/387, 408/409, 420/421, 483/484 - where PEP8 asks for two, and the file is inconsistent with itself since 502-504 does leave two before the class. Separately, the four region predicates use single-quoted one-line docstrings (`\"Determine whether (n1, n2) is in the set DLL\"` at 368, and 373, 379, 384) rather than triple quotes, unlike every other docstring in the file; and three continuation lines are under-indented rather than aligned to their opening delimiter - 486 (`maxiter, npers, npts):` at 8 spaces under a `def` whose arguments start at column 34), 629 and 641"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [54, 157, 183],
-     "detail": "the lecture contains no bold and no italic anywhere, yet it names and defines several terms in narrative: \"coupled oscillators\" at 54, which 56 then calls the paper's technical contribution; the \"iceberg trade cost $\\tau_{j,k}$\" at 157; and $\\rho$ at 183-184, \"a proxy for the degree of globalization\", which is the single parameter the rest of the lecture varies (713, 763-766, 824). None is marked, so nothing on the page distinguishes the sentence that introduces a term from the sentences that use it"}
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        277,
+        750
+      ],
+      "detail": "the law of motion at 273-284 is piecewise over four regions of the unit square - $D_{LL}$, $D_{HH}$, $D_{HL}$, $D_{LH}$, defined at 288-295 by the cutoff $s_1(\\rho)$ and the implicit curve $h_j(n_k)$ - and that partition is never drawn, even though the lecture already plots on exactly that square (`pcolormesh(unitrange, unitrange, ...)` at 750). One panel showing the two curves cutting $[0,1]^2$ into four labelled regions would make both the `cases` display and the four-branch `if/elif` chain at 394-405 legible at a glance; without it the reader has to hold four inequalities in their head. Second, the attraction-basis figures (709, 741-787) carry no axis labels at all, so nothing says the axes are the initial conditions $n_{1,0}$ and $n_{2,0}$ - and 706 describes the encoding as \"dark colors indicate synchronization, while light colors indicate failure\" while the colorbar at 773-774 is actually a periods-to-synchronize scale with no label of its own"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        216,
+        314,
+        324
+      ],
+      "detail": "$N_{j,t}^c$ and $N_{j,t}^m$ are used in the display at 216 ($M_{j,t} := N_{j,t}^c + N_{j,t}^m/\\theta$) and only defined afterwards, at 219 (\"The symbols $N_{j,t}^c$ and $N_{j,t}^m$ will denote the measures of $\\Omega^c$ and $\\Omega^m$\"), so the reader meets the composite before either of its parts. Second, 310-314 promises the root and never shows it: \"Since we know $h_j(n_k) > 0$ then we can just solve the quadratic equation and return the positive root\" followed by \"This gives us\" - and what follows at 317 is the quadratic itself, not its root; the closed form only ever appears as `root = (-b + np.sqrt(b*b - 4*a*c)) / (2*a)` at 362. Third, the whole simulation section turns on whether cycles \"synchronize\" (324-329, 689-692, 706, 713), but the criterion is never stated in the prose - it lives only in a docstring and a code branch (427-431, 470-480: $|n_{1,t} - n_{2,t}| < 10^{-8}$ sustained for `npers` consecutive periods), so a reader of the rendered page cannot say what the dark regions of the figure mean"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        366,
+        371,
+        377,
+        382,
+        387,
+        409,
+        421,
+        484
+      ],
+      "detail": "top-level definitions in the main cell are separated by a single blank line throughout - 365/366, 370/371, 376/377, 381/382, 386/387, 408/409, 420/421, 483/484 - where PEP8 asks for two, and the file is inconsistent with itself since 502-504 does leave two before the class. Separately, the four region predicates use single-quoted one-line docstrings (`\"Determine whether (n1, n2) is in the set DLL\"` at 368, and 373, 379, 384) rather than triple quotes, unlike every other docstring in the file; and three continuation lines are under-indented rather than aligned to their opening delimiter - 486 (`maxiter, npers, npts):` at 8 spaces under a `def` whose arguments start at column 34), 629 and 641"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        54,
+        157,
+        183
+      ],
+      "detail": "the lecture contains no bold and no italic anywhere, yet it names and defines several terms in narrative: \"coupled oscillators\" at 54, which 56 then calls the paper's technical contribution; the \"iceberg trade cost $\\tau_{j,k}$\" at 157; and $\\rho$ at 183-184, \"a proxy for the degree of globalization\", which is the single parameter the rest of the lecture varies (713, 763-766, 824). None is marked, so nothing on the page distinguishes the sentence that introduces a term from the sentences that use it"
+    }
   ],
   "strengths": [
     "The mechanism is told in plain words before any algebra appears: 66-84 walks innovation to temporary monopoly to imitation to strategic complementarity to obsolescence, one step per sentence, and 88-94 adds the coupling that trade introduces - so the 200 lines of model that follow read as formalisation of something already understood rather than as the source of it",
@@ -29,5 +65,9 @@
     "Clean the PEP8 items: two blank lines between the eight top-level definitions listed above, triple-quoted docstrings at 368, 373, 379 and 384, and aligned continuations at 486, 629 and 641",
     "Sweep the remaining measured items: add the `ipywidgets` install cell at the top (the lecture imports it at 47 and it is not in Anaconda), give the two static figures at 709 and 721 `:name:` targets and the two code-cell figures at 656 and 741 `mystnb` figure metadata, move the `set(title=...)` at 673 into a caption, drop the `figsize` overrides at 679, 755 and 806, replace the raw programming-lecture URL at 336 with a `{doc}` link, and split the two-sentence paragraphs at 790 and 797"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "7ab13ffdb9fdcfc661fefaa3dece5240b463dda3"
+  }
 }

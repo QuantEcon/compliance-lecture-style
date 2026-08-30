@@ -2,18 +2,73 @@
   "series": "lecture-python.myst",
   "lecture": "linear_algebra",
   "judgment": [
-    {"rule": "qe-math-009", "count": 4, "lines": [231, 476, 1148, 1321],
-     "detail": "476 is the most consequential line in the file: \"The matrix formed by replacing $a_{ij}$ by $a_{ji}$ ... is called the **transpose** of $A$ and denoted $A'$ or $A^{\\top}$\". It offers both notations, and the lecture then uses the apostrophe 114 times and `^{\\top}` never again - including in the *defining* equation of the inner product at 231, $x' y := \\sum_i x_i y_i$, and throughout the quadratic forms at 1131-1158 and the whole exercise solution at 1230-1373. This is the lecture the rest of the corpus learns its notation from, so licensing the prime here is where the corpus-wide qe-math-002 count comes from. 1148-1150 also overloads $y$: the differentiation list declares \"$B$ be an $m \\times n$ matrix and $y$ be an $m \\times 1$ vector\", while $y$ is the $n \\times 1$ left-hand side of $y = Ax$ everywhere else in the lecture (38-39, 669, 761, 820) and again in the exercise at 1187. The Lagrangian is $\\mathcal L$ in the exercise (1201, 1206) and plain $L$ in the solution (1251, 1260, 1277, 1297) for the same object. And 1321 sets an English word in math mode, `\\,\\,\\,\\, with \\,\\,\\,\\,`, padded with four thin spaces on each side"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [342, 951, 1074, 1094],
-     "detail": "all five figures sit in the first 990 lines; the 330 lines from 1051 to the end - Series Expansions, Matrix Norms, Neumann's Theorem, Spectral Radius, Positive Definite Matrices, Differentiating Forms, and the exercise - contain no figure and no code cell at all. Three of those want one badly: 1074-1082 defines the spectral norm as $\\max_{\\|x\\|=1}\\|Ax\\|$ and says a contractive $S$ \"pulls all vectors towards the origin\", which is the unit circle and its image - the same arrows-and-images construction the eigenvector cell at 941-986 already draws; 1109-1120 states Gelfand's formula $\\rho(A) = \\lim_k \\|A^k\\|^{1/k}$ with no numerical check, though `eig` is imported at 80 and plotting $\\|A^k\\|^{1/k}$ against $\\max_i|\\lambda_i|$ for $k = 1..20$ is three lines; and 1127-1138 defines positive definiteness with no picture of $x'Ax$ on the unit circle. The eigenvector figure itself (941-986) uses $A = [[1,2],[2,1]]$, whose eigenvalues are $3$ and $-1$, so one red image arrow points the *opposite* way to its blue eigenvector - and 937-939 says only \"the image $Av$ of each $v$ is just a scaled version of the original\", with no annotation of which arrow is which or what the two eigenvalues are. 342 uses `cmap=cm.jet` for the span plane, the one colormap most strongly advised against, and all five figures override `figsize` (104, 174, 298, 695, 951) and strip two spines each (106-109, 176-179, 699-702, 953-956)"},
-    {"rule": "qe-writing-003", "count": 5, "lines": [470, 1056, 1196, 1277, 1341],
-     "detail": "two sign errors sit in the displayed solution. 1277 writes $\\frac{\\partial L}{\\partial u} = -(Q+Q')u - B'\\lambda = -2Qu + B'\\lambda = 0$, in which the middle and right-hand expressions disagree in the sign of the $B'\\lambda$ term; from the Lagrangian at 1251 the correct derivative is $-2Qu + B'\\lambda$, so the first expression is the wrong one - and the substitution at 1283 quietly uses the correct version. 1341 writes $-2u'B'PAx = -2x'S'B'PAx$, but $u = -Sx$ gives $u' = -x'S'$, so the middle expression should be $+2x'S'B'PAx$; the next line then has $+2$, so again the reader sees a sign appear from nowhere. 1196 asks a question in parentheses - \"(What must the dimensions of $y$ and $u$ be to make this a well-posed problem?)\" - that the solution never answers: its primitive list at 1241-1246 restates $P$, $Q$, $A$ and $B$ and omits $y$ and $u$ entirely. 1056-1064 is a section titled \"Series Expansions\" whose whole content is that \"A generalization of this idea exists in the matrix setting\"; the generalization arrives three subsections later at {eq}`la_neumann` (1100) with no sentence linking it back to the geometric series at 1062. And 470 asserts \"For obvious reasons, the matrix $A$ is also called a vector if either $n=1$ or $k=1$\" without giving the reasons"},
-    {"rule": "qe-code-001", "count": 5, "lines": [115, 188, 310, 686, 949],
-     "detail": "the same misindentation appears five times: at 115-119, 183-187, 196-200, 965-969 and 974-978 the `arrowprops=dict(...)` continuation lines are aligned with `ax.annotate(`'s first argument rather than with `dict(`'s opening bracket, so `shrink`, `alpha` and `width` read as arguments of `annotate` (E128). 188 and 201 pass the font size as a string, `fontsize='16'`, where 326, 710, 717, 720 and 726 pass it as an int in the same file. The name `x` is rebound five times inside the span cell (300-344) as a zero array (310), a two-element tuple (330) and a mesh coordinate, and `z` three times (309, 324, 332), in a lecture whose subject is what $x$ and $z$ denote as vectors. 318 and 686 both define a module-level `def f(x, ...)`, the second shadowing the first for a different purpose (a plane, then a cosine). And 949 rebinds `evecs` from the 2-d array returned by `eig` to a tuple of its two columns, so the name means one thing in the figure cell and another in the cell at 1021-1026 that prints it - which is also what 1029's note (\"the *columns* of `evecs` are the eigenvectors\") is having to explain"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [255, 822, 909, 1227],
-     "detail": "822-839 takes nine one-sentence paragraphs to establish that a $k$-dimensional plane is unlikely to contain an arbitrary point of $\\mathbb R^n$. 1227-1252 restates the exercise's entire setup - objective, constraint, four primitives, Lagrangian - which 1178-1204 has just given, changing only $\\mathcal L$ to $L$; and 1305-1306 closes a step with a circular clause, \"which follows from the definition of the first-order conditions for Lagrangian equation\". 909 is ungrammatical (\"we can solve for $x = A^{-1} y$ by either via `inv(A) @ y`, or using `solve(A, y)`\"), and 1166 likewise (\"Chapters 2 and 3 of the [Econometric Theory] contains a discussion\"). 255 drops a 32-word paragraph on fused multiply-add and BLAS between two one-line code cells, where the point being made is only that `@` is preferred"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [1254, 1271, 1308],
-     "detail": "this is the batch's most careful lecture on this rule and the deviation is confined to one place: `**Step 1.**`, `**Step 2.**` and `**Step 3.**` at 1254, 1271 and 1308 use bold as a heading inside the solution, where `#####` headings or an enumerated list would carry the structure. 1166 also sets a book title as a link label rather than in italic. Everything else is right - about thirty definitions are bolded (88, 228, 234, 236, 276, 285, 287, 352, 402-403, 472, 474, 476, 478, 480, 482, 484, 644, 776, 791, 803, 807, 932-933, 1037, 1079-1080, 1082, 1131-1132) and italic is reserved for the three real emphases, *multiplying* (533), *only if* (654) and *columns* (1029)"}
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        231,
+        476,
+        1148,
+        1321
+      ],
+      "detail": "476 is the most consequential line in the file: \"The matrix formed by replacing $a_{ij}$ by $a_{ji}$ ... is called the **transpose** of $A$ and denoted $A'$ or $A^{\\top}$\". It offers both notations, and the lecture then uses the apostrophe 114 times and `^{\\top}` never again - including in the *defining* equation of the inner product at 231, $x' y := \\sum_i x_i y_i$, and throughout the quadratic forms at 1131-1158 and the whole exercise solution at 1230-1373. This is the lecture the rest of the corpus learns its notation from, so licensing the prime here is where the corpus-wide qe-math-002 count comes from. 1148-1150 also overloads $y$: the differentiation list declares \"$B$ be an $m \\times n$ matrix and $y$ be an $m \\times 1$ vector\", while $y$ is the $n \\times 1$ left-hand side of $y = Ax$ everywhere else in the lecture (38-39, 669, 761, 820) and again in the exercise at 1187. The Lagrangian is $\\mathcal L$ in the exercise (1201, 1206) and plain $L$ in the solution (1251, 1260, 1277, 1297) for the same object. And 1321 sets an English word in math mode, `\\,\\,\\,\\, with \\,\\,\\,\\,`, padded with four thin spaces on each side"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        342,
+        951,
+        1074,
+        1094
+      ],
+      "detail": "all five figures sit in the first 990 lines; the 330 lines from 1051 to the end - Series Expansions, Matrix Norms, Neumann's Theorem, Spectral Radius, Positive Definite Matrices, Differentiating Forms, and the exercise - contain no figure and no code cell at all. Three of those want one badly: 1074-1082 defines the spectral norm as $\\max_{\\|x\\|=1}\\|Ax\\|$ and says a contractive $S$ \"pulls all vectors towards the origin\", which is the unit circle and its image - the same arrows-and-images construction the eigenvector cell at 941-986 already draws; 1109-1120 states Gelfand's formula $\\rho(A) = \\lim_k \\|A^k\\|^{1/k}$ with no numerical check, though `eig` is imported at 80 and plotting $\\|A^k\\|^{1/k}$ against $\\max_i|\\lambda_i|$ for $k = 1..20$ is three lines; and 1127-1138 defines positive definiteness with no picture of $x'Ax$ on the unit circle. The eigenvector figure itself (941-986) uses $A = [[1,2],[2,1]]$, whose eigenvalues are $3$ and $-1$, so one red image arrow points the *opposite* way to its blue eigenvector - and 937-939 says only \"the image $Av$ of each $v$ is just a scaled version of the original\", with no annotation of which arrow is which or what the two eigenvalues are. 342 uses `cmap=cm.jet` for the span plane, the one colormap most strongly advised against, and all five figures override `figsize` (104, 174, 298, 695, 951) and strip two spines each (106-109, 176-179, 699-702, 953-956)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        470,
+        1056,
+        1196,
+        1277,
+        1341
+      ],
+      "detail": "two sign errors sit in the displayed solution. 1277 writes $\\frac{\\partial L}{\\partial u} = -(Q+Q')u - B'\\lambda = -2Qu + B'\\lambda = 0$, in which the middle and right-hand expressions disagree in the sign of the $B'\\lambda$ term; from the Lagrangian at 1251 the correct derivative is $-2Qu + B'\\lambda$, so the first expression is the wrong one - and the substitution at 1283 quietly uses the correct version. 1341 writes $-2u'B'PAx = -2x'S'B'PAx$, but $u = -Sx$ gives $u' = -x'S'$, so the middle expression should be $+2x'S'B'PAx$; the next line then has $+2$, so again the reader sees a sign appear from nowhere. 1196 asks a question in parentheses - \"(What must the dimensions of $y$ and $u$ be to make this a well-posed problem?)\" - that the solution never answers: its primitive list at 1241-1246 restates $P$, $Q$, $A$ and $B$ and omits $y$ and $u$ entirely. 1056-1064 is a section titled \"Series Expansions\" whose whole content is that \"A generalization of this idea exists in the matrix setting\"; the generalization arrives three subsections later at {eq}`la_neumann` (1100) with no sentence linking it back to the geometric series at 1062. And 470 asserts \"For obvious reasons, the matrix $A$ is also called a vector if either $n=1$ or $k=1$\" without giving the reasons"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        115,
+        188,
+        310,
+        686,
+        949
+      ],
+      "detail": "the same misindentation appears five times: at 115-119, 183-187, 196-200, 965-969 and 974-978 the `arrowprops=dict(...)` continuation lines are aligned with `ax.annotate(`'s first argument rather than with `dict(`'s opening bracket, so `shrink`, `alpha` and `width` read as arguments of `annotate` (E128). 188 and 201 pass the font size as a string, `fontsize='16'`, where 326, 710, 717, 720 and 726 pass it as an int in the same file. The name `x` is rebound five times inside the span cell (300-344) as a zero array (310), a two-element tuple (330) and a mesh coordinate, and `z` three times (309, 324, 332), in a lecture whose subject is what $x$ and $z$ denote as vectors. 318 and 686 both define a module-level `def f(x, ...)`, the second shadowing the first for a different purpose (a plane, then a cosine). And 949 rebinds `evecs` from the 2-d array returned by `eig` to a tuple of its two columns, so the name means one thing in the figure cell and another in the cell at 1021-1026 that prints it - which is also what 1029's note (\"the *columns* of `evecs` are the eigenvectors\") is having to explain"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        255,
+        822,
+        909,
+        1227
+      ],
+      "detail": "822-839 takes nine one-sentence paragraphs to establish that a $k$-dimensional plane is unlikely to contain an arbitrary point of $\\mathbb R^n$. 1227-1252 restates the exercise's entire setup - objective, constraint, four primitives, Lagrangian - which 1178-1204 has just given, changing only $\\mathcal L$ to $L$; and 1305-1306 closes a step with a circular clause, \"which follows from the definition of the first-order conditions for Lagrangian equation\". 909 is ungrammatical (\"we can solve for $x = A^{-1} y$ by either via `inv(A) @ y`, or using `solve(A, y)`\"), and 1166 likewise (\"Chapters 2 and 3 of the [Econometric Theory] contains a discussion\"). 255 drops a 32-word paragraph on fused multiply-add and BLAS between two one-line code cells, where the point being made is only that `@` is preferred"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        1254,
+        1271,
+        1308
+      ],
+      "detail": "this is the batch's most careful lecture on this rule and the deviation is confined to one place: `**Step 1.**`, `**Step 2.**` and `**Step 3.**` at 1254, 1271 and 1308 use bold as a heading inside the solution, where `#####` headings or an enumerated list would carry the structure. 1166 also sets a book title as a link label rather than in italic. Everything else is right - about thirty definitions are bolded (88, 228, 234, 236, 276, 285, 287, 352, 402-403, 472, 474, 476, 478, 480, 482, 484, 644, 776, 791, 803, 807, 932-933, 1037, 1079-1080, 1082, 1131-1132) and italic is reserved for the three real emphases, *multiplying* (533), *only if* (654) and *columns* (1029)"
+    }
   ],
   "strengths": [
     "About thirty terms are defined, every one in bold and every one in its own paragraph - **vector** (88), **inner product** (228), **orthogonal** (234), **norm** (236), **span** (287), **linearly dependent**/**independent** (402-403), **full column rank** (776), **inverse matrix** (791), **determinant** (803), **nonsingular** (807), **eigenvalue**/**eigenvector** (932-933), **spectral norm** (1080), **contractive** (1082), **positive definite** (1131) - with italic kept for the three genuine emphases at 533, 654 and 1029. This is the cleanest execution of the bold/italic rule in the batch",
@@ -37,5 +92,9 @@
   ],
   "scanner_doubts": [
     "linear_algebra.md:1378,1381 - qe-writing-001 is reported x4 (1146, 1217, 1378, 1381), and two of the four are footnote *definitions* rather than paragraphs. Line 1378 is `[^fn_mdt]: Although there is a specialized matrix data type defined in NumPy...` continued on 1379, and line 1381 is `[^cfn]: Suppose that $\\|S\\| < 1$. Take any nonzero vector $x$, and let $r := \\|x\\|$. We have ... Hence every point is pulled towards the origin.` - five sentences in one footnote body. A MyST footnote body cannot be split into blank-line-separated sentences without indenting every continuation paragraph, and no lecture in this corpus does that, so applying one-sentence-per-paragraph to a `[^label]:` block asks for a construction the format discourages. This is a rule-definition question rather than a detector bug - the same class as the qe-ref-001 line-initial-citation item already referred upstream - but it is worth settling, because footnotes carrying a short proof (1381 here) are a recurring pattern in the corpus and they will always trip the check. The other two hits (1146, a real two-sentence paragraph, and 1217, inside a `{note}` whose body can hold several paragraphs) are legitimate."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "33f3dc53e5a058c4ab9d074cabc87be3d1f1ef9e"
+  }
 }

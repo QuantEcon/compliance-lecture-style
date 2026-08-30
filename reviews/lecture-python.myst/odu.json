@@ -2,20 +2,84 @@
   "series": "lecture-python.myst",
   "lecture": "odu",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [484, 693, 699, 727, 1015],
-     "detail": "the heading tree does not match the argument. \"## Take 1: Solution by VFI\" at 269 is an H2 that contains the whole first method, but \"## Take 2: A More Efficient Method\" at 484 contains only four paragraphs of promise (486-497) - the actual method lives in three *sibling* H2s that follow (\"Another Functional Equation\" 499, \"Solving the RWFE\" 551, \"Implementation\" 627), so \"Take 2\" is an empty section and the contrast the lecture is built on is invisible in the table of contents. Worse, the machinery the rest of the lecture depends on is defined inside a collapsed solution: `solve_wbar` is written at 715-745 inside `{solution-start} odu_ex1 :class: dropdown`, and it is then called by Appendix A at 789 and by `job_search_example` at 967 - so Examples 1 to 5 will not run unless the reader has expanded exercise 1's solution. Line 699 puts a `## Solutions` heading over that single solution. Line 693 sends the reader to \"the figure for the optimal policy [shown above](take-1-solution-by-vfi)\", but that anchor (268) points at the start of the section, not at the policy figure 190 lines later at 462. `solve_wbar` also carries `m, n = len(sp.w_grid), len(sp.π_grid)` at 727, dead code copied from `solve_model` where it was used at 427. And 1015-1016 plots `f(x_grid)` and `g(x_grid)` using the `x_grid` bound at line 229 inside the first figure cell, 786 lines earlier, so `job_search_example` silently depends on a module global that nothing in its signature mentions"},
-    {"rule": "qe-math-015", "count": 3, "lines": [131, 1022, 1066],
-     "detail": "127-129 states the convention exactly right - \"two possible distributions $F$ and $G$\" whose \"densities\" are $f$ and $g$ - and then the lecture abandons it in both directions. From 131 onward the *densities* carry the distribution role: \"nature selects $q$ to be either $f$ or $g$\" (131), \"the two possible distributions $f$ and $g$\" (137), \"prior probability $\\pi_0$ on $f$ having been chosen\" (139), $\\mathbb{P}\\{q = f\\}$ (167-169). Then in the Examples section the uppercase letters come back for the same objects - \"$F$ ~ Beta(1, 1), $G$ ~ Beta(3, 1.2)\" (1066, 1123, 1140, 1152, 1178), \"$G$ has the same mean as $F$\" (1125), \"$G$ is now an 'inferior' distribution to $F$\" (1128) - so the reader meets two letters for one object 900 lines apart. And 1022-1023 label curves computed from `1 - beta.cdf(w_bar, F_a, F_b)`, i.e. from the CDFs, with the lowercase density letters `'$f$'` and `'$g$'`, which is the exact inversion the rule is about"},
-    {"rule": "qe-code-001", "count": 6, "lines": [371, 645, 727, 799, 970, 1009],
-     "detail": "371 opens `get_greedy`'s docstring with four quotes, `\"\"\"\"`, so the docstring begins with a stray `\"`; 970-972 assign two lambdas to names (`l = lambda w: f(w) / g(w)`, `obj = lambda w: l(w) - 1.`), which PEP8 asks to be `def`s, and the first uses `l`, the identifier PEP8 singles out as ambiguous - as do 230-231 and 793; 799 writes `if e == False:` where `if not e:` is asked for, and `e` there is a float read from an array of ones, so the comparison works only because `0.0 == False`; 1009 assigns the quiver artist to `q`, never uses it, and shadows the lecture's own symbol for the unknown wage density (94, 123, 131, 184); 645-653 repeats `κ` verbatim from 333-341 and 635-639 repeats the six unpacking lines of 323-327, while `get_greedy` (369-394) is a copy of `T` (343-367) with `max(v_1, v_2)` swapped for `v_1 > v_2`; 727 leaves two unused names; and 351-359, 377-385 and 665-669 nest `prange` inside `prange`, which numba only parallelises at the outermost level, so the inner two read as parallel and are not"},
-    {"rule": "qe-math-009", "count": 4, "lines": [265, 558, 590, 1009],
-     "detail": "line 265 writes the conjectured policy as `$\\mathbb 1{w\\geq \\bar w(\\pi) }$` with unescaped braces, so the braces are read as TeX grouping and the rendered output is $\\mathbb 1 w \\geq \\bar w(\\pi)$ with the indicator's argument no longer delimited - and it is the same object that 113 writes as `\\mathbf{1}\\{w \\geq \\bar w\\}`, so the lecture has two spellings, one of which does not render. The reservation wage is $\\bar w$ in the model (114, 251, 266, 481, 509, 541) and $\\overline{w}$ in the examples (1027, 1132, 1144, 1166). Line 558 introduces $b[0,1]$ for the space of bounded functions and then 590-595 states {eq}`odu_nt2` \"for real numbers $a, b, c$\", where $b$ is that function space and $c$ is the unemployment compensation used in the display two lines above at 567 - three meanings for $b$ and $c$ inside forty lines. And $\\omega$ is a generic element of $b[0,1]$ throughout 558-625 while 175 already used $\\omega$ as an index ranging over $\\{f, g\\}$"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [157, 551, 981, 1068],
-     "detail": "the model section (116-266) derives a two-state dynamic program with Bayesian learning and has exactly one figure - the two densities at 222. The Bayes update {eq}`odu_pi_rec_2` at 157-162 is the lecture's central mechanism and its picture, the red arrow field showing how $\\pi_t$ moves in response to $w_t$, exists at 1009 but is not shown until line 1118, some 950 lines later. The contraction argument at 551-625 is six displayed inequalities culminating in \"$Q^k \\omega \\to \\bar w$ uniformly\" (625) and nothing plots the iterates, though `solve_wbar` computes them. The four-panel figure built at 981-1029 has no caption of any kind, so the prose at 1068-1115 has to identify panels by position - \"the red arrows in the upper right figure\", \"the lower right figure\", \"That graph\" - and the two CDF panels at 1041-1057 carry their titles inside the image via `title.set_text`. The lecture also has no `{note}` or `{warning}` anywhere, though 305 (`# Avoids instability` on the $\\pi$ grid bounds) and 399-400 (\"We will omit a detailed discussion of the code\") are both notes written as code comments or asides"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [129, 149, 399, 1109, 1159],
-     "detail": "several typos land on load-bearing sentences: \"repectively\" at 129, in the line that establishes the $F$/$f$ notation; \"about the the distribution of $W_t$\" at 149; \"unemployment compensation if low\" at 1159; and \"the priori is strong\" at 1088 (repeated as a code comment at 906) where the word is *prior*, the lecture's own central object. Line 399-400 presents 77 lines of code (320-397) and then declines to explain any of it - \"We will omit a detailed discussion of the code because there is a more efficient solution method that we will use later\" - which leaves the reader carrying `operator_factory`, `v_func`, `κ`, `T` and `get_greedy` with no commentary. Lines 1109-1112 are a 46-word sentence stacking the claim, the qualifier, the boundary case and the reason for the boundary case. And 496-497 ends the \"Take 2\" section on a general aphorism (\"when it comes to programming, a bit of mathematical analysis goes a long way\") rather than on what the method is"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [264, 1128],
-     "detail": "the two genuine definitions are correctly bold (**reservation wage** 114, **reservation wage functional equation** 548), but the lecture uses no italic at all, so where it wants emphasis it reaches for something else: 264 opens a paragraph with the bold label `**Summary:**`, and 1128 and 1143 put emphasis in scare quotes - \"$G$ is now an \"inferior\" distribution to $F$\" - which the rule asks to be italic"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        484,
+        693,
+        699,
+        727,
+        1015
+      ],
+      "detail": "the heading tree does not match the argument. \"## Take 1: Solution by VFI\" at 269 is an H2 that contains the whole first method, but \"## Take 2: A More Efficient Method\" at 484 contains only four paragraphs of promise (486-497) - the actual method lives in three *sibling* H2s that follow (\"Another Functional Equation\" 499, \"Solving the RWFE\" 551, \"Implementation\" 627), so \"Take 2\" is an empty section and the contrast the lecture is built on is invisible in the table of contents. Worse, the machinery the rest of the lecture depends on is defined inside a collapsed solution: `solve_wbar` is written at 715-745 inside `{solution-start} odu_ex1 :class: dropdown`, and it is then called by Appendix A at 789 and by `job_search_example` at 967 - so Examples 1 to 5 will not run unless the reader has expanded exercise 1's solution. Line 699 puts a `## Solutions` heading over that single solution. Line 693 sends the reader to \"the figure for the optimal policy [shown above](take-1-solution-by-vfi)\", but that anchor (268) points at the start of the section, not at the policy figure 190 lines later at 462. `solve_wbar` also carries `m, n = len(sp.w_grid), len(sp.π_grid)` at 727, dead code copied from `solve_model` where it was used at 427. And 1015-1016 plots `f(x_grid)` and `g(x_grid)` using the `x_grid` bound at line 229 inside the first figure cell, 786 lines earlier, so `job_search_example` silently depends on a module global that nothing in its signature mentions"
+    },
+    {
+      "rule": "qe-math-015",
+      "count": 3,
+      "lines": [
+        131,
+        1022,
+        1066
+      ],
+      "detail": "127-129 states the convention exactly right - \"two possible distributions $F$ and $G$\" whose \"densities\" are $f$ and $g$ - and then the lecture abandons it in both directions. From 131 onward the *densities* carry the distribution role: \"nature selects $q$ to be either $f$ or $g$\" (131), \"the two possible distributions $f$ and $g$\" (137), \"prior probability $\\pi_0$ on $f$ having been chosen\" (139), $\\mathbb{P}\\{q = f\\}$ (167-169). Then in the Examples section the uppercase letters come back for the same objects - \"$F$ ~ Beta(1, 1), $G$ ~ Beta(3, 1.2)\" (1066, 1123, 1140, 1152, 1178), \"$G$ has the same mean as $F$\" (1125), \"$G$ is now an 'inferior' distribution to $F$\" (1128) - so the reader meets two letters for one object 900 lines apart. And 1022-1023 label curves computed from `1 - beta.cdf(w_bar, F_a, F_b)`, i.e. from the CDFs, with the lowercase density letters `'$f$'` and `'$g$'`, which is the exact inversion the rule is about"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        371,
+        645,
+        727,
+        799,
+        970,
+        1009
+      ],
+      "detail": "371 opens `get_greedy`'s docstring with four quotes, `\"\"\"\"`, so the docstring begins with a stray `\"`; 970-972 assign two lambdas to names (`l = lambda w: f(w) / g(w)`, `obj = lambda w: l(w) - 1.`), which PEP8 asks to be `def`s, and the first uses `l`, the identifier PEP8 singles out as ambiguous - as do 230-231 and 793; 799 writes `if e == False:` where `if not e:` is asked for, and `e` there is a float read from an array of ones, so the comparison works only because `0.0 == False`; 1009 assigns the quiver artist to `q`, never uses it, and shadows the lecture's own symbol for the unknown wage density (94, 123, 131, 184); 645-653 repeats `κ` verbatim from 333-341 and 635-639 repeats the six unpacking lines of 323-327, while `get_greedy` (369-394) is a copy of `T` (343-367) with `max(v_1, v_2)` swapped for `v_1 > v_2`; 727 leaves two unused names; and 351-359, 377-385 and 665-669 nest `prange` inside `prange`, which numba only parallelises at the outermost level, so the inner two read as parallel and are not"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        265,
+        558,
+        590,
+        1009
+      ],
+      "detail": "line 265 writes the conjectured policy as `$\\mathbb 1{w\\geq \\bar w(\\pi) }$` with unescaped braces, so the braces are read as TeX grouping and the rendered output is $\\mathbb 1 w \\geq \\bar w(\\pi)$ with the indicator's argument no longer delimited - and it is the same object that 113 writes as `\\mathbf{1}\\{w \\geq \\bar w\\}`, so the lecture has two spellings, one of which does not render. The reservation wage is $\\bar w$ in the model (114, 251, 266, 481, 509, 541) and $\\overline{w}$ in the examples (1027, 1132, 1144, 1166). Line 558 introduces $b[0,1]$ for the space of bounded functions and then 590-595 states {eq}`odu_nt2` \"for real numbers $a, b, c$\", where $b$ is that function space and $c$ is the unemployment compensation used in the display two lines above at 567 - three meanings for $b$ and $c$ inside forty lines. And $\\omega$ is a generic element of $b[0,1]$ throughout 558-625 while 175 already used $\\omega$ as an index ranging over $\\{f, g\\}$"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        157,
+        551,
+        981,
+        1068
+      ],
+      "detail": "the model section (116-266) derives a two-state dynamic program with Bayesian learning and has exactly one figure - the two densities at 222. The Bayes update {eq}`odu_pi_rec_2` at 157-162 is the lecture's central mechanism and its picture, the red arrow field showing how $\\pi_t$ moves in response to $w_t$, exists at 1009 but is not shown until line 1118, some 950 lines later. The contraction argument at 551-625 is six displayed inequalities culminating in \"$Q^k \\omega \\to \\bar w$ uniformly\" (625) and nothing plots the iterates, though `solve_wbar` computes them. The four-panel figure built at 981-1029 has no caption of any kind, so the prose at 1068-1115 has to identify panels by position - \"the red arrows in the upper right figure\", \"the lower right figure\", \"That graph\" - and the two CDF panels at 1041-1057 carry their titles inside the image via `title.set_text`. The lecture also has no `{note}` or `{warning}` anywhere, though 305 (`# Avoids instability` on the $\\pi$ grid bounds) and 399-400 (\"We will omit a detailed discussion of the code\") are both notes written as code comments or asides"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        129,
+        149,
+        399,
+        1109,
+        1159
+      ],
+      "detail": "several typos land on load-bearing sentences: \"repectively\" at 129, in the line that establishes the $F$/$f$ notation; \"about the the distribution of $W_t$\" at 149; \"unemployment compensation if low\" at 1159; and \"the priori is strong\" at 1088 (repeated as a code comment at 906) where the word is *prior*, the lecture's own central object. Line 399-400 presents 77 lines of code (320-397) and then declines to explain any of it - \"We will omit a detailed discussion of the code because there is a more efficient solution method that we will use later\" - which leaves the reader carrying `operator_factory`, `v_func`, `κ`, `T` and `get_greedy` with no commentary. Lines 1109-1112 are a 46-word sentence stacking the claim, the qualifier, the boundary case and the reason for the boundary case. And 496-497 ends the \"Take 2\" section on a general aphorism (\"when it comes to programming, a bit of mathematical analysis goes a long way\") rather than on what the method is"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        264,
+        1128
+      ],
+      "detail": "the two genuine definitions are correctly bold (**reservation wage** 114, **reservation wage functional equation** 548), but the lecture uses no italic at all, so where it wants emphasis it reaches for something else: 264 opens a paragraph with the bold label `**Summary:**`, and 1128 and 1143 put emphasis in scare quotes - \"$G$ is now an \"inferior\" distribution to $F$\" - which the rule asks to be italic"
+    }
   ],
   "strengths": [
     "The lecture earns its second method rather than announcing it: 501-544 starts from the indifference condition at $w = \\bar w(\\pi)$, combines {eq}`odu_mvf` and {eq}`odu_mvf2` into {eq}`odu_mvf3`, and arrives at the one-dimensional functional equation {eq}`odu_mvf4` - so the claim at 491-494 that the new operator is one-dimensional with no maximisation step is derived, not asserted",
@@ -39,5 +103,9 @@
   ],
   "scanner_doubts": [
     "odu.md:1048,1055 - qe-fig-006 is reported with count 1 (line 849, `Time`), but this lecture sets two more capitalised axis labels that the check cannot see: `axs[0].set(xlabel='time', ylabel='Prob(time)')` at 1048 and `axs[1].set(xlabel='π', ylabel='Prob(π)')` at 1055. `check_fig_006` (tools/qestyle_rules.py:1246-1263) matches only `set_xlabel(`/`set_ylabel(`/`set_zlabel(`/`plt.xlabel(`/`ax.xlabel(` - the keyword form `ax.set(xlabel=..., ylabel=...)` is absent from the pattern at 1249-1250, and odu uses that form eight times (455, 469, 761, 991, 1012, 1020, 1027, 1048, 1055). Verified: running run_all over odu.md reports qe-fig-006 only at 849; feeding `'Prob(time)'` through the same label-filtering logic at 1253-1262 (`core[0].isalpha()`, not `isupper()`, matches `^[A-Z][a-z]`, not in `PROPER_NOUNS`) yields a hit, so the label would be flagged if the pattern reached it. Corpus reach is worth the fix: re-running the same filter over every `\\b(?<!_)([xyz])label\\s*=\\s*['\\\"]...` occurrence in all five series turns up 39 missed capitalised labels in 15 files, including `Time` and `Consumption` in `perm_income.md:521`, `Initial Government Debt` in `opt_tax_recur.md:1316`, `Assets` in `black_litterman.md:422,437`, `Year`/`Number of countries` in `simple_linear_regression.md:489`, and ten in `util_rand_resp.md` (315, 350, 426, 549, 642). Adding `|\\b(?<!_)[xyz]label\\s*=\\s*` as an alternative in the pattern (keeping the same downstream filter) would pick these up. Note this is a different gap from the already-filed qe-fig-003 one, which is about a *multi-line* `ax.set(..., title=...)`: here even the single-line keyword form is missed"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "839df361158f4bf39ca6b18e71b94de92f6b1051"
+  }
 }

@@ -18,5 +18,9 @@
     "Convert the `{image}` at 52-54 to a `{figure}` with a `:name:` and a short caption such as \"the Launch Notebook icon\" (qe-fig-005), and give the path a leading slash - `/_static/lecture_specific/troubleshooting/launch.png` - to match the fifteen other image and figure directives in this series; only this file and `long_run_growth.md:34` use the relative form",
     "Leave the rest as it is. Two comparable support pages in other series returned no judgment findings, and this one should too: the page is 69 lines, one sentence per paragraph almost throughout, with no term to define and no result to visualise"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "462301d83fff0717ad3fbe92cc29bfafc171785a"
+  }
 }

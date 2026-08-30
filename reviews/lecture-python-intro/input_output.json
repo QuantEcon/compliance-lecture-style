@@ -2,12 +2,39 @@
   "series": "lecture-python-intro",
   "lecture": "input_output",
   "judgment": [
-    {"rule": "qe-code-001", "count": 9, "lines": [89, 152, 155, 168, 285, 298, 304, 471, 593],
-     "detail": "missing space after a comma in `colorise_weights(centrality,beta=False)` (89, 593), `[(2,'c')]` (155), `nx.draw_networkx_edges(G,pos=pos, ...)` (168) and `[0,0]` (471); `nodes= (1, 2, 'c')` with a space on only one side of `=` (152); a continuation line under-indented by one column relative to the opening bracket (285); and single-space-before-hash inline comments where PEP8 asks for two (298, 304)"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [366, 506],
-     "detail": "the production possibility frontier is the section's whole subject and ends in the concrete line $10d_1 + 500d_2 = x_0$ (366) that is never plotted, even though the lecture already draws the feasible set for the primal constraints at 197; and the demand-shock decomposition $\\Delta x = \\Delta d + A\\Delta d + A^2\\Delta d + \\cdots$ (506) describes successive rounds of propagation through the very network drawn in {numref}`us_15sectors`, with no figure showing the rounds decaying"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [185],
-     "detail": "\"*Feasible allocations must satisfy*\" is a lead-in to an equation set in italic, not an emphasised word; the parallel lead-in at 230 (\"More generally, constraints on production are\") is correctly plain"}
+    {
+      "rule": "qe-code-001",
+      "count": 9,
+      "lines": [
+        89,
+        152,
+        155,
+        168,
+        285,
+        298,
+        304,
+        471,
+        593
+      ],
+      "detail": "missing space after a comma in `colorise_weights(centrality,beta=False)` (89, 593), `[(2,'c')]` (155), `nx.draw_networkx_edges(G,pos=pos, ...)` (168) and `[0,0]` (471); `nodes= (1, 2, 'c')` with a space on only one side of `=` (152); a continuation line under-indented by one column relative to the opening bracket (285); and single-space-before-hash inline comments where PEP8 asks for two (298, 304)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        366,
+        506
+      ],
+      "detail": "the production possibility frontier is the section's whole subject and ends in the concrete line $10d_1 + 500d_2 = x_0$ (366) that is never plotted, even though the lecture already draws the feasible set for the primal constraints at 197; and the demand-shock decomposition $\\Delta x = \\Delta d + A\\Delta d + A^2\\Delta d + \\cdots$ (506) describes successive rounds of propagation through the very network drawn in {numref}`us_15sectors`, with no figure showing the rounds decaying"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        185
+      ],
+      "detail": "\"*Feasible allocations must satisfy*\" is a lead-in to an equation set in italic, not an emphasised word; the parallel lead-in at 230 (\"More generally, constraints on production are\") is correctly plain"
+    }
   ],
   "strengths": [
     "Every equation that later gets referenced carries a label and is cited by `{eq}` - `eq:inout_1` (237) at 243 and 404, `eq:inout_2` (247) at 253 and 487, `eq:inout_ex` (280) at 342, `eq:inout_frontier` (327) at 337, `eq:inout_price` (396) at 404",
@@ -28,5 +55,9 @@
   "scanner_doubts": [
     "input_output.md - qe-ref-001 is reported with count 3 but only two line numbers (373, 608), and those are the only two author-position `{cite}` uses in the file; the third occurrence is unaccounted for",
     "input_output.md:249,487 - qe-writing-004 is reported as clean (no violations), but \"Leontief Inverse\" is capitalised mid-sentence at 249 and 487 while line 301 writes \"Leontief inverse\"; this looks like a missed detection rather than a correct zero"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "6c8fa595d346fa7ddd3c1755001436a0b2a07622"
+  }
 }

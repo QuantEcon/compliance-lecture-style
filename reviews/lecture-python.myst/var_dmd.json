@@ -2,16 +2,69 @@
   "series": "lecture-python.myst",
   "lecture": "var_dmd",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 4, "lines": [327, 690, 823, 838],
-     "detail": "840 lines, no figure, no code cell and no admonition other than the one `prf:proposition`/`prf:proof` pair at 604-637 - in a lecture whose entire subject is geometric. 327-329 defines an **encoder** that **rotates** the $m\\times1$ vector $X_t$ into $\\tilde b_t$ and a **decoder** that rotates it back, and the rotation is never drawn; the three representations differ only in which SVD they use (full at 302 and 371, reduced at 487) and in the encoder/decoder pair each induces (308/314, 426/432, 665/685), which is one small table or diagram and is instead spread over 500 lines of cross-reference. 690-714 is titled \"Variance Decomposition of $X$\" and derives $X = \\check X + \\epsilon$ with $\\epsilon^\\top \\Phi = 0$ - the orthogonal-projection triangle - and points the reader at `orth_proj` (692) for the picture rather than drawing it. 823 says \"In applications, we'll actually use only a few modes, often three or less\" without the singular-value spectrum that is the standard way to choose $r$. And 836-840, \"Source for Some Python Code\", is the lecture's entire computational content: a bare URL to `pydmd`, in a Python lecture series"},
-    {"rule": "qe-writing-003", "count": 6, "lines": [238, 270, 377, 642, 766, 783],
-     "detail": "238 names the wrong identity: the string of equalities at 229-233 goes from $(V\\Sigma U^\\top U \\Sigma V^\\top)^{-1}$ to $(V\\Sigma\\Sigma V^\\top)^{-1}$, which cancels $U^\\top U$, but the parenthetical says \"Since we are in the $m>>n$ case in which $V^\\top V = I_{p\\times p}$ in a reduced SVD\". 270 ends its sentence with a comma - \"Dynamic mode decomposition was introduced by {cite}`schmid2010`,\" - and the next paragraph starts fresh. 377-383 contradicts itself: (a) says \"for a full SVD $UU^\\top = I_{m\\times m}$ and $U^\\top U = I_{p\\times p}$ are both identity matrices\" (for a full SVD $U$ is $m\\times m$, so the second is $I_{m\\times m}$, not $I_{p\\times p}$), (b) says \"for a reduced SVD of $X$, $U^\\top U$ is not an identity matrix\", and 383 then says \"requirements (a) and (b) are both satisfied\" - (b) is the negation of half of (a), so they cannot both be. The H3 at 642, \"Decoder of $\\check b$ as a linear projection\", names the wrong direction: what the section derives is $\\check b_t = \\Phi^+ X_t$ (665, 678), which 423-432 would call the *encoder*; the decoder is $\\check X = \\Phi\\check b$ at 685. 766 misquotes its own equation - \"Recall that from equation {eq}`eq:tildeAverify`, $\\tilde A = \\tilde U^\\top X' \\tilde V \\tilde\\Sigma^{-1}$\" - where 523-524 has a trailing $\\tilde U^\\top$. And the chain at 777-783 cannot hold as written: 777 gives $\\hat b_1 = \\tilde W \\Lambda \\check b_1$ and 783 then says \"Consequently, $\\hat b_1 = (\\tilde W\\Lambda)^{-1}\\tilde b_1$\", inverting the same factor and substituting $\\tilde b_1$ for $\\check b_1$ in one step, with $\\hat b_1$ on the left of both"},
-    {"rule": "qe-writing-005", "count": 8, "lines": [55, 109, 163, 291, 371, 506, 589, 596],
-     "detail": "the file contains no italic text at all in 840 lines, and bold carries three different jobs. Definitions, correctly: **first-order vector autoregression** (26), **Moore-Penrose pseudo-inverse** (102), **right-inverse** (115), **left-inverse** (142), **underdetermined least-squares** (165), **encoder**/**decoder** (327, 329, 423, 429), **projected modes** (462), **exact**/**approximate** modes (802). Emphasis, which the rule assigns to italic: **everything** twice at 55, **rows** (109) and **columns** (135), **fits perfectly** (163), **reduced** and **full** at 291 and again at 302, 319, 371, 383, 487, 491 and 758, **not** at 371 and 381, **not**/**are** eigenvectors at 585 and 596, **can** at 589. And ten section headings are set as bold paragraphs rather than markdown headings: **Short-Fat Case:** (106), **Tall-Skinny Case:** (133), **Guide to three representations:** (283), **Guide to impatient reader:** (294), **Computing Dominant Eigenvectors of $\\hat A$** (506), **Interpretation as projection coefficients** (515), **An Inverse Challenge** (539), **A Blind Alley** (552), **An Approach That Works** (587), **Variance Decomposition of $X$** (690) - so the seven-step structure of Representation 3 appears nowhere in the table of contents"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [126, 154, 168, 206, 283, 289],
-     "detail": "154 and 212 are the same sentence verbatim, 58 lines apart: \"The $i$th row of $\\hat A$ is an $m\\times1$ vector of regression coefficients of $X_{i,t+1}$ on $X_{j,t}, j = 1,\\ldots,m$\". The case descriptions are also written twice - 87 at 108 and 88 at 135, word for word except that \"variables\" becomes \"attributes\". 168-171 announces its own repetition (\"To reiterate, in the **tall-skinny** case ... we want to fit equation {eq}`eq:VARfirstorder`\") of 44 and 133-165. 283-296 gives the same guidance in two consecutive bold-headed paragraphs, \"**Guide to three representations:** In practice, we'll mainly be interested in Representation 3\" and \"**Guide to impatient reader:** In our applications, we'll be using Representation 3\". 287 and 289 are the same statement twice (\"we'll use only a small subset of **DMD modes** to approximate dynamics\" / \"We use such a small subset of DMD modes to construct a reduced-rank approximation to $A$\"). 124 and 126 also say one thing twice, and 126 misspells it (\"It is used to estimate vector autorgressions\"). Two sentences are ungrammatical: 206 (\"we'll use efficient algorithms to constructing a **reduced-rank approximation**\") and 811 (\"or use compute a decoded $\\hat X_{t+j}$\"); 585 has \"matix\""},
-    {"rule": "qe-math-009", "count": 4, "lines": [75, 87, 181, 489],
-     "detail": "the notation needs a disclaimer to survive: 75 has to say \"Here $'$ is part of the name of the matrix $X'$ and does not indicate matrix transposition\", because the file also uses $^\\top$ for transpose 92 times. Any of $X_+$, $Y$ or $X^{(2)}$ would carry the shifted-data meaning without a warning, and would also stop the prime colliding with the five other diacritics in use - $\\tilde X$, $\\hat A$, $\\tilde A$, $\\check A$ (181), $\\tilde b$, $\\hat b$, $\\check b$, $\\overline X$, $\\check X$, $\\hat X$, $\\tilde U$, $\\tilde\\Sigma$, $\\tilde V$, $\\tilde W$, $\\tilde\\Phi_s$. \"Much greater than\" is spelled three ways and never with `\\gg`: `> >` at 87, 88, 108, 135 and 238, which renders as two separate relations, and `>>` at 265. 181 writes `\\textrm{argmin}` and `|| \\cdot ||_F` where `\\operatorname*{argmin}` and `\\|\\cdot\\|_F` are the standard forms, and 489 writes `\\textrm{min}(m,n)` for the quantity that 83 writes correctly as `\\min(m, n)`. And the transpose convention is defined twice in different words, at 40 (\"$\\cdot^\\top$ *again* denotes complex transposition\", on its first appearance) and at 77"}
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        327,
+        690,
+        823,
+        838
+      ],
+      "detail": "840 lines, no figure, no code cell and no admonition other than the one `prf:proposition`/`prf:proof` pair at 604-637 - in a lecture whose entire subject is geometric. 327-329 defines an **encoder** that **rotates** the $m\\times1$ vector $X_t$ into $\\tilde b_t$ and a **decoder** that rotates it back, and the rotation is never drawn; the three representations differ only in which SVD they use (full at 302 and 371, reduced at 487) and in the encoder/decoder pair each induces (308/314, 426/432, 665/685), which is one small table or diagram and is instead spread over 500 lines of cross-reference. 690-714 is titled \"Variance Decomposition of $X$\" and derives $X = \\check X + \\epsilon$ with $\\epsilon^\\top \\Phi = 0$ - the orthogonal-projection triangle - and points the reader at `orth_proj` (692) for the picture rather than drawing it. 823 says \"In applications, we'll actually use only a few modes, often three or less\" without the singular-value spectrum that is the standard way to choose $r$. And 836-840, \"Source for Some Python Code\", is the lecture's entire computational content: a bare URL to `pydmd`, in a Python lecture series"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        238,
+        270,
+        377,
+        642,
+        766,
+        783
+      ],
+      "detail": "238 names the wrong identity: the string of equalities at 229-233 goes from $(V\\Sigma U^\\top U \\Sigma V^\\top)^{-1}$ to $(V\\Sigma\\Sigma V^\\top)^{-1}$, which cancels $U^\\top U$, but the parenthetical says \"Since we are in the $m>>n$ case in which $V^\\top V = I_{p\\times p}$ in a reduced SVD\". 270 ends its sentence with a comma - \"Dynamic mode decomposition was introduced by {cite}`schmid2010`,\" - and the next paragraph starts fresh. 377-383 contradicts itself: (a) says \"for a full SVD $UU^\\top = I_{m\\times m}$ and $U^\\top U = I_{p\\times p}$ are both identity matrices\" (for a full SVD $U$ is $m\\times m$, so the second is $I_{m\\times m}$, not $I_{p\\times p}$), (b) says \"for a reduced SVD of $X$, $U^\\top U$ is not an identity matrix\", and 383 then says \"requirements (a) and (b) are both satisfied\" - (b) is the negation of half of (a), so they cannot both be. The H3 at 642, \"Decoder of $\\check b$ as a linear projection\", names the wrong direction: what the section derives is $\\check b_t = \\Phi^+ X_t$ (665, 678), which 423-432 would call the *encoder*; the decoder is $\\check X = \\Phi\\check b$ at 685. 766 misquotes its own equation - \"Recall that from equation {eq}`eq:tildeAverify`, $\\tilde A = \\tilde U^\\top X' \\tilde V \\tilde\\Sigma^{-1}$\" - where 523-524 has a trailing $\\tilde U^\\top$. And the chain at 777-783 cannot hold as written: 777 gives $\\hat b_1 = \\tilde W \\Lambda \\check b_1$ and 783 then says \"Consequently, $\\hat b_1 = (\\tilde W\\Lambda)^{-1}\\tilde b_1$\", inverting the same factor and substituting $\\tilde b_1$ for $\\check b_1$ in one step, with $\\hat b_1$ on the left of both"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        55,
+        109,
+        163,
+        291,
+        371,
+        506,
+        589,
+        596
+      ],
+      "detail": "the file contains no italic text at all in 840 lines, and bold carries three different jobs. Definitions, correctly: **first-order vector autoregression** (26), **Moore-Penrose pseudo-inverse** (102), **right-inverse** (115), **left-inverse** (142), **underdetermined least-squares** (165), **encoder**/**decoder** (327, 329, 423, 429), **projected modes** (462), **exact**/**approximate** modes (802). Emphasis, which the rule assigns to italic: **everything** twice at 55, **rows** (109) and **columns** (135), **fits perfectly** (163), **reduced** and **full** at 291 and again at 302, 319, 371, 383, 487, 491 and 758, **not** at 371 and 381, **not**/**are** eigenvectors at 585 and 596, **can** at 589. And ten section headings are set as bold paragraphs rather than markdown headings: **Short-Fat Case:** (106), **Tall-Skinny Case:** (133), **Guide to three representations:** (283), **Guide to impatient reader:** (294), **Computing Dominant Eigenvectors of $\\hat A$** (506), **Interpretation as projection coefficients** (515), **An Inverse Challenge** (539), **A Blind Alley** (552), **An Approach That Works** (587), **Variance Decomposition of $X$** (690) - so the seven-step structure of Representation 3 appears nowhere in the table of contents"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        126,
+        154,
+        168,
+        206,
+        283,
+        289
+      ],
+      "detail": "154 and 212 are the same sentence verbatim, 58 lines apart: \"The $i$th row of $\\hat A$ is an $m\\times1$ vector of regression coefficients of $X_{i,t+1}$ on $X_{j,t}, j = 1,\\ldots,m$\". The case descriptions are also written twice - 87 at 108 and 88 at 135, word for word except that \"variables\" becomes \"attributes\". 168-171 announces its own repetition (\"To reiterate, in the **tall-skinny** case ... we want to fit equation {eq}`eq:VARfirstorder`\") of 44 and 133-165. 283-296 gives the same guidance in two consecutive bold-headed paragraphs, \"**Guide to three representations:** In practice, we'll mainly be interested in Representation 3\" and \"**Guide to impatient reader:** In our applications, we'll be using Representation 3\". 287 and 289 are the same statement twice (\"we'll use only a small subset of **DMD modes** to approximate dynamics\" / \"We use such a small subset of DMD modes to construct a reduced-rank approximation to $A$\"). 124 and 126 also say one thing twice, and 126 misspells it (\"It is used to estimate vector autorgressions\"). Two sentences are ungrammatical: 206 (\"we'll use efficient algorithms to constructing a **reduced-rank approximation**\") and 811 (\"or use compute a decoded $\\hat X_{t+j}$\"); 585 has \"matix\""
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        75,
+        87,
+        181,
+        489
+      ],
+      "detail": "the notation needs a disclaimer to survive: 75 has to say \"Here $'$ is part of the name of the matrix $X'$ and does not indicate matrix transposition\", because the file also uses $^\\top$ for transpose 92 times. Any of $X_+$, $Y$ or $X^{(2)}$ would carry the shifted-data meaning without a warning, and would also stop the prime colliding with the five other diacritics in use - $\\tilde X$, $\\hat A$, $\\tilde A$, $\\check A$ (181), $\\tilde b$, $\\hat b$, $\\check b$, $\\overline X$, $\\check X$, $\\hat X$, $\\tilde U$, $\\tilde\\Sigma$, $\\tilde V$, $\\tilde W$, $\\tilde\\Phi_s$. \"Much greater than\" is spelled three ways and never with `\\gg`: `> >` at 87, 88, 108, 135 and 238, which renders as two separate relations, and `>>` at 265. 181 writes `\\textrm{argmin}` and `|| \\cdot ||_F` where `\\operatorname*{argmin}` and `\\|\\cdot\\|_F` are the standard forms, and 489 writes `\\textrm{min}(m,n)` for the quantity that 83 writes correctly as `\\min(m, n)`. And the transpose convention is defined twice in different words, at 40 (\"$\\cdot^\\top$ *again* denotes complex transposition\", on its first appearance) and at 77"
+    }
   ],
   "strengths": [
     "The lecture is honest about which representation matters and says so before the reader invests in the other two: 283-296 marks Representations 1 and 2 as stage-setting, tells the impatient reader to skip them, and gives the reason - representations 1 and 2 need a full SVD, and applications need a reduced one (291)",
@@ -34,5 +87,9 @@
   "scanner_doubts": [
     "var_dmd.md:72,75,79,81,97,120,160,181,196,253 (and 18 more) - qe-math-002 x28 is a false positive across the whole file, and it is the only thing holding Math down to 5/10. Line 75 states the convention in prose: \"Here $'$ is part of the name of the matrix $X'$ and does not indicate matrix transposition\", and line 77 confirms the alternative, \"We use $\\cdot^\\top$ to denote matrix transposition\" - which the file then does 92 times. So every apostrophe in the file is a matrix *name*, not a transpose. The `evident` gate in `tools/qestyle_rules.py` is defeated by the `FOLLOWING_FACTOR` branch: line 97 is $\\hat A = X' X^+$, a primed symbol juxtaposed with a following factor, which the gate reads as proof that this lecture uses apostrophes for transposes, and once `evident` is true all 28 sites count. The juxtaposition heuristic cannot distinguish a transposed matrix in a product from a matrix *named* with a prime that is also in a product, and this lecture is the case where a named-prime matrix is multiplied on the right on nearly every line. Two possible narrowings: (a) suppress the bare-apostrophe branches in a file that uses `^\\top` above some threshold (92 uses against 28 apostrophes here) since such a file has clearly chosen `\\top`; (b) look for the disclaimer sentence - \"does not indicate matrix transposition\" / \"denotes a next period value\" - which several lectures in this corpus state explicitly.",
     "var_dmd.md - the report scores Code N/A (\"no executable code cells\") and Figures N/A (\"no figures or plotting code\"), which is accurate but worth flagging as a scoring artefact rather than a detector bug: an 840-line lecture in a Python lecture series that ships no code and no figure is excluded from two of the five categories and so scores 6.9 overall on writing, math, references and links alone. A lecture with no code cannot violate qe-code-* or qe-fig-*, so the absence is rewarded by omission. If the scoring layer has a way to distinguish \"no code because none is needed\" from \"no code in a computational lecture whose last section is a link to someone else's implementation\" (836-840), this file is the corpus's clearest instance of the second."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "ee8e8c2bd73ba9e852c55bf3e06ca4fb89815bef"
+  }
 }

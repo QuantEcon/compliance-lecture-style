@@ -14,5 +14,9 @@
     "Rewrap the source so no paragraph opens with a word orphaned by the previous wrap: line 36 begins 'The' alone, line 48 begins 'In' alone",
     "Strip the trailing double-space hard line breaks at lines 8, 19, 22, 31, 39, 46 and 51 - each sits at the end of a paragraph, where the forced line break has no rendered effect and only makes the source noisy"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "ac8c6f39136a23708f9a667612e8ec2566e093cc"
+  }
 }

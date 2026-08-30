@@ -2,16 +2,54 @@
   "series": "lecture-python.myst",
   "lecture": "genetic_classifier",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 4, "lines": [47, 560, 599, 670],
-     "detail": "four bolds carry emphasis rather than definition: 'They **discover the rule itself**' (47), 'start with **equal** strengths' (560), 'converges, but **not to one**' (599), and 'must **emerge** from how agents choose to trade' (670). The file is otherwise disciplined - italic does the emphasis (39, 165, 284, 307, 319, 335, 339, 478, 487, 523, 541, 622, 641, 652) and bold names the terms being introduced (83, 93, 128, 188, 318, 365, 523, 534-543, 626, 649)"},
-    {"rule": "qe-code-001", "count": 3, "lines": [111, 359, 402],
-     "detail": "line 111 pads the assignment operator to align with the line above (`players    = ...`) and pads inside the mean vector (E221, E241); lines 359-361 put the return statement on the same line as the `if` (E701) with padding after the colon; and lines 402-406 define the five panel strategies as one-line `def ... : return ...` bodies (E704), again column-aligned. All three read as deliberate tables, but PEP8 rules out the construct rather than the spacing"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [306, 812, 818],
-     "detail": "three sentences run past 40 words with the argument hung off a colon: 48 words at 306-309 (the simulated-annealing geometry), 40 at 812-814 (sign reversals), and 42 at 818-820, which also restates what 306-309 already explained about declining random shaking - the solution can point back to the section instead of re-deriving it"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [164, 626],
-     "detail": "two claims that the lecture makes visually elsewhere are left as prose. The Minsky-Papert critique at 164-166 - a single perceptron 'cannot separate classes that a line cannot' - is the canonical two-panel picture, and the separable case is already plotted 15 lines above at 151-159, so the non-separable partner costs almost nothing. The bucket brigade at 626-635 is the one component of the classifier system that is described but never drawn or run: reward seeping backward along a chain of rules is a diagram, and it is the mechanism the lecture says the next one depends on"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [622],
-     "detail": "'### A two-armed bandit' outgrows its title: from 615 to 635 the text leaves the bandit behind and discusses accounting schemes in general, sequential credit assignment, and the bucket brigade - material about classifier systems as such, which belongs in the parent section at 519 rather than inside its worked example"}
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        47,
+        560,
+        599,
+        670
+      ],
+      "detail": "four bolds carry emphasis rather than definition: 'They **discover the rule itself**' (47), 'start with **equal** strengths' (560), 'converges, but **not to one**' (599), and 'must **emerge** from how agents choose to trade' (670). The file is otherwise disciplined - italic does the emphasis (39, 165, 284, 307, 319, 335, 339, 478, 487, 523, 541, 622, 641, 652) and bold names the terms being introduced (83, 93, 128, 188, 318, 365, 523, 534-543, 626, 649)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        111,
+        359,
+        402
+      ],
+      "detail": "line 111 pads the assignment operator to align with the line above (`players    = ...`) and pads inside the mean vector (E221, E241); lines 359-361 put the return statement on the same line as the `if` (E701) with padding after the colon; and lines 402-406 define the five panel strategies as one-line `def ... : return ...` bodies (E704), again column-aligned. All three read as deliberate tables, but PEP8 rules out the construct rather than the spacing"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        306,
+        812,
+        818
+      ],
+      "detail": "three sentences run past 40 words with the argument hung off a colon: 48 words at 306-309 (the simulated-annealing geometry), 40 at 812-814 (sign reversals), and 42 at 818-820, which also restates what 306-309 already explained about declining random shaking - the solution can point back to the section instead of re-deriving it"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        164,
+        626
+      ],
+      "detail": "two claims that the lecture makes visually elsewhere are left as prose. The Minsky-Papert critique at 164-166 - a single perceptron 'cannot separate classes that a line cannot' - is the canonical two-panel picture, and the separable case is already plotted 15 lines above at 151-159, so the non-separable partner costs almost nothing. The bucket brigade at 626-635 is the one component of the classifier system that is described but never drawn or run: reward seeping backward along a chain of rules is a diagram, and it is the mechanism the lecture says the next one depends on"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        622
+      ],
+      "detail": "'### A two-armed bandit' outgrows its title: from 615 to 635 the text leaves the bandit behind and discusses accounting schemes in general, sequential credit assignment, and the bucket brigade - material about classifier systems as such, which belongs in the parent section at 519 rather than inside its worked example"
+    }
   ],
   "strengths": [
     "All four figure cells carry mystnb `caption` and `name` metadata (145-149, 253-257, 452-456, 564-568), so every figure in the lecture is addressable",
@@ -33,5 +71,9 @@
   "scanner_doubts": [
     "qe-writing-006 x1 at genetic_classifier.md:178 flags '## Associative memory: the Hopfield network' on the word 'Hopfield', which is a person's name - the heading is correct sentence case. The proper-noun list appears not to contain it, and the same lecture's other headings (81, 314, 519, 637) pass",
     "qe-fig-003 x1 at genetic_classifier.md:275 flags `axes[row, col].set_title(title)`, but that call labels the three columns of a 3x3 panel grid with 'stored', 'corrupted' and 'recovered' (268-275), and it fires only for `row == 0`. Per-axes labels on a panel grid are not the embedded figure title the rule is aimed at, and a caption cannot replace them"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "40151d3a0e388e2c9ac8982ed159de9bb3a7e6a0"
+  }
 }

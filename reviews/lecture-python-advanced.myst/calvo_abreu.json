@@ -2,19 +2,83 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "calvo_abreu",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 6, "lines": [35, 39, 42, 149, 151, 242],
-     "detail": "line 35 is a single 65-word sentence carrying four separate ideas (linear-quadratic version, time inconsistency, Stackelberg/Ramsey planner, the once-and-for-all choice of the money-growth sequence); 39-40 is 45 words and garbled (\"believe how future government authorities ... will respond\" is missing \"about\"); 42 then restates 39-40 almost verbatim; 149 repeats the whole of 45 verbatim except for the opening clause, and 151 repeats 47 verbatim; 242-247 is a 45-word sentence with a parenthetical em-dash aside embedded in the middle of its subject"},
-    {"rule": "qe-code-001", "count": 17,
-     "lines": [414, 426, 428, 438, 444, 446, 453, 455, 456, 458, 489, 492, 499, 501, 557, 565, 621],
-     "detail": "fourteen lines inside the code cells carry trailing whitespace (414, 426, 428, 438, 444, 446, 456, 458, 489, 492, 499, 501, 557, 565) - PEP8 W291/W293, and 489 leaves eight trailing spaces after a `def` colon; 453 and 455 bind lambdas to names (`self.J_θ = lambda ...`, `self.V_θ = lambda ...`) where PEP8 asks for `def`; 453-454 and 621-623 use backslash line continuation with a hanging indent inside an expression that parentheses would wrap cleanly"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [117, 151, 366, 519, 589],
-     "detail": "bold is used as a paragraph label at 117 (\"**Insight:**\") rather than to mark a defined term; the terms defined and bolded once are then re-bolded on later mentions where the rule wants italic - **credible government policy** / **sustainable plan** at 151 after 47, **Ramsey plan** at 519, **self-enforcing** at 589 after 269 and 300; and the reverse error occurs at 366-367, where *stick* and *carrot* are italicised at exactly the point they are being defined (\"Low one-period utilities early are a *stick*\")"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [145, 213, 679],
-     "detail": "line 145 asserts that \"a time $t$ policymaker cares only about $v_t$\" but $v_t$ is never defined anywhere in this lecture; line 213 introduces the government's one-period return function $s(\\theta,\\mu)$ - used continuously from 217 to 613 - by pointing at \"equation {eq}`eq_old6` in quantecon lecture {cite}`Calvo1978`\", where `eq_old6` is not a label in this file and the citation names Calvo's 1978 paper rather than the quantecon lecture {doc}`calvo`; and $J(\\theta^R_0)$ arrives unexplained at 385. Lines 679-686 then graft a lecture-wide summary (\"We have also computed **credible plans**...\") onto the end of the \"Whose plan is it?\" section, which was asking a different question"},
-    {"rule": "qe-math-009", "count": 2, "lines": [590, 641],
-     "detail": "lines 641-643 name the three recursive policy functions $\\nu_\\mu, \\nu_\\theta, \\nu_v$ - a nu indexed by mu, theta and v, so $\\nu_v(v_t, \\mu_t)$ sets nu against v and mu against mu in the same expression, which no reader can hold apart on screen; and the deviation value carries two symbols for one object, $v_j^{A,D}$ at 307 and 597-600 but $V_t^{A,D}$ at 590-592 and in the plot label at 573"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [117, 185],
-     "detail": "the within-period/between-period timing protocol at 185-208 is a branching structure - forecasts brought into $t$, then the confirm branch continuing with $\\{\\tilde\\mu_{t+j+1}\\}$ versus the disappoint branch restarting at $\\vec\\mu^A$ - and it is only ever set out as prose bullets, where a two-branch tree diagram would carry the whole mechanism; the lecture also has no admonitions at all, so the emphasised aside at 117 (\"**Insight:**\") and the reminders at 86 and 311 are typeset as bold labels and bare parentheticals instead of `{note}` blocks"}
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        35,
+        39,
+        42,
+        149,
+        151,
+        242
+      ],
+      "detail": "line 35 is a single 65-word sentence carrying four separate ideas (linear-quadratic version, time inconsistency, Stackelberg/Ramsey planner, the once-and-for-all choice of the money-growth sequence); 39-40 is 45 words and garbled (\"believe how future government authorities ... will respond\" is missing \"about\"); 42 then restates 39-40 almost verbatim; 149 repeats the whole of 45 verbatim except for the opening clause, and 151 repeats 47 verbatim; 242-247 is a 45-word sentence with a parenthetical em-dash aside embedded in the middle of its subject"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 17,
+      "lines": [
+        414,
+        426,
+        428,
+        438,
+        444,
+        446,
+        453,
+        455,
+        456,
+        458,
+        489,
+        492,
+        499,
+        501,
+        557,
+        565,
+        621
+      ],
+      "detail": "fourteen lines inside the code cells carry trailing whitespace (414, 426, 428, 438, 444, 446, 456, 458, 489, 492, 499, 501, 557, 565) - PEP8 W291/W293, and 489 leaves eight trailing spaces after a `def` colon; 453 and 455 bind lambdas to names (`self.J_θ = lambda ...`, `self.V_θ = lambda ...`) where PEP8 asks for `def`; 453-454 and 621-623 use backslash line continuation with a hanging indent inside an expression that parentheses would wrap cleanly"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        117,
+        151,
+        366,
+        519,
+        589
+      ],
+      "detail": "bold is used as a paragraph label at 117 (\"**Insight:**\") rather than to mark a defined term; the terms defined and bolded once are then re-bolded on later mentions where the rule wants italic - **credible government policy** / **sustainable plan** at 151 after 47, **Ramsey plan** at 519, **self-enforcing** at 589 after 269 and 300; and the reverse error occurs at 366-367, where *stick* and *carrot* are italicised at exactly the point they are being defined (\"Low one-period utilities early are a *stick*\")"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        145,
+        213,
+        679
+      ],
+      "detail": "line 145 asserts that \"a time $t$ policymaker cares only about $v_t$\" but $v_t$ is never defined anywhere in this lecture; line 213 introduces the government's one-period return function $s(\\theta,\\mu)$ - used continuously from 217 to 613 - by pointing at \"equation {eq}`eq_old6` in quantecon lecture {cite}`Calvo1978`\", where `eq_old6` is not a label in this file and the citation names Calvo's 1978 paper rather than the quantecon lecture {doc}`calvo`; and $J(\\theta^R_0)$ arrives unexplained at 385. Lines 679-686 then graft a lecture-wide summary (\"We have also computed **credible plans**...\") onto the end of the \"Whose plan is it?\" section, which was asking a different question"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        590,
+        641
+      ],
+      "detail": "lines 641-643 name the three recursive policy functions $\\nu_\\mu, \\nu_\\theta, \\nu_v$ - a nu indexed by mu, theta and v, so $\\nu_v(v_t, \\mu_t)$ sets nu against v and mu against mu in the same expression, which no reader can hold apart on screen; and the deviation value carries two symbols for one object, $v_j^{A,D}$ at 307 and 597-600 but $V_t^{A,D}$ at 590-592 and in the plot label at 573"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        117,
+        185
+      ],
+      "detail": "the within-period/between-period timing protocol at 185-208 is a branching structure - forecasts brought into $t$, then the confirm branch continuing with $\\{\\tilde\\mu_{t+j+1}\\}$ versus the disappoint branch restarting at $\\vec\\mu^A$ - and it is only ever set out as prose bullets, where a two-branch tree diagram would carry the whole mechanism; the lecture also has no admonitions at all, so the emphasised aside at 117 (\"**Insight:**\") and the reminders at 86 and 311 are typeset as bold labels and bare parentheticals instead of `{note}` blocks"
+    }
   ],
   "strengths": [
     "Every labelled equation is genuinely load-bearing: `eq_old1_new` is cited at 82 and 89, `eq_old2_new` at 109, `eq_old3_new` at 117, `eq_old10` at 590, `eq_old100a` at 675, and `eq_old11` three times at 650, 653 and 656 - no label is dead weight",
@@ -35,5 +99,9 @@
   "scanner_doubts": [
     "calvo_abreu.md:422 - qe-code-002 flags the spelled-out `beta` in `lq = LQ(self.Q, self.R, self.A, self.B, beta=self.β)`, but `beta` there is the keyword-argument name of `quantecon.LQ`, not an author-chosen variable; the author-side value is already `self.β`. This looks like a false positive, so the count of 1 is probably 0",
     "calvo_abreu.md:213 - qe-ref-001 is reported with count 2 (39, 357) but 213 uses a citation where a lecture reference belongs (\"described in equation {eq}`eq_old6` in quantecon lecture {cite}`Calvo1978`\"); it is missed because NARRATIVE_LEAD does not treat \"lecture \" as a lead context. The count looks like 3, not 2"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "3d78bafc554f343f8d3dc00b0e1b0808b8786302"
+  }
 }

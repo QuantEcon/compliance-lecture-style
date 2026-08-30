@@ -2,18 +2,68 @@
   "series": "lecture-python-intro",
   "lecture": "monte_carlo",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [497, 668, 685, 696],
-     "detail": "668 breaks the exercise it is solving. `monte_carlo_ex1` asks the reader to \"write a faster version of this code using NumPy\" (626); the solution defines `compute_call_price_vector` (634-652) and times it (655-657), then says \"Now let's try with larger $M$ to get a more accurate calculation\" (664) and calls `compute_call_price(M=10_000_000)` - the Python-loop version from 584, at a thousand times the sample size. The one cell meant to show the payoff of vectorising times the unvectorised function. 685 and 696 break the second exercise in two directions: 679 states \"an underlying with spot price of \\$100 and a knockout barrier of \\$120\" while the solution sets `default_S0 = 10` (696) and puts 100 in `default_K` (698), so the exercise's spot price is the solution's strike and the solution's spot price appears nowhere in the exercise; and 685 tells the reader to \"use the dynamics defined in {eq}`s_mc_dyms`\", which is the *constant*-volatility model at 444-448, while the solution at 725-726 simulates the stochastic-volatility model of 476-484. 497 is quieter but undercuts a whole section: `default_ν = 0.001` with $h_0 = 0$ and $\\rho = 0.1$ confines $h_t$ to about $[-0.001, 0.001]$, so $\\sigma_t = \\exp(h_t)$ is constant to three decimal places and the \"more realistic dynamics\" that 458-486 spends thirty lines motivating is numerically the simple model it was introduced to replace - and nothing says so"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [93, 411, 704],
-     "detail": "a lecture about the distribution of a random payoff draws exactly one figure (547-560), and it is the one figure that is not about a distribution. 83-103 turns entirely on the shape of the lognormal - 71-78 asks the reader to weigh a high mean against a high variance, and 93-103 gives both in closed form - with no density plot to make either concrete. 409-414 draws ten million payoffs into `return_draws` and reduces them to a single printed number; the histogram is one line away and would show the reader that the option price is the mean of a very skewed distribution, which is the whole reason Monte Carlo is being used. And `monte_carlo_ex2` (676-778) is about a *path* crossing a level: one simulated path with `ax.axhline(bp)` would show a knockout happening, and the exercise instead relies on the reader believing that `option_is_null` is doing what 767 says. The one figure that exists (547-560) has no axis labels, no legend and no `lw`, and it stacks 50 paths and 50 log paths where the point of comparing them is never stated in the prose"},
-    {"rule": "qe-code-001", "count": 4, "lines": [191, 495, 526, 635],
-     "detail": "635-643 mis-indents a whole signature: `def compute_call_price_vector(` opens its parenthesis at column 29, so a visual indent is column 30, and the nine continuation lines sit at column 23 - the alignment of `def compute_call_price(` at 584, from which the function was copied. 526-531 is off in the other direction, at column 31 against a parenthesis at 29. 191 closes the `compute_mean` signature with `    ):` at four spaces, which is neither the indentation of the line that opens the construct nor the indentation of the parameters. And 495-499 (repeated at 693-697) pads before the assignment operator to align a block of constants - `default_μ  = 0.0001`, `default_S0 = 10` - which is the \"more than one space around an assignment operator to align it with another\" that PEP8 lists under Pet Peeves. Two related items that are not spacing: `return (S / n)` at 198 wraps its return value in parentheses for nothing, and `return_draws` at 411 names an array of payoffs, `np.maximum(S - K, 0)`, after returns"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [80, 188, 467],
-     "detail": "188-198 restates 174-180 exactly. The loop body inside `compute_mean` is the same six lines as the bare loop above it, character for character; the function is called once at 206, never timed, and never used again, so the reader reads the same code twice and learns nothing from the second reading - the vectorized comparison at 219-243 is what the section is actually building to. 80-81 (\"Either way, this discussion shows the importance of understanding the distribution of $S$\") closes a run of nine one-sentence paragraphs by restating their premise. And 464-467 says the same thing twice in two sentences and gets the second one wrong grammatically: \"volatility (measured by $\\sigma$) is not stationary\" followed by \"Instead it rather changes over time, sometimes high (like during the GFC) and sometimes low\" - where \"Instead it rather changes\" needs an editor and \"GFC\" is used unexpanded in an introductory lecture with an international audience"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [135, 258, 349, 681],
-     "detail": "the lecture bolds four terms - **risk-neutral price** (284), **expiry date**, **strike price** and **underlying** (353-355) - and leaves every other term it defines with no emphasis at all, including the four the lecture is named after or built on. 135 defines the subject of the lecture in plain text: \"This is the Monte Carlo method, which runs as follows\". 258 defines risk-neutral pricing in plain text (\"When we use risk-neutral pricing, we determine the price of a given asset according to its expected payoff\") even though the *number* it produces is bolded twenty-six lines later. 349 introduces the European call option, the object of two whole sections, unmarked. 681 defines the knockout in the exercise (\"if the spot price ever moves above \\$120, the option 'knocks out' and the contract is null and void\") with quotation marks doing the work bold should do. There is also no italic emphasis anywhere in the 781 lines, so the file has no working distinction between the two forms - just four bolded terms and nothing else"},
-    {"rule": "qe-math-009", "count": 2, "lines": [101, 273],
-     "detail": "the mean and the variance of the same random variable, two displays apart, are written in two different notational systems: `\\mathbb E S` at 94 and `\\mathop{\\mathrm{Var}} S` at 101, where the second hand-rolls an operator with `\\mathop{}` that `\\operatorname{Var}` (or `\\mathbb V`, to match the expectation) gives for free. 273 mismatches its own delimiters inside a single line: `\\mathbb P\\left\\{G = 10^6 \\right\\} = \\mathbb P\\{G = 0\\}` - `\\left\\{ \\right\\}` on the left of the equals sign and plain `\\{ \\}` on the right, for contents that are one line tall either way. A third, smaller item: `LN` is set as maths italic at 87, 125 and 377, so the distribution's name reads as a product $L \\cdot N$ where `\\mathrm{LN}` would set it upright"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        497,
+        668,
+        685,
+        696
+      ],
+      "detail": "668 breaks the exercise it is solving. `monte_carlo_ex1` asks the reader to \"write a faster version of this code using NumPy\" (626); the solution defines `compute_call_price_vector` (634-652) and times it (655-657), then says \"Now let's try with larger $M$ to get a more accurate calculation\" (664) and calls `compute_call_price(M=10_000_000)` - the Python-loop version from 584, at a thousand times the sample size. The one cell meant to show the payoff of vectorising times the unvectorised function. 685 and 696 break the second exercise in two directions: 679 states \"an underlying with spot price of \\$100 and a knockout barrier of \\$120\" while the solution sets `default_S0 = 10` (696) and puts 100 in `default_K` (698), so the exercise's spot price is the solution's strike and the solution's spot price appears nowhere in the exercise; and 685 tells the reader to \"use the dynamics defined in {eq}`s_mc_dyms`\", which is the *constant*-volatility model at 444-448, while the solution at 725-726 simulates the stochastic-volatility model of 476-484. 497 is quieter but undercuts a whole section: `default_ν = 0.001` with $h_0 = 0$ and $\\rho = 0.1$ confines $h_t$ to about $[-0.001, 0.001]$, so $\\sigma_t = \\exp(h_t)$ is constant to three decimal places and the \"more realistic dynamics\" that 458-486 spends thirty lines motivating is numerically the simple model it was introduced to replace - and nothing says so"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        93,
+        411,
+        704
+      ],
+      "detail": "a lecture about the distribution of a random payoff draws exactly one figure (547-560), and it is the one figure that is not about a distribution. 83-103 turns entirely on the shape of the lognormal - 71-78 asks the reader to weigh a high mean against a high variance, and 93-103 gives both in closed form - with no density plot to make either concrete. 409-414 draws ten million payoffs into `return_draws` and reduces them to a single printed number; the histogram is one line away and would show the reader that the option price is the mean of a very skewed distribution, which is the whole reason Monte Carlo is being used. And `monte_carlo_ex2` (676-778) is about a *path* crossing a level: one simulated path with `ax.axhline(bp)` would show a knockout happening, and the exercise instead relies on the reader believing that `option_is_null` is doing what 767 says. The one figure that exists (547-560) has no axis labels, no legend and no `lw`, and it stacks 50 paths and 50 log paths where the point of comparing them is never stated in the prose"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        191,
+        495,
+        526,
+        635
+      ],
+      "detail": "635-643 mis-indents a whole signature: `def compute_call_price_vector(` opens its parenthesis at column 29, so a visual indent is column 30, and the nine continuation lines sit at column 23 - the alignment of `def compute_call_price(` at 584, from which the function was copied. 526-531 is off in the other direction, at column 31 against a parenthesis at 29. 191 closes the `compute_mean` signature with `    ):` at four spaces, which is neither the indentation of the line that opens the construct nor the indentation of the parameters. And 495-499 (repeated at 693-697) pads before the assignment operator to align a block of constants - `default_μ  = 0.0001`, `default_S0 = 10` - which is the \"more than one space around an assignment operator to align it with another\" that PEP8 lists under Pet Peeves. Two related items that are not spacing: `return (S / n)` at 198 wraps its return value in parentheses for nothing, and `return_draws` at 411 names an array of payoffs, `np.maximum(S - K, 0)`, after returns"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        80,
+        188,
+        467
+      ],
+      "detail": "188-198 restates 174-180 exactly. The loop body inside `compute_mean` is the same six lines as the bare loop above it, character for character; the function is called once at 206, never timed, and never used again, so the reader reads the same code twice and learns nothing from the second reading - the vectorized comparison at 219-243 is what the section is actually building to. 80-81 (\"Either way, this discussion shows the importance of understanding the distribution of $S$\") closes a run of nine one-sentence paragraphs by restating their premise. And 464-467 says the same thing twice in two sentences and gets the second one wrong grammatically: \"volatility (measured by $\\sigma$) is not stationary\" followed by \"Instead it rather changes over time, sometimes high (like during the GFC) and sometimes low\" - where \"Instead it rather changes\" needs an editor and \"GFC\" is used unexpanded in an introductory lecture with an international audience"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        135,
+        258,
+        349,
+        681
+      ],
+      "detail": "the lecture bolds four terms - **risk-neutral price** (284), **expiry date**, **strike price** and **underlying** (353-355) - and leaves every other term it defines with no emphasis at all, including the four the lecture is named after or built on. 135 defines the subject of the lecture in plain text: \"This is the Monte Carlo method, which runs as follows\". 258 defines risk-neutral pricing in plain text (\"When we use risk-neutral pricing, we determine the price of a given asset according to its expected payoff\") even though the *number* it produces is bolded twenty-six lines later. 349 introduces the European call option, the object of two whole sections, unmarked. 681 defines the knockout in the exercise (\"if the spot price ever moves above \\$120, the option 'knocks out' and the contract is null and void\") with quotation marks doing the work bold should do. There is also no italic emphasis anywhere in the 781 lines, so the file has no working distinction between the two forms - just four bolded terms and nothing else"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        101,
+        273
+      ],
+      "detail": "the mean and the variance of the same random variable, two displays apart, are written in two different notational systems: `\\mathbb E S` at 94 and `\\mathop{\\mathrm{Var}} S` at 101, where the second hand-rolls an operator with `\\mathop{}` that `\\operatorname{Var}` (or `\\mathbb V`, to match the expectation) gives for free. 273 mismatches its own delimiters inside a single line: `\\mathbb P\\left\\{G = 10^6 \\right\\} = \\mathbb P\\{G = 0\\}` - `\\left\\{ \\right\\}` on the left of the equals sign and plain `\\{ \\}` on the right, for contents that are one line tall either way. A third, smaller item: `LN` is set as maths italic at 87, 125 and 377, so the distribution's name reads as a product $L \\cdot N$ where `\\mathrm{LN}` would set it upright"
+    }
   ],
   "strengths": [
     "The lecture is one question asked four times with the tool getting stronger at each pass - compute $\\mathbb E S$ when the distribution is known (83-103), when it is not (109-139), when the payoff is an option (347-414), and when the dynamics generate the distribution (418-611) - and line 105, \"So far we have no need for a computer\", marks the exact point where the method becomes necessary rather than merely convenient",
@@ -40,5 +90,9 @@
   ],
   "scanner_doubts": [
     "qe-writing-006 - the count of 1 at line 52 is a false positive: \"An introduction to Monte Carlo\" is a correctly sentence-cased H2, and the two words flagged (\"Monte\", \"Carlo\") are a proper noun - the Monaco district the method is named after, capitalised by every style guide. The cause is a gap in the allowlist, not in the logic: `PROPER_NOUNS` in `tools/qestyle_rules.py` has an extensive \"places and institutions\" block (`china`, `usa`, `york`, `kong`, ...) but neither `monte` nor `carlo`, so `_is_proper` cannot clear either word. I added both to `PROPER_NOUNS` in-process and re-ran `qe-writing-006` and `qe-writing-004` over all five series: 1128 hits -> 1126, nothing added. The two suppressed hits are both false positives - `lecture-python-intro/monte_carlo.md:52` and `lecture-python.myst/sargent_surico.md:1269` (\"Estimating with Hamiltonian Monte Carlo\", where `hamiltonian` is already allowlisted and only the method name was tripping it). A two-word allowlist addition with no other effect on the corpus"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "0a9ec14efac75b1d9fd33e8699316d072572190f"
+  }
 }

@@ -2,14 +2,44 @@
   "series": "lecture-dp",
   "lecture": "os_egm_jax",
   "judgment": [
-    {"rule": "qe-code-001", "count": 3, "lines": [90, 148, 383],
-     "detail": "`s` is made to carry two unrelated meanings and then shadowed. The `Model` field at 90 is `s: float  # shock scale parameter` - the same quantity os_egm calls `ν` (os_egm.md:175) - while `s_grid` (91) and the loop variable `s` are *savings*. Line 144 unpacks `β, μ, s, s_grid, shocks, α = model` and line 148 immediately rebinds the same name with `def compute_c(s):`, so inside the closure `s` is a savings level and the scale parameter is unreachable. It happens not to matter only because `shocks` was pre-drawn at 114, which is exactly the kind of coincidence a reader should not have to verify. Second point, in the same file: the width kwarg is spelled `lw=2` at 220 and 224 and `linewidth=2` at 383"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [395, 403],
-     "detail": "the exercise's convergence check contradicts the paragraph immediately above it. Lines 395-397 explain that 'the plots for $\\gamma > 1$ do not cover the entire x-axis range' because 'the endogenous grid $x = s + \\sigma(s)$ depends on the consumption policy, which varies with $\\gamma$' - i.e. each $\\gamma$ has its own $x$ grid. Line 399 then promises 'the maximum deviation between the log utility case ($\\gamma = 1.0$) and values approaching from above' and line 403 computes `jnp.max(jnp.abs(policies[1.0] - policies[γ]))`, differencing the two arrays index by index. That is the gap between the policies at equal *savings*, not at equal wealth, so it is not the deviation between the two policy functions the prose describes - and 407 reads it as 'confirming convergence'. Either interpolate both onto a common $x$ grid or say that the comparison is at equal $s_i$"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [82, 245, 292],
-     "detail": "three kinds of repetition. (1) The solution copies the body's code rather than parameterising it: `K_crra` (292-321) is `K` (135-162) with `u_prime`/`u_prime_inv` given a `γ` argument, and `solve_model_crra` (326-354) is `solve_model_time_iter` (177-205) with `K_crra` substituted - the inner `condition` and `body` functions at 337-345 are identical to 188-196 line for line. Sixty lines of the lecture exist to change three calls, in a series whose NumPy version already stores the utility callables in `Model` (os_egm.md:179-181). (2) 'Utility and production functions will be defined globally to work with JAX's JIT compiler' (84) is repeated as 'We define utility and production functions globally' (120) with the reason dropped. (3) The speed claim is made four times before it is measured once - 36 ('improved performance'), 132 ('vectorizes the computation'), 173 ('JIT-compiled for speed'), 237 ('very fast thanks to JIT compilation and vectorization') - and then the four-bullet list at 245-250 says it a fifth time"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [237, 377],
-     "detail": "the lecture exists to show that JAX is faster (36, 237, 245-250) and contains no picture or number of that comparison: the `qe.Timer` cell at 240-243 prints one figure with no NumPy counterpart, and both figures in the file (217-228, 377-392) plot consumption policies, which is what os_egm already plots. A run-time bar for NumPy versus JAX, or a curve of solve time against `grid_size`, is the figure this lecture is missing. The second figure has its own visual problem the text works around in prose instead: 395-397 explains that the $\\gamma > 1$ curves stop short because each has its own endogenous grid, which plotting against savings $s$ or interpolating onto a shared $x$ grid would simply remove"}
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        90,
+        148,
+        383
+      ],
+      "detail": "`s` is made to carry two unrelated meanings and then shadowed. The `Model` field at 90 is `s: float  # shock scale parameter` - the same quantity os_egm calls `ν` (os_egm.md:175) - while `s_grid` (91) and the loop variable `s` are *savings*. Line 144 unpacks `β, μ, s, s_grid, shocks, α = model` and line 148 immediately rebinds the same name with `def compute_c(s):`, so inside the closure `s` is a savings level and the scale parameter is unreachable. It happens not to matter only because `shocks` was pre-drawn at 114, which is exactly the kind of coincidence a reader should not have to verify. Second point, in the same file: the width kwarg is spelled `lw=2` at 220 and 224 and `linewidth=2` at 383"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        395,
+        403
+      ],
+      "detail": "the exercise's convergence check contradicts the paragraph immediately above it. Lines 395-397 explain that 'the plots for $\\gamma > 1$ do not cover the entire x-axis range' because 'the endogenous grid $x = s + \\sigma(s)$ depends on the consumption policy, which varies with $\\gamma$' - i.e. each $\\gamma$ has its own $x$ grid. Line 399 then promises 'the maximum deviation between the log utility case ($\\gamma = 1.0$) and values approaching from above' and line 403 computes `jnp.max(jnp.abs(policies[1.0] - policies[γ]))`, differencing the two arrays index by index. That is the gap between the policies at equal *savings*, not at equal wealth, so it is not the deviation between the two policy functions the prose describes - and 407 reads it as 'confirming convergence'. Either interpolate both onto a common $x$ grid or say that the comparison is at equal $s_i$"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        82,
+        245,
+        292
+      ],
+      "detail": "three kinds of repetition. (1) The solution copies the body's code rather than parameterising it: `K_crra` (292-321) is `K` (135-162) with `u_prime`/`u_prime_inv` given a `γ` argument, and `solve_model_crra` (326-354) is `solve_model_time_iter` (177-205) with `K_crra` substituted - the inner `condition` and `body` functions at 337-345 are identical to 188-196 line for line. Sixty lines of the lecture exist to change three calls, in a series whose NumPy version already stores the utility callables in `Model` (os_egm.md:179-181). (2) 'Utility and production functions will be defined globally to work with JAX's JIT compiler' (84) is repeated as 'We define utility and production functions globally' (120) with the reason dropped. (3) The speed claim is made four times before it is measured once - 36 ('improved performance'), 132 ('vectorizes the computation'), 173 ('JIT-compiled for speed'), 237 ('very fast thanks to JIT compilation and vectorization') - and then the four-bullet list at 245-250 says it a fifth time"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        237,
+        377
+      ],
+      "detail": "the lecture exists to show that JAX is faster (36, 237, 245-250) and contains no picture or number of that comparison: the `qe.Timer` cell at 240-243 prints one figure with no NumPy counterpart, and both figures in the file (217-228, 377-392) plot consumption policies, which is what os_egm already plots. A run-time bar for NumPy versus JAX, or a curve of solve time against `grid_size`, is the figure this lecture is missing. The second figure has its own visual problem the text works around in prose instead: 395-397 explains that the $\\gamma > 1$ curves stop short because each has its own endogenous grid, which plotting against savings $s$ or interpolating onto a shared $x$ grid would simply remove"
+    }
   ],
   "strengths": [
     "Each JAX mechanism is named in prose immediately before the code that uses it, so the file reads as a translation rather than a rewrite: `vmap` at 132 ahead of `jax.vmap(compute_c)` (156), `jax.lax.while_loop` at 173 ahead of the `condition`/`body` pair (188-202), and `@jax.jit` at 176",
@@ -31,5 +61,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 is blind to a Greek name used as an identifier *suffix*, which is the exact mirror of the fix recorded in tools/VERIFICATION.md under 'qe-code-002 only ever saw a Greek name that stood completely alone'. `GREEK_RE` (tools/qestyle_rules.py:911) is `(?<![\\w.])(alpha|beta|...)(?:s|_[A-Za-z0-9_]+)?(?![A-Za-z0-9])`: the lookbehind rejects a preceding `_`, so `mu_vec` is caught but `target_mu` is not. This lecture is the clean example - line 368 is `c_gamma, x_gamma = solve_model_crra(model_crra, c_init, x_init, γ)`, with the unicode `γ` and two spelled-out `gamma`s on one line, and the file is reported clean on all four uses (368-371) while being flagged for `mu` at 151. MEASURED, both directions, over the 5-series corpus: adding a prefix alternative `(?<![\\w.])((?:[A-Za-z][A-Za-z0-9]*_)+(greek)(?:s|_[A-Za-z0-9_]+)?)(?![A-Za-z0-9])`, matched as a whole identifier and skipped when the identifier is a function the file defines anywhere (`^\\s*def NAME`), gives **+60 occurrences, -0 removals**, 700 -> 760, reach 57 -> 64. Three guards were each necessary and each measured: (a) whole-identifier matching, or `rho_chi` and `sig_chi`-shaped names are counted twice by the two branches - 4 such overlaps in the corpus; (b) the def-name skip, which removes 67 occurrences that are English function names rather than variables (`compute_res_wage_given_beta`, `s_from_psi`, `create_beta_density`, `fit_gamma`, `plim_alpha_cagan`) - without it the total is +131 and reads badly; (c) the skip has to be file-wide, not per cell, because `create_beta_density` and `s_from_psi` are defined in one cell and used in others (per-cell scoping leaves 22 of them in). The 60 survivors are: os_egm_jax `c_gamma`/`x_gamma` (10 across both copies), dovis_accounting_mf `v_phi`/`x_xi_b`/`x_xi_r` (11), hansen_richard_1987 `target_mu`/`front_mu` (6 - the same family as the `mu_vec` case that motivated the earlier fix), misspecified_recovery `exp_eta` (6, in a file where line 124 is `eta = np.log(exp_eta)` and only the bare `eta` is currently seen), mccall_model `model_low_beta` (6, line 517 is `model_low_beta = McCallModel(β=β_new)`), doubts_or_variability `p_eta_pct` (3), gorman_heterogeneous_households `weights_for_chi` (3, in a file that writes `χ_tilde` in unicode at 1138), merging_of_opinions `tv_beta` (3), prob_meaning `n_thetas` (3, line 173 is `θ_low, θ_high, n_thetas = 0.01, 0.99, 50`), rational_learning_re `log_phi_s` (2), robust_permanent_income `log_mu` (2, with `mu = np.exp(log_mu)` on the next line), tsyrennikov_2013 `v_aut_delta` (2), two_computation `unit_grid_tau` (2), sargent_surico `sig_chi` (1). Seven of the 16 touched paths were previously reported clean on qe-code-002. Every survivor sits in a file that writes the same letter in unicode elsewhere, which is the rule's own inconsistency test; the one I would call debatable is `tv_beta` (3 occurrences), where `beta` may name the Beta distribution rather than a parameter, the same family as the `beta_prior` exemption already in the check. Canaries checked and unmoved: `likelihood_ratio_process.md:541` `beta = np.array(...)` still fires, `qe.LQ(..., beta=β)` in lqcontrol stays exempt, `chi2` is untouched, and `np.pi`-style attribute access is still blocked by the `.` in the lookbehind."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "ad4460ceb57bd52d38ffddc39e222478ca899efb"
+  }
 }

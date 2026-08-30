@@ -2,16 +2,57 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "growth_in_dles",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [575, 587],
-     "detail": "Example 3.2 is not the experiment the text describes. 571 says \"Next let's lower $\\beta$ to 0.94\" - one change against Example 3 - and 587-595 then attributes the loss of growth entirely to $\\beta(\\gamma_1 + \\delta_k) < 1$. But 575 builds `pref4 = (β_2, l_λ, π_h, δ_h, θ_h)` with `l_λ`, the Example 1 value $\\lambda = 0$ set at 312, rather than the `l_λ2 = -1` of Example 3 (504-505). So the cell lowers $\\beta$ *and* removes the habit persistence that 481-485 introduced as the very thing that generates growth, which makes the conclusion at 587-595 unsupported by the run - and inconsistent with Example 3.1, which correctly changes only $\\lambda$ (547-548) while holding everything else at the Example 3 values. Either 575 should read `l_λ2` or the prose has to say that two parameters moved"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [351, 352, 542],
-     "detail": "the lecture is a comparison of five economies, and all five figures are the same two lines drawn the same way - `plt.plot(econ.c[0], label='Cons.')` and `plt.plot(econ.i[0], label='Inv.')` at 353-354, 438-439, 518-519, 554-555 and 581-582 - with no title, no caption, no axis labels and no shared scale, so on the built page they are five indistinguishable pictures whose differences the reader has to reconstruct from the surrounding prose. The two experiments in Examples 3.1 and 3.2 (542-599) exist purely to be contrasted with Example 3, and putting those three paths on one set of axes, or the five economies in a shared-axis panel, is the figure this lecture is actually about. Second, the pointers that would help a reader locate the source figures are buried in code comments where the published page does not show them: \"# This is the right panel of Fig 5.7.1 from p.105 of HS2013\" (352) and \"# This is the right panel of Fig 5.10.1 from p.110 of HS2013\" (517) belong in the prose or in the figure captions. Third, the five eigenvalue cells (366, 376, 460, 531, 566) print bare tuples whose numbers carry the whole argument of the lecture - unit root, below unity, two unit roots, one below unity, one above - and none of them is labelled or tabulated"},
-    {"rule": "qe-code-001", "count": 6, "lines": [317, 419, 420, 422, 423, 504],
-     "detail": "the rule explicitly permits capitals for matrices, and the code declines them exactly where the correspondence with the mathematics would be most useful: 317-325 names the matrices $A_{22}, C_2, U_b, U_d$ as `a22, c2, ub, ud`, while the scalars in the neighbouring cell keep their unicode symbols (`γ_1`, `ϕ_1`, `δ_k`, `θ_k`). The Example 2 renamings then produce names that read as other symbols: `γ2 = 0.15` is the scalar $\\gamma_1$ of Example 2 and `γ22` (420) is the $\\Gamma$ matrix built from it, so `γ22` looks like $\\gamma_{22}$ and sits three lines from the genuine `a22`; `ϕ_12 = 1` (422) is the scalar $\\phi_1$, not $\\phi_{12}$, and `ϕ_i2` (423) is the matrix $\\Phi_i$. Likewise $\\lambda$ is carried in `l_λ` (312), `l_λ2` (504) and `l_λ3` (547) - a prefix that means nothing here, since `λ` is free and the neighbouring `π_h`, `δ_h`, `θ_h` take no prefix"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [361, 468, 495],
-     "detail": "the two terms the lecture introduces are set in quotation marks rather than bold: Jones and Manuelli's \"growth condition\" (468, and used again at 471 and 534) and the effective \"bliss point\" (495), both of which are being defined at those points. The only bold in the file is at 361, on two terms that are *not* being defined there - \"suggest that each has or nearly has a **random walk** or **unit root** component\" is emphasis, which the rule assigns to italic, and the lecture uses italic correctly for exactly that job at 466 (\"*sustained* growth\")"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [284, 359],
-     "detail": "282-284 runs two sentences together with no punctuation between them: \"(In this economy $\\delta_h$ and $\\theta_h$ are arbitrary as household capital does not enter the equation for consumption services We set them to values that will become useful in Example 3)\". 359-361 hedges twice in one 30-word sentence - \"Inspection of the plot shows that the sample paths of consumption and investment drift in ways that suggest that each has or nearly has a random walk or unit root component\" - where the next two cells settle the question exactly (366 prints the eigenvalues, 372 states the answer)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        575,
+        587
+      ],
+      "detail": "Example 3.2 is not the experiment the text describes. 571 says \"Next let's lower $\\beta$ to 0.94\" - one change against Example 3 - and 587-595 then attributes the loss of growth entirely to $\\beta(\\gamma_1 + \\delta_k) < 1$. But 575 builds `pref4 = (β_2, l_λ, π_h, δ_h, θ_h)` with `l_λ`, the Example 1 value $\\lambda = 0$ set at 312, rather than the `l_λ2 = -1` of Example 3 (504-505). So the cell lowers $\\beta$ *and* removes the habit persistence that 481-485 introduced as the very thing that generates growth, which makes the conclusion at 587-595 unsupported by the run - and inconsistent with Example 3.1, which correctly changes only $\\lambda$ (547-548) while holding everything else at the Example 3 values. Either 575 should read `l_λ2` or the prose has to say that two parameters moved"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        351,
+        352,
+        542
+      ],
+      "detail": "the lecture is a comparison of five economies, and all five figures are the same two lines drawn the same way - `plt.plot(econ.c[0], label='Cons.')` and `plt.plot(econ.i[0], label='Inv.')` at 353-354, 438-439, 518-519, 554-555 and 581-582 - with no title, no caption, no axis labels and no shared scale, so on the built page they are five indistinguishable pictures whose differences the reader has to reconstruct from the surrounding prose. The two experiments in Examples 3.1 and 3.2 (542-599) exist purely to be contrasted with Example 3, and putting those three paths on one set of axes, or the five economies in a shared-axis panel, is the figure this lecture is actually about. Second, the pointers that would help a reader locate the source figures are buried in code comments where the published page does not show them: \"# This is the right panel of Fig 5.7.1 from p.105 of HS2013\" (352) and \"# This is the right panel of Fig 5.10.1 from p.110 of HS2013\" (517) belong in the prose or in the figure captions. Third, the five eigenvalue cells (366, 376, 460, 531, 566) print bare tuples whose numbers carry the whole argument of the lecture - unit root, below unity, two unit roots, one below unity, one above - and none of them is labelled or tabulated"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        317,
+        419,
+        420,
+        422,
+        423,
+        504
+      ],
+      "detail": "the rule explicitly permits capitals for matrices, and the code declines them exactly where the correspondence with the mathematics would be most useful: 317-325 names the matrices $A_{22}, C_2, U_b, U_d$ as `a22, c2, ub, ud`, while the scalars in the neighbouring cell keep their unicode symbols (`γ_1`, `ϕ_1`, `δ_k`, `θ_k`). The Example 2 renamings then produce names that read as other symbols: `γ2 = 0.15` is the scalar $\\gamma_1$ of Example 2 and `γ22` (420) is the $\\Gamma$ matrix built from it, so `γ22` looks like $\\gamma_{22}$ and sits three lines from the genuine `a22`; `ϕ_12 = 1` (422) is the scalar $\\phi_1$, not $\\phi_{12}$, and `ϕ_i2` (423) is the matrix $\\Phi_i$. Likewise $\\lambda$ is carried in `l_λ` (312), `l_λ2` (504) and `l_λ3` (547) - a prefix that means nothing here, since `λ` is free and the neighbouring `π_h`, `δ_h`, `θ_h` take no prefix"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        361,
+        468,
+        495
+      ],
+      "detail": "the two terms the lecture introduces are set in quotation marks rather than bold: Jones and Manuelli's \"growth condition\" (468, and used again at 471 and 534) and the effective \"bliss point\" (495), both of which are being defined at those points. The only bold in the file is at 361, on two terms that are *not* being defined there - \"suggest that each has or nearly has a **random walk** or **unit root** component\" is emphasis, which the rule assigns to italic, and the lecture uses italic correctly for exactly that job at 466 (\"*sustained* growth\")"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        284,
+        359
+      ],
+      "detail": "282-284 runs two sentences together with no punctuation between them: \"(In this economy $\\delta_h$ and $\\theta_h$ are arbitrary as household capital does not enter the equation for consumption services We set them to values that will become useful in Example 3)\". 359-361 hedges twice in one 30-word sentence - \"Inspection of the plot shows that the sample paths of consumption and investment drift in ways that suggest that each has or nearly has a random walk or unit root component\" - where the next two cells settle the question exactly (366 prints the eigenvalues, 372 states the answer)"
+    }
   ],
   "strengths": [
     "The three economies are built as one parameterisation with a stated list of what varies: 54-115 fixes the common structure and 108-115 says an instance is exactly the fourteen matrices and $\\beta$, then 196-267 fixes the shared preferences, technology and information, and 269-271 names the seven parameters plus $x_0$ that will move across the examples - so each later section only has to give a delta",
@@ -32,5 +73,9 @@
   ],
   "scanner_doubts": [
     "growth_in_dles.md:296,413 - qe-math-002 is reported as 0 for this lecture, but the two initial-condition displays write a row vector transposed with an apostrophe: `x_0 = \\left[{\\begin{array}{ccccc} 5 & 150 & 1 & 0 & 0 \\end{array}}\\right]'` at 293-296 and the same shape at 410-413. In `check_math_002` the `prime` pattern accepts a closing delimiter before the apostrophe only from the set `\\)`, `\\}` and `\\\\top` - a closing square bracket is not in the alternation, so `\\right]'` and `[0, 1, 0, 0]'` go uncounted. Adding `\\]` to that group would catch both; the risk of a false positive looks small, since a primed closing square bracket in this corpus is a transposed vector rather than a derivative. I ran `check_math_002` against this file directly to confirm it returns no hits"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "37984fe409b20ccf9b0437336778d13f5385a576"
+  }
 }

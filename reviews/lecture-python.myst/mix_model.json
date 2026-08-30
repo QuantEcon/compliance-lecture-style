@@ -2,20 +2,79 @@
   "series": "lecture-python.myst",
   "lecture": "mix_model",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [14, 56, 278, 817, 396],
-     "detail": "(1) Line 14 anchors this lecture as `(likelihood-ratio-process)=`, which is the subject of a *different* lecture in the same series: `likelihood_ratio_process.md:14` carries `(likelihood_ratio_process)=`, so the two targets differ only in hyphen versus underscore, and anyone writing `[](likelihood-ratio-process)` lands on a lecture titled \"Incorrect Models\". The anchor is referenced nowhere in the corpus (I grepped all five series) and the lecture is linked as `{doc}`mix_model`` from `likelihood_bayes.md:618` and `divergence_measures.md:560`, so it is a copy-paste leftover. (2) $\\pi_t$ is defined twice with two different operators: 56 writes $\\pi_t = \\mathbb{E}[\\textrm{nature chose distribution } f \\mid w^t]$ and 308 writes $\\pi_t = \\mathbb{P}\\{q = f \\mid w^t\\}$ - the second is right, and the first puts an event inside an expectation. (3) The section that promises to \"generate samples using each of them and verify that they match well\" (203) verifies at `α = 0.0` (278), where the mixture is entirely $G$ and nothing is being compounded at all; the density curve plotted at 289 reduces to $g$, so the figure demonstrates the two samplers on the one value of $\\alpha$ at which the compound lottery is not compound. (4) The exercise (807-835) renames the mixing probability from $\\alpha$ to $x$ without saying so - 817 speaks of \"the uncertainty about $x$\" as if $x$ had been introduced - while $x$ is the *argument* of the densities everywhere else in the file (`def p(x, a, b)` at 157, `lambda x:` at 162-163, 552, 558). (5) The H2 at 396, \"What a type 1 agent learns when mixture $H$ generates data\", uses the CDF where the next line and the rest of the lecture use $h$ (398, 92, 111, 497, 780)"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [74, 802, 234, 660],
-     "detail": "the overview says everything three times. 74-111 introduces the two agents (78-79 \"Our first type of agent erroneously thinks that at time $-1$, nature once and for all chose $f$ or $g$\"; 81-82 \"Our second type of agent knows, correctly, that nature mixes $f$ and $g$\") and then immediately re-introduces both at greater length (92-101 for type 1, 103-111 for type 2); the concluding remarks then give the same two paragraphs a third time (773-788). Cutting 92-111 would lose nothing. On sentence length, 802 is 55 words in a single clause chain, 660-661 is 39 words split across a colon, and 96 and 98-99 are 30 and 38 words. And 234 cites a Google *search query* as a reference - `[Mr. P Solver video on Monte Carlo simulation](https://www.google.com/search?q=Mr.+P+Solver+video+on+Monte+Carlo+simulation&oq=...)` - which is not a link to anything stable and carries a tracking-style `oq` parameter; either link the video or drop the sentence"},
-    {"rule": "qe-code-001", "count": 5, "lines": [240, 330, 552, 719, 866],
-     "detail": "flake8 finds five items and every one is real. 330 is the sharpest: `def update(π, l)` uses `l` as a parameter name (E741), which PEP8 names explicitly as forbidden because it is indistinguishable from `1` in most fonts - and the file already writes the same object as `l_t`, `l_arr`, `l_seq` elsewhere (175, 188, 428, 571). 552 and 558 assign lambdas (E731, `h = lambda x: α * f(x) + (1 - α) * g(x)`, twice in adjacent functions where one module-level `def h(x, α)` would serve both). 719 assigns `y_samp` and never uses it (F841) and 866 assigns `T = w.size` and never uses it (F841). The remaining item a linter cannot see is a shadowing that matters: `p` is the Beta *density function* at 157 and is called as such at 162-163, and then `draw_lottery(key, p, N)` (240) and `draw_lottery_MC(key, p, N)` (258) bind `p` to the *mixing probability*, so inside those two functions the name means something unrelated and the density is unreachable - the call sites pass `α` (281-282, 416, 712, 855, 951), which is what the parameter should be called. Minor: 159 leaves `a-1` and `b-1` unspaced inside the exponents (E226), which is defensible as tracking $x^{a-1}(1-x)^{b-1}$, and 751 loops `for i in range(len(sizes))` where `enumerate` is meant"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [146, 269, 790],
-     "detail": "(1) The two distributions the whole lecture is about are never drawn. 146 says \"Let's use Python to generate two Beta distributions\", 152-163 sets $F = \\mathrm{Beta}(1,1)$ and $G = \\mathrm{Beta}(3,1.2)$ and defines `f` and `g` - and no cell ever plots them. Every later claim is about how close $h = \\alpha f + (1-\\alpha) g$ is to each of them (497, 502-508, 663-665), and the reader cannot see either one; the only density that appears is at 289, and there $\\alpha = 0$ so it is just $g$. Three lines added to the existing `xs = np.linspace(0, 1, 1000)` cell would fix it. (2) The sampler check at 269-292 draws one histogram pair at $\\alpha = 0$; a small panel over $\\alpha \\in \\{0, 0.5, 1\\}$ would both verify the samplers where it matters and show the mixture deforming from $g$ to $f$, which is the mechanism behind the KL crossing at 610-614. (3) The closing generalization (790-802) - a manifold $S$ of models $s(X\\mid\\theta)$, nature's $h$ lying outside it, Bayes selecting the $\\theta$ that minimizes the KL divergence from $h$ - is the canonical projection diagram, is the lecture's actual thesis, and is given as two paragraphs of prose. It is also the one figure that would tie the two agents together, since type 2's model contains $h$ and type 1's does not"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [32, 65, 797],
-     "detail": "the same term is italicised where it is defined and bolded where it is used again: 32 writes \"A compound lottery can be said to create a _mixture distribution_\" and 68 writes \"nature perpetually draws from the **mixture distribution** with CDF\", 36 lines apart. 65 uses bold for pure emphasis - \"Now, **each period** $t \\geq 0$, nature flips a possibly unfair coin\" - where the file's own convention is italic (34 *timing*, 89 *correct*, 96 *true*, 99 *closest*, 115 *mix*, 798 _inverting_). And the italic markers are split between two spellings, `_..._` at 32 and 797 and `*...*` at 34, 89, 96, 99 and 115, with 797-798 using bold and underscore-italic in one sentence (\"solve an **inverse problem** of somehow _inverting_ $s(x \\mid \\theta)$\")"},
-    {"rule": "qe-math-009", "count": 3, "lines": [398, 516, 502],
-     "detail": "three notational shortcuts that cost the reader more than they save. (1) 398 writes the parameterised mixture as \"$h;\\alpha$\" - a bare semicolon inside math with no delimiters - where 497 and 677 write the same object properly as $h(w \\mid \\alpha)$, and 413 repeats the `h;α` form in a docstring. (2) 516 writes the limit condition as $\\min_{f,g}\\{KL_g, KL_f\\}$: the subscript makes $f$ and $g$ look like minimisation variables when the minimum is over the two displayed values, and the next two lines (518-520) state the condition correctly and without notation (\"$\\pi_t$ goes to one if and only if $KL_f < KL_g$\"), so the display can simply go. (3) $KL_g(\\alpha)$ and $KL_f(\\alpha)$ (502-508) subscript the divergence with its *second* argument, so $KL_g$ is the divergence of $h$ from $g$; the code then names the same quantities `KL_g`, `KL_f`, `KL_g_v`, `KL_f_v`, `KL_g_quad`, `KL_f_quad`, `KL_g_arr`, `KL_f_arr` and labels the figure `KL(h, g)` (601), which is the clearer form and could be the notation throughout"},
-    {"rule": "qe-math-015", "count": 1, "lines": [396],
-     "detail": "the lecture is otherwise a model of this rule - $F$, $G$ and $H$ are the CDFs and are used only as such ($H(w) = \\alpha F(w) + (1-\\alpha)G(w)$ at 71, \"if a random variable $X$ has CDF $F$\" at 223, `jsp.beta.cdf` at 262), while $f$, $g$ and $h$ are the densities and are used only as such (\"The two density functions\" at 161, $h(w) = \\alpha f(w) + (1-\\alpha)g(w)$ at 497, the integrands of the two divergences at 502-508) - which is exactly why the one slip is visible. The H2 at 396 reads \"What a type 1 agent learns when mixture $H$ generates data\", using the CDF letter for the data-generating object, and line 398 immediately below it uses the density: \"We now study what happens when the mixture distribution $h;\\alpha$ truly generated the data each period\". Every other statement of that idea uses $h$ (92-93, 111, 780, 800)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        14,
+        56,
+        278,
+        817,
+        396
+      ],
+      "detail": "(1) Line 14 anchors this lecture as `(likelihood-ratio-process)=`, which is the subject of a *different* lecture in the same series: `likelihood_ratio_process.md:14` carries `(likelihood_ratio_process)=`, so the two targets differ only in hyphen versus underscore, and anyone writing `[](likelihood-ratio-process)` lands on a lecture titled \"Incorrect Models\". The anchor is referenced nowhere in the corpus (I grepped all five series) and the lecture is linked as `{doc}`mix_model`` from `likelihood_bayes.md:618` and `divergence_measures.md:560`, so it is a copy-paste leftover. (2) $\\pi_t$ is defined twice with two different operators: 56 writes $\\pi_t = \\mathbb{E}[\\textrm{nature chose distribution } f \\mid w^t]$ and 308 writes $\\pi_t = \\mathbb{P}\\{q = f \\mid w^t\\}$ - the second is right, and the first puts an event inside an expectation. (3) The section that promises to \"generate samples using each of them and verify that they match well\" (203) verifies at `α = 0.0` (278), where the mixture is entirely $G$ and nothing is being compounded at all; the density curve plotted at 289 reduces to $g$, so the figure demonstrates the two samplers on the one value of $\\alpha$ at which the compound lottery is not compound. (4) The exercise (807-835) renames the mixing probability from $\\alpha$ to $x$ without saying so - 817 speaks of \"the uncertainty about $x$\" as if $x$ had been introduced - while $x$ is the *argument* of the densities everywhere else in the file (`def p(x, a, b)` at 157, `lambda x:` at 162-163, 552, 558). (5) The H2 at 396, \"What a type 1 agent learns when mixture $H$ generates data\", uses the CDF where the next line and the rest of the lecture use $h$ (398, 92, 111, 497, 780)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        74,
+        802,
+        234,
+        660
+      ],
+      "detail": "the overview says everything three times. 74-111 introduces the two agents (78-79 \"Our first type of agent erroneously thinks that at time $-1$, nature once and for all chose $f$ or $g$\"; 81-82 \"Our second type of agent knows, correctly, that nature mixes $f$ and $g$\") and then immediately re-introduces both at greater length (92-101 for type 1, 103-111 for type 2); the concluding remarks then give the same two paragraphs a third time (773-788). Cutting 92-111 would lose nothing. On sentence length, 802 is 55 words in a single clause chain, 660-661 is 39 words split across a colon, and 96 and 98-99 are 30 and 38 words. And 234 cites a Google *search query* as a reference - `[Mr. P Solver video on Monte Carlo simulation](https://www.google.com/search?q=Mr.+P+Solver+video+on+Monte+Carlo+simulation&oq=...)` - which is not a link to anything stable and carries a tracking-style `oq` parameter; either link the video or drop the sentence"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        240,
+        330,
+        552,
+        719,
+        866
+      ],
+      "detail": "flake8 finds five items and every one is real. 330 is the sharpest: `def update(π, l)` uses `l` as a parameter name (E741), which PEP8 names explicitly as forbidden because it is indistinguishable from `1` in most fonts - and the file already writes the same object as `l_t`, `l_arr`, `l_seq` elsewhere (175, 188, 428, 571). 552 and 558 assign lambdas (E731, `h = lambda x: α * f(x) + (1 - α) * g(x)`, twice in adjacent functions where one module-level `def h(x, α)` would serve both). 719 assigns `y_samp` and never uses it (F841) and 866 assigns `T = w.size` and never uses it (F841). The remaining item a linter cannot see is a shadowing that matters: `p` is the Beta *density function* at 157 and is called as such at 162-163, and then `draw_lottery(key, p, N)` (240) and `draw_lottery_MC(key, p, N)` (258) bind `p` to the *mixing probability*, so inside those two functions the name means something unrelated and the density is unreachable - the call sites pass `α` (281-282, 416, 712, 855, 951), which is what the parameter should be called. Minor: 159 leaves `a-1` and `b-1` unspaced inside the exponents (E226), which is defensible as tracking $x^{a-1}(1-x)^{b-1}$, and 751 loops `for i in range(len(sizes))` where `enumerate` is meant"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        146,
+        269,
+        790
+      ],
+      "detail": "(1) The two distributions the whole lecture is about are never drawn. 146 says \"Let's use Python to generate two Beta distributions\", 152-163 sets $F = \\mathrm{Beta}(1,1)$ and $G = \\mathrm{Beta}(3,1.2)$ and defines `f` and `g` - and no cell ever plots them. Every later claim is about how close $h = \\alpha f + (1-\\alpha) g$ is to each of them (497, 502-508, 663-665), and the reader cannot see either one; the only density that appears is at 289, and there $\\alpha = 0$ so it is just $g$. Three lines added to the existing `xs = np.linspace(0, 1, 1000)` cell would fix it. (2) The sampler check at 269-292 draws one histogram pair at $\\alpha = 0$; a small panel over $\\alpha \\in \\{0, 0.5, 1\\}$ would both verify the samplers where it matters and show the mixture deforming from $g$ to $f$, which is the mechanism behind the KL crossing at 610-614. (3) The closing generalization (790-802) - a manifold $S$ of models $s(X\\mid\\theta)$, nature's $h$ lying outside it, Bayes selecting the $\\theta$ that minimizes the KL divergence from $h$ - is the canonical projection diagram, is the lecture's actual thesis, and is given as two paragraphs of prose. It is also the one figure that would tie the two agents together, since type 2's model contains $h$ and type 1's does not"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        32,
+        65,
+        797
+      ],
+      "detail": "the same term is italicised where it is defined and bolded where it is used again: 32 writes \"A compound lottery can be said to create a _mixture distribution_\" and 68 writes \"nature perpetually draws from the **mixture distribution** with CDF\", 36 lines apart. 65 uses bold for pure emphasis - \"Now, **each period** $t \\geq 0$, nature flips a possibly unfair coin\" - where the file's own convention is italic (34 *timing*, 89 *correct*, 96 *true*, 99 *closest*, 115 *mix*, 798 _inverting_). And the italic markers are split between two spellings, `_..._` at 32 and 797 and `*...*` at 34, 89, 96, 99 and 115, with 797-798 using bold and underscore-italic in one sentence (\"solve an **inverse problem** of somehow _inverting_ $s(x \\mid \\theta)$\")"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        398,
+        516,
+        502
+      ],
+      "detail": "three notational shortcuts that cost the reader more than they save. (1) 398 writes the parameterised mixture as \"$h;\\alpha$\" - a bare semicolon inside math with no delimiters - where 497 and 677 write the same object properly as $h(w \\mid \\alpha)$, and 413 repeats the `h;α` form in a docstring. (2) 516 writes the limit condition as $\\min_{f,g}\\{KL_g, KL_f\\}$: the subscript makes $f$ and $g$ look like minimisation variables when the minimum is over the two displayed values, and the next two lines (518-520) state the condition correctly and without notation (\"$\\pi_t$ goes to one if and only if $KL_f < KL_g$\"), so the display can simply go. (3) $KL_g(\\alpha)$ and $KL_f(\\alpha)$ (502-508) subscript the divergence with its *second* argument, so $KL_g$ is the divergence of $h$ from $g$; the code then names the same quantities `KL_g`, `KL_f`, `KL_g_v`, `KL_f_v`, `KL_g_quad`, `KL_f_quad`, `KL_g_arr`, `KL_f_arr` and labels the figure `KL(h, g)` (601), which is the clearer form and could be the notation throughout"
+    },
+    {
+      "rule": "qe-math-015",
+      "count": 1,
+      "lines": [
+        396
+      ],
+      "detail": "the lecture is otherwise a model of this rule - $F$, $G$ and $H$ are the CDFs and are used only as such ($H(w) = \\alpha F(w) + (1-\\alpha)G(w)$ at 71, \"if a random variable $X$ has CDF $F$\" at 223, `jsp.beta.cdf` at 262), while $f$, $g$ and $h$ are the densities and are used only as such (\"The two density functions\" at 161, $h(w) = \\alpha f(w) + (1-\\alpha)g(w)$ at 497, the integrands of the two divergences at 502-508) - which is exactly why the one slip is visible. The H2 at 396 reads \"What a type 1 agent learns when mixture $H$ generates data\", using the CDF letter for the data-generating object, and line 398 immediately below it uses the density: \"We now study what happens when the mixture distribution $h;\\alpha$ truly generated the data each period\". Every other statement of that idea uses $h$ (92-93, 111, 780, 800)"
+    }
   ],
   "strengths": [
     "The two sampling methods are implemented independently and then checked against each other and against the analytic density in one figure (239-292): `draw_lottery` flips a coin and draws from the selected Beta, `draw_lottery_MC` inverts the mixture CDF with `jnp.searchsorted`, and both histograms are overlaid on `α * f(xs) + (1 - α) * g(xs)`",
@@ -45,5 +104,9 @@
   "scanner_doubts": [
     "Nothing to file. One near-miss worth recording rather than filing: the qe-code-003 hit at 20 reports `jax` as a non-Anaconda import with no install cell, and the install cell at 20-24 runs `!pip install numpyro`. numpyro declares jax as a hard dependency, so the environment the lecture builds does contain jax and the finding is technically a false positive - but a checker cannot know a package's dependency graph without resolving it, so I would not change the check. The lecture-side fix is to write `!pip install numpyro jax`, which makes the intent explicit and clears the finding; the same shape will recur for any lecture whose install line names only an umbrella package.",
     "Cleared, not filed. (1) qe-math-014 (proposed) is satisfied: the file's only $\\mathbb{P}$ site is 308, $\\mathbb{P}\\{q = f \\mid w^t\\}$, an event in braces, which is exactly the rule; the mis-operatored twin at 56 is a different fault and I have put it under qe-writing-003. (2) The two qe-fig-006 hits (933, 962) are genuine sentence-initial capitals on a common noun, not proper names. (3) The qe-fig-004 hit (273) fires on `Monte` and `Carlo`, which are a proper noun, so the capitalisation half of that finding is a false positive - the caption is five words, inside the rule's 5-6 word limit, so there is nothing to fix on either count. (4) flake8 with `--extend-select=E226,E228` at a 90-character limit reports no long lines at all in this file and the five findings listed under qe-code-001, so the drafted Code 9/10 understates the code, which is clean apart from the naming."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "965eba33235934d0fcbd050731399d8302feec63"
+  }
 }

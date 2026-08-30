@@ -10,5 +10,9 @@
   "actions": [
     "Consider dropping the `jupytext` and `kernelspec` front matter (1-10): the page has no code cells, so the declared Python 3 kernel is never used and the file is still converted to an executable notebook at build time"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "5f17e89227ef1cd3603b380a677f30f9bf080c08"
+  }
 }

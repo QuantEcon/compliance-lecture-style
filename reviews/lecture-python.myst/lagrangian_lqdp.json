@@ -2,18 +2,68 @@
   "series": "lecture-python.myst",
   "lecture": "lagrangian_lqdp",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 1, "lines": [258],
-     "detail": "the lecture has no figures at all, and the one it most needs is already computed. \"## Reciprocal Pairs Property\" (258-324) establishes the organising fact of the whole lecture - the eigenvalues of the symplectic $M$ come in reciprocal pairs, so exactly half lie inside the unit circle - and then 527-530 computes those eigenvalues and prints them as a bare Python list, while 562-570 prints the diagonals of $W_{11}$ and $W_{22}$ as two more lists. One scatter of `np.linalg.eigvals(M)` in the complex plane with the unit circle drawn, stable and unstable eigenvalues marked differently, shows the reciprocal pairing, the half-in-half-out split, and why `sort_fun` at 542 can separate them - all from data the notebook already holds"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [52, 279, 372, 780, 827],
-     "detail": "52-53 is a 46-word sentence, and 55 then repeats its content (\"describes the joint dynamics of a system of equations describing the states and costates\" against \"describes the first-order dynamics of state and co-state vectors\"), spelling \"costates\" one way at 53 and \"co-state\" the other at 55; 372 repeats 367-368 verbatim (\"Let $V^{ij}$ denote the $(i,j)$ piece of the partitioned $V^{-1}$ matrix\") four lines after the same sentence; 279 is not a sentence at all (\"The determinant of a symplectic, then $\\textrm{det}(M) = 1$\"); 780-781 stacks two adverbs ungrammatically (\"it is useful explicitly briefly to describe\"); and 827 is 46 words that use the phrase \"this lecture\" twice to mean two different lectures. The file also carries the typos \"positive define\" for positive definite (141, 192), \"sbe\" (835) and \"contruct\" (683)"},
-    {"rule": "qe-math-009", "count": 3, "lines": [316, 465, 682],
-     "detail": "three symbols are reused for unrelated objects. $V$ is the value function from 87 (\"$V(x) = -x'Px$\") and 149, and becomes the Schur transformation matrix at 316, then is used that way through 361-431 and in the code at 546-555 and 608 - so the docstring at 614-616 writes \"V(x) = x' P x\" inside the very function whose local `V` is the Schur basis. $\\mu$ is the costate vector from 161 to 209 and 791-891, and at 465 becomes a scalar income parameter (`μ = 1`) that then enters the $A$ matrix at 470. $\\lambda$ is an eigenvalue at 50 and 302 and becomes a model parameter at 682-691 (`construct_H(ρ=.9, λ=.5, δ=0)`). Separately the Lagrangian is written `{\\cal L}` at 161 and `{\\cal{L}}` at 787 - the deprecated plain-TeX form, spelled two different ways, where `\\mathcal{L}` is standard"},
-    {"rule": "qe-code-001", "count": 5, "lines": [591, 599, 612, 638, 686],
-     "detail": "599-601 breaks the `raise ValueError(` block open: the f-string argument is indented four spaces while the `raise` sits at eight, so the continuation and the closing paren are left of the statement that owns them (PEP8 E128); 612 leaves one blank line between the top-level `stable_solution` and `stationary_P` where PEP8 asks for two (E302); 638 binds `n, k = lq.n, lq.k` and uses neither, and 640-641 bind `L`, `N`, `W` and `V` and use none of them (F841 x6 in one 30-line function); 591-595 redefines `tol` and `sort_fun` inside `stable_solution` although both already exist at module scope from 540-544; and 686 writes `H[0, :] = ρ,δ` with no space after the comma (E231). The `stable_solution` docstring is also misleading - the system it draws at 579-580 as `y' = |a b| y` / `x' = |c d| x` is not the block system the function solves"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [454, 699, 763],
-     "detail": "\"## Application\" (452) applies the method to the discounted permanent-income problem and 456-458 introduces the transformed matrices $\\hat A = \\beta^{1/2}A$, $\\hat B = \\beta^{1/2}B$ as a given - but the transformation is not derived until \"### Transforming States and Controls to Eliminate Discounting\" at 705-752, 250 lines later, so the reader must accept the trick before seeing why it works; 699 is an H2 (\"## Discounted Problems\") whose entire body is a `+++` marker and two blank lines before its first H3; and 767-775 re-runs `stationary_P(lq)` and `lq.stationary_values()`, the identical two cells already executed at 646-657, producing the same output a second time"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [53, 146, 245],
-     "detail": "53 bolds **states** and **costates** for emphasis in the middle of a long sentence and 197-198 then bolds **costate** and **state** again where they are actually defined, so the reader sees the marker twice and the definition second; 146 bolds \"**gradient of the value function**\", which is not a term the lecture coins but an object it computes; and 245 bolds the adjective in \"a **stable** solution\", pure emphasis where the rule asks for italic. 58 also bolds its own full stop (\"**invariant subspaces.**\")"}
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        258
+      ],
+      "detail": "the lecture has no figures at all, and the one it most needs is already computed. \"## Reciprocal Pairs Property\" (258-324) establishes the organising fact of the whole lecture - the eigenvalues of the symplectic $M$ come in reciprocal pairs, so exactly half lie inside the unit circle - and then 527-530 computes those eigenvalues and prints them as a bare Python list, while 562-570 prints the diagonals of $W_{11}$ and $W_{22}$ as two more lists. One scatter of `np.linalg.eigvals(M)` in the complex plane with the unit circle drawn, stable and unstable eigenvalues marked differently, shows the reciprocal pairing, the half-in-half-out split, and why `sort_fun` at 542 can separate them - all from data the notebook already holds"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        52,
+        279,
+        372,
+        780,
+        827
+      ],
+      "detail": "52-53 is a 46-word sentence, and 55 then repeats its content (\"describes the joint dynamics of a system of equations describing the states and costates\" against \"describes the first-order dynamics of state and co-state vectors\"), spelling \"costates\" one way at 53 and \"co-state\" the other at 55; 372 repeats 367-368 verbatim (\"Let $V^{ij}$ denote the $(i,j)$ piece of the partitioned $V^{-1}$ matrix\") four lines after the same sentence; 279 is not a sentence at all (\"The determinant of a symplectic, then $\\textrm{det}(M) = 1$\"); 780-781 stacks two adverbs ungrammatically (\"it is useful explicitly briefly to describe\"); and 827 is 46 words that use the phrase \"this lecture\" twice to mean two different lectures. The file also carries the typos \"positive define\" for positive definite (141, 192), \"sbe\" (835) and \"contruct\" (683)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        316,
+        465,
+        682
+      ],
+      "detail": "three symbols are reused for unrelated objects. $V$ is the value function from 87 (\"$V(x) = -x'Px$\") and 149, and becomes the Schur transformation matrix at 316, then is used that way through 361-431 and in the code at 546-555 and 608 - so the docstring at 614-616 writes \"V(x) = x' P x\" inside the very function whose local `V` is the Schur basis. $\\mu$ is the costate vector from 161 to 209 and 791-891, and at 465 becomes a scalar income parameter (`μ = 1`) that then enters the $A$ matrix at 470. $\\lambda$ is an eigenvalue at 50 and 302 and becomes a model parameter at 682-691 (`construct_H(ρ=.9, λ=.5, δ=0)`). Separately the Lagrangian is written `{\\cal L}` at 161 and `{\\cal{L}}` at 787 - the deprecated plain-TeX form, spelled two different ways, where `\\mathcal{L}` is standard"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        591,
+        599,
+        612,
+        638,
+        686
+      ],
+      "detail": "599-601 breaks the `raise ValueError(` block open: the f-string argument is indented four spaces while the `raise` sits at eight, so the continuation and the closing paren are left of the statement that owns them (PEP8 E128); 612 leaves one blank line between the top-level `stable_solution` and `stationary_P` where PEP8 asks for two (E302); 638 binds `n, k = lq.n, lq.k` and uses neither, and 640-641 bind `L`, `N`, `W` and `V` and use none of them (F841 x6 in one 30-line function); 591-595 redefines `tol` and `sort_fun` inside `stable_solution` although both already exist at module scope from 540-544; and 686 writes `H[0, :] = ρ,δ` with no space after the comma (E231). The `stable_solution` docstring is also misleading - the system it draws at 579-580 as `y' = |a b| y` / `x' = |c d| x` is not the block system the function solves"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        454,
+        699,
+        763
+      ],
+      "detail": "\"## Application\" (452) applies the method to the discounted permanent-income problem and 456-458 introduces the transformed matrices $\\hat A = \\beta^{1/2}A$, $\\hat B = \\beta^{1/2}B$ as a given - but the transformation is not derived until \"### Transforming States and Controls to Eliminate Discounting\" at 705-752, 250 lines later, so the reader must accept the trick before seeing why it works; 699 is an H2 (\"## Discounted Problems\") whose entire body is a `+++` marker and two blank lines before its first H3; and 767-775 re-runs `stationary_P(lq)` and `lq.stationary_values()`, the identical two cells already executed at 646-657, producing the same output a second time"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        53,
+        146,
+        245
+      ],
+      "detail": "53 bolds **states** and **costates** for emphasis in the middle of a long sentence and 197-198 then bolds **costate** and **state** again where they are actually defined, so the reader sees the marker twice and the definition second; 146 bolds \"**gradient of the value function**\", which is not a term the lecture coins but an object it computes; and 245 bolds the adjective in \"a **stable** solution\", pure emphasis where the rule asks for italic. 58 also bolds its own full stop (\"**invariant subspaces.**\")"
+    }
   ],
   "strengths": [
     "Twenty-four display equations are labelled and every one of them is cited where it is used - `riccati` at 135, 137, 192 and 435, `eqn:valgrad` at 152, 167 and 194, `lag-lqdp-eq2` at 184, 202, 206, 811 and 823, `eq663` at 823, 827, 829 and 882 - which is what lets a lecture this dense in algebra refer back precisely instead of restating",
@@ -34,5 +84,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 x1 at `lectures/lagrangian_lqdp.md`:476 is a false positive. The line is `lq = LQ(Q, R, A, B, beta=β)`, and `beta=` is the keyword-argument name in QuantEcon.py's `LQ` constructor, not an identifier the author chose - the value passed is the unicode `β` defined at 463. Renaming it to `β=` would raise `TypeError`. The same defect shows up in `lectures/imp_sample.md`, where the token `beta` is the imported `jax.scipy.stats.beta`; the check needs to skip keyword-argument names and imported names, and look only at assignment targets and parameter definitions."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "4d80bb632bba257caf00693a4a78fa779cd7a099"
+  }
 }

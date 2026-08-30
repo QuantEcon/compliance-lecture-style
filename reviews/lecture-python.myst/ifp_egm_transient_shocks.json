@@ -2,14 +2,43 @@
   "series": "lecture-python.myst",
   "lecture": "ifp_egm_transient_shocks",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 3, "lines": [34, 129, 816],
-     "detail": "the lecture tells the reader at 66-67 to consult {doc}`ifp_egm` for the extensive discussion, and then reproduces that lecture's EGM derivation almost verbatim at 129-171 - 'To do so we use the EGM', 'We begin with an exogenous savings grid', 'We fix a current guess of the policy function', the boundary case, the endogenous grid, the interpolation - which is ifp_egm.md:273-320 with the integral added. Line 34 reads 'we continue extend the IFP' and line 816 'Lets' look at wealth inequality by computing some standard measures of this phenomenon', both carried over from sibling lectures with their defects"},
-    {"rule": "qe-code-001", "count": 4, "lines": [267, 656, 730, 848],
-     "detail": "line 267 closes a hanging-indent signature with `    ) -> np.ndarray:` at 4 spaces, leaving arguments at body indent (E121/E125); the pattern recurs at 331, 435, 516, 713, 758 and 849. Line 656 puts a space before the comma in `+ y_bar(k) , label=label` (E203). Lines 730 and 774 bind lambdas to names where PEP8 asks for `def` (E731), and 770 and 774 are dead locals into the bargain. Line 848 writes the annotated default without spaces, `p: float=0.01` (E252). Trailing whitespace at 309, 473, 638, 639 and 862"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [809],
-     "detail": "the lecture's whole contribution over {doc}`ifp_egm` is the transient shock, and its effect is described in words rather than shown: 'As was the case in {doc}`ifp_egm`, the wealth distribution looks implausible. While we have at least gained a nontrivial right tail, we still have a left skew' (809-811). The right tail that was gained is exactly what a two-panel comparison of the two models' wealth histograms - or the two consumption policies - would display, and the lecture already draws seven figures"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [968],
-     "detail": "exercise `ifp_egm_ex1` instructs the reader to 'Step `r` through `np.linspace(0, 0.016, 4)`' (968), and its own solution uses `np.linspace(0, 0.04, 4)` with a comment justifying the different upper bound (983-984). A reader who follows the exercise as written produces a different figure from the one shown"}
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        34,
+        129,
+        816
+      ],
+      "detail": "the lecture tells the reader at 66-67 to consult {doc}`ifp_egm` for the extensive discussion, and then reproduces that lecture's EGM derivation almost verbatim at 129-171 - 'To do so we use the EGM', 'We begin with an exogenous savings grid', 'We fix a current guess of the policy function', the boundary case, the endogenous grid, the interpolation - which is ifp_egm.md:273-320 with the integral added. Line 34 reads 'we continue extend the IFP' and line 816 'Lets' look at wealth inequality by computing some standard measures of this phenomenon', both carried over from sibling lectures with their defects"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        267,
+        656,
+        730,
+        848
+      ],
+      "detail": "line 267 closes a hanging-indent signature with `    ) -> np.ndarray:` at 4 spaces, leaving arguments at body indent (E121/E125); the pattern recurs at 331, 435, 516, 713, 758 and 849. Line 656 puts a space before the comma in `+ y_bar(k) , label=label` (E203). Lines 730 and 774 bind lambdas to names where PEP8 asks for `def` (E731), and 770 and 774 are dead locals into the bargain. Line 848 writes the annotated default without spaces, `p: float=0.01` (E252). Trailing whitespace at 309, 473, 638, 639 and 862"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        809
+      ],
+      "detail": "the lecture's whole contribution over {doc}`ifp_egm` is the transient shock, and its effect is described in words rather than shown: 'As was the case in {doc}`ifp_egm`, the wealth distribution looks implausible. While we have at least gained a nontrivial right tail, we still have a left skew' (809-811). The right tail that was gained is exactly what a two-panel comparison of the two models' wealth histograms - or the two consumption policies - would display, and the lecture already draws seven figures"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        968
+      ],
+      "detail": "exercise `ifp_egm_ex1` instructs the reader to 'Step `r` through `np.linspace(0, 0.016, 4)`' (968), and its own solution uses `np.linspace(0, 0.04, 4)` with a comment justifying the different upper bound (983-984). A reader who follows the exercise as written produces a different figure from the one shown"
+    }
   ],
   "strengths": [
     "The single change from the predecessor is threaded through consistently: the Euler equation gains an integral against $\\phi$ (112-118, 142-150), the solver integrates it by Monte Carlo over `η_draws`, and `y_bar` documents in its docstring exactly which expectation it is approximating and how (637-651), with the approximation written out in the text at 674-677",
@@ -29,5 +58,9 @@
   ],
   "scanner_doubts": [
     "qe-math-002 x3 at ifp_egm_transient_shocks.md:115, 116 and 122 flags `u'`, but all three are the derivative of the utility function inside the composition $(u' \\circ \\sigma)$, and line 123 states the convention in the lecture itself: 'primes indicate next period states (as well as derivatives)'. Same gap as ifp_egm.md:260-267, ifp_advanced.md:179-294 and ifp_discrete.md:130 - the derivative-prime exception does not fire when the prime is followed by `\\circ` or applied to a bracketed argument"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "b891596e4e2c68443c9545b6de6fcc5b1988af06"
+  }
 }

@@ -2,16 +2,68 @@
   "series": "lecture-python.myst",
   "lecture": "prob_meaning",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 4, "lines": [246, 260, 484, 505],
-     "detail": "the lecture apologises at 528 for a scale problem it could fix in one line and then leaves it in three figures. 246-258 plots the theoretical probability and the simulated fraction against $I$ running from $10^2$ to $10^6$ on a *linear* axis, so 190 of the 200 computed points fall inside the leftmost one percent of the plot - and the cell already has `log_Is` in hand at 236, so `ax.set_xscale('log')` is the whole fix. 496-516, 599-620 and 626-643 all plot against the *index* of `n_obs_list` (1, 2, 3, 4, 5, 10, 20, 50, 100, 1000, 5000, 10000, 50000, 100000, 200000, 300000) with every third tick relabelled, so equal horizontal distances stand for increments ranging from 1 to 100,000 - which is exactly what 528 calls \"the scale of the graph that has the number of observations increasing disproportionately\", and the \"hump shape\" 518 asks the reader to see is partly an artifact of it. Second, 269-283 derives the variance of the indicator, $p(1-p)$, so the sampling error of $f_k^I$ is $\\sqrt{p(1-p)/I}$ - the exact rate the figure at 246-258 is meant to show, and no band is drawn, leaving 262 (\"the difference ... becomes smaller\") as a qualitative claim about a curve whose noise is not quantified. Third, the Bayesian coverage interval is defined through the CDF at 484-492 ($F(a) = q_1$, $F(b) = q_2$) with no picture of $F$ or of the shaded tails; the box plot that would illustrate it arrives 140 lines later at 626-643"},
-    {"rule": "qe-writing-003", "count": 5, "lines": [150, 167, 583, 652, 555],
-     "detail": "the lecture's whole frequentist section depends on names bound inside a collapsed dropdown. `simulate_head_counts` (129) and `θ, n, k, I = 0.7, 20, 10, 1_000_000` (150) sit between `{solution-start}` at 119 and `{solution-end}` at 157, and the three comparison sections at 162-283 then use all four names plus that function - so a reader who leaves the solution folded, which is what `:class: dropdown` is for, sees code referring to variables that were never introduced. The value $k = 10$ in particular appears only as the third element of that tuple, and 164-167 announces it afterwards. Second, 167 typesets the sample size as `$$ n=20, k=10, I=1,000,000 $$`, so LaTeX renders it as `1, 000, 000` with inter-comma spacing; the same thing happens inline at 199 and 232. Third, 583 supports $k/n \\to 0.4$ with \"(see {ref}`pm_ex1`)\", but `pm_ex1` is about $f_k^I \\to p(k \\mid \\theta)$ across $I$ independent length-$n$ sequences, which is a different limit in a different index - the within-sequence law of large numbers that gives $k/n \\to \\theta$ is never stated. Fourth, 652 attributes the off-centre coverage intervals to \"the persistent influence of the prior distribution and the randomness of the simulation path\", contradicting 581 (\"As $n$ grows, the fixed prior counts $\\alpha$ and $\\beta$ become negligible beside the data\"); at $n = 300{,}000$ with $\\alpha = \\beta = 0.5$ the prior moves the posterior mean by about $3\\times10^{-6}$, so the offset is sampling noise and the prior should not be named first. Fifth, 554-555 places the pointer to the next section (\"The next section explains *why* this concentration occurs\") inside the dropdown that closes at 556, so it is hidden by default"},
-    {"rule": "qe-code-001", "count": 6, "lines": [52, 175, 241, 455, 474, 505],
-     "detail": "241 recomputes `binom.pmf(k, n, θ)` inside a 200-iteration loop where none of the three arguments changes, appending the same constant 200 times and then plotting it as a \"theoretical\" curve at 249 - a horizontal line drawn from 200 identical values. The same loop calls `simulate_head_counts(θ, n, Is[i], seed=i)` with `Is[i]` up to $10^6$ two hundred times, and the θ- and n-sweeps each run 50 simulations at $I = 10^6$, so the three cells draw on the order of $2\\times10^9$ uniforms to produce three figures; `binom.rvs` or one multinomial draw gives the same curves. 172-181, 203-211 and 234-243 are three copies of the same six-line loop, and 183-195, 214-226 and 246-258 three copies of the same twelve-line plot cell, differing only in the swept variable; all six index with `for i in range(n_thetas)` rather than iterating the array. 52-53 imports the same module twice, `from scipy.stats import binom` and `import scipy.stats as st`. 175 names a list of probabilities `P` where the lecture's own notation for that object is lowercase $p(k \\mid \\theta)$ (65, 102). 455 and 539 `enumerate` one list only to index a parallel one (`for i, n_obs in enumerate(n_obs_list[:10]): posterior = posterior_list[i]`) where `zip` is meant. 474-478 builds a two-row table by constructing an empty DataFrame, assigning `'upper'` before `'lower'`, setting `.index`, and transposing - five statements for one constructor, and the resulting display puts the upper bound above the lower one. And `fontsize=` is hard-coded at seven different values (11, 12, 13, 15, 16) across the eight figure cells (188-192, 219-223, 251-255, 460-464, 506-513, 544-548, 606-617, 638-642)"},
-    {"rule": "qe-writing-005", "count": 9, "lines": [83, 85, 260, 296, 297, 399, 552, 661],
-     "detail": "the same term carries both markers: **random variable** in bold at 288 (\"we treat $\\theta$ as a **random variable** rather than a fixed parameter\") and *random variable* in italic at 661 (\"$\\theta$ was itself a *random variable* describing our beliefs\"). Bold is otherwise doing emphasis in nine places the rule assigns to italic - **independent** three times at 83-85, five words in two list items at 296-297 (**before**, **any**, **before**, **more**, **some**), and a whole clause including inline math at 260, `**$I$, the number of independent sequences,**`. A third markup style appears for italic in two places, underscores rather than asterisks: `_single_` (399) and `_concentrate_` (552), against `*why*` (554), `*fixed*` (659) and `*anything*` (683). Eighteen bold part labels **a)**-**f)** (331-534) are used as structure inside exercise and solution bodies. The genuine definitions are handled correctly throughout (20, 22, 24, 34, 307, 308, 312, 314, 673, 675), which is what makes the emphasis usage stand out"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [32, 36, 528, 667],
-     "detail": "36-41 takes three sentences and 60 words to say \"try it yourself before reading our answer\": \"We do this by inviting you to write some Python code\", \"It would be especially useful if you tried doing this after each question that we pose for you, before proceeding to read the rest of the lecture\", \"We provide our own answers as the lecture unfolds, but you'll learn more if you try writing your own code before reading and running ours\". 32 claims a method the lecture does not use - \"this lecture uses the Socratic method\" - where the form is exercises with dropdown solutions. 667-677 defines conjugacy five times over: \"assumptions that link functional forms ... in a way that has eased our calculations considerably\" (667), then the same in specifics (669), then \"So posterior and prior are both beta distributions, albeit ones with different parameters\" (671), then a simile (\"fit together like hand and glove\", 673), then \"we also sometimes say that we have **conjugate prior** for the likelihood function\" (675) - and 679-685 closes with a staged rhetorical exchange (\"To be argumentative, one could ask...\", \"A dignified response to that question is, well, it shouldn't, but...\"). 528 is a 22-word apology for a fixable axis"}
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        246,
+        260,
+        484,
+        505
+      ],
+      "detail": "the lecture apologises at 528 for a scale problem it could fix in one line and then leaves it in three figures. 246-258 plots the theoretical probability and the simulated fraction against $I$ running from $10^2$ to $10^6$ on a *linear* axis, so 190 of the 200 computed points fall inside the leftmost one percent of the plot - and the cell already has `log_Is` in hand at 236, so `ax.set_xscale('log')` is the whole fix. 496-516, 599-620 and 626-643 all plot against the *index* of `n_obs_list` (1, 2, 3, 4, 5, 10, 20, 50, 100, 1000, 5000, 10000, 50000, 100000, 200000, 300000) with every third tick relabelled, so equal horizontal distances stand for increments ranging from 1 to 100,000 - which is exactly what 528 calls \"the scale of the graph that has the number of observations increasing disproportionately\", and the \"hump shape\" 518 asks the reader to see is partly an artifact of it. Second, 269-283 derives the variance of the indicator, $p(1-p)$, so the sampling error of $f_k^I$ is $\\sqrt{p(1-p)/I}$ - the exact rate the figure at 246-258 is meant to show, and no band is drawn, leaving 262 (\"the difference ... becomes smaller\") as a qualitative claim about a curve whose noise is not quantified. Third, the Bayesian coverage interval is defined through the CDF at 484-492 ($F(a) = q_1$, $F(b) = q_2$) with no picture of $F$ or of the shaded tails; the box plot that would illustrate it arrives 140 lines later at 626-643"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        150,
+        167,
+        583,
+        652,
+        555
+      ],
+      "detail": "the lecture's whole frequentist section depends on names bound inside a collapsed dropdown. `simulate_head_counts` (129) and `θ, n, k, I = 0.7, 20, 10, 1_000_000` (150) sit between `{solution-start}` at 119 and `{solution-end}` at 157, and the three comparison sections at 162-283 then use all four names plus that function - so a reader who leaves the solution folded, which is what `:class: dropdown` is for, sees code referring to variables that were never introduced. The value $k = 10$ in particular appears only as the third element of that tuple, and 164-167 announces it afterwards. Second, 167 typesets the sample size as `$$ n=20, k=10, I=1,000,000 $$`, so LaTeX renders it as `1, 000, 000` with inter-comma spacing; the same thing happens inline at 199 and 232. Third, 583 supports $k/n \\to 0.4$ with \"(see {ref}`pm_ex1`)\", but `pm_ex1` is about $f_k^I \\to p(k \\mid \\theta)$ across $I$ independent length-$n$ sequences, which is a different limit in a different index - the within-sequence law of large numbers that gives $k/n \\to \\theta$ is never stated. Fourth, 652 attributes the off-centre coverage intervals to \"the persistent influence of the prior distribution and the randomness of the simulation path\", contradicting 581 (\"As $n$ grows, the fixed prior counts $\\alpha$ and $\\beta$ become negligible beside the data\"); at $n = 300{,}000$ with $\\alpha = \\beta = 0.5$ the prior moves the posterior mean by about $3\\times10^{-6}$, so the offset is sampling noise and the prior should not be named first. Fifth, 554-555 places the pointer to the next section (\"The next section explains *why* this concentration occurs\") inside the dropdown that closes at 556, so it is hidden by default"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        52,
+        175,
+        241,
+        455,
+        474,
+        505
+      ],
+      "detail": "241 recomputes `binom.pmf(k, n, θ)` inside a 200-iteration loop where none of the three arguments changes, appending the same constant 200 times and then plotting it as a \"theoretical\" curve at 249 - a horizontal line drawn from 200 identical values. The same loop calls `simulate_head_counts(θ, n, Is[i], seed=i)` with `Is[i]` up to $10^6$ two hundred times, and the θ- and n-sweeps each run 50 simulations at $I = 10^6$, so the three cells draw on the order of $2\\times10^9$ uniforms to produce three figures; `binom.rvs` or one multinomial draw gives the same curves. 172-181, 203-211 and 234-243 are three copies of the same six-line loop, and 183-195, 214-226 and 246-258 three copies of the same twelve-line plot cell, differing only in the swept variable; all six index with `for i in range(n_thetas)` rather than iterating the array. 52-53 imports the same module twice, `from scipy.stats import binom` and `import scipy.stats as st`. 175 names a list of probabilities `P` where the lecture's own notation for that object is lowercase $p(k \\mid \\theta)$ (65, 102). 455 and 539 `enumerate` one list only to index a parallel one (`for i, n_obs in enumerate(n_obs_list[:10]): posterior = posterior_list[i]`) where `zip` is meant. 474-478 builds a two-row table by constructing an empty DataFrame, assigning `'upper'` before `'lower'`, setting `.index`, and transposing - five statements for one constructor, and the resulting display puts the upper bound above the lower one. And `fontsize=` is hard-coded at seven different values (11, 12, 13, 15, 16) across the eight figure cells (188-192, 219-223, 251-255, 460-464, 506-513, 544-548, 606-617, 638-642)"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 9,
+      "lines": [
+        83,
+        85,
+        260,
+        296,
+        297,
+        399,
+        552,
+        661
+      ],
+      "detail": "the same term carries both markers: **random variable** in bold at 288 (\"we treat $\\theta$ as a **random variable** rather than a fixed parameter\") and *random variable* in italic at 661 (\"$\\theta$ was itself a *random variable* describing our beliefs\"). Bold is otherwise doing emphasis in nine places the rule assigns to italic - **independent** three times at 83-85, five words in two list items at 296-297 (**before**, **any**, **before**, **more**, **some**), and a whole clause including inline math at 260, `**$I$, the number of independent sequences,**`. A third markup style appears for italic in two places, underscores rather than asterisks: `_single_` (399) and `_concentrate_` (552), against `*why*` (554), `*fixed*` (659) and `*anything*` (683). Eighteen bold part labels **a)**-**f)** (331-534) are used as structure inside exercise and solution bodies. The genuine definitions are handled correctly throughout (20, 22, 24, 34, 307, 308, 312, 314, 673, 675), which is what makes the emphasis usage stand out"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        32,
+        36,
+        528,
+        667
+      ],
+      "detail": "36-41 takes three sentences and 60 words to say \"try it yourself before reading our answer\": \"We do this by inviting you to write some Python code\", \"It would be especially useful if you tried doing this after each question that we pose for you, before proceeding to read the rest of the lecture\", \"We provide our own answers as the lecture unfolds, but you'll learn more if you try writing your own code before reading and running ours\". 32 claims a method the lecture does not use - \"this lecture uses the Socratic method\" - where the form is exercises with dropdown solutions. 667-677 defines conjugacy five times over: \"assumptions that link functional forms ... in a way that has eased our calculations considerably\" (667), then the same in specifics (669), then \"So posterior and prior are both beta distributions, albeit ones with different parameters\" (671), then a simile (\"fit together like hand and glove\", 673), then \"we also sometimes say that we have **conjugate prior** for the likelihood function\" (675) - and 679-685 closes with a staged rhetorical exchange (\"To be argumentative, one could ask...\", \"A dignified response to that question is, well, it shouldn't, but...\"). 528 is a 22-word apology for a fixable axis"
+    }
   ],
   "strengths": [
     "The lecture writes probability of an event with braces throughout - $\\mathbb{P}\\{X = k \\mid \\theta\\}$ at 65, $\\mathbb{1}\\left\\{\\sum_{h=1}^n y_h^i = k\\right\\}$ at 99, $\\mathbb{1}\\{X_i = k\\}$ at 269 - which is the convention proposed qe-math-014 asks for and which most of the corpus does not follow",
@@ -35,5 +87,9 @@
     "Swap the emphasis markers where they are reversed: italicise the nine bold emphases (83 twice, 85, 260, 296 twice, 297 three times) and settle **random variable** at 288 against *random variable* at 661; use asterisks rather than underscores at 399 and 552; and move the eighteen **a)**-**f)** labels into real structure",
     "Sweep the rest: the 36 double spaces (20, 36, 38, 56, 62, 75, 83, 90, 94, 102 and 26 more), the three Title Case H2 headings at 58, 286 and 665, `\\mathbb{V}` for the two `\\operatorname{Var}` at 578 and 592, \"law of large numbers\" lower-cased at 267 and 583, the duplicate `scipy.stats` import at 52-53, the five-statement DataFrame at 474-478, and the conjugacy paragraph at 667-685 cut to its definition"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "0e49300461f63cd36b35cab36fdae9dcfcbc037b"
+  }
 }

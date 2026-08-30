@@ -2,18 +2,69 @@
   "series": "lecture-python-intro",
   "lecture": "money_inflation_nonlinear",
   "judgment": [
-    {"rule": "qe-math-009", "count": 3, "lines": [85, 451, 464],
-     "detail": "the steady-state inflation rate carries four names and the lecture never says they are the same object. 80 announces \"the two prospective limiting values for $\\overline \\pi$\"; 85-88 introduces $x$ as \"a common rate of growth of logarithms of the money supply and price level\" and states the defining equation {eq}`eq:steadypi` in $x$; 155-157 solves it and stores the answers as $\\pi_l$ and $\\pi_u$ (labelled that way on the figure at 170 and 190); and the exercises add $x^*$ (457) while `mni_ex2` reverts to $\\pi_l(g), \\pi_u(g)$ (553-554) with its own solution labelling the axis \"steady-state inflation rate $x$\" (516, 673). Not one sentence connects $x$ to $\\overline\\pi$ to $\\pi_l$. The same function is spelled three ways too: `\\exp(-\\alpha x) - \\exp(-(1+\\alpha)x)` at 93 and 99, $L(x) = e^{-\\alpha x} - e^{-(1+\\alpha)x}$ at 451, and `compute_seign` in code at 175 - so the reader matching the exercise's $L$ against the body's display has to notice they are the same. And the lower/upper distinction is marked two different ways in adjacent paragraphs: $\\underline p(m_0)$ and $\\overline p(m_0)$ by under- and overline (208-213), $\\pi_l$ and $\\pi_u$ by subscript. `{\\rm max}` for a subscript recurs at 464, 468, 511, 553, 558, 609, 641 and 669 where `\\mathrm{max}` or `_{\\max}` is the LaTeX form"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [106, 417, 429],
-     "detail": "104-106 says the same thing about both sides of the same equation. {eq}`eq:steadypi` is $\\exp(-\\alpha x) - \\exp(-(1+\\alpha)x) = g$; 104 correctly calls the left side \"steady state revenue raised by printing money\", and then 106 calls the right side \"the quantity of time $t$ goods that the government raises by printing money\" - which is the left side again. The counterpart passage in {doc}`money_inflation` (its lines 212-214) gets it right: left side seigniorage, right side government expenditures. 417 is a broken sentence with a full stop in the middle: \"almost all paths converge to the *higher* inflation tax rate displayed in the stationary state Laffer curve. displayed in figure {numref}`laffer_curve_nonlinear`.\" And 429 opens \"We discovered that\" with a bulleted conclusion, immediately after a `{note}` about the *linear* lecture and under no heading of its own - the material is lifted from the \"Equilibrium selection\" section of {doc}`money_inflation` without the section, so a reader reaching 429 has just been told about a different model and is then handed \"we discovered\""},
-    {"rule": "qe-writing-007", "count": 3, "lines": [191, 368, 382],
-     "detail": "{numref}`p0_path_nonlin` (394-415) plots every path with `**line_params` and no `label`, and `draw_iterations` never calls `ax.legend()`, so the figure shows however many curves `np.arange(p0_l, p0_u, 0.1)` happens to produce with nothing identifying any of them. Worse, the $\\pi_l$ and $\\pi_u$ reference lines are drawn only on the bottom two panels - `for ax in axes[2:]` at 382 - while 417 tells the reader to stare at \"the paths of price levels\" to see the convergence, i.e. at the second panel, which carries no marker for either steady state. On the Laffer-curve figure the two labels are placed at `plt.gca().get_ylim()[0]*2` (191), a y-coordinate defined as twice the lower axis limit: for a curve whose values sit just above zero that is an arbitrary height, and it lands off the axes whenever the lower limit is negative, where `ax.annotate` with `xycoords=('data', 'axes fraction')` would pin them. Two smaller gaps: the pseudo-code at 300-336 is thirty-six lines of nested bullets restating a two-line recursion that the two displayed equations already give, and `mni_ex3` part a asks for the closed form $g_{\\max}(\\alpha) = \\alpha^\\alpha/(1+\\alpha)^{1+\\alpha}$ (641) which its own solution never evaluates - 667 computes `compute_seign(x_star_α, α)` instead and the two are never compared"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [82, 284, 300, 446],
-     "detail": "no term in this lecture is bolded at its definition. 35-36 bolds **inflation tax** and **Laffer curve** in the Overview, both imported from {doc}`money_inflation` and neither defined here; after that, bold is used only for structural labels - **Pseudo-code** (300), the three exercise titles (446, 548, 631) and the **Part a.** / **Part b.** / **Part c.** markers (476, 523, 596, 612, 657, 684, 711). Meanwhile the definitions that do occur are marked three other ways: *steady state* is italicised at 82, and 284 sets two concepts in inline code - \"we'll treat $m_t$ as a ``natural state variable`` and $p_t$ as a ``jump`` variable\" - which renders them as monospace, the formatting reserved for identifiers; the counterpart sentence in {doc}`money_inflation` (line 795) bolds **state** and **jump** correctly. Names are italicised too, at 18 (*Laffer curves*) and 280 (*Method 2*)"},
-    {"rule": "qe-code-001", "count": 5, "lines": [128, 273, 385, 500, 666],
-     "detail": "273 assigns a lambda to a name - `eq_g = lambda x: np.exp(-model.α * x) - np.exp(-(1 + model.α) * x)` - where PEP8 asks for a `def`, and the file already has `compute_seign` (175) computing exactly that expression, so the lambda is both a style violation and a duplicate. Three continuation lines miss their visual indent: `CaganLaffer = namedtuple('CaganLaffer',` opens its parenthesis at column 24 and continues at column 24 (128-132, one short), `line_params = {'lw': 1.5,` opens its brace at column 14 and continues at 14 (408-410, one short), and `ax.text(` at 384 opens at column 19 and continues at column 25 (five past). 132 also leaves a space before the closing bracket, `\"g\" ])`. 500 runs to 90 characters. And the exercise cells pad before `=` to align blocks of assignments at 666-667, 692-694 and 722-724 (`x_star_α  =`, `g_max_α   =`, `m_temp  =`, `p0_l_α  =`), which PEP8 lists under Pet Peeves. One item that is not spacing: 492 imports `minimize_scalar` in the middle of the lecture when 115-120 is the import cell"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [29, 33, 421],
-     "detail": "29-33 takes three sentences to say \"as in the linear lecture\", and the middle one is circular in the same way its predecessor was: \"That lecture presented a linear version of the model in this lecture\" (31). The third then puts the lecture's own contents in the past tense - \"As in that lecture, we discussed these topics:\" (33) - for four topics that are discussed below, not above. The same material then arrives a second time at 417-439, where 425-427's `{note}` restates 29-31 and the bullets restate 35-46. 421 is a 78-word single sentence with two quoted terms and a colon, copied verbatim from {doc}`money_inflation`:962, and it is the longest sentence in a lecture whose house style is otherwise one short sentence per paragraph. Smaller: 27 opens a quotation with two apostrophes, `''method 2''`, which renders as two straight marks rather than a quote, and the two `+++ {\"user_expressions\": []}` markers at 123 and 141 are leftover jupytext metadata in the published source"}
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        85,
+        451,
+        464
+      ],
+      "detail": "the steady-state inflation rate carries four names and the lecture never says they are the same object. 80 announces \"the two prospective limiting values for $\\overline \\pi$\"; 85-88 introduces $x$ as \"a common rate of growth of logarithms of the money supply and price level\" and states the defining equation {eq}`eq:steadypi` in $x$; 155-157 solves it and stores the answers as $\\pi_l$ and $\\pi_u$ (labelled that way on the figure at 170 and 190); and the exercises add $x^*$ (457) while `mni_ex2` reverts to $\\pi_l(g), \\pi_u(g)$ (553-554) with its own solution labelling the axis \"steady-state inflation rate $x$\" (516, 673). Not one sentence connects $x$ to $\\overline\\pi$ to $\\pi_l$. The same function is spelled three ways too: `\\exp(-\\alpha x) - \\exp(-(1+\\alpha)x)` at 93 and 99, $L(x) = e^{-\\alpha x} - e^{-(1+\\alpha)x}$ at 451, and `compute_seign` in code at 175 - so the reader matching the exercise's $L$ against the body's display has to notice they are the same. And the lower/upper distinction is marked two different ways in adjacent paragraphs: $\\underline p(m_0)$ and $\\overline p(m_0)$ by under- and overline (208-213), $\\pi_l$ and $\\pi_u$ by subscript. `{\\rm max}` for a subscript recurs at 464, 468, 511, 553, 558, 609, 641 and 669 where `\\mathrm{max}` or `_{\\max}` is the LaTeX form"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        106,
+        417,
+        429
+      ],
+      "detail": "104-106 says the same thing about both sides of the same equation. {eq}`eq:steadypi` is $\\exp(-\\alpha x) - \\exp(-(1+\\alpha)x) = g$; 104 correctly calls the left side \"steady state revenue raised by printing money\", and then 106 calls the right side \"the quantity of time $t$ goods that the government raises by printing money\" - which is the left side again. The counterpart passage in {doc}`money_inflation` (its lines 212-214) gets it right: left side seigniorage, right side government expenditures. 417 is a broken sentence with a full stop in the middle: \"almost all paths converge to the *higher* inflation tax rate displayed in the stationary state Laffer curve. displayed in figure {numref}`laffer_curve_nonlinear`.\" And 429 opens \"We discovered that\" with a bulleted conclusion, immediately after a `{note}` about the *linear* lecture and under no heading of its own - the material is lifted from the \"Equilibrium selection\" section of {doc}`money_inflation` without the section, so a reader reaching 429 has just been told about a different model and is then handed \"we discovered\""
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        191,
+        368,
+        382
+      ],
+      "detail": "{numref}`p0_path_nonlin` (394-415) plots every path with `**line_params` and no `label`, and `draw_iterations` never calls `ax.legend()`, so the figure shows however many curves `np.arange(p0_l, p0_u, 0.1)` happens to produce with nothing identifying any of them. Worse, the $\\pi_l$ and $\\pi_u$ reference lines are drawn only on the bottom two panels - `for ax in axes[2:]` at 382 - while 417 tells the reader to stare at \"the paths of price levels\" to see the convergence, i.e. at the second panel, which carries no marker for either steady state. On the Laffer-curve figure the two labels are placed at `plt.gca().get_ylim()[0]*2` (191), a y-coordinate defined as twice the lower axis limit: for a curve whose values sit just above zero that is an arbitrary height, and it lands off the axes whenever the lower limit is negative, where `ax.annotate` with `xycoords=('data', 'axes fraction')` would pin them. Two smaller gaps: the pseudo-code at 300-336 is thirty-six lines of nested bullets restating a two-line recursion that the two displayed equations already give, and `mni_ex3` part a asks for the closed form $g_{\\max}(\\alpha) = \\alpha^\\alpha/(1+\\alpha)^{1+\\alpha}$ (641) which its own solution never evaluates - 667 computes `compute_seign(x_star_α, α)` instead and the two are never compared"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        82,
+        284,
+        300,
+        446
+      ],
+      "detail": "no term in this lecture is bolded at its definition. 35-36 bolds **inflation tax** and **Laffer curve** in the Overview, both imported from {doc}`money_inflation` and neither defined here; after that, bold is used only for structural labels - **Pseudo-code** (300), the three exercise titles (446, 548, 631) and the **Part a.** / **Part b.** / **Part c.** markers (476, 523, 596, 612, 657, 684, 711). Meanwhile the definitions that do occur are marked three other ways: *steady state* is italicised at 82, and 284 sets two concepts in inline code - \"we'll treat $m_t$ as a ``natural state variable`` and $p_t$ as a ``jump`` variable\" - which renders them as monospace, the formatting reserved for identifiers; the counterpart sentence in {doc}`money_inflation` (line 795) bolds **state** and **jump** correctly. Names are italicised too, at 18 (*Laffer curves*) and 280 (*Method 2*)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        128,
+        273,
+        385,
+        500,
+        666
+      ],
+      "detail": "273 assigns a lambda to a name - `eq_g = lambda x: np.exp(-model.α * x) - np.exp(-(1 + model.α) * x)` - where PEP8 asks for a `def`, and the file already has `compute_seign` (175) computing exactly that expression, so the lambda is both a style violation and a duplicate. Three continuation lines miss their visual indent: `CaganLaffer = namedtuple('CaganLaffer',` opens its parenthesis at column 24 and continues at column 24 (128-132, one short), `line_params = {'lw': 1.5,` opens its brace at column 14 and continues at 14 (408-410, one short), and `ax.text(` at 384 opens at column 19 and continues at column 25 (five past). 132 also leaves a space before the closing bracket, `\"g\" ])`. 500 runs to 90 characters. And the exercise cells pad before `=` to align blocks of assignments at 666-667, 692-694 and 722-724 (`x_star_α  =`, `g_max_α   =`, `m_temp  =`, `p0_l_α  =`), which PEP8 lists under Pet Peeves. One item that is not spacing: 492 imports `minimize_scalar` in the middle of the lecture when 115-120 is the import cell"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        29,
+        33,
+        421
+      ],
+      "detail": "29-33 takes three sentences to say \"as in the linear lecture\", and the middle one is circular in the same way its predecessor was: \"That lecture presented a linear version of the model in this lecture\" (31). The third then puts the lecture's own contents in the past tense - \"As in that lecture, we discussed these topics:\" (33) - for four topics that are discussed below, not above. The same material then arrives a second time at 417-439, where 425-427's `{note}` restates 29-31 and the bullets restate 35-46. 421 is a 78-word single sentence with two quoted terms and a colon, copied verbatim from {doc}`money_inflation`:962, and it is the longest sentence in a lecture whose house style is otherwise one short sentence per paragraph. Smaller: 27 opens a quotation with two apostrophes, `''method 2''`, which renders as two straight marks rather than a quote, and the two `+++ {\"user_expressions\": []}` markers at 123 and 141 are leftover jupytext metadata in the published source"
+    }
   ],
   "strengths": [
     "The lecture is honest about what the non-linearity costs and says so in the one place a reader would otherwise be confused: the `{prf:remark}` at 71-74 points out that {eq}`eq:mdemand` is linear in logs while {eq}`eq:msupply` is linear in levels, and that this is what forces the computation method to change - which is the whole reason this lecture exists alongside {doc}`money_inflation`",
@@ -37,5 +88,9 @@
     "Have `mni_ex3` verify the closed form it asks for: part a gives $g_{\\max}(\\alpha) = \\alpha^\\alpha/(1+\\alpha)^{1+\\alpha}$ (641) and the solution computes `compute_seign(x_star_α, α)` instead (667), so the formula the exercise poses is never checked. Also reconcile the `fsolve` starting guesses - the body uses `x0=0.6` for $\\pi_l$ (155) and the exercises use `x0=0.3` (578, 616, 696) - so part c's \"confirm they agree with `π_l` and `π_u` computed in the lecture\" compares results from different initial guesses",
     "Finish the smaller items: the 37 internal double spaces, the two-sentence `{prf:remark}` at 73 (qe-writing-001), mystnb `caption`/`name` metadata on the four un-named figure cells (504, 568, 659, 713), `lw=2` on the nine line plots, the `figsize` override at 348 (qe-fig-001), the two over-long captions at 170 and 398 (qe-fig-004), the `''method 2''` quotation at 27, the two leftover `+++ {\"user_expressions\": []}` markers at 123 and 141, and the \"integar\" typo at 387"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "cc41f3ea140a56da2ffe3e18d2e9e5308812f71c"
+  }
 }

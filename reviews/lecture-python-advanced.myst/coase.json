@@ -2,14 +2,50 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "coase",
   "judgment": [
-    {"rule": "qe-math-009", "count": 7, "lines": [304, 308, 309, 310, 324, 429, 451],
-     "detail": "the set of candidate price functions is written `\\mathcal P` throughout (defined at 304, then used at 308-310, 324, 429, 451); plain `P` is unused anywhere in the lecture, so this is the exact case the rule names - `$P$` instead of `$\\mathcal{P}$` when freely choosing"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [105, 173, 213],
-     "detail": "line 173 is a 45-word sentence that states the recursive structure and its one qualification in a single breath; line 105 is 39 words carrying the pyramid analogy plus its cost implication; line 213 is 35 words joining the free-entry assumption to its zero-profit consequence - each splits cleanly into two sentences (the quotation at 89-91 is 50 words but is a direct quote from Coase and should stay intact)"},
-    {"rule": "qe-code-001", "count": 5, "lines": [440, 471, 482, 503, 585],
-     "detail": "lines 471, 482 and 503 bind lambdas to names (`Tp`, `p_func`, `f`) where PEP8 asks for `def` (E731) - none of the three is closer to mathematical notation; the `__init__` signature at 440-443 opens arguments on the same line as `(` and then continues at 12 spaces instead of aligning with `self` (E128); line 585 indents the loop body 3 spaces instead of 4"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [87],
-     "detail": "line 87 uses bold for emphasis on a rhetorical question - `**what determines the size of firms**?` - which is the reverse of the rule; every other bold in the file (184, 192, 233, 241, 268, 417, 598) correctly marks a definition, so this is the one outlier"}
+    {
+      "rule": "qe-math-009",
+      "count": 7,
+      "lines": [
+        304,
+        308,
+        309,
+        310,
+        324,
+        429,
+        451
+      ],
+      "detail": "the set of candidate price functions is written `\\mathcal P` throughout (defined at 304, then used at 308-310, 324, 429, 451); plain `P` is unused anywhere in the lecture, so this is the exact case the rule names - `$P$` instead of `$\\mathcal{P}$` when freely choosing"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        105,
+        173,
+        213
+      ],
+      "detail": "line 173 is a 45-word sentence that states the recursive structure and its one qualification in a single breath; line 105 is 39 words carrying the pyramid analogy plus its cost implication; line 213 is 35 words joining the free-entry assumption to its zero-profit consequence - each splits cleanly into two sentences (the quotation at 89-91 is 50 words but is a direct quote from Coase and should stay intact)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        440,
+        471,
+        482,
+        503,
+        585
+      ],
+      "detail": "lines 471, 482 and 503 bind lambdas to names (`Tp`, `p_func`, `f`) where PEP8 asks for `def` (E731) - none of the three is closer to mathematical notation; the `__init__` signature at 440-443 opens arguments on the same line as `(` and then continues at 12 spaces instead of aligning with `self` (E128); line 585 indents the loop body 3 spaces instead of 4"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        87
+      ],
+      "detail": "line 87 uses bold for emphasis on a rhetorical question - `**what determines the size of firms**?` - which is the reverse of the rule; every other bold in the file (184, 192, 233, 241, 268, 417, 598) correctly marks a definition, so this is the one outlier"
+    }
   ],
   "strengths": [
     "The verbal Coase quotation introduced at 89-91 is deliberately closed at 399-405: the same passage is re-quoted right after the marginal conditions {eq}`coase_env` and {eq}`coase_foc` are derived, so the reader sees the model reproduce the prose argument",
@@ -27,5 +63,9 @@
     "Replace the three named lambdas at 471, 482 and 503 with `def`, align the `__init__` continuation lines at 441-443, and re-indent the loop body at 585 to 4 spaces",
     "Sweep the remaining mechanical items: split the two-sentence paragraphs at 89, 278, 570 and 622-623 (qe-writing-001, 4 occurrences), collapse the double spaces at 68, 278 (twice), 301, 424, 570 and 623 (qe-writing-008, 7 occurrences), move the three narrative `{cite}` calls at 306, 354 and 381 out of the sentence flow (qe-ref-001, 3 occurrences), and set `lw=2` on the plots at 537, 555 and 638 (qe-fig-008, 3 occurrences)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "bc879271dfc5d26abdd883437c6f2c1b77d1afdd"
+  }
 }

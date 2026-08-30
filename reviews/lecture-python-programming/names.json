@@ -66,5 +66,9 @@
     "Fix 87 (\"no names bound are to the first object\"), cut the garbage-collection aside at 93-95, and either redeem or delete the promise at 302",
     "Update 336-337: `__builtin__` is the Python 2 module name - in Python 3 it is `builtins`; also strip the trailing whitespace at 83 and 177 and the double space at 383"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "3ce66b143c30532ea8351fc5675f3f00191e5d16"
+  }
 }

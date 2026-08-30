@@ -2,19 +2,82 @@
   "series": "lecture-python.myst",
   "lecture": "learning_approximation",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 4, "lines": [91, 111, 362, 840],
-     "detail": "the lecture uses bold and italic interchangeably for emphasis, sometimes on the same word. Italic is used correctly and often - *separate* (45), *continuous* (53), *computing* (77), *realized* (288), *slow* (509), *happens* (619), *whole* (787) - but bold does the same job at 91 (\"**is** a learning economy\", a bolded copula), 111 (\"a **continuous** Markov process\", the same word italicised at 53), 362, 368 and 370 (\"the **constant** family\", \"**linear**\", \"**quadratic**\"), 415 (\"**recursively**\"), 643 (\"**generalize**\"), 660 (\"**discover**\"), and 840, 843, 845, 848 (\"**small**\", \"**variance**\", \"**large**\", \"**bias**\"). Bold is meanwhile doing genuine definition work elsewhere (**approximate equilibrium** 69, **functional equation** 87, **Nadaraya-Watson** 556), so the marker is carrying two jobs at once"},
-    {"rule": "qe-code-001", "count": 20,
-     "lines": [192, 220, 222, 235, 239, 312, 314, 319, 327, 353, 386, 460, 473, 582, 594, 701, 752, 753, 754, 830],
-     "detail": "eighteen lines inside code cells run past 79 characters (PEP8 E501): 192, 220, 235, 239, 314, 319, 327, 353, 386, 460, 473, 582, 594, 701, 752, 753, 754 and 830, with 460 at 93 and 220 at 90 - and in several cases the overrun is a trailing comment (460 pushes `# date t-1 Euler realizes now` out to column 57) or a nested generator expression that would read better split (220, 239). 222 binds a lambda to a name inside `solve_benchmark` (E731) where a two-line `def` would do. Blank-line separation between top-level defs is inconsistent within the same cells: one line at 302-312, two at 316-318, one at 173 after the assignment"},
-    {"rule": "qe-math-009", "count": 3, "lines": [203, 425, 549],
-     "detail": "$R$ is the gross return on currency at 120, 128, 131 and 140 - the object the whole functional equation turns on - and then at 425-431 becomes the second-moment matrix of the regressors in the recursive least squares display, with 430 explaining \"$R_t$ tracks the second moment of the regressors\" three hundred lines after $R_t$ was defined as a return; the code carries the same clash (`R = ridge * np.eye(...)` at 450 in a lecture whose `s_from_psi` implements $f = w_1\\psi/(1+\\psi)$ derived from returns). $F$ is the transition kernel $F(G', G)$ at 112 and a kernel distribution estimate $\\hat F_t(x)$ at 549. And $T$ is \"the $T$ map\" at 203, cited from another lecture and never defined here, while `T` is the simulation length in every function signature in the file (318, 440, 568, 695)"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [73, 555, 563],
-     "detail": "the epigraph at 73 (\"Learning algorithms and equilibrium computation algorithms look like each other\") is the opening sentence of the longer Sargent quotation at 520-526, so the same sentence is quoted twice, and the claim is additionally restated in the author's own words at 81-82, 91, 411-417, 528-531 and 650-654 - seven statements of one thesis. 555-558 is a 46-word sentence carrying a definition, a construction and an iteration scheme. And 560-565 states the batch-versus-recursive correspondence a third time in six lines, after 546-553 and 555 have each stated it"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [700, 822],
-     "detail": "two of the lecture's central claims are about the shape of a curve that is only ever tabulated. 700-712 asks the reader to see that the sup-norm error \"falls at first but then rises again\" across degrees 0 to 5 while the ergodic RMS \"falls monotonically and then flattens\" - two error paths, six points each, presented as a rounded DataFrame - and 822-838 does the same across five bandwidths and then asserts \"There is an interior optimum\". Plotting the two error measures against degree, and against $\\log h$, would make both claims visible at a glance and would show the U-shape the bias-variance discussion at 840-852 describes. The lecture is otherwise willing to plot: exercise lae_ex3 even draws the fitted rules at 827-835 without drawing the error curve that is the point of the exercise"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [46, 546],
-     "detail": "\"non-parametric\" names two different things in the same lecture: at 46 and 92 it is the one-number-per-state rule of the previous lecture, the approach the Overview rejects as hopeless in a continuous state, and at 540-544 it is the kernel smoother offered as the alternative to the parametric route - so the term labels both the method being dismissed and the method being recommended, with no note that the two senses differ. Separately, 546-553 displays a recursion for $\\hat F_t(x)$, a kernel estimate of a distribution, in a section whose subject and whose implementation are the conditional expectation $\\psi(G)$; 563-565 then claims that display \"stands to this smoother exactly as {eq}`recursive_pea` stands to the batch algorithm\", but a Nadaraya-Watson conditional mean is not the batch counterpart of a recursive density estimator, so the correspondence the sentence asserts is not the one the display shows"}
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        91,
+        111,
+        362,
+        840
+      ],
+      "detail": "the lecture uses bold and italic interchangeably for emphasis, sometimes on the same word. Italic is used correctly and often - *separate* (45), *continuous* (53), *computing* (77), *realized* (288), *slow* (509), *happens* (619), *whole* (787) - but bold does the same job at 91 (\"**is** a learning economy\", a bolded copula), 111 (\"a **continuous** Markov process\", the same word italicised at 53), 362, 368 and 370 (\"the **constant** family\", \"**linear**\", \"**quadratic**\"), 415 (\"**recursively**\"), 643 (\"**generalize**\"), 660 (\"**discover**\"), and 840, 843, 845, 848 (\"**small**\", \"**variance**\", \"**large**\", \"**bias**\"). Bold is meanwhile doing genuine definition work elsewhere (**approximate equilibrium** 69, **functional equation** 87, **Nadaraya-Watson** 556), so the marker is carrying two jobs at once"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 20,
+      "lines": [
+        192,
+        220,
+        222,
+        235,
+        239,
+        312,
+        314,
+        319,
+        327,
+        353,
+        386,
+        460,
+        473,
+        582,
+        594,
+        701,
+        752,
+        753,
+        754,
+        830
+      ],
+      "detail": "eighteen lines inside code cells run past 79 characters (PEP8 E501): 192, 220, 235, 239, 314, 319, 327, 353, 386, 460, 473, 582, 594, 701, 752, 753, 754 and 830, with 460 at 93 and 220 at 90 - and in several cases the overrun is a trailing comment (460 pushes `# date t-1 Euler realizes now` out to column 57) or a nested generator expression that would read better split (220, 239). 222 binds a lambda to a name inside `solve_benchmark` (E731) where a two-line `def` would do. Blank-line separation between top-level defs is inconsistent within the same cells: one line at 302-312, two at 316-318, one at 173 after the assignment"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        203,
+        425,
+        549
+      ],
+      "detail": "$R$ is the gross return on currency at 120, 128, 131 and 140 - the object the whole functional equation turns on - and then at 425-431 becomes the second-moment matrix of the regressors in the recursive least squares display, with 430 explaining \"$R_t$ tracks the second moment of the regressors\" three hundred lines after $R_t$ was defined as a return; the code carries the same clash (`R = ridge * np.eye(...)` at 450 in a lecture whose `s_from_psi` implements $f = w_1\\psi/(1+\\psi)$ derived from returns). $F$ is the transition kernel $F(G', G)$ at 112 and a kernel distribution estimate $\\hat F_t(x)$ at 549. And $T$ is \"the $T$ map\" at 203, cited from another lecture and never defined here, while `T` is the simulation length in every function signature in the file (318, 440, 568, 695)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        73,
+        555,
+        563
+      ],
+      "detail": "the epigraph at 73 (\"Learning algorithms and equilibrium computation algorithms look like each other\") is the opening sentence of the longer Sargent quotation at 520-526, so the same sentence is quoted twice, and the claim is additionally restated in the author's own words at 81-82, 91, 411-417, 528-531 and 650-654 - seven statements of one thesis. 555-558 is a 46-word sentence carrying a definition, a construction and an iteration scheme. And 560-565 states the batch-versus-recursive correspondence a third time in six lines, after 546-553 and 555 have each stated it"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        700,
+        822
+      ],
+      "detail": "two of the lecture's central claims are about the shape of a curve that is only ever tabulated. 700-712 asks the reader to see that the sup-norm error \"falls at first but then rises again\" across degrees 0 to 5 while the ergodic RMS \"falls monotonically and then flattens\" - two error paths, six points each, presented as a rounded DataFrame - and 822-838 does the same across five bandwidths and then asserts \"There is an interior optimum\". Plotting the two error measures against degree, and against $\\log h$, would make both claims visible at a glance and would show the U-shape the bias-variance discussion at 840-852 describes. The lecture is otherwise willing to plot: exercise lae_ex3 even draws the fitted rules at 827-835 without drawing the error curve that is the point of the exercise"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        46,
+        546
+      ],
+      "detail": "\"non-parametric\" names two different things in the same lecture: at 46 and 92 it is the one-number-per-state rule of the previous lecture, the approach the Overview rejects as hopeless in a continuous state, and at 540-544 it is the kernel smoother offered as the alternative to the parametric route - so the term labels both the method being dismissed and the method being recommended, with no note that the two senses differ. Separately, 546-553 displays a recursion for $\\hat F_t(x)$, a kernel estimate of a distribution, in a section whose subject and whose implementation are the conditional expectation $\\psi(G)$; 563-565 then claims that display \"stands to this smoother exactly as {eq}`recursive_pea` stands to the batch algorithm\", but a Nadaraya-Watson conditional mean is not the batch counterpart of a recursive density estimator, so the correspondence the sentence asserts is not the one the display shows"
+    }
   ],
   "strengths": [
     "The five-item plan at 84-93 maps one-to-one onto the five H2 sections (105, 198, 273, 409, 533) and every item is actually delivered - including the hardest one, showing that the recursive form of Marcet's algorithm *is* a learning economy, which 415-437 and the code at 439-475 carry out rather than assert",
@@ -37,5 +100,9 @@
   "scanner_doubts": [
     "qe-math-002 x3 in `lectures/learning_approximation.md` (112, 137) is entirely false positives, and it is the file's only High-severity math finding. Line 137 is `u'\\bigl(w_1 - f(G_t)\\bigr)` inside a `{math}` directive - the derivative of the utility function, the case spec section 9 says the check exempts - and the same `u'` appears at 120, 139 and 152. Line 112 is `F(G', G) = \\operatorname{Prob}\\{G_{t+1} \\leq G' \\mid G_t = G\\}`, where the prime marks a next-period value, exactly as in `lectures/inventory_q.md`. The lecture's genuine transposes are all written `^\\top` (279, 425, 426), so it is fully qe-math-002 compliant and should score 10 on that rule.",
     "qe-code-002 x1 at `lectures/learning_approximation.md`:190 is a false positive of the same kind reported for `lectures/lagrangian_lqdp.md`:476 and `lectures/imp_sample.md`. The line is `mc = qe.tauchen(21, ρ, σ, mu=np.log(G_bar) * (1 - ρ), n_std=2.5)`, and `mu=` is the keyword-argument name in QuantEcon.py's `tauchen`; the author's own identifiers here are the unicode `ρ` and `σ` on the same line. Three lectures in this series now show the same defect, so the fix is worth doing once: restrict the check to assignment targets and parameter definitions rather than every name-like token in a cell."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "0113e3369de887301bb4e3ef3f170b0e1cee1871"
+  }
 }

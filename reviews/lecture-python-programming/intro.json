@@ -13,5 +13,9 @@
     "Consider two more sentences of orientation before `{tableofcontents}`: what background the series assumes and how it relates to `lecture-python-intro`, which the sibling series supplies on its own `about` page",
     "If the house convention on cross-series links tightens, revisit the bare markdown link to quantecon.org/lectures at line 14 - it is the only link in the file"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "440a2a1ba0f79a905ab931972db1dac493690d8b"
+  }
 }

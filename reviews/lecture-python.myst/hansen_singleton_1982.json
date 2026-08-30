@@ -2,14 +2,44 @@
   "series": "lecture-python.myst",
   "lecture": "hansen_singleton_1982",
   "judgment": [
-    {"rule": "qe-math-009", "count": 3, "lines": [154, 166, 378],
-     "detail": "the letter M carries three jobs and its lowercase carries two more: $M_j$ is the maturity of asset $j$ (124, 131, 151), $M_{t+1}(\\theta)$ is the stochastic discount factor (166, 188, 540, 598), $m$ is the number of Euler equations (221, 376, 574) and $m_t(\\theta)$ is the moment vector (540, 600) - so `\\beta^{M_j}` and $M_{t+1}$ appear in the same display at 151-166 meaning unrelated things. The asset index also switches mid-sentence at 154, from 'asset $j$' to $R^i_{t+1} = (P_{i,t+1}+D_{i,t+1})/P_{i,t}$, and the superscript $i$ then persists (161, 164, 188, 540) while the model is written in $j$. And the information set is $\\mathcal{I}_t$ at 328, 330, 332 and 334 but plain $I_t$ at 378"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [50, 182, 330, 1119],
-     "detail": "line 50 is a subordinate clause with no main clause ('Though maximum likelihood estimators ... will be asymptotically more efficient when the distributional assumptions are correctly specified.'), and line 182 is a fragment ending in a comma - 'Just like what we did together in {doc}`hansen_singleton_1983`,' - whose continuation starts a new paragraph at 184. Lines 328, 330 and 334 state the same requirement three times in four lines: instruments must lie in $\\mathcal{I}_t$. Lines 1119 and 1121 each contain a grammatical slip ('So GMM is provides a way', 'more efficient that are the GMM estimators')"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [420],
-     "detail": "the whole estimator is implemented before the object it minimises is defined: `two_step_gmm` at 420-534 minimises the GMM criterion, forms the optimal weighting matrix and computes the $J$ statistic, and the section that defines $g_T(\\theta)$, the criterion {eq}`hs82-criterion`, the sandwich covariance and $J_T$ only begins at 536. A reader meeting `j_stat`, `j_df` and the two-step weighting at 420-534 has not yet been told what any of them are"},
-    {"rule": "qe-code-001", "count": 2, "lines": [86, 387],
-     "detail": "lines 85-87 split a conditional expression across three continuation lines at a 9-space indent that matches neither the opening bracket nor a hanging indent (E128), leaving `if \"\\\\\" not in c / and \"^\" not in c and \"_\" not in c / else c for c in ...` hard to parse; line 387 leaves trailing whitespace inside a docstring. The `data[n_lags - 1 - j : t_obs - 1 - j, :]` spacing at 311, 363 and 368 is correct PEP8 for a slice with compound expressions and is left alone"}
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        154,
+        166,
+        378
+      ],
+      "detail": "the letter M carries three jobs and its lowercase carries two more: $M_j$ is the maturity of asset $j$ (124, 131, 151), $M_{t+1}(\\theta)$ is the stochastic discount factor (166, 188, 540, 598), $m$ is the number of Euler equations (221, 376, 574) and $m_t(\\theta)$ is the moment vector (540, 600) - so `\\beta^{M_j}` and $M_{t+1}$ appear in the same display at 151-166 meaning unrelated things. The asset index also switches mid-sentence at 154, from 'asset $j$' to $R^i_{t+1} = (P_{i,t+1}+D_{i,t+1})/P_{i,t}$, and the superscript $i$ then persists (161, 164, 188, 540) while the model is written in $j$. And the information set is $\\mathcal{I}_t$ at 328, 330, 332 and 334 but plain $I_t$ at 378"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        50,
+        182,
+        330,
+        1119
+      ],
+      "detail": "line 50 is a subordinate clause with no main clause ('Though maximum likelihood estimators ... will be asymptotically more efficient when the distributional assumptions are correctly specified.'), and line 182 is a fragment ending in a comma - 'Just like what we did together in {doc}`hansen_singleton_1983`,' - whose continuation starts a new paragraph at 184. Lines 328, 330 and 334 state the same requirement three times in four lines: instruments must lie in $\\mathcal{I}_t$. Lines 1119 and 1121 each contain a grammatical slip ('So GMM is provides a way', 'more efficient that are the GMM estimators')"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        420
+      ],
+      "detail": "the whole estimator is implemented before the object it minimises is defined: `two_step_gmm` at 420-534 minimises the GMM criterion, forms the optimal weighting matrix and computes the $J$ statistic, and the section that defines $g_T(\\theta)$, the criterion {eq}`hs82-criterion`, the sandwich covariance and $J_T$ only begins at 536. A reader meeting `j_stat`, `j_df` and the two-step weighting at 420-534 has not yet been told what any of them are"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 2,
+      "lines": [
+        86,
+        387
+      ],
+      "detail": "lines 85-87 split a conditional expression across three continuation lines at a 9-space indent that matches neither the opening bracket nor a hanging indent (E128), leaving `if \"\\\\\" not in c / and \"^\" not in c and \"_\" not in c / else c for c in ...` hard to parse; line 387 leaves trailing whitespace inside a docstring. The `data[n_lags - 1 - j : t_obs - 1 - j, :]` spacing at 311, 363 and 368 is correct PEP8 for a slice with compound expressions and is left alone"
+    }
   ],
   "strengths": [
     "The estimator is validated before it is used: a DGP that satisfies the Euler equation by construction (740-785), a single-sample recovery check, then a 500-replication Monte Carlo whose $J$ histogram is compared against the $\\chi^2$ density (930-974) - and only then the real data at 976",
@@ -30,5 +60,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 is counted twice (781, 782) for `xi`, but the same lecture spells out Greek in compound identifiers that are not counted: `mu_c`, `phi_c`, `sigma_c` (745-752, 766-768), `sigma_eta` (769), `delta_c` (749-776) and `gamma_j` (404). If the check matches whole identifiers only, every `<greek>_<suffix>` name slips through - a common pattern in this corpus, so the corpus-wide qe-code-002 total is probably an undercount"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "f95f65fccb4bd23c61dd88565ce886b29a2ad74b"
+  }
 }

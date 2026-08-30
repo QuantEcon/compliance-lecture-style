@@ -996,3 +996,88 @@ PY
 Then open each cited line and judge it against
 `action-style-guide/style_checker/rules/`. A rule is only as good as the sample someone
 actually read.
+
+## Costed follow-ups
+
+Measured changes that were deliberately **not** landed, and one stale bullet, brought across
+from the two session files that recorded them — `.claude/RESUME.md` and
+`.claude/pending-patches.json`, both deleted once this section existed. The verdicts those
+files carried are in *The last three doubts* above; what is here is only the part that was
+costed and left for a later pass. None of it needs measuring again from nothing — it needs
+deciding.
+
+### 1. Widening `qe-math-010`'s per-file `e_is_operator` gate
+
+The landed patch changed the *pattern* only. The gate that switches the whole bare-letter
+branch off in a file with no `E[` anywhere is unchanged, and it is what keeps
+`tax_smoothing_1` (70, 203, 354), `tax_smoothing_2` (122), `tax_smoothing_3` (80) and
+`un_insure` (34) at zero on this rule. Feeding the `\big`-family and big-operator shapes into
+the gate as evidence was measured against the patch **as first filed** (1489 → 1596, before
+the Greek-operand correction the lenses added, so these totals do not compose with the 1608
+that landed):
+
+| Variant | Occurrences | Added / removed | File-paths | Reach |
+|---|---|---|---|---|
+| gate widened to A+B evidence | 1489 → 1601 | +112 / −0 | 30 | 124 → 136 |
+| gate widened, with branch C | 1489 → 1657 | +168 / −0 | 33 (12 off zero) | 124 → 136 |
+
+The 61 additions the widening contributes were read individually and none is a false positive
+(`perm_income_cons:94`, `markov_jump_lq:94`, `supply_demand_var:112`, `tax_smoothing_1:354`).
+The reason it was held back is not doubt about the findings: it takes seven `lecture-dp` and
+advanced lectures off a clean 0 and so moves category scores. **That is a scoring decision,
+not a detector one, and it wants its own pass** — and, being a scoring decision, it should land
+in the same pass as the history row that explains the step.
+
+**Unresolved, and worth an hour before anyone quotes a number.** The gate pattern is a
+hand-copied duplicate of `applied` rather than `applied` itself, so the gate and the branch it
+guards can disagree. The two session files disagree about what simply reusing `applied` costs:
+`pending-patches.json` recorded **+1**, one further file whose gate flips on `E_0\!\left\{`,
+attributing it to the gate copy lacking the `THIN` steps; `RESUME.md` recorded **+27
+occurrences and reach 124 → 129**, attributing it to `applied` also accepting `(`. They were
+written in the same session and neither measurement script survives the container. Re-measure;
+do not cite either figure.
+
+### 2. What `qe-math-010` still does not count, by construction
+
+Both were measured, judged genuine, and left out of the landed patch on purpose:
+
+- **Dropping the mandatory subscript on `E`** adds **39** matches — `Eq_a` and `Ex_a`
+  (`hansen_jagannathan_1991:340`), `Er_v^*` (:602), `Ev_t v_t'` (`hs_recursive_models:1429`),
+  `E w_{st}^2 = .5` (`supply_demand_var:146`). Spot-checked in context they look genuine, but
+  39 unread additions do not belong in a patch justified by a read of every one. It is a
+  separate doubt, and it is the one that would test the "a matrix `E` is not time-indexed"
+  argument, since without the subscript that argument is gone.
+- **Branch C takes a single Latin letter as the operand**, which is the shape the doubt filed,
+  so a macro operand is still invisible: `E_t\mu_{t+j}` (`cagan_rational_expectations:172`).
+  Branch B covers `\sum` and `\prod`, not `\int`.
+
+### 3. The `qe-ref-001` author-year duplication, as a new rule
+
+Costed and adjudicated in full above; not repeated here. Two things to know before picking it
+up: the write-up in *The last three doubts* lists **five** adoption conditions and is the
+current version — the session brief recorded four, missing the possessive / given-name /
+ampersand / epigraph class, which is the one where `{cite:t}` alone cannot express the fix at
+all. And the bibliography is available (`sparse-checkout add '/lectures/_static/*.bib'`), so
+the year gate — 327 / reach 114, +36 / −0 — is measurable now; it is unblocked, not
+unverifiable.
+
+The pattern as filed was
+
+```python
+AUTHOR_YEAR_CITE = re.compile(
+    r"(?<![A-Za-z0-9])[A-Z][^\s(]*\s*\((?:1[6-9]|20)\d\d[a-z]?\)\s*\{cite\}`")
+```
+
+recorded so nobody rebuilds it from the prose — but note that everything in it except the two
+`\s*` measures no change, and the analysis above replaces its author guard with an anchored
+`\b[A-Z][\w’'\-]*`, which measures 329 against its 331 and drops the `**Black-Litterman**`
+false positive it admits. Start from the conditions, not from this line.
+
+### 4. The `qe-math-010` bullet under *Known limitations* is now partly stale
+
+It reads "It counts `E[…]`, `E_t(…)`, `E\{…\}` but not `E_0 \sum` or `E \tilde\theta_t^2`".
+The first half stopped being true when the `\big`-family, big-operator and juxtaposition
+branches landed: `E_0 \sum` is counted wherever the file's gate is on. What survives is the
+second sentence — the *evidence gate*, with those `tax_smoothing` lines as its live instances,
+and `E \tilde\theta_t^2` as a macro operand branch C does not take (item 2). Rewrite it when
+item 1 is decided; they are the same decision seen from two sides.

@@ -72,5 +72,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 x10 in lq_robust_smoothing.md is entirely false positives, and Code should read 10/10 rather than 7/10. Every hit is a LaTeX command inside a mystnb figure caption in a code cell's YAML metadata, or a rule label inside a docstring: `\\beta` at 551, `\\beta` and `\\sigma` at 552, `\\beta` at 553, `\\beta` and `\\sigma` at 554, `eq:rcs-zeta` at 692, `\\sigma` twice at 739, and `\\sigma` at 940 - exactly ten. The lexer marks the whole fenced block, metadata included, as `kind == \"code\"`, and `_strip_py` is applied one line at a time in check_code_002, so a triple-quoted docstring spanning several lines is never blanked. The actual Python in this lecture uses unicode σ, β, ζ, α and η throughout and contains no spelled-out Greek at all. Two cheap guards: skip lines inside a cell's YAML metadata block, and require the match to be adjacent to an identifier context rather than preceded by a backslash."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "07c994fcb210da4e2ccec72d635f81a6a8b911dd"
+  }
 }

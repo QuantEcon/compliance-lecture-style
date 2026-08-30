@@ -5,37 +5,66 @@
     {
       "rule": "qe-writing-007",
       "count": 3,
-      "lines": [181, 265, 273],
+      "lines": [
+        181,
+        265,
+        273
+      ],
       "detail": "the Markov state path is computed and thrown away. 265 and 305 both unpack `x, u, w, state = lqm.compute_sequence(...)`, and `state` - which period is a bad state - is never used again, while 252-260 and 327-330 ask the reader to identify exactly those periods by eye (\"positive spikes occur when debt is positive and the government must urgently raise tax revenues now\", \"debt is recurrently reset to zero and tax collections spike up\"); shading the bad states on the two panels would turn every one of those claims into something visible. Second, the two figures (262-281 and 290-322) are drawn by identical code with identical titles - 'One-period debt issuance' and 'Taxation' at 275/278 and 316/319 - and nothing in either records which of the two price parameterisations produced it, so the comparison the closing paragraph rests on is between two indistinguishable pictures separated by nine lines of prose. Third, the four-state construction at 152-155 and its transition matrix at 181-185 is the natural candidate for a small transition diagram: the one property that matters has to be argued in words at 188-191 (\"the Markov state cannot move, for example, from state 3 to state 1\"), which a four-node diagram with the two forbidden arrows absent would show at a glance"
     },
     {
       "rule": "qe-writing-003",
       "count": 4,
-      "lines": [143, 222, 246, 263],
+      "lines": [
+        143,
+        222,
+        246,
+        263
+      ],
       "detail": "246-260 sits between the setup cell and the simulation cell and reads results off a figure that does not exist yet - \"The spikes in the tax collection series indicate periods when the government is unable to access financial markets\" - before 263-265 has set $x_0$ or the horizon, and its opening line sends the reader to `tax_smoothing_2` for \"the same process for $G_t$\" that the cell immediately above has already fixed at 195-200 (`β, Gbar, ρ, σ = 0.95, 5, 0.8, 1`). The claim at 249-250 that \"government debt fluctuates around zero\" is also partly a property of `x0 = np.array([[0, 1, 25]])` at 263, whose three entries are never identified (initial debt 0, the constant, and $G_0 = 25$, which is the unconditional mean $5/(1-0.8)$ implied by 195-198) - the sibling lecture starts the same state vector at 100 and at 1000. Second, the dead-end argument at 134-143 rests entirely on a computation it never shows: \"the government would have an incentive to set $b_{t,t+1}$ to a large negative number\" is supported only by the bullet \"Riccati equations will tell us this\", and no Riccati equation appears in the lecture. Third, 222 adds `1e-9` to `R1[0, 0]` - a penalty on debt in the *good* states - where the prose at 170-176 describes only the large penalty in states 2 and 4, so the model solved has a perturbation the model derived does not"
     },
     {
       "rule": "qe-code-001",
       "count": 6,
-      "lines": [198, 222, 243, 264, 297, 314],
+      "lines": [
+        198,
+        222,
+        243,
+        264,
+        297,
+        314
+      ],
       "detail": "264 binds `T` to the simulation horizon in a lecture whose objective is built from tax collections $T_t$ (67, 77, 80, 86, 132) - and the value is then passed as `ts_length=T` at 265, so the keyword already carries the meaning. 222-223 write `R1[0, 0] = R[0, 0] + 1e-9` and `R2[0, 0] = R[0, 0] + 1e12` where `+=` says it. 198 leaves a trailing comma and a space inside the closing bracket, `np.array([[1, 0], [Gbar, ρ], ])`. 243 ends `lqm.stationary_values();` with a semicolon to suppress notebook output, which PEP8 rules out. 314 has two spaces after `=` (`fig, (ax1, ax2) =  plt.subplots(...)`). And 296-302 repeats the six list assignments of 234-240 verbatim in the second cell while omitting the `stationary_values()` call that 243 makes for the first, so the two experiments are set up asymmetrically for no stated reason; 269-270 and 310-311 also loop 300 times to compute `tax[i, :] = S @ x[:, i] + M @ u[:, i]`, twice, where the whole path is one matrix product. 265 and 305 additionally bind `w`, shadowing the shock $w_{t+1}$ of 94-97, and never use it"
     },
     {
       "rule": "qe-writing-005",
       "count": 4,
-      "lines": [45, 100, 107, 171],
+      "lines": [
+        45,
+        100,
+        107,
+        171
+      ],
       "detail": "the lecture's own term gets three different treatments: bold at 45 (**roll-over risk**, correct - it is being defined) and then curly quotes at 107-108, 145 and 327 (“roll-over risk”), with italic *roll-over* risk at 136 in between. Two terms that are being defined are set in italic instead of bold: *controls* at 100, in the list that introduces the choice variables, and *effectively* at 171 - which the same sentence announces as a definition (\"this is important because it defines what we mean by *effectively*\"), after 160 has promised it. The italics that are genuinely emphasis are correct (*assets* at 140)"
     },
     {
       "rule": "qe-writing-002",
       "count": 4,
-      "lines": [32, 35, 141, 252],
+      "lines": [
+        32,
+        35,
+        141,
+        252
+      ],
       "detail": "32-33 carries the same stray closing parenthesis as the two earlier lectures in the series - \"some ideas of {cite}`barro1999determinants` and {cite}`barro2003religion`) that extend\" - with nothing opening it. 35 and 39 both drop the noun after the citation, so a bibliography key becomes the subject of the sentence: \"{cite}`Barro1979` is about a government that borrows and lends\" and \"Technically, {cite}`Barro1979` looks a lot like a consumption-smoothing model\" (the sibling lecture has the identical pair at its lines 35 and 39). 138-143 ends a sentence without punctuation and continues it as a one-item bullet (\"because that is cheap\" / \" * Riccati equations will tell us this\"). And 252-257 splits a two-part contrast across a one-item bulleted list and a following paragraph - \"positive spikes occur when debt is positive\" as a bullet, \"Negative spikes occur when the government has positive asset holdings\" as a paragraph - so the parallel structure the sentence sets up is broken by the markup"
     },
     {
       "rule": "qe-math-009",
       "count": 2,
-      "lines": [77, 86],
+      "lines": [
+        77,
+        86
+      ],
       "detail": "three conventions index the same pair of dates in the space of ten lines. 77 states the choice variables as $\\{b_{t+1}, T_t\\}_{t=0}^\\infty$ with a single subscript; 86 and 100-103 write the same object as $b_{t,t+1}$ and its inherited counterpart as $b_{t-1,t}$; and the price of that very bond, in the same display at 86, is $p^t_{t+1}$, with the issue date raised to a superscript. One of the two two-index forms would do, and the single-subscript $b_{t+1}$ at 77 should match whichever is chosen, since 100 immediately re-declares the control as $b_{t,t+1}$"
     }
   ],
@@ -60,5 +89,9 @@
   ],
   "scanner_doubts": [
     "tax_smoothing_3.md:32,39 - qe-ref-001 is reported with count 2 (32, 35), and both are real, but two more citations in the same three sentences want `{cite:t}` and are missed for two different reasons. (a) 39 reads \"Technically,  {cite}`Barro1979`  looks a lot like a consumption-smoothing model\" - a citation in author position - and `NARRATIVE_LEAD` (tools/qestyle_rules.py:1219) does not fire because the preceding token is \"Technically,\", a comma rather than one of `[.!?]`, and `NARRATIVE_TRAIL` does not fire because \"looks\" is not in its 20-verb list. This is the same gap I noted on `hs_invertibility_example`, where the preceding tokens were a surname and a common noun. (b) More interestingly, the second citation on line 32, \"and  {cite}`barro2003religion`) that extend\", *is* matched by `NARRATIVE_LEAD` on \"and \" but is then discarded by the parenthetical exemption `re.match(r\"[^`]*`\\s*[.,;:)]\", after)`, because the character after the closing backtick is `)` - and that `)` is the stray unmatched parenthesis the prose finding above reports. So a typo is suppressing a genuine detection, and the same typo appears at tax_smoothing_1:41 and tax_smoothing_2:32. Tightening the exemption to require a `(` earlier in the line would fix all three"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "c332bea96237a84f2531371b75df32892fe9050d"
+  }
 }

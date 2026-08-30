@@ -2,15 +2,61 @@
   "series": "lecture-python.myst",
   "lecture": "mccall_model_with_sep_markov",
   "judgment": [
-    {"rule": "qe-code-001", "count": 21,
-     "lines": [210, 260, 284, 285, 286, 289, 292, 341, 343, 407, 435, 455, 488, 490, 589, 603, 657, 787, 805, 845, 864],
-     "detail": "four separate PEP8 groups. Trailing whitespace on nine code lines (210, 260, 289, 292, 341, 343, 435, 488, 490 - 292 is whitespace-only). Annotated parameters with no spaces around `=`: `tol: float=1e-6` and `max_iter: int=1_000` (284, 285), where the same file writes `tol: float = 1e-6` correctly at 405 and `T: int = 2_000` at 601. Closing brackets parked at column 4 under an 8-space hanging indent, matching neither PEP8 option (286, 407, 603, 805, 845). Four code lines past 79 characters (455, 589, 787, 864 - the last is 86). And the continuation at 657 is indented 11 spaces against a visual indent of 12, so `label=` sits one column left of the arguments it continues"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [651, 486],
-     "detail": "line 651 sets `ax1.set_xticks((0, 1))` on the employment-status panel, but ax1's x-axis is time over 2,000 periods - the two ticks belong on the y-axis (0 = unemployed, 1 = employed), as the panel title at 650 says, so the top panel of the lecture's main simulation figure has a time axis marked only at t = 0 and t = 1. Separately, the figure at 486-494 is a byte-for-byte repeat of the figure at 340-347 - same data, same code, same styling - produced to show that the efficient method gives the same answer, which 471-473 has already established numerically to six decimals; and neither figure marks the reservation wage that 350 says is the point of the plot"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [903, 525],
-     "detail": "line 903 computes the time-average unemployment rate as `jnp.mean(unemployed_indicator)`, but `unemployed_indicator` was created at 664 as a local by-product of the three-panel plotting cell in a different section, 240 lines earlier - nothing in the prose says the ergodicity comparison depends on that cell having been run, and the variable name appears nowhere in between. Line 525 asks the reader 'Can you provide an intuitive economic story behind the outcome that you see in this figure?' and the lecture never answers it and never turns it into an exercise, so the sensitivity section ends on an open question the reader cannot resolve"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [691, 708],
-     "detail": "line 691-693 is ungrammatical in its main clause - 'positive correlation means that a high current $w$ is often leads a high new draw' - in the sentence that explains the lecture's most distinctive dynamic, why a separated worker so often lands another job at once; and the sentence beginning at 708 ('The reason is that the process $(S_t, W_t)$, where ...') is interrupted by a two-item bullet list before its predicate arrives six lines later at 713-714 ('is Markovian, since ..., and ergodic'), so the reader has to hold the subject across the list to find out what is being claimed"}
+    {
+      "rule": "qe-code-001",
+      "count": 21,
+      "lines": [
+        210,
+        260,
+        284,
+        285,
+        286,
+        289,
+        292,
+        341,
+        343,
+        407,
+        435,
+        455,
+        488,
+        490,
+        589,
+        603,
+        657,
+        787,
+        805,
+        845,
+        864
+      ],
+      "detail": "four separate PEP8 groups. Trailing whitespace on nine code lines (210, 260, 289, 292, 341, 343, 435, 488, 490 - 292 is whitespace-only). Annotated parameters with no spaces around `=`: `tol: float=1e-6` and `max_iter: int=1_000` (284, 285), where the same file writes `tol: float = 1e-6` correctly at 405 and `T: int = 2_000` at 601. Closing brackets parked at column 4 under an 8-space hanging indent, matching neither PEP8 option (286, 407, 603, 805, 845). Four code lines past 79 characters (455, 589, 787, 864 - the last is 86). And the continuation at 657 is indented 11 spaces against a visual indent of 12, so `label=` sits one column left of the arguments it continues"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        651,
+        486
+      ],
+      "detail": "line 651 sets `ax1.set_xticks((0, 1))` on the employment-status panel, but ax1's x-axis is time over 2,000 periods - the two ticks belong on the y-axis (0 = unemployed, 1 = employed), as the panel title at 650 says, so the top panel of the lecture's main simulation figure has a time axis marked only at t = 0 and t = 1. Separately, the figure at 486-494 is a byte-for-byte repeat of the figure at 340-347 - same data, same code, same styling - produced to show that the efficient method gives the same answer, which 471-473 has already established numerically to six decimals; and neither figure marks the reservation wage that 350 says is the point of the plot"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        903,
+        525
+      ],
+      "detail": "line 903 computes the time-average unemployment rate as `jnp.mean(unemployed_indicator)`, but `unemployed_indicator` was created at 664 as a local by-product of the three-panel plotting cell in a different section, 240 lines earlier - nothing in the prose says the ergodicity comparison depends on that cell having been run, and the variable name appears nowhere in between. Line 525 asks the reader 'Can you provide an intuitive economic story behind the outcome that you see in this figure?' and the lecture never answers it and never turns it into an exercise, so the sensitivity section ends on an open question the reader cannot resolve"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        691,
+        708
+      ],
+      "detail": "line 691-693 is ungrammatical in its main clause - 'positive correlation means that a high current $w$ is often leads a high new draw' - in the sentence that explains the lecture's most distinctive dynamic, why a separated worker so often lands another job at once; and the sentence beginning at 708 ('The reason is that the process $(S_t, W_t)$, where ...') is interrupted by a two-item bullet list before its predicate arrives six lines later at 713-714 ('is Markovian, since ..., and ergodic'), so the reader has to hold the subject across the list to find out what is being claimed"
+    }
   ],
   "strengths": [
     "The efficiency improvement is earned in three steps and then checked: the employed worker's Bellman equation is solved for $v_e$ in closed form (361-364), substituted to leave a single fixed-point problem in $v_u$ (370-377), and the resulting reservation wage is printed against the first method's to six decimals with their difference (471-473)",
@@ -30,5 +76,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-005 x5 for mccall_model_with_sep_markov.md is an undercount: the lecture renders seven figures, and the two produced by `plot_cross_sectional_unemployment` (defined 841-885, called at 916 and 925) are not counted because `_cell_makes_figure` requires a plotting call at column zero - the plotting is inside the function, and the calling cells contain only the call. Same blind spot as lq_inventories.md; the count should be 7, not 5."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "d5d725d674afd3261b4a4c0af1f683282b1080f0"
+  }
 }

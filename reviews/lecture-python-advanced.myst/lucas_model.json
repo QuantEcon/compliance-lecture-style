@@ -2,16 +2,58 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "lucas_model",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [507, 385, 516],
-     "detail": "507 reads the figure for a case the lecture never computes: \"We see that the price is increasing, even if we remove all serial correlation from the endowment process\" - but the only figure above it (495-504) is produced by `LucasTree()` with the default `α=0.90` (402), so serial correlation is fully present and the parenthetical claim has no supporting run. Second, the specialisation at 385-387 changes the shock symbol and skips the step that connects the algebra to the code: 83-86 sets $y_{t+1} = G(y_t, \\xi_{t+1})$ with $\\{\\xi_t\\}$ distributed $\\phi$, 385 writes $\\ln y_{t+1} = \\alpha \\ln y_t + \\sigma\\epsilon_{t+1}$ with $\\{\\epsilon_t\\}$ standard normal, and nothing states that this means $G(y, z) = y^\\alpha z$ with $z$ lognormal - which is exactly what the code assumes at 415, 420 and 454 (`self.ϕ = lognorm(σ)`, `y**α * self.draws`). Third, 516 describes the static figure as \"the orange line ... and the green line\", but the exercise that replicates it (543-555) plots two lines with the default matplotlib cycle, so a reader who does the replication gets blue and orange and cannot match the description"},
-    {"rule": "qe-writing-005", "count": 6, "lines": [58, 78, 122, 272, 318],
-     "detail": "the file contains no bold at all, and every term it defines is italicised instead: *Pure exchange* and *Representative* in the two bullets that define them (58-61), *consumption endowment* at 78 (\"Another way to view $\\{y_t\\}$ is as a *consumption endowment*\"), *ex-dividend* at 122 where the next two bullets spell out what it means, *functional equation* at 272 and again at 299, and *fixed point* at 318. Since italic is never used for emphasis anywhere in the lecture, these six are a straight substitution to bold - and \"Lucas operator\", named at 313 and used a dozen times after, is currently marked in neither"},
-    {"rule": "qe-math-009", "count": 3, "lines": [327, 385, 234],
-     "detail": "the space of candidate functions is written $cb\\mathbb{R}_+$ (327, 331, 332, 348, 353), which typesets as a product of two italic letters against a blackboard symbol and reads as $c \\cdot b \\cdot \\mathbb{R}_+$; the standard $C_b(\\mathbb{R}_+)$, or at least $\\mathrm{cb}\\mathbb{R}_+$, says the same thing unambiguously. Second, $\\alpha$ carries two meanings fifteen lines apart across a section boundary: it is the contraction modulus in {eq}`ltbc` (342-373, where 373 sets $\\alpha := \\beta$) and then the autocorrelation of $\\ln y$ at 385 and in the class signature at 402, which is what the code uses at 420, 438 and 454. Third, the derivative of the value function with respect to its first argument is written $v_1'$ at 234 and $v'_1$ at 237, 240 and 243 - the prime and the subscript swap places for the same object"},
-    {"rule": "qe-code-001", "count": 5, "lines": [429, 443, 448, 395, 546],
-     "detail": "429 and 443 put a blank line between the `def` line and the docstring (`def operator_factory(tree, parallel_flag=True):` then an empty line then `\"\"\"`, and the same inside `def T(f):`), and 435-436 and 445-446 add another blank after it, where the docstring should be the first statement; 393-396 closes the class docstring after a trailing blank line. 448 assigns a lambda to a name, `Af = lambda x: np.interp(x, grid, f)`, which PEP8 asks to be written as a `def`. 546 writes `for β in (.95, 0.98)`, mixing the leading-dot and leading-zero float styles inside one tuple. Minor, but the file is inconsistent with itself: `solve_model` at 465-472 gets the docstring placement right"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [332],
-     "detail": "the lecture proves that $T$ is a contraction with modulus $\\beta$ and that $T^k f$ converges uniformly to $f^*$ from any starting point (329-373), then computes exactly that iteration (482-486), and never plots it. A figure showing three or four successive iterates $f$, $Tf$, $T^2f$, ... approaching $f^*$ from the constant initial guess `np.ones_like(grid)` (480) would turn the contraction-mapping argument - which the `{note}` at 335-337 explicitly invites readers to skip - into something visible, and it costs one extra array per pass through the existing loop. The one figure that does show a comparative static (519) is a pre-baked PNG whose colours the text at 516 describes and the replication code at 543-555 does not reproduce"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        507,
+        385,
+        516
+      ],
+      "detail": "507 reads the figure for a case the lecture never computes: \"We see that the price is increasing, even if we remove all serial correlation from the endowment process\" - but the only figure above it (495-504) is produced by `LucasTree()` with the default `α=0.90` (402), so serial correlation is fully present and the parenthetical claim has no supporting run. Second, the specialisation at 385-387 changes the shock symbol and skips the step that connects the algebra to the code: 83-86 sets $y_{t+1} = G(y_t, \\xi_{t+1})$ with $\\{\\xi_t\\}$ distributed $\\phi$, 385 writes $\\ln y_{t+1} = \\alpha \\ln y_t + \\sigma\\epsilon_{t+1}$ with $\\{\\epsilon_t\\}$ standard normal, and nothing states that this means $G(y, z) = y^\\alpha z$ with $z$ lognormal - which is exactly what the code assumes at 415, 420 and 454 (`self.ϕ = lognorm(σ)`, `y**α * self.draws`). Third, 516 describes the static figure as \"the orange line ... and the green line\", but the exercise that replicates it (543-555) plots two lines with the default matplotlib cycle, so a reader who does the replication gets blue and orange and cannot match the description"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        58,
+        78,
+        122,
+        272,
+        318
+      ],
+      "detail": "the file contains no bold at all, and every term it defines is italicised instead: *Pure exchange* and *Representative* in the two bullets that define them (58-61), *consumption endowment* at 78 (\"Another way to view $\\{y_t\\}$ is as a *consumption endowment*\"), *ex-dividend* at 122 where the next two bullets spell out what it means, *functional equation* at 272 and again at 299, and *fixed point* at 318. Since italic is never used for emphasis anywhere in the lecture, these six are a straight substitution to bold - and \"Lucas operator\", named at 313 and used a dozen times after, is currently marked in neither"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        327,
+        385,
+        234
+      ],
+      "detail": "the space of candidate functions is written $cb\\mathbb{R}_+$ (327, 331, 332, 348, 353), which typesets as a product of two italic letters against a blackboard symbol and reads as $c \\cdot b \\cdot \\mathbb{R}_+$; the standard $C_b(\\mathbb{R}_+)$, or at least $\\mathrm{cb}\\mathbb{R}_+$, says the same thing unambiguously. Second, $\\alpha$ carries two meanings fifteen lines apart across a section boundary: it is the contraction modulus in {eq}`ltbc` (342-373, where 373 sets $\\alpha := \\beta$) and then the autocorrelation of $\\ln y$ at 385 and in the class signature at 402, which is what the code uses at 420, 438 and 454. Third, the derivative of the value function with respect to its first argument is written $v_1'$ at 234 and $v'_1$ at 237, 240 and 243 - the prime and the subscript swap places for the same object"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        429,
+        443,
+        448,
+        395,
+        546
+      ],
+      "detail": "429 and 443 put a blank line between the `def` line and the docstring (`def operator_factory(tree, parallel_flag=True):` then an empty line then `\"\"\"`, and the same inside `def T(f):`), and 435-436 and 445-446 add another blank after it, where the docstring should be the first statement; 393-396 closes the class docstring after a trailing blank line. 448 assigns a lambda to a name, `Af = lambda x: np.interp(x, grid, f)`, which PEP8 asks to be written as a `def`. 546 writes `for β in (.95, 0.98)`, mixing the leading-dot and leading-zero float styles inside one tuple. Minor, but the file is inconsistent with itself: `solve_model` at 465-472 gets the docstring placement right"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        332
+      ],
+      "detail": "the lecture proves that $T$ is a contraction with modulus $\\beta$ and that $T^k f$ converges uniformly to $f^*$ from any starting point (329-373), then computes exactly that iteration (482-486), and never plots it. A figure showing three or four successive iterates $f$, $Tf$, $T^2f$, ... approaching $f^*$ from the constant initial guess `np.ones_like(grid)` (480) would turn the contraction-mapping argument - which the `{note}` at 335-337 explicitly invites readers to skip - into something visible, and it costs one extra array per pass through the existing loop. The one figure that does show a comparative static (519) is a pre-baked PNG whose colours the text at 516 describes and the replication code at 543-555 does not reproduce"
+    }
   ],
   "strengths": [
     "The lecture states its own method before applying it and names it as the general pattern: 162-166 says that in a competitive model one determines consumer behaviour taking $p$ as given and then uses equilibrium conditions to recover $p$, and calls that \"the standard way to solve competitive equilibrium models\" - so the reader knows at 168 what the next fifty lines are for",
@@ -33,5 +75,9 @@
     "Clean the PEP8 items: docstring placement at 393-396, 429-436 and 443-446, the assigned lambda at 448, and the mixed float literals at 546; add the missing \"us\" at 381 (\"The preceding discussion tells that we can compute $f^*$\")",
     "Sweep the figures: `lw=2` at 500, `mystnb: figure: caption/name` metadata on the two code-cell figures (495, 543), a `:name:` on the static figure at 519, and drop the `figsize=(10, 6)` overrides at 499 and 544; and consider generating the $\\beta$-comparison figure at 519 in place, since the exercise solution at 543-555 already draws it"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "8c435918b2939d1f86578b62b6cd71b69458272c"
+  }
 }

@@ -2,16 +2,70 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "amss2",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 10, "lines": [58, 59, 61, 73, 111, 113, 128, 302, 474, 486],
-     "detail": "bold carries plain emphasis rather than definition in ten places: **constant over time** (58), **to** (59), **particular** / **loans** / **never** (61), **assets** (73), **weak** (111), **assets** / **constant** (113), **identical** (128 and 474), **same** (302 and 486). The rule assigns italic to all of these; the lecture does bold its genuine terms correctly (**measurability constraints** at 44, **fiscal risk** at 572), so the two uses are running together"},
-    {"rule": "qe-code-001", "count": 9, "lines": [359, 374, 400, 408, 518, 689, 691, 693, 738],
-     "detail": "five lambdas are bound to names where PEP8 asks for `def` - `eq` (359), `τ` (689), `R_s` (691), `X_s` (693) - and 359 and 691 additionally use a backslash continuation *inside* parentheses that already continue the expression; 408 puts a double space before the `+` in `u.Uc(c0, 1)  + u.Un(...)` and continues with two more backslashes; 374 writes `np.eye((2))` with a redundant inner paren; 400 writes `u.G[s-1]` and 738 `1/den2` unspaced while the surrounding lines space every operator; 518 binds the loop variable `id`, shadowing the builtin"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [27, 44, 66, 70, 111],
-     "detail": "lines 32-33, 41-42 and 44-45 state one claim three times in a row, the third opening \"Another way to say this is that\" - so the paragraph pays for the same idea three times; 27 is a 40-word sentence with a double `whether ... or whether` construction; 66 is a 30-word bullet that uses \"gross\" four times, including the compound \"gross-of-gross-interest-payments\"; 70 is a 33-word bullet that ends \"restricted to exchange only risk-free debt  debt\"; 111-112 is a 44-word bullet holding a parenthetical aside, a starting condition and a comparison"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [337, 528, 686],
-     "detail": "line 337 reads \"**Step 6:** Put steps 2 through 6 in a function minimizer\" - Step 6 cannot contain itself, and the minimiser wraps steps 2 through 5; the \"Remarks about long simulation\" section at 528-539 ends by announcing \"We now describe how to find such an initial level of government debt\", but that derivation is 230 lines *behind* the reader at 297-423, so the section points forward to something already done; and 686 drops in `c = [0.940580824225584, 0.8943592757759343]` as a hard-coded literal with no statement of where the two numbers came from, which breaks the chain from the reverse-engineering cells above (the comment on the next line, `n = c + g  # Total population`, also mislabels labor supply as population)"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [313, 713],
-     "detail": "the lecture's punchline is delivered as bare scalars: 713 prints `bhat, b_bar`, 719 prints their difference and 727 prints `Jmin`, and the reader is told at 722 that the approximation does \"a remarkably good job\" - all of which the existing long-simulation debt panel at 516 could show directly by drawing $\\hat b$ as a horizontal line against the converging AMSS path. The seven-step reverse-engineering algorithm at 313-340, which nests a two-equation solve inside a scalar minimisation inside a final joint solve, is also carried by prose alone where a small flow diagram would carry it"}
+    {
+      "rule": "qe-writing-005",
+      "count": 10,
+      "lines": [
+        58,
+        59,
+        61,
+        73,
+        111,
+        113,
+        128,
+        302,
+        474,
+        486
+      ],
+      "detail": "bold carries plain emphasis rather than definition in ten places: **constant over time** (58), **to** (59), **particular** / **loans** / **never** (61), **assets** (73), **weak** (111), **assets** / **constant** (113), **identical** (128 and 474), **same** (302 and 486). The rule assigns italic to all of these; the lecture does bold its genuine terms correctly (**measurability constraints** at 44, **fiscal risk** at 572), so the two uses are running together"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 9,
+      "lines": [
+        359,
+        374,
+        400,
+        408,
+        518,
+        689,
+        691,
+        693,
+        738
+      ],
+      "detail": "five lambdas are bound to names where PEP8 asks for `def` - `eq` (359), `τ` (689), `R_s` (691), `X_s` (693) - and 359 and 691 additionally use a backslash continuation *inside* parentheses that already continue the expression; 408 puts a double space before the `+` in `u.Uc(c0, 1)  + u.Un(...)` and continues with two more backslashes; 374 writes `np.eye((2))` with a redundant inner paren; 400 writes `u.G[s-1]` and 738 `1/den2` unspaced while the surrounding lines space every operator; 518 binds the loop variable `id`, shadowing the builtin"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        27,
+        44,
+        66,
+        70,
+        111
+      ],
+      "detail": "lines 32-33, 41-42 and 44-45 state one claim three times in a row, the third opening \"Another way to say this is that\" - so the paragraph pays for the same idea three times; 27 is a 40-word sentence with a double `whether ... or whether` construction; 66 is a 30-word bullet that uses \"gross\" four times, including the compound \"gross-of-gross-interest-payments\"; 70 is a 33-word bullet that ends \"restricted to exchange only risk-free debt  debt\"; 111-112 is a 44-word bullet holding a parenthetical aside, a starting condition and a comparison"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        337,
+        528,
+        686
+      ],
+      "detail": "line 337 reads \"**Step 6:** Put steps 2 through 6 in a function minimizer\" - Step 6 cannot contain itself, and the minimiser wraps steps 2 through 5; the \"Remarks about long simulation\" section at 528-539 ends by announcing \"We now describe how to find such an initial level of government debt\", but that derivation is 230 lines *behind* the reader at 297-423, so the section points forward to something already done; and 686 drops in `c = [0.940580824225584, 0.8943592757759343]` as a hard-coded literal with no statement of where the two numbers came from, which breaks the chain from the reverse-engineering cells above (the comment on the next line, `n = c + g  # Total population`, also mislabels labor supply as population)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        313,
+        713
+      ],
+      "detail": "the lecture's punchline is delivered as bare scalars: 713 prints `bhat, b_bar`, 719 prints their difference and 727 prints `Jmin`, and the reader is told at 722 that the approximation does \"a remarkably good job\" - all of which the existing long-simulation debt panel at 516 could show directly by drawing $\\hat b$ as a horizontal line against the converging AMSS path. The seven-step reverse-engineering algorithm at 313-340, which nests a two-equation solve inside a scalar minimisation inside a final joint solve, is also carried by prose alone where a small flow diagram would carry it"
+    }
   ],
   "strengths": [
     "The reverse-engineered $b_0$ is verified two independent ways: the six-panel short simulation at 432-471 shows the Lucas-Stokey and AMSS paths coinciding, and 704-728 shows the BEGS approximation $\\hat b$ matching $\\bar b$ with the fiscal-risk criterion $J({\\mathcal B}^*)$ evaluating to machine zero",
@@ -32,5 +86,9 @@
   "scanner_doubts": [
     "amss2.md:554,557,609,619 and 585,598,632-635,646-647,660 - the Math category is scored 10/10 with \"no mechanical violations detected\", but expectations are written as bare `E_t` / `E_{t-1}` and variance and covariance as `{\\rm var}` / `{\\rm cov}` throughout, none of which is the prescribed `\\mathbb{E}` / `\\mathbb{V}`. `check_math_010`'s bare-letter branch is gated on `e_is_operator`, which only arms when a bare `E` is followed by `[` or `\\{`; here `E` is always applied by juxtaposition (`\\beta E_t u_{c,t+1}`), so the gate never arms, and the lower-case `{\\rm var}` spelling misses the `other` pattern, which matches `\\mathrm{Var}`-style forms only. The same miss shows up in amss and amss3, which share this notation",
     "amss2.md:321,330,617 - three equation labels are defined and never referenced: `LSA_xsola` (321), `amss2_LSA_bsol` (330) and `rate_of_convergence` (617). No rule reports on dead labels, so this is a gap in coverage rather than a wrong count - worth a check if `qe-math-013` is ever extended"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "ef61b0dca25eaeaf8eba5f33bbd3bdff128d6528"
+  }
 }

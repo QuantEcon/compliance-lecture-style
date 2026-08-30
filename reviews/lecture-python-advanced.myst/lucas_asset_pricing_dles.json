@@ -5,37 +5,61 @@
     {
       "rule": "qe-writing-003",
       "count": 4,
-      "lines": [74, 128, 137, 228],
+      "lines": [
+        74,
+        128,
+        137,
+        228
+      ],
       "detail": "the asset-pricing section (135-161) is the point of the lecture and every matrix in it is undefined here: $A^o$ (147, 151), $M_c$ (141, 157) and $U_a$ (138) appear with no definition, and $\\bar e_1$ gets only a gloss saying what its presence \"indicates\" (160-161) rather than what it is - so the four displays cannot be read without HS2013 open, and nothing connects $U_a$ to the `Pay=np.array([econ1.Sd[0, :]])` of 204 that supplies it in code. Second, two of the three technology equations are inert and the lecture does not say so: with `gam = 0` at 166 the capital term $\\gamma k_{t-1}$ vanishes and with `ϕ_i = np.array([[0], [-ϕ_1]])` at 171 investment costs no consumption, so $k_t = \\delta_k k_{t-1} + i_t$ (81) and $g_t = \\phi_1 i_t$ (85) never touch $c_t = d_{1t}$ (77) - and $\\gamma$'s value is never stated in the algebra at all, appearing only as `gam` in the code. Third, $x_0$ is displayed at 128-133 as a five-element vector inside the **Information** block whose state $z_t$ is three-dimensional (99-109), with the two extra entries ($h_{-1} = 5$, $k_{-1} = 150$) never identified. Fourth, 231-232 says \"Above we have also calculated the correlation coefficient between these two returns\" of a cell (228) that prints a 2x2 matrix, and 279's claim that \"the correlation between these two gross rates is now more negative\" asks the reader to compare two unlabelled 2x2 matrices printed 48 lines apart"
     },
     {
       "rule": "qe-writing-007",
       "count": 3,
-      "lines": [209, 238, 267],
+      "lines": [
+        209,
+        238,
+        267
+      ],
       "detail": "all five figures are a bare `plt.plot` with a legend: no title, no axis labels, no caption, no `name`, and no `fig, ax`. That would matter less if the lecture's claims were not comparisons between figures. 279 (\"now more negative\") compares the correlation behind the figure at 267 with the one behind 219, and 292-294 (\"has been accentuated relative to the first instance of our economy\") compares the term structure at 284 with the one at 238 - in both cases across independently autoscaled y-axes 46 to 48 lines apart, so \"accentuated\" is exactly the kind of claim two separate autoscaled plots cannot support. Putting each pair on shared axes, or the $\\rho = 0.8$ and $\\rho = 0.4$ paths on one set of axes, would settle both. Third, 249-251 asks for a comparison the figures make impossible in a different way: \"net rates of return are low when the price of the tree is high, and vice versa\" relates the series in the figure at 238 to the one at 209, two cells and thirty lines apart, when a twin-axis plot or a scatter would show the relation itself. The caption text is already written - the `### Fig 7.12.1 from p.147 of HS2013` comments at 210, 220, 239, 268 and 285 are what the reader of the built page never sees"
     },
     {
       "rule": "qe-math-009",
       "count": 3,
-      "lines": [63, 141, 147],
+      "lines": [
+        63,
+        141,
+        147
+      ],
       "detail": "the transpose is written three ways in twenty lines: a bare apostrophe in $x_t'$ (141) and after a delimiter in $[\\,\\cdot\\,]'$ (132), a braced superscript in $C^{'}$ and $U_a^{'}$ (151, 157), and a superscript letter-plus-apostrophe in $A^{o'}$ (147, 151) - five appearances, three notations, all of which the style guide would have as `\\top`. 141 also writes `\\bar e _1` with a space before the subscript, which renders the subscript detached from the symbol it belongs to, and the symbol itself is never defined. And 63 hangs the conditioning information set outside every delimiter, $-\\frac{1}{2}\\mathbb{E}\\sum_{t=0}^\\infty \\beta^t[(c_t-b_t)^2 + l_t^2]|J_0$, so the bar reads as applying to the whole expression rather than as conditioning the expectation; $\\mathbb{E}_0$ says it in one symbol, and $l_t$ in that same display is the only appearance of $l_t$ in the file - the relation $g_t \\cdot g_t = l_t^2$ that connects it to the technology at 85 is stated in the sibling lecture and omitted here"
     },
     {
       "rule": "qe-writing-002",
       "count": 3,
-      "lines": [26, 43, 137],
+      "lines": [
+        26,
+        43,
+        137
+      ],
       "detail": "26-27 opens with the suite's standard 34-word triple-nested sentence (\"one of a suite of lectures that use the quantecon DLE class to instantiate models within the {cite}`HS2013` class of models described in detail in {doc}`...`\"). 43-44 then uses the word \"class\" three times in nineteen words with two different meanings - a mathematical class of environments and a Python class - \"We assume basic knowledge of the class of economic environments that fall within the domain of the DLE class\". And 137 drops out of math mode for a symbol the rest of the file always sets in math: \"the time t value of a permanent claim to a stream $y_s = U_ax_s$\""
     },
     {
       "rule": "qe-writing-005",
       "count": 2,
-      "lines": [198, 216],
+      "lines": [
+        198,
+        216
+      ],
       "detail": "the one term the lecture introduces is quoted rather than bolded, all three times it appears: the \"Lucas tree\" at 216-217, 249 and 253. And `Pay` - a Python keyword argument, passed as `Pay=...` at 204 and 264 - is put in prose quotation marks at 198 and 200 where inline code is what marks an identifier; the lecture uses backticks for nothing at all, so the reader has no way to tell that \"Pay\" is something they will type. The two italics in the file are emphasis and are correct (*net* at 235 and 281)"
     },
     {
       "rule": "qe-code-001",
       "count": 3,
-      "lines": [166, 175, 180],
+      "lines": [
+        166,
+        175,
+        180
+      ],
       "detail": "166-167 breaks the file's own convention twice in two lines: `gam = 0` is ASCII in a cell where every other parameter carries its unicode symbol (`ϕ_c`, `ϕ_g`, `ϕ_1`, `δ_k`, `θ_k`, `β`, `π_h`, `δ_h`, `θ_h`), and the name `γ` is then given to the technology *matrix* $\\Gamma$ rather than to the scalar $\\gamma$ that `gam` holds - so the subscripted-looking pair `gam`/`γ` are a scalar and a matrix. 175-186 downcases $U_d$, $A_{22}$, $C_2$ and $U_b$ to `ud`, `a22`, `c2`, `ub` where the rule explicitly permits capitals for matrices (the column padding at 177-179 is deliberate matrix alignment and is fine). And 180-181 builds `c2` as `np.array([[0, 1, 0], [0, 0, 1]]).T`, the transpose of the 3x2 matrix actually displayed at 104-108, so the literal in the code does not look like the matrix in the lecture"
     }
   ],
@@ -61,5 +85,9 @@
   ],
   "scanner_doubts": [
     "lucas_asset_pricing_dles.md:147,151,157 - qe-math-002 is reported with count 2, both on line 141 ($x_t'$ and, presumably, the second prime the regex finds there), but four more genuine transposes in the same 20-line section are missed, and they are a *new* gap rather than the known `\\]` or DECORATED ones. They are written as superscripted apostrophes: `(A^{o'})^\\tau` at 147, `C C^{'} (A^{o'})^\\tau` at 151 (two), and `U_a^{'}M_c` at 157. The `prime` regex in `check_math_002` only accepts a bare `'` whose base is a capital with an optional single subscript, a letter with a subscript, `)`, `}` or `\\top`; here the character immediately before the apostrophe is `{` (for `C^{'}`, `U_a^{'}`) or the lowercase superscript letter `o` with no subscript (for `A^{o'}`), so none matches - and DECORATED (line 379) only covers `\\hat`/`\\bar`/`\\tilde`-style decorations, not superscripts. Adding an alternative for `\\^\\{?\\s*'\\s*\\}?` and for a superscript letter followed by `'` inside braces would catch all four. This matters beyond the count: the file writes the same operation five ways (`x_t'`, `\\right]'`, `C^{'}`, `U_a^{'}`, `A^{o'}`) and the scanner sees only the first, so the Math score of 5.5 understates it and a contributor told to fix \"2 occurrences on line 141\" would leave four behind"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "355c535d3f8bf153e150b83da6bbd34e8e78fb15"
+  }
 }

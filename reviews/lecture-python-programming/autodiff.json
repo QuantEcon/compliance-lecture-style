@@ -44,5 +44,9 @@
   ],
   "scanner_doubts": [
     "qe-math-002 ×3 at autodiff.md:140-141 is a false positive. The math is `(f g h)' = (f' g + g' f) h + (f g) h'` - the product rule, where every prime is a derivative, not a transpose. `check_math_002` in tools/qestyle_rules.py:388-393 matches `)'` at end-of-line (140) and the `prime_vec` pattern on `f' g` and `g' f` (141). The derivative-prime exception at line 391 only guards primes followed by `(`, so a prime followed by a space and another symbol slips through. The lecture has no transposes at all."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "99c4e8f8f1a7fc0bcc2ca0b4b26602b02d9730df"
+  }
 }

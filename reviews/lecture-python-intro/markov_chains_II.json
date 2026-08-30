@@ -2,12 +2,39 @@
   "series": "lecture-python-intro",
   "lecture": "markov_chains_II",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [189, 202, 208],
-     "detail": "three cross-references do not connect to what they claim. Line 208 reads `{ref}`discussed before <mc_eg1-1>`` but no label `mc_eg1-1` exists in either Markov lecture - markov_chains_I defines `mc_eg1` and this file defines `mc_eg1-2`, so the reference is broken. Line 189 says \"The result in [theorem 4.3](llnfmc0)\", which hard-codes a theorem number and then links to the *equation* label `llnfmc0` rather than the theorem's own label `stationary` (169). Line 202 links `[not IID](iid_violation)` to a target defined in lln_clt.md (line 406), which a bare markdown link cannot resolve across documents"},
-    {"rule": "qe-code-001", "count": 7, "lines": [258, 261, 321, 441, 468, 576, 629],
-     "detail": "spaces around the keyword-argument `=` in `label = fr'...'` (261-262, 321-322); a single space before an inline comment plus trailing whitespace (258); missing space after commas in `('1','2',...)` (441, 468), where `codes_B` is also assigned and never used; an invalid escape sequence in the non-raw f-string `f'$x_0 = \\, {x0} $'` (576), which pycodestyle flags as W605 and which the neighbouring cells correctly write as `fr'...'`; and `result = lambda P: ...` bound to a name inside the loop it is used in, shadowing both `result` and the loop variable `P` (629)"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [351, 406],
-     "detail": "the eight-state Benhabib matrix is printed three times within thirty lines - as a `bmatrix` (406-418), as a Python literal inside the exercise (429-438), and as the same literal again in the solution (458-465); and the six-state political-institutions matrix is printed twice more here (351-361, 372-377) on top of the three copies it already has in markov_chains_I. Referring back to the labelled matrix in the earlier lecture would carry the same information"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        189,
+        202,
+        208
+      ],
+      "detail": "three cross-references do not connect to what they claim. Line 208 reads `{ref}`discussed before <mc_eg1-1>`` but no label `mc_eg1-1` exists in either Markov lecture - markov_chains_I defines `mc_eg1` and this file defines `mc_eg1-2`, so the reference is broken. Line 189 says \"The result in [theorem 4.3](llnfmc0)\", which hard-codes a theorem number and then links to the *equation* label `llnfmc0` rather than the theorem's own label `stationary` (169). Line 202 links `[not IID](iid_violation)` to a target defined in lln_clt.md (line 406), which a bare markdown link cannot resolve across documents"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        258,
+        261,
+        321,
+        441,
+        468,
+        576,
+        629
+      ],
+      "detail": "spaces around the keyword-argument `=` in `label = fr'...'` (261-262, 321-322); a single space before an inline comment plus trailing whitespace (258); missing space after commas in `('1','2',...)` (441, 468), where `codes_B` is also assigned and never used; an invalid escape sequence in the non-raw f-string `f'$x_0 = \\, {x0} $'` (576), which pycodestyle flags as W605 and which the neighbouring cells correctly write as `fr'...'`; and `result = lambda P: ...` bound to a name inside the loop it is used in, shadowing both `result` and the loop variable `P` (629)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        351,
+        406
+      ],
+      "detail": "the eight-state Benhabib matrix is printed three times within thirty lines - as a `bmatrix` (406-418), as a Python literal inside the exercise (429-438), and as the same literal again in the solution (458-465); and the six-state political-institutions matrix is printed twice more here (351-361, 372-377) on top of the three copies it already has in markov_chains_I. Referring back to the labelled matrix in the earlier lecture would carry the same information"
+    }
   ],
   "strengths": [
     "Definitions are bolded once, at the point of definition, and never re-bolded: accessible and reachable (61), communicate (63), irreducible (71), ergodicity (189)",
@@ -28,5 +55,9 @@
   "scanner_doubts": [
     "markov_chains_II.md:208 - the reference `{ref}`discussed before <mc_eg1-1>`` targets a label that exists nowhere in the corpus, which per spec section 5 is a build-risk (Critical) item; no rule in the drafted report catches it, so broken `{ref}` targets appear to be outside the mechanised layer's coverage even though broken `{eq}` refs are in scope",
     "markov_chains_II.md:189 - \"The result in [theorem 4.3](llnfmc0)\" hard-codes a theorem number in prose, which is the same defect qe-math-013 (proposed) catches for equations (\"see equation (3)\"); the drafted report shows no qe-math-013 finding for this lecture"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "e6da714eab69ca3a1d7164f4637e5326d347af1c"
+  }
 }

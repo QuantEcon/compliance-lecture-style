@@ -2,17 +2,66 @@
   "series": "lecture-python-intro",
   "lecture": "cagan_adaptive",
   "judgment": [
-    {"rule": "qe-code-001", "count": 12,
-     "lines": [296, 298, 318, 323, 545, 546, 648, 698, 700, 714, 715, 716],
-     "detail": "line 298 puts spaces around four keyword defaults and not the fifth (`α = 5, m0 = 1, Eπ0 = 0.5, T=80, λ = 0.9`) - PEP8 wants no spaces on any of them; line 296 indents the namedtuple continuation to column 24 where the visual-indent target is 28; line 318 spaces the same `*` two different ways in one expression (`(1-λ)*B @ C, (1-λ) * B @ μ_seq`); line 323 has a single space before an inline comment where two are required; lines 545, 546, 648, 698 and 700 pad `=` with two to five spaces to line assignments up in a column; lines 714-716 pad after a comma for the same reason"},
-    {"rule": "qe-writing-002", "count": 9, "lines": [23, 25, 67, 388, 418, 434, 443, 445, 465],
-     "detail": "nine sentences of 30-40 words. Lines 23 (40) and 25 (39) open the lecture with two chained clauses each; line 67 is a 32-word sentence that names three logarithms before reaching its verb; lines 388, 418, 434, 443, 445 and 465 each carry two ideas separated by 'namely', 'so by', or a trailing relative clause"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [469, 599],
-     "detail": "the symbol rho is used at line 469 (exercise ca_ex1, part b: 'print rho') before it exists - the lecture body writes the same quantity only as an unnamed absolute-value expression at line 377 and never names it. Exercise ca_ex3 then states at line 599 that 'the lecture derives that ... pi_{t+1} = rho pi_t' and supplies the definition itself; the derivation at lines 382-386 stops one step short of that reduction and never makes it for constant mu"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [587],
-     "detail": "line 587 uses bold for emphasis - 'the public systematically **over-predicts** inflation' - two lines after line 585 correctly uses italic for the same job ('falls *below* expected inflation')"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [372],
-     "detail": "the stability section (lines 372-394) presents the condition |(lambda - alpha(1-lambda))/(1 - alpha(1-lambda))| < 1, a region in (lambda, alpha) space, and then just prints one number at line 393. Line 390 invites the reader to 'study outcomes in examples that violate condition' with nothing to look at; a plot of the stable region, or of rho against lambda for a few alpha, would carry the whole section"}
+    {
+      "rule": "qe-code-001",
+      "count": 12,
+      "lines": [
+        296,
+        298,
+        318,
+        323,
+        545,
+        546,
+        648,
+        698,
+        700,
+        714,
+        715,
+        716
+      ],
+      "detail": "line 298 puts spaces around four keyword defaults and not the fifth (`α = 5, m0 = 1, Eπ0 = 0.5, T=80, λ = 0.9`) - PEP8 wants no spaces on any of them; line 296 indents the namedtuple continuation to column 24 where the visual-indent target is 28; line 318 spaces the same `*` two different ways in one expression (`(1-λ)*B @ C, (1-λ) * B @ μ_seq`); line 323 has a single space before an inline comment where two are required; lines 545, 546, 648, 698 and 700 pad `=` with two to five spaces to line assignments up in a column; lines 714-716 pad after a comma for the same reason"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 9,
+      "lines": [
+        23,
+        25,
+        67,
+        388,
+        418,
+        434,
+        443,
+        445,
+        465
+      ],
+      "detail": "nine sentences of 30-40 words. Lines 23 (40) and 25 (39) open the lecture with two chained clauses each; line 67 is a 32-word sentence that names three logarithms before reaching its verb; lines 388, 418, 434, 443, 445 and 465 each carry two ideas separated by 'namely', 'so by', or a trailing relative clause"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        469,
+        599
+      ],
+      "detail": "the symbol rho is used at line 469 (exercise ca_ex1, part b: 'print rho') before it exists - the lecture body writes the same quantity only as an unnamed absolute-value expression at line 377 and never names it. Exercise ca_ex3 then states at line 599 that 'the lecture derives that ... pi_{t+1} = rho pi_t' and supplies the definition itself; the derivation at lines 382-386 stops one step short of that reduction and never makes it for constant mu"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        587
+      ],
+      "detail": "line 587 uses bold for emphasis - 'the public systematically **over-predicts** inflation' - two lines after line 585 correctly uses italic for the same job ('falls *below* expected inflation')"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        372
+      ],
+      "detail": "the stability section (lines 372-394) presents the condition |(lambda - alpha(1-lambda))/(1 - alpha(1-lambda))| < 1, a region in (lambda, alpha) space, and then just prints one number at line 393. Line 390 invites the reader to 'study outcomes in examples that violate condition' with nothing to look at; a plot of the stable region, or of rho against lambda for a few alpha, would carry the whole section"
+    }
   ],
   "strengths": [
     "Every display equation carries a MyST label and every label is actually cited - eq:caganmd_ad, eq:eqfiscth1, eq:eqpipi, eq:adaptexpn, eq:eq1, eq:eq2, eq:eq4, eq:eq101_ad, eq:mcum_ad, eq:notre and eq:suffcond are all referenced from the surrounding text",
@@ -32,5 +81,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-008 lists 6 missing-`lw` plot calls in cagan_adaptive.md but appears to miss six more in the same file: lines 346, 347, 348, 349, 350 and 351 are all `ax[i].plot(...)` with no `lw=`, and they draw the five main panels of the lecture. The `axes[0].plot` form was caught in bivariate_dist.md, so the gap may be specific to `ax[i].plot` with a single-letter axis array."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "d216a4869f26ae46092bb38ba58f97a461bdd5bd"
+  }
 }

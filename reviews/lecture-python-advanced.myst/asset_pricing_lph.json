@@ -2,18 +2,74 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "asset_pricing_lph",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [688, 701, 769],
-     "detail": "exercise `apl_ex3` opens at 672 and does not close until 718, and at 701 a bold \"**More Exercises**\" heading starts a *second* question inside it - find the scalars $a, b$ such that $m_t = a + bR^m_t$ - which is then posed again as exercise `apl_ex4` at 830-838, so one exercise contains the next one's problem; the parameter list at 684-699 specifies $\\lambda = 0.04$ while the solution's code at 734 sets `λ = 0.08`, so the simulation does not use the stated parameters; and 769-771 is an empty code cell holding only the comment `# Code for the inverse problem`, placed *before* the \"**Inverse Problem:**\" heading at 773 that introduces the section it belongs to"},
-    {"rule": "qe-writing-005", "count": 8, "lines": [84, 192, 210, 271, 457, 464, 560, 679],
-     "detail": "bold carries emphasis rather than definition throughout - **positively**/**lower**/**negatively**/**higher** (192-193), **perfectly** (197), **high**/**low** eight times over (271-279), **not** (397, 467), **exact**/**residual** (457), **orthogonal to** (560), **estimate**/**choose** (679), **linear** (834) - and 464 sets an entire sentence in bold. The emphasis markup is also not consistent with itself: 84 and 87 use `__law of one price__` and `__absence of an arbitrage__` while every other term uses `**`, and 212 and 787 use `_representative consumer_` and `_true_` where the rest of the file would use `*`. Bold is separately used for block labels that want a directive: **Example** (210), **Testing strategies:** (538), **Step 1:**/**Step 2:** (545, 550), **Direct Problem:** (725), **Inverse Problem:** (773)"},
-    {"rule": "qe-code-001", "count": 6, "lines": [358, 360, 366, 367, 864, 866],
-     "detail": "the rule's two explicit examples are both broken, in opposite directions: 358 and 360 write `alpha + beta*x` and `alpha - beta*x` with no spaces around the multiplication, while 864 and 866 write `(ERf + ξ) ** 2 + λ ** 2 + σf ** 2` with spaces around every `**`, which the rule says to write as `a**b`; 366-367 write `1/Em` and `sigmam/Em` unspaced. The two one-line helpers at 357 and 359 are also separated by no blank line at all (E302) and are named `y` and `z`, which says nothing about what they compute"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [22, 111, 224, 421, 575],
-     "detail": "22-23 opens the lecture with a 45-word sentence that defines three symbols inside its own subordinate clauses; 111 is 42 words (\"refers to the fact that interesting restrictions can be deduced by recognizing that ... and then using that fact to rearrange ...\"); 224-225 duplicates its own noun phrase - \"For a constant relative risk aversion (CRRA) utility function $U(C) = ...$ utility function $U'(C) = C^{-\\gamma}$\"; 421 is a 41-word sentence with a parenthetical gloss that restates the clause before it; and 575-576 is 33 words and ungrammatical (\"Our basic tools are random number generator that we shall use to ...\")"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [414, 818],
-     "detail": "the figure at 352-390 is one line segment short of the text it illustrates: 414-419 describes \"the length of a horizontal line from the point $\\sigma(R^j), E(R^j) = .05, 1.015$ to the frontier\" and gives its formula, and the plot draws the point (387) but not that segment, so the quantity the section is about is invisible. Second, the exercises end by printing `βi_hat, σi_hat` (818) beside `βi, σi` (822) and then asking the reader at 825 \"How close did your estimates come to the parameters we specified?\" - a scatter of estimated against true betas with a 45-degree line answers that question at a glance, and the lecture already has matplotlib imported"},
-    {"rule": "qe-math-009", "count": 2, "lines": [174, 456],
-     "detail": "$\\beta$ carries two different meanings that meet inside the same bullet: it is the intertemporal discount factor at 218, 221 and 508, and the regression coefficient $\\beta_{i,m}$, $\\beta_{i,a}$, $\\beta_{i,R^{mv}}$ at 174, 185, 473, 488 and 492 - and 508 uses both readings in one line (\"specifies the factor to be $m_{t+1} = \\beta \\frac{u'(c_{t+1})}{u'(c_t)}$\" in a passage about $\\beta_{i,j}$ exposures). Separately, the scalar $a$ names three unrelated objects: the slope of the affine frontier relation at 456-457, one of four scalars at 462, and the SDF intercept at 705-708 and 852"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        688,
+        701,
+        769
+      ],
+      "detail": "exercise `apl_ex3` opens at 672 and does not close until 718, and at 701 a bold \"**More Exercises**\" heading starts a *second* question inside it - find the scalars $a, b$ such that $m_t = a + bR^m_t$ - which is then posed again as exercise `apl_ex4` at 830-838, so one exercise contains the next one's problem; the parameter list at 684-699 specifies $\\lambda = 0.04$ while the solution's code at 734 sets `λ = 0.08`, so the simulation does not use the stated parameters; and 769-771 is an empty code cell holding only the comment `# Code for the inverse problem`, placed *before* the \"**Inverse Problem:**\" heading at 773 that introduces the section it belongs to"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        84,
+        192,
+        210,
+        271,
+        457,
+        464,
+        560,
+        679
+      ],
+      "detail": "bold carries emphasis rather than definition throughout - **positively**/**lower**/**negatively**/**higher** (192-193), **perfectly** (197), **high**/**low** eight times over (271-279), **not** (397, 467), **exact**/**residual** (457), **orthogonal to** (560), **estimate**/**choose** (679), **linear** (834) - and 464 sets an entire sentence in bold. The emphasis markup is also not consistent with itself: 84 and 87 use `__law of one price__` and `__absence of an arbitrage__` while every other term uses `**`, and 212 and 787 use `_representative consumer_` and `_true_` where the rest of the file would use `*`. Bold is separately used for block labels that want a directive: **Example** (210), **Testing strategies:** (538), **Step 1:**/**Step 2:** (545, 550), **Direct Problem:** (725), **Inverse Problem:** (773)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        358,
+        360,
+        366,
+        367,
+        864,
+        866
+      ],
+      "detail": "the rule's two explicit examples are both broken, in opposite directions: 358 and 360 write `alpha + beta*x` and `alpha - beta*x` with no spaces around the multiplication, while 864 and 866 write `(ERf + ξ) ** 2 + λ ** 2 + σf ** 2` with spaces around every `**`, which the rule says to write as `a**b`; 366-367 write `1/Em` and `sigmam/Em` unspaced. The two one-line helpers at 357 and 359 are also separated by no blank line at all (E302) and are named `y` and `z`, which says nothing about what they compute"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        22,
+        111,
+        224,
+        421,
+        575
+      ],
+      "detail": "22-23 opens the lecture with a 45-word sentence that defines three symbols inside its own subordinate clauses; 111 is 42 words (\"refers to the fact that interesting restrictions can be deduced by recognizing that ... and then using that fact to rearrange ...\"); 224-225 duplicates its own noun phrase - \"For a constant relative risk aversion (CRRA) utility function $U(C) = ...$ utility function $U'(C) = C^{-\\gamma}$\"; 421 is a 41-word sentence with a parenthetical gloss that restates the clause before it; and 575-576 is 33 words and ungrammatical (\"Our basic tools are random number generator that we shall use to ...\")"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        414,
+        818
+      ],
+      "detail": "the figure at 352-390 is one line segment short of the text it illustrates: 414-419 describes \"the length of a horizontal line from the point $\\sigma(R^j), E(R^j) = .05, 1.015$ to the frontier\" and gives its formula, and the plot draws the point (387) but not that segment, so the quantity the section is about is invisible. Second, the exercises end by printing `βi_hat, σi_hat` (818) beside `βi, σi` (822) and then asking the reader at 825 \"How close did your estimates come to the parameters we specified?\" - a scatter of estimated against true betas with a 45-degree line answers that question at a glance, and the lecture already has matplotlib imported"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        174,
+        456
+      ],
+      "detail": "$\\beta$ carries two different meanings that meet inside the same bullet: it is the intertemporal discount factor at 218, 221 and 508, and the regression coefficient $\\beta_{i,m}$, $\\beta_{i,a}$, $\\beta_{i,R^{mv}}$ at 174, 185, 473, 488 and 492 - and 508 uses both readings in one line (\"specifies the factor to be $m_{t+1} = \\beta \\frac{u'(c_{t+1})}{u'(c_t)}$\" in a passage about $\\beta_{i,j}$ exposures). Separately, the scalar $a$ names three unrelated objects: the slope of the affine frontier relation at 456-457, one of four scalars at 462, and the SDF intercept at 705-708 and 852"
+    }
   ],
   "strengths": [
     "The whole lecture is built from one equation and says so: $E m R^i = 1$ is labelled `eq:EMR1` at 66 and then genuinely cited at 83, 102, 133, 147 and 297 as each result is derived from it, and the derivation chain `eq:EMR2` to `eq:EMR3` to `eq:ERbetarep` to `eq:EMR5` to `eq:ERM6` is fully cross-referenced",
@@ -34,5 +90,9 @@
   "scanner_doubts": [
     "asset_pricing_lph.md:508 - qe-math-002 is reported with count 2 on this line, but the flagged `\\prime`s are `u^{\\prime}\\left(c_{t+1}\\right)` and `u^{\\prime}\\left(c_{t}\\right)` - derivatives of a utility function, not transposes. The same derivative notation appears unflagged as `U'(C)` at 222 and 225 and `u'(c_t)` at 176 and 283, so the count of 2 looks like 0 and the Math score should not be charged for it",
     "asset_pricing_lph.md:241 - qe-math-011 (proposed) reports nothing, but 241 writes `\\epsilon_{t+1} \\sim {\\mathcal N}(0,1)`, a calligraphic distribution name of exactly the kind the rule targets. The pattern in `check_math_011` has a `\\\\mathcal\\s+(N|U)` alternative that does match `\\mathcal N`, but the match then starts *inside* the wrapping braces, so `before` ends with `{` and DIST_BEFORE (which needs `\\sim` at the end of `before`) fails, while `after` begins with `}` and DIST_AFTER (which needs `(` or `[`) fails too. The brace-wrapped `{\\mathcal N}` form escapes, while the `{\\cal N}` form is caught because that alternative includes its braces. Worth fixing, since `{\\mathcal N}(0,1)` is a common spelling in this corpus"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "3e5cf262c8df8bc644064f4af7e142442d1a9a5a"
+  }
 }

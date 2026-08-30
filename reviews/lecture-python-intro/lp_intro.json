@@ -2,14 +2,50 @@
   "series": "lecture-python-intro",
   "lecture": "lp_intro",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 1, "lines": [550],
-     "detail": "the duality section opens with \"Let's develop these ideas using the production problem from Example 1\" (513) and the dual it builds at 550-557 has exactly two variables, so it could be drawn with the same feasible-set-plus-iso-line figure the primal gets at 109-138; instead the two shadow prices are only asserted numerically (608) and verified by re-solving (616-624), and the reader never sees the dual feasible region or that the two optimal values meet"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [166, 168, 170, 178],
-     "detail": "the three investment options are stated as 36-43 word run-ons, each packing two or three separate rules into one sentence - the annuity terms plus the must-keep-investing condition (166), the deposit terms plus the borrowing limit plus the repayment terms (168), and the bond availability plus the cap plus the payout (170-172) - and the variable list at 178 is a 32-word sentence that also contains the typo \"the amount of put in the annuity\""},
-    {"rule": "qe-writing-005", "count": 5, "lines": [47, 242, 254, 509, 548],
-     "detail": "the same three terms are bolded as if newly defined each time they recur: **dual** at 33, again at 47, again at 509, again at 548; **standard form** at 43, again at 242, again at 254; **primal** at 31, again at 509 - after the first definition these are emphasis, which the rule assigns to italic"},
-    {"rule": "qe-code-001", "count": 6, "lines": [115, 116, 123, 127, 128, 129],
-     "detail": "missing space after commas in `ax.set_xlim(0,15)` and `ax.set_ylim(0,10)` (115-116), in the polygon vertex list `[[0, 0],[0, 6],[2.5, 5],[5, 0]]` (123) and in the three iso-revenue plot calls `label=\"...\",color='k',linewidth=0.75` (127-129). The column alignment inside the numeric matrix and bounds literals (462, 468-472, 680-682, 741-742) is deliberately matrix-like and is covered by the rule's own mathematical-notation exception, so it is not counted here"}
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        550
+      ],
+      "detail": "the duality section opens with \"Let's develop these ideas using the production problem from Example 1\" (513) and the dual it builds at 550-557 has exactly two variables, so it could be drawn with the same feasible-set-plus-iso-line figure the primal gets at 109-138; instead the two shadow prices are only asserted numerically (608) and verified by re-solving (616-624), and the reader never sees the dual feasible region or that the two optimal values meet"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        166,
+        168,
+        170,
+        178
+      ],
+      "detail": "the three investment options are stated as 36-43 word run-ons, each packing two or three separate rules into one sentence - the annuity terms plus the must-keep-investing condition (166), the deposit terms plus the borrowing limit plus the repayment terms (168), and the bond availability plus the cap plus the payout (170-172) - and the variable list at 178 is a 32-word sentence that also contains the typo \"the amount of put in the annuity\""
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        47,
+        242,
+        254,
+        509,
+        548
+      ],
+      "detail": "the same three terms are bolded as if newly defined each time they recur: **dual** at 33, again at 47, again at 509, again at 548; **standard form** at 43, again at 242, again at 254; **primal** at 31, again at 509 - after the first definition these are emphasis, which the rule assigns to italic"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        115,
+        116,
+        123,
+        127,
+        128,
+        129
+      ],
+      "detail": "missing space after commas in `ax.set_xlim(0,15)` and `ax.set_ylim(0,10)` (115-116), in the polygon vertex list `[[0, 0],[0, 6],[2.5, 5],[5, 0]]` (123) and in the three iso-revenue plot calls `label=\"...\",color='k',linewidth=0.75` (127-129). The column alignment inside the numeric matrix and bounds literals (462, 468-472, 680-682, 741-742) is deliberately matrix-like and is covered by the rule's own mathematical-notation exception, so it is not counted here"
+    }
   ],
   "strengths": [
     "The lecture earns its computational turn: the graphical solution at 109-148 is explicitly shown not to scale (150-154), which is what motivates the standard form and the solver",
@@ -29,5 +65,9 @@
   ],
   "scanner_doubts": [
     "lp_intro.md:240,405,513 - qe-writing-004 flags mid-sentence 'Example', but all three refer to the lecture's own section headings (\"## Example 1: production problem\", \"## Example 2: investment problem\"); naming a titled section is a proper reference rather than gratuitous capitalisation, so this count of 3 is probably 0"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "3f164b45fc119b1ec888553be3ce382bde7e1fca"
+  }
 }

@@ -14,5 +14,9 @@
     "If the aggregate pages treat per-lecture scores as comparable, consider excluding this file (and the equivalent `zreferences.md` in the other four series) from series averages, since a five-line generated page scoring 10 pulls a series mean upwards for no editorial reason",
     "One thing worth checking outside this file: the bibliography path at 15 is written relative (`_static/quant-econ.bib`) rather than root-relative (`/_static/quant-econ.bib`); confirm that matches the convention used by the other four series before changing anything"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "5f17e89227ef1cd3603b380a677f30f9bf080c08"
+  }
 }

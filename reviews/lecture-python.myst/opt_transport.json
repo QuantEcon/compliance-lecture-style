@@ -2,18 +2,78 @@
   "series": "lecture-python.myst",
   "lecture": "opt_transport",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [341, 493, 580, 610, 627],
-     "detail": "the lecture insists on a vectorization convention and then silently switches it. 362-372 stops to explain that `C_vec = C.reshape((m*n, 1), order='F')` uses Fortran column-major order because that is what $\\operatorname{vec}$ means, and even links an alternative row-major treatment; then 493 writes `c = C.flatten()`, which is row-major, and 496-500 builds `A_eq` with `i*n+j` indexing to match - so the QuantEcon solver is handed a different vectorization of the same problem, which is why 521 reshapes with `order='C'` and 525 with `order='F'` four lines apart, and why 514 has to say \"the solutions differs\". Nothing tells the reader the convention changed. Second, {eq}`dualproblem2` at 577-582 writes the dual constraint as an equality, `A' [u; v] = \\operatorname{vec}(C)`, contradicting {eq}`dualproblem` at 555 ($u_i + v_j \\le c_{ij}$) and the code at 588, which passes `A_ub=A.T, b_ub=C_vec` - an inequality; 579 also writes the objective as `p u + q v` where 554 has $\\sum_i p_i u_i + \\sum_j q_j v_j$, so two transposes are missing. Third, 610 promises \"We can verify these match the dual solution from SciPy\" and the cell at 612-615 reprints the same `res_dual.x[:m]` and `res_dual.x[-n:]` that 595-596 already printed, without touching `res_qe.lambd` from 606-607 - the verification is a repeat, not a comparison, and it matters because $A$ is rank deficient so the dual is not unique. Fourth, that same non-uniqueness undercuts 627-641 and is never mentioned there: the lecture spends 376-394 and 420-458 establishing that one equality constraint is redundant, which means $(u, v)$ is determined only up to adding a constant to every $u_i$ and subtracting it from every $v_j$ - so \"$u_i$ describes the cost of shipping one unit **from** factory $i$\" (629) is not a well-defined number, and 627's comparative static (\"One unit more capacity in factory $i$ ... results in $u_i$ more transportation costs\") is infeasible on its own, since {eq}`sumconstraints` requires $\\sum p_i = \\sum q_j$. Fifth, 668 says \"Sure enough, we have the same solution and the same cost\" where nothing is compared - `total_cost` is printed at 671 and `res.fun` was printed 300 lines earlier at 357 - and \"the same solution\" is ambiguous in a lecture that has just shown there are two optimal plans"},
-    {"rule": "qe-writing-005", "count": 14, "lines": [76, 78, 374, 420, 426, 456, 472, 550, 563, 629, 637],
-     "detail": "the file has three italics, all correct emphasis (*matrix*, *vector*, *vector* at 139-144), and fourteen bold spans that are emphasis rather than definition: **from** and **to** at 76, 78, 472, 473, 629 and 633 (six occurrences of the same two words), **minimization** and **maximization** at 550, **two** at 420, **all** at 426, **Ah hah!** at 456, **values** at 563 and 573, and **plus** at 637 and 639. 374 additionally uses bold as a heading in mid-prose, **Interpreting the solver behavior:**. The genuine definitions are all handled correctly (**transportation**/**optimal transport** 18, **optimal transport problem** 108, **vectorization** 168, **Kronecker product** 179 and 184, **dual** 550, **shadow prices** 573, **strong duality** 620, **complementary slackness** 641), so the marker is carrying both jobs and the italic marker is doing almost nothing"},
-    {"rule": "qe-code-001", "count": 5, "lines": [411, 435, 445, 741, 819],
-     "detail": "435 creates `rng = np.random.default_rng()` with no seed, and the 1000-shuffle experiment at 438-448 then supports two claims that depend on what it finds: \"putting constraints in different orders in this case uncovers two optimal transportation plans\" (456) and \"These are the same two plans computed earlier\" (458). Neither is reproducible across builds. 445 compounds it by testing `if sol not in sol_found` on tuples of floats, so two plans that differ in the last bit are counted as distinct and the number \"two\" is a floating-point accident rather than a fact about the LP. 411, 415, 532, 537 and 760 use `%time` on a fifteen-variable linear program and then draw conclusions from single un-repeated measurements - \"Evidently, it is slightly quicker to work with the system that removed a redundant constraint\" (418) and \"the `quantecon.optimize.linprog_simplex` is much faster\" (540) - where the operations take microseconds and `%time` reports wall clock; `qe.timeit` over many repetitions is what those two sentences need. 741-742 rebinds `p` and `q` as loop variables (`[p.mass for p in p_list]`), shadowing the capacity and requirement vectors set at 333-334, and 782-796 does it again, so after that cell `p` and `q` are `Node` objects and re-running any earlier cell (352, 407, 463, 664) fails; 749 likewise rebinds `c` from 493. And 819-821 is an empty code cell at the end of the file"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [84, 386, 618],
-     "detail": "84 embeds a static PNG, `optimal_transport_splitting_experiment.png`, with no caption and no `:name:`, to illustrate factories and locations in the plane with vertex sizes proportional to capacity and demand and arrows for the transport plan - which is precisely the figure the lecture generates from code at 771-816 with `networkx`, node sizes scaled by mass and arrows for positive transfers. The opening picture cannot be regenerated, resized, or re-parameterised, and the machinery to build it arrives 700 lines later. Second, the lecture's most interesting result - that the same LP has two optimal plans, and that constraint *ordering* rather than redundancy selects between them (420-464) - is delivered entirely as printed 15-vectors at 451-453; each plan is a $3\\times5$ shipment matrix over three factories and five locations, and two small heatmaps or two arrow diagrams side by side would show what actually differs between them, which the printed `tuple` of fifteen floats does not. Third, \"Interpretation of dual problem\" (618-641) explains ship-out and ship-in costs, complementary slackness, and that $u_i + v_j = c_{ij}$ exactly on the shipped routes - all in prose, with the numbers $u$ and $v$ printed three cells earlier and never brought together with the plan. One table of $c_{ij}$, $u_i + v_j$ and $x_{ij}$ over the fifteen routes would make complementary slackness visible in the worked example"},
-    {"rule": "qe-math-009", "count": 3, "lines": [102, 154, 206],
-     "detail": "the five constrained-optimization displays use `\\mbox{subject to }` (102, 160, 237, 555, 580) where `\\text{}` is the LaTeX form - `\\mbox` is plain-TeX and does not scale with the surrounding math. 154-155 defines the ones vector twice over, first as $(1, 1, \\dots, 1)'$ and then as $\\mathbf{1}_n$, and the bold form is then used in ten places (qe-math-004); the style guide asks for `\\mathbb{1}` with an explanation, which 154 already supplies. 206 sets up the Kronecker identity awkwardly: `Let $A = \\mathbf{I}_m', B = \\mathbf{1}_n$` assigns $A$ the *transpose of the identity* purely so that the $A'$ appearing in {eq}`kroneckerprop` comes out as $I_m$, and the reader has to unwind a double transpose to see it. Stating {eq}`kroneckerprop` as $\\operatorname{vec}(AXB) = (B^\\top \\otimes A)\\operatorname{vec}(X)$ lets $A = I_m$ be written directly. The letter $A$ also carries three meanings in seventy lines - a generic $m \\times s$ matrix (181), $\\mathbf{I}_m'$ (206), and the $(m+n) \\times mn$ constraint matrix (237, 245) that the code then builds at 344-346"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [133, 402, 654],
-     "detail": "398-404 takes four one-sentence paragraphs and an exclamation mark to say one thing: \"But we can drop one of the equality constraints, and use only 7 of them\", \"After doing this, we attain the same minimized cost\", \"However, we find a different transportation plan\", \"Though it is a different plan, it attains the same cost!\" - the fourth restates the second and third. 654-655 is a parenthetical defence of material the reader has already read (\"That said, the discussion provided above on vectorization remains important, since we want to understand what happens under the hood\"), and 26 (\"We will provide other applications in followup lectures\") and 126 (\"More about this later\") are two more unanchored forward promises with no `{ref}`. 133 also carries a duplicated word - \"we discuss using using standard linear programming solvers\""}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        341,
+        493,
+        580,
+        610,
+        627
+      ],
+      "detail": "the lecture insists on a vectorization convention and then silently switches it. 362-372 stops to explain that `C_vec = C.reshape((m*n, 1), order='F')` uses Fortran column-major order because that is what $\\operatorname{vec}$ means, and even links an alternative row-major treatment; then 493 writes `c = C.flatten()`, which is row-major, and 496-500 builds `A_eq` with `i*n+j` indexing to match - so the QuantEcon solver is handed a different vectorization of the same problem, which is why 521 reshapes with `order='C'` and 525 with `order='F'` four lines apart, and why 514 has to say \"the solutions differs\". Nothing tells the reader the convention changed. Second, {eq}`dualproblem2` at 577-582 writes the dual constraint as an equality, `A' [u; v] = \\operatorname{vec}(C)`, contradicting {eq}`dualproblem` at 555 ($u_i + v_j \\le c_{ij}$) and the code at 588, which passes `A_ub=A.T, b_ub=C_vec` - an inequality; 579 also writes the objective as `p u + q v` where 554 has $\\sum_i p_i u_i + \\sum_j q_j v_j$, so two transposes are missing. Third, 610 promises \"We can verify these match the dual solution from SciPy\" and the cell at 612-615 reprints the same `res_dual.x[:m]` and `res_dual.x[-n:]` that 595-596 already printed, without touching `res_qe.lambd` from 606-607 - the verification is a repeat, not a comparison, and it matters because $A$ is rank deficient so the dual is not unique. Fourth, that same non-uniqueness undercuts 627-641 and is never mentioned there: the lecture spends 376-394 and 420-458 establishing that one equality constraint is redundant, which means $(u, v)$ is determined only up to adding a constant to every $u_i$ and subtracting it from every $v_j$ - so \"$u_i$ describes the cost of shipping one unit **from** factory $i$\" (629) is not a well-defined number, and 627's comparative static (\"One unit more capacity in factory $i$ ... results in $u_i$ more transportation costs\") is infeasible on its own, since {eq}`sumconstraints` requires $\\sum p_i = \\sum q_j$. Fifth, 668 says \"Sure enough, we have the same solution and the same cost\" where nothing is compared - `total_cost` is printed at 671 and `res.fun` was printed 300 lines earlier at 357 - and \"the same solution\" is ambiguous in a lecture that has just shown there are two optimal plans"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 14,
+      "lines": [
+        76,
+        78,
+        374,
+        420,
+        426,
+        456,
+        472,
+        550,
+        563,
+        629,
+        637
+      ],
+      "detail": "the file has three italics, all correct emphasis (*matrix*, *vector*, *vector* at 139-144), and fourteen bold spans that are emphasis rather than definition: **from** and **to** at 76, 78, 472, 473, 629 and 633 (six occurrences of the same two words), **minimization** and **maximization** at 550, **two** at 420, **all** at 426, **Ah hah!** at 456, **values** at 563 and 573, and **plus** at 637 and 639. 374 additionally uses bold as a heading in mid-prose, **Interpreting the solver behavior:**. The genuine definitions are all handled correctly (**transportation**/**optimal transport** 18, **optimal transport problem** 108, **vectorization** 168, **Kronecker product** 179 and 184, **dual** 550, **shadow prices** 573, **strong duality** 620, **complementary slackness** 641), so the marker is carrying both jobs and the italic marker is doing almost nothing"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        411,
+        435,
+        445,
+        741,
+        819
+      ],
+      "detail": "435 creates `rng = np.random.default_rng()` with no seed, and the 1000-shuffle experiment at 438-448 then supports two claims that depend on what it finds: \"putting constraints in different orders in this case uncovers two optimal transportation plans\" (456) and \"These are the same two plans computed earlier\" (458). Neither is reproducible across builds. 445 compounds it by testing `if sol not in sol_found` on tuples of floats, so two plans that differ in the last bit are counted as distinct and the number \"two\" is a floating-point accident rather than a fact about the LP. 411, 415, 532, 537 and 760 use `%time` on a fifteen-variable linear program and then draw conclusions from single un-repeated measurements - \"Evidently, it is slightly quicker to work with the system that removed a redundant constraint\" (418) and \"the `quantecon.optimize.linprog_simplex` is much faster\" (540) - where the operations take microseconds and `%time` reports wall clock; `qe.timeit` over many repetitions is what those two sentences need. 741-742 rebinds `p` and `q` as loop variables (`[p.mass for p in p_list]`), shadowing the capacity and requirement vectors set at 333-334, and 782-796 does it again, so after that cell `p` and `q` are `Node` objects and re-running any earlier cell (352, 407, 463, 664) fails; 749 likewise rebinds `c` from 493. And 819-821 is an empty code cell at the end of the file"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        84,
+        386,
+        618
+      ],
+      "detail": "84 embeds a static PNG, `optimal_transport_splitting_experiment.png`, with no caption and no `:name:`, to illustrate factories and locations in the plane with vertex sizes proportional to capacity and demand and arrows for the transport plan - which is precisely the figure the lecture generates from code at 771-816 with `networkx`, node sizes scaled by mass and arrows for positive transfers. The opening picture cannot be regenerated, resized, or re-parameterised, and the machinery to build it arrives 700 lines later. Second, the lecture's most interesting result - that the same LP has two optimal plans, and that constraint *ordering* rather than redundancy selects between them (420-464) - is delivered entirely as printed 15-vectors at 451-453; each plan is a $3\\times5$ shipment matrix over three factories and five locations, and two small heatmaps or two arrow diagrams side by side would show what actually differs between them, which the printed `tuple` of fifteen floats does not. Third, \"Interpretation of dual problem\" (618-641) explains ship-out and ship-in costs, complementary slackness, and that $u_i + v_j = c_{ij}$ exactly on the shipped routes - all in prose, with the numbers $u$ and $v$ printed three cells earlier and never brought together with the plan. One table of $c_{ij}$, $u_i + v_j$ and $x_{ij}$ over the fifteen routes would make complementary slackness visible in the worked example"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        102,
+        154,
+        206
+      ],
+      "detail": "the five constrained-optimization displays use `\\mbox{subject to }` (102, 160, 237, 555, 580) where `\\text{}` is the LaTeX form - `\\mbox` is plain-TeX and does not scale with the surrounding math. 154-155 defines the ones vector twice over, first as $(1, 1, \\dots, 1)'$ and then as $\\mathbf{1}_n$, and the bold form is then used in ten places (qe-math-004); the style guide asks for `\\mathbb{1}` with an explanation, which 154 already supplies. 206 sets up the Kronecker identity awkwardly: `Let $A = \\mathbf{I}_m', B = \\mathbf{1}_n$` assigns $A$ the *transpose of the identity* purely so that the $A'$ appearing in {eq}`kroneckerprop` comes out as $I_m$, and the reader has to unwind a double transpose to see it. Stating {eq}`kroneckerprop` as $\\operatorname{vec}(AXB) = (B^\\top \\otimes A)\\operatorname{vec}(X)$ lets $A = I_m$ be written directly. The letter $A$ also carries three meanings in seventy lines - a generic $m \\times s$ matrix (181), $\\mathbf{I}_m'$ (206), and the $(m+n) \\times mn$ constraint matrix (237, 245) that the code then builds at 344-346"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        133,
+        402,
+        654
+      ],
+      "detail": "398-404 takes four one-sentence paragraphs and an exclamation mark to say one thing: \"But we can drop one of the equality constraints, and use only 7 of them\", \"After doing this, we attain the same minimized cost\", \"However, we find a different transportation plan\", \"Though it is a different plan, it attains the same cost!\" - the fourth restates the second and third. 654-655 is a parenthetical defence of material the reader has already read (\"That said, the discussion provided above on vectorization remains important, since we want to understand what happens under the hood\"), and 26 (\"We will provide other applications in followup lectures\") and 126 (\"More about this later\") are two more unanchored forward promises with no `{ref}`. 133 also carries a duplicated word - \"we discuss using using standard linear programming solvers\""
+    }
   ],
   "strengths": [
     "The vectorization is derived rather than asserted: 137-155 says why it is needed (SciPy's `linprog` wants a vector, the problem has a matrix of unknowns), 166-176 defines $\\operatorname{vec}$ and rewrites the objective as an inner product, 178-202 introduces the Kronecker product with its block form and the one identity that matters, and 204-255 then converts both constraint blocks and assembles $A$ and $b$ - so the `np.kron` calls at 344-346 are readable line by line against the algebra",
@@ -35,5 +95,9 @@
     "Convert the ten `\\mathbf{1}`/`\\mathbf{I}` to `\\mathbb{1}` and plain $I$ (qe-math-004), the fourteen apostrophe transposes to `\\top` (154, 159, 161, 175, 201, 214, 222, 225, 236, 247 and the rest), and `\\mbox` to `\\text` in the five optimization displays; lower-case the nine Title Case headings at 60, 131, 137, 258, 480, 546, 646, 658 and 677",
     "Sweep the small items: the 44 double spaces (29, 66, 68, 74, 76, 110, 114, 155, 166, 168 and 34 more), the empty code cell at 819-821, `p`/`q`/`c` rebound as loop variables at 741-742, 749 and 782-796, `` `fun` `` written as math at 477 (it renders as $f\\cdot u\\cdot n$), and the typos at 133 (\"using using\"), 225 (\"rewriten\"), 472 (\"factor\" for factory), 514 (\"solutions differs\") and 637 (\"transprotation\")"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "ed41c95302f620efcd3f0096c1987ba8a37f8d0f"
+  }
 }

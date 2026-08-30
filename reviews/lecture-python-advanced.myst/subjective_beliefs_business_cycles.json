@@ -2,18 +2,72 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "subjective_beliefs_business_cycles",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [396, 843, 303],
-     "detail": "the lecture carries three different specifications of the belief factor and never says which one is in force where. Case 1 fixes $\\theta_t = \\theta$ (706-724), Case 2 makes it linear in the state, $\\theta_t = \\bar\\theta(\\bar x + x_t)$ (726-759, restated at 1053-1054 and 2092), and 841-847 introduces a third - an exogenous AR(1) - conceding that it is \"a third specification of pessimism, distinct from the fixed $\\theta$ of Case 1 and the state-dependent $\\theta_t$ of Case 2\" without reconciling them; 1962-1964 defers the reconciliation to the appendix, which then re-derives Case 2 (2020-2045) and never returns to the AR(1). The code mixes them freely: `solve_vx` solves the Case-2 Riccati equation in $\\mu_\\theta$ (775-799), `simulate_θ` draws AR(1) paths (850-859), and the exercise at 2297-2301 feeds an AR(1) path straight into the Case-2 wedge formula `belief_wedge(m_temp, θ_sim_temp)`, while the notation table at 464-465 defines $\\bar\\theta$ only as \"loading of the belief factor on the state\". Separately, five results are hard-coded in prose that a cell in the same lecture computes - \"The reported PC1 share of 0.809\" at 396 against `pc1_share` at 296 (which the figure also prints at 381), \"from about 0.55 to about 1.39\" at 1586-1587 against `std_no_θ_scaled`/`std_full_scaled` at 1552-1553, and \"0.52 and 1.22\" at 437-438 and again as literals in the comments at 1256-1257 against `c_u`/`c_π` at 448-449 - so a recalibration silently falsifies the prose. And `fred_recession_spans` (303-322) fetches a live CSV from `fred.stlouisfed.org` at build time, parsing a hard-coded column name `observation_date`, while every other input comes from the pinned `data-lectures` mirror at 149-153"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [120, 363, 404, 1450, 1497],
-     "detail": "the \"Empirical facts\" section (404-427) restates in three bullets what the two preceding figure discussions have just established: 408-409 (\"Both wedges are **positive on average**\") repeats 360 (\"Both wedges are positive most of the time\"), 411-412 (\"**countercyclical**: they rise during every NBER recession in the sample\") repeats 360-361 (\"both rise during the shaded NBER recessions\"), and 414-416 (\"the first principal component explains about four-fifths of their joint variation\") repeats 387 and 396-402. Line 120-122 is a 37-word sentence whose whole job is to restate 111-118: \"Thus the lecture uses one object in two related ways: empirically, a belief wedge is a survey forecast minus a statistical benchmark forecast; in the model, it is a subjective expectation minus an objective expectation.\" Line 363 opens with a pronoun that has no antecedent - \"It suggests that households persistently overpredict unemployment and inflation\" - where the referent is the pair of facts in the previous paragraph. And several paragraphs are split mid-thought, leaving an orphan clause standing as its own paragraph: 1450-1453 (\"...act as if bad future states are more likely.\" / \"Vacancy posting weakens, output falls, unemployment rises, and the two survey wedges jump together.\"), 1497-1501, 944-945, 1630-1631 and 2452-2453"},
-    {"rule": "qe-math-009", "count": 3, "lines": [1069, 2108, 2150],
-     "detail": "two matrices are set in blackboard bold, $\\mathbb{M}_{t+1}$ (2104, 2108) and $\\mathbb{D}$ (2121-2164), and 2150-2151 states the reason: \"(We write $\\mathbb{D}$ for this matrix to avoid confusion with the expectation operator $E_t$.)\" - so the decoration exists only because the lecture writes expectation as a bare $E_t$ throughout. Fixing the 38 `qe-math-010` occurrences to `\\mathbb{E}_t` frees plain $D$ and removes the stated justification, and it also stops blackboard bold meaning two different things in one file. Second, `q` now carries five distinct meanings: the answer shares $q_t^u, q_t^d$ (225-231), the value-function constant $v_q$ (466, 632), the law-of-motion intercept $\\psi_q$ (1049), the volatility-scaling parameter $\\mathsf{q}$ in a fifth font (1069, 1090, 1970-2012), and `q = macro_q` in code at 175 - where the perturbation parameter is the one object with no competing claim on a fresh letter. Third, the appendix writes `\\operatorname{stack}` and `\\mathrm{diag}` (2108, 2143) as multi-letter operators inside a display that already has six subscripted $g$ variants, where naming the rows explicitly would be shorter than the notation that describes them"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [216, 1591, 1685],
-     "detail": "\"Role of firms' beliefs\" (1591-1621) makes five quantitative claims with no figure and no code - inflation falls on impact, the inflation wedge is too small, wages fall by less, the perceived surplus stays larger, comovement weakens - in a lecture where every other claim gets its own panel, and where the machinery to show it already exists: the `irf` function (1418-1436) plus a second `NKModel` with the belief loadings on the inflation row zeroed would produce the comparison in six lines. \"Extensions\" (1685-1746) likewise reports thirteen numbers in running prose (0.85, 0.56, 1.49, 0.22, 0.20, 0.35, 0.51, 0.83, 0.79, 1.39, 0.77, 0.45, 0.13) where a five-row table indexed by variant would let a reader compare them. And the Carlson-Parkin inversion at 216-258 is the one step in the empirical section a reader is unlikely to have seen before - a normal cross-section of household forecasts cut by thresholds $\\pm a$, with the observed shares as tail masses - and the single figure that would explain it, that density with the two cut points and the three shares shaded, is not drawn"},
-    {"rule": "qe-writing-005", "count": 8, "lines": [29, 48, 432, 706, 1045, 1220, 1789, 2201],
-     "detail": "the two terms the lecture is named for are the two it italicises: \"These biases, called *belief wedges*\" (29) and \"a time-varying *belief shock*\" (48), with *wedge loadings* (432) a third - all definitions, all in italic - while the sentence immediately above 29 puts the finding in bold (\"**systematic upward biases**\", 27). Bold is then used for plain emphasis at 1045 (\"with **objective** law of motion\"), 1220 (\"driven by the **single scalar** belief factor\"), 1789 (\"Under the **subjective** measure\") and 2256 (\"the wedge is **negative**\"), alongside its correct definitional uses (**likelihood ratio** 488, **risk-sensitive** 539, **Riccati equation** 746). Italic also does heading duty in nine places where a heading or a `{prf}` label would be clearer: *Case 1: fixed $\\theta$.* (706), *Case 2: state-dependent $\\theta_t$.* (726), *Part 1.* / *Part 2.* / *Part 3.* (2221, 2249, 2259) and the four exercise titles (2201, 2278, 2332, 2392)"},
-    {"rule": "qe-code-001", "count": 2, "lines": [1002, 1834],
-     "detail": "1002 builds two f-strings with no placeholders in them, `labels_f = [f'subjective, θ = θ_bar', f'subjective, θ = 2θ_bar']`, which `ruff` reports as F541; the `f` prefixes are inert and the neighbouring list at 903-905 uses a real placeholder in one entry and none in the others, so the distinction is invisible. And `compute_tau_wedge_loadings` (1834, called at 1881) spells out `tau` in an identifier in a file that otherwise uses the unicode letter for exactly that index - `τ_max` is this function's own parameter (1834), `for τ in range(...)` its own loop variable (1853), and `τ_max`, `τ_grid`, `τ` appear at 979-987, 998, 1880-1896 - so the name should be `compute_τ_wedge_loadings` (qe-code-002's intent, though the detector does not reach inside the identifier; see scanner_doubts)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        396,
+        843,
+        303
+      ],
+      "detail": "the lecture carries three different specifications of the belief factor and never says which one is in force where. Case 1 fixes $\\theta_t = \\theta$ (706-724), Case 2 makes it linear in the state, $\\theta_t = \\bar\\theta(\\bar x + x_t)$ (726-759, restated at 1053-1054 and 2092), and 841-847 introduces a third - an exogenous AR(1) - conceding that it is \"a third specification of pessimism, distinct from the fixed $\\theta$ of Case 1 and the state-dependent $\\theta_t$ of Case 2\" without reconciling them; 1962-1964 defers the reconciliation to the appendix, which then re-derives Case 2 (2020-2045) and never returns to the AR(1). The code mixes them freely: `solve_vx` solves the Case-2 Riccati equation in $\\mu_\\theta$ (775-799), `simulate_θ` draws AR(1) paths (850-859), and the exercise at 2297-2301 feeds an AR(1) path straight into the Case-2 wedge formula `belief_wedge(m_temp, θ_sim_temp)`, while the notation table at 464-465 defines $\\bar\\theta$ only as \"loading of the belief factor on the state\". Separately, five results are hard-coded in prose that a cell in the same lecture computes - \"The reported PC1 share of 0.809\" at 396 against `pc1_share` at 296 (which the figure also prints at 381), \"from about 0.55 to about 1.39\" at 1586-1587 against `std_no_θ_scaled`/`std_full_scaled` at 1552-1553, and \"0.52 and 1.22\" at 437-438 and again as literals in the comments at 1256-1257 against `c_u`/`c_π` at 448-449 - so a recalibration silently falsifies the prose. And `fred_recession_spans` (303-322) fetches a live CSV from `fred.stlouisfed.org` at build time, parsing a hard-coded column name `observation_date`, while every other input comes from the pinned `data-lectures` mirror at 149-153"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        120,
+        363,
+        404,
+        1450,
+        1497
+      ],
+      "detail": "the \"Empirical facts\" section (404-427) restates in three bullets what the two preceding figure discussions have just established: 408-409 (\"Both wedges are **positive on average**\") repeats 360 (\"Both wedges are positive most of the time\"), 411-412 (\"**countercyclical**: they rise during every NBER recession in the sample\") repeats 360-361 (\"both rise during the shaded NBER recessions\"), and 414-416 (\"the first principal component explains about four-fifths of their joint variation\") repeats 387 and 396-402. Line 120-122 is a 37-word sentence whose whole job is to restate 111-118: \"Thus the lecture uses one object in two related ways: empirically, a belief wedge is a survey forecast minus a statistical benchmark forecast; in the model, it is a subjective expectation minus an objective expectation.\" Line 363 opens with a pronoun that has no antecedent - \"It suggests that households persistently overpredict unemployment and inflation\" - where the referent is the pair of facts in the previous paragraph. And several paragraphs are split mid-thought, leaving an orphan clause standing as its own paragraph: 1450-1453 (\"...act as if bad future states are more likely.\" / \"Vacancy posting weakens, output falls, unemployment rises, and the two survey wedges jump together.\"), 1497-1501, 944-945, 1630-1631 and 2452-2453"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        1069,
+        2108,
+        2150
+      ],
+      "detail": "two matrices are set in blackboard bold, $\\mathbb{M}_{t+1}$ (2104, 2108) and $\\mathbb{D}$ (2121-2164), and 2150-2151 states the reason: \"(We write $\\mathbb{D}$ for this matrix to avoid confusion with the expectation operator $E_t$.)\" - so the decoration exists only because the lecture writes expectation as a bare $E_t$ throughout. Fixing the 38 `qe-math-010` occurrences to `\\mathbb{E}_t` frees plain $D$ and removes the stated justification, and it also stops blackboard bold meaning two different things in one file. Second, `q` now carries five distinct meanings: the answer shares $q_t^u, q_t^d$ (225-231), the value-function constant $v_q$ (466, 632), the law-of-motion intercept $\\psi_q$ (1049), the volatility-scaling parameter $\\mathsf{q}$ in a fifth font (1069, 1090, 1970-2012), and `q = macro_q` in code at 175 - where the perturbation parameter is the one object with no competing claim on a fresh letter. Third, the appendix writes `\\operatorname{stack}` and `\\mathrm{diag}` (2108, 2143) as multi-letter operators inside a display that already has six subscripted $g$ variants, where naming the rows explicitly would be shorter than the notation that describes them"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        216,
+        1591,
+        1685
+      ],
+      "detail": "\"Role of firms' beliefs\" (1591-1621) makes five quantitative claims with no figure and no code - inflation falls on impact, the inflation wedge is too small, wages fall by less, the perceived surplus stays larger, comovement weakens - in a lecture where every other claim gets its own panel, and where the machinery to show it already exists: the `irf` function (1418-1436) plus a second `NKModel` with the belief loadings on the inflation row zeroed would produce the comparison in six lines. \"Extensions\" (1685-1746) likewise reports thirteen numbers in running prose (0.85, 0.56, 1.49, 0.22, 0.20, 0.35, 0.51, 0.83, 0.79, 1.39, 0.77, 0.45, 0.13) where a five-row table indexed by variant would let a reader compare them. And the Carlson-Parkin inversion at 216-258 is the one step in the empirical section a reader is unlikely to have seen before - a normal cross-section of household forecasts cut by thresholds $\\pm a$, with the observed shares as tail masses - and the single figure that would explain it, that density with the two cut points and the three shares shaded, is not drawn"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        29,
+        48,
+        432,
+        706,
+        1045,
+        1220,
+        1789,
+        2201
+      ],
+      "detail": "the two terms the lecture is named for are the two it italicises: \"These biases, called *belief wedges*\" (29) and \"a time-varying *belief shock*\" (48), with *wedge loadings* (432) a third - all definitions, all in italic - while the sentence immediately above 29 puts the finding in bold (\"**systematic upward biases**\", 27). Bold is then used for plain emphasis at 1045 (\"with **objective** law of motion\"), 1220 (\"driven by the **single scalar** belief factor\"), 1789 (\"Under the **subjective** measure\") and 2256 (\"the wedge is **negative**\"), alongside its correct definitional uses (**likelihood ratio** 488, **risk-sensitive** 539, **Riccati equation** 746). Italic also does heading duty in nine places where a heading or a `{prf}` label would be clearer: *Case 1: fixed $\\theta$.* (706), *Case 2: state-dependent $\\theta_t$.* (726), *Part 1.* / *Part 2.* / *Part 3.* (2221, 2249, 2259) and the four exercise titles (2201, 2278, 2332, 2392)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 2,
+      "lines": [
+        1002,
+        1834
+      ],
+      "detail": "1002 builds two f-strings with no placeholders in them, `labels_f = [f'subjective, θ = θ_bar', f'subjective, θ = 2θ_bar']`, which `ruff` reports as F541; the `f` prefixes are inert and the neighbouring list at 903-905 uses a real placeholder in one entry and none in the others, so the distinction is invisible. And `compute_tau_wedge_loadings` (1834, called at 1881) spells out `tau` in an identifier in a file that otherwise uses the unicode letter for exactly that index - `τ_max` is this function's own parameter (1834), `for τ in range(...)` its own loop variable (1853), and `τ_max`, `τ_grid`, `τ` appear at 979-987, 998, 1880-1896 - so the name should be `compute_τ_wedge_loadings` (qe-code-002's intent, though the detector does not reach inside the identifier; see scanner_doubts)"
+    }
   ],
   "strengths": [
     "The notation table at 457-468 is placed before any theory and pins down exactly the three-way distinction the rest of the lecture turns on - $\\theta_t$ the belief factor, $\\bar\\theta$ its loading on the state, $\\mu_\\theta = \\bar\\theta\\bar x$ its steady-state level - along with $v_x$, $v_q$, $\\nu_t$ and $\\Delta_t^{(\\tau)}$, so the reader never has to reconstruct a symbol from context",
@@ -39,5 +93,9 @@
   "scanner_doubts": [
     "subjective_beliefs_business_cycles.md:1836 - qe-code-002 is reported with count 1, `spelled-out tau`, but line 1836 is prose inside a docstring: `Compute tau-period belief wedge loadings.` The cause is that `check_code_002` calls `_strip_py(l.raw)` line by line, while `_strip_py`'s docstring rule is `re.sub(r'\"\"\"(?:.|\\n)*?\"\"\"', blank, src)` - a multi-line pattern that can never match a single interior line of a docstring, so every word of every multi-line docstring in the corpus is scanned as if it were code. The fix is to strip per cell (`_code_cells` already yields whole cells to the same function for the `drawing_lines` pass) or to track triple-quote state across lines. The inversion is exact here: the real violation in the same function - `compute_tau_wedge_loadings` at 1834 and 1881, spelling out `tau` in an identifier in a file that uses `τ_max`, `τ_grid` and `for τ in range(...)` everywhere else - is invisible to `GREEK_RE`, whose `(?<![\\w.])(tau)(?![\\w])` boundaries are blocked by the surrounding underscores. Both halves are worth fixing: strip docstrings properly, and allow a match at an `_` boundary inside an identifier",
     "subjective_beliefs_business_cycles.md:2293,2411 - qe-fig-005 is reported with count 2 for two code-cell figures without mystnb metadata, and both cells are inside `{solution-start}` blocks (2288-2326 and 2406-2474). The other nine figures in the lecture all carry full metadata, so the two exceptions are exactly the ones in solutions. That would be consistent if the figure rules agreed on scope, but they do not: `check_fig_003` skips any line with `l.in_exercise` (\"No embedded matplotlib titles outside exercises/solutions\"), so `ax.set_title('Persistence and belief-wedge volatility')` at 2305 and `fig.suptitle('Subjective drift and steady-state wedge')` at 2422 - genuine embedded titles, in the same two cells qe-fig-005 does flag - are not counted, and qe-fig-003 shows as zero for this lecture. One of the two scopes is wrong; if figures in solutions are published output that needs names, they also need to not carry embedded titles"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "efac3d88f7adf128e62d158dde8ea9e3628f78a3"
+  }
 }

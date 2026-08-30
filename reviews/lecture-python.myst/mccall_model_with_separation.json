@@ -2,14 +2,47 @@
   "series": "lecture-python.myst",
   "lecture": "mccall_model_with_separation",
   "judgment": [
-    {"rule": "qe-code-001", "count": 9, "lines": [256, 318, 516, 527, 539, 388, 684, 702, 720],
-     "detail": "`BetaBinomial(n-1, a, b)` at 256 omits the spaces around `-` that the neighbouring lines keep; the closing bracket of the `solve_full_model` signature sits at column 4 (318) - matching neither the opening line nor the 8-space hanging indent of its arguments; three one-line docstrings are written as padded single-quoted strings, `\" One update of the scalar h. \"` (516) and likewise 527 and 539, although the other five docstrings in the file use triple quotes (284, 296, 319, 376, 571); and four top-level definitions are followed by only one blank line before the next statement (388, 684, 702, 720) where PEP8 asks for two"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [132, 431],
-     "detail": "two sentences are garbled: line 132 reads '$v_u(w)$ be maximum lifetime for a worker who who enters the current period unemployed' - the noun 'value' is missing from 'maximum lifetime' and 'who' is doubled, in the very sentence that defines one of the lecture's two value functions; line 431 reads 'But we can go further, but eliminating $v_e$ from the above equation', where the second 'but' should be 'by'"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [518],
-     "detail": "`update_h` at 515-520 calls `compute_v_e`, which is not defined until 526, and the prose introduces it afterwards at 523 ('Also, we provide a function to compute $v_e$'). A reader following the code in order meets the call before the function and before the sentence that motivates it; swapping the two cells costs nothing"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [360],
-     "detail": "the figure at 360-365 exists to locate the reservation wage - 370 says 'The reservation wage is the $w$ where these lines meet' - but it draws only $v_e$ and $h$, marks nothing, and carries no axis labels, so after computing $\\bar w$ the lecture can say only that 'This value seems close to where the two lines meet' (392). A vertical line at `w_bar_full`, or a marker at the crossing, would turn that hedge into a check"}
+    {
+      "rule": "qe-code-001",
+      "count": 9,
+      "lines": [
+        256,
+        318,
+        516,
+        527,
+        539,
+        388,
+        684,
+        702,
+        720
+      ],
+      "detail": "`BetaBinomial(n-1, a, b)` at 256 omits the spaces around `-` that the neighbouring lines keep; the closing bracket of the `solve_full_model` signature sits at column 4 (318) - matching neither the opening line nor the 8-space hanging indent of its arguments; three one-line docstrings are written as padded single-quoted strings, `\" One update of the scalar h. \"` (516) and likewise 527 and 539, although the other five docstrings in the file use triple quotes (284, 296, 319, 376, 571); and four top-level definitions are followed by only one blank line before the next statement (388, 684, 702, 720) where PEP8 asks for two"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        132,
+        431
+      ],
+      "detail": "two sentences are garbled: line 132 reads '$v_u(w)$ be maximum lifetime for a worker who who enters the current period unemployed' - the noun 'value' is missing from 'maximum lifetime' and 'who' is doubled, in the very sentence that defines one of the lecture's two value functions; line 431 reads 'But we can go further, but eliminating $v_e$ from the above equation', where the second 'but' should be 'by'"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        518
+      ],
+      "detail": "`update_h` at 515-520 calls `compute_v_e`, which is not defined until 526, and the prose introduces it afterwards at 523 ('Also, we provide a function to compute $v_e$'). A reader following the code in order meets the call before the function and before the sentence that motivates it; swapping the two cells costs nothing"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        360
+      ],
+      "detail": "the figure at 360-365 exists to locate the reservation wage - 370 says 'The reservation wage is the $w$ where these lines meet' - but it draws only $v_e$ and $h$, marks nothing, and carries no axis labels, so after computing $\\bar w$ the lecture can say only that 'This value seems close to where the two lines meet' (392). A vertical line at `w_bar_full`, or a marker at the crossing, would turn that hedge into a check"
+    }
   ],
   "strengths": [
     "Every labelled equation is referred to later, and the references are what carry the derivation: bell2_mccall is cited at 170, 219, 237 and 407, bell1_mccall at 195, 200, 237 and 442, defh_mm at 348, 407, 420 and 436, and v_e_closed at 485 and 523 - there is not a single dead label in the lecture",
@@ -30,5 +63,9 @@
   "scanner_doubts": [
     "qe-math-002 x5 in mccall_model_with_separation.md (lines 156, 181, 214, 480, 498) are all false positives. Every one is the next-period prime `w'` in `\\sum_{w' \\in \\mathbb W}` - line 126 states the convention explicitly ('primes denote next period values') - and the lecture has no transposes at all. The `prime_vec` regex in check_math_002 fires on a lowercase letter followed by a prime and then a backslash command, which `w' \\in` satisfies; the derivative exception `(?!\\s*\\()` does not cover next-period primes. This pattern is pervasive in the dynamic-programming lectures, so the same false positive is likely wherever `w' \\in`, `x' \\in` or `s' \\in` appears.",
     "qe-code-003 x1 at line 37 of mccall_model_with_separation.md is a false positive: the install cell at 37-41 runs `!pip install quantecon jax myst-nb` and the flagged import is `myst_nb` (line 68). check_code_003 tests `e.lower() in p.lower()`, so the underscore in the module name never matches the hyphen in the distribution name. Normalising `-` and `_` before the containment test would clear it."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "fc39e1b5135551e27a8bedb94a7539562b024cf2"
+  }
 }

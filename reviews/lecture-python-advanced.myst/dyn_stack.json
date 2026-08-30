@@ -2,18 +2,83 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "dyn_stack",
   "judgment": [
-    {"rule": "qe-code-001", "count": 7, "lines": [1005, 1058, 1213, 1236, 1255, 1257, 1356],
-     "detail": "1005 writes `π_matrix = (R + F. T @ Q @ F)` - a space between the attribute dot and `T`, which parses but reads as a typo and is what PEP8's whitespace-before-member rule exists to prevent. Four of the file's \"manual checks\" are one-sided inequalities where a magnitude is meant: `(P - P_next < tol0).all()` at 1058, `(v_leader_direct - v_expanded < tol0)[0, 0]` at 1066, `yt[:, 0][-1] - (...)[-1] < tol0` at 1172 and `(P  - (...) < tol0).all()` at 1205 (also carrying a double space) all pass whenever the difference is negative, so a comment reading \"Manually checks whether P is approximately a fixed point\" is checking something weaker than it claims; 1403 does it correctly with `np.abs`, so the pattern is available in the same file. The two iteration cells use `for i in range(1000)` and `for i in range(100)` with `i` unused and a fixed count in place of a convergence test (1213, 1234, 1237), and 1236 resets `P_iter = np.zeros((5, 5))` inside the outer loop so each policy evaluation restarts from zero. 1255 is a bare `F_iter` expression nested inside an `if` block, which Jupyter does not echo, so the success branch of the policy-iteration cell prints nothing at all. 1257-1258 and 1260-1261 put a backslash continuation inside a string literal, so the failure messages carry a run of twelve spaces mid-sentence. And 1356-1357 name the MPE quantities against the state vector: 1292 defines $z_t = [1, q_{2t}, q_{1t}]'$, so `q1 = z[1, :]` is firm 2's output and `q2 = z[2, :]` is firm 1's - the reverse of the convention `q_leader = yt[1, :-1]`, `q_follower = yt[2, :-1]` used at 1022-1023 - and 1380-1381 then pair `π_1 = p * q1 - γ * u1**2` with `u1 = -F1 @ z`, mixing one firm's control with the other's quantity; the error is invisible only because the MPE is symmetric, which the cell at 1372 goes on to verify"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [274, 610, 775, 1117],
-     "detail": "{eq}`sstack3` and its own restatement disagree about a sign: 274 writes the forward sum as `\\sum_{j=0}^\\infty \\delta_2^j q_{2t+j+1}` while 296, quoting the same equation inside the leader's Lagrangian {eq}`sstack4`, writes `\\sum_{j=0}^\\infty \\delta_2^{-j} q_{2t+j+1}` - and since 248 establishes $\\delta_2 > 1/\\sqrt\\beta > 1$, only the second converges, so 274 is wrong at the point where the follower's decision rule is first stated. Lines 610-635 repeat 178-204 verbatim: the same Lagrangian, the same two first-order conditions and the same rearrangement, differing only by the word \"again\", a dropped citation, and a new typo (\"These first-order order conditions\"). {eq}`finalrule` at 775 drops the check accent - `u_t = -F_z \\check z_t - F_x \\sum_{j=1}^t H^t_j z_{t-j}` - in the one equation whose entire purpose, stated at 791-796, is that the representation must be \"cast in terms of the history $\\check z^t$ and **not** a corresponding representation cast in terms of $z^t$\"; 750 has the accent. And the three-bullet reading of the time-inconsistency figure at 1117-1119 is self-contradictory and mislabels the firms: the third bullet says the reborn leader \"wants to increase the output of the follower firm 2 below that prescribed\" - increase below, and firm 2 is the leader per 108-109 - while the first bullet cites $w(\\hat x_0)$ where the panel plots $w(\\hat x_t)$"},
-    {"rule": "qe-writing-005", "count": 12, "lines": [155, 226, 239, 251, 703, 795, 813, 881, 1076, 1128, 1289],
-     "detail": "the same device is formatted four different ways: `**Big K, little k**` (703, 718, 809), curly-quoted with math delimiters as `“Big $K$, little $k$”` (813), split into `**Big K**` and `**little k**` (881-882), and mangled at 1128 as `**Big** $K$ **, little** $k$`, which renders as a bold \"Big\", a plain $K$, a bold \", little\" and a plain $k$. Bold is then used for plain emphasis throughout - **time** and **within time** (155-158), **two boundary conditions:** (226), **factored** (239), **unstable**, **backwards**, **stable**, **forwards** in one sentence (250-252), **not** (795), **resets** (1076), **state** (1289) and **reborn at $t$** three times (1117-1119) - alongside its correct definitional uses (**Stackelberg leader**/**follower** 34-36, **natural state variables** 327, **feedback-feedforward** 269, **continuation Stackelberg leader** 454). Italic, meanwhile, is reserved for two words only (*working backward* 175, *natural* 802)"},
-    {"rule": "qe-math-009", "count": 6, "lines": [516, 750, 887, 900, 906, 591],
-     "detail": "516 writes the maximum as `{\\rm max}_{u, y^*}` where `\\max` is the standard operator and is used correctly at 473, 479 and 502 in the same section. The multiplier matrices flip index order between their definition and their use: 750 writes $\\check x_t = \\sum_{j=1}^t H_j^t \\check z_{t-j}$ and 756-760 define $H^t_1, H^t_2, \\ldots, H^t_t$, so the same object appears as both $H_j^t$ and $H^t_j$ in adjacent displays. The accent on $X$ is applied inconsistently in the follower's problem: 887 writes $\\tilde X_t' \\tilde R x_t$ where the display's own right side is a quadratic form in the five-vector (so the second factor should be $\\tilde X_t$), and puts $- x_t^2 \\tilde Q$ on the left against $- \\gamma x_t^2$ on the right, giving two names for one scalar; 900 has $x_t = -\\tilde F X_t$ and 920 $x_0 = -\\tilde F \\tilde X_0$; 906 has $\\tilde X_{t+1} = (\\tilde A - \\tilde B \\tilde F) X_t$, accented on the left and not on the right. And 591 introduces a third sequence notation, $\\vec q_{2,1} = \\{q_{2t+1}\\}_{t=0}^\\infty$, used once and never again beside $\\vec q_2$ and $\\{q_{2t+1}\\}_{t=0}^\\infty$"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [102, 1094, 1161],
-     "detail": "the timing protocol is the concept the whole lecture rests on - both firms choose entire sequences once and for all at $t=0$, the leader first *within* time 0 and the follower second, knowing the leader's whole sequence (102-121, restated at 153-158 and again at 459-468) - and it is carried entirely by prose that has to italicise \"within time\" to make the point; a single timeline would do it. Second, the file has twelve code cells whose entire output is an unlabelled bare value: `True`/`False` at 1058, 1066, 1172, 1205 and 1403, a raw float at 1167, 1284, 1372 and 1445, and raw matrices at 1190, 1195 and 1200 - a reader cannot tell what any of them is asserting without reading the code, where a printed sentence or a `{note}` would say it. The one place the lecture does want to flag something to the reader, 1161-1162 (\"Note: Variables with `_tilde` are obtained from solving the follower's problem -- those without are from the Stackelberg problem\"), is written as bare prose immediately after a figure rather than as a `{note}` admonition, so the convention that governs the next fifteen cells is easy to miss. Third, the time-inconsistency figure (1094-1113) plots 301 points as `'bo'`/`'ro'` markers at `ms=2` in three stacked panels with embedded titles and no y-axis labels, and the second panel has no legend at all"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [160, 610, 685, 1041],
-     "detail": "610-635 restates 178-204 word for word (see qe-writing-003), 26 lines of algebra a reader has already worked through. 160-165 spends two sentences saying that the abstract formulation is abstract (\"While our abstract formulation reveals the timing protocol and equilibrium concept well, it obscures details that must be addressed when we want to compute and interpret a Stackelberg plan\" / \"To gain insights about these things, we study them in more detail\"). 685-697 is four paragraphs of announcement with no content - \"We'll report results of implementing this code soon\", \"But first, we want to represent the Stackelberg leader's optimal choices recursively\", a two-bullet list of reasons, then \"First, let's get a recursive representation\" - immediately before the section that does it. And 1041-1043 says the same thing twice: \"We'll compute it two ways and get the same answer\" then \"In addition to being a useful check on the accuracy of our coding, computing things in these two ways helps us think about the structure of the problem\""}
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        1005,
+        1058,
+        1213,
+        1236,
+        1255,
+        1257,
+        1356
+      ],
+      "detail": "1005 writes `π_matrix = (R + F. T @ Q @ F)` - a space between the attribute dot and `T`, which parses but reads as a typo and is what PEP8's whitespace-before-member rule exists to prevent. Four of the file's \"manual checks\" are one-sided inequalities where a magnitude is meant: `(P - P_next < tol0).all()` at 1058, `(v_leader_direct - v_expanded < tol0)[0, 0]` at 1066, `yt[:, 0][-1] - (...)[-1] < tol0` at 1172 and `(P  - (...) < tol0).all()` at 1205 (also carrying a double space) all pass whenever the difference is negative, so a comment reading \"Manually checks whether P is approximately a fixed point\" is checking something weaker than it claims; 1403 does it correctly with `np.abs`, so the pattern is available in the same file. The two iteration cells use `for i in range(1000)` and `for i in range(100)` with `i` unused and a fixed count in place of a convergence test (1213, 1234, 1237), and 1236 resets `P_iter = np.zeros((5, 5))` inside the outer loop so each policy evaluation restarts from zero. 1255 is a bare `F_iter` expression nested inside an `if` block, which Jupyter does not echo, so the success branch of the policy-iteration cell prints nothing at all. 1257-1258 and 1260-1261 put a backslash continuation inside a string literal, so the failure messages carry a run of twelve spaces mid-sentence. And 1356-1357 name the MPE quantities against the state vector: 1292 defines $z_t = [1, q_{2t}, q_{1t}]'$, so `q1 = z[1, :]` is firm 2's output and `q2 = z[2, :]` is firm 1's - the reverse of the convention `q_leader = yt[1, :-1]`, `q_follower = yt[2, :-1]` used at 1022-1023 - and 1380-1381 then pair `π_1 = p * q1 - γ * u1**2` with `u1 = -F1 @ z`, mixing one firm's control with the other's quantity; the error is invisible only because the MPE is symmetric, which the cell at 1372 goes on to verify"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        274,
+        610,
+        775,
+        1117
+      ],
+      "detail": "{eq}`sstack3` and its own restatement disagree about a sign: 274 writes the forward sum as `\\sum_{j=0}^\\infty \\delta_2^j q_{2t+j+1}` while 296, quoting the same equation inside the leader's Lagrangian {eq}`sstack4`, writes `\\sum_{j=0}^\\infty \\delta_2^{-j} q_{2t+j+1}` - and since 248 establishes $\\delta_2 > 1/\\sqrt\\beta > 1$, only the second converges, so 274 is wrong at the point where the follower's decision rule is first stated. Lines 610-635 repeat 178-204 verbatim: the same Lagrangian, the same two first-order conditions and the same rearrangement, differing only by the word \"again\", a dropped citation, and a new typo (\"These first-order order conditions\"). {eq}`finalrule` at 775 drops the check accent - `u_t = -F_z \\check z_t - F_x \\sum_{j=1}^t H^t_j z_{t-j}` - in the one equation whose entire purpose, stated at 791-796, is that the representation must be \"cast in terms of the history $\\check z^t$ and **not** a corresponding representation cast in terms of $z^t$\"; 750 has the accent. And the three-bullet reading of the time-inconsistency figure at 1117-1119 is self-contradictory and mislabels the firms: the third bullet says the reborn leader \"wants to increase the output of the follower firm 2 below that prescribed\" - increase below, and firm 2 is the leader per 108-109 - while the first bullet cites $w(\\hat x_0)$ where the panel plots $w(\\hat x_t)$"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 12,
+      "lines": [
+        155,
+        226,
+        239,
+        251,
+        703,
+        795,
+        813,
+        881,
+        1076,
+        1128,
+        1289
+      ],
+      "detail": "the same device is formatted four different ways: `**Big K, little k**` (703, 718, 809), curly-quoted with math delimiters as `“Big $K$, little $k$”` (813), split into `**Big K**` and `**little k**` (881-882), and mangled at 1128 as `**Big** $K$ **, little** $k$`, which renders as a bold \"Big\", a plain $K$, a bold \", little\" and a plain $k$. Bold is then used for plain emphasis throughout - **time** and **within time** (155-158), **two boundary conditions:** (226), **factored** (239), **unstable**, **backwards**, **stable**, **forwards** in one sentence (250-252), **not** (795), **resets** (1076), **state** (1289) and **reborn at $t$** three times (1117-1119) - alongside its correct definitional uses (**Stackelberg leader**/**follower** 34-36, **natural state variables** 327, **feedback-feedforward** 269, **continuation Stackelberg leader** 454). Italic, meanwhile, is reserved for two words only (*working backward* 175, *natural* 802)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 6,
+      "lines": [
+        516,
+        750,
+        887,
+        900,
+        906,
+        591
+      ],
+      "detail": "516 writes the maximum as `{\\rm max}_{u, y^*}` where `\\max` is the standard operator and is used correctly at 473, 479 and 502 in the same section. The multiplier matrices flip index order between their definition and their use: 750 writes $\\check x_t = \\sum_{j=1}^t H_j^t \\check z_{t-j}$ and 756-760 define $H^t_1, H^t_2, \\ldots, H^t_t$, so the same object appears as both $H_j^t$ and $H^t_j$ in adjacent displays. The accent on $X$ is applied inconsistently in the follower's problem: 887 writes $\\tilde X_t' \\tilde R x_t$ where the display's own right side is a quadratic form in the five-vector (so the second factor should be $\\tilde X_t$), and puts $- x_t^2 \\tilde Q$ on the left against $- \\gamma x_t^2$ on the right, giving two names for one scalar; 900 has $x_t = -\\tilde F X_t$ and 920 $x_0 = -\\tilde F \\tilde X_0$; 906 has $\\tilde X_{t+1} = (\\tilde A - \\tilde B \\tilde F) X_t$, accented on the left and not on the right. And 591 introduces a third sequence notation, $\\vec q_{2,1} = \\{q_{2t+1}\\}_{t=0}^\\infty$, used once and never again beside $\\vec q_2$ and $\\{q_{2t+1}\\}_{t=0}^\\infty$"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        102,
+        1094,
+        1161
+      ],
+      "detail": "the timing protocol is the concept the whole lecture rests on - both firms choose entire sequences once and for all at $t=0$, the leader first *within* time 0 and the follower second, knowing the leader's whole sequence (102-121, restated at 153-158 and again at 459-468) - and it is carried entirely by prose that has to italicise \"within time\" to make the point; a single timeline would do it. Second, the file has twelve code cells whose entire output is an unlabelled bare value: `True`/`False` at 1058, 1066, 1172, 1205 and 1403, a raw float at 1167, 1284, 1372 and 1445, and raw matrices at 1190, 1195 and 1200 - a reader cannot tell what any of them is asserting without reading the code, where a printed sentence or a `{note}` would say it. The one place the lecture does want to flag something to the reader, 1161-1162 (\"Note: Variables with `_tilde` are obtained from solving the follower's problem -- those without are from the Stackelberg problem\"), is written as bare prose immediately after a figure rather than as a `{note}` admonition, so the convention that governs the next fifteen cells is easy to miss. Third, the time-inconsistency figure (1094-1113) plots 301 points as `'bo'`/`'ro'` markers at `ms=2` in three stacked panels with embedded titles and no y-axis labels, and the second panel has no legend at all"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        160,
+        610,
+        685,
+        1041
+      ],
+      "detail": "610-635 restates 178-204 word for word (see qe-writing-003), 26 lines of algebra a reader has already worked through. 160-165 spends two sentences saying that the abstract formulation is abstract (\"While our abstract formulation reveals the timing protocol and equilibrium concept well, it obscures details that must be addressed when we want to compute and interpret a Stackelberg plan\" / \"To gain insights about these things, we study them in more detail\"). 685-697 is four paragraphs of announcement with no content - \"We'll report results of implementing this code soon\", \"But first, we want to represent the Stackelberg leader's optimal choices recursively\", a two-bullet list of reasons, then \"First, let's get a recursive representation\" - immediately before the section that does it. And 1041-1043 says the same thing twice: \"We'll compute it two ways and get the same answer\" then \"In addition to being a useful check on the accuracy of our coding, computing things in these two ways helps us think about the structure of the problem\""
+    }
   ],
   "strengths": [
     "The follower's decision rule is derived rather than quoted: the Euler equations are reduced to the second-order difference equation {eq}`sstack1` (217-221), its two boundary conditions are stated separately (226-230), the lag polynomial is factored with the root ordering $0 < \\delta_1 < 1 < 1/\\sqrt\\beta < \\delta_2$ made explicit (242-248), the reason for inverting the unstable root forward rather than backward is given in one sentence (250-252), and the result is named for its shape - the **feedback-feedforward** form {eq}`sstack3` - so the forward sum over the leader's future quantities arrives as a consequence rather than an assumption",
@@ -37,5 +102,9 @@
   ],
   "scanner_doubts": [
     "dyn_stack.md:987,1144,1340,1398 - qe-code-002 is reported with count 4 and all four are `beta=β` in QuantEcon.py call signatures: `LQ(Q, R, A, B, beta=β)` (987), `LQ(Q_tilde, R_tilde, A_tilde, B_tilde, beta=β)` (1144), `qe.nnash(..., beta=β, tol=tol1)` (1340) and `qe.LQ(Q1, R1, Λ1, B1, beta=β)` (1398). `beta` is the keyword in the library's signature and the value passed is already the unicode `β` (defined at 950), so there is nothing for a contributor to change. This is the same defect reported for robustness.md:1051 - `check_code_002` exempts only matplotlib's `alpha=` - and it appears here four times in one file, so the fix (skip a GREEK_RE match that is immediately followed by `=` inside a call, treating it as a third-party kwarg rather than an identifier the author chose) is worth more than the single occurrence in robustness suggested. Between these two lectures the rule contributes 5 unfixable occurrences and, as far as I can see, no fixable ones"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "40aa128bc51d835e41f4906fdf8cb32c4b80cdb6"
+  }
 }

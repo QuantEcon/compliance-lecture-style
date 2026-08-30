@@ -2,14 +2,44 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "muth_kalman",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [78, 140, 369],
-     "detail": "the lecture's punchline is never stated. Friedman's smoothing parameter is $K$ in {eq}`expectations` (65) and the Kalman gain is also called $K$ from 140 onwards, but nothing says the two are deliberately the same object - which is the entire content of \"reverse engineering a la Muth\". The reader is left to infer it from 362-363 (\"the **autoregressive coefficients** decline geometrically with decay rate $(1-K)$\") and the bare `print` at 369. Second, the horizon index slips: 68-69 defines $y^*_{t+i,t}$ as a forecast \"over horizon $i$\", and 78-79 then says the scheme \"gives linear least forecasts of $y_{t+j}$ for any horizon $i$\" - $j$ is already in use at 65 as the summation index over past $y$. Third, the lecture ends on the code cell at 368-369 with no closing sentence after \"These are exactly the target outcomes that Muth (1960) aimed to reverse engineer\" (365-366)"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [84, 85, 135, 162],
-     "detail": "bold is used for emphasis and italic for the definition, i.e. both backwards. 84-85 sets **question** and **answer** in bold purely for contrastive emphasis (\"for what optimal forecasting **question** is Milton Friedman's adaptive expectation scheme the **answer**\"), where the rule asks for italic. Conversely the term the lecture actually defines - the time-invariant *innovations representation*, introduced at 135 and named again at 149 - is italicised rather than bolded, and the same term appears a third time at 162 in plain double quotes (\"innovations representation\"), so one object carries three different typographic treatments. `*permanent income*` at 291 is the same case: a named concept in italic"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [349],
-     "detail": "the MA/AR figure (349-355) is the one that carries the result the lecture is building to, and it is the only figure with no title on either panel and no axis label at all - the horizontal axis is the lag $j$ and nothing says so, where the three earlier figures at 278-285, 299-306 and 317-323 each set a title and an x-label. It also stops short of the claim in the prose: 362-363 says the autoregressive coefficients \"decline geometrically with decay rate $(1-K)$\", which could be shown by overlaying $(1-K)^j$ on the bottom panel instead of asserted and then printed as a number at 369"},
-    {"rule": "qe-math-009", "count": 2, "lines": [267, 288],
-     "detail": "the filtered state is written `\\hat{x_t}` at 267 and 288, which sets the hat over the whole subscripted symbol, while every other occurrence - 144, 195, 213, 234, 274, 290 - uses the simpler and correct `\\hat x_t`. Related, 129 writes `\\epsilon_{2t}` where the rest of the lecture (104, 116, 123, 207, 213, 220) writes `\\epsilon_{2,t}`"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        78,
+        140,
+        369
+      ],
+      "detail": "the lecture's punchline is never stated. Friedman's smoothing parameter is $K$ in {eq}`expectations` (65) and the Kalman gain is also called $K$ from 140 onwards, but nothing says the two are deliberately the same object - which is the entire content of \"reverse engineering a la Muth\". The reader is left to infer it from 362-363 (\"the **autoregressive coefficients** decline geometrically with decay rate $(1-K)$\") and the bare `print` at 369. Second, the horizon index slips: 68-69 defines $y^*_{t+i,t}$ as a forecast \"over horizon $i$\", and 78-79 then says the scheme \"gives linear least forecasts of $y_{t+j}$ for any horizon $i$\" - $j$ is already in use at 65 as the summation index over past $y$. Third, the lecture ends on the code cell at 368-369 with no closing sentence after \"These are exactly the target outcomes that Muth (1960) aimed to reverse engineer\" (365-366)"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        84,
+        85,
+        135,
+        162
+      ],
+      "detail": "bold is used for emphasis and italic for the definition, i.e. both backwards. 84-85 sets **question** and **answer** in bold purely for contrastive emphasis (\"for what optimal forecasting **question** is Milton Friedman's adaptive expectation scheme the **answer**\"), where the rule asks for italic. Conversely the term the lecture actually defines - the time-invariant *innovations representation*, introduced at 135 and named again at 149 - is italicised rather than bolded, and the same term appears a third time at 162 in plain double quotes (\"innovations representation\"), so one object carries three different typographic treatments. `*permanent income*` at 291 is the same case: a named concept in italic"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        349
+      ],
+      "detail": "the MA/AR figure (349-355) is the one that carries the result the lecture is building to, and it is the only figure with no title on either panel and no axis label at all - the horizontal axis is the lag $j$ and nothing says so, where the three earlier figures at 278-285, 299-306 and 317-323 each set a title and an x-label. It also stops short of the claim in the prose: 362-363 says the autoregressive coefficients \"decline geometrically with decay rate $(1-K)$\", which could be shown by overlaying $(1-K)^j$ on the bottom panel instead of asserted and then printed as a number at 369"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        267,
+        288
+      ],
+      "detail": "the filtered state is written `\\hat{x_t}` at 267 and 288, which sets the hat over the whole subscripted symbol, while every other occurrence - 144, 195, 213, 234, 274, 290 - uses the simpler and correct `\\hat x_t`. Related, 129 writes `\\epsilon_{2t}` where the rest of the lecture (104, 116, 123, 207, 213, 220) writes `\\epsilon_{2,t}`"
+    }
   ],
   "strengths": [
     "The lecture names the question before answering it: 81-85 states in one sentence what Muth was actually asking (\"for what optimal forecasting **question** is Milton Friedman's adaptive expectation scheme the **answer**\"), and 87-95 then says exactly which tool is being swapped in for Muth's, with 90-92 pointing at the two classical-methods lectures for the original route",
@@ -27,5 +57,9 @@
     "Sweep the figures: `lw=2` on the seven `plot` calls (280, 281, 301, 302, 319, 350, 352), lowercase the axis labels at 283, 305 and 322, and move the `set_title` calls at 284, 304 and 321 into `mystnb: figure: caption/name` metadata on the four figure cells (278, 299, 317, 339)",
     "Replace the raw URL at 97 with a `{doc}` cross-reference and write the two bare expectations at 144-145 as `\\mathbb{E}`"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "b84220b69ef5318aba666a6e6138b42f7fba8a58"
+  }
 }

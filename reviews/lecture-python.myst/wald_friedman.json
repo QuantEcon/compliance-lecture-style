@@ -2,18 +2,76 @@
   "series": "lecture-python.myst",
   "lecture": "wald_friedman",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [259, 315, 513, 594, 961],
-     "detail": "the lecture ships two different Jensen-Shannon implementations and uses the wrong one's name for the result. `compute_JS` (315-321) averages $KL(f, m)$ and $KL(g, m)$ and is never called; `js_dist` (739-746) averages $KL(m, f_0)$ and $KL(m, f_1)$ and takes a square root - the KL arguments are reversed and KL is not symmetric, so the two functions do not agree, and 762's comment on the call site says \"# Compute KL divergence\" while 780 labels the axis \"Jensen-Shannon distance\", 787 calls it \"relative entropy\" and 789 calls it \"Jensen-Shannon divergence\". `compute_wald_thresholds` is likewise defined twice, identically, at 472-477 and again at 597-602 inside a `hide-input` cell. `sprt_single_run` calls `np.random.seed(seed)` at 513 and is invoked from a `prange` loop at 537 and 926, so numba's per-thread generator is reseeded on every iteration of a parallel loop - the sample depends on thread scheduling, which is the one thing a seeded simulation is meant to rule out. The adjustment table at 961-983 opens with `(A_f, B_f) = (5.0, 0.5)`, which raises $A$ and lowers $B$, while the entire discussion at 990-998 covers only the opposite direction and then concludes that \"as $A$ decreases and $B$ increases from their optimal Wald values, both Type I and Type II error rates increase\" - a claim the first row of the table contradicts by construction. And two of the seven key ideas the overview promises are never delivered: **critical region** (59) is defined only inside a Wald quotation at 182, and **uniformly most powerful test** (60) gets one sentence at 259-260 saying that Wald goes on to discuss it"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [45, 363, 721, 729, 787],
-     "detail": "line 45 is one 75-word sentence that also contains a disagreement and a tautology - \"from the perspective of a statistician working within the Neyman-Pearson tradition of a frequentist statistician who thinks about testing hypotheses and consequently use laws of large numbers to investigate limiting properties of particular statistics under a given **hypothesis** ...\" - and 49 (48 words) and 42 (39 words) are the same shape. Line 363 announces its own redundancy, \"To repeat ourselves\", before restating at 355-366 what 54-56 and 142-145 have already said twice. Line 721 is a paragraph consisting of \"This makes sense.\" Line 729-730 misplaces the comma (\"While, KL divergence is larger when two distributions differ more\") and 732 drops a verb (\"a symmetric measure of divergence that actually a metric\"), as does 725 (\"it should takes longer\"). And 787 names the wrong quantity: \"a clear negative correlation between relative entropy and mean stopping time\" describes a scatter whose x-axis is the Jensen-Shannon distance"},
-    {"rule": "qe-code-001", "count": 6, "lines": [303, 319, 561, 594, 1113, 1366],
-     "detail": "147 of the file's code lines carry trailing whitespace (PEP8 W291/W293) - `awk` over the fenced blocks counts them, e.g. 319, 465, 514, 518, 521, 532, 536, 542-543, 547, 553, 556, 560, 565, 607, 612-617 - and 179 lines in the file overall. 303 writes `return r * x** (a-1) * (1 - x) ** (b-1)`, putting the space after `**` on one factor and around it on the other, where the rule asks explicitly for `a**b`. Eight `if` statements put the body on the same line as the condition (`if log_L >= logA: return 1, False` at 1113-1114, 1125-1126, 1288-1289, 1300-1301). Line 1366 joins two calls with a comma into a discarded tuple, `ax2.set_xticks(x), ax2.set_xticklabels(['Markov', 'VAR'])`. 561-564, 664-667, 858-859, 948-951 and 1281-1282 use backslash continuations where the surrounding parentheses already allow the wrap. And 597-602 is a second, byte-identical definition of an `@njit` function defined 120 lines earlier"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [251, 402, 708, 979],
-     "detail": "the Neyman-Pearson section runs 150 lines (127-277) of block quotation with no figure at all, and the thing it is about - $\\alpha$ and $\\beta$ as the two tail areas of $f_0$ and $f_1$ on either side of the critical value $k$ in the display at 251 - is the most standard picture in statistics, drawable in five lines from the densities the lecture plots forty lines later at 326-337. The one picture of the SPRT's three-region structure is a static PNG at 402-404 with no caption and no name, and the lecture generates that same picture in code at 836-898 (`plot_likelihood_paths` draws $\\log A$, $\\log B$ and the paths between them), 430 lines further on. The three-way comparison at 707-717 emits three separate three-panel figures with no captions and no `{numref}` labels, so 719-725's conclusion asks the reader to hold three unlabelled images side by side. And the threshold experiment ends in a bare pandas frame at 979-983 that 986-998 then narrates in nine lines of prose, where plotting type I and type II error against the adjustment factors would show the frontier the prose is describing"},
-    {"rule": "qe-math-009", "count": 4, "lines": [285, 748, 1046, 1310],
-     "detail": "$A$ and $B$ are Wald's decision thresholds from 285 to 998, but the Friedman quotation at 98 has already used A and B for the two projectile designs, and exercise 2 uses $A^{(0)}, A^{(1)}$ for the VAR coefficient matrices (1203-1216, 1338-1345) - so `run_var_sprt` at 1305-1310 holds `params.A_0` (a matrix) and `A, B, logA, logB = compute_wald_thresholds(...)` (a threshold) in one scope. $\\beta$ is the type II error probability throughout (207, 366, 419, 466) while `beta`/`np.random.beta` is the beta distribution in the code (73, 516, 858), and 748 names a helper `generate_β_pairs` where the β means beta-distribution shape parameters, not the error rate that `params.β` carries in the same namedtuple. The likelihood ratio is $L_m$ in the body (383-397) and $\\Lambda_t$ in exercise 1 (1046). And `p` is the beta density at 300 while `p_1, p_0` are transition probabilities at 1118"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [61, 148, 232, 586],
-     "detail": "**power** and **size** are bolded as definitions at 57-58, bolded again as emphasis at 61 in the very next bullet, and then set in *italic* at 232-233 where they are actually defined (\"the quantity $\\alpha$ is called the *size* of the critical region, and the quantity $1-\\beta$ is called the *power*\") - so the same two terms take both formats and the definition gets the wrong one. The book title takes three forms: **Sequential Analysis** in bold at 148 and 408, *Sequential Analysis* in italic at 125, alongside *Two Lucky People* in italic at 83. And 586 bolds emphasis, \"**lower** type I and type II error rates than the target values\""}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        259,
+        315,
+        513,
+        594,
+        961
+      ],
+      "detail": "the lecture ships two different Jensen-Shannon implementations and uses the wrong one's name for the result. `compute_JS` (315-321) averages $KL(f, m)$ and $KL(g, m)$ and is never called; `js_dist` (739-746) averages $KL(m, f_0)$ and $KL(m, f_1)$ and takes a square root - the KL arguments are reversed and KL is not symmetric, so the two functions do not agree, and 762's comment on the call site says \"# Compute KL divergence\" while 780 labels the axis \"Jensen-Shannon distance\", 787 calls it \"relative entropy\" and 789 calls it \"Jensen-Shannon divergence\". `compute_wald_thresholds` is likewise defined twice, identically, at 472-477 and again at 597-602 inside a `hide-input` cell. `sprt_single_run` calls `np.random.seed(seed)` at 513 and is invoked from a `prange` loop at 537 and 926, so numba's per-thread generator is reseeded on every iteration of a parallel loop - the sample depends on thread scheduling, which is the one thing a seeded simulation is meant to rule out. The adjustment table at 961-983 opens with `(A_f, B_f) = (5.0, 0.5)`, which raises $A$ and lowers $B$, while the entire discussion at 990-998 covers only the opposite direction and then concludes that \"as $A$ decreases and $B$ increases from their optimal Wald values, both Type I and Type II error rates increase\" - a claim the first row of the table contradicts by construction. And two of the seven key ideas the overview promises are never delivered: **critical region** (59) is defined only inside a Wald quotation at 182, and **uniformly most powerful test** (60) gets one sentence at 259-260 saying that Wald goes on to discuss it"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        45,
+        363,
+        721,
+        729,
+        787
+      ],
+      "detail": "line 45 is one 75-word sentence that also contains a disagreement and a tautology - \"from the perspective of a statistician working within the Neyman-Pearson tradition of a frequentist statistician who thinks about testing hypotheses and consequently use laws of large numbers to investigate limiting properties of particular statistics under a given **hypothesis** ...\" - and 49 (48 words) and 42 (39 words) are the same shape. Line 363 announces its own redundancy, \"To repeat ourselves\", before restating at 355-366 what 54-56 and 142-145 have already said twice. Line 721 is a paragraph consisting of \"This makes sense.\" Line 729-730 misplaces the comma (\"While, KL divergence is larger when two distributions differ more\") and 732 drops a verb (\"a symmetric measure of divergence that actually a metric\"), as does 725 (\"it should takes longer\"). And 787 names the wrong quantity: \"a clear negative correlation between relative entropy and mean stopping time\" describes a scatter whose x-axis is the Jensen-Shannon distance"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        303,
+        319,
+        561,
+        594,
+        1113,
+        1366
+      ],
+      "detail": "147 of the file's code lines carry trailing whitespace (PEP8 W291/W293) - `awk` over the fenced blocks counts them, e.g. 319, 465, 514, 518, 521, 532, 536, 542-543, 547, 553, 556, 560, 565, 607, 612-617 - and 179 lines in the file overall. 303 writes `return r * x** (a-1) * (1 - x) ** (b-1)`, putting the space after `**` on one factor and around it on the other, where the rule asks explicitly for `a**b`. Eight `if` statements put the body on the same line as the condition (`if log_L >= logA: return 1, False` at 1113-1114, 1125-1126, 1288-1289, 1300-1301). Line 1366 joins two calls with a comma into a discarded tuple, `ax2.set_xticks(x), ax2.set_xticklabels(['Markov', 'VAR'])`. 561-564, 664-667, 858-859, 948-951 and 1281-1282 use backslash continuations where the surrounding parentheses already allow the wrap. And 597-602 is a second, byte-identical definition of an `@njit` function defined 120 lines earlier"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        251,
+        402,
+        708,
+        979
+      ],
+      "detail": "the Neyman-Pearson section runs 150 lines (127-277) of block quotation with no figure at all, and the thing it is about - $\\alpha$ and $\\beta$ as the two tail areas of $f_0$ and $f_1$ on either side of the critical value $k$ in the display at 251 - is the most standard picture in statistics, drawable in five lines from the densities the lecture plots forty lines later at 326-337. The one picture of the SPRT's three-region structure is a static PNG at 402-404 with no caption and no name, and the lecture generates that same picture in code at 836-898 (`plot_likelihood_paths` draws $\\log A$, $\\log B$ and the paths between them), 430 lines further on. The three-way comparison at 707-717 emits three separate three-panel figures with no captions and no `{numref}` labels, so 719-725's conclusion asks the reader to hold three unlabelled images side by side. And the threshold experiment ends in a bare pandas frame at 979-983 that 986-998 then narrates in nine lines of prose, where plotting type I and type II error against the adjustment factors would show the frontier the prose is describing"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        285,
+        748,
+        1046,
+        1310
+      ],
+      "detail": "$A$ and $B$ are Wald's decision thresholds from 285 to 998, but the Friedman quotation at 98 has already used A and B for the two projectile designs, and exercise 2 uses $A^{(0)}, A^{(1)}$ for the VAR coefficient matrices (1203-1216, 1338-1345) - so `run_var_sprt` at 1305-1310 holds `params.A_0` (a matrix) and `A, B, logA, logB = compute_wald_thresholds(...)` (a threshold) in one scope. $\\beta$ is the type II error probability throughout (207, 366, 419, 466) while `beta`/`np.random.beta` is the beta distribution in the code (73, 516, 858), and 748 names a helper `generate_β_pairs` where the β means beta-distribution shape parameters, not the error rate that `params.β` carries in the same namedtuple. The likelihood ratio is $L_m$ in the body (383-397) and $\\Lambda_t$ in exercise 1 (1046). And `p` is the beta density at 300 while `p_1, p_0` are transition probabilities at 1118"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        61,
+        148,
+        232,
+        586
+      ],
+      "detail": "**power** and **size** are bolded as definitions at 57-58, bolded again as emphasis at 61 in the very next bullet, and then set in *italic* at 232-233 where they are actually defined (\"the quantity $\\alpha$ is called the *size* of the critical region, and the quantity $1-\\beta$ is called the *power*\") - so the same two terms take both formats and the definition gets the wrong one. The book title takes three forms: **Sequential Analysis** in bold at 148 and 408, *Sequential Analysis* in italic at 125, alongside *Two Lucky People* in italic at 83. And 586 bolds emphasis, \"**lower** type I and type II error rates than the target values\""
+    }
   ],
   "strengths": [
     "The lecture lets Wald state the Neyman-Pearson theory in his own words across six block quotations (174-186, 190-207, 212-230, 238-243, 247-257, 264-277) and marks the single place it intervenes, inline and in the quotation itself: \"[ here Wald applies law of large numbers by driving $M \\rightarrow \\infty$ (our comment, not Wald's) ]\" at 226-228",
@@ -38,5 +96,9 @@
   ],
   "scanner_doubts": [
     "wald_friedman.md:1083,1084,1087,1092,1093 - a suspicion I am recording as *cleared*, so nobody re-opens it. Code scores 10/10 with no qe-code-002 hits, yet the exercise 1 solution spells a Greek letter out five times - `pi = np.real(eigenvectors[:, idx])` and `return pi / pi.sum()` (1083-1084), `def simulate_markov_chain(P, pi_0, T, seed)` (1087), `cumsum_pi = np.cumsum(pi_0)` (1092-1093) - for exactly the objects the very next cell writes as `π_0` and `π_1` (1106, 1112, 1132-1133, 1141, 1145). The reason nothing fires is that \"pi\" is simply absent from `GREEK_WORDS` (tools/qestyle_rules.py:789-794), so `GREEK_RE` cannot match it; verified by running the checks over this file, which returns no qe-code-002 hit. I do **not** recommend adding it. The omission looks deliberate - π is also a mathematical constant - and although the `(?<![\\w.])` lookbehind at 795 already excludes `np.pi` and `math.pi`, and the imported-name exemption would cover `from math import pi`, a scan of bare `pi` identifiers across all five series turns up only about four affected files (this one, `bayes_intro.md` where `pi(θ)` is a prior density, `opt_transport.md:760-779` where `pi` is a transport plan) plus `lecture-python-programming/lectures/names.md:127`, where `pi = 'foobar'` is the deliberate point of a lecture about how names bind - a guaranteed false positive. The cost/benefit does not favour a new branch; the wald_friedman instance is better handled as the per-lecture recommendation in the actions above"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "75b341e325ecfb463d1a39dcd4bf5c68ac83ae91"
+  }
 }

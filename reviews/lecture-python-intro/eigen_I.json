@@ -2,16 +2,54 @@
   "series": "lecture-python-intro",
   "lecture": "eigen_I",
   "judgment": [
-    {"rule": "qe-code-001", "count": 5, "lines": [226, 231, 576, 1136, 1281],
-     "detail": "`ax[0].set_title(\"points $x_1, x_2, \\cdots, x_k$\")` at 226 and 231 puts `\\cdots` in a plain (non-raw) string, an invalid escape sequence (pycodestyle W605) - the identical titles at 543, 547 and 551 are correctly written `r\"...\"`; `grid_composition_transform(B,A)` at 576 drops the space after the comma that the parallel call at 568 has; `plt.quiver(*origin, - eigenvectors[0], - eigenvectors[1], ...)` at 1136-1137 puts a space after the unary minus; `ax.quiver(x, y, u_imag, u_real-x, v_real-y, v_imag-u_imag, ...)` at 1281 omits the spaces around the binary minus that the same expression has at 1125"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [343, 720],
-     "detail": "definitions set in italics instead of bold: line 343 \"is called a _rotation matrix_\" and line 720 \"we say that $\\lambda$ is an *eigenvalue* of $A$, and $v$ is the corresponding *eigenvector*\" - these are the two central definitions of the lecture, and the lecture bolds correctly elsewhere (**spectral radius** at 913)"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [699, 854],
-     "detail": "line 699 promises \"We now discuss the property of A that determines this behavior\" after the three spiral-in / ellipse / spiral-out experiments, but the eigenvalue sections never return to those three matrices; line 854 defers with \"This is discussed further later\" and gives no pointer - the connection is in fact only made inside exercise `eig1_ex3` (1163-1242), so the main narrative closes without answering the question it posed"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [493, 1112, 1156],
-     "detail": "line 493 \"This means first apply transformation $B$ and then transformation $A$\" restates 486-487 word for word in meaning; line 1112 \"(This is a more advanced topic in linear algebra, please step ahead if you are comfortable with the math.)\" reads as the opposite of what is meant - the reader who is comfortable is the one who should stay; line 1156 repeats 1154 with \"Specifically\" and adds only the superlative"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [858],
-     "detail": "the Neumann Series Lemma section (858-965) is the only substantive section with no figure, although its whole content is the condition $r(A) < 1$ - the natural picture, eigenvalues plotted inside the unit disk, or the truncated sum converging to $(I-A)^{-1}$, is absent even though the lecture gives every other concept a panel"}
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        226,
+        231,
+        576,
+        1136,
+        1281
+      ],
+      "detail": "`ax[0].set_title(\"points $x_1, x_2, \\cdots, x_k$\")` at 226 and 231 puts `\\cdots` in a plain (non-raw) string, an invalid escape sequence (pycodestyle W605) - the identical titles at 543, 547 and 551 are correctly written `r\"...\"`; `grid_composition_transform(B,A)` at 576 drops the space after the comma that the parallel call at 568 has; `plt.quiver(*origin, - eigenvectors[0], - eigenvectors[1], ...)` at 1136-1137 puts a space after the unary minus; `ax.quiver(x, y, u_imag, u_real-x, v_real-y, v_imag-u_imag, ...)` at 1281 omits the spaces around the binary minus that the same expression has at 1125"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        343,
+        720
+      ],
+      "detail": "definitions set in italics instead of bold: line 343 \"is called a _rotation matrix_\" and line 720 \"we say that $\\lambda$ is an *eigenvalue* of $A$, and $v$ is the corresponding *eigenvector*\" - these are the two central definitions of the lecture, and the lecture bolds correctly elsewhere (**spectral radius** at 913)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        699,
+        854
+      ],
+      "detail": "line 699 promises \"We now discuss the property of A that determines this behavior\" after the three spiral-in / ellipse / spiral-out experiments, but the eigenvalue sections never return to those three matrices; line 854 defers with \"This is discussed further later\" and gives no pointer - the connection is in fact only made inside exercise `eig1_ex3` (1163-1242), so the main narrative closes without answering the question it posed"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        493,
+        1112,
+        1156
+      ],
+      "detail": "line 493 \"This means first apply transformation $B$ and then transformation $A$\" restates 486-487 word for word in meaning; line 1112 \"(This is a more advanced topic in linear algebra, please step ahead if you are comfortable with the math.)\" reads as the opposite of what is meant - the reader who is comfortable is the one who should stay; line 1156 repeats 1154 with \"Specifically\" and adds only the superlative"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        858
+      ],
+      "detail": "the Neumann Series Lemma section (858-965) is the only substantive section with no figure, although its whole content is the condition $r(A) < 1$ - the natural picture, eigenvalues plotted inside the unit disk, or the truncated sum converging to $(I-A)^{-1}$, is absent even though the lecture gives every other concept a panel"
+    }
   ],
   "strengths": [
     "The transformation taxonomy is built on one reusable pair of functions, `grid_transform` and `circle_transform` (194-281), then applied unchanged to scaling, shearing, rotation and permutation - so the four sections are directly comparable panel for panel",
@@ -31,5 +69,9 @@
   ],
   "scanner_doubts": [
     "Not a miscount, a rule-scope question: all 6 qe-fig-007 hits in eigen_I.md (138, 221, 247, 539, 616, 746) are `spines[spine].set_color('none')` on 'right'/'top', each paired with a `set_position('zero')` two lines earlier (135-138, 218-221, 244-247, 536-539, 613-616, 743-746). That pair is the standard idiom for drawing axes through the origin, which these vector diagrams need. Complying with qe-fig-007 as written would mean giving up the origin-crossing axes. The same idiom appears in linear_equations.md and scalar_dynam.md in this series (grep `set_position('zero')`), so it is worth deciding once whether the rule is meant to fire on it - as distinct from a plain `spines['top'].set_visible(False)` despine, which it should."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "46b93d5089d228689b5c90bd7d3125b15efd9aca"
+  }
 }

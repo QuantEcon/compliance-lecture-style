@@ -57,5 +57,9 @@
   ],
   "scanner_doubts": [
     "qe-writing-001 ×2 at need_for_speed.md:424 and 466 - both are the bodies of `{note}` directives (423-429 and 465-472), not running prose. tools/qestyle_rules.py:_paragraph_blocks (line 214) excludes headings, list items, tables, targets and option lines from qe-writing-001 but not the bodies of directives; no rule in tools/ mentions `note`, `tip`, `admonition` or `epigraph`."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "37bf97e38b33ec68cf2bff01a786229663e2970d"
+  }
 }

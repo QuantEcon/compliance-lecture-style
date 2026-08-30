@@ -17,5 +17,9 @@
     "Drop the trailing space at the end of line 21, and add the missing newline at end of file (line 34 closes the fence with no terminating newline)",
     "Consider stating what the table measures - the `{nb-exec-table}` at 16-17 lists per-notebook execution time and status for the most recent build, which line 14 (\"This table contains the latest execution statistics\") does not quite say"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "3ada25f0238a6d5072ee6fa8f3e7816026e7d107"
+  }
 }

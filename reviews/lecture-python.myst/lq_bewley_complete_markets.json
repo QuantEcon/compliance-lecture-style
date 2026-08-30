@@ -2,14 +2,42 @@
   "series": "lecture-python.myst",
   "lecture": "lq_bewley_complete_markets",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 2, "lines": [218, 146],
-     "detail": "line 218 is a 48-word sentence carrying three separate claims (the unit root, the absence of a stationary distribution, and the two initial-draw conventions used in the simulation) and is the only sentence in the lecture that does not fit the one-idea-per-paragraph rhythm the rest of the file keeps; separately, the definition $h = (1-\\beta)\\check{G}(I-\\beta\\check{A})^{-1}\\check{C}$ is restated verbatim three times (96, 146, 230) when the later two could cite it"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [446],
-     "detail": "line 446 - 'The optimal robust rule takes the same form as the rule above, but under a distorted model of the income process' - refers to a rule 'above' that does not exist in this lecture; it describes the robust rule of lq_robust_bewley, which the reader has not seen, so the paragraph reads as a conclusion drawn from absent material"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [211, 379, 437],
-     "detail": "bold marks emphasis rather than a definition: **idiosyncratic** at 211 is the second, non-defining use of a term already introduced at 139; **time-invariant** at 379 emphasises a property; and the note at 437 bolds **complete markets** / **incomplete markets** for contrast although both were defined earlier. The lecture italicises emphasis correctly elsewhere (*ex ante* 128, *variance* 261, *constant* 354, *not* 369, *rank* 565), so this is internal inconsistency rather than an unknown convention"},
-    {"rule": "qe-code-001", "count": 2, "lines": [180, 409],
-     "detail": "`c[:, t+1]` (180) and `c_inc[:, t+1]` (409) omit the spaces around `+` that the same expression carries everywhere else in the file - `mean_c[t + 1]` (293), `c[:, t + 1]` (488), `c_inc[:, t + 1]` (540, 594) - and line 180 sits in the same cell as `np.zeros((N, T_sim + 1))` at 175"}
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        218,
+        146
+      ],
+      "detail": "line 218 is a 48-word sentence carrying three separate claims (the unit root, the absence of a stationary distribution, and the two initial-draw conventions used in the simulation) and is the only sentence in the lecture that does not fit the one-idea-per-paragraph rhythm the rest of the file keeps; separately, the definition $h = (1-\\beta)\\check{G}(I-\\beta\\check{A})^{-1}\\check{C}$ is restated verbatim three times (96, 146, 230) when the later two could cite it"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        446
+      ],
+      "detail": "line 446 - 'The optimal robust rule takes the same form as the rule above, but under a distorted model of the income process' - refers to a rule 'above' that does not exist in this lecture; it describes the robust rule of lq_robust_bewley, which the reader has not seen, so the paragraph reads as a conclusion drawn from absent material"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        211,
+        379,
+        437
+      ],
+      "detail": "bold marks emphasis rather than a definition: **idiosyncratic** at 211 is the second, non-defining use of a term already introduced at 139; **time-invariant** at 379 emphasises a property; and the note at 437 bolds **complete markets** / **incomplete markets** for contrast although both were defined earlier. The lecture italicises emphasis correctly elsewhere (*ex ante* 128, *variance* 261, *constant* 354, *not* 369, *rank* 565), so this is internal inconsistency rather than an unknown convention"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 2,
+      "lines": [
+        180,
+        409
+      ],
+      "detail": "`c[:, t+1]` (180) and `c_inc[:, t+1]` (409) omit the spaces around `+` that the same expression carries everywhere else in the file - `mean_c[t + 1]` (293), `c[:, t + 1]` (488), `c_inc[:, t + 1]` (540, 594) - and line 180 sits in the same cell as `np.zeros((N, T_sim + 1))` at 175"
+    }
   ],
   "strengths": [
     "All three figure-producing cells in the body carry full `mystnb: figure: caption/name` metadata (160-166, 266-272, 389-395), so every figure a reader meets in the narrative is captioned and cross-referenceable; the three qe-fig-005 hits are confined to the exercise solutions",
@@ -27,5 +55,9 @@
     "Change the three emphasis-bolds to italic (211, 379, 437), fix the double space in the caption at 393 and the three narrative double spaces at 130, 149, 437 (qe-writing-008, 3 occurrences)",
     "Drop `figsize=(12, 4)` at 299 and 414 unless the two-panel aspect ratio is deliberate (qe-fig-001, 2 occurrences), shorten the 8-word caption at 389 (qe-fig-004), and space the `t+1` indices at 180 and 409"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "ba867623f383b179256c54caae4d24655a6fde4e"
+  }
 }

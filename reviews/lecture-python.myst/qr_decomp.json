@@ -2,18 +2,75 @@
   "series": "lecture-python.myst",
   "lecture": "qr_decomp",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [53, 129, 322, 353, 407],
-     "detail": "129 states something false in a displayed definition: $Q = \\left[a_1 | a_2 | \\cdots | a_n\\right] = \\left[e_1 | e_2 | \\cdots | e_n\\right]$, which asserts $Q = A$. The left half is copy-pasted from 114, where $[a_1|\\cdots|a_n]$ correctly denotes $A$; $Q$ is the second bracket only. 53-59 contradicts itself in four consecutive sentences: \"We'll start with a **square** matrix $A$\" / \"If a square matrix $A$ is nonsingular, then a $QR$ factorization is unique\" / \"We'll deal with a rectangular matrix $A$ later\" / \"Actually, our algorithm will work with a rectangular $A$ that is not square\" - the fourth cancels the third with no explanation of which is operative. 353-355 names the wrong module twice: \"compare the results with what `scipy.linalg.eigvals` gives us\", and 366 repeats \"Compare with the `scipy` package\", but the cell at 369 calls `np.linalg.eigvals`. 407 has the comment \"X is random matrix where each column follows multivariate normal dist.\" on a cell whose `rng.multivariate_normal(𝜇, Σ, size=n)` puts each draw in a *row* - $X$ is $n \\times k$ per 394, and it is $X'$ (378, 418) whose columns are the draws. And 322-324 publishes an internal maintainer note in the reader-facing body: a `{todo}` reading \"@mmcky to migrate this to use sphinx-proof\", between the algorithm and the remark about it"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [73, 301, 372, 448],
-     "detail": "a 469-line lecture on orthogonal projection with no figure anywhere. 73-100 is the Gram-Schmidt construction stated as \"**normalize** a vector to have unit norm\" and \"**orthogonalize** the next vector\", and it is the standard case for one diagram: $a_1$, the unit vector $e_1$ along it, $a_2$, its projection $(a_2 \\cdot e_1)e_1$, and the perpendicular residual $u_2$ - which would also discharge 91-92, \"We invite the reader to verify that $e_1$ is orthogonal to $e_2$\". The overview promises \"Orthogonal projection and least squares\" at 20 and the entire delivery is the two bullets at 103-108; there is no projection picture, no least-squares example and no code for it. 301-320 gives the QR eigenvalue iteration as six steps ending in \"Iterate to convergence\", and `QR_eigvals` already computes the convergence measure `diff` at 345 and throws it away - plotting it per iteration would show what \"converge\" means and cost two lines. And the verification at 448 prints two arrays of five eigenvalues side by side for the reader to compare digit by digit, where the same numbers plotted against a 45-degree line would settle 389's conjecture at a glance. The only admonition in the file is the `{todo}` at 322; the sign caveat at 206-212 and the \"**Remark:**\" at 326 are both `{note}` material"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [31, 47, 202, 206, 389],
-     "detail": "202-214 spends seven consecutive one-sentence paragraphs setting up a sign normalisation: \"The preceding code is fine but can benefit from some further housekeeping\" / \"We want to do this because later in this notebook we want to compare results from using our homemade code above with the code for a QR that the Python `scipy` package delivers\" / \"There can be be sign differences between the $Q$ and $R$ matrices produced by different numerical algorithms\" / \"All of these are valid QR decompositions...\" / \"However, to make the results ... comparable, let's require that $Q$ have positive diagonal entries\" / \"We do this by adjusting the signs...\" / \"To accomplish this we'll define a pair of functions\". 31 says \"of a matrix\" twice in one 30-word sentence. 47-49 announces the homemade-code plan a second time (\"Because doing so is so educational, we'll write our own Python code to do the job\") after 27, and a third time at 167. Four typos sit in the prose and comments: \"be be\" (206), \"decomposision\" (120), \"that that\" (389), \"vetor\" (192)"},
-    {"rule": "qe-code-001", "count": 5, "lines": [177, 178, 218, 224, 401],
-     "detail": "the four functions carry three naming styles: `QR_Decomposition` (177) is CapWords, which PEP8 reserves for classes; `QR_eigvals` (331) is a hybrid; `diag_sign` (217) and `adjust_sign` (224) are correct snake_case. Five inline comments have one space before the hash instead of two - 178 `A.shape # get the shape of A`, and likewise 180, 181, 190, 192 (E262). Two one-line docstrings use single double-quotes instead of triple (218, 332), against PEP 257, while the docstring at 225-228 in the same cell does it correctly. 224 starts a top-level `def` one blank line after the previous `return` (E302). And 401, 432, 441, 442, 448 and 464 spell the Greek identifiers with the mathematical-alphanumeric codepoints `𝜇` (U+1D707) and `𝜆` (U+1D706) rather than ordinary Greek `μ` (U+03BC) and `λ` (U+03BB), while `Σ` (403) and `Λ` (433) in the same cells are ordinary Greek - two Unicode blocks for Greek names in one file, and the U+1D7xx forms cannot be typed from a Greek keyboard layout. 244-245 also leaves two commented-out `A` matrices in a published cell, one of which duplicates the rectangular example set up separately at 288"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [53, 63, 79, 106, 305],
-     "detail": "the two algorithm steps are defined in bold at 75-77 (**normalize**, **orthogonalize**) and then re-bolded as emphasis three more times each at 79, 85 and (for normalize) 106's neighbourhood - and at 106 the same concept switches to italic, *normalization*, which is the file's only italic in 469 lines. Bold also carries plain emphasis at 53 (**square**), 63 (**columns**) and 305-306 (**eigenvalues**, **square** again), and 326 uses bold as a paragraph label, \"**Remark:**\". So the two markers between them are doing definition, emphasis and heading duty, with the same word appearing in both"},
-    {"rule": "qe-math-009", "count": 3, "lines": [71, 88, 415],
-     "detail": "71 defines the norm as \"$|| \\cdot ||$\" using the raw middle-dot character U+00B7 as the argument placeholder - and that same raw character is then the inner-product *operator* at 88, 99, 116, 117, 136, 137 and 148-150, so one character means both \"argument slot\" and \"dot product\". `\\cdot` is used for the identical operator at 92, 103, 106 and 156-162, and both spellings appear inside the single display at 148-150. The norm itself is written `||x||` rather than `\\|x\\|` throughout (71, 82, 88, 99), which typesets as two ordinary bars with no spacing correction. And the transpose is spelled three ways: `^T` at 42, a bare apostrophe at 378-389, and `^{\\prime}` at 415, 427, 436 and 461 - the last two conventions used 30 lines apart for the same matrices $X$, $R$ and $\\tilde P$"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        53,
+        129,
+        322,
+        353,
+        407
+      ],
+      "detail": "129 states something false in a displayed definition: $Q = \\left[a_1 | a_2 | \\cdots | a_n\\right] = \\left[e_1 | e_2 | \\cdots | e_n\\right]$, which asserts $Q = A$. The left half is copy-pasted from 114, where $[a_1|\\cdots|a_n]$ correctly denotes $A$; $Q$ is the second bracket only. 53-59 contradicts itself in four consecutive sentences: \"We'll start with a **square** matrix $A$\" / \"If a square matrix $A$ is nonsingular, then a $QR$ factorization is unique\" / \"We'll deal with a rectangular matrix $A$ later\" / \"Actually, our algorithm will work with a rectangular $A$ that is not square\" - the fourth cancels the third with no explanation of which is operative. 353-355 names the wrong module twice: \"compare the results with what `scipy.linalg.eigvals` gives us\", and 366 repeats \"Compare with the `scipy` package\", but the cell at 369 calls `np.linalg.eigvals`. 407 has the comment \"X is random matrix where each column follows multivariate normal dist.\" on a cell whose `rng.multivariate_normal(𝜇, Σ, size=n)` puts each draw in a *row* - $X$ is $n \\times k$ per 394, and it is $X'$ (378, 418) whose columns are the draws. And 322-324 publishes an internal maintainer note in the reader-facing body: a `{todo}` reading \"@mmcky to migrate this to use sphinx-proof\", between the algorithm and the remark about it"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        73,
+        301,
+        372,
+        448
+      ],
+      "detail": "a 469-line lecture on orthogonal projection with no figure anywhere. 73-100 is the Gram-Schmidt construction stated as \"**normalize** a vector to have unit norm\" and \"**orthogonalize** the next vector\", and it is the standard case for one diagram: $a_1$, the unit vector $e_1$ along it, $a_2$, its projection $(a_2 \\cdot e_1)e_1$, and the perpendicular residual $u_2$ - which would also discharge 91-92, \"We invite the reader to verify that $e_1$ is orthogonal to $e_2$\". The overview promises \"Orthogonal projection and least squares\" at 20 and the entire delivery is the two bullets at 103-108; there is no projection picture, no least-squares example and no code for it. 301-320 gives the QR eigenvalue iteration as six steps ending in \"Iterate to convergence\", and `QR_eigvals` already computes the convergence measure `diff` at 345 and throws it away - plotting it per iteration would show what \"converge\" means and cost two lines. And the verification at 448 prints two arrays of five eigenvalues side by side for the reader to compare digit by digit, where the same numbers plotted against a 45-degree line would settle 389's conjecture at a glance. The only admonition in the file is the `{todo}` at 322; the sign caveat at 206-212 and the \"**Remark:**\" at 326 are both `{note}` material"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        31,
+        47,
+        202,
+        206,
+        389
+      ],
+      "detail": "202-214 spends seven consecutive one-sentence paragraphs setting up a sign normalisation: \"The preceding code is fine but can benefit from some further housekeeping\" / \"We want to do this because later in this notebook we want to compare results from using our homemade code above with the code for a QR that the Python `scipy` package delivers\" / \"There can be be sign differences between the $Q$ and $R$ matrices produced by different numerical algorithms\" / \"All of these are valid QR decompositions...\" / \"However, to make the results ... comparable, let's require that $Q$ have positive diagonal entries\" / \"We do this by adjusting the signs...\" / \"To accomplish this we'll define a pair of functions\". 31 says \"of a matrix\" twice in one 30-word sentence. 47-49 announces the homemade-code plan a second time (\"Because doing so is so educational, we'll write our own Python code to do the job\") after 27, and a third time at 167. Four typos sit in the prose and comments: \"be be\" (206), \"decomposision\" (120), \"that that\" (389), \"vetor\" (192)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        177,
+        178,
+        218,
+        224,
+        401
+      ],
+      "detail": "the four functions carry three naming styles: `QR_Decomposition` (177) is CapWords, which PEP8 reserves for classes; `QR_eigvals` (331) is a hybrid; `diag_sign` (217) and `adjust_sign` (224) are correct snake_case. Five inline comments have one space before the hash instead of two - 178 `A.shape # get the shape of A`, and likewise 180, 181, 190, 192 (E262). Two one-line docstrings use single double-quotes instead of triple (218, 332), against PEP 257, while the docstring at 225-228 in the same cell does it correctly. 224 starts a top-level `def` one blank line after the previous `return` (E302). And 401, 432, 441, 442, 448 and 464 spell the Greek identifiers with the mathematical-alphanumeric codepoints `𝜇` (U+1D707) and `𝜆` (U+1D706) rather than ordinary Greek `μ` (U+03BC) and `λ` (U+03BB), while `Σ` (403) and `Λ` (433) in the same cells are ordinary Greek - two Unicode blocks for Greek names in one file, and the U+1D7xx forms cannot be typed from a Greek keyboard layout. 244-245 also leaves two commented-out `A` matrices in a published cell, one of which duplicates the rectangular example set up separately at 288"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        53,
+        63,
+        79,
+        106,
+        305
+      ],
+      "detail": "the two algorithm steps are defined in bold at 75-77 (**normalize**, **orthogonalize**) and then re-bolded as emphasis three more times each at 79, 85 and (for normalize) 106's neighbourhood - and at 106 the same concept switches to italic, *normalization*, which is the file's only italic in 469 lines. Bold also carries plain emphasis at 53 (**square**), 63 (**columns**) and 305-306 (**eigenvalues**, **square** again), and 326 uses bold as a paragraph label, \"**Remark:**\". So the two markers between them are doing definition, emphasis and heading duty, with the same word appearing in both"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        71,
+        88,
+        415
+      ],
+      "detail": "71 defines the norm as \"$|| \\cdot ||$\" using the raw middle-dot character U+00B7 as the argument placeholder - and that same raw character is then the inner-product *operator* at 88, 99, 116, 117, 136, 137 and 148-150, so one character means both \"argument slot\" and \"dot product\". `\\cdot` is used for the identical operator at 92, 103, 106 and 156-162, and both spellings appear inside the single display at 148-150. The norm itself is written `||x||` rather than `\\|x\\|` throughout (71, 82, 88, 99), which typesets as two ordinary bars with no spacing correction. And the transpose is spelled three ways: `^T` at 42, a bare apostrophe at 378-389, and `^{\\prime}` at 415, 427, 436 and 461 - the last two conventions used 30 lines apart for the same matrices $X$, $R$ and $\\tilde P$"
+    }
   ],
   "strengths": [
     "Every claim in the lecture is checked against a reference implementation in the same notebook: the homemade `QR_Decomposition` against `scipy.linalg.qr` for a square matrix (264-278) and again for a rectangular one (291-298), the homemade `QR_eigvals` against the library eigenvalues (362-369), and the PCA conjecture of 389 against two machine-precision residuals (458, 468)",
@@ -34,5 +91,9 @@
     "Code cleanup: rename `QR_Decomposition` (177) to snake_case, put two spaces before the inline comments at 178, 180, 181, 190 and 192, use triple quotes for the docstrings at 218 and 332, add the second blank line before 224, delete the commented-out matrices at 244-245, and normalise the Greek identifiers at 401, 432, 441, 442, 448 and 464 from U+1D707/U+1D706 to ordinary `μ`/`λ`, matching the `Σ` and `Λ` beside them",
     "Sweep the mechanical remainder: the ten `array`/`matrix` displays that should be `bmatrix` (68, 114, 115, 116, 129, 130, 136, 147, 148), the bare `\\begin{align*}` block at 155 that needs wrapping in `$$ ... \\begin{aligned}`, `{\\mathcal N}` at 379, the three title-case headings (29, 165, 301), the 22 double spaces, the two-sentence list item at 378-380, and the four typos (\"be be\" 206, \"decomposision\" 120, \"that that\" 389, \"vetor\" 192)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "f32312d8a420eff5ef660716490fc6f550670845"
+  }
 }

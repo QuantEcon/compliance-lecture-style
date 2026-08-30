@@ -2,18 +2,72 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "amss",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 3, "lines": [645, 790, 836],
-     "detail": "the same all-caps caveat `# WARNING: DO NOT EXPECT THE CODE TO WORK IF YOU CHANGE PARAMETERS` is pasted into five code cells (836, 864, 890, 982, 1024) - an important, repeated warning about the fragility of the grid bounds, hidden in comments where one `{warning}` admonition in the prose would carry it once and be visible to a reader who is not reading the source. Second, the section that carries the lecture's central theoretical claim - $V_x(x,s)$ is a risk-adjusted martingale under the twisted matrix $\\check\\Pi$ (645-718) - never plots $V_x$, even though the code already computes $V$ on a 300-point grid (850, 990); the figures show consumption, labor, debt, taxes, spending and output, but not the one object the theory is about. Third, the six-state $(t,g)$ construction at 790-810, with the war branch opening at $t=3$, is presented only as a $6\\times 6$ matrix where a small transition diagram would make the trick immediately legible"},
-    {"rule": "qe-writing-005", "count": 6, "lines": [33, 245, 294, 585, 677, 930],
-     "detail": "the assignment of bold and italic is inconsistent in both directions. Definitions appear in bold in some places (**natural debt limit** 221, **measurability constraints** 249, **marketable subspace** 327, **continuation Ramsey planner** 601, **state variable degeneracy** 710) and in italic in others (*implementability constraints* 294, *measurability constraints* 585 - the same term as 249, *risk-adjusted martingale* 677, *martingale convergence theorem* 732). Emphasis likewise appears in bold (**without** 33, **purchases**/**sells** 920-921, **low** twice at 930 and again at 932, **increase**/**reduction** 949-950) and occasionally in italic (*only* 306, *increase* 384, *same* 922). Line 245 sets an entire sentence in bold"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [221, 815, 1056],
-     "detail": "the displayed expenditure vector at 815 is $g = (0.1, 0.1, 0.1, 0.1, 0.2, 0.1)$, putting the war value in the fifth state, which matches the state list at 794 where state 5 is $(3, g_h)$ - but the code at 846 writes `g = np.array([0.1, 0.1, 0.1, 0.2, 0.1, 0.1])`, putting it in the fourth, and 891-892 then treat index 3 as the war history; so the algebra and the code disagree about which state is the war state and a reader checking one against the other is stopped cold. Line 221 introduces the **natural debt limit** that 262 then invokes to derive {eq}`TS_gov_wo3`, deferring it to \"a forthcoming lecture\" that is never named or linked. And 1056 says \"the following figure\" but two further paragraphs (1059, 1061) intervene before the cells that draw it at 1063-1089"},
-    {"rule": "qe-code-001", "count": 7, "lines": [86, 91, 866, 996, 1081, 1082, 1087],
-     "detail": "five lines in the interpolation cell carry trailing whitespace (86, 96, 105, 115, 121); 91-92 and 100-101 use backslash line continuations with a two-space hanging indent (`slope = (y_values[1] - y_values[0]) \\` then `  / (x_nodes[1] - x_nodes[0])`) where parentheses would wrap the expression cleanly; 866 and 999 write `) ** 2` with spaces around the exponentiation operator, which the rule explicitly asks to be written `a**b`; 996 leaves a space before a closing bracket, `np.hstack([1 - g, np.ones(S)]) ]).T`; 1081 puts a backslash continuation *inside* the parentheses of `zip(...)` and 1082 indents the continuation to a flat 8 spaces; and 1087 omits the space after the comma in `('Complete Markets','Incomplete Markets')`, where the identical call at 1043 has it"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [191, 327, 368, 921],
-     "detail": "327 is a 50-word sentence with three levels of nesting (\"In a language used in the literature on incomplete markets models, it can be said that the AMSS model requires that at each $(t,s^t)$ what would be the present value of ... must belong to the **marketable subspace** ...\"); 368-369 is 44 words before reaching its main verb; 191 is 40 words comparing three papers in one breath; and 921-922 says it twice - \"the Ramsey planner designs these purchases and sales designed so that\""},
-    {"rule": "qe-math-009", "count": 1, "lines": [612],
-     "detail": "the state space is written `{\\cal S}` at 612 and 624 where a plain $S$ would do - and the lecture itself uses plain `S` for exactly that object in code at 856 and 995 (`S = len(Π)`), so the calligraphic form is decoration that also breaks the correspondence between the algebra and the implementation"}
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        645,
+        790,
+        836
+      ],
+      "detail": "the same all-caps caveat `# WARNING: DO NOT EXPECT THE CODE TO WORK IF YOU CHANGE PARAMETERS` is pasted into five code cells (836, 864, 890, 982, 1024) - an important, repeated warning about the fragility of the grid bounds, hidden in comments where one `{warning}` admonition in the prose would carry it once and be visible to a reader who is not reading the source. Second, the section that carries the lecture's central theoretical claim - $V_x(x,s)$ is a risk-adjusted martingale under the twisted matrix $\\check\\Pi$ (645-718) - never plots $V_x$, even though the code already computes $V$ on a 300-point grid (850, 990); the figures show consumption, labor, debt, taxes, spending and output, but not the one object the theory is about. Third, the six-state $(t,g)$ construction at 790-810, with the war branch opening at $t=3$, is presented only as a $6\\times 6$ matrix where a small transition diagram would make the trick immediately legible"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        33,
+        245,
+        294,
+        585,
+        677,
+        930
+      ],
+      "detail": "the assignment of bold and italic is inconsistent in both directions. Definitions appear in bold in some places (**natural debt limit** 221, **measurability constraints** 249, **marketable subspace** 327, **continuation Ramsey planner** 601, **state variable degeneracy** 710) and in italic in others (*implementability constraints* 294, *measurability constraints* 585 - the same term as 249, *risk-adjusted martingale* 677, *martingale convergence theorem* 732). Emphasis likewise appears in bold (**without** 33, **purchases**/**sells** 920-921, **low** twice at 930 and again at 932, **increase**/**reduction** 949-950) and occasionally in italic (*only* 306, *increase* 384, *same* 922). Line 245 sets an entire sentence in bold"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        221,
+        815,
+        1056
+      ],
+      "detail": "the displayed expenditure vector at 815 is $g = (0.1, 0.1, 0.1, 0.1, 0.2, 0.1)$, putting the war value in the fifth state, which matches the state list at 794 where state 5 is $(3, g_h)$ - but the code at 846 writes `g = np.array([0.1, 0.1, 0.1, 0.2, 0.1, 0.1])`, putting it in the fourth, and 891-892 then treat index 3 as the war history; so the algebra and the code disagree about which state is the war state and a reader checking one against the other is stopped cold. Line 221 introduces the **natural debt limit** that 262 then invokes to derive {eq}`TS_gov_wo3`, deferring it to \"a forthcoming lecture\" that is never named or linked. And 1056 says \"the following figure\" but two further paragraphs (1059, 1061) intervene before the cells that draw it at 1063-1089"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        86,
+        91,
+        866,
+        996,
+        1081,
+        1082,
+        1087
+      ],
+      "detail": "five lines in the interpolation cell carry trailing whitespace (86, 96, 105, 115, 121); 91-92 and 100-101 use backslash line continuations with a two-space hanging indent (`slope = (y_values[1] - y_values[0]) \\` then `  / (x_nodes[1] - x_nodes[0])`) where parentheses would wrap the expression cleanly; 866 and 999 write `) ** 2` with spaces around the exponentiation operator, which the rule explicitly asks to be written `a**b`; 996 leaves a space before a closing bracket, `np.hstack([1 - g, np.ones(S)]) ]).T`; 1081 puts a backslash continuation *inside* the parentheses of `zip(...)` and 1082 indents the continuation to a flat 8 spaces; and 1087 omits the space after the comma in `('Complete Markets','Incomplete Markets')`, where the identical call at 1043 has it"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        191,
+        327,
+        368,
+        921
+      ],
+      "detail": "327 is a 50-word sentence with three levels of nesting (\"In a language used in the literature on incomplete markets models, it can be said that the AMSS model requires that at each $(t,s^t)$ what would be the present value of ... must belong to the **marketable subspace** ...\"); 368-369 is 44 words before reaching its main verb; 191 is 40 words comparing three papers in one breath; and 921-922 says it twice - \"the Ramsey planner designs these purchases and sales designed so that\""
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        612
+      ],
+      "detail": "the state space is written `{\\cal S}` at 612 and 624 where a plain $S$ would do - and the lecture itself uses plain `S` for exactly that object in code at 856 and 995 (`S = len(Π)`), so the calligraphic form is decoration that also breaks the correspondence between the algebra and the implementation"
+    }
   ],
   "strengths": [
     "The lecture is organised around one difference and keeps saying which side of it the reader is on: 138-140 opens with \"let's start with things that are identical\", 187 marks the exact point where AMSS departs from Lucas-Stokey, and 319-327 and 454-468 each give an explicit item-by-item comparison of the two models' first-order conditions",
@@ -34,5 +88,9 @@
   ],
   "scanner_doubts": [
     "amss.md:228,524,534,551,560,617,664,673,684 - qe-math-010 (proposed) is reported with count 1 (line 451). The lecture is mostly careful, using `\\mathbb E_0`, `\\mathbb E_t` correctly in the displays at 302, 313, 344, 353, 403 and 524. But `\\mathbb E` is missing altogether from several conditional expectations that are written out as explicit sums over the transition matrix - which is legitimate - while 691 calls $\\check\\Pi(s|s_-)$ a \"transition density\", and the lower-case `{\\rm ...}` operators that trip the same gap in amss2 and amss3 do not appear here. So the count of 1 is probably right for this file; I flag it only because the `e_is_operator` gate described in the amss2 and amss3 overlays affects the other two lectures in this family and a fix there should be re-run against this one"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "b386729c3a8b33bc22ec0a94ef3ba115c0690469"
+  }
 }

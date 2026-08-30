@@ -70,5 +70,9 @@
   ],
   "scanner_doubts": [
     "qe-writing-004 x4 (python_oop.md:154, 209, 297, 765): 209 flags 'Consumer' in 'Here how we set up our Consumer class', which is the class name defined three lines later at 212 - it wants backticks, not lower case; and 765 flags 'Theorem' in 'The Glivenko--Cantelli Theorem', part of a named result. Only 154 ('Classes') and 297 ('Class') are narrative capitalisation, so the honest count is 2."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "14d4403ffdc25a8698da764db00116c6410c0349"
+  }
 }

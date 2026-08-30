@@ -2,16 +2,62 @@
   "series": "lecture-python.myst",
   "lecture": "exchange_rate_learning",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 9, "lines": [47, 57, 62, 243, 627, 635, 665, 700, 751],
-     "detail": "bold is doing emphasis work throughout: the two signposts '**First**' (47) and '**Second**' (62), and then '**determinate**' (57), '**flat in $\\lambda$**' (243), '**converges**' (627), '**does not converge**' (635), '**asymmetrically**' (665), '**not**' (700) and '**raises**' (751). The file already uses italic correctly for exactly this job (38, 52, 150, 335, 371, 380, 402, 602, 616, 653, 722), and bold correctly for the terms it defines (79, 251, 388, 438, 442, 450, 476-478, 559), so the nine bolded emphases are inconsistent with the file's own practice"},
-    {"rule": "qe-writing-002", "count": 8, "lines": [37, 79, 476, 601, 637, 651, 667, 818],
-     "detail": "one-sentence-per-paragraph discipline is perfect here, which leaves the length inside the sentence as the only place complexity can go, and eight sentences run 40-54 words with two or three clauses hung off em-dashes and colons: 49 words at 37-40, 41 at 79-81, 54 at 476-479 (three GA operators plus a fourth defined mid-sentence), 41 at 601-603, 41 at 637-639, 42 at 651-653, 48 at 667-670 and 45 at 818-820"},
-    {"rule": "qe-math-009", "count": 1, "lines": [203],
-     "detail": "$R$ is introduced at 203 as the running estimate of the Hessian, and sixteen lines later at 219-220 $R_1$ and $R_2$ are the gross currency returns - two unrelated objects on one letter, in adjacent displays, and the collision carries into the code where `R` is the list of Hessian estimates (265, 282-283) while `R1, R2` are returns (279-280). Naming the second-moment matrix anything else would remove the clash at no cost"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [429, 615],
-     "detail": "the lecture's two empirical claims are the only ones with no exhibit. Lines 429-432 describe Arifovic's laboratory exchange rate in words - 'fluctuated persistently, roughly within a band from $0.5$ to $2$', 'the amplitude grew across sessions' - where every model claim in the file gets a figure or a printed diagnostic; and 615-617 compares the simulated spectrum with the spectra of real hard-currency pairs 'except *without* the dip at zero frequency' with nothing to look at, although the simulated spectrum is plotted immediately above at 588-598"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [166],
-     "detail": "'### The indeterminacy, recalled' is a mathematical subsection that ends, at 166-168, with a paragraph about code organisation - carrying parameters in a container 'rather than leaving them lying about as globals'. It belongs with the cell it justifies, not inside the derivation of the indeterminacy"}
+    {
+      "rule": "qe-writing-005",
+      "count": 9,
+      "lines": [
+        47,
+        57,
+        62,
+        243,
+        627,
+        635,
+        665,
+        700,
+        751
+      ],
+      "detail": "bold is doing emphasis work throughout: the two signposts '**First**' (47) and '**Second**' (62), and then '**determinate**' (57), '**flat in $\\lambda$**' (243), '**converges**' (627), '**does not converge**' (635), '**asymmetrically**' (665), '**not**' (700) and '**raises**' (751). The file already uses italic correctly for exactly this job (38, 52, 150, 335, 371, 380, 402, 602, 616, 653, 722), and bold correctly for the terms it defines (79, 251, 388, 438, 442, 450, 476-478, 559), so the nine bolded emphases are inconsistent with the file's own practice"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 8,
+      "lines": [
+        37,
+        79,
+        476,
+        601,
+        637,
+        651,
+        667,
+        818
+      ],
+      "detail": "one-sentence-per-paragraph discipline is perfect here, which leaves the length inside the sentence as the only place complexity can go, and eight sentences run 40-54 words with two or three clauses hung off em-dashes and colons: 49 words at 37-40, 41 at 79-81, 54 at 476-479 (three GA operators plus a fourth defined mid-sentence), 41 at 601-603, 41 at 637-639, 42 at 651-653, 48 at 667-670 and 45 at 818-820"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        203
+      ],
+      "detail": "$R$ is introduced at 203 as the running estimate of the Hessian, and sixteen lines later at 219-220 $R_1$ and $R_2$ are the gross currency returns - two unrelated objects on one letter, in adjacent displays, and the collision carries into the code where `R` is the list of Hessian estimates (265, 282-283) while `R1, R2` are returns (279-280). Naming the second-moment matrix anything else would remove the clash at no cost"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        429,
+        615
+      ],
+      "detail": "the lecture's two empirical claims are the only ones with no exhibit. Lines 429-432 describe Arifovic's laboratory exchange rate in words - 'fluctuated persistently, roughly within a band from $0.5$ to $2$', 'the amplitude grew across sessions' - where every model claim in the file gets a figure or a printed diagnostic; and 615-617 compares the simulated spectrum with the spectra of real hard-currency pairs 'except *without* the dip at zero frequency' with nothing to look at, although the simulated spectrum is plotted immediately above at 588-598"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        166
+      ],
+      "detail": "'### The indeterminacy, recalled' is a mathematical subsection that ends, at 166-168, with a paragraph about code organisation - carrying parameters in a container 'rather than leaving them lying about as globals'. It belongs with the cell it justifies, not inside the derivation of the indeterminacy"
+    }
   ],
   "strengths": [
     "All four figure cells carry mystnb `caption` and `name` metadata (297-302, 352-357, 525-530, 563-568), so every figure in the lecture is addressable - unusual in this corpus and worth keeping",
@@ -31,5 +77,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 is reported as 0 violations, but the portfolio share is named `lam` throughout the code (223-233, 257-289, 457-473, 482-502) while the same file writes `λ0_grid` (358), `κ` (257) and `μ`, `φ` (802) in unicode. If the check matches only fully spelled-out Greek words ('lambda'), it will miss the common truncation `lam`, and this lecture is a clean test case for that gap"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "800898e8ec171bc9ffeb502549eeebd25ce7d4c2"
+  }
 }

@@ -79,5 +79,9 @@
   ],
   "scanner_doubts": [
     "Cleared, not filed. (1) `qe-math-014` and `qe-math-015` (proposed) have nothing to score in this file: there is no `\\mathbb{P}`, no expectation operator, and no density or CDF anywhere - the only probabilistic object is the IID disturbance $\\eta_t$ (341, 452), described in words. (2) `qe-fig-008`'s three marker-only hits (236, 238, 297) are another corpus instance of the already-filed false positive; recording them because all three are in one figure cell here, so the exemption's shape matters to this file's Figures score. (3) Math 10/10 and Code 10/10 are correct mechanical results: the file has no `pmatrix`, no `\\mathbf`, no `\\tag`, no `align` inside `$$`, and flake8 over the code cells finds only the single long line reported under `qe-code-001`. (4) `qe-ref-001`'s three hits are all genuine narrative-position citations; the second citation on line 75, `Nancy Stokey {cite}`stokey1989reputation``, is the correct parenthetical form and is not what the hit is on (the detail string names `'of {cite}'`), so there is no false positive to report here (5) **Since drafting, the marker-only exemption has landed**: `tools/qestyle_rules.py` at HEAD `458e59c` (commit `26eb29a`) exempts a `plot()` whose positional format string is markers with no line style, and re-running `check_fig_008` against this file now gives **1** hit (288) rather than 4 - so the three false positives at 236, 238 and 297 are already gone and a re-drafted report will show the corrected count."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "e2349a65261ffc38fe86f29dde259bfa75845da0"
+  }
 }

@@ -2,18 +2,79 @@
   "series": "lecture-python.myst",
   "lecture": "perm_income",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 10, "lines": [77, 97, 176, 196, 244, 264, 554, 634, 857, 923],
-     "detail": "the same term is set both ways six lines apart: *economic income* in italic at 264 (\"These last two equations assert that consumption equals *economic income*\") and **economic income** in bold at 270, inside the very list the italic sentence introduces. The bold marker is otherwise used correctly for nine definitions - **random walk** (91), the five wealth concepts (266-270), **cointegrating vector** (622), **present value of the moving average coefficients** (731), **fundamental** (1006) - while ten more definitions arrive in italic: *information set* (77), *random walks* (89), *innovation* (97), *no Ponzi scheme* (176), *Euler equations* (196), *law of iterated expectations* (244), *innovation to the expected present value* (554), *cointegrating residual* (634), *innovation representation* (857) and *permanent* (923). The italics that are doing emphasis are correct (*necessary* 209, *is* 610, *state* 40 and 276, *exogenous*/*endogenous* 280-281), so the file is running two conventions at once rather than misunderstanding one"},
-    {"rule": "qe-writing-003", "count": 5, "lines": [396, 811, 849, 936, 998],
-     "detail": "849 contradicts itself: \"In contrast, notice how most of a transitory income shock is saved and only a small amount is saved\" - the second clause must read \"consumed\", as 785-787 and 797 both explain. 998, footnote f2, states the standard assumptions as \"$u'(c) >0, u''(c)<0, u'''(c) > 0$\" and two sentences later argues from \"the fact that $u''' <0$\"; Jensen's inequality gives $\\mathbb{E}_t[u'(c_{t+1})] > u'(\\mathbb{E}_t[c_{t+1}])$ when $u'$ is convex, i.e. when $u''' > 0$, so the sign in the second mention is wrong and it is the step the whole footnote turns on. 936 reads \"Application of formula to this example shows that\" with the reference missing - 789 has the same sentence complete (\"Application of the formula for debt in {eq}`pi_ssr`\"). 811 defines a second function also called `time_path`, with an incompatible signature (`time_path(T, permanent=False)` against `time_path(T, rng)` at 482), silently shadowing the first for the rest of the notebook. And 396-419 introduces three labelled moment recursions, {eq}`lss_mut_perm_income`, {eq}`eqsigmalaw` and {eq}`eqymoments`, that are never computed and never referred to again - part of a wider pattern in which nine labelled equations have no citation anywhere in the file: `pi_cpa` (301), `pi_stsp` (386), those three, `pi_crw` (644), `sprob12` (718), `sprob13` (726) and `consexample1b` (939)"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [509, 599, 853],
-     "detail": "the lecture already draws 250 independent consumption paths (511-523) and then, 130 lines later, derives $\\mathrm{Var}[c_t] = \\mathrm{Var}[c_0] + t\\,\\hat\\sigma^2$ (661-671) and says \"the variance of $c_t$ increases over time at a rate proportional to $t$\" (679) - without measuring the spread of the fan it has in hand. A $\\pm\\sqrt{t}\\,\\hat\\sigma$ envelope on that figure, or the realised cross-sectional variance plotted against the predicted line, would test {eq}`pi_vt` with the simulation already written. Second, cointegration is one of the four things the overview promises (41) and the section that delivers it (599-635) produces the cointegrating vector $[(1-\\beta)\\ \\ 1]$ and the residual $(1-\\beta)b_t + c_t$ entirely in algebra; `time_path` at 482 already returns `b` and `c`, so one panel showing $b_t$ and $c_t$ wandering while $(1-\\beta)b_t + c_t$ stays flat is the picture the argument is asking for. Third, \"Two Classic Examples\" (734) gives Example 1 a two-panel impulse-response figure (804-845) and Example 2 (853-944) nothing at all - no code, no figure - even though its content is a one-parameter family in the Kalman gain $K$ and 899-901 and 928 make quantitative claims about how the response varies with $K$ that a single plot over $K \\in [0,1]$ would show"},
-    {"rule": "qe-code-001", "count": 6, "lines": [492, 499, 514, 517, 837, 843],
-     "detail": "492 is `rng = np.random.default_rng()` with no seed, and it is the only generator in the lecture, so both figures (495-504 and 512-523) are different on every build - which matters because 507 makes a claim about the drawn path (\"Observe that consumption is considerably smoother than income\"). 517 compounds it with a second, separately unseeded source: `rcolor = random.choice(('c', 'g', 'b', 'k'))` from the stdlib `random` imported at 52, so the 250 path colours are random, carry no information, and change every build. 514 binds `b_sum = np.zeros(T+1)` and never uses it, and the loop at 515-518 unpacks `w` and `b` it does not use. 499 has a space after the opening parenthesis, `ax.plot( b, 'b-', label=\"Debt\")` (E201). 837 draws the impulse marker at `(S, S)` with `S = 5` labelled \"# Impulse date\" at 807, but the shock is placed at index `S+1` (818, 820) and the jump in `c` therefore occurs at period 6, so the vertical line sits one period before the response it marks. 843 calls `plt.tight_layout()` where the two sibling figures (504, 523) do not, and 838 sets `grid(alpha=0.5)` where 501 and 520 call `grid()` bare - three figures, three conventions"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [173, 214, 325, 951],
-     "detail": "173 is a two-sentence `{note}` whose second sentence takes 33 words to say that the parameters can be chosen to make negative consumption unlikely. Three forward promises are made and never anchored: \"These ideas will be clarified below\" (214), \"We do this later\" (223), \"(Later examples will investigate more realistic income streams.)\" (425) - none names a section or uses a `{ref}`, and the lecture has labels available (`odr_pi`, `coint_pi`, `sub_classic_consumption`). 325-327 hedges rather than explains: \"To get from the second last to the last expression in this chain of equalities is not trivial. A key is to use the fact that...\" - \"a key\" rather than the step. And 162 (\"discounted geometric sums of some quadratic forms to be described below\") and 951 (\"it doesn't capture important aspects of some consumption/savings data\") both gesture at unnamed objects where naming them costs nothing"},
-    {"rule": "qe-math-009", "count": 3, "lines": [234, 259, 897],
-     "detail": "the file mixes plain TeX `\\over` with LaTeX `\\frac` for the same two quantities: `{r \\over 1+r}` at 259 and 304 against `\\frac{r}{1+r}` at 269, and `{1 \\over 1-\\beta}` at 561 and 585 against `\\frac{c_t}{1-\\beta}` at 249. 234 writes the limit condition as $\\lim_{t \\to \\infty} \\beta^{\\frac{t}{2}} b_{t+1} = 0$, putting a `\\frac` inside an exponent where $\\beta^{t/2}$ is both standard and legible at that size. 897 writes the innovation as $a_t := y_t - E [ y_t \\,|\\, y_{t-1}, \\ldots, y_0]$ - a bare `E` in a lecture that uses `\\mathbb{E}` in all 30 other places, and `\\,|\\,` hand-spacing where `\\mid` does the job (the same hand-spacing appears at 76)"}
+    {
+      "rule": "qe-writing-005",
+      "count": 10,
+      "lines": [
+        77,
+        97,
+        176,
+        196,
+        244,
+        264,
+        554,
+        634,
+        857,
+        923
+      ],
+      "detail": "the same term is set both ways six lines apart: *economic income* in italic at 264 (\"These last two equations assert that consumption equals *economic income*\") and **economic income** in bold at 270, inside the very list the italic sentence introduces. The bold marker is otherwise used correctly for nine definitions - **random walk** (91), the five wealth concepts (266-270), **cointegrating vector** (622), **present value of the moving average coefficients** (731), **fundamental** (1006) - while ten more definitions arrive in italic: *information set* (77), *random walks* (89), *innovation* (97), *no Ponzi scheme* (176), *Euler equations* (196), *law of iterated expectations* (244), *innovation to the expected present value* (554), *cointegrating residual* (634), *innovation representation* (857) and *permanent* (923). The italics that are doing emphasis are correct (*necessary* 209, *is* 610, *state* 40 and 276, *exogenous*/*endogenous* 280-281), so the file is running two conventions at once rather than misunderstanding one"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        396,
+        811,
+        849,
+        936,
+        998
+      ],
+      "detail": "849 contradicts itself: \"In contrast, notice how most of a transitory income shock is saved and only a small amount is saved\" - the second clause must read \"consumed\", as 785-787 and 797 both explain. 998, footnote f2, states the standard assumptions as \"$u'(c) >0, u''(c)<0, u'''(c) > 0$\" and two sentences later argues from \"the fact that $u''' <0$\"; Jensen's inequality gives $\\mathbb{E}_t[u'(c_{t+1})] > u'(\\mathbb{E}_t[c_{t+1}])$ when $u'$ is convex, i.e. when $u''' > 0$, so the sign in the second mention is wrong and it is the step the whole footnote turns on. 936 reads \"Application of formula to this example shows that\" with the reference missing - 789 has the same sentence complete (\"Application of the formula for debt in {eq}`pi_ssr`\"). 811 defines a second function also called `time_path`, with an incompatible signature (`time_path(T, permanent=False)` against `time_path(T, rng)` at 482), silently shadowing the first for the rest of the notebook. And 396-419 introduces three labelled moment recursions, {eq}`lss_mut_perm_income`, {eq}`eqsigmalaw` and {eq}`eqymoments`, that are never computed and never referred to again - part of a wider pattern in which nine labelled equations have no citation anywhere in the file: `pi_cpa` (301), `pi_stsp` (386), those three, `pi_crw` (644), `sprob12` (718), `sprob13` (726) and `consexample1b` (939)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        509,
+        599,
+        853
+      ],
+      "detail": "the lecture already draws 250 independent consumption paths (511-523) and then, 130 lines later, derives $\\mathrm{Var}[c_t] = \\mathrm{Var}[c_0] + t\\,\\hat\\sigma^2$ (661-671) and says \"the variance of $c_t$ increases over time at a rate proportional to $t$\" (679) - without measuring the spread of the fan it has in hand. A $\\pm\\sqrt{t}\\,\\hat\\sigma$ envelope on that figure, or the realised cross-sectional variance plotted against the predicted line, would test {eq}`pi_vt` with the simulation already written. Second, cointegration is one of the four things the overview promises (41) and the section that delivers it (599-635) produces the cointegrating vector $[(1-\\beta)\\ \\ 1]$ and the residual $(1-\\beta)b_t + c_t$ entirely in algebra; `time_path` at 482 already returns `b` and `c`, so one panel showing $b_t$ and $c_t$ wandering while $(1-\\beta)b_t + c_t$ stays flat is the picture the argument is asking for. Third, \"Two Classic Examples\" (734) gives Example 1 a two-panel impulse-response figure (804-845) and Example 2 (853-944) nothing at all - no code, no figure - even though its content is a one-parameter family in the Kalman gain $K$ and 899-901 and 928 make quantitative claims about how the response varies with $K$ that a single plot over $K \\in [0,1]$ would show"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        492,
+        499,
+        514,
+        517,
+        837,
+        843
+      ],
+      "detail": "492 is `rng = np.random.default_rng()` with no seed, and it is the only generator in the lecture, so both figures (495-504 and 512-523) are different on every build - which matters because 507 makes a claim about the drawn path (\"Observe that consumption is considerably smoother than income\"). 517 compounds it with a second, separately unseeded source: `rcolor = random.choice(('c', 'g', 'b', 'k'))` from the stdlib `random` imported at 52, so the 250 path colours are random, carry no information, and change every build. 514 binds `b_sum = np.zeros(T+1)` and never uses it, and the loop at 515-518 unpacks `w` and `b` it does not use. 499 has a space after the opening parenthesis, `ax.plot( b, 'b-', label=\"Debt\")` (E201). 837 draws the impulse marker at `(S, S)` with `S = 5` labelled \"# Impulse date\" at 807, but the shock is placed at index `S+1` (818, 820) and the jump in `c` therefore occurs at period 6, so the vertical line sits one period before the response it marks. 843 calls `plt.tight_layout()` where the two sibling figures (504, 523) do not, and 838 sets `grid(alpha=0.5)` where 501 and 520 call `grid()` bare - three figures, three conventions"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        173,
+        214,
+        325,
+        951
+      ],
+      "detail": "173 is a two-sentence `{note}` whose second sentence takes 33 words to say that the parameters can be chosen to make negative consumption unlikely. Three forward promises are made and never anchored: \"These ideas will be clarified below\" (214), \"We do this later\" (223), \"(Later examples will investigate more realistic income streams.)\" (425) - none names a section or uses a `{ref}`, and the lecture has labels available (`odr_pi`, `coint_pi`, `sub_classic_consumption`). 325-327 hedges rather than explains: \"To get from the second last to the last expression in this chain of equalities is not trivial. A key is to use the fact that...\" - \"a key\" rather than the step. And 162 (\"discounted geometric sums of some quadratic forms to be described below\") and 951 (\"it doesn't capture important aspects of some consumption/savings data\") both gesture at unnamed objects where naming them costs nothing"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        234,
+        259,
+        897
+      ],
+      "detail": "the file mixes plain TeX `\\over` with LaTeX `\\frac` for the same two quantities: `{r \\over 1+r}` at 259 and 304 against `\\frac{r}{1+r}` at 269, and `{1 \\over 1-\\beta}` at 561 and 585 against `\\frac{c_t}{1-\\beta}` at 249. 234 writes the limit condition as $\\lim_{t \\to \\infty} \\beta^{\\frac{t}{2}} b_{t+1} = 0$, putting a `\\frac` inside an exponent where $\\beta^{t/2}$ is both standard and legible at that size. 897 writes the innovation as $a_t := y_t - E [ y_t \\,|\\, y_{t-1}, \\ldots, y_0]$ - a bare `E` in a lecture that uses `\\mathbb{E}` in all 30 other places, and `\\,|\\,` hand-spacing where `\\mid` does the job (the same hand-spacing appears at 76)"
+    }
   ],
   "strengths": [
     "The martingale groundwork at 66-105 is laid before it is needed and drawn tightly: the definition, the conditional-expectation operator $\\mathbb{E}_t := \\mathbb{E}[\\cdot \\mid \\mathcal{F}_t]$ with the information set explained as \"a collection of random variables that the modeler declares to be visible at $t$\", the distinction between martingales and random walks, and then a link to Wald's martingale at 105 as an explicit counterexample to the converse",
@@ -36,5 +97,9 @@
     "Convert the eight apostrophe transposes to `\\top` (158, 394, 406, 417, 624, 670), write `\\mathbb{V}` for the two `\\mathrm{Var}` at 664 and `\\mathbb{E}` for the bare `E` at 897, pick `\\frac` over `\\over` throughout (259, 304, 561, 585), and lower-case the 15 Title Case headings at 56, 107, 186, 217, 274, 331, 421, 526, 531, 636 and the rest",
     "Sweep the small items: the 29 double spaces (45, 69, 76, 91, 173, 196, 223, 269, 271, 383 and 19 more), `{cite:t}` for the three author-as-subject citations at 859 and 899, `mystnb` caption and name metadata on the three figure cells (474, 511, 804) with the `set_title` at 834 moved into one, the \"reponse\" typo at 834, \"functions that illustrates\" at 799, the missing reference at 936, the dead `b_sum` at 514, and the impulse marker at 837 that sits one period before the jump"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "2b4fa9aa561f94caa7bf63629b7d4ec0511c4dc3"
+  }
 }

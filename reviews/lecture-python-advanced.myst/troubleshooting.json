@@ -17,5 +17,9 @@
     "Split the two-sentence paragraph at 65-66 and remove the double space after \"possible.\" (qe-writing-001, qe-writing-008)",
     "Give the screenshot at 52 an `:alt:` describing the Launch Notebook icon and convert it to a `{figure}` with a `:name:` so it can be referenced (qe-fig-005)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "d1c03960eac33be92d125ef7c7a4036d0544c972"
+  }
 }

@@ -69,5 +69,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-005 x6 for mccall_fitted_vfi.md is an undercount by one: the figure drawn inside `plot_cross_sectional_unemployment` (772-787) and rendered by the bare call at 793 is not counted, because `_cell_makes_figure` requires a plotting call at column zero. Same blind spot as lq_inventories.md and mccall_model_with_sep_markov.md."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "42437d9b448502e1f7595c23b7a96d6e4202c807"
+  }
 }

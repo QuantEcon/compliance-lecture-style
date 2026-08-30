@@ -2,14 +2,44 @@
   "series": "lecture-dp",
   "lecture": "os_stochastic",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [329, 575, 834],
-     "detail": "three breaks in the thread. (1) Two H3s in one page are both '### The Bellman Operator' (329 and 551), which gives the page two sections with the same name and the same generated anchor - the first is the definition of $T$, the second its implementation. (2) `get_greedy` (578-591) is introduced by the four words 'Here's the function:' (575) and sits under that second Bellman-operator heading, with no paragraph saying which function or why; greedy policies were last discussed 250 lines earlier at 291-323, and the sibling lecture os_numerical gives the same code a heading and three paragraphs of setup (411-437). (3) The exercise and its solution specify different utility functions: 814 asks for $u(c) = \\frac{c^{1-\\gamma}}{1-\\gamma}$ and 835 implements `(c**(1 - γ) - 1) / (1 - γ)`. The extra $-1$ is harmless for the policy, which is presumably why it survived, but a reader checking the code against the exercise finds them different"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [471, 849],
-     "detail": "the lecture's whole point is that returns are now stochastic (32-43: 'wealth now evolves stochastically', 'stochastic returns, due to shocks to production') and not one of its five figures contains any randomness. All five plot deterministic functions of $x$: $Tv^*$ against $v^*$ (673-678), the 36 iterates (692-706), the converged value function (763-773), the policy (789-798) and the CRRA policy (850-854). The lognormal $\\phi$ is specified at 471-475 and drawn at 509, and neither the shock distribution nor a simulated path $\\{x_t\\}$ under the computed policy is ever shown - which is also the one figure that would distinguish this lecture's output from os_numerical's. The exercise figure at 849-854 compounds it: it plots the CRRA policy alone, so the reader cannot see what raising $\\gamma$ to 1.5 did relative to the log case plotted at 789-798"},
-    {"rule": "qe-code-001", "count": 3, "lines": [556, 567, 582],
-     "detail": "(1) `T`'s annotation at 556 is `-> tuple[np.ndarray, np.ndarray]` and the function returns one array, `v_new` (572) - the signature states an interface the code does not have, and the caller at 738 uses it as a single array. (2) The two loops over the same grid, in adjacent functions, are written two ways: `for i in range(len(x_grid)): x = x_grid[i]` at 567-568 in `T`, and the idiomatic `for i, x in enumerate(model.x_grid)` at 586 in `get_greedy`, which is also what os_numerical uses in both places (265, 448). (3) Two docstrings are single-quoted one-liners padded with spaces - `\" Compute the v-greedy policy on x_grid.\"` (582) and `\" Solve by value function iteration. \"` (731) - while 452, 501, 557, 634 and 644 in the same file use the triple-quoted form. Also `B` unpacks `μ` and `ν` at 529 and uses neither"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [264, 335],
-     "detail": "the file bolds thirteen terms at their definitions - **production function** (96), **current savings** (104), **adapted** (146), **state** and **control** (150-151), **policy functions** (160), **feasible consumption policy** (173), **value function** (235), **optimal** (246), **Bellman equation** (251), **greedy** (296), **Bellman operator** (333), **value function iteration** (394) - and then italicises the fourteenth: 'This is a *functional equation in* $v$' (264), where the italic run also swallows the preposition. Line 335 goes the other way and bolds a word for emphasis rather than definition - '(The term **operator** is usually reserved for functions that send functions into functions!)' - two lines after the same word has already been bolded as the definition at 333"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        329,
+        575,
+        834
+      ],
+      "detail": "three breaks in the thread. (1) Two H3s in one page are both '### The Bellman Operator' (329 and 551), which gives the page two sections with the same name and the same generated anchor - the first is the definition of $T$, the second its implementation. (2) `get_greedy` (578-591) is introduced by the four words 'Here's the function:' (575) and sits under that second Bellman-operator heading, with no paragraph saying which function or why; greedy policies were last discussed 250 lines earlier at 291-323, and the sibling lecture os_numerical gives the same code a heading and three paragraphs of setup (411-437). (3) The exercise and its solution specify different utility functions: 814 asks for $u(c) = \\frac{c^{1-\\gamma}}{1-\\gamma}$ and 835 implements `(c**(1 - γ) - 1) / (1 - γ)`. The extra $-1$ is harmless for the policy, which is presumably why it survived, but a reader checking the code against the exercise finds them different"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        471,
+        849
+      ],
+      "detail": "the lecture's whole point is that returns are now stochastic (32-43: 'wealth now evolves stochastically', 'stochastic returns, due to shocks to production') and not one of its five figures contains any randomness. All five plot deterministic functions of $x$: $Tv^*$ against $v^*$ (673-678), the 36 iterates (692-706), the converged value function (763-773), the policy (789-798) and the CRRA policy (850-854). The lognormal $\\phi$ is specified at 471-475 and drawn at 509, and neither the shock distribution nor a simulated path $\\{x_t\\}$ under the computed policy is ever shown - which is also the one figure that would distinguish this lecture's output from os_numerical's. The exercise figure at 849-854 compounds it: it plots the CRRA policy alone, so the reader cannot see what raising $\\gamma$ to 1.5 did relative to the log case plotted at 789-798"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        556,
+        567,
+        582
+      ],
+      "detail": "(1) `T`'s annotation at 556 is `-> tuple[np.ndarray, np.ndarray]` and the function returns one array, `v_new` (572) - the signature states an interface the code does not have, and the caller at 738 uses it as a single array. (2) The two loops over the same grid, in adjacent functions, are written two ways: `for i in range(len(x_grid)): x = x_grid[i]` at 567-568 in `T`, and the idiomatic `for i, x in enumerate(model.x_grid)` at 586 in `get_greedy`, which is also what os_numerical uses in both places (265, 448). (3) Two docstrings are single-quoted one-liners padded with spaces - `\" Compute the v-greedy policy on x_grid.\"` (582) and `\" Solve by value function iteration. \"` (731) - while 452, 501, 557, 634 and 644 in the same file use the triple-quoted form. Also `B` unpacks `μ` and `ν` at 529 and uses neither"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        264,
+        335
+      ],
+      "detail": "the file bolds thirteen terms at their definitions - **production function** (96), **current savings** (104), **adapted** (146), **state** and **control** (150-151), **policy functions** (160), **feasible consumption policy** (173), **value function** (235), **optimal** (246), **Bellman equation** (251), **greedy** (296), **Bellman operator** (333), **value function iteration** (394) - and then italicises the fourteenth: 'This is a *functional equation in* $v$' (264), where the italic run also swallows the preposition. Line 335 goes the other way and bolds a word for emphasis rather than definition - '(The term **operator** is usually reserved for functions that send functions into functions!)' - two lines after the same word has already been bolded as the definition at 333"
+    }
   ],
   "strengths": [
     "Every formal object is given a plain-language reading immediately after its display, in the same shape each time: $v_\\sigma$ at 226-233 ('In other words, it is the lifetime value of following policy $\\sigma$ forever'), $v^*$ at 240-244, $v$-greedy at 301-312, $T$ at 342-349, and the integral term at 267-271 broken into three bullets",
@@ -32,5 +62,9 @@
     "Two prose repairs: 79 reads 'Here we described the new model and the optimization problem' (present tense - or delete, since '### Setup' follows immediately), and 101-106 ends a sentence at 'is **current savings**.' and then starts the next with 'and all variables are required to be nonnegative.'",
     "The upstream twin `lecture-python.myst/lectures/os_stochastic.md` has already replaced `np.random.seed`/`randn` at 508-509 with `default_rng`/`standard_normal`; fix the rest upstream too so both copies clear at once"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "204568e68d90f4b94ee02e88fbdb840aa47e68ff"
+  }
 }

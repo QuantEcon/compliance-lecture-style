@@ -2,10 +2,23 @@
   "series": "lecture-dp",
   "lecture": "ifp_opi",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [28, 427],
-     "detail": "line 28 asserts 'OPI combines elements of both value function iteration and policy iteration' and then never says how - the reader is sent off-site to DP1 at line 30, and the algorithm box at 249-252 only lists the two steps. The missing connection is the one the whole lecture turns on: $m = 1$ is exactly VFI and $m \\to \\infty$ is policy iteration, so $m$ interpolates between them. It is never stated, even though the sweep at 387 includes $m=1$ and the summary at 416-417 relies on the large-$m$ end of that same idea. Separately, the exercise at 427 asks the reader to vary '$\\rho$ and $\\nu$' - symbols that appear nowhere in the lecture's narrative or math; they exist only as keyword arguments at line 95, because the income process itself was left in {doc}`ifp_discrete`"},
-    {"rule": "qe-code-001", "count": 1, "lines": [124],
-     "detail": "line 124 writes `a, y, ap  = a_grid[i], y_grid[j], a_grid[ip]` with two spaces before the `=` (pycodestyle E221); the parallel unpacking at line 177 in `T_σ` has one. The multi-space alignment at 133-135 and 194-195 is a different case and should be left alone - the aligned `in_axes` tuples make the moving axis read as a diagonal, which is the 'closer to mathematical notation' exception the rule allows for"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        28,
+        427
+      ],
+      "detail": "line 28 asserts 'OPI combines elements of both value function iteration and policy iteration' and then never says how - the reader is sent off-site to DP1 at line 30, and the algorithm box at 249-252 only lists the two steps. The missing connection is the one the whole lecture turns on: $m = 1$ is exactly VFI and $m \\to \\infty$ is policy iteration, so $m$ interpolates between them. It is never stated, even though the sweep at 387 includes $m=1$ and the summary at 416-417 relies on the large-$m$ end of that same idea. Separately, the exercise at 427 asks the reader to vary '$\\rho$ and $\\nu$' - symbols that appear nowhere in the lecture's narrative or math; they exist only as keyword arguments at line 95, because the income process itself was left in {doc}`ifp_discrete`"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 1,
+      "lines": [
+        124
+      ],
+      "detail": "line 124 writes `a, y, ap  = a_grid[i], y_grid[j], a_grid[ip]` with two spaces before the `=` (pycodestyle E221); the parallel unpacking at line 177 in `T_σ` has one. The multi-space alignment at 133-135 and 194-195 is a different case and should be left alone - the aligned `in_axes` tuples make the moving axis read as a diagonal, which is the 'closer to mathematical notation' exception the rule allows for"
+    }
   ],
   "strengths": [
     "The vectorization is built up one axis at a time (133-135) from a single scalar `B` at 114, with the `in_axes` tuples column-aligned so the axis being mapped reads down the diagonal - a reader can see what each `vmap` adds instead of facing one opaque call",
@@ -26,5 +39,9 @@
     "ifp_opi.md, line 102 - the 2 `qe-code-002` hits are false positives, and of the same kind as the `beta` hits in career.md. Line 102 is `mc = qe.tauchen(n=y_size, rho=ρ, sigma=ν)`: `rho` and `sigma` are the keyword-parameter names of the `quantecon.tauchen` function, not identifiers the author chose. The author's own variables ARE Unicode - they are the values being passed, `ρ` and `ν`, declared at line 95. Renaming the keywords would break the call. The check should skip identifiers in keyword-argument position (and names bound by an import), which would clear both this and the career.md case.",
     "ifp_opi.md, line 30 - the 1 `qe-link-002` hit looks unactionable. The link is `[DP1](https://dp.quantecon.org)`. `dp.quantecon.org` is the *Dynamic Programming* book, not one of the five lecture series, and it is NOT in lecture-dp's `intersphinx_mapping`, which lists only `intro`, `intermediate` and `advanced` (lectures/_config.yml lines 96-105). There is no `{doc}` target to convert this to; doing what the rule asks would break the build. Either drop `dp.quantecon.org` from the known-intersphinx URL list, or the series needs the mapping added first.",
     "Scope question affecting 5 of the 18 lecture-dp files I reviewed, not a miscount. The reports mark the JAX category 'out of scope' on the grounds that `qe-jax-*` targets `lecture-jax`, which is not in the corpus - but ifp_opi.md, ifp_discrete.md, ifp_egm.md, ifp_egm_transient_shocks.md and ifp_advanced.md all `import jax` and are written in exactly the idiom the JAX rules describe (`NamedTuple` model at 79-85 for qe-jax-002, `jax.lax.while_loop` / `fori_loop` at 215, 240, 286 for qe-jax-005, functional updates throughout for qe-jax-004). calvo_machine_learn.md also touches JAX. So 'out of scope' here is a statement about the repository the rules were written for, not about the lecture - and it silently exempts real JAX code from 7 rules. Worth deciding whether the JAX category should key off `import jax` in the file rather than off the series name."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "d1e67328a81b619e5dc5b3575799c5277a1e6e4b"
+  }
 }

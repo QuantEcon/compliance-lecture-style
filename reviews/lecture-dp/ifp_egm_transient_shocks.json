@@ -2,14 +2,45 @@
   "series": "lecture-dp",
   "lecture": "ifp_egm_transient_shocks",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [556, 968],
-     "detail": "lines 556-570 present a verification that cannot work as described. `create_ifp` is defined twice - at 210 with `β=0.96` and again at 401 with `β=0.94` - so `ifp_numpy` (352) and `ifp` (547) are different models, yet 567-568 concludes 'These numbers confirm that we are computing essentially the same policy'. Line 570 then diagnoses the gap as 'mainly due to different Monte Carlo integration outcomes over relatively small samples', which is a specific wrong answer: both constructors draw 100 standard normals from the same seed, and the discount factor is what differs. Second, exercise `ifp_egm_ex1` at 968 says to step `r` through `np.linspace(0, 0.016, 4)` and its own solution at 984 uses `np.linspace(0, 0.04, 4)`, justified by a comment ('With β=0.96, we need R*β < 1, so r < 0.0416') that names a discount factor the model in scope does not have"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [34, 104, 616, 816],
-     "detail": "line 34 reads 'we continue extend the IFP' - a verb is missing; line 104 ends 'where $a_y, b_y$ are positive constants' with no full stop and a trailing space; line 816 has 'Lets'' for 'Let's' plus four words of padding ('some standard measures of this phenomenon'). The fourth is duplication: the figure cell at 616-623 is byte-identical to the one at 365-373, labels included, and both plot `a_vec`/`c_vec` - the NumPy solution from line 358 - so the JAX section's only policy figure is a second printing of the NumPy section's. The prose around it (426-427 repeating 234-235 verbatim, the identical operator docstrings at 268-275 and 436-443, 'Let's road test the EGM code' at both 349 and 544) has the same copy-forward character"},
-    {"rule": "qe-code-001", "count": 4, "lines": [656, 842, 848, 862],
-     "detail": "line 656 writes `+ y_bar(k) , label=label` with a space before the comma (E203); line 842 writes `jnp.arange(1, n+1)` unspaced while line 843 directly below writes `(n + 1) / n` spaced; line 848 writes `p: float=0.01`, which needs spaces around `=` on an annotated parameter (E252), where 514 in the same file gets it right; line 862 leaves trailing whitespace after `return wealth_top / wealth_total` (W291, also at 309, 473, 638-639)"},
-    {"rule": "qe-math-009", "count": 1, "lines": [99],
-     "detail": "`\\mathsf Z` at line 99 for the Markov chain's state support - the one decorative letter left in this file, and the same object the code calls `z_grid`. Plain $Z$ would do, and would also settle the disagreement across the series, where {doc}`ifp_egm` writes `\\mathsf S`/`\\mathsf Z` and {doc}`ifp_advanced` writes `\\mathbf S` and `\\mathscr C` for the same family of objects"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        556,
+        968
+      ],
+      "detail": "lines 556-570 present a verification that cannot work as described. `create_ifp` is defined twice - at 210 with `β=0.96` and again at 401 with `β=0.94` - so `ifp_numpy` (352) and `ifp` (547) are different models, yet 567-568 concludes 'These numbers confirm that we are computing essentially the same policy'. Line 570 then diagnoses the gap as 'mainly due to different Monte Carlo integration outcomes over relatively small samples', which is a specific wrong answer: both constructors draw 100 standard normals from the same seed, and the discount factor is what differs. Second, exercise `ifp_egm_ex1` at 968 says to step `r` through `np.linspace(0, 0.016, 4)` and its own solution at 984 uses `np.linspace(0, 0.04, 4)`, justified by a comment ('With β=0.96, we need R*β < 1, so r < 0.0416') that names a discount factor the model in scope does not have"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        34,
+        104,
+        616,
+        816
+      ],
+      "detail": "line 34 reads 'we continue extend the IFP' - a verb is missing; line 104 ends 'where $a_y, b_y$ are positive constants' with no full stop and a trailing space; line 816 has 'Lets'' for 'Let's' plus four words of padding ('some standard measures of this phenomenon'). The fourth is duplication: the figure cell at 616-623 is byte-identical to the one at 365-373, labels included, and both plot `a_vec`/`c_vec` - the NumPy solution from line 358 - so the JAX section's only policy figure is a second printing of the NumPy section's. The prose around it (426-427 repeating 234-235 verbatim, the identical operator docstrings at 268-275 and 436-443, 'Let's road test the EGM code' at both 349 and 544) has the same copy-forward character"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        656,
+        842,
+        848,
+        862
+      ],
+      "detail": "line 656 writes `+ y_bar(k) , label=label` with a space before the comma (E203); line 842 writes `jnp.arange(1, n+1)` unspaced while line 843 directly below writes `(n + 1) / n` spaced; line 848 writes `p: float=0.01`, which needs spaces around `=` on an annotated parameter (E252), where 514 in the same file gets it right; line 862 leaves trailing whitespace after `return wealth_top / wealth_total` (W291, also at 309, 473, 638-639)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        99
+      ],
+      "detail": "`\\mathsf Z` at line 99 for the Markov chain's state support - the one decorative letter left in this file, and the same object the code calls `z_grid`. Plain $Z$ would do, and would also settle the disagreement across the series, where {doc}`ifp_egm` writes `\\mathsf S`/`\\mathsf Z` and {doc}`ifp_advanced` writes `\\mathbf S` and `\\mathscr C` for the same family of objects"
+    }
   ],
   "strengths": [
     "The Monte Carlo step is written into the math before it appears in code: equation `cfequmc` at 248-256 restates `cfequ_ts` with the integral replaced by $\\frac{1}{m}\\sum_{\\ell=1}^m$, and line 258 says each $\\eta_\\ell$ is a standard normal draw - so `η_draws` in the constructor at 418 is implementing something the reader has already seen defined",
@@ -31,5 +62,9 @@
   "scanner_doubts": [
     "ifp_egm_transient_shocks.md, lines 115, 116, 122 - the 3 `qe-math-002` hits are the same `(u' \\circ \\sigma)` false positive already reported for ifp_egm.md (3 hits) and ifp_advanced.md (6 hits). Twelve hits across three files in this series now trace to one missing exception: `u'` immediately followed by `\\circ`. Line 123 of this file states the convention outright - 'primes indicate next period states (as well as derivatives)'.",
     "ifp_egm_transient_shocks.md, lines 686 and 1017 - the 2 `qe-ref-001` hits split the same way as in ifp_egm.md and ifp_advanced.md: line 1017 is a genuine miss of `{cite:t}` (the citation is the sentence's subject - '{cite}`Ljungqvist2012` section 18.6 can be consulted'), while line 686 is a bullet-list citation ('* For details see {cite}`ma2020income`'), which the rule text permits. Across the three files the check flagged 'see {cite}' four times where the citation was parenthetical or in a list, and missed several author-in-subject-position cases; the discriminator appears to be the word 'see' rather than sentence position."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "77f5c3690b009f9f279bb883448fbc7820ca7f44"
+  }
 }

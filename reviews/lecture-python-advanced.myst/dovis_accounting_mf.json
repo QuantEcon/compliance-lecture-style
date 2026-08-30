@@ -2,10 +2,31 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "dovis_accounting_mf",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 10, "lines": [66, 282, 375, 995, 1565, 1580, 1597, 1599, 2042, 2048],
-     "detail": "twenty-four sentences in this file run past 34 words and ten of them past 42: 2048 is 56 words comparing Colombia and Chile on two channels at once, 1580 is 55, 1565 and 1599 are 53, 2042 is 51, 1597 is 50, 66 is 48, and 282, 375 and 995 are 42-43 each; the pattern is a main clause followed by two or three subordinate clauses that each deserve their own sentence, and it is worst exactly where the argument is hardest (the disinflation mechanics at 1565-1599 and the case studies at 2042-2048)"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [409],
-     "detail": "the Ramsey and Markov benchmarks are set up at 350-427 as the two poles the model lives between - line 409 says \"The full model *interpolates* between these two extremes depending on the cost $\\xi_t$\" - and that interpolation is never drawn; the section is entirely prose and bullet lists, the next figure (497) is about indirect utility, and no later figure plots inflation or debt against $\\xi$ with the two benchmarks marked, although the model is solved on a $\\xi$ grid and the values needed are already in hand"}
+    {
+      "rule": "qe-writing-002",
+      "count": 10,
+      "lines": [
+        66,
+        282,
+        375,
+        995,
+        1565,
+        1580,
+        1597,
+        1599,
+        2042,
+        2048
+      ],
+      "detail": "twenty-four sentences in this file run past 34 words and ten of them past 42: 2048 is 56 words comparing Colombia and Chile on two channels at once, 1580 is 55, 1565 and 1599 are 53, 2042 is 51, 1597 is 50, 66 is 48, and 282, 375 and 995 are 42-43 each; the pattern is a main clause followed by two or three subordinate clauses that each deserve their own sentence, and it is worst exactly where the argument is hardest (the disinflation mechanics at 1565-1599 and the case studies at 2042-2048)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        409
+      ],
+      "detail": "the Ramsey and Markov benchmarks are set up at 350-427 as the two poles the model lives between - line 409 says \"The full model *interpolates* between these two extremes depending on the cost $\\xi_t$\" - and that interpolation is never drawn; the section is entirely prose and bullet lists, the next figure (497) is about indirect utility, and no later figure plots inflation or debt against $\\xi$ with the two benchmarks marked, although the model is solved on a $\\xi$ grid and the values needed are already in hand"
+    }
   ],
   "strengths": [
     "Figures are named and then actually referenced: `fig-credibility-targets` is cited at 308 before it appears, `fig-fundamental` at 1584 and 1734, `fig-institutional` at 1756 - this is the only lecture in the series that uses `{numref}` as a matter of course",
@@ -25,5 +46,9 @@
   "scanner_doubts": [
     "dovis_accounting_mf.md:693,694,695,740,746,752,753 - qe-math-002 reports 11 apostrophe transposes and is the second-largest contributor to the 3/10 Math score, but every one of them is a next-period prime: `\\xi_1'` (693-695), `b'`, `\\phi'` and `s_1'` (740, 746, 752, 753). None is a transpose. All 11 hits look like false positives. This is the same defect I saw in discrete_dp (six `s'` hits), so it is systemic rather than a one-file accident - the transpose check needs to exclude primes on scalar state variables, or at least require a matrix-shaped symbol to its left.",
     "dovis_accounting_mf.md:680 - qe-writing-006 flags the H2 \"The full model with Gumbel shocks\" as Title Case, but the only capitals are the leading \"The\" and the proper noun \"Gumbel\" (as in the Gumbel distribution). This heading is already in the sentence case the rule requires, so the single hit looks like a false positive."
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "121110d7d67db9501a23fa99da164580abb2101b"
+  }
 }

@@ -2,18 +2,94 @@
   "series": "lecture-python-intro",
   "lecture": "greek_square",
   "judgment": [
-    {"rule": "qe-math-009", "count": 4, "lines": [188, 190, 192, 194],
-     "detail": "`{\\mathcal I}` is used four times for the set $\\{2, 3, \\ldots\\}$ - a calligraphic symbol carrying no more information than a plain letter, defined on the spot at 188 and then never used again after 194; the same lecture writes plain $M$, $V$, $\\Lambda$ for its matrices"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [102, 128, 192, 317],
-     "detail": "four definitions set in italics: \"We call such a function $g$ a *solution*\" (102), \"which we can rewrite as the *characteristic equation*\" (128), \"$\\sigma$ is said to be a *perfect square*\" (192 - the same term the lecture correctly bolds at 41), and \"we constructed an *invariant subspace* of ${\\bf R}^2$\" (317), which is where the lecture's central concept is introduced and is followed by \"Here is what is going on\""},
-    {"rule": "qe-writing-002", "count": 3, "lines": [291, 309, 608],
-     "detail": "lines 279-306 state the same limit four times over - $\\eta_1 = 0$ at 279-289, then \"Actually, if $\\eta_1 = 0$\" at 291-297 adding only that convergence is immediate, then the symmetric $\\eta_2 = 0$ case at 299-306 - where two displays would carry the content; line 309 restates the signpost already given at 264; and 576 (\"The following notations and equations will help us\") with 608 (\"These equations will be very useful soon\") are two content-free announcements around one short derivation"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [249, 515],
-     "detail": "lines 249-262 re-derive the general solution and the two-equation system for $(\\eta_1, \\eta_2)$ that {eq}`eq:2diff9`-{eq}`eq:2diff11` already gave at 156-169, switching the root symbol from $\\delta$ to $\\lambda$ without saying that this is the same result specialised - the reader has to re-map the notation rather than being told; and line 515 breaks the thread outright with \"each eigenvector is just a two-dimensional subspace of ${\\mathbb R}^3$\" in a lecture whose state vector has been $x_t \\in \\mathbb{R}^2$ since line 439"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [266],
-     "detail": "the algorithm's central claim - that $y_{t+1}/y_t \\to 1 + \\sqrt{\\sigma}$ for almost all initial conditions (266-277) - is never plotted; `solve_sqrt` at 361-379 builds exactly that sequence and then discards everything but the last two entries at 377, and the only ratio figure (686-716) shows the two muted cases where convergence is immediate, so the generic convergence the ancient Greeks relied on is the one thing the reader never sees"},
-    {"rule": "qe-code-001", "count": 32, "lines": [343, 346, 358, 365, 368, 375, 378, 391, 408, 470, 474, 476, 478, 483, 533, 535, 539, 540, 542, 543, 648, 649, 661, 662, 679, 693, 695, 699, 704, 706, 710, 712],
-     "detail": "28 code lines carry trailing whitespace, including whitespace-only lines inside function bodies (343, 346, 358, 365, 368, 375, 378, 470, 474, 476, 478, 483, 533, 535, 539, 540, 542, 543, 648, 661, 662, 679, 693, 695, 699, 704, 706, 710); on top of that `dev = abs(sqrt_σ-np.sqrt(σ))` at 391 drops the spaces around the minus that line 377 has, `y = lambda t, ηs: ...` at 408 binds a lambda to a name where a `def` belongs, and `V[1,1]/V[0,1]` at 649 and `V[1,0]/V[0,0]` at 662 omit the space after the comma in the index that line 353 includes"}
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        188,
+        190,
+        192,
+        194
+      ],
+      "detail": "`{\\mathcal I}` is used four times for the set $\\{2, 3, \\ldots\\}$ - a calligraphic symbol carrying no more information than a plain letter, defined on the spot at 188 and then never used again after 194; the same lecture writes plain $M$, $V$, $\\Lambda$ for its matrices"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        102,
+        128,
+        192,
+        317
+      ],
+      "detail": "four definitions set in italics: \"We call such a function $g$ a *solution*\" (102), \"which we can rewrite as the *characteristic equation*\" (128), \"$\\sigma$ is said to be a *perfect square*\" (192 - the same term the lecture correctly bolds at 41), and \"we constructed an *invariant subspace* of ${\\bf R}^2$\" (317), which is where the lecture's central concept is introduced and is followed by \"Here is what is going on\""
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        291,
+        309,
+        608
+      ],
+      "detail": "lines 279-306 state the same limit four times over - $\\eta_1 = 0$ at 279-289, then \"Actually, if $\\eta_1 = 0$\" at 291-297 adding only that convergence is immediate, then the symmetric $\\eta_2 = 0$ case at 299-306 - where two displays would carry the content; line 309 restates the signpost already given at 264; and 576 (\"The following notations and equations will help us\") with 608 (\"These equations will be very useful soon\") are two content-free announcements around one short derivation"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        249,
+        515
+      ],
+      "detail": "lines 249-262 re-derive the general solution and the two-equation system for $(\\eta_1, \\eta_2)$ that {eq}`eq:2diff9`-{eq}`eq:2diff11` already gave at 156-169, switching the root symbol from $\\delta$ to $\\lambda$ without saying that this is the same result specialised - the reader has to re-map the notation rather than being told; and line 515 breaks the thread outright with \"each eigenvector is just a two-dimensional subspace of ${\\mathbb R}^3$\" in a lecture whose state vector has been $x_t \\in \\mathbb{R}^2$ since line 439"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        266
+      ],
+      "detail": "the algorithm's central claim - that $y_{t+1}/y_t \\to 1 + \\sqrt{\\sigma}$ for almost all initial conditions (266-277) - is never plotted; `solve_sqrt` at 361-379 builds exactly that sequence and then discards everything but the last two entries at 377, and the only ratio figure (686-716) shows the two muted cases where convergence is immediate, so the generic convergence the ancient Greeks relied on is the one thing the reader never sees"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 32,
+      "lines": [
+        343,
+        346,
+        358,
+        365,
+        368,
+        375,
+        378,
+        391,
+        408,
+        470,
+        474,
+        476,
+        478,
+        483,
+        533,
+        535,
+        539,
+        540,
+        542,
+        543,
+        648,
+        649,
+        661,
+        662,
+        679,
+        693,
+        695,
+        699,
+        704,
+        706,
+        710,
+        712
+      ],
+      "detail": "28 code lines carry trailing whitespace, including whitespace-only lines inside function bodies (343, 346, 358, 365, 368, 375, 378, 470, 474, 476, 478, 483, 533, 535, 539, 540, 542, 543, 648, 661, 662, 679, 693, 695, 699, 704, 706, 710); on top of that `dev = abs(sqrt_σ-np.sqrt(σ))` at 391 drops the spaces around the minus that line 377 has, `y = lambda t, ηs: ...` at 408 binds a lambda to a name where a `def` belongs, and `V[1,1]/V[0,1]` at 649 and `V[1,0]/V[0,0]` at 662 omit the space after the comma in the index that line 353 includes"
+    }
   ],
   "strengths": [
     "Every display equation that is referred to again carries a label, and every label is actually cited - `eq:2diff1` (74) at 78, 94, 116, 141, 153; `eq:2diff6` (132) at 134, 159, 214; `eq:second_order` (202) at 208, 246, 249, 329, 429, 458; `eq:cha_eq0` (212) at 216, 235, 503; `eq:secretweapon` (239) at 241, 502; `eq:leq_sq` (262) at 264, 309; `eq:deactivate1` and `eq:deactivate2` (629, 641) at 643, 645, 658, 724 - which is what lets the lecture argue by reference instead of repetition",
@@ -33,5 +109,9 @@
   ],
   "scanner_doubts": [
     "One of the two qe-writing-001 hits in greek_square.md is a false positive: the hit at line 23 is the verbatim Bertrand Russell quotation inside the ```{epigraph} fence at 22-24. It genuinely contains 7 sentences, but one-sentence-per-paragraph cannot be applied to quoted material without altering the quotation, so the only correct action is to leave it. check_writing_001 (tools/qestyle_rules.py 266-273) walks `_paragraph_blocks(doc)` with no exemption for `{epigraph}` or blockquote content. The second hit (line 86, inside a `{note}`) is a fair one. In this series only geom_series.md and greek_square.md use `{epigraph}`, so the blast radius is small here - geom_series' epigraph at 44 is a single sentence and is not hit - but the exemption is worth adding before the rule meets a lecture that quotes at length."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "8e7850e81d9d46d7a151e9bab7223b8aa5f50ad1"
+  }
 }

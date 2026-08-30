@@ -60,5 +60,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-002 records nothing for python_by_example.md:46, where a static PNG (`_static/lecture_specific/python_by_example/test_program_1_updated.png`) shows the output of the very program printed 15 lines later at 61-69 - the clearest code-generatable static image in the series. The cause is the `NOT_A_PLOT` guard in tools/qestyle_rules.py:909-913, which exempts every path containing `/python_by_example/` rather than only the screenshots in that directory."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "1a67a68e6836c9e8d0cbde2afa339d6e0f48c295"
+  }
 }

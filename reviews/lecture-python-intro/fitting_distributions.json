@@ -2,12 +2,32 @@
   "series": "lecture-python-intro",
   "lecture": "fitting_distributions",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 2, "lines": [243, 670],
-     "detail": "two definitions set in italics in a lecture that bolds nine others: \"They are called *plotting positions*\" at 243 and \"an additional parameter $\\nu > 0$, called the *degrees of freedom*\" at 670 - both are the \"called X\" pattern that **parametric class** (33), **method of moments** (84), **Q-Q plot** (202), **Kolmogorov-Smirnov statistic** (358) and **Student's t distributions** (668) all get bold for"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [307, 589],
-     "detail": "line 307-309 is a 41-word sentence with three clauses chained through a colon and a \"so\" (\"The points curve away from the line, and the departure has a clear meaning: towards the right, ... so the data have a longer right tail than the normal distribution allows\"), where the lecture's other sentences run to a single idea; lines 589-590 restate the third warning of 492-495 almost word for word (\"it is only the best of the candidates we happened to try\") rather than referring back to it the way line 649 refers to the second warning"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [497],
-     "detail": "\"We take up that point below\" at 497 is answered by the \"When the normal fails\" section at 581, but the Count data section (500-578) is inserted between them - it introduces the Poisson class, a discrete data set and a new diagnostic, and belongs either before the three warnings or after they are resolved"}
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        243,
+        670
+      ],
+      "detail": "two definitions set in italics in a lecture that bolds nine others: \"They are called *plotting positions*\" at 243 and \"an additional parameter $\\nu > 0$, called the *degrees of freedom*\" at 670 - both are the \"called X\" pattern that **parametric class** (33), **method of moments** (84), **Q-Q plot** (202), **Kolmogorov-Smirnov statistic** (358) and **Student's t distributions** (668) all get bold for"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        307,
+        589
+      ],
+      "detail": "line 307-309 is a 41-word sentence with three clauses chained through a colon and a \"so\" (\"The points curve away from the line, and the departure has a clear meaning: towards the right, ... so the data have a longer right tail than the normal distribution allows\"), where the lecture's other sentences run to a single idea; lines 589-590 restate the third warning of 492-495 almost word for word (\"it is only the best of the candidates we happened to try\") rather than referring back to it the way line 649 refers to the second warning"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        497
+      ],
+      "detail": "\"We take up that point below\" at 497 is answered by the \"When the normal fails\" section at 581, but the Count data section (500-578) is inserted between them - it introduces the Poisson class, a discrete data set and a new diagnostic, and belongs either before the three warnings or after they are resolved"
+    }
   ],
   "strengths": [
     "Nine of the eleven figures carry full `mystnb: figure:` metadata with both a caption and a `name` (169, 271, 294, 322, 382, 457, 550, 612, 707), so the figures are nameable and cross-referenceable without further work",
@@ -25,5 +45,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-008 count 2 in fitting_distributions.md (lines 258 and 564) looks like 2 false positives: neither call draws a line. Line 258 is `ax.plot(u.ppf(p), x_sorted, '.', ms=3, alpha=0.6, **kwargs)` - the '.' format string is markers only - and line 564 is `ax.plot(S, u.pmf(S), linestyle='', marker='o', color='C1', ...)`, which disables the line explicitly. Adding `lw=2` to either would change nothing on the page. check_fig_008 in tools/qestyle_rules.py (1067-1097) tests only for the absence of `lw=`/`linewidth=` in the assembled call; a guard for a marker-only format string or `linestyle=''`/`linestyle='none'` would remove this class of hit. With these two removed the lecture's Figures category has only the 2 qe-fig-005 hits left."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "47ea2905c979c662da121a22fe31145ed9632558"
+  }
 }

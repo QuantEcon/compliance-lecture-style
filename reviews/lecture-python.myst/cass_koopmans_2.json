@@ -2,18 +2,65 @@
   "series": "lecture-python.myst",
   "lecture": "cass_koopmans_2",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 3, "lines": [29, 211, 263],
-     "detail": "the phrase \"this lecture {doc}`Cass-Koopmans Planning Model <cass_koopmans_1>`\" - \"this lecture\" naming a *different* lecture - is used seven times (29, 129, 139, 416, 553, 671, 823), where \"the previous lecture\" or just the `{doc}` link would read correctly. Line 211 is not a sentence: \"Because  is a **relative price**. the unit of account  in terms of which the prices $q^0_t$ are stated is; we are free to re-normalize them...\" - it has no subject, a full stop in the middle and a trailing \"is;\". Line 263 reads \"because we it  displays constant returns to scale\""},
-    {"rule": "qe-writing-003", "count": 3, "lines": [632, 648, 995],
-     "detail": "lines 632 and 641 are the same sentence twice (\"If we plug {eq}`eq-pl` into {eq}`Zero-profits` for all t, we get\" / \"If we now plug...\") but derive two different results, and the first should point at the *capital* zero-profit condition at 245-247, which carries no label at all - only the labour condition at 251-255 is labelled `Zero-profits`. Line 648 says the wage result \"is exactly {eq}`eq-pr4`\", but `eq-pr4` (459-463) is the household's capital-choice function $k^*_t(\\vec q, \\vec w, \\vec \\eta)$; the wage guess is `eq-price2`. And the lecture stops at line 999 immediately after \"Now we plot when $t_0=20$\" - the two yield-curve figures at 990-999 get no interpretation and there is no closing section, where the sibling lecture ends with \"## Concluding Remarks\""},
-    {"rule": "qe-writing-005", "count": 5, "lines": [50, 61, 188, 306, 663],
-     "detail": "line 50 writes the trick's name as `A **Big** $K$ **, little** $k$ trick`, so the bold spans break around the inline math and end up bolding the comma; the same construction is repeated at 425. The other four are bold used for emphasis, not definition: **prices** at 61, **single** at 188 and again at 357, **equilibrium** at 306, and `**Normalization:**` at 663 used as a heading"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [180, 871],
-     "detail": "sections \"Market Structure\", \"Firm Problem\" and \"Household Problem\" (180-402) describe a circular flow in words - the household owns labour and capital and rents both to the firm, the firm sells output back to the household, and all trades happen once in a single grand market just before date 0 (400-402) - and there is no diagram of it, in a lecture whose whole point is the correspondence between that structure and the planner's. Separately the six-panel figure at 853-879 plots four horizons with no `label=` and no legend, so nothing identifies which curve is $T=250$ and which is $T=50$; the very next figure (890-916) plots four values of $\\gamma$ with `label=fr'$\\gamma = {γ}$'` and `axs[0, 0].legend()`, so the fix is already in the file"},
-    {"rule": "qe-code-001", "count": 3, "lines": [704, 737, 856],
-     "detail": "line 704 writes `if γ!= 1` with no space before the operator; line 737 opens a docstring with four quotes (`''''`), so its first character is a stray apostrophe; lines 856 and 894 both bind `fix, axs = plt.subplots(...)` - a typo for `fig`, and the name is never used. `def r(pp, t0, q_path)` at 969 also takes two parameters it never reads"},
-    {"rule": "qe-math-009", "count": 1, "lines": [516],
-     "detail": "the household's Lagrangian is written $\\mathcal{L}(\\vec c, \\vec k, \\lambda)$ at 516 and 523; the letter $L$ is otherwise unused in this lecture, so the calligraphic form buys no disambiguation, and the sibling lecture writes the same kind of object as a plain $L$ (cass_koopmans_1:128)"}
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        29,
+        211,
+        263
+      ],
+      "detail": "the phrase \"this lecture {doc}`Cass-Koopmans Planning Model <cass_koopmans_1>`\" - \"this lecture\" naming a *different* lecture - is used seven times (29, 129, 139, 416, 553, 671, 823), where \"the previous lecture\" or just the `{doc}` link would read correctly. Line 211 is not a sentence: \"Because  is a **relative price**. the unit of account  in terms of which the prices $q^0_t$ are stated is; we are free to re-normalize them...\" - it has no subject, a full stop in the middle and a trailing \"is;\". Line 263 reads \"because we it  displays constant returns to scale\""
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        632,
+        648,
+        995
+      ],
+      "detail": "lines 632 and 641 are the same sentence twice (\"If we plug {eq}`eq-pl` into {eq}`Zero-profits` for all t, we get\" / \"If we now plug...\") but derive two different results, and the first should point at the *capital* zero-profit condition at 245-247, which carries no label at all - only the labour condition at 251-255 is labelled `Zero-profits`. Line 648 says the wage result \"is exactly {eq}`eq-pr4`\", but `eq-pr4` (459-463) is the household's capital-choice function $k^*_t(\\vec q, \\vec w, \\vec \\eta)$; the wage guess is `eq-price2`. And the lecture stops at line 999 immediately after \"Now we plot when $t_0=20$\" - the two yield-curve figures at 990-999 get no interpretation and there is no closing section, where the sibling lecture ends with \"## Concluding Remarks\""
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        50,
+        61,
+        188,
+        306,
+        663
+      ],
+      "detail": "line 50 writes the trick's name as `A **Big** $K$ **, little** $k$ trick`, so the bold spans break around the inline math and end up bolding the comma; the same construction is repeated at 425. The other four are bold used for emphasis, not definition: **prices** at 61, **single** at 188 and again at 357, **equilibrium** at 306, and `**Normalization:**` at 663 used as a heading"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        180,
+        871
+      ],
+      "detail": "sections \"Market Structure\", \"Firm Problem\" and \"Household Problem\" (180-402) describe a circular flow in words - the household owns labour and capital and rents both to the firm, the firm sells output back to the household, and all trades happen once in a single grand market just before date 0 (400-402) - and there is no diagram of it, in a lecture whose whole point is the correspondence between that structure and the planner's. Separately the six-panel figure at 853-879 plots four horizons with no `label=` and no legend, so nothing identifies which curve is $T=250$ and which is $T=50$; the very next figure (890-916) plots four values of $\\gamma$ with `label=fr'$\\gamma = {γ}$'` and `axs[0, 0].legend()`, so the fix is already in the file"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        704,
+        737,
+        856
+      ],
+      "detail": "line 704 writes `if γ!= 1` with no space before the operator; line 737 opens a docstring with four quotes (`''''`), so its first character is a stray apostrophe; lines 856 and 894 both bind `fix, axs = plt.subplots(...)` - a typo for `fig`, and the name is never used. `def r(pp, t0, q_path)` at 969 also takes two parameters it never reads"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        516
+      ],
+      "detail": "the household's Lagrangian is written $\\mathcal{L}(\\vec c, \\vec k, \\lambda)$ at 516 and 523; the letter $L$ is otherwise unused in this lecture, so the calligraphic form buys no disambiguation, and the sibling lecture writes the same kind of object as a plain $L$ (cass_koopmans_1:128)"
+    }
   ],
   "strengths": [
     "The verification is done term by term and each step names the planning-problem condition it reproduces: {eq}`cond1` plus the price guess gives \"which is {eq}`constraint1`\" (561), {eq}`cond2` gives {eq}`constraint2` (585), {eq}`cond3` gives {eq}`constraint3` (607), {eq}`cond4` gives {eq}`constraint4` (621) - the reader can check the correspondence claim one line at a time",
@@ -34,5 +81,9 @@
   "scanner_doubts": [
     "cass_koopmans_2.md - Math scores 10/10 with no mechanical violations, but the file cites eight equation labels that are defined only in cass_koopmans_1.md: `utility-functional` and `allocation` (line 130) and `constraint1`, `constraint2`, `constraint3`, `constraint4` (lines 553, 561, 585, 607, 621). Spec §5 classes a broken `{eq}` ref as Critical, one occurrence being enough, so either the checker does not resolve `{eq}` targets against the file's own `:label:` set, or it treats an unresolvable label as out of scope. Either way this lecture should not be reporting a clean Math category",
     "cass_koopmans_2.md:648 - `{eq}`eq-pr4`` is a *resolvable* label pointing at the wrong equation (the household's capital-choice function rather than the wage guess). A ref-target check would not catch this, so it is noted here only as evidence that the `{eq}` usage in this file needs a pass; no count is being disputed"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "f416adfd9402ba407c4b373755fae18ca6f3c36c"
+  }
 }

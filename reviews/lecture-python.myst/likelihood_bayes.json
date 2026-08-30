@@ -2,20 +2,80 @@
   "series": "lecture-python.myst",
   "lecture": "likelihood_bayes",
   "judgment": [
-    {"rule": "qe-math-014", "count": 4, "lines": [247, 288, 446, 669],
-     "detail": "the lecture states the convention itself and then breaks it. 236-242 defines the events with braces - `A = \\{q=f\\}`, `B = \\{w^{t+1}\\}` - and says outright \"where braces $\\{\\cdot\\}$ are our shorthand for 'event'\". Five lines later 247 writes `{\\rm Prob}(q=f |w^{t+1})` with parentheses around exactly that event, and the same parenthesised form recurs at 288, 300, 446, 472 and 669, plus `\\pi_0 = {\\rm Prob}(q=f|\\emptyset)` at 217-218. The one place the braces survive is inside `{\\rm Prob}({a = f | w_0})` at 669, where they are typed inside the parentheses rather than replacing them. Written as `\\mathbb{P}\\{q = f \\mid w^{t+1}\\}` throughout, the notation would match the convention the lecture announces at 242"},
-    {"rule": "qe-math-015", "count": 4, "lines": [637, 678, 946, 1037],
-     "detail": "from section 623 onward the lecture switches to uppercase $F$ and $G$ for the two objects it has called densities $f$ and $g$ for six hundred lines - \"successive draws of his wage are drawn from either $F$ or $G$\" (637), \"the probability that $w_{t+1}$ is being drawn from distribution $F$\" (678), \"pushes the subjective distribution to draw from $F$ more frequently\" (946), \"almost sure that $w_t$ is drawn from $F$, or is almost sure it is drawn from $G$\" (1037) - while the surrounding mathematics keeps using $f(w_0)$, $g(w_0)$, $\\ell(w_t) = f(w_t)/g(w_t)$ and the code keeps using `F_a, F_b` as beta parameters of the *density*. Neither $F$ nor $G$ is ever a CDF anywhere in the lecture, so the uppercase is not the case distinction proposed qe-math-015 reserves it for; 669-678 has both forms four lines apart"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [29, 33, 710, 718],
-     "detail": "the lecture bolds two definitions - **likelihood ratio process** (109) and **recursion** / **multiplicative decomposition** (128-129) - and italicises at least six others: *likelihood ratio processes* and *Bayesian learning* in the opening sentence (29), *prior* and *posterior* at 33, *martingale* at 710, *bounded martingale* at 712, *sufficient statistic* at 718, *martingale convergence theorem* at 723. All six are terms being introduced, which the rule assigns to bold; the file's many other italics (*some* 142, *same* and *different* 339, *permanent* 451, *not* 467, *before* 657, *subjective* 720) are correct emphasis, so the marker is doing both jobs at once"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [331, 467, 618, 640],
-     "detail": "331-334 repeats 274-279 almost word for word and says so (\"As mentioned above, formula {eq}`eq_Bayeslaw1033` shows the key role that the likelihood ratio process ... plays in determining the posterior probability $\\pi_{t+1}$\"), so two consecutive sentences appear twice fifty lines apart; 618-621 states the same forward reference twice in a row (\"This topic is taken up in {doc}`mix_model`\" then \"We explore how to learn the true mixing parameter $x$ in the exercise of {doc}`mix_model`\"); 640 announces its own redundancy (\"We'll review and reiterate and rearrange some formulas that we have encountered above\"); and 467 is a single 47-word sentence carrying a negation, an equation reference and a restatement of the alternative timing protocol. The closing section at 1039-1042 also repeats line 46 verbatim"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [636, 648, 938],
-     "detail": "636 introduces \"a McCall worker\" and wage draws with no transition, three sections into a lecture about a statistician observing $w_t$ - the worker never appears again except at 657-678 and 1037; 648 and 657 silently change the prior's index from $\\pi_0$, used from 193 to 612, to $\\pi_{-1}$, and both then coexist for the rest of the lecture while the code keeps calling the same quantity `π0` (856, 869, 924), so 973-977 describes a table of $\\pi_{-1}$ values produced by a function whose parameter is `π0s`; and the histogram at 929-937 for $\\pi_0 = 0.3$ is plotted and then never mentioned, with 940 returning to the $\\pi_0 = 0.5$ ensemble"},
-    {"rule": "qe-code-001", "count": 5, "lines": [322, 577, 832, 853, 951],
-     "detail": "322 names a parameter `l` (`def update(π, l)`), which PEP8 E741 singles out as ambiguous, and uses it again at 326; 577 and 156-157 bind lambdas to names (E731); 832-834, 845-846, 853, 899, 932 and 951-954 index without a space after the comma - `np.empty((N,T+1))`, `π_path[:,0]`, `π_path[:,t]`, `π_path[j,:]` (E231) - where the rest of the file writes `[i, :]`; 853 runs to 98 characters (E501); 951-954 and 370-371 and 410-411 indent continuation lines four spaces from the statement start rather than aligning under the opening bracket (E128); and 848-850 and 854-856 separate top-level defs by one blank line instead of two (E302). Line 844 also recomputes `f(w)/g(w)` twice in one expression"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [971],
-     "detail": "971 promises \"We'll use our simulations to generate a histogram of this distribution\" and 979-982 delivers a `pandas` DataFrame instead - eleven rows of $\\pi_{-1}$ against the fraction of paths converging to 0 and to 1. The claim being checked (985: \"The fraction of simulations for which $\\pi_t$ had converged to $1$ is indeed always close to $\\pi_{-1}$\") is that one column equals the index, which is a 45-degree line: plotting the realized fraction against $\\pi_{-1}$ with the identity line drawn would verify the martingale prediction of 810-812 in one picture, where the table asks the reader to compare eleven pairs of rounded numbers by eye"}
+    {
+      "rule": "qe-math-014",
+      "count": 4,
+      "lines": [
+        247,
+        288,
+        446,
+        669
+      ],
+      "detail": "the lecture states the convention itself and then breaks it. 236-242 defines the events with braces - `A = \\{q=f\\}`, `B = \\{w^{t+1}\\}` - and says outright \"where braces $\\{\\cdot\\}$ are our shorthand for 'event'\". Five lines later 247 writes `{\\rm Prob}(q=f |w^{t+1})` with parentheses around exactly that event, and the same parenthesised form recurs at 288, 300, 446, 472 and 669, plus `\\pi_0 = {\\rm Prob}(q=f|\\emptyset)` at 217-218. The one place the braces survive is inside `{\\rm Prob}({a = f | w_0})` at 669, where they are typed inside the parentheses rather than replacing them. Written as `\\mathbb{P}\\{q = f \\mid w^{t+1}\\}` throughout, the notation would match the convention the lecture announces at 242"
+    },
+    {
+      "rule": "qe-math-015",
+      "count": 4,
+      "lines": [
+        637,
+        678,
+        946,
+        1037
+      ],
+      "detail": "from section 623 onward the lecture switches to uppercase $F$ and $G$ for the two objects it has called densities $f$ and $g$ for six hundred lines - \"successive draws of his wage are drawn from either $F$ or $G$\" (637), \"the probability that $w_{t+1}$ is being drawn from distribution $F$\" (678), \"pushes the subjective distribution to draw from $F$ more frequently\" (946), \"almost sure that $w_t$ is drawn from $F$, or is almost sure it is drawn from $G$\" (1037) - while the surrounding mathematics keeps using $f(w_0)$, $g(w_0)$, $\\ell(w_t) = f(w_t)/g(w_t)$ and the code keeps using `F_a, F_b` as beta parameters of the *density*. Neither $F$ nor $G$ is ever a CDF anywhere in the lecture, so the uppercase is not the case distinction proposed qe-math-015 reserves it for; 669-678 has both forms four lines apart"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        29,
+        33,
+        710,
+        718
+      ],
+      "detail": "the lecture bolds two definitions - **likelihood ratio process** (109) and **recursion** / **multiplicative decomposition** (128-129) - and italicises at least six others: *likelihood ratio processes* and *Bayesian learning* in the opening sentence (29), *prior* and *posterior* at 33, *martingale* at 710, *bounded martingale* at 712, *sufficient statistic* at 718, *martingale convergence theorem* at 723. All six are terms being introduced, which the rule assigns to bold; the file's many other italics (*some* 142, *same* and *different* 339, *permanent* 451, *not* 467, *before* 657, *subjective* 720) are correct emphasis, so the marker is doing both jobs at once"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        331,
+        467,
+        618,
+        640
+      ],
+      "detail": "331-334 repeats 274-279 almost word for word and says so (\"As mentioned above, formula {eq}`eq_Bayeslaw1033` shows the key role that the likelihood ratio process ... plays in determining the posterior probability $\\pi_{t+1}$\"), so two consecutive sentences appear twice fifty lines apart; 618-621 states the same forward reference twice in a row (\"This topic is taken up in {doc}`mix_model`\" then \"We explore how to learn the true mixing parameter $x$ in the exercise of {doc}`mix_model`\"); 640 announces its own redundancy (\"We'll review and reiterate and rearrange some formulas that we have encountered above\"); and 467 is a single 47-word sentence carrying a negation, an equation reference and a restatement of the alternative timing protocol. The closing section at 1039-1042 also repeats line 46 verbatim"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        636,
+        648,
+        938
+      ],
+      "detail": "636 introduces \"a McCall worker\" and wage draws with no transition, three sections into a lecture about a statistician observing $w_t$ - the worker never appears again except at 657-678 and 1037; 648 and 657 silently change the prior's index from $\\pi_0$, used from 193 to 612, to $\\pi_{-1}$, and both then coexist for the rest of the lecture while the code keeps calling the same quantity `π0` (856, 869, 924), so 973-977 describes a table of $\\pi_{-1}$ values produced by a function whose parameter is `π0s`; and the histogram at 929-937 for $\\pi_0 = 0.3$ is plotted and then never mentioned, with 940 returning to the $\\pi_0 = 0.5$ ensemble"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        322,
+        577,
+        832,
+        853,
+        951
+      ],
+      "detail": "322 names a parameter `l` (`def update(π, l)`), which PEP8 E741 singles out as ambiguous, and uses it again at 326; 577 and 156-157 bind lambdas to names (E731); 832-834, 845-846, 853, 899, 932 and 951-954 index without a space after the comma - `np.empty((N,T+1))`, `π_path[:,0]`, `π_path[:,t]`, `π_path[j,:]` (E231) - where the rest of the file writes `[i, :]`; 853 runs to 98 characters (E501); 951-954 and 370-371 and 410-411 indent continuation lines four spaces from the statement start rather than aligning under the opening bracket (E128); and 848-850 and 854-856 separate top-level defs by one blank line instead of two (E302). Line 844 also recomputes `f(w)/g(w)` twice in one expression"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        971
+      ],
+      "detail": "971 promises \"We'll use our simulations to generate a histogram of this distribution\" and 979-982 delivers a `pandas` DataFrame instead - eleven rows of $\\pi_{-1}$ against the fraction of paths converging to 0 and to 1. The claim being checked (985: \"The fraction of simulations for which $\\pi_t$ had converged to $1$ is indeed always close to $\\pi_{-1}$\") is that one column equals the index, which is a 45-degree line: plotting the realized fraction against $\\pi_{-1}$ with the identity line drawn would verify the martingale prediction of 810-812 in one picture, where the table asks the reader to compare eleven pairs of rounded numbers by eye"
+    }
   ],
   "strengths": [
     "The lecture states the braces-for-events convention explicitly at 236-242 - `A = \\{q=f\\}`, `B = \\{w^{t+1}\\}`, \"where braces $\\{\\cdot\\}$ are our shorthand for 'event'\" - which is more than most lectures in the corpus do, and it is exactly the distinction proposed qe-math-014 is about",
@@ -39,5 +99,9 @@
     "Math is scored 10/10 for `lectures/likelihood_bayes.md`, but the file contains 26 instances of `{\\rm Prob}` and 5 of `\\textrm{Prob}` (202, 217, 218, 226, 229-233, 247, 288, 300, 446, 472, 669, 734, 790, 795, 806 among others), five bare expectation operators (`E(\\pi_t \\mid \\pi_{t-1})` at 703, `E_t` at 774, `E_{-1}` at 780, 786, 801) and a variance written `\\sigma^2(\\cdot\\mid\\cdot)` at 995 - and no `\\mathbb` anywhere in the file. Spec section 2.2 says the qe-math-010 check catches bare `E[`, `E_t`, `\\Pr(` and `\\Var(`; it evidently does not catch `{\\rm Prob}(`, `\\textrm{Prob}(`, `E(`, or `E_t` followed by a space rather than a subscripted bracket. This is a systematic miss of roughly 37 occurrences in one lecture and it is the difference between 10/10 and a low Math score.",
     "qe-code-002 x4 in `lectures/likelihood_bayes.md` (56, 152) is a false positive. Line 56 is `from math import gamma` and line 152 is `r = gamma(a + b) / (gamma(a) * gamma(b))` - the gamma *function* from the standard library, used to build the beta density. It is an imported name, not a spelled-out Greek variable, and `γ` would be both a broken import and the wrong symbol. This is the fourth instance of the same defect in this series, after `beta` in `imp_sample.md`, `beta=` in `lagrangian_lqdp.md`:476 and `mu=` in `learning_approximation.md`:190.",
     "qe-fig-005 x6 in `lectures/likelihood_bayes.md` includes line 50, which is the opening import cell (`import matplotlib.pyplot as plt`, `import numpy as np`, ... `rng = np.random.default_rng(142857)`). It contains no plotting call and produces no figure, so it cannot be missing figure metadata. The five genuine hits are 874, 896, 929, 948 and 1005."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "ba537ef3179a4daac682c75868bffa883c02fd71"
+  }
 }

@@ -2,16 +2,60 @@
   "series": "lecture-dp",
   "lecture": "rs_inventory_q",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 9, "lines": [381, 387, 395, 439, 440, 517, 518, 522, 434],
-     "detail": "the rule is inverted systematically: bold is used for emphasis nine times and never once for a definition. Emphasis in bold: 'is **deterministic**' (381), 'The variance comes from **revenue**' (387), 'because it **caps the randomness of revenue**' (395-396), 'is a **decreasing** function' (439), 'corresponds to the **minimum**' (440), 'The Q-values are **positive**' (517), 'we **minimize** rather than maximize' (518), 'enters as a **power**' (522). Bold is also used as a list label at 434, 455, 533, 535, 547 and 549 (`**Step 1.**`, `**Step 2.**`, `**Initialize**`, `**At each step:**`, `**Extract the greedy policy**`, `**Compare**`). Meanwhile the four terms the lecture actually defines - the risk-sensitive Bellman equation (77), the certainty equivalent (115, 165), the Q-factor (415-424) and optimistic initialization (551-560) - carry no bold at all, and the two correct italic emphases in the file (*minimizes* 555, *below* 557) sit in the one paragraph that gets it right"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [376, 370, 167],
-     "detail": "the lecture's central economic claim gets five paragraphs of prose and no picture. 376-402 argues that the variance of profit comes from revenue $\\min(x, D)$, that '$\\min(x, D) \\approx D$' when $x$ is high and '$\\min(x, D) \\approx x$' when $x$ is low, and that a risk-sensitive agent therefore holds less stock - and every object in that argument is already computed: `ϕ_values` at 157 is the demand PMF, so one panel of $\\mathrm{sd}[\\min(x, D)]$ against $x$, or two histograms of $\\min(x, D)$ at a high and a low $x$, would show the whole mechanism at a glance. Second, all four figures (307, 346, 684, 714) are unnamed, so the prose has to point at them by position - 'The plots above show' (370), 'The panels below show' (707), 'The top panel shows the optimal policy from VFI for reference' (712) - and the claim at 751-754 asks the reader to 'compare with {doc}`inventory_q`', i.e. with a figure in a different document that cannot be cross-referenced because neither figure has a name. Third, there is not one admonition in 772 lines, and three passages want one: the log-sum-exp stability note at 167-178, the magnitude argument that justifies `q_init=1e-9` at 559-560, and the four-item 'Notice several differences from the risk-neutral case' list at 515-523"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [45, 658],
-     "detail": "the roadmap in the Introduction omits half the lecture. 45-47 says 'We show how the model can be solved using value function iteration. We then investigate how risk sensitivity affects the optimal policy' - and stops. Q-learning is in the lecture's title (23), occupies 405-754, and is the part that carries the novel derivation (the Q-factor fixed point at 430-487, where max becomes min and the continuation value becomes a power), yet a reader working from the Introduction has no idea it is coming. Second, 645 sets the wrapper's default to `n_steps=20_000_000` while nothing in the lecture ever runs 20 million steps: 661-663 runs 5 million, 658 says 'We run $n$ = 5 million steps', and 748 reports on 'step 5 million' - so the default is a fourth number that contradicts the three that agree"},
-    {"rule": "qe-code-001", "count": 4, "lines": [151, 212, 337, 153],
-     "detail": "151 closes the signature of `create_rs_inventory_model` at an indent of 4, matching neither column 0 nor the 8-space indent of the arguments above it (E124), and then leaves 152 blank before the body. 212, 254 and 648 unpack the whole `RSModel` and leave locals unused - `p` at 212 and 254, `d_values` and `ϕ_values` at 648 (F841); `T_rs` and `get_greedy_rs` need only six of the eight fields. 337 and 592 call `np.random.seed(seed)` inside a `@numba.jit(nopython=True)` function, mutating numba's global RNG state as a side effect of a simulation call - the copy of this file in `lecture-python.myst` has already been converted to a passed-in `np.random.default_rng` generator (`rng.geometric`, `rng.integers`, `rng.random`), which is both the modern NumPy API and the reason the copies differ. And 153 names a probability *mass* function `demand_pdf`, three lines after `ϕ_values = demand_pdf(p, d_values)` computes a geometric PMF and 58 lines before 111 states 'Here $\\phi(d)$ denotes the demand probability mass function'"},
-    {"rule": "qe-math-009", "count": 1, "lines": [420],
-     "detail": "the negative thin space `\\!` is applied to six `\\left(` and `\\ln` openings (420, 445, 446, 452, 465, 472) and omitted from the seven structurally identical ones (100-108, 463, 481, 503, 520, 626, 671), so a hand-tuned micro-space is present in about half the displays and absent from the rest with no visible reason for the split. Dropping all six is the simpler and more consistent choice"}
+    {
+      "rule": "qe-writing-005",
+      "count": 9,
+      "lines": [
+        381,
+        387,
+        395,
+        439,
+        440,
+        517,
+        518,
+        522,
+        434
+      ],
+      "detail": "the rule is inverted systematically: bold is used for emphasis nine times and never once for a definition. Emphasis in bold: 'is **deterministic**' (381), 'The variance comes from **revenue**' (387), 'because it **caps the randomness of revenue**' (395-396), 'is a **decreasing** function' (439), 'corresponds to the **minimum**' (440), 'The Q-values are **positive**' (517), 'we **minimize** rather than maximize' (518), 'enters as a **power**' (522). Bold is also used as a list label at 434, 455, 533, 535, 547 and 549 (`**Step 1.**`, `**Step 2.**`, `**Initialize**`, `**At each step:**`, `**Extract the greedy policy**`, `**Compare**`). Meanwhile the four terms the lecture actually defines - the risk-sensitive Bellman equation (77), the certainty equivalent (115, 165), the Q-factor (415-424) and optimistic initialization (551-560) - carry no bold at all, and the two correct italic emphases in the file (*minimizes* 555, *below* 557) sit in the one paragraph that gets it right"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        376,
+        370,
+        167
+      ],
+      "detail": "the lecture's central economic claim gets five paragraphs of prose and no picture. 376-402 argues that the variance of profit comes from revenue $\\min(x, D)$, that '$\\min(x, D) \\approx D$' when $x$ is high and '$\\min(x, D) \\approx x$' when $x$ is low, and that a risk-sensitive agent therefore holds less stock - and every object in that argument is already computed: `ϕ_values` at 157 is the demand PMF, so one panel of $\\mathrm{sd}[\\min(x, D)]$ against $x$, or two histograms of $\\min(x, D)$ at a high and a low $x$, would show the whole mechanism at a glance. Second, all four figures (307, 346, 684, 714) are unnamed, so the prose has to point at them by position - 'The plots above show' (370), 'The panels below show' (707), 'The top panel shows the optimal policy from VFI for reference' (712) - and the claim at 751-754 asks the reader to 'compare with {doc}`inventory_q`', i.e. with a figure in a different document that cannot be cross-referenced because neither figure has a name. Third, there is not one admonition in 772 lines, and three passages want one: the log-sum-exp stability note at 167-178, the magnitude argument that justifies `q_init=1e-9` at 559-560, and the four-item 'Notice several differences from the risk-neutral case' list at 515-523"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        45,
+        658
+      ],
+      "detail": "the roadmap in the Introduction omits half the lecture. 45-47 says 'We show how the model can be solved using value function iteration. We then investigate how risk sensitivity affects the optimal policy' - and stops. Q-learning is in the lecture's title (23), occupies 405-754, and is the part that carries the novel derivation (the Q-factor fixed point at 430-487, where max becomes min and the continuation value becomes a power), yet a reader working from the Introduction has no idea it is coming. Second, 645 sets the wrapper's default to `n_steps=20_000_000` while nothing in the lecture ever runs 20 million steps: 661-663 runs 5 million, 658 says 'We run $n$ = 5 million steps', and 748 reports on 'step 5 million' - so the default is a fourth number that contradicts the three that agree"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        151,
+        212,
+        337,
+        153
+      ],
+      "detail": "151 closes the signature of `create_rs_inventory_model` at an indent of 4, matching neither column 0 nor the 8-space indent of the arguments above it (E124), and then leaves 152 blank before the body. 212, 254 and 648 unpack the whole `RSModel` and leave locals unused - `p` at 212 and 254, `d_values` and `ϕ_values` at 648 (F841); `T_rs` and `get_greedy_rs` need only six of the eight fields. 337 and 592 call `np.random.seed(seed)` inside a `@numba.jit(nopython=True)` function, mutating numba's global RNG state as a side effect of a simulation call - the copy of this file in `lecture-python.myst` has already been converted to a passed-in `np.random.default_rng` generator (`rng.geometric`, `rng.integers`, `rng.random`), which is both the modern NumPy API and the reason the copies differ. And 153 names a probability *mass* function `demand_pdf`, three lines after `ϕ_values = demand_pdf(p, d_values)` computes a geometric PMF and 58 lines before 111 states 'Here $\\phi(d)$ denotes the demand probability mass function'"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        420
+      ],
+      "detail": "the negative thin space `\\!` is applied to six `\\left(` and `\\ln` openings (420, 445, 446, 452, 465, 472) and omitted from the seven structurally identical ones (100-108, 463, 481, 503, 520, 626, 671), so a hand-tuned micro-space is present in about half the displays and absent from the rest with no visible reason for the split. Dropping all six is the simpler and more consistent choice"
+    }
   ],
   "strengths": [
     "The derivation of the risk-sensitive Q-factor equation is laid out as two numbered steps that each state their own goal and are each verifiable: 432 says what is to be achieved ('a fixed point equation in $q$ alone, eliminating $v^*$'), Step 1 (434-453) establishes $\\exp(-\\gamma v^*(x)) = \\min_a q(x,a)$ and explains the max-to-min flip by the monotonicity of $\\psi^{-1}$ (439-441), Step 2 (455-485) substitutes it back, and 487 confirms the goal was reached",
@@ -31,5 +75,9 @@
     "Figures: add `lw=2` to the nine line plots (312, 313, 358, 687, 688, 694, 695, 725, 734) and drop the four `figsize=` overrides (308, 348, 685, 717). The two multi-panel `figsize` calls at 348 and 717 scale with `len(γ_values)` / `n_snaps`, so if the height is genuinely needed keep only that argument and drop the fixed width",
     "Sentence-case the four Title Case headings (59 'The model', 124 'Solving via value function iteration', 368 'Interpreting the outcomes', 405 'Q-learning'), split the two two-sentence paragraphs at 557 and 559, clear the double space at 557, rename `demand_pdf` (153) to `demand_pmf`, unpack only the fields used at 212, 254 and 648, and drop the `{contents}` directive at 25-27"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "0a65a44c75b5a8dad5585fb0dead879ef6c63624"
+  }
 }

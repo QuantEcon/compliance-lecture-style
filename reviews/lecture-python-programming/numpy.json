@@ -81,5 +81,9 @@
   "scanner_doubts": [
     "qe-fig-008 ×13 at numpy.md is almost entirely a false positive. Twelve of the flagged lines (519, 522, 525, 528, 532, 535, 538, 541, 545, 548, 551, 554) are the `ax.plot` calls inside `draw_cube`, which draw the edges of a schematic cube - not line charts. They also do set line width, through `**kwargs` from the `solid` and `dotted` dicts at 563-566, which deliberately use `lw=1` and `lw=0.5`; forcing `lw=2` would ruin the diagram. Only 1391 (`ax.plot(x_vals, f(x_vals))` in `ECDF.plot`) is a genuine occurrence. Consider skipping `qe-fig-008` for plot calls that pass `**kwargs`, or inside a helper whose caller sets `lw`.",
     "qe-writing-001 ×3 at numpy.md:27, 468, 1436 and qe-writing-008 at 27: line 27 is the body of an `{epigraph}` - a five-sentence verbatim quotation from Michael Crichton, whose own double space after \"consensus.\" is what qe-writing-008 flags. Line 468 is the body of a `{note}`. Only 1436 is running prose. tools/qestyle_rules.py:_paragraph_blocks (line 214) excludes headings, list items, tables, targets and option lines from qe-writing-001 but not the bodies of directives; no rule in tools/ mentions `note`, `tip`, `admonition` or `epigraph`."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "7d3eda078b5d80dad2b8b36cf941882ad46ab4fd"
+  }
 }

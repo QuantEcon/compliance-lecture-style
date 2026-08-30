@@ -2,14 +2,47 @@
   "series": "lecture-python.myst",
   "lecture": "bayes_nonconj",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 6, "lines": [39, 114, 203, 260, 384, 445],
-     "detail": "the lecture uses italic correctly for emphasis in about fifteen places (*same* 33, *compute* 128, *declaration* 130, *reads* 132, *single* 142, *zero* 310, *joint* 454, *within the guide family* 513, ...) but then reaches for bold for the same job six times: **not** (39), **small** (114), **four** (203), **not** (260), **scale** (384), and **minimizing**/**maximizing** (445); none of these is a term being defined"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [51, 53, 218, 396],
-     "detail": "four sentences run to 40+ words, each carrying two joined ideas: line 51 (41 words) defines NUTS as Hamiltonian Monte Carlo and then explains accept/reject in one breath; line 53 (41 words) joins the gradient-proposal mechanism to the automatic step-length tuning with a semicolon; the middle sentence of line 218 (42 words) explains autocorrelation, the length-N comparison and the bulk/tail split together; line 396 (40 words) states both halves of the MCMC-versus-VI rule of thumb in one sentence"},
-    {"rule": "qe-code-001", "count": 2, "lines": [160, 277],
-     "detail": "two code lines exceed the PEP8 79-character limit with no mathematical justification: the `run_nuts` signature at line 160 is 84 characters and the four keyword defaults would split cleanly across lines, and `prior_pdf = np.where(...)` at line 277 is 83 characters"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [439],
-     "detail": "the ELBO derivation (398-452) is the one section of an otherwise well-illustrated lecture with no visual support; the decomposition at 439-441 - $\\log p(Y)$ fixed, split into the KL divergence plus the ELBO, so maximising one closes the gap on the other - is exactly the relationship a single stacked-bar or bound diagram makes obvious, and the sentence at 452 (\"the ELBO is a lower bound on $\\log p(Y)$ - hence its name\") is asking for one"}
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        39,
+        114,
+        203,
+        260,
+        384,
+        445
+      ],
+      "detail": "the lecture uses italic correctly for emphasis in about fifteen places (*same* 33, *compute* 128, *declaration* 130, *reads* 132, *single* 142, *zero* 310, *joint* 454, *within the guide family* 513, ...) but then reaches for bold for the same job six times: **not** (39), **small** (114), **four** (203), **not** (260), **scale** (384), and **minimizing**/**maximizing** (445); none of these is a term being defined"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        51,
+        53,
+        218,
+        396
+      ],
+      "detail": "four sentences run to 40+ words, each carrying two joined ideas: line 51 (41 words) defines NUTS as Hamiltonian Monte Carlo and then explains accept/reject in one breath; line 53 (41 words) joins the gradient-proposal mechanism to the automatic step-length tuning with a semicolon; the middle sentence of line 218 (42 words) explains autocorrelation, the length-N comparison and the bulk/tail split together; line 396 (40 words) states both halves of the MCMC-versus-VI rule of thumb in one sentence"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 2,
+      "lines": [
+        160,
+        277
+      ],
+      "detail": "two code lines exceed the PEP8 79-character limit with no mathematical justification: the `run_nuts` signature at line 160 is 84 characters and the four keyword defaults would split cleanly across lines, and `prior_pdf = np.where(...)` at line 277 is 83 characters"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        439
+      ],
+      "detail": "the ELBO derivation (398-452) is the one section of an otherwise well-illustrated lecture with no visual support; the decomposition at 439-441 - $\\log p(Y)$ fixed, split into the KL divergence plus the ELBO, so maximising one closes the gap on the other - is exactly the relationship a single stacked-bar or bound diagram makes obvious, and the sentence at 452 (\"the ELBO is a lower bound on $\\log p(Y)$ - hence its name\") is asking for one"
+    }
   ],
   "strengths": [
     "The lecture validates the machinery before trusting it: the conjugate beta case is run through NUTS first (192-252) precisely so the sampler can be checked against a posterior known in closed form, and the plan at 58-62 says so up front",
@@ -27,5 +60,9 @@
     "Set `lw=2` on the loss-curve plot at line 482 - the only `ax.plot` in the lecture without it (qe-fig-008)",
     "Wrap the two over-long code lines at 160 and 277, and consider giving `plot_prior_posterior` a `{numref}`-able name per figure rather than a `title=` string"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "c70df051d1604be2b16a8b5c0d1c6deb669a1e22"
+  }
 }

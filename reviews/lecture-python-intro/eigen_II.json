@@ -2,18 +2,66 @@
   "series": "lecture-python-intro",
   "lecture": "eigen_II",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 3, "lines": [169, 355, 465],
-     "detail": "the lecture has no figure at all across 569 lines, and three passages are about things only a picture shows: the Perron-Frobenius statement at 169-184 compares $|\\lambda|$ against $r(A)$ for every eigenvalue, which is a plot of the spectrum against a circle of radius $r(A)$; the convergence of $r(A)^{-m} A^m$ to the Perron projection is delivered at 355-362 as printed Frobenius norms for n = 1, 10, 100, 1000, 10000 rather than an error curve; and the $O(\\eta^t)$ rate at 462-468 is asserted with no plot of $\\|\\psi P^t - \\psi^*\\|$ against the spectral gap"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [63, 118, 265],
-     "detail": "definitions left unbolded while emphasis is bolded - the exact reversal the rule forbids: \"is called irreducible\" at 63 and \"is called a left eigenvector\" at 118 carry no bold, although **nonnegative** (49), **dominant eigenvalue** (164), **primitive** (228) and **Perron projection** (267) are all correctly bolded; at 265 bold is used for emphasis instead, \"the inequality $|\\lambda| \\leq r(A)$ is **strict**\""},
-    {"rule": "qe-writing-003", "count": 2, "lines": [191, 453],
-     "detail": "line 191 says \"Let's build our intuition for the theorem using a simple example we have seen [before](mc_eg1)\" but the next section (195-203) introduces a fresh matrix and never returns to `mc_eg1`, so the promised link is not made; line 453 \"Recall that eigenvalues are ordered from smallest to largest from $i = 1 ... n$\" asks the reader to recall a convention this lecture has not stated - and the code at 305-308 picks the dominant eigenvalue with `np.max`/`np.argmax`, giving no ordering at all"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [63, 222],
-     "detail": "line 63 packs the irreducibility definition into 33 words and then mis-states its own condition: \"$A + A^2 + A^3 + \\cdots \\gg 0$, where $\\gg 0$ indicates that every element in $A$ is strictly positive\" - the positivity is a property of the sum, not of $A$; line 222 \"We know that in real world situations it's hard for a matrix to be everywhere positive (although they have nice properties)\" leaves \"they\" and the parenthetical unattached to anything"},
-    {"rule": "qe-math-009", "count": 1, "lines": [447],
-     "detail": "$\\psi \\in \\mathscr{D}(S)$ at 447 reaches for a script alphabet for the set of distributions on $S$ - the only decorative symbol in a lecture that otherwise uses plain letters - and the symbol is never defined here or linked to where it is defined"},
-    {"rule": "qe-code-001", "count": 7, "lines": [138, 139, 148, 149, 322, 550, 561],
-     "detail": "`{v[:,0]}`, `{-v[:,1]}`, `{w[:,0]}`, `{-w[:,1]}` at 138-139 and `{e[:,0]}` ... `{ε[:,1]}` at 148-149 omit the space after the comma in the index, which the same lecture writes correctly as `v[:, i]` at 311-312; `def check_convergence(M)` at 322 follows the previous top-level def with a single blank line (PEP8 asks for two); `#dominant eigenvalue/spectral radius` at 550 has no space after the hash; `d.shape = (3,1)` at 561 has no space after the comma"}
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        169,
+        355,
+        465
+      ],
+      "detail": "the lecture has no figure at all across 569 lines, and three passages are about things only a picture shows: the Perron-Frobenius statement at 169-184 compares $|\\lambda|$ against $r(A)$ for every eigenvalue, which is a plot of the spectrum against a circle of radius $r(A)$; the convergence of $r(A)^{-m} A^m$ to the Perron projection is delivered at 355-362 as printed Frobenius norms for n = 1, 10, 100, 1000, 10000 rather than an error curve; and the $O(\\eta^t)$ rate at 462-468 is asserted with no plot of $\\|\\psi P^t - \\psi^*\\|$ against the spectral gap"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        63,
+        118,
+        265
+      ],
+      "detail": "definitions left unbolded while emphasis is bolded - the exact reversal the rule forbids: \"is called irreducible\" at 63 and \"is called a left eigenvector\" at 118 carry no bold, although **nonnegative** (49), **dominant eigenvalue** (164), **primitive** (228) and **Perron projection** (267) are all correctly bolded; at 265 bold is used for emphasis instead, \"the inequality $|\\lambda| \\leq r(A)$ is **strict**\""
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        191,
+        453
+      ],
+      "detail": "line 191 says \"Let's build our intuition for the theorem using a simple example we have seen [before](mc_eg1)\" but the next section (195-203) introduces a fresh matrix and never returns to `mc_eg1`, so the promised link is not made; line 453 \"Recall that eigenvalues are ordered from smallest to largest from $i = 1 ... n$\" asks the reader to recall a convention this lecture has not stated - and the code at 305-308 picks the dominant eigenvalue with `np.max`/`np.argmax`, giving no ordering at all"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        63,
+        222
+      ],
+      "detail": "line 63 packs the irreducibility definition into 33 words and then mis-states its own condition: \"$A + A^2 + A^3 + \\cdots \\gg 0$, where $\\gg 0$ indicates that every element in $A$ is strictly positive\" - the positivity is a property of the sum, not of $A$; line 222 \"We know that in real world situations it's hard for a matrix to be everywhere positive (although they have nice properties)\" leaves \"they\" and the parenthetical unattached to anything"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        447
+      ],
+      "detail": "$\\psi \\in \\mathscr{D}(S)$ at 447 reaches for a script alphabet for the set of distributions on $S$ - the only decorative symbol in a lecture that otherwise uses plain letters - and the symbol is never defined here or linked to where it is defined"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        138,
+        139,
+        148,
+        149,
+        322,
+        550,
+        561
+      ],
+      "detail": "`{v[:,0]}`, `{-v[:,1]}`, `{w[:,0]}`, `{-w[:,1]}` at 138-139 and `{e[:,0]}` ... `{ε[:,1]}` at 148-149 omit the space after the comma in the index, which the same lecture writes correctly as `v[:, i]` at 311-312; `def check_convergence(M)` at 322 follows the previous top-level def with a single blank line (PEP8 asks for two); `#dominant eigenvalue/spectral radius` at 550 has no space after the hash; `d.shape = (3,1)` at 561 has no space after the comma"
+    }
   ],
   "strengths": [
     "The lecture is stitched into the series rather than standing alone - `{ref}` and `{doc}`-style links reach mc_irreducible (57), la_eigenvalues (104), mc_eg1 (191), mc1_ex_1 (386, 431), mc_eg3 and mc_eg2 (395), and la_neumann (534) - so every borrowed concept has a destination",
@@ -31,5 +79,9 @@
     "Lower-case the theorem names in narrative text: \"Gershgorin Circle Theorem\" at 457 and \"Neumann Series Lemma\" at 554 (qe-writing-004 x2), split the two-sentence paragraph at 267 (qe-writing-001), move the `{cite}` at 443 out of the sentence flow (qe-ref-001), and reduce the double space at 266 (qe-writing-008)",
     "Fix the code slips listed above: `v[:, 0]` spacing in the four f-strings at 138-139 and 148-149, a second blank line before `def check_convergence` at 322, `# dominant` at 550, and `(3, 1)` at 561"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "c383d4fb85b8309958c5aae3e79658c2c0daf28b"
+  }
 }

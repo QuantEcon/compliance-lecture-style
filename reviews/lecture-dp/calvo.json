@@ -2,16 +2,62 @@
   "series": "lecture-dp",
   "lecture": "calvo",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [432, 644],
-     "detail": "the section that names the lecture's method points at the wrong two equations. 'Note on dynamic programming squared' (423-437) says the two Bellman equations are '{eq}`eq_old1`, which expresses how $\\theta_t$ depends on $\\mu_t$ and $\\theta_{t+1}$' and '{eq}`eq_old4`, which expresses how value $v_t$ depends on $(\\mu_t, \\theta_t)$ and $v_{t+1}$'. But `eq_old1` (112) is the Cagan money-demand function $m_t - p_t = -\\alpha(p_{t+1}-p_t)$ and `eq_old4` (189) is the state transition $x_{t+1} = Ax_t + B\\mu_t$. The equations meant are `eq_old2` (136) and `eq_old8` (302). Both references resolve, so nothing breaks - the reader simply lands on the wrong display twice in the four lines that explain what 'dynamic programming squared' means. Separately, line 644 says '(Here an application of the Big $K$, little $k$ trick is again at work.)' - the trick has not appeared earlier in this lecture, is not explained, and is not linked"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [28, 75, 318, 725, 749, 753],
-     "detail": "the installation cell appears twice: lines 28-34 ('this lecture will need the following libraries') and lines 77-83 ('this lecture will use the following libraries'), running the identical `!pip install --upgrade quantecon`. Lines 749-750 repeat 708-709 word for word ('Time-variation of $\\vec \\mu$ chosen by a Ramsey planner is the telltale sign of the Ramsey plan's time inconsistency'). Line 75 has 'the recursive structure structure of the Ramsey problem'; line 753 has '**must** must choose'; lines 318 and 321 both read 'is the value of attained by the government'; line 725 has 'defined inequation {eq}`eq:barvdef`'. Four more of the same kind: 'plannner' (704), 'for computed in subproblem 1 above' (554), 'and of the continuation value' (1341), and 'respectfully' for 'respectively' (1361)"},
-    {"rule": "qe-writing-005", "count": 8, "lines": [153, 220, 251, 329, 345, 646, 715, 753],
-     "detail": "bold used for stress rather than definition at 251 (**costs** / **benefits**), 329 (**policy**), 345 (**output** / **input**), 646-647 ('**promised inflation** equals **actual inflation**'), 715 (the single word **is**) and 753 (**must**); line 153 uses '**Insight:**' as a bold pseudo-label. Line 220 is the reverse error - the term being defined, 'bliss level', is wrapped in double backticks and so renders as inline code rather than bold, and it is the name the lecture then relies on. The file's genuine definitional bolds (**time inconsistency** 38, **Ramsey plan** 55, **dynamic programming squared** 426, **promised inflation rates** 634) are doing the right job and are diluted by the rest"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [371],
-     "detail": "'Three timing protocols' (369-412) distinguishes three models along three stated dimensions - *what* a policymaker chooses, *when* it chooses, and what it *assumes* about how its choice affects expectations - and then delivers the nine resulting cells as three separate prose passages (373-378, 380-389, 396-412). The reader has to build the grid mentally, and the payoff of the whole lecture depends on holding it. A three-by-three table would do it in one block, and the lecture already renders LaTeX tables from pandas (`generate_table`, 1287-1300), so the machinery is present"},
-    {"rule": "qe-code-001", "count": 4, "lines": [962, 1259, 1297, 1455],
-     "detail": "line 962 assigns a lambda (E731) and writes a space after the unary minus, `lambda θ_array: - np.array([1, θ_array])`, with a backslash continuation that the surrounding parentheses make unnecessary; line 1259 puts a compound statement on one line, `if not isinstance(clqs, list): clqs, axes = [clqs], [axes]` (E701); line 1297 runs to about 90 characters (E501); line 1455 writes `T-1` unspaced where the same file spaces its other binary operators. Trailing whitespace is also scattered through the class body (923, 937, 947, 967, 998, 1001, 1008, 1010)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        432,
+        644
+      ],
+      "detail": "the section that names the lecture's method points at the wrong two equations. 'Note on dynamic programming squared' (423-437) says the two Bellman equations are '{eq}`eq_old1`, which expresses how $\\theta_t$ depends on $\\mu_t$ and $\\theta_{t+1}$' and '{eq}`eq_old4`, which expresses how value $v_t$ depends on $(\\mu_t, \\theta_t)$ and $v_{t+1}$'. But `eq_old1` (112) is the Cagan money-demand function $m_t - p_t = -\\alpha(p_{t+1}-p_t)$ and `eq_old4` (189) is the state transition $x_{t+1} = Ax_t + B\\mu_t$. The equations meant are `eq_old2` (136) and `eq_old8` (302). Both references resolve, so nothing breaks - the reader simply lands on the wrong display twice in the four lines that explain what 'dynamic programming squared' means. Separately, line 644 says '(Here an application of the Big $K$, little $k$ trick is again at work.)' - the trick has not appeared earlier in this lecture, is not explained, and is not linked"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        28,
+        75,
+        318,
+        725,
+        749,
+        753
+      ],
+      "detail": "the installation cell appears twice: lines 28-34 ('this lecture will need the following libraries') and lines 77-83 ('this lecture will use the following libraries'), running the identical `!pip install --upgrade quantecon`. Lines 749-750 repeat 708-709 word for word ('Time-variation of $\\vec \\mu$ chosen by a Ramsey planner is the telltale sign of the Ramsey plan's time inconsistency'). Line 75 has 'the recursive structure structure of the Ramsey problem'; line 753 has '**must** must choose'; lines 318 and 321 both read 'is the value of attained by the government'; line 725 has 'defined inequation {eq}`eq:barvdef`'. Four more of the same kind: 'plannner' (704), 'for computed in subproblem 1 above' (554), 'and of the continuation value' (1341), and 'respectfully' for 'respectively' (1361)"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        153,
+        220,
+        251,
+        329,
+        345,
+        646,
+        715,
+        753
+      ],
+      "detail": "bold used for stress rather than definition at 251 (**costs** / **benefits**), 329 (**policy**), 345 (**output** / **input**), 646-647 ('**promised inflation** equals **actual inflation**'), 715 (the single word **is**) and 753 (**must**); line 153 uses '**Insight:**' as a bold pseudo-label. Line 220 is the reverse error - the term being defined, 'bliss level', is wrapped in double backticks and so renders as inline code rather than bold, and it is the name the lecture then relies on. The file's genuine definitional bolds (**time inconsistency** 38, **Ramsey plan** 55, **dynamic programming squared** 426, **promised inflation rates** 634) are doing the right job and are diluted by the rest"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        371
+      ],
+      "detail": "'Three timing protocols' (369-412) distinguishes three models along three stated dimensions - *what* a policymaker chooses, *when* it chooses, and what it *assumes* about how its choice affects expectations - and then delivers the nine resulting cells as three separate prose passages (373-378, 380-389, 396-412). The reader has to build the grid mentally, and the payoff of the whole lecture depends on holding it. A three-by-three table would do it in one block, and the lecture already renders LaTeX tables from pandas (`generate_table`, 1287-1300), so the machinery is present"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        962,
+        1259,
+        1297,
+        1455
+      ],
+      "detail": "line 962 assigns a lambda (E731) and writes a space after the unary minus, `lambda θ_array: - np.array([1, θ_array])`, with a backslash continuation that the surrounding parentheses make unnecessary; line 1259 puts a compound statement on one line, `if not isinstance(clqs, list): clqs, axes = [clqs], [axes]` (E701); line 1297 runs to about 90 characters (E501); line 1455 writes `T-1` unspaced where the same file spaces its other binary operators. Trailing whitespace is also scattered through the class body (923, 937, 947, 967, 998, 1001, 1008, 1010)"
+    }
   ],
   "strengths": [
     "'Multiple roles of $\\theta_t$' (681-696) is the conceptual payoff of the whole construction and it is stated compactly: the same symbol is the actual inflation rate in {eq}`eq_old3`, the public's expected rate in {eq}`eq_old2`, and a promise chosen at time 0 in {eq}`eq_old9` - and lines 692-696 name what that ambiguity illuminates (whether the government leads or follows the market, forward guidance, inflation targeting)",
@@ -34,5 +80,9 @@
   "scanner_doubts": [
     "calvo.md, line 931 - the single `qe-code-002` hit is a false positive, the fifth of this kind in the series (after career.md, ifp_opi.md, ifp_discrete.md, cons_news.md and discrete_dp.md). The line is `lq = LQ(self.Q, self.R, self.A, self.B, beta=self.β)`: `beta` is the `quantecon.LQ` constructor's parameter name and the value passed is the author's own Unicode `β`. Every Greek identifier the author controls in this 1557-line file is already Unicode (`α`, `β`, `θ`, `μ`, `θ_n`, `θ_R`, `θ_B`). Excluding keyword-argument position would clear this file completely.",
     "calvo.md, lines 67, 193, 288, 765 - rule attribution, not a miscount, and the same issue I raised for cons_news.md. The 4 links are real and should be fixed, but three of them target `lqcontrol`, which exists in lecture-dp itself (lectures/lqcontrol.md), so they are same-series references belonging to qe-link-001 rather than qe-link-002. Only line 765 (`markov_perf`) is genuinely cross-series. As in cons_news.md the host is `python-intro.quantecon.org`, which is absent from lecture-dp's `intersphinx_mapping` (intro / intermediate / advanced only) - worth checking whether that host is stale in the checker's known-URL list, since a `{doc}`intro:lqcontrol`` fix derived from it would not resolve."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "49d01b297f01a89bbb51e9eced7a8598afbae42a"
+  }
 }

@@ -2,12 +2,35 @@
   "series": "lecture-python.myst",
   "lecture": "inventory_dynamics",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 3, "lines": [42, 77, 275],
-     "detail": "the file contains no bold at all, so every term it defines arrives in plain text: \"so-called s-S inventory dynamics\" (42), which is the subject of the lecture; the notation `$a^+ := \\max\\{a, 0\\}$` (77), introduced mid-sentence as \"With notation\"; and \"kernel density estimator\" (275), where the term is carried by a Wikipedia link instead. The one emphasis mark in the file, *new* at 142, is correctly italic"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [55, 438, 510],
-     "detail": "55 spends 35 words (\"While our Markov environment and many of the concepts we consider are related to those found in our lecture on finite Markov chains, ...\") to say that the state space here is continuous rather than finite; 438 loses its verb agreement - \"we have written a specialized JAX-jitted function and using `jax.vmap` to use parallelization across firms\" - and says \"use\" twice; and the printed label at 510, \"Frequency of at least two stock outs\", names the wrong event, since the exercise (424-425) and the function docstring (446-450) both count restocks, and a firm that restocks at $X_t \\leq s$ has not run out of stock"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [159, 272],
-     "detail": "\"Let's run a first simulation, of a single path:\" at 159 sits after the cell that actually runs it (153-157) and introduces the cell that only plots it, so the reader meets the result before the announcement; and 272 asks the reader to consult \"figure with paths above\" to see why the distribution is bimodal, which means jumping back over two intervening figures to the one at 181 - the bimodality argument is never made in the text where it is stated"}
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        42,
+        77,
+        275
+      ],
+      "detail": "the file contains no bold at all, so every term it defines arrives in plain text: \"so-called s-S inventory dynamics\" (42), which is the subject of the lecture; the notation `$a^+ := \\max\\{a, 0\\}$` (77), introduced mid-sentence as \"With notation\"; and \"kernel density estimator\" (275), where the term is carried by a Wikipedia link instead. The one emphasis mark in the file, *new* at 142, is correctly italic"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        55,
+        438,
+        510
+      ],
+      "detail": "55 spends 35 words (\"While our Markov environment and many of the concepts we consider are related to those found in our lecture on finite Markov chains, ...\") to say that the state space here is continuous rather than finite; 438 loses its verb agreement - \"we have written a specialized JAX-jitted function and using `jax.vmap` to use parallelization across firms\" - and says \"use\" twice; and the printed label at 510, \"Frequency of at least two stock outs\", names the wrong event, since the exercise (424-425) and the function docstring (446-450) both count restocks, and a firm that restocks at $X_t \\leq s$ has not run out of stock"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        159,
+        272
+      ],
+      "detail": "\"Let's run a first simulation, of a single path:\" at 159 sits after the cell that actually runs it (153-157) and introduces the cell that only plots it, so the reader meets the result before the announcement; and 272 asks the reader to consult \"figure with paths above\" to see why the distribution is bimodal, which means jumping back over two intervening figures to the one at 181 - the bimodality argument is never made in the text where it is stated"
+    }
   ],
   "strengths": [
     "The `{note}` at 141-147 anticipates the reader's objection to `X.at[t].set(x_new)` - that copying an array every period looks wasteful - and answers it with the XLA in-place argument, so the JAX idiom is explained where it is first used rather than assumed",
@@ -28,5 +51,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-008 x7 in `lectures/inventory_dynamics.md` includes line 233, `ax.plot((T,), (X[T],), \"ko\", alpha=0.5)`. The `\"ko\"` format string draws markers only, with no line segment, so `lw=` has no effect there and the missing-`lw` finding is a false positive. The check appears to look for `plot(` without `lw=` regardless of whether the format string contains a line style; a marker-only format (`\"ko\"`, `\"o\"`, `\".\"`, `\"x\"`) should be exempt. The other six hits (168, 169, 170, 185, 186, 290) are genuine."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "bc7b1d989e3436e5008767b0034e9bdfdf9a0993"
+  }
 }

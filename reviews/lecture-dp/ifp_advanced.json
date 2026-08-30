@@ -2,16 +2,64 @@
   "series": "lecture-dp",
   "lecture": "ifp_advanced",
   "judgment": [
-    {"rule": "qe-math-009", "count": 14, "lines": [117, 166, 170, 172, 200, 219, 223, 228, 241, 243, 244, 245, 248, 305],
-     "detail": "`\\mathscr C` for the class of candidate consumption policies runs through the whole theory section - 166, 170, 172, 200, 219, 223, 228, 241, 243, 244, 245, 248 - and `\\mathsf Z` for the Markov state support appears at 117 and 305. Neither face carries information: plain $C$ and $Z$ would read the same, and neither symbol survives into the code, where the policy class is just a pair of arrays. The lecture writes $\\rho$, $\\sigma$, $P$ and $K$ undecorated in the same displays, so the script and sans-serif letters are the odd ones out. The 3 `\\mathbf S` hits already counted under qe-math-004 (203, 221, 232) are the same object that {doc}`ifp_egm` writes as `\\mathsf S` - a third face for the state space across two consecutive lectures"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [253, 490],
-     "detail": "line 253 opens 'In the study of that model we found that it was possible to further accelerate time iteration' - there is no 'that model'. The preceding section (226-249) is about the convergence properties of $K$ in this lecture's own model; the optimal growth model the sentence means is not named until line 258, five lines later. Second, the Implementation section builds up to `a_star, σ_star = solve_model(ifp, a_init, σ_init)` at 490 and the timed re-solve at 496-498, and then simply stops - neither result is printed, plotted or referred to again. The Simulation section at 639-645 re-creates the model and re-solves it from scratch under new names, so the reader who has just followed 190 lines of algorithm never sees what it produced"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [490],
-     "detail": "this is the only lecture in the IFP sequence with no picture of the consumption policy. {doc}`ifp_discrete`, {doc}`ifp_opi` and {doc}`ifp_egm` all plot $\\sigma$ against assets by income state, and the whole point of this lecture is what stochastic returns do to that policy - yet `σ_star`, computed at 490, is never drawn. The three figures present are a log-wealth histogram (652) and two Gini-versus-volatility plots inside the exercises (752, 829). The claim at 262-263 that 'optimal consumption can be equal to assets when the level of assets is low', and the $a_0 = c_0 = 0$ anchoring at 278-279, are exactly the features one figure would settle"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [508, 513, 670],
-     "detail": "line 508 instructs 'Set `num_households=50_000, T=500`', but every call in the lecture passes `num_households=200_000` (646, 743, 820) - the sentence and the four paragraphs around it (501-514) are copied verbatim from {doc}`ifp_egm` lines 811-824 and were not updated, so the reader is told a number the code contradicts. Line 513-514 is part of that copy and still ends without a full stop, with a double space in 'pair `c_vec`  and `a_vec`'. Line 670 reads 'Lets' look at wealth inequality by computing some standard measures of this phenomenon' - misplaced apostrophe, and the trailing six words say nothing the first six did not"},
-    {"rule": "qe-code-001", "count": 3, "lines": [429, 613, 619],
-     "detail": "line 429 leaves trailing whitespace after the comment `# Fix consumption-asset pair at (0, 0)` (W291); line 613 writes `jnp.arange(1, n+1)` with no spaces around `+` while line 614 immediately below writes `(n + 1) / n` spaced, inside the same four-line function; line 619 writes `p: float=0.01`, which needs spaces around the `=` because the parameter is annotated (E252) - the same file gets this right at 445-446 (`tol: float = 1e-5`)"}
+    {
+      "rule": "qe-math-009",
+      "count": 14,
+      "lines": [
+        117,
+        166,
+        170,
+        172,
+        200,
+        219,
+        223,
+        228,
+        241,
+        243,
+        244,
+        245,
+        248,
+        305
+      ],
+      "detail": "`\\mathscr C` for the class of candidate consumption policies runs through the whole theory section - 166, 170, 172, 200, 219, 223, 228, 241, 243, 244, 245, 248 - and `\\mathsf Z` for the Markov state support appears at 117 and 305. Neither face carries information: plain $C$ and $Z$ would read the same, and neither symbol survives into the code, where the policy class is just a pair of arrays. The lecture writes $\\rho$, $\\sigma$, $P$ and $K$ undecorated in the same displays, so the script and sans-serif letters are the odd ones out. The 3 `\\mathbf S` hits already counted under qe-math-004 (203, 221, 232) are the same object that {doc}`ifp_egm` writes as `\\mathsf S` - a third face for the state space across two consecutive lectures"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        253,
+        490
+      ],
+      "detail": "line 253 opens 'In the study of that model we found that it was possible to further accelerate time iteration' - there is no 'that model'. The preceding section (226-249) is about the convergence properties of $K$ in this lecture's own model; the optimal growth model the sentence means is not named until line 258, five lines later. Second, the Implementation section builds up to `a_star, σ_star = solve_model(ifp, a_init, σ_init)` at 490 and the timed re-solve at 496-498, and then simply stops - neither result is printed, plotted or referred to again. The Simulation section at 639-645 re-creates the model and re-solves it from scratch under new names, so the reader who has just followed 190 lines of algorithm never sees what it produced"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        490
+      ],
+      "detail": "this is the only lecture in the IFP sequence with no picture of the consumption policy. {doc}`ifp_discrete`, {doc}`ifp_opi` and {doc}`ifp_egm` all plot $\\sigma$ against assets by income state, and the whole point of this lecture is what stochastic returns do to that policy - yet `σ_star`, computed at 490, is never drawn. The three figures present are a log-wealth histogram (652) and two Gini-versus-volatility plots inside the exercises (752, 829). The claim at 262-263 that 'optimal consumption can be equal to assets when the level of assets is low', and the $a_0 = c_0 = 0$ anchoring at 278-279, are exactly the features one figure would settle"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        508,
+        513,
+        670
+      ],
+      "detail": "line 508 instructs 'Set `num_households=50_000, T=500`', but every call in the lecture passes `num_households=200_000` (646, 743, 820) - the sentence and the four paragraphs around it (501-514) are copied verbatim from {doc}`ifp_egm` lines 811-824 and were not updated, so the reader is told a number the code contradicts. Line 513-514 is part of that copy and still ends without a full stop, with a double space in 'pair `c_vec`  and `a_vec`'. Line 670 reads 'Lets' look at wealth inequality by computing some standard measures of this phenomenon' - misplaced apostrophe, and the trailing six words say nothing the first six did not"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        429,
+        613,
+        619
+      ],
+      "detail": "line 429 leaves trailing whitespace after the comment `# Fix consumption-asset pair at (0, 0)` (W291); line 613 writes `jnp.arange(1, n+1)` with no spaces around `+` while line 614 immediately below writes `(n + 1) / n` spaced, inside the same four-line function; line 619 writes `p: float=0.01`, which needs spaces around the `=` because the parameter is annotated (E252) - the same file gets this right at 445-446 (`tol: float = 1e-5`)"
+    }
   ],
   "strengths": [
     "The stability condition is enforced, not just stated: the requirement $\\beta G_R < 1$ at 138-141 is simplified to $\\beta \\mathbb{E} R_t < 1$ under the IID assumption at 147-152, and `create_ifp` then computes exactly that from the lognormal parameters and asserts it at 355-356 - so a reader who supplies bad parameters is stopped rather than shown a divergent solve",
@@ -33,5 +81,9 @@
   "scanner_doubts": [
     "ifp_advanced.md, lines 179, 182, 213, 234, 235, 294 - all 6 `qe-math-002` hits are false positives, and they confirm the pattern I flagged in ifp_egm.md: every one is `u'` inside a composition, `(u' \\circ \\sigma)` or `(u' \\circ c)`. The plain `u'(a)` at 183 and 214 and `u'(\\xi)` at 210 in the same displays were correctly skipped, so the leak is specifically `u'` followed by `\\circ`, which §9's 'superscript followed by a factor' test reads as multiplication. Across ifp_egm.md and this file that is 9 of the corpus's qe-math-002 hits in one series attributable to a single missing exception; treating `\\circ` as a relation, or treating a single lowercase italic base as non-matrix-like, fixes all 9.",
     "ifp_advanced.md, lines 50, 168, 224 - the 3 `qe-ref-001` hits are 1 right and 2 wrong, and the misses are more telling than the hits. Line 168 ('In {cite}`ma2020income` it is shown that') is a genuine in-flow citation that wants `{cite:t}`. But line 50 ('(see, e.g., {cite}`benhabib2015` or {cite}`stachurski2019impossibility`)') and line 224 ('(see {cite}`ma2020income` for more details)') are both fully parenthetical, which the rule text explicitly assigns to `{cite}`. Meanwhile line 53 ('analyzed in detail in {cite}`ma2020income`') and line 162 ('the IID and CRRA environment of {cite}`benhabib2015`') are in-flow and were not flagged. Combined with the ifp_egm.md case, the check looks like it is matching on 'see {cite}' rather than on author-in-sentence-position - it over-fires on parentheticals containing 'see' and under-fires on the real cases."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "f6df09b2748f7be8b513bcf4482b04a53119335e"
+  }
 }

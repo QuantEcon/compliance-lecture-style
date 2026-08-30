@@ -2,12 +2,32 @@
   "series": "lecture-python-intro",
   "lecture": "cobweb",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 3, "lines": [17, 195, 396],
-     "detail": "the three definitions that organize the lecture are all in plain text: the model itself at line 17 ('The cobweb model is a model of prices and quantities...'), naive expectations at line 195 ('which refers to the case where producers expect...'), and adaptive expectations at lines 396-400. The only bold in the file, at line 529, is a pseudo-heading for the third scheme inside an exercise, and the italics at lines 22 and 102 are correctly doing emphasis"},
-    {"rule": "qe-writing-002", "count": 1, "lines": [102],
-     "detail": "line 102 is a 32-word sentence carrying three clauses - why supply is dated at t, what it depends on, and the notation for it - where the surrounding prose keeps to one idea per sentence"},
-    {"rule": "qe-code-001", "count": 1, "lines": [349],
-     "detail": "line 349 writes the keyword default as `y_b= 12`, with a space after the equals sign and none before; the parameter beside it on the same line (`y_a=3`) uses the correct form"}
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        17,
+        195,
+        396
+      ],
+      "detail": "the three definitions that organize the lecture are all in plain text: the model itself at line 17 ('The cobweb model is a model of prices and quantities...'), naive expectations at line 195 ('which refers to the case where producers expect...'), and adaptive expectations at lines 396-400. The only bold in the file, at line 529, is a pseudo-heading for the third scheme inside an exercise, and the italics at lines 22 and 102 are correctly doing emphasis"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 1,
+      "lines": [
+        102
+      ],
+      "detail": "line 102 is a 32-word sentence carrying three clauses - why supply is dated at t, what it depends on, and the notation for it - where the surrounding prose keeps to one idea per sentence"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 1,
+      "lines": [
+        349
+      ],
+      "detail": "line 349 writes the keyword default as `y_b= 12`, with a space after the equals sign and none before; the parameter beside it on the same line (`y_a=3`) uses the correct form"
+    }
   ],
   "strengths": [
     "The 45-degree diagram helper at lines 240-313 draws the cobweb itself - vertical and horizontal arrows tracing p_0 to p_1 to p_2, with the x-ticks relabelled $p_0$, $p_1$, ... - so the reader follows the dynamics by eye instead of being told a cycle exists",
@@ -26,5 +46,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-008 lists 9 missing-`lw` plot calls in cobweb.md; three are false positives - lines 271, 362 and 504 each open an `ax.plot(` whose `lw=2` argument sits on a later physical line (272, 366, 508). This is the same continuation-line blind spot seen in business_cycle.md and cagan_adaptive.md, so it is likely corpus-wide."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "d1c393fcae3dd477a8f087978e2cc48950ede9d0"
+  }
 }

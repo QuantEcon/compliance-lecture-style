@@ -2,18 +2,78 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "black_litterman",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 10, "lines": [518, 583, 969, 1010, 1025, 1071, 1316],
-     "detail": "ten places where a step does not follow from the one before it. (i) 518 standardises the Gaussian as $\\bar{Z} \\equiv \\Sigma(Z-\\mu) \\sim \\mathcal{N}(\\mathbf{0}, I)$, which needs $\\Sigma^{-1/2}$ - as written $\\bar Z$ has covariance $\\Sigma^3$ - and it is precisely the square-root transformation that makes $\\bar z \\cdot \\bar z = (z-\\mu)'\\Sigma^{-1}(z-\\mu)$ in {eq}`ellipse` at 527. (ii) 581-586 states Leamer's program as $\\max_{\\vec r_e}$ of $(\\vec r_e - \\mu_{BL})'\\Sigma^{-1}(\\vec r_e - \\mu_{BL})$ subject to the other quadratic form being $\\geq \\bar d_2$; the prose at 576-579 asks for the opposite (maximise one *likelihood* subject to the other's likelihood being at least $\\bar d_2$, i.e. minimise the first form subject to the second being $\\leq \\bar d_2$), and as displayed the objective is unbounded. (iii) 969 gives the second line of the ${\\sf T}$ operator as $-\\log \\theta \\int \\exp(-V/\\theta)\\phi\\,d\\epsilon$, where the operator is $-\\theta \\log \\int \\exp(-V/\\theta)\\phi\\,d\\epsilon$. (iv) 1010 introduces a $\\zeta$ that is defined nowhere and is absent from the same expression at 1038. (v) 1024-1026 has a doubled closing bracket, no transpose on $w$, and no $\\frac{\\delta}{2}$ on the variance term, so it does not equal 1030-1032 as 1028 claims. (vi) 1038 gives ${\\sf T}[w(\\vec r - r_f {\\bf 1})] = w'\\mu - \\frac{1}{2\\theta}w'\\Sigma w$ but 1065-1069 restates the same criterion as $w'(\\mu - \\theta^{-1}\\Sigma w)$, twice the penalty; only the first is consistent with $w_{\\rm rob} = (\\delta+\\gamma)^{-1}\\Sigma^{-1}\\mu$ at 1074. (vii) 1071 calls that $w_{\\rm rob}$ the \"minimizer\" of the criterion 1056-1057 says is maximised. (viii) 1316 drops the $\\frac{1}{2\\kappa}$ from $\\gamma(0)$ that both 1294 and the bound at 1317-1318 carry, and 1317 leaves a stray `\\cdot` where the factor $i$ was. (ix) 1093-1094 defines $S_N$ with $\\sum_{t=1}^{N}(X_i - \\bar X_N)^2$, summing over $t$ and indexing by $i$. (x) 950-951 says relative entropy \"is the expected value of the likelihood ratio $m$\" where 941 and 947 both show it is the expected value of $\\log m$; 760-761 similarly writes $\\mathbb E \\beta_{OLS}$ without the hat that 762 has"},
-    {"rule": "qe-code-001", "count": 10, "lines": [184, 308, 389, 650, 662, 1401],
-     "detail": "two naming choices actively mislead, and two cells are duplicated. 308 and 634 assign $w_m' \\Sigma w_m$ - which 252 defines as $\\sigma^2$ - to a variable called `σ_m`, and 311 then computes `sr_m = r_m / np.sqrt(σ_m)`, so the name says standard deviation and the value is a variance; 314 and 635 call $\\delta_m$ `d_m`, where 191 writes the same parameter `δ`. The `black_litterman` docstring at 390-393 says the function \"calculates the Black-Litterman mixture mean excess return and covariance matrix\", but it returns only `μ_tilde`, and its first parameter `λ` corresponds to nothing in {eq}`mix-views` and is passed as the literal `1` at both call sites (402, 410). `decolletage` is defined twice, at 650 and 704, the second shadowing the first, with 28 near-identical lines differing only in `τ * Σ_est` becoming `τ * np.eye(N)`. Spacing: 184 has `(np.random.randn(N) + 5)  /100`, with a double space and no space after the operator; 662-663 write `alpha =.4` where 716-717 write `alpha=.4`; 668 and 723 write `s=20*3`; 656 and 710 leave trailing whitespace. 427 sets `ax[1].set_title(...)` and 437-438 sets the identical title again through `ax[1].set(title=...)`. 1259 names a variable `autocorr_h1000` for `np.exp(-κ * n_grid * 1e8)` and labels it $h=\\infty$. And 1401-1402 puts a backslash continuation inside a string literal, so the rendered figure title contains a 14-space run"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [409, 612, 1080],
-     "detail": "the two figures at the conceptual centre of the lecture cannot be read. The curve-decolletage panels (649-680, 703-735) exist to show two iso-likelihood ellipses and the contract curve between them, but both densities are filled with the *same* colormap - `ax.contourf(X, Y, Z_hat, cmap='viridis', alpha=.4)` immediately followed by the same call for `Z_BL` - so the two views are indistinguishable; the two `scatter` calls at 666-667 take default colours with no labels; there is no legend; and the only identification of the two points is a pair of `ax.text` annotations at 675-676. Second, `BL_plot(τ)` at 409-443 is written as a function of the mixing parameter and then called exactly once, with $\\tau = 1$ (401, 443), so the dependence on $\\tau$ that 380-386 discusses - \"this portfolio $\\tilde w$ will deviate from the portfolio $w_{BL}$ in amounts that depend on the mixing parameter $\\tau$\" - is never shown, though the machinery to show it is already a one-line loop. Third, the robust-control half of the lecture (886-1082) has no figure at all, and it ends on an assertion that is exactly a plot: 1080-1082 says an increase in $\\gamma$ \"shrinks the portfolio weights toward zero in the same way that an increase in risk aversion does\", which $w_{\\rm rob} = (\\delta+\\gamma)^{-1}\\Sigma^{-1}\\mu$ makes a two-line computation on the data already in memory"},
-    {"rule": "qe-writing-005", "count": 14, "lines": [96, 164, 232, 573, 751, 973],
-     "detail": "definitions are split between the two conventions and bold also carries emphasis. Bold definitions: **robust portfolio choice** (45), **mean-variance portfolio choice model** (51), **mean-variance portfolio choice problem** (124), **Sharpe-ratio** (264), **market's views** (335), **likelihood ratio** (918), **entropy** / **Entropy** (935, 938), **spherical symmetry** (545). Italic definitions, for terms of exactly the same standing: *excess returns* (96-97), *iso-likelihood* in effect at 533-534, *curve decolletage* (573), *information contract curve* (575, 595), *mean squared error (MSE)* (751-752), *Tikhonov regularization* (790), *ridge regression* (814), *risk-sensitivity* (991), *frequency* and *lags* (1218-1219), *relative MSE* (1128). And four uses of bold are plain emphasis, which the rule reserves for italic: **plausible** (164), **extreme long and short positions** (167), **actual** (232), **adversary** (973). 938 also sets a bold word alone as a de facto heading, \"**Entropy** is defined as\""},
-    {"rule": "qe-writing-002", "count": 5, "lines": [49, 218, 981, 1205, 1326],
-     "detail": "48-52 carries two errors in one sentence - \"means are more difficult to estimate that covariances\" and \"Black and Litterman, on the one hand, an robust control theorists, on the other\" - and 218 opens a paragraph with \"Black and Litterman's responded to this situation\". 978-985 runs two statements together with no break: \"Here the penalty parameter $\\theta \\in [\\underline \\theta, +\\infty]$ is a robustness parameter when it is $+\\infty$, there is no scope for the minimizing agent to distort the distribution\". Three inline maths are glued to the following word so the prose runs into the symbol: `$\\{X_i\\}$is ergodic` (1103), `$\\mu$is the unconditional mean` (1200), and `$\\mathcal T(h) \\equiv \\{nh : n \\in \\mathbb Z \\}$with$h>0$` (1205), which also loses the spaces around \"with\"; 153 has `vector$(\\vec r - r_f {\\bf 1})$`. And the same display is repeated verbatim eleven lines apart at 1326-1328 and 1337-1339. \"Euclidiean\" at 505"},
-    {"rule": "qe-math-009", "count": 3, "lines": [292, 759, 1124],
-     "detail": "the same three objects each have two spellings. The market-implied mean is $\\mu_{BL}$ at 231, 341, 370, 381, 477, 495, 555 and 601 but $\\mu_{\\bf BL}$ at 292, 362 and 365 - a bold subscript on a two-letter label. The mean squared error function is `\\text{mse}` at 759, 777 and 820 and `\\text{MSE}` at 1124, 1132, 1167, 1173 and 1184. And operators are set in four different fonts across the lecture: `{\\sf T}` (900-1060), `{\\rm ent}` (941, 947), `{\\rm var}` (1025), `{\\rm rob}` (1074), `\\text{corr}` and `\\text{cov}` (1229, 1235, 1292), and `{\\bf SR}_m` (261, 280) - the last putting a scalar in bold. Settling on `\\mathrm{}` for all of them, and on one spelling of each label, costs nothing and removes a reader's doubt about whether $\\mu_{\\bf BL}$ and $\\mu_{BL}$ are the same object"}
+    {
+      "rule": "qe-writing-003",
+      "count": 10,
+      "lines": [
+        518,
+        583,
+        969,
+        1010,
+        1025,
+        1071,
+        1316
+      ],
+      "detail": "ten places where a step does not follow from the one before it. (i) 518 standardises the Gaussian as $\\bar{Z} \\equiv \\Sigma(Z-\\mu) \\sim \\mathcal{N}(\\mathbf{0}, I)$, which needs $\\Sigma^{-1/2}$ - as written $\\bar Z$ has covariance $\\Sigma^3$ - and it is precisely the square-root transformation that makes $\\bar z \\cdot \\bar z = (z-\\mu)'\\Sigma^{-1}(z-\\mu)$ in {eq}`ellipse` at 527. (ii) 581-586 states Leamer's program as $\\max_{\\vec r_e}$ of $(\\vec r_e - \\mu_{BL})'\\Sigma^{-1}(\\vec r_e - \\mu_{BL})$ subject to the other quadratic form being $\\geq \\bar d_2$; the prose at 576-579 asks for the opposite (maximise one *likelihood* subject to the other's likelihood being at least $\\bar d_2$, i.e. minimise the first form subject to the second being $\\leq \\bar d_2$), and as displayed the objective is unbounded. (iii) 969 gives the second line of the ${\\sf T}$ operator as $-\\log \\theta \\int \\exp(-V/\\theta)\\phi\\,d\\epsilon$, where the operator is $-\\theta \\log \\int \\exp(-V/\\theta)\\phi\\,d\\epsilon$. (iv) 1010 introduces a $\\zeta$ that is defined nowhere and is absent from the same expression at 1038. (v) 1024-1026 has a doubled closing bracket, no transpose on $w$, and no $\\frac{\\delta}{2}$ on the variance term, so it does not equal 1030-1032 as 1028 claims. (vi) 1038 gives ${\\sf T}[w(\\vec r - r_f {\\bf 1})] = w'\\mu - \\frac{1}{2\\theta}w'\\Sigma w$ but 1065-1069 restates the same criterion as $w'(\\mu - \\theta^{-1}\\Sigma w)$, twice the penalty; only the first is consistent with $w_{\\rm rob} = (\\delta+\\gamma)^{-1}\\Sigma^{-1}\\mu$ at 1074. (vii) 1071 calls that $w_{\\rm rob}$ the \"minimizer\" of the criterion 1056-1057 says is maximised. (viii) 1316 drops the $\\frac{1}{2\\kappa}$ from $\\gamma(0)$ that both 1294 and the bound at 1317-1318 carry, and 1317 leaves a stray `\\cdot` where the factor $i$ was. (ix) 1093-1094 defines $S_N$ with $\\sum_{t=1}^{N}(X_i - \\bar X_N)^2$, summing over $t$ and indexing by $i$. (x) 950-951 says relative entropy \"is the expected value of the likelihood ratio $m$\" where 941 and 947 both show it is the expected value of $\\log m$; 760-761 similarly writes $\\mathbb E \\beta_{OLS}$ without the hat that 762 has"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 10,
+      "lines": [
+        184,
+        308,
+        389,
+        650,
+        662,
+        1401
+      ],
+      "detail": "two naming choices actively mislead, and two cells are duplicated. 308 and 634 assign $w_m' \\Sigma w_m$ - which 252 defines as $\\sigma^2$ - to a variable called `σ_m`, and 311 then computes `sr_m = r_m / np.sqrt(σ_m)`, so the name says standard deviation and the value is a variance; 314 and 635 call $\\delta_m$ `d_m`, where 191 writes the same parameter `δ`. The `black_litterman` docstring at 390-393 says the function \"calculates the Black-Litterman mixture mean excess return and covariance matrix\", but it returns only `μ_tilde`, and its first parameter `λ` corresponds to nothing in {eq}`mix-views` and is passed as the literal `1` at both call sites (402, 410). `decolletage` is defined twice, at 650 and 704, the second shadowing the first, with 28 near-identical lines differing only in `τ * Σ_est` becoming `τ * np.eye(N)`. Spacing: 184 has `(np.random.randn(N) + 5)  /100`, with a double space and no space after the operator; 662-663 write `alpha =.4` where 716-717 write `alpha=.4`; 668 and 723 write `s=20*3`; 656 and 710 leave trailing whitespace. 427 sets `ax[1].set_title(...)` and 437-438 sets the identical title again through `ax[1].set(title=...)`. 1259 names a variable `autocorr_h1000` for `np.exp(-κ * n_grid * 1e8)` and labels it $h=\\infty$. And 1401-1402 puts a backslash continuation inside a string literal, so the rendered figure title contains a 14-space run"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        409,
+        612,
+        1080
+      ],
+      "detail": "the two figures at the conceptual centre of the lecture cannot be read. The curve-decolletage panels (649-680, 703-735) exist to show two iso-likelihood ellipses and the contract curve between them, but both densities are filled with the *same* colormap - `ax.contourf(X, Y, Z_hat, cmap='viridis', alpha=.4)` immediately followed by the same call for `Z_BL` - so the two views are indistinguishable; the two `scatter` calls at 666-667 take default colours with no labels; there is no legend; and the only identification of the two points is a pair of `ax.text` annotations at 675-676. Second, `BL_plot(τ)` at 409-443 is written as a function of the mixing parameter and then called exactly once, with $\\tau = 1$ (401, 443), so the dependence on $\\tau$ that 380-386 discusses - \"this portfolio $\\tilde w$ will deviate from the portfolio $w_{BL}$ in amounts that depend on the mixing parameter $\\tau$\" - is never shown, though the machinery to show it is already a one-line loop. Third, the robust-control half of the lecture (886-1082) has no figure at all, and it ends on an assertion that is exactly a plot: 1080-1082 says an increase in $\\gamma$ \"shrinks the portfolio weights toward zero in the same way that an increase in risk aversion does\", which $w_{\\rm rob} = (\\delta+\\gamma)^{-1}\\Sigma^{-1}\\mu$ makes a two-line computation on the data already in memory"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 14,
+      "lines": [
+        96,
+        164,
+        232,
+        573,
+        751,
+        973
+      ],
+      "detail": "definitions are split between the two conventions and bold also carries emphasis. Bold definitions: **robust portfolio choice** (45), **mean-variance portfolio choice model** (51), **mean-variance portfolio choice problem** (124), **Sharpe-ratio** (264), **market's views** (335), **likelihood ratio** (918), **entropy** / **Entropy** (935, 938), **spherical symmetry** (545). Italic definitions, for terms of exactly the same standing: *excess returns* (96-97), *iso-likelihood* in effect at 533-534, *curve decolletage* (573), *information contract curve* (575, 595), *mean squared error (MSE)* (751-752), *Tikhonov regularization* (790), *ridge regression* (814), *risk-sensitivity* (991), *frequency* and *lags* (1218-1219), *relative MSE* (1128). And four uses of bold are plain emphasis, which the rule reserves for italic: **plausible** (164), **extreme long and short positions** (167), **actual** (232), **adversary** (973). 938 also sets a bold word alone as a de facto heading, \"**Entropy** is defined as\""
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        49,
+        218,
+        981,
+        1205,
+        1326
+      ],
+      "detail": "48-52 carries two errors in one sentence - \"means are more difficult to estimate that covariances\" and \"Black and Litterman, on the one hand, an robust control theorists, on the other\" - and 218 opens a paragraph with \"Black and Litterman's responded to this situation\". 978-985 runs two statements together with no break: \"Here the penalty parameter $\\theta \\in [\\underline \\theta, +\\infty]$ is a robustness parameter when it is $+\\infty$, there is no scope for the minimizing agent to distort the distribution\". Three inline maths are glued to the following word so the prose runs into the symbol: `$\\{X_i\\}$is ergodic` (1103), `$\\mu$is the unconditional mean` (1200), and `$\\mathcal T(h) \\equiv \\{nh : n \\in \\mathbb Z \\}$with$h>0$` (1205), which also loses the spaces around \"with\"; 153 has `vector$(\\vec r - r_f {\\bf 1})$`. And the same display is repeated verbatim eleven lines apart at 1326-1328 and 1337-1339. \"Euclidiean\" at 505"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        292,
+        759,
+        1124
+      ],
+      "detail": "the same three objects each have two spellings. The market-implied mean is $\\mu_{BL}$ at 231, 341, 370, 381, 477, 495, 555 and 601 but $\\mu_{\\bf BL}$ at 292, 362 and 365 - a bold subscript on a two-letter label. The mean squared error function is `\\text{mse}` at 759, 777 and 820 and `\\text{MSE}` at 1124, 1132, 1167, 1173 and 1184. And operators are set in four different fonts across the lecture: `{\\sf T}` (900-1060), `{\\rm ent}` (941, 947), `{\\rm var}` (1025), `{\\rm rob}` (1074), `\\text{corr}` and `\\text{cov}` (1229, 1235, 1292), and `{\\bf SR}_m` (261, 280) - the last putting a scalar in bold. Settling on `\\mathrm{}` for all of them, and on one spelling of each label, costs nothing and removes a reader's doubt about whether $\\mu_{\\bf BL}$ and $\\mu_{BL}$ are the same object"
+    }
   ],
   "strengths": [
     "The lecture makes a promise in the overview and keeps it in the appendix: 54-56 says \"at the end of this lecture, we shall use some rates of convergence results and some simulations to verify how means are more difficult to estimate than variances\", and 1084-1418 does exactly that - closed-form MSEs for the IID case (1160-1185), the discretised Ornstein-Uhlenbeck process that puts dependence in (1196-1216), the analytic inflation factor for the mean estimator (1312-1339), an honest admission that the variance estimator's MSE is harder to derive (1341), and a simulation that supplies it (1348-1405)",
@@ -33,5 +93,9 @@
     "Collapse the two `decolletage` definitions (650, 704) into one function parameterised by the second view's covariance, and call `BL_plot` (409) at more than one $\\tau$ so the mixing discussed at 380-386 is visible",
     "Settle the notation and sweep the mechanical load: $\\mu_{BL}$ versus $\\mu_{\\bf BL}$ (292, 362, 365), `\\text{mse}` versus `\\text{MSE}`, and the four operator fonts; then the 36 apostrophe transposes to `\\top`, the 24 bold vectors and matrices ({\\bf 1}, {\\bf SR}, \\mathbf{0}) to plain letters, the 14 unbraced `\\mathbb E` / `\\mathbb V`, the 6 `\\mathcal{N}` distribution names, the 5 embedded `set_title` calls moved into `mystnb` captions with `name:` fields, the 12 `plot()` calls without `lw=2`, the 7 capitalised axis labels, the two full URLs to this series at 30 and 38, and the escaped underscore `r\\_f` at 1041, which renders literally"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "807c1ee926568eaaabb2c4fc7c4f69047b7bab65"
+  }
 }

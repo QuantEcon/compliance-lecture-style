@@ -2,16 +2,61 @@
   "series": "lecture-dp",
   "lecture": "perm_income_cons",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [289, 659, 729, 310, 399],
-     "detail": "289-293 defines a matrix and leaves a shock attached to it: `\\tilde C := \\begin{bmatrix} C \\\\ 0 \\end{bmatrix} w_{t+1}` - the `w_{t+1}` belongs to the law of motion {eq}`pilqsd` at 236, not to $\\tilde C$, and the code confirms it (`CLQ = np.array([0., σ, 0., 0.]).reshape(4,1)`, 380). 659 mismatches its own summation index: `c_0 = (1-\\beta) E_0 \\sum_{t=0}^\\infty \\beta^j y_{t}` sums over $t$ while the exponent runs on $j$, and it is derived one line below {eq}`old12` at 653, which gets it right. $R$ carries two meanings: the LQ criterion matrix at 228, 301 ('$R :=$ a $4 \\times 4$ matrix of zeros') and 310 ('a small entry $\\epsilon > 0$ in the $(4,4)$ position of $R$'), and the gross interest rate at 729 ('the fixed gross interest rate $R = r+1$'), 747 and 751 ('$R = \\beta^{-1}$') - the code has to disambiguate them as `R` and `RLQ` (336, 373) and then prints the matrix under the wrong name, `print(f\"R = \\n {RLQ}\")` at 389. 310-314 introduces the penalty trick, does not say what $\\epsilon$ is (the code uses `1e-9` at 376), and promises 'We'll check whether it really is small numerically soon' - the comparison at 457-466 is presumably that check, but it never says so and 466 only asserts 'We have verified that the two methods give the same solution'. And 399 is not a sentence: 'We'll save the implied optimal policy function soon compare them with what we get by employing an alternative solution method'"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [745, 210, 685, 666],
-     "detail": "745-755 says one thing five times, in five consecutive one-sentence paragraphs: 'This rigs a closed economy in which people are borrowing and lending with each other at a gross risk-free interest rate of $R = \\beta^{-1}$' (745-747), 'Across the group of people being analyzed, risk-free loans are in zero excess supply' (749), 'We have arranged primitives so that $R = \\beta^{-1}$ clears the market for risk-free loans at zero aggregate excess supply' (751), 'So the risk-free loans are being made from one person to another within our closed set of agents' (753), 'There is no need for foreigners to lend to our group' (755). 210-212 is a rhetorical question whose answer is content-free - 'Why solve a model in two distinct ways? / Because by doing so we gather insights about the structure of the model' - and 214-219 then gives the real answer, so the first exchange can go. 685-689 is 40 words that end in 'rise pretty much together' after already saying 'both rise markedly'. 666 drifts pronouns inside one sentence: 'he or she incurs so much debt that eventually ... he consumes less each period than his nonfinancial income'. Separately, the lecture's central term is spelled three ways - '**co-integrating relationship**' (648), 'cointegrating residual' (679, 691, 695, 784) and 'Cointegration' (676, 711)"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [642, 776, 308],
-     "detail": "the lecture renders six figures from three plotting functions, none of them named, and then refers to all six by position: 'the above graphs' (642), 'the accompanying graph' (670), 'The following figure' (678), 'the corresponding figures' (757), 'The graphs confirm the following outcomes' (776), 'the cointegration figure' (786). The claims at 776-784 are explicitly comparative - 'As before, the consumption distribution spreads out over time', 'Unlike before, the average level of debt stays at zero', 'Now the cointegrating residual seems stationary, and not just asymptotically stationary' - and each requires the reader to hold a figure from 150 lines earlier in their head, because there is no `:name:` to cross-reference and no side-by-side. The two cointegration figures (717 and 789) are the payoff of the whole lecture and are drawn in separate cells 70 lines apart; one two-panel figure with the transient case on the left and the Bewley case on the right would make the asymptotically-stationary-versus-stationary distinction visible instead of remembered. Second, in 791 lines there is not one admonition, and 303-314 is exactly what one is for: 'there is one problem remaining ... we're going to use a trick: put a small penalty on $b_t^2$ ... That will induce a (hopefully) small approximation error'"},
-    {"rule": "qe-code-001", "count": 6, "lines": [553, 556, 368, 560, 598, 404],
-     "detail": "553 and 580 have a single blank line before a top-level `def` where PEP8 asks for two (E302), and 553-554 then opens the function body with a blank line. 556 and 583 write `T =  bsim.shape[1]` with two spaces after `=` (E222). Comma spacing is inconsistent inside single statements: 368 `np.zeros((3,1))`, 379 and 380 `.reshape(4,1)`, and 548 `cons_mean[t], cons_var[t] = μ_y[1,0], Σ_y[1, 1]` - the same line has one subscript without the space and one with, while 345 and 355 use `np.zeros((3, 3))` and `np.zeros((1, 4))` (E231). 560 assigns `xvals = np.arange(T)` in `consumption_income_debt_figure` and never uses it; the identical line at 602 in the sibling function is used six times. 598-599 are two consecutive blank lines inside a function body (E303). 404 has two spaces after the comment marker, `#  Form closed loop system`. Also `β_LQ = β` at 381 is an alias used once, at 396"},
-    {"rule": "qe-math-009", "count": 2, "lines": [247, 228],
-     "detail": "247 writes the trace as `{\\rm trace} ( P \\tilde C \\tilde C')`, the plain-TeX `{\\rm ...}` form, where `\\operatorname{tr}` is the one-token standard and is the only occurrence of `\\rm` in the file. Second, the transpose prime is placed three different ways within seventy lines: before the subscript at 228 and 240 (`x'_t R x_t`, `u'_t Q u_t`, `\\mathbb E w_t w'_t`), on a bare symbol at 244 and 247 (`x'Px`, `\\tilde C'`), and after the subscript at 298 (`x_t' R x_t + u_t'Q u_t`) - the last of which is also the placement used by the lecture this one builds on. The prose calls the observation matrix $U$ (131, 198, 273, 423-425) while the code calls it `G` (341, 433-434, 445) with no note that they are the same object, which then propagates into `G_LSS` (447)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        289,
+        659,
+        729,
+        310,
+        399
+      ],
+      "detail": "289-293 defines a matrix and leaves a shock attached to it: `\\tilde C := \\begin{bmatrix} C \\\\ 0 \\end{bmatrix} w_{t+1}` - the `w_{t+1}` belongs to the law of motion {eq}`pilqsd` at 236, not to $\\tilde C$, and the code confirms it (`CLQ = np.array([0., σ, 0., 0.]).reshape(4,1)`, 380). 659 mismatches its own summation index: `c_0 = (1-\\beta) E_0 \\sum_{t=0}^\\infty \\beta^j y_{t}` sums over $t$ while the exponent runs on $j$, and it is derived one line below {eq}`old12` at 653, which gets it right. $R$ carries two meanings: the LQ criterion matrix at 228, 301 ('$R :=$ a $4 \\times 4$ matrix of zeros') and 310 ('a small entry $\\epsilon > 0$ in the $(4,4)$ position of $R$'), and the gross interest rate at 729 ('the fixed gross interest rate $R = r+1$'), 747 and 751 ('$R = \\beta^{-1}$') - the code has to disambiguate them as `R` and `RLQ` (336, 373) and then prints the matrix under the wrong name, `print(f\"R = \\n {RLQ}\")` at 389. 310-314 introduces the penalty trick, does not say what $\\epsilon$ is (the code uses `1e-9` at 376), and promises 'We'll check whether it really is small numerically soon' - the comparison at 457-466 is presumably that check, but it never says so and 466 only asserts 'We have verified that the two methods give the same solution'. And 399 is not a sentence: 'We'll save the implied optimal policy function soon compare them with what we get by employing an alternative solution method'"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        745,
+        210,
+        685,
+        666
+      ],
+      "detail": "745-755 says one thing five times, in five consecutive one-sentence paragraphs: 'This rigs a closed economy in which people are borrowing and lending with each other at a gross risk-free interest rate of $R = \\beta^{-1}$' (745-747), 'Across the group of people being analyzed, risk-free loans are in zero excess supply' (749), 'We have arranged primitives so that $R = \\beta^{-1}$ clears the market for risk-free loans at zero aggregate excess supply' (751), 'So the risk-free loans are being made from one person to another within our closed set of agents' (753), 'There is no need for foreigners to lend to our group' (755). 210-212 is a rhetorical question whose answer is content-free - 'Why solve a model in two distinct ways? / Because by doing so we gather insights about the structure of the model' - and 214-219 then gives the real answer, so the first exchange can go. 685-689 is 40 words that end in 'rise pretty much together' after already saying 'both rise markedly'. 666 drifts pronouns inside one sentence: 'he or she incurs so much debt that eventually ... he consumes less each period than his nonfinancial income'. Separately, the lecture's central term is spelled three ways - '**co-integrating relationship**' (648), 'cointegrating residual' (679, 691, 695, 784) and 'Cointegration' (676, 711)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        642,
+        776,
+        308
+      ],
+      "detail": "the lecture renders six figures from three plotting functions, none of them named, and then refers to all six by position: 'the above graphs' (642), 'the accompanying graph' (670), 'The following figure' (678), 'the corresponding figures' (757), 'The graphs confirm the following outcomes' (776), 'the cointegration figure' (786). The claims at 776-784 are explicitly comparative - 'As before, the consumption distribution spreads out over time', 'Unlike before, the average level of debt stays at zero', 'Now the cointegrating residual seems stationary, and not just asymptotically stationary' - and each requires the reader to hold a figure from 150 lines earlier in their head, because there is no `:name:` to cross-reference and no side-by-side. The two cointegration figures (717 and 789) are the payoff of the whole lecture and are drawn in separate cells 70 lines apart; one two-panel figure with the transient case on the left and the Bewley case on the right would make the asymptotically-stationary-versus-stationary distinction visible instead of remembered. Second, in 791 lines there is not one admonition, and 303-314 is exactly what one is for: 'there is one problem remaining ... we're going to use a trick: put a small penalty on $b_t^2$ ... That will induce a (hopefully) small approximation error'"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        553,
+        556,
+        368,
+        560,
+        598,
+        404
+      ],
+      "detail": "553 and 580 have a single blank line before a top-level `def` where PEP8 asks for two (E302), and 553-554 then opens the function body with a blank line. 556 and 583 write `T =  bsim.shape[1]` with two spaces after `=` (E222). Comma spacing is inconsistent inside single statements: 368 `np.zeros((3,1))`, 379 and 380 `.reshape(4,1)`, and 548 `cons_mean[t], cons_var[t] = μ_y[1,0], Σ_y[1, 1]` - the same line has one subscript without the space and one with, while 345 and 355 use `np.zeros((3, 3))` and `np.zeros((1, 4))` (E231). 560 assigns `xvals = np.arange(T)` in `consumption_income_debt_figure` and never uses it; the identical line at 602 in the sibling function is used six times. 598-599 are two consecutive blank lines inside a function body (E303). 404 has two spaces after the comment marker, `#  Form closed loop system`. Also `β_LQ = β` at 381 is an alias used once, at 396"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        247,
+        228
+      ],
+      "detail": "247 writes the trace as `{\\rm trace} ( P \\tilde C \\tilde C')`, the plain-TeX `{\\rm ...}` form, where `\\operatorname{tr}` is the one-token standard and is the only occurrence of `\\rm` in the file. Second, the transpose prime is placed three different ways within seventy lines: before the subscript at 228 and 240 (`x'_t R x_t`, `u'_t Q u_t`, `\\mathbb E w_t w'_t`), on a bare symbol at 244 and 247 (`x'Px`, `\\tilde C'`), and after the subscript at 298 (`x_t' R x_t + u_t'Q u_t`) - the last of which is also the placement used by the lecture this one builds on. The prose calls the observation matrix $U$ (131, 198, 273, 423-425) while the code calls it `G` (341, 433-434, 445) with no note that they are the same object, which then propagates into `G_LSS` (447)"
+    }
   ],
   "strengths": [
     "The lecture solves the same model twice and then checks the two solutions against each other in code rather than asserting agreement: 454 states the invariant ('`A_LSS` calculated as we have here should equal `ABF` calculated above using the LQ model'), 457 prints the difference `ABF - A_LSS`, and 463 prints `c_pol` against `-F` - so the claim at 466 is executable, and a reader who changes a parameter finds out immediately if it stops holding",
@@ -31,5 +76,9 @@
     "Tidy the code per the findings above (E302 at 553 and 580, the double `=` spaces at 556 and 583, the comma spacing at 368, 379, 380 and 548, the dead `xvals` at 560, the double blank line at 598), drop the three `figsize=(10, 8)` overrides (559, 601, 707), and add `lw=2` to the 12 line plots (563-614) - unlike `lqcontrol`, none of these calls sets a width through `**kwargs`, so all 12 are real",
     "Cut the repetition: collapse 745-755 to one or two sentences, delete the rhetorical exchange at 210-212, settle on one spelling of 'cointegrating' (648 has the only hyphen), fix 399, and clear the 19 double spaces. Note that this file and `lecture-python.myst/lectures/perm_income_cons.md` differ only in the three intersphinx prefixes at 62, 68 and 174 - the two copies carry identical style findings, so every fix here has to be mirrored, and this copy is the one that is ahead on links"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "5c8a5c5565550777a683a8ec1f14ed97b63b0b00"
+  }
 }

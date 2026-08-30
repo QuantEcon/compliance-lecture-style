@@ -2,18 +2,73 @@
   "series": "lecture-python.myst",
   "lecture": "ge_arrow",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 5, "lines": [33, 443, 623, 754, 802],
-     "detail": "large blocks are repeated verbatim rather than referred back to. The 'Inputs' bullet at 443-447 reproduces 296-300 word for word, display included; the column vectors $y^k$ and $y$ are displayed three times (566-571, 623-632, 754-763); the two Remarks at 636-641 reappear almost unchanged at 767-772; and the five-step algorithm at 677-687 is re-listed at 802-813 with only the equation labels changed. Line 33 is a single 50-word bullet that chains a utility assumption, a representative-consumer claim, a pricing-kernel formula and an ordering result together"},
-    {"rule": "qe-math-009", "count": 4, "lines": [187, 201, 311, 449],
-     "detail": "plain TeX and decorative constructions are used where standard LaTeX is shorter: `\\hskip.5cm` at 187, `{\\beta u'_k(c_{t+1}^k) \\pi(s_{t+1}|s_t) \\over u'_k(c_t^k)}` at 201-202 instead of `\\frac`, and an invented braced operator `{\\textrm{Price}}\\{\\cdot\\}` at 311. Most pervasive is `\\left( \\right)` wrapped around single-symbol arguments - `y^k\\left(s\\right)`, `u\\left(c\\right)`, `c\\left(s\\right)`, `\\left[1, \\ldots, K\\right]` - dense from 449 through 520 and again at 540-570, 601-611 and 651-657, where plain `(s)` and `\\{1,\\ldots,K\\}` would read better"},
-    {"rule": "qe-writing-005", "count": 6, "lines": [528, 583, 636, 641, 767, 772],
-     "detail": "bold is used as a directive label six times - '**Key finding:**' at 528 and '**Remark:**' at 583, 636, 641, 767 and 772 - none of which is a definition. MyST has `{note}` for exactly this, and the file already uses it correctly once at 346-349 for the resolvent operator"},
-    {"rule": "qe-code-001", "count": 6, "lines": [940, 1110, 1126, 1130, 1188, 1287],
-     "detail": "three dead locals in `wealth_distribution` - `n = self.n`, `Q = self.Q`, `y, ys = self.y, self.ys` at 940-942 - are assigned and never read (F841); `print (` has a space before the parenthesis at 1110, 1188 and 1287 (E211); and `ex2.P[0,1]` / `ex2.P[1,0]` at 1126 and 1130 omit the space after the comma (E231)"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [641, 1357],
-     "detail": "the lecture's headline result - state-variable degeneracy, that every agent's continuation wealth returns to zero whenever the Markov state returns to $s_0$ (263-280, 641, 772) - is asserted three times and never drawn, although a simulated $\\{\\psi_t^k\\}$ path along a Markov sample path shows it in one panel. In the finite-horizon example the text says at 1350-1352 that `ψ` and `J` come back as sequences ordered from $t=T$ to $t=0$, and then prints them as raw arrays at 1357-1365; a sequence indexed by $t$ is a line plot. The lecture has exactly one figure in 1387 lines (1242-1252)"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [72, 584],
-     "detail": "line 72 warns the reader in a parenthesis that the notation is unreliable - '(Sometimes we inadvertently reverse the recording order and denote a history as $s^t = [s_t, s_{t-1}, \\ldots, s_0]$)' - which leaves every later history expression ambiguous rather than fixing the convention. Line 584 points forward in prose, 'See the section on a Finite Horizon Economy below', to a section actually titled '## Finite Horizon' (701), where a {ref} to a label would carry the reader there"}
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        33,
+        443,
+        623,
+        754,
+        802
+      ],
+      "detail": "large blocks are repeated verbatim rather than referred back to. The 'Inputs' bullet at 443-447 reproduces 296-300 word for word, display included; the column vectors $y^k$ and $y$ are displayed three times (566-571, 623-632, 754-763); the two Remarks at 636-641 reappear almost unchanged at 767-772; and the five-step algorithm at 677-687 is re-listed at 802-813 with only the equation labels changed. Line 33 is a single 50-word bullet that chains a utility assumption, a representative-consumer claim, a pricing-kernel formula and an ordering result together"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        187,
+        201,
+        311,
+        449
+      ],
+      "detail": "plain TeX and decorative constructions are used where standard LaTeX is shorter: `\\hskip.5cm` at 187, `{\\beta u'_k(c_{t+1}^k) \\pi(s_{t+1}|s_t) \\over u'_k(c_t^k)}` at 201-202 instead of `\\frac`, and an invented braced operator `{\\textrm{Price}}\\{\\cdot\\}` at 311. Most pervasive is `\\left( \\right)` wrapped around single-symbol arguments - `y^k\\left(s\\right)`, `u\\left(c\\right)`, `c\\left(s\\right)`, `\\left[1, \\ldots, K\\right]` - dense from 449 through 520 and again at 540-570, 601-611 and 651-657, where plain `(s)` and `\\{1,\\ldots,K\\}` would read better"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        528,
+        583,
+        636,
+        641,
+        767,
+        772
+      ],
+      "detail": "bold is used as a directive label six times - '**Key finding:**' at 528 and '**Remark:**' at 583, 636, 641, 767 and 772 - none of which is a definition. MyST has `{note}` for exactly this, and the file already uses it correctly once at 346-349 for the resolvent operator"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        940,
+        1110,
+        1126,
+        1130,
+        1188,
+        1287
+      ],
+      "detail": "three dead locals in `wealth_distribution` - `n = self.n`, `Q = self.Q`, `y, ys = self.y, self.ys` at 940-942 - are assigned and never read (F841); `print (` has a space before the parenthesis at 1110, 1188 and 1287 (E211); and `ex2.P[0,1]` / `ex2.P[1,0]` at 1126 and 1130 omit the space after the comma (E231)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        641,
+        1357
+      ],
+      "detail": "the lecture's headline result - state-variable degeneracy, that every agent's continuation wealth returns to zero whenever the Markov state returns to $s_0$ (263-280, 641, 772) - is asserted three times and never drawn, although a simulated $\\{\\psi_t^k\\}$ path along a Markov sample path shows it in one panel. In the finite-horizon example the text says at 1350-1352 that `ψ` and `J` come back as sequences ordered from $t=T$ to $t=0$, and then prints them as raw arrays at 1357-1365; a sequence indexed by $t$ is a line plot. The lecture has exactly one figure in 1387 lines (1242-1252)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        72,
+        584
+      ],
+      "detail": "line 72 warns the reader in a parenthesis that the notation is unreliable - '(Sometimes we inadvertently reverse the recording order and denote a history as $s^t = [s_t, s_{t-1}, \\ldots, s_0]$)' - which leaves every later history expression ambiguous rather than fixing the convention. Line 584 points forward in prose, 'See the section on a Finite Horizon Economy below', to a section actually titled '## Finite Horizon' (701), where a {ref} to a label would carry the reader there"
+    }
   ],
   "strengths": [
     "The law of iterated values is derived in deliberate parallel with the law of iterated expectations (380-433), the two chains of equalities lined up term for term, so the analogy the section is about is visible in the layout rather than only asserted",
@@ -33,5 +88,9 @@
   ],
   "scanner_doubts": [
     "qe-math-010 is counted 3 times (299, 393, 446) but bare $E$ is used as the expectation operator at least five more times without being counted: `E_0 \\sum_{t=0}^\\infty` at 113 and 462, `E d(s_{t+j})| s_t` at 397, and `E V(d(s_{t+j}))| s_t` at 431. The documented guard only counts a bare `E` that is applied to `[`, `\\{` or `(`, so an expectation applied to a `\\sum` or to a function name slips through - and here the text says in words at 114 that '$E_0$ is the mathematical expectation operator', so there is no ambiguity with a matrix named $E$"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "3886d6ad8cf5b2b6e629458f94242a67b01a0d2d"
+  }
 }

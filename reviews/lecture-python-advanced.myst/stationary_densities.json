@@ -2,18 +2,74 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "stationary_densities",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [454, 606, 792, 975],
-     "detail": "the Implementation section (441-457) discusses a class whose source is not in the lecture: 443 links out to `lae.py` on GitHub, then 445 explains \"our use of the `__call__` method\", 449 refers to \"the data and stochastic kernel that it stores as its instance data\", and 454 says \"(This is the reason that we reshaped `X` and `y` inside the class --- to make vectorization work)\" - a reference to a reshape that appears nowhere in the file, so \"we\" did something the reader cannot see. Second, exercise 1 gives away its own answer inside the exercise block: 792 announces \"The next figure shows the result of such a computation\", 794 shows it, 798 explains what the *solution* added to it (\"The additional density (black line) ... added to the solution for illustration\"), 802-803 states the conclusion (\"the look-ahead estimator is a much tighter fit\"), and only then does the dropdown solution at 810-856 appear. Third, 975 tells the reader that in the boxplot \"the red line in the center is the median\", but matplotlib has drawn the median in orange (`boxplot.medianprops.color: C1`) since 2.0, so the prose describes a figure the cell at 959-973 no longer produces. Fourth, the CDF machinery built in \"Beyond densities\" (522-596) is dropped one line into the next section - 604 says \"We will, however, treat only the density case\" and 606 promises \"The general case is relatively similar --- references are given below\", but the reference list at 675-682 is about stability in the density case and says nothing about the general case"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [68, 281, 530],
-     "detail": "the file contains no italics at all - not one `*...*` span in 1059 lines - so emphasis is carried by bold throughout: \"any discrete **time** Markov process\" (68), \"our lecture on **finite** Markov chains\" (281), and \"**cannot** be represented as a density\" (530) are all emphasis, which the rule assigns to italic. Bold is otherwise used correctly and consistently for definitions (**stochastic kernel on** 130, **Markov operator** 325, **look-ahead** 371, **stationary** 612, **global stability** 649, **ergodicity** 651), so the fix is only to move the three emphases to italic. Line 130 also bolds the trailing preposition, `**stochastic kernel on** $S$`, where the defined term is \"stochastic kernel\""},
-    {"rule": "qe-code-001", "count": 10, "lines": [833, 834, 838, 879, 901, 915, 922, 1026],
-     "detail": "the same expression is written two ways in the same lecture: 497 has `k[:, t+1] = s * A[:, t] * k[:, t]**α + ...` and 922 has `s * A[:,t] * k[:, t]**α + ...`, dropping the space after the comma in the slice. Multiplication spacing is likewise inconsistent - `loc=i*2` at 879 and 915 and `figsize=(10, 4*J)` at 1026 against `(1 - δ) * x` at 487 and 903 - where the rule asks for `a * b` and reserves the tight form for `a**b`. The three one-line docstrings at 834, 838 and 901 are delimited with a single `\"` rather than `\"\"\"` (PEP 257), unlike the triple-quoted docstring at 482-485, and they disagree with each other on terminal punctuation (838 and 901 end with a period, 834 does not) and on case (\"the TAR Model\" at 834). Finally 833, 837 and 900 are top-level `def`s preceded by one blank line where PEP8 asks for two - and 481 in this same lecture uses two"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [445, 456, 639, 664, 975],
-     "detail": "445 is 33 words that spend most of themselves on Python mechanics rather than on the estimator (\"Given our use of the `__call__` method, an instance of `LAE` acts as a callable object, which is essentially a function that can store its own data (see ...)\"), and 452-457 continues for three more paragraphs on the vectorisation of code the lecture does not show, closing with the unsupported \"Because the implementation is fully vectorized, it is about as efficient as it would be in C or Fortran\". 664 is 40 words carrying a nested parenthetical (\"it means we can learn about $\\psi^*$ (i.e., approximate the right-hand side of {eq}`statd_lln` via the left-hand side) without requiring any special knowledge about what to do with $X_0$\"), and \"This is actually very important\" opens it with two words of filler. 639 packs a 36-word sentence around an inline formula in parentheses, $\\psi \\in \\mathscr D \\text{ and } \\psi = \\psi P \\implies \\psi = \\psi^*$, where a displayed line would read cleanly. 975 is 35 words describing the anatomy of a boxplot. Separately, nine paragraphs are wholly parenthesised (88, 118, 135, 225, 244, 276, 312, 454, 800), which signals to the reader that they are optional - but two of them are not: 244 is the only pointer to the appendix proof and 454 carries the reason the class is written the way it is"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [101, 522, 589],
-     "detail": "the lecture's whole pedagogical device is a term-by-term translation of the finite case into the density case, and it is carried entirely in prose spread over 500 lines - stochastic matrix $P[i,j]$ (101) against family of densities $p(x, \\cdot)$ (126), the sum $\\sum_{i \\in S} P[i,j]\\psi_t[i]$ (293) against the integral $\\int p(x,y)\\psi_t(x)dx$ (306), stationary distribution against stationary density (610-621), and the $\\psi P$ convention (314-332). A four-row two-column table would put the correspondence in front of the reader once instead of asking them to hold it. Second, \"Beyond densities\" (522-596) has neither a figure nor a code cell: its point is that $h(x) := x \\mathbf 1\\{0 \\leq x \\leq 1\\} + \\mathbf 1\\{x > 1\\}$ (557) puts atoms at 0 and 1 so no density exists, and a single plot of $G(x, \\cdot)$ showing its two jumps would make that visible immediately, where the prose asks the reader to \"think about it\" (560). Its \"Computation\" subsection (589-596) recommends the empirical distribution function and shows neither code nor output, in a lecture that plots everything else"},
-    {"rule": "qe-math-009", "count": 3, "lines": [314, 639, 644],
-     "detail": "the set of densities on $S$ is written `\\mathscr D` at 314, 639 and 644, where a plain $D$ would carry exactly as much information - the symbol appears only three times, is never manipulated, and nothing else in the lecture competes for the letter $D$. The neighbouring notation is otherwise plain ($S$, $P$, $p$, $\\psi$, $\\phi$), so the script letter is the one piece of decoration in the file"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        454,
+        606,
+        792,
+        975
+      ],
+      "detail": "the Implementation section (441-457) discusses a class whose source is not in the lecture: 443 links out to `lae.py` on GitHub, then 445 explains \"our use of the `__call__` method\", 449 refers to \"the data and stochastic kernel that it stores as its instance data\", and 454 says \"(This is the reason that we reshaped `X` and `y` inside the class --- to make vectorization work)\" - a reference to a reshape that appears nowhere in the file, so \"we\" did something the reader cannot see. Second, exercise 1 gives away its own answer inside the exercise block: 792 announces \"The next figure shows the result of such a computation\", 794 shows it, 798 explains what the *solution* added to it (\"The additional density (black line) ... added to the solution for illustration\"), 802-803 states the conclusion (\"the look-ahead estimator is a much tighter fit\"), and only then does the dropdown solution at 810-856 appear. Third, 975 tells the reader that in the boxplot \"the red line in the center is the median\", but matplotlib has drawn the median in orange (`boxplot.medianprops.color: C1`) since 2.0, so the prose describes a figure the cell at 959-973 no longer produces. Fourth, the CDF machinery built in \"Beyond densities\" (522-596) is dropped one line into the next section - 604 says \"We will, however, treat only the density case\" and 606 promises \"The general case is relatively similar --- references are given below\", but the reference list at 675-682 is about stability in the density case and says nothing about the general case"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        68,
+        281,
+        530
+      ],
+      "detail": "the file contains no italics at all - not one `*...*` span in 1059 lines - so emphasis is carried by bold throughout: \"any discrete **time** Markov process\" (68), \"our lecture on **finite** Markov chains\" (281), and \"**cannot** be represented as a density\" (530) are all emphasis, which the rule assigns to italic. Bold is otherwise used correctly and consistently for definitions (**stochastic kernel on** 130, **Markov operator** 325, **look-ahead** 371, **stationary** 612, **global stability** 649, **ergodicity** 651), so the fix is only to move the three emphases to italic. Line 130 also bolds the trailing preposition, `**stochastic kernel on** $S$`, where the defined term is \"stochastic kernel\""
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 10,
+      "lines": [
+        833,
+        834,
+        838,
+        879,
+        901,
+        915,
+        922,
+        1026
+      ],
+      "detail": "the same expression is written two ways in the same lecture: 497 has `k[:, t+1] = s * A[:, t] * k[:, t]**α + ...` and 922 has `s * A[:,t] * k[:, t]**α + ...`, dropping the space after the comma in the slice. Multiplication spacing is likewise inconsistent - `loc=i*2` at 879 and 915 and `figsize=(10, 4*J)` at 1026 against `(1 - δ) * x` at 487 and 903 - where the rule asks for `a * b` and reserves the tight form for `a**b`. The three one-line docstrings at 834, 838 and 901 are delimited with a single `\"` rather than `\"\"\"` (PEP 257), unlike the triple-quoted docstring at 482-485, and they disagree with each other on terminal punctuation (838 and 901 end with a period, 834 does not) and on case (\"the TAR Model\" at 834). Finally 833, 837 and 900 are top-level `def`s preceded by one blank line where PEP8 asks for two - and 481 in this same lecture uses two"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        445,
+        456,
+        639,
+        664,
+        975
+      ],
+      "detail": "445 is 33 words that spend most of themselves on Python mechanics rather than on the estimator (\"Given our use of the `__call__` method, an instance of `LAE` acts as a callable object, which is essentially a function that can store its own data (see ...)\"), and 452-457 continues for three more paragraphs on the vectorisation of code the lecture does not show, closing with the unsupported \"Because the implementation is fully vectorized, it is about as efficient as it would be in C or Fortran\". 664 is 40 words carrying a nested parenthetical (\"it means we can learn about $\\psi^*$ (i.e., approximate the right-hand side of {eq}`statd_lln` via the left-hand side) without requiring any special knowledge about what to do with $X_0$\"), and \"This is actually very important\" opens it with two words of filler. 639 packs a 36-word sentence around an inline formula in parentheses, $\\psi \\in \\mathscr D \\text{ and } \\psi = \\psi P \\implies \\psi = \\psi^*$, where a displayed line would read cleanly. 975 is 35 words describing the anatomy of a boxplot. Separately, nine paragraphs are wholly parenthesised (88, 118, 135, 225, 244, 276, 312, 454, 800), which signals to the reader that they are optional - but two of them are not: 244 is the only pointer to the appendix proof and 454 carries the reason the class is written the way it is"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        101,
+        522,
+        589
+      ],
+      "detail": "the lecture's whole pedagogical device is a term-by-term translation of the finite case into the density case, and it is carried entirely in prose spread over 500 lines - stochastic matrix $P[i,j]$ (101) against family of densities $p(x, \\cdot)$ (126), the sum $\\sum_{i \\in S} P[i,j]\\psi_t[i]$ (293) against the integral $\\int p(x,y)\\psi_t(x)dx$ (306), stationary distribution against stationary density (610-621), and the $\\psi P$ convention (314-332). A four-row two-column table would put the correspondence in front of the reader once instead of asking them to hold it. Second, \"Beyond densities\" (522-596) has neither a figure nor a code cell: its point is that $h(x) := x \\mathbf 1\\{0 \\leq x \\leq 1\\} + \\mathbf 1\\{x > 1\\}$ (557) puts atoms at 0 and 1 so no density exists, and a single plot of $G(x, \\cdot)$ showing its two jumps would make that visible immediately, where the prose asks the reader to \"think about it\" (560). Its \"Computation\" subsection (589-596) recommends the empirical distribution function and shows neither code nor output, in a lecture that plots everything else"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        314,
+        639,
+        644
+      ],
+      "detail": "the set of densities on $S$ is written `\\mathscr D` at 314, 639 and 644, where a plain $D$ would carry exactly as much information - the symbol appears only three times, is never manipulated, and nothing else in the lecture competes for the letter $D$. The neighbouring notation is otherwise plain ($S$, $P$, $p$, $\\psi$, $\\phi$), so the script letter is the one piece of decoration in the file"
+    }
   ],
   "strengths": [
     "Every step of the finite-to-continuous translation names the object it replaces: 101 defines the stochastic matrix $P[i,j]$ and 126 replaces it with the family of densities $p(x, \\cdot)$ \"analogous to the finite state case\" (128); 293 writes the finite update $\\psi_{t+1}[j] = \\sum_{i \\in S} P[i,j]\\psi_t[i]$ and 300-306 replaces the sum with an integral explicitly; and the unusual choice to write the operator on the right, $\\psi P$, is given its reason in a note at 327-332 rather than left as a convention to absorb",
@@ -34,5 +90,9 @@
   ],
   "scanner_doubts": [
     "stationary_densities.md:77,476,879,915 - qe-code-002 is reported ×4 (\"spelled-out `beta`\"), but all four hits are `scipy.stats.beta`, the Beta distribution: 77 is `from scipy.stats import lognorm, beta` and 476, 879, 915 are calls `beta(5, 5, scale=0.5, ...)` constructing the initial distribution. Renaming these to `β` would break the code. `GREEK_RE` guards against a dotted attribute with `(?<![\\w.])`, so `scipy.stats.beta` is already excluded, but a name bound by `from <module> import beta` and then called bare is not. Suggested fix: collect the names bound by `from ... import` / `import ... as` in the lecture's code cells and exempt them from `check_code_002`. The same pattern will fire on `from scipy.stats import gamma`, `chi2` and `expon`, and on `from scipy.special import gamma`, anywhere in the corpus"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "5914f00c257cd01d87c93efea8ae048751f934e0"
+  }
 }

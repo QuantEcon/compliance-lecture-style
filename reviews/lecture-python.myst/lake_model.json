@@ -2,16 +2,55 @@
   "series": "lecture-python.myst",
   "lecture": "lake_model",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 2, "lines": [56, 495],
-     "detail": "the lecture is named after a picture it never draws. 56-61 sets out the metaphor in bullets - two \"lakes\", the pools of employed and unemployed, with \"flows\" between them caused by firing and hiring and by entry and exit from the labor force - and that is a two-box diagram with four labelled arrows whose weights are exactly the $\\lambda$, $\\alpha$, $b$, $d$ of 99-102 and the entries of $A$ at 153-157. Drawing it would let the reader read the transition matrix off the figure. Second, \"## Dynamics of an individual worker\" (484-527) puts up the two-state transition matrix $P$ at 497-504 and reasons about $\\psi_{t+1} = \\psi_t P$ and $\\psi^*[0] = \\alpha/(\\alpha+\\lambda)$ with no state-transition diagram, in a lecture that already spends eight figures on time paths"},
-    {"rule": "qe-code-001", "count": 5, "lines": [229, 317, 334, 424, 589],
-     "detail": "334, 339 and 400 each unpack the whole model with `λ, α, b, d, A, R, g = model` and then use exactly one of the seven names (`A` at 335, `R` at 340 and 401), leaving eighteen unused bindings across three short functions where `model.A` and `model.R` would do; 317 declares `def update_wrapper(state, t)` and never uses `t`; 229 leaves a trailing space after `A: jnp.ndarray` in the NamedTuple body; 424 binds `e, f = jnp.linalg.eigvals(model.R)`, where `e` is the employment rate everywhere else in the lecture (352, 168) and `f` is `generate_path`'s callable parameter (297); and 589-590 mis-indents the continuation of the `P` literal by one column so the two matrix rows do not line up, with alignment padding inside the row itself. 332-337 and 461-470 also separate top-level defs by one blank line rather than two (E302), and 690, 798 and 816 pass `figsize` as a list where every other call passes a tuple"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [66, 68, 448],
-     "detail": "the Overview makes two promises the lecture does not keep: 66 says \"Later, we'll determine some of these transition rates endogenously using the {doc}`McCall search model <mccall_model>`\" and nothing after it does - $\\lambda$ and $\\alpha$ stay exogenous through to the last exercise; and 68-70 says the ergodicity material \"will help us build an equilibrium model of ex-ante homogeneous workers whose different luck generates variations in their ex post experiences\", but no equilibrium model appears. Separately, exercise `model_ex1` sits at 448-481, immediately after \"### Rate dynamics\" and 180 lines before the \"## Exercises\" heading at 632 that holds `model_ex2` and `model_ex3`, so one of the three exercises is outside the section that collects them"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [45, 168],
-     "detail": "the file contains no bold at all, and the term it exists to define is italicised instead: \"This lecture describes what has come to be called a *lake model*\" (45), where the rule asks for bold on a definition - the two other italics in the file, *cross-sectional* and *long run time series* at 68, are correct emphasis. The employment and unemployment rates are then defined in plain text at 168-169, as is the aggregate-versus-rate capitalisation convention at 171, which is the one piece of notation a reader most needs to find again"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [123, 628],
-     "detail": "123 duplicates a word - \"Of the mass of workers $U_t$ workers who are currently unemployed\" - where the parallel sentence at 118 reads correctly; and 628 (\"In this case it takes much of the sample for these two objects to converge\") gives no magnitude for a claim the figure above it can be read off precisely, in a section headed \"### Convergence rate\" whose opening question at 567 asks exactly how long"}
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        56,
+        495
+      ],
+      "detail": "the lecture is named after a picture it never draws. 56-61 sets out the metaphor in bullets - two \"lakes\", the pools of employed and unemployed, with \"flows\" between them caused by firing and hiring and by entry and exit from the labor force - and that is a two-box diagram with four labelled arrows whose weights are exactly the $\\lambda$, $\\alpha$, $b$, $d$ of 99-102 and the entries of $A$ at 153-157. Drawing it would let the reader read the transition matrix off the figure. Second, \"## Dynamics of an individual worker\" (484-527) puts up the two-state transition matrix $P$ at 497-504 and reasons about $\\psi_{t+1} = \\psi_t P$ and $\\psi^*[0] = \\alpha/(\\alpha+\\lambda)$ with no state-transition diagram, in a lecture that already spends eight figures on time paths"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        229,
+        317,
+        334,
+        424,
+        589
+      ],
+      "detail": "334, 339 and 400 each unpack the whole model with `λ, α, b, d, A, R, g = model` and then use exactly one of the seven names (`A` at 335, `R` at 340 and 401), leaving eighteen unused bindings across three short functions where `model.A` and `model.R` would do; 317 declares `def update_wrapper(state, t)` and never uses `t`; 229 leaves a trailing space after `A: jnp.ndarray` in the NamedTuple body; 424 binds `e, f = jnp.linalg.eigvals(model.R)`, where `e` is the employment rate everywhere else in the lecture (352, 168) and `f` is `generate_path`'s callable parameter (297); and 589-590 mis-indents the continuation of the `P` literal by one column so the two matrix rows do not line up, with alignment padding inside the row itself. 332-337 and 461-470 also separate top-level defs by one blank line rather than two (E302), and 690, 798 and 816 pass `figsize` as a list where every other call passes a tuple"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        66,
+        68,
+        448
+      ],
+      "detail": "the Overview makes two promises the lecture does not keep: 66 says \"Later, we'll determine some of these transition rates endogenously using the {doc}`McCall search model <mccall_model>`\" and nothing after it does - $\\lambda$ and $\\alpha$ stay exogenous through to the last exercise; and 68-70 says the ergodicity material \"will help us build an equilibrium model of ex-ante homogeneous workers whose different luck generates variations in their ex post experiences\", but no equilibrium model appears. Separately, exercise `model_ex1` sits at 448-481, immediately after \"### Rate dynamics\" and 180 lines before the \"## Exercises\" heading at 632 that holds `model_ex2` and `model_ex3`, so one of the three exercises is outside the section that collects them"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        45,
+        168
+      ],
+      "detail": "the file contains no bold at all, and the term it exists to define is italicised instead: \"This lecture describes what has come to be called a *lake model*\" (45), where the rule asks for bold on a definition - the two other italics in the file, *cross-sectional* and *long run time series* at 68, are correct emphasis. The employment and unemployment rates are then defined in plain text at 168-169, as is the aggregate-versus-rate capitalisation convention at 171, which is the one piece of notation a reader most needs to find again"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        123,
+        628
+      ],
+      "detail": "123 duplicates a word - \"Of the mass of workers $U_t$ workers who are currently unemployed\" - where the parallel sentence at 118 reads correctly; and 628 (\"In this case it takes much of the sample for these two objects to converge\") gives no magnitude for a claim the figure above it can be read off precisely, in a section headed \"### Convergence rate\" whose opening question at 567 asks exactly how long"
+    }
   ],
   "strengths": [
     "`generate_path` is written once as a higher-order `lax.scan` wrapper (296-326) and then drives every simulation in the lecture - stocks and rates in the body (361, 435) and in both exercise solutions (682, 683, 775, 776, 785, 787) - so eight simulations share one implementation and one `jax.jit` boundary",
@@ -31,5 +70,9 @@
     "Move exercise `model_ex1` (448-481) down into the \"## Exercises\" section at 632, and replace the four hand-written three-panel plotting blocks in the solutions (689-703, 707-719, 798-811, 815-827) with the `zip` loop already used at 367-369 - the same figure is currently coded out four times",
     "Add `lw=2` to the eight line plots in the exercise solutions (692, 695, 698, 713, 800, 803, 806, 821) to match the body, bold the definitions at 45 and 168-169, fix the duplicated word at 123, give a number for \"much of the sample\" at 628, and close the six double spaces (97, 128, 148, 173, 380)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "5ab59ea0eeb97ee811085af52d1f534872762cdc"
+  }
 }

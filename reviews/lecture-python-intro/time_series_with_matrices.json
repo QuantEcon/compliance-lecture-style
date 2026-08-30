@@ -2,18 +2,70 @@
   "series": "lecture-python-intro",
   "lecture": "time_series_with_matrices",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 4, "lines": [31, 78, 85, 574],
-     "detail": "definitions are set in italic about as often as in bold, and one term appears both ways. Bold is used correctly for **second-order linear difference equation** (29-30), **national income** and **gross domestic product** (75-76), **autoregressive** and **moving average** (40, 567, 570), **second-order stochastic linear difference equation** (266-267), **statistical stationarity** (462) and **stationary** (514). But *multiplier-accelerator model* - the model the whole lecture is built on - is introduced in italic at 31; the `{note}` at 83-88 defines three terms in italic (*boundary conditions* 85, *initial conditions* and *terminal conditions* 86, after *initial conditions* already appeared in italic at 73); and the forward-looking section defines four more the same way (*backward looking* 574, *forward looking* 577, *perfect foresight* 579-580 and again 593). Worst, line 78 sets \"Equation {eq}`tswm_1` is called a *second-order linear difference equation*\" in italic - the same term the lecture bolded at 29-30, and 78 is the sentence that actually defines it. Genuine emphasis in italic is rare and correct (*not* at 512), so the file is not overusing italic; it is using it for the wrong job. One markup slip in the same family: 230 nests the emphasis inside a cross-reference label, `{ref}`*steady state*<scalar-dynam:steady-state>``"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [499, 645, 665],
-     "detail": "499-509 silently replaces the model. Line 496 says \"let's print out the covariance matrix $\\Sigma_y$ for a time series $y$\", but the cell instantiates `population_moments(α_0=0, α_1=.8, α_2=0, T=6, y_neg1=0., y_0=0., σ_u=1)` - a first-order autoregression with zero drift and zero initial conditions, not the Samuelson second-order model the reader has followed for 400 lines - and the conclusions at 512-514 about the superdiagonal of $\\Sigma_y$ are drawn from that unannounced substitute, after which 523 switches back to the defaults just as silently. 645 does the same to the shocks: `σ_u = 0.` turns off the randomness the preceding three sections were built around, so both price figures (655, 670) are deterministic, while the display at 589-591 still writes $y = A^{-1}(b + u)$ and nothing in the prose says $u$ has been set to zero. And 665 asks the reader \"Can you explain why the trend of the price is downward over time?\" in a lecture that has no exercises and no solutions, so the question has nowhere to land - the one-sentence answer (the sum $\\sum_{j=0}^{T-t}$ in 596 loses a term every period) is never given"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [255, 474, 488],
-     "detail": "the lecture draws nine figures and never once puts two series on one set of axes where the comparison *is* the point. 237-238 announces the contrast between the general path and the constant steady-state path and then plots them in two separate figures (222, 254) that a reader has to flip between; the same happens for the price paths (655, 670), which differ only in the initial conditions. The lecture already knows the idiom - 656-660 plots $y$ and $p$ together with a legend - so it is a missed application, not a missing skill. 466-479 plots the population mean *inside* the sampling loop (474), so the red line is drawn a hundred times, and it is given no `label` and no legend, which means nothing on the figure identifies the one curve the figure exists to show. And 486-489 is the only figure in the file with no axis labels at all - every other plot sets `xlabel` and `ylabel` - even though 492 immediately asks the reader to notice how \"the population variance increases and asymptotes\", a claim about the very axes that are unlabelled"},
-    {"rule": "qe-math-009", "count": 3, "lines": [93, 275, 388],
-     "detail": "the two stacked systems (93-114, 607-625) annotate each block with `\\underset{\\equiv A}{\\underbrace{...}}` - two nested decoration commands wrapped around a `\\left[ \\begin{array} \\right]` - four times, where the lecture's own plainer idiom twenty lines later does the same job better: 119-127 writes `A y = b` and then names $y$ in a separate display. The normal distribution is written two different ways: plain `N\\left(0, \\sigma_{u}^{2}\\right)` at 275 and `{\\mathcal N}(\\mu_y, \\Sigma_y)` at 376, so the same object carries a decoration in one place and not the other (the decoration itself is what qe-math-011 counts; the inconsistency is the simplicity problem). And 388 writes the identity as `I_{T \\times T}`, spelling its dimensions as a subscripted product where plain $I$ suffices because $T$ is fixed for the whole lecture, and writes the transpose as `(A^{-1})^T` rather than `(A^{-1})^\\top` - the drafted report shows no qe-math-002 finding because the checker cannot see this shape (see scanner_doubts). `\\left( \\right)` also wraps contents that can never grow tall at 275, 302 and 590"},
-    {"rule": "qe-code-001", "count": 6, "lines": [394, 401, 473, 526, 550, 637],
-     "detail": "394 names a class `population_moments` where PEP8 asks for CapWords; the rule's escape hatch is \"unless closer to mathematical notation\", and there is no mathematics being approximated by a lowercase-with-underscores class name - contrast the Greek identifiers `α_0`, `σ_u`, `μ_y`, `Σ_y`, which are exactly the justified departure the rule has in mind. 637 writes `β ** np.arange(0, T-i)` with spaces around the exponentiation operator, which the rule names explicitly (\"write `a**b`\"), and the same file gets it right at 449 (`σ_u**2`). Missing space after the comma in a slice at 473 (`ys[i,:]`), 526 (`Σ_y[72:,72:]`) and 550 (`A_inv[0:7,0:7]`). And 24 lines carry trailing whitespace, most of it inside the class - every keyword argument line of the two constructor calls (401-407, 499-504) plus the blank-but-indented lines at 428, 450 and 455; in narrative text 214 and 514 end in *two* spaces, which Markdown reads as a hard line break in the middle of a paragraph"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [464, 535, 543],
-     "detail": "535 is a sentence whose content is that there will be no content: \"There is a lot to be learned about the process by staring at the off diagonal elements of $\\Sigma_y$ corresponding to different time periods $t$, but we resist the temptation to do so here.\" 541-547 spends four lines and a one-item bullet list getting to a single `print` call at 550: \"Let's print out $A^{-1}$ and stare at its structure\", then a bulleted rhetorical question \"* is it triangular or almost triangular or $\\ldots$ ?\" (543), then \"To study the structure of $A^{-1}$, we shall print just up to $3$ decimals\" (545) - which describes nothing the cell does, since the precision was set globally at line 57 - and then \"Let's begin by printing out just the upper left hand corner\" (547). And 464 has lost a conjunction: \"generating $N$ time realizations of $y$ plotting them together with population mean $\\mu_y$\""}
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        31,
+        78,
+        85,
+        574
+      ],
+      "detail": "definitions are set in italic about as often as in bold, and one term appears both ways. Bold is used correctly for **second-order linear difference equation** (29-30), **national income** and **gross domestic product** (75-76), **autoregressive** and **moving average** (40, 567, 570), **second-order stochastic linear difference equation** (266-267), **statistical stationarity** (462) and **stationary** (514). But *multiplier-accelerator model* - the model the whole lecture is built on - is introduced in italic at 31; the `{note}` at 83-88 defines three terms in italic (*boundary conditions* 85, *initial conditions* and *terminal conditions* 86, after *initial conditions* already appeared in italic at 73); and the forward-looking section defines four more the same way (*backward looking* 574, *forward looking* 577, *perfect foresight* 579-580 and again 593). Worst, line 78 sets \"Equation {eq}`tswm_1` is called a *second-order linear difference equation*\" in italic - the same term the lecture bolded at 29-30, and 78 is the sentence that actually defines it. Genuine emphasis in italic is rare and correct (*not* at 512), so the file is not overusing italic; it is using it for the wrong job. One markup slip in the same family: 230 nests the emphasis inside a cross-reference label, `{ref}`*steady state*<scalar-dynam:steady-state>``"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        499,
+        645,
+        665
+      ],
+      "detail": "499-509 silently replaces the model. Line 496 says \"let's print out the covariance matrix $\\Sigma_y$ for a time series $y$\", but the cell instantiates `population_moments(α_0=0, α_1=.8, α_2=0, T=6, y_neg1=0., y_0=0., σ_u=1)` - a first-order autoregression with zero drift and zero initial conditions, not the Samuelson second-order model the reader has followed for 400 lines - and the conclusions at 512-514 about the superdiagonal of $\\Sigma_y$ are drawn from that unannounced substitute, after which 523 switches back to the defaults just as silently. 645 does the same to the shocks: `σ_u = 0.` turns off the randomness the preceding three sections were built around, so both price figures (655, 670) are deterministic, while the display at 589-591 still writes $y = A^{-1}(b + u)$ and nothing in the prose says $u$ has been set to zero. And 665 asks the reader \"Can you explain why the trend of the price is downward over time?\" in a lecture that has no exercises and no solutions, so the question has nowhere to land - the one-sentence answer (the sum $\\sum_{j=0}^{T-t}$ in 596 loses a term every period) is never given"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        255,
+        474,
+        488
+      ],
+      "detail": "the lecture draws nine figures and never once puts two series on one set of axes where the comparison *is* the point. 237-238 announces the contrast between the general path and the constant steady-state path and then plots them in two separate figures (222, 254) that a reader has to flip between; the same happens for the price paths (655, 670), which differ only in the initial conditions. The lecture already knows the idiom - 656-660 plots $y$ and $p$ together with a legend - so it is a missed application, not a missing skill. 466-479 plots the population mean *inside* the sampling loop (474), so the red line is drawn a hundred times, and it is given no `label` and no legend, which means nothing on the figure identifies the one curve the figure exists to show. And 486-489 is the only figure in the file with no axis labels at all - every other plot sets `xlabel` and `ylabel` - even though 492 immediately asks the reader to notice how \"the population variance increases and asymptotes\", a claim about the very axes that are unlabelled"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        93,
+        275,
+        388
+      ],
+      "detail": "the two stacked systems (93-114, 607-625) annotate each block with `\\underset{\\equiv A}{\\underbrace{...}}` - two nested decoration commands wrapped around a `\\left[ \\begin{array} \\right]` - four times, where the lecture's own plainer idiom twenty lines later does the same job better: 119-127 writes `A y = b` and then names $y$ in a separate display. The normal distribution is written two different ways: plain `N\\left(0, \\sigma_{u}^{2}\\right)` at 275 and `{\\mathcal N}(\\mu_y, \\Sigma_y)` at 376, so the same object carries a decoration in one place and not the other (the decoration itself is what qe-math-011 counts; the inconsistency is the simplicity problem). And 388 writes the identity as `I_{T \\times T}`, spelling its dimensions as a subscripted product where plain $I$ suffices because $T$ is fixed for the whole lecture, and writes the transpose as `(A^{-1})^T` rather than `(A^{-1})^\\top` - the drafted report shows no qe-math-002 finding because the checker cannot see this shape (see scanner_doubts). `\\left( \\right)` also wraps contents that can never grow tall at 275, 302 and 590"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        394,
+        401,
+        473,
+        526,
+        550,
+        637
+      ],
+      "detail": "394 names a class `population_moments` where PEP8 asks for CapWords; the rule's escape hatch is \"unless closer to mathematical notation\", and there is no mathematics being approximated by a lowercase-with-underscores class name - contrast the Greek identifiers `α_0`, `σ_u`, `μ_y`, `Σ_y`, which are exactly the justified departure the rule has in mind. 637 writes `β ** np.arange(0, T-i)` with spaces around the exponentiation operator, which the rule names explicitly (\"write `a**b`\"), and the same file gets it right at 449 (`σ_u**2`). Missing space after the comma in a slice at 473 (`ys[i,:]`), 526 (`Σ_y[72:,72:]`) and 550 (`A_inv[0:7,0:7]`). And 24 lines carry trailing whitespace, most of it inside the class - every keyword argument line of the two constructor calls (401-407, 499-504) plus the blank-but-indented lines at 428, 450 and 455; in narrative text 214 and 514 end in *two* spaces, which Markdown reads as a hard line break in the middle of a paragraph"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        464,
+        535,
+        543
+      ],
+      "detail": "535 is a sentence whose content is that there will be no content: \"There is a lot to be learned about the process by staring at the off diagonal elements of $\\Sigma_y$ corresponding to different time periods $t$, but we resist the temptation to do so here.\" 541-547 spends four lines and a one-item bullet list getting to a single `print` call at 550: \"Let's print out $A^{-1}$ and stare at its structure\", then a bulleted rhetorical question \"* is it triangular or almost triangular or $\\ldots$ ?\" (543), then \"To study the structure of $A^{-1}$, we shall print just up to $3$ decimals\" (545) - which describes nothing the cell does, since the precision was set globally at line 57 - and then \"Let's begin by printing out just the upper left hand corner\" (547). And 464 has lost a conjunction: \"generating $N$ time realizations of $y$ plotting them together with population mean $\\mu_y$\""
+    }
   ],
   "strengths": [
     "The lecture checks its own claims in code at the moment it makes them: 198-202 solves the system a second way and asserts `np.allclose(y, y_second_method)`, and 205 claims $A$ is lower triangular with 209 verifying `np.allclose(A, np.tril(A))` in the very next cell - so two statements a reader would otherwise have to take on trust are executable",
@@ -37,5 +89,9 @@
   "scanner_doubts": [
     "qe-math-002 - the drafted report shows no qe-math-002 finding for this file, but line 388 writes `\\Sigma_y = A^{-1} (\\sigma_u^2 I_{T \\times T} ) (A^{-1})^T`, which is a transpose written `^T`. Two defects in `supT` (`tools/qestyle_rules.py`, in `check_math_002`) hide it. (a) The base alternation admits only a bare capital or a `DECORATED` form, so a *closing delimiter* base is unreachable - even though the same function already reasons, for the apostrophe, that \"a closing parenthesis is a transpose whatever follows it\" and gives `prime_paren`, `lprime` and `sup_prime` an explicit `\\)|\\}|\\]` branch. (b) The superscript is spelled `\\^\\{?T\\}?`, the optional-brace shape whose backtracking hazard this function's own comment warns about for `PRIME_SUP`: on `^{T+1}` the `\\{?` consumes the brace, `T` matches, and `\\}?` matches empty, so `(1+r)^{T+1}` looks like `^T`. I tested a fix in a scratch copy of `tools/`: spell the superscript `_T = r\"\\^(?:\\{\\s*T\\s*\\}|T)\"`, substitute it into `supT`, and add an unguarded `supT_paren = re.compile(r\"\\)\" + _T)` (unguarded because `)^T` cannot be a terminal date or a summation limit). Running `check_math_002` over all five series: 1596 -> 1603, nothing removed. The tightened superscript alone changes the existing branch not at all (34 -> 34 on that branch, including `Q^TQ` in `qr_decomp`, which survives because the brace alternative is explicit rather than optional). All 7 new hits are genuine transposes: `time_series_with_matrices.md:388`, `calvo_machine_learn.md:860` in both `lecture-dp` and `lecture-python-advanced.myst` (`(h_1 \\cdot B^T \\vec{\\beta})^T \\vec{\\mu}` - the `B^T` in the same expression is already counted, the outer one was not), and `supply_demand_var.md` at 927, 975 and twice at 1013. I also tested the other two closing delimiters and they must not be added: a `\\]` base finds nothing corpus-wide, and a `\\}` base finds 200 matches that are all sequence or summation limits (`\\{y_t\\}_{t=0}^T`, `\\sum_{t=0}^T`), so `}` stays out",
     "qe-writing-004 - not a defect to fix, and already filed, but worth restating with this file as evidence: all three reported lines (371, 518, 533) are markdown link labels holding the exact titles of the linked lectures. The count of 7 across 3 lines is entirely lecture titles, so the whole writing-004 finding for this file is spurious even though the lines themselves do carry a real (link-002) fault"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "9817e1e189dfe8c337a277f68e8d1e52f0806d94"
+  }
 }

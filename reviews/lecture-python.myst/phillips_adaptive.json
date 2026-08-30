@@ -87,5 +87,9 @@
   ],
   "scanner_doubts": [
     "Cleared, not filed. (1) `qe-math-014` and `qe-math-015` (proposed) have nothing to score: the file has no `\\mathbb{P}`, no expectation operator and no density or CDF - its only stochastic objects are the disturbances $\\varepsilon_{C,t}$, $\\varepsilon_{K,t}$ (338, 343), $\\varepsilon_t$ (392) and the control error $v_{2t}$ (349), all described in words. (2) Writing 10/10, Math 10/10 and Code 10/10 are correct mechanical results: every paragraph holds one sentence, there are no double-space runs, the transposes are `^\\top` throughout (174, 180, 328-344), the matrices are `bmatrix`, there is no `\\tag` and no `align` inside `$$`, and flake8 over the code cells reports nothing - the three code items above are ones its selectors cannot reach. (3) `qe-fig-008` correctly does not fire: every `plot()` call in the file already carries `lw=` (136, 307, 446). (4) The two `qe-ref-001` hits (84, 399) are both genuine sentence-initial narrative citations wanting `{cite:t}`; note that 375 (\"Robert Solow and James Tobin {cite}`Solow1968,Tobin1968`\") and 88 (\"the adaptive expectations scheme of Milton Friedman and {cite}`Cagan`\") are the correct parenthetical form with the authors already named, and the check rightly leaves them alone"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "f6f24407a03105cd56099892f498d5b702f91fc3"
+  }
 }

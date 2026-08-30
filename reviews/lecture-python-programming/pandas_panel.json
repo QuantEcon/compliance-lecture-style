@@ -67,5 +67,9 @@
     "Reconsider dropping Australia in place at 423, or say in the text that everything downstream - including `.describe()` at 435 and the kernel densities at 480 - now excludes it",
     "Fix 470 (2016 where the code and title say 2015), 173, and the missing preposition at 242; settle `DateTimeIndex` (116) against `DatetimeIndex` (163, 328, 336, 344); bold the three definitions at 101-103, 124 and 440"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "383220d3e89a84604ae7adfef0566971e4a762a3"
+  }
 }

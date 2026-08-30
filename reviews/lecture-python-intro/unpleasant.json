@@ -2,18 +2,69 @@
   "series": "lecture-python-intro",
   "lecture": "unpleasant",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 3, "lines": [481, 484, 588],
-     "detail": "the lecture's central figure cannot show what the lecture says it shows. `plot_path` (473-486) loops over `m0_arr` and calls `ax.plot(paths[i])` at 481 with no `label` and no legend, so {numref}`fig:unpl1` renders the two experiments - $m_0 = 80$ and $m_0 = 100$ (496) - as two indistinguishable curves in each of four panels. The bullets at 501-505 then make claims that are entirely about *which* curve is which: \"the lower is the post-open-market-operation money supply at time $0$, lower is the price level at time $0$\", and \"an open market operation that reduces the post open market operation money supply at time $0$ also *lowers* the rate of return on money $R_u$\". A reader cannot check either from the figure. 484-485 compounds it: a dashed red horizontal line at $\\check m_0$ is drawn on the $m_t$ panel and labelled inside the axes with `ax.text`, and no sentence anywhere in the lecture mentions it. Third, the Laffer curve is the object on which the whole conclusion rests - 588-589 says \"a higher $\\bar g$ sits further up the seigniorage Laffer curve, requiring a lower $R_u$\", and `un_ex2` is built entirely around its peak $g_{\\max}$ (602-616) - and it is never drawn; the lecture sends the reader to Wikipedia for it at 21, and `un_ex2` plots $\\bar g(T)$ against a horizontal line at $g_{\\max}$ (691-704) rather than against the curve itself"},
-    {"rule": "qe-math-009", "count": 3, "lines": [147, 289, 604],
-     "detail": "289-297 writes the fixed-point map as `{\\mathcal S}` - \"$\\widehat p_0 = {\\mathcal S}(p_0)$\", \"a fixed point of ${\\mathcal S}$\", \"$p_{0,j+1} = (1-\\theta) {\\mathcal S}(p_{0,j}) + \\theta p_{0,j}$\" - where plain $S$ would do, which is this rule's own worked example; and the implementation calls it `S` (358) and `S_with_g_bar` (637), so the calligraphic form is decoration that also breaks the correspondence between the pseudo code and the code. The same symbols are then spelled two ways throughout the source: $\\widetilde R$ at 82, 87, 92, 95, 103, 109, 258, 265 and 271 against `\\tilde R` at 28, 147, 277, 312, 531 and 586; and $\\overline g$ at 140, 147, 169, 183, 192 and 240 against `\\bar g` at 322, 518, 531, 586 and 602. Both pairs render identically, so this is source noise rather than a rendering fault, but it means a reader grepping the source for the object cannot find it. And 604-611 switches to plain-TeX font commands for subscripts - `g_{\\rm max}`, `\\bar R_{\\rm max}` - where the rest of the file uses none and `\\mathrm{}` or `_{\\max}` is the LaTeX form"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [403, 507, 696],
-     "detail": "403-407 interprets a figure four paragraphs before drawing it: \"Notice that the slope of $p_0$ as a function of $m_0$ is constant\" (403) and \"This outcome indicates that our model verifies a quantity theory of money outcome\" (405-407) come before the cell that plots it at 414-421, so the reader is told what to notice about something not yet on the page. 507 contradicts the model it is summarising. It is the last of four bullets reading {numref}`fig:unpl1` and says \"$R$ is important in the context of maintaining monetary stability ... Thus, a larger $R$ might be chosen to mitigate the negative impacts on the real rate of return caused by inflation\" - but $R$ with no subscript is not a symbol in this lecture ($R_t$, $R_u$, $\\bar R$, $\\widetilde R$ all are), and nothing here is *chosen*: the whole point of the preceding three bullets is that $R_u$ is pinned down by $\\bar g$, which is pinned down by the open market operation. 696 is a latent failure in the `un_ex2` solution: `T_star` is assigned inside `if np.any(feasible):` (695-696) and then read unconditionally at 707 and 711, so on any parameterisation with no feasible $T$ the cell raises `NameError` instead of reporting that the fiscal limit is below 1 - which is exactly the case part c asks the reader to think about"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [21, 30, 115, 514],
-     "detail": "bold and italic are both used for definitions, and one term is bolded four times. **open market operation(s)** is bold at 115, defined at 157, and bold again at 262 and 322 - so the emphasis marks every occurrence rather than the definition, which is the \"overuse of emphasis formatting\" the rule names. Conversely two terms are *defined* in italic inside link labels: [*Laffer curve*](21) and [*fixed point*](43), both first mentions. 30 and 32 bold a hyphenated modifier rather than the term - **gross-of-interest** government deficit, the critical **money-to-bonds** ratio - so the bold ends mid-noun-phrase. And 514 and 600 set a whole sentence in bold as an exercise title (`**How the length of the tight-money period $T$ amplifies unpleasant arithmetic.**`), where the `{exercise}` directive already supplies a heading slot. The genuinely good uses are all in one place: the three policy definitions at 153-158 (**fiscal policy**, **monetary policy**, **debt-management policy**, **open market operation**) and the italic *nominal* / *real* contrast at 94-95"},
-    {"rule": "qe-code-001", "count": 5, "lines": [370, 452, 546, 574, 628],
-     "detail": "the exponentiation operator is spaced almost everywhere the rule says it should not be: `R_tilde ** T * Bm1` and `(1 - R_tilde ** T)` at 370 and 440, `λ ** T` at 380 and 655, `λ ** (T - t)` at 453-454, `model_T.R_tilde ** T_val` at 556-557, `R_tilde ** T` at 644-645 - while 648 writes `(γ1 + γ2 - g_bar)**2` in the rule's preferred form, so the file contradicts itself inside one cell. 452-454 uses a backslash continuation whose right-hand side is already fully parenthesised (`paths[0, t] = (1 / γ1) * m0 * \\`), where dropping the backslash and moving the opening bracket up is the PEP8 form; 554-555 does the same. Aligned assignments pad before `=` at 546-547 (`R_u_list  = []`), 554-556 (`Bm1   =`, `BTm1  =`) and 628-629 (`R_max   =`, `g_max   =`), which PEP8 lists under Pet Peeves. And 574, 694 and 701 embed LaTeX in ordinary strings with doubled backslashes (`'...raises $\\\\bar{g}$'`) while 573, 692 and 700 use raw strings for the same job in the same cells"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [39, 251, 507],
-     "detail": "39 is circular and empty: \"That lecture described supplies and demands for money that appear in that lecture.\" It is also the fourth of six pointers to {doc}`money_inflation` in the first thirty-two lines (19, 21, 39, 41, 48, 50), three of which say the same thing - go read that lecture. 251-253 spends thirty-three words describing what it is about to do: \"Now let's describe a computational algorithm in more detail in the form of a description that constitutes pseudo code because it approaches a set of instructions we could provide to a Python coder\", where the `{prf:algorithm}` directive that follows announces itself. And 507 is two sentences of content-free hedging (\"$R$ is important in the context of maintaining monetary stability and addressing the consequences of increased inflation due to government deficits\") at the end of an otherwise sharp four-point summary; it is the only bullet of the four that states no result"}
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        481,
+        484,
+        588
+      ],
+      "detail": "the lecture's central figure cannot show what the lecture says it shows. `plot_path` (473-486) loops over `m0_arr` and calls `ax.plot(paths[i])` at 481 with no `label` and no legend, so {numref}`fig:unpl1` renders the two experiments - $m_0 = 80$ and $m_0 = 100$ (496) - as two indistinguishable curves in each of four panels. The bullets at 501-505 then make claims that are entirely about *which* curve is which: \"the lower is the post-open-market-operation money supply at time $0$, lower is the price level at time $0$\", and \"an open market operation that reduces the post open market operation money supply at time $0$ also *lowers* the rate of return on money $R_u$\". A reader cannot check either from the figure. 484-485 compounds it: a dashed red horizontal line at $\\check m_0$ is drawn on the $m_t$ panel and labelled inside the axes with `ax.text`, and no sentence anywhere in the lecture mentions it. Third, the Laffer curve is the object on which the whole conclusion rests - 588-589 says \"a higher $\\bar g$ sits further up the seigniorage Laffer curve, requiring a lower $R_u$\", and `un_ex2` is built entirely around its peak $g_{\\max}$ (602-616) - and it is never drawn; the lecture sends the reader to Wikipedia for it at 21, and `un_ex2` plots $\\bar g(T)$ against a horizontal line at $g_{\\max}$ (691-704) rather than against the curve itself"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        147,
+        289,
+        604
+      ],
+      "detail": "289-297 writes the fixed-point map as `{\\mathcal S}` - \"$\\widehat p_0 = {\\mathcal S}(p_0)$\", \"a fixed point of ${\\mathcal S}$\", \"$p_{0,j+1} = (1-\\theta) {\\mathcal S}(p_{0,j}) + \\theta p_{0,j}$\" - where plain $S$ would do, which is this rule's own worked example; and the implementation calls it `S` (358) and `S_with_g_bar` (637), so the calligraphic form is decoration that also breaks the correspondence between the pseudo code and the code. The same symbols are then spelled two ways throughout the source: $\\widetilde R$ at 82, 87, 92, 95, 103, 109, 258, 265 and 271 against `\\tilde R` at 28, 147, 277, 312, 531 and 586; and $\\overline g$ at 140, 147, 169, 183, 192 and 240 against `\\bar g` at 322, 518, 531, 586 and 602. Both pairs render identically, so this is source noise rather than a rendering fault, but it means a reader grepping the source for the object cannot find it. And 604-611 switches to plain-TeX font commands for subscripts - `g_{\\rm max}`, `\\bar R_{\\rm max}` - where the rest of the file uses none and `\\mathrm{}` or `_{\\max}` is the LaTeX form"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        403,
+        507,
+        696
+      ],
+      "detail": "403-407 interprets a figure four paragraphs before drawing it: \"Notice that the slope of $p_0$ as a function of $m_0$ is constant\" (403) and \"This outcome indicates that our model verifies a quantity theory of money outcome\" (405-407) come before the cell that plots it at 414-421, so the reader is told what to notice about something not yet on the page. 507 contradicts the model it is summarising. It is the last of four bullets reading {numref}`fig:unpl1` and says \"$R$ is important in the context of maintaining monetary stability ... Thus, a larger $R$ might be chosen to mitigate the negative impacts on the real rate of return caused by inflation\" - but $R$ with no subscript is not a symbol in this lecture ($R_t$, $R_u$, $\\bar R$, $\\widetilde R$ all are), and nothing here is *chosen*: the whole point of the preceding three bullets is that $R_u$ is pinned down by $\\bar g$, which is pinned down by the open market operation. 696 is a latent failure in the `un_ex2` solution: `T_star` is assigned inside `if np.any(feasible):` (695-696) and then read unconditionally at 707 and 711, so on any parameterisation with no feasible $T$ the cell raises `NameError` instead of reporting that the fiscal limit is below 1 - which is exactly the case part c asks the reader to think about"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        21,
+        30,
+        115,
+        514
+      ],
+      "detail": "bold and italic are both used for definitions, and one term is bolded four times. **open market operation(s)** is bold at 115, defined at 157, and bold again at 262 and 322 - so the emphasis marks every occurrence rather than the definition, which is the \"overuse of emphasis formatting\" the rule names. Conversely two terms are *defined* in italic inside link labels: [*Laffer curve*](21) and [*fixed point*](43), both first mentions. 30 and 32 bold a hyphenated modifier rather than the term - **gross-of-interest** government deficit, the critical **money-to-bonds** ratio - so the bold ends mid-noun-phrase. And 514 and 600 set a whole sentence in bold as an exercise title (`**How the length of the tight-money period $T$ amplifies unpleasant arithmetic.**`), where the `{exercise}` directive already supplies a heading slot. The genuinely good uses are all in one place: the three policy definitions at 153-158 (**fiscal policy**, **monetary policy**, **debt-management policy**, **open market operation**) and the italic *nominal* / *real* contrast at 94-95"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        370,
+        452,
+        546,
+        574,
+        628
+      ],
+      "detail": "the exponentiation operator is spaced almost everywhere the rule says it should not be: `R_tilde ** T * Bm1` and `(1 - R_tilde ** T)` at 370 and 440, `λ ** T` at 380 and 655, `λ ** (T - t)` at 453-454, `model_T.R_tilde ** T_val` at 556-557, `R_tilde ** T` at 644-645 - while 648 writes `(γ1 + γ2 - g_bar)**2` in the rule's preferred form, so the file contradicts itself inside one cell. 452-454 uses a backslash continuation whose right-hand side is already fully parenthesised (`paths[0, t] = (1 / γ1) * m0 * \\`), where dropping the backslash and moving the opening bracket up is the PEP8 form; 554-555 does the same. Aligned assignments pad before `=` at 546-547 (`R_u_list  = []`), 554-556 (`Bm1   =`, `BTm1  =`) and 628-629 (`R_max   =`, `g_max   =`), which PEP8 lists under Pet Peeves. And 574, 694 and 701 embed LaTeX in ordinary strings with doubled backslashes (`'...raises $\\\\bar{g}$'`) while 573, 692 and 700 use raw strings for the same job in the same cells"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        39,
+        251,
+        507
+      ],
+      "detail": "39 is circular and empty: \"That lecture described supplies and demands for money that appear in that lecture.\" It is also the fourth of six pointers to {doc}`money_inflation` in the first thirty-two lines (19, 21, 39, 41, 48, 50), three of which say the same thing - go read that lecture. 251-253 spends thirty-three words describing what it is about to do: \"Now let's describe a computational algorithm in more detail in the form of a description that constitutes pseudo code because it approaches a set of instructions we could provide to a Python coder\", where the `{prf:algorithm}` directive that follows announces itself. And 507 is two sentences of content-free hedging (\"$R$ is important in the context of maintaining monetary stability and addressing the consequences of increased inflation due to government deficits\") at the end of an otherwise sharp four-point summary; it is the only bullet of the four that states no result"
+    }
   ],
   "strengths": [
     "The backward-induction structure is stated as a plan and then followed exactly: 163-197 says the algorithm works backwards from $t = T$, computes the stationary $R_u$ from the quadratic {eq}`eq:up_steadyquadratic`, picks the larger root with a reason (174), and derives $R_T, b_T, p_T$; 200-241 then works back from $p_T$ to $p_0$ and reduces the whole telescoped sum {eq}`eq:allts` to the one-line backward recursion at 234 that the code implements",
@@ -39,5 +90,9 @@
   ],
   "scanner_doubts": [
     "qe-math-002 - `unpleasant.md:271` is a false positive, and the cause is a lookbehind that stops one token too early. The `supT` regex in `check_math_002` (`tools/qestyle_rules.py`) accepts as a transpose base either a `DECORATED` group or a bare capital guarded by `(?<![A-Za-z0-9\\\\])`. `DECORATED` is `\\\\(?:hat|tilde|bar|vec|widehat|widetilde|mathbf|boldsymbol|check|dot)\\{[^{}]*\\}` - it requires braces - so the brace-less `\\widetilde R` is not seen as decorated, and the bare-capital branch then matches the `R`, because the character before it is a space and the lookbehind only blocks an immediately preceding backslash. With ` B_{-1}` following, the factor lookahead is satisfied and `R^T` is reported. But `\\widetilde R^T B_{-1}` at 271 is compounding, not transposition: line 82 says \"Let $\\widetilde R > 1$ be a time-invariant gross real rate of return on government one-period inflation-indexed bonds\", and the code writes it `R_tilde ** T * Bm1` at 370, 440 and 556. (The second `\\widetilde R^T` on the same line escapes only by accident - it is followed by `}`, so the factor lookahead fails.) I tested a stopgap in a scratch copy: add `(?<!\\\\tilde )(?<!\\\\widetilde )(?<!\\\\bar )(?<!\\\\hat )` to the bare-capital branch and re-run over all five series - 34 hits -> 33, nothing added, and the single suppressed hit is exactly this one. So it is safe on today's corpus, but I would not merge it as the fix: it is the wrong discriminator, because `\\bar A^T B` for a genuine transpose of a decorated matrix is a shape this corpus could acquire tomorrow, and the exemption would silence it. The right discriminator is the one the prose already supplies - a symbol declared as a rate or compared to a number is a scalar, so `^T` on it is a power - and the cheap approximation of it is to require the base of a bare-capital `^T` to be a symbol the file uses with a matrix-like index somewhere. I flag this so the false positive is on record; the DECORATED branch itself is behaving correctly (all 18 of its corpus hits are `\\vec{\\mu}^T`-style transposes in `calvo_machine_learn`, in both `lecture-dp` and `lecture-python-advanced.myst`). Note this is independent of the `)^T` gap I filed under `time_series_with_matrices`: tightening the superscript spelling there leaves this hit exactly where it is, which I confirmed (that branch stays at 34 before the lookbehind change)"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "d911590b22db011f097ec99f5bc3394a8f010157"
+  }
 }

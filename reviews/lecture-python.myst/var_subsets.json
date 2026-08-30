@@ -59,5 +59,9 @@
   "scanner_doubts": [
     "Cleared, not filed. (1) `qe-code-002` at 38 looked high for a file whose Greek is nearly all matrix-valued, so I checked the sites: `Sigma`, `Omega`, `Psi`, `Gamma`, `Phi` and `eps` really are spelled out in the class (494-597) and in `report` (603-628), and the rule makes no exception for matrix-valued names, so 38 is right. (2) `qe-math-002` at zero is right: every transpose in the file is `^\\top` (100, 132, 166-167, 173, 194, 310, 313, 345, 369, 404-405, 411, 432, 447, 507, 1051), including inside the docstring shorthand `E eps eps'` at 483, which is prose inside a docstring and not narrative math. (3) `qe-math-014` and `qe-math-015` (proposed) do not apply - there is no `\\mathbb{P}` anywhere in the file and no density or CDF is named, so both are omitted rather than scored. (4) `qe-writing-004` at 2 (1063, 1188) is right and both are the same \"Example 2\" / \"Example 1\" shape that the rule's per-line matching is known to fire on; here the capitalisation is a genuine cross-reference to the `## Example 1` and `## Example 2` headings at 631 and 926, so the fix is to lower-case the reference or to make it a proper `{ref}`, not to exempt the pattern",
     "Cleared, not filed: var_subsets.md:1103,1106 - the solution figure sets embedded titles through a multi-line `axes[0].set(xlabel=..., ylabel=..., title='information lost by dropping $i_t$')` (1103-1104) and the same at 1105-1107, and neither appears among the six measured `qe-fig-003` hits. That is correct behaviour, not a miss: both sit inside the `{solution-start}` block opened at 1082, and `check_fig_003` (tools/qestyle_rules.py:1105) skips lines with `l.in_exercise` by design. The related per-line / `[^)]*` gap in the same `.set(` branch does cause a real miss elsewhere - see the `lln_clt` overlay, where line 341 is outside any exercise"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "f15ddcb41a635f781c94d2046cdc505c571faf1a"
+  }
 }

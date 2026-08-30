@@ -61,5 +61,9 @@
   "scanner_doubts": [
     "qe-math-010 (proposed) records nothing for sympy.md:349, where the expectation is written `E(X) = \\sum_{x=0}^{\\infty} x f(x)` directly under the sentence 'The expectation of the distribution is:' (346) - a bare plain-letter expectation that should be `\\mathbb{E}`. The cause is the `e_is_operator` gate in check_math_010 (tools/qestyle_rules.py:560-561): it arms the bare-letter branch only when some math span already uses `E[` or `E\\{`, so a lecture whose only expectation notation is `E(` is never checked at all.",
     "qe-fig-003 records nothing for sympy.md:479 (`p.title = 'A Simple Plot'`), an embedded figure title on the lecture's first plot. It is set by attribute assignment on a SymPy plot object, while the pattern at tools/qestyle_rules.py:935-936 matches only matplotlib's `set_title`/`suptitle`/`plt.title` calls. The title is also Title Case, so qe-fig-004 would have had something to say about it too."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "a79c8d30b289bac691b40e05f0bf74007a7a8c3c"
+  }
 }

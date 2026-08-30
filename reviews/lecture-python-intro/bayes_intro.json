@@ -2,14 +2,41 @@
   "series": "lecture-python-intro",
   "lecture": "bayes_intro",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 3, "lines": [203, 489, 491],
-     "detail": "bold used for emphasis rather than definition: 'the bank does **not** know' (203), 'the posterior **concentrates**' (489), 'the posterior becomes **tighter**' (491). These are emphasis and belong in italic; the lecture's own bold-for-definition usage (lines 21, 78, 201, 211, 263, 527) is otherwise correct"},
-    {"rule": "qe-math-014", "count": 2, "lines": [196, 198],
-     "detail": "the Bernoulli likelihood is written as an event with parentheses - `P(Y_i = 1 \\mid \\theta)` and `P(Y_i = 0 \\mid \\theta)` - where `\\mathbb{P}\\{Y_i = 1 \\mid \\theta\\}` is called for; the H/L/D probabilities at lines 82-130 are named sets and correctly take parentheses. The lecture writes plain `P` for probability throughout even though it uses `\\mathbb{E}` at lines 654 and 730, which is why the mechanical blackboard-bold check saw nothing here"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [96],
-     "detail": "the risky-borrowing example (lines 96-133) walks through P(H)=0.2, P(D|H)=0.40, P(D)=0.12, P(H|D)=0.667 in prose alone; a probability tree or a 100-borrower box would carry it, and the lecture already shows it can draw that kind of schematic in the prior/data/posterior diagram at line 31"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [591],
-     "detail": "the 'Further observations' preamble at lines 499-504 announces exactly two observations - the closed form and batch updating - but a third top-level section, 'Sequential and batch updates agree' (line 591), continues the same thread with no signpost, so the reader is told the thread ended one section early"}
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        203,
+        489,
+        491
+      ],
+      "detail": "bold used for emphasis rather than definition: 'the bank does **not** know' (203), 'the posterior **concentrates**' (489), 'the posterior becomes **tighter**' (491). These are emphasis and belong in italic; the lecture's own bold-for-definition usage (lines 21, 78, 201, 211, 263, 527) is otherwise correct"
+    },
+    {
+      "rule": "qe-math-014",
+      "count": 2,
+      "lines": [
+        196,
+        198
+      ],
+      "detail": "the Bernoulli likelihood is written as an event with parentheses - `P(Y_i = 1 \\mid \\theta)` and `P(Y_i = 0 \\mid \\theta)` - where `\\mathbb{P}\\{Y_i = 1 \\mid \\theta\\}` is called for; the H/L/D probabilities at lines 82-130 are named sets and correctly take parentheses. The lecture writes plain `P` for probability throughout even though it uses `\\mathbb{E}` at lines 654 and 730, which is why the mechanical blackboard-bold check saw nothing here"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        96
+      ],
+      "detail": "the risky-borrowing example (lines 96-133) walks through P(H)=0.2, P(D|H)=0.40, P(D)=0.12, P(H|D)=0.667 in prose alone; a probability tree or a 100-borrower box would carry it, and the lecture already shows it can draw that kind of schematic in the prior/data/posterior diagram at line 31"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        591
+      ],
+      "detail": "the 'Further observations' preamble at lines 499-504 announces exactly two observations - the closed form and batch updating - but a third top-level section, 'Sequential and batch updates agree' (line 591), continues the same thread with no signpost, so the reader is told the thread ended one section early"
+    }
   ],
   "strengths": [
     "The density-versus-probability case convention holds without exception: lowercase for the Bernoulli and binomial likelihoods (`p(y \\mid \\theta)` at line 268, `p(k \\mid \\theta)` at line 571) and for the belief densities pi, pi_0, pi_n, with uppercase reserved for probabilities of events",
@@ -28,5 +55,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 reports 13 spelled-out-Greek hits in bayes_intro.md, and every one I could resolve is a false positive: lines 39, 354, 358, 475 and 542 are the matplotlib `alpha=` transparency keyword, and lines 73, 240, 314, 347, 350, 539, 674 and 829 are `scipy.stats.beta`. Neither is an author-chosen identifier and neither can be renamed. The lecture in fact uses Unicode theta consistently. Worth checking corpus-wide - `alpha=` and `beta.` are common enough that this may be inflating qe-code-002 across many lectures."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "a7edc575a16a5e3a6a4afd9f1181dd83324c2f8d"
+  }
 }

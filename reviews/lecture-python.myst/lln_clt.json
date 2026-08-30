@@ -2,18 +2,71 @@
   "series": "lecture-python.myst",
   "lecture": "lln_clt",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [42, 394, 416, 459, 510],
-     "detail": "five breaks, two of them substantive. (a) 42 promises \"We also demonstrate how the LLN and CLT break down when the assumptions they are based on do not hold\" - and no such demonstration exists. There is no Cauchy, no infinite-variance, no heavy-tailed and no dependent example anywhere in the 927 lines; the headings run Overview, Relationships, LLN (Classical LLN / Proof / Illustration), CLT (Statement / Intuition / Simulation 1 / Simulation 2 / Multivariate Case), Exercises. The nearest thing is 708-714, where the *delta method's* own hypothesis $g'(\\mu) \\neq 0$ fails - not the LLN or the CLT. (b) 436-437 says the underlying variable is \"the convex combination of three different beta densities\" and the docstring at 458 says \"j is a random draw from {0, 1, 2}\", but 459 writes `js = rng.integers(0, 2, size=k)`, whose upper bound is exclusive - only components 0 and 1 are ever drawn, so the third shift at 457 (`bdraws[2, :] -= 1.1`) never enters and the figure at 480-504 shows a two-component mixture. (c) 416 tells the reader to \"Notice the absence of for loops --- every operation is vectorized, meaning that the major calculations are all shifted to highly optimized C code\", and then the lecture's own final solution at 899-908 fills `error_obs` with a 50,000-iteration Python loop that vectorizes in three lines exactly as Simulation 1 does. (d) 384-385 declares the exponential as $F(x) = 1 - e^{-\\lambda x}$ and the comment at 394 says \"Exponential distribution, \\u03bb = 1/2\", but `expon(2)` sets `loc=2, scale=1` - a unit-rate exponential shifted right by 2, with mean 3, not rate 1/2; 235 has the same error, labelling `expon(1)` as \"exponential with \\u03bb = 1\" when its mean is 2. (The CLT demo survives it because the shift cancels in $\\bar X_n - \\mu$, which is why it has gone unnoticed.) (e) 510 says \"We leave you to investigate its contents if you wish to know more\" with no antecedent for \"its\", and 512-514 tells the reader to \"run the file from the ordinary IPython shell\" so the 3-D figure \"should pop up in a window that you can rotate with your mouse\" - a workflow this book does not have. Also 476's comment says \"Multiply j-th column by sqrt j\" where 477 divides"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [145, 196, 218, 274],
-     "detail": "145 is a 41-word parenthetical carrying two long link labels and no closing period (\"(This version is weaker because we claim only [convergence in probability](...) rather than [almost sure convergence](...), and assume a finite second moment)\"); the same missing-period pattern recurs at 361, 387, 439, 541, 654 and 800. 196-198 opens on a double negative and needs 33 words to say that the covariances must mostly be near zero. 218 carries a stale instruction to the reader - \"(as usual, you can click on it to expand it)\" - that does not describe this book's figures. And 224 with 274 makes a claim the figure cannot support: 251 picks three of six distributions with `random.choice` and no seed, so the published panel changes on every build, yet 224 asserts \"In each of the three cases, convergence of $\\bar X_n$ to $\\mu$ occurs as predicted\" and 274 then explains that the three were chosen at random - the reader is told to verify something that is different each time"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [308, 310, 742],
-     "detail": "there are only four bold spans in the file and the split is even: 87 (**Kolmogorov's strong law**) and 567 (**variance-covariance matrix**) are definitions and correctly bold, while 308 (**any**), 310 (**always**) and 742 (**standard**) are emphasis and should be italic - \"for **any** distribution with finite second moment ... **always** leads to a Gaussian curve\". There is not one italic span anywhere in the lecture, so bold is the only emphasis device available to it"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [42, 190, 200],
-     "detail": "three places where a figure is the natural carrier and the lecture uses prose. The breakdown case promised at 42 is the clearest: the machinery at 226-272 already plots $\\bar X_n$ against $n$ for three distributions, and adding a fourth panel with a Cauchy sample would show non-convergence next to convergence in the same axes - which is what the sentence at 42 promises and never delivers. Second, the proof produces a concrete bound, $\\mathbb P\\{|\\bar X_n - \\mu| \\geq \\epsilon\\} \\leq \\sigma^2/(n\\epsilon^2)$ at 184-189, and never plots it against the simulated tail frequency, although Simulation 1 (390-413) already generates 100,000 draws of $\\bar X_n$ and could overlay the two curves in three lines. Third, 200-206 introduces \"asymptotic independence\" - covariance $\\mathbb E(X_i-\\mu)(X_j-\\mu)$ falling to zero as $|i-j|$ grows - calls it \"very important in time series analysis\", and illustrates it with nothing at all; it is the one idea in the lecture with no accompanying picture, code or example"},
-    {"rule": "qe-math-009", "count": 3, "lines": [296, 570, 592],
-     "detail": "$k$ carries two meanings in the same passage: 529 fixes it as the dimension of $\\mathbf X$ and 800 reminds the reader of that, but 592 calls a generic entry of the covariance matrix \"the $j,k$-th term\" when 581-587 has just used $k$ for the last row and column - so \"the $j,k$-th term\" reads as the last column rather than a generic one, and $i,j$ was available. The code then takes $k$ for a third job, the number of draws, at 393. The convergence arrow is spelled two ways in the same lecture - `\\stackrel { d } {\\to}` with spaces inside both groups at 296, 301, 625, 647 and 737, and the tighter `\\stackrel{d}{\\to}` at 753, 757, 775, 783, 793, 840, 858 and 876 - and the second is both simpler and the majority spelling. And the variance operator is written `\\mathop{\\mathrm{Var}}` at 570, 578, 749 and 750 but plain `\\mathrm{Var}` at 869 and 870; whichever letter is chosen, the `\\mathop{}` wrapper adds nothing that `\\mathrm{}` does not already do"},
-    {"rule": "qe-code-001", "count": 5, "lines": [59, 263, 480, 891, 911],
-     "detail": "480 writes `plt.figure(figsize = (10, 6))` with spaces around a keyword-argument `=`, which PEP8 forbids and which the other seven `figsize=` calls in the file get right (239, 332, 405, 696, 915). `Axes3D` is imported at 59 and never used - the 3-D axes are created by `add_subplot(projection='3d')` at 480. The import block at 54-61 puts the standard-library `random` (55) between two third-party imports instead of in its own group. `list(range(n))` is materialised four times in the same loop body at 263, 265, 267 and 268 where `range(n)` or a single `np.arange(n)` bound once outside the loop would do. 891-892 binds `\\u03a3` to a tuple of tuples and then rebinds the same name to `np.array(\\u03a3)`, so the name means two types two lines apart. And 911-912 calls the normalized matrix `temp`, which says nothing about the object the next line squares and sums"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        42,
+        394,
+        416,
+        459,
+        510
+      ],
+      "detail": "five breaks, two of them substantive. (a) 42 promises \"We also demonstrate how the LLN and CLT break down when the assumptions they are based on do not hold\" - and no such demonstration exists. There is no Cauchy, no infinite-variance, no heavy-tailed and no dependent example anywhere in the 927 lines; the headings run Overview, Relationships, LLN (Classical LLN / Proof / Illustration), CLT (Statement / Intuition / Simulation 1 / Simulation 2 / Multivariate Case), Exercises. The nearest thing is 708-714, where the *delta method's* own hypothesis $g'(\\mu) \\neq 0$ fails - not the LLN or the CLT. (b) 436-437 says the underlying variable is \"the convex combination of three different beta densities\" and the docstring at 458 says \"j is a random draw from {0, 1, 2}\", but 459 writes `js = rng.integers(0, 2, size=k)`, whose upper bound is exclusive - only components 0 and 1 are ever drawn, so the third shift at 457 (`bdraws[2, :] -= 1.1`) never enters and the figure at 480-504 shows a two-component mixture. (c) 416 tells the reader to \"Notice the absence of for loops --- every operation is vectorized, meaning that the major calculations are all shifted to highly optimized C code\", and then the lecture's own final solution at 899-908 fills `error_obs` with a 50,000-iteration Python loop that vectorizes in three lines exactly as Simulation 1 does. (d) 384-385 declares the exponential as $F(x) = 1 - e^{-\\lambda x}$ and the comment at 394 says \"Exponential distribution, \\u03bb = 1/2\", but `expon(2)` sets `loc=2, scale=1` - a unit-rate exponential shifted right by 2, with mean 3, not rate 1/2; 235 has the same error, labelling `expon(1)` as \"exponential with \\u03bb = 1\" when its mean is 2. (The CLT demo survives it because the shift cancels in $\\bar X_n - \\mu$, which is why it has gone unnoticed.) (e) 510 says \"We leave you to investigate its contents if you wish to know more\" with no antecedent for \"its\", and 512-514 tells the reader to \"run the file from the ordinary IPython shell\" so the 3-D figure \"should pop up in a window that you can rotate with your mouse\" - a workflow this book does not have. Also 476's comment says \"Multiply j-th column by sqrt j\" where 477 divides"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        145,
+        196,
+        218,
+        274
+      ],
+      "detail": "145 is a 41-word parenthetical carrying two long link labels and no closing period (\"(This version is weaker because we claim only [convergence in probability](...) rather than [almost sure convergence](...), and assume a finite second moment)\"); the same missing-period pattern recurs at 361, 387, 439, 541, 654 and 800. 196-198 opens on a double negative and needs 33 words to say that the covariances must mostly be near zero. 218 carries a stale instruction to the reader - \"(as usual, you can click on it to expand it)\" - that does not describe this book's figures. And 224 with 274 makes a claim the figure cannot support: 251 picks three of six distributions with `random.choice` and no seed, so the published panel changes on every build, yet 224 asserts \"In each of the three cases, convergence of $\\bar X_n$ to $\\mu$ occurs as predicted\" and 274 then explains that the three were chosen at random - the reader is told to verify something that is different each time"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        308,
+        310,
+        742
+      ],
+      "detail": "there are only four bold spans in the file and the split is even: 87 (**Kolmogorov's strong law**) and 567 (**variance-covariance matrix**) are definitions and correctly bold, while 308 (**any**), 310 (**always**) and 742 (**standard**) are emphasis and should be italic - \"for **any** distribution with finite second moment ... **always** leads to a Gaussian curve\". There is not one italic span anywhere in the lecture, so bold is the only emphasis device available to it"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        42,
+        190,
+        200
+      ],
+      "detail": "three places where a figure is the natural carrier and the lecture uses prose. The breakdown case promised at 42 is the clearest: the machinery at 226-272 already plots $\\bar X_n$ against $n$ for three distributions, and adding a fourth panel with a Cauchy sample would show non-convergence next to convergence in the same axes - which is what the sentence at 42 promises and never delivers. Second, the proof produces a concrete bound, $\\mathbb P\\{|\\bar X_n - \\mu| \\geq \\epsilon\\} \\leq \\sigma^2/(n\\epsilon^2)$ at 184-189, and never plots it against the simulated tail frequency, although Simulation 1 (390-413) already generates 100,000 draws of $\\bar X_n$ and could overlay the two curves in three lines. Third, 200-206 introduces \"asymptotic independence\" - covariance $\\mathbb E(X_i-\\mu)(X_j-\\mu)$ falling to zero as $|i-j|$ grows - calls it \"very important in time series analysis\", and illustrates it with nothing at all; it is the one idea in the lecture with no accompanying picture, code or example"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        296,
+        570,
+        592
+      ],
+      "detail": "$k$ carries two meanings in the same passage: 529 fixes it as the dimension of $\\mathbf X$ and 800 reminds the reader of that, but 592 calls a generic entry of the covariance matrix \"the $j,k$-th term\" when 581-587 has just used $k$ for the last row and column - so \"the $j,k$-th term\" reads as the last column rather than a generic one, and $i,j$ was available. The code then takes $k$ for a third job, the number of draws, at 393. The convergence arrow is spelled two ways in the same lecture - `\\stackrel { d } {\\to}` with spaces inside both groups at 296, 301, 625, 647 and 737, and the tighter `\\stackrel{d}{\\to}` at 753, 757, 775, 783, 793, 840, 858 and 876 - and the second is both simpler and the majority spelling. And the variance operator is written `\\mathop{\\mathrm{Var}}` at 570, 578, 749 and 750 but plain `\\mathrm{Var}` at 869 and 870; whichever letter is chosen, the `\\mathop{}` wrapper adds nothing that `\\mathrm{}` does not already do"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        59,
+        263,
+        480,
+        891,
+        911
+      ],
+      "detail": "480 writes `plt.figure(figsize = (10, 6))` with spaces around a keyword-argument `=`, which PEP8 forbids and which the other seven `figsize=` calls in the file get right (239, 332, 405, 696, 915). `Axes3D` is imported at 59 and never used - the 3-D axes are created by `add_subplot(projection='3d')` at 480. The import block at 54-61 puts the standard-library `random` (55) between two third-party imports instead of in its own group. `list(range(n))` is materialised four times in the same loop body at 263, 265, 267 and 268 where `range(n)` or a single `np.arange(n)` bound once outside the loop would do. 891-892 binds `\\u03a3` to a tuple of tuples and then rebinds the same name to `np.array(\\u03a3)`, so the name means two types two lines apart. And 911-912 calls the normalized matrix `temp`, which says nothing about the object the next line squares and sums"
+    }
   ],
   "strengths": [
     "The proposed `qe-math-014` convention holds without exception: every one of the eight probability statements applies $\\mathbb P$ to an event written in braces - `\\mathbb P \\left\\{ \\bar X_n \\to \\mu \\ldots \\right\\}` (109, 615), `\\mathbb P \\left\\{ |\\bar X_n - \\mu| \\geq \\epsilon \\right\\}` (140, 154, 187), `\\mathbb P\\{X_i = 0\\}` (324), `\\mathbb P\\{\\mathbf X_1 \\leq \\mathbf x_1, \\ldots\\}` (536-538) - and there is not one `\\mathbb P(\\cdot)` in the file",
@@ -38,5 +91,9 @@
   "scanner_doubts": [
     "lln_clt.md:341-343 - `qe-fig-003` is measured at 0, but the cell at 331-346 sets an embedded title: `ax.set(xlim=(-0.5, 8.5), ylim=(0, 0.55),` on 341, continuing to `title=f'$n = {n}$')` on 343. `check_fig_003` (tools/qestyle_rules.py:1099-1108) iterates one line at a time (`for l in doc.lines`) and its `.set(` branch is `\\.set\\(\\s*[^)]*\\btitle\\s*=` (1103), so it fails twice over on this input: `title=` is two lines below the `.set(`, and even on one line the `[^)]*` would be stopped by the `(-0.5, 8.5)` argument before it. A tolerant fix is to match `title\\s*=` anywhere inside the balanced argument list of a `.set(` call rather than within one line - the lexer already tracks cell boundaries, so the scan can be per-cell. Corpus scale for the multi-line shape: 28 sites across 13 lectures (`market_diffusion` 6, `pricing_information` 5, `ifp_advanced` 2 in each of two series, `arma` 2, `black_litterman` 2, `sargent_surico` 2, `chang_ramsey` 1 in each of two series, `navy_captain` 1, `var_subsets` 2, this one). Note that some of those - `var_subsets` 1103 and 1106 among them - sit inside `{solution-start}` blocks and are exempt by design under the `l.in_exercise` guard at 1105, so the true miss count is lower than 28; line 341 here is in `### Intuition` and is not exempt",
     "Cleared, not filed. (1) `qe-math-004` at 121 looked implausibly high, so I counted: 107 `\\mathbf` plus 14 `\\boldsymbol` is exactly 121, all inside 529-877. The measurement is right and the Math score of 3 is earned. (2) The six variance-operator sites (`\\mathop{\\mathrm{Var}}` at 570, 578, 749, 750 and `\\mathrm{Var}` at 869, 870) are absent from the 42 `qe-math-010` hits, which is the already-filed bare-Roman-operator gap rather than a new defect, so I report them only as a `qe-math-009` consistency point and leave the count alone. (3) `qe-math-002` at 5 (572, 750, 765, 870, 871) is right - all five are genuine transposes written `'` on a bolded matrix or a parenthesised difference, and no derivative prime is among them; the two real derivative primes, $g'(\\mu)$ at 641 and 647, are correctly excluded"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "81dd1e2abd9033d0b6953b406d916f39685b414d"
+  }
 }

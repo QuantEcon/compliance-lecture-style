@@ -2,18 +2,75 @@
   "series": "lecture-dp",
   "lecture": "smoothing",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [617, 737, 898, 26],
-     "detail": "the code for Model 2 arrives 140 lines before Model 2 does. The `### Code` cell under `## Model 1 (complete markets)` (617-745) defines `consumption_incomplete` (714-744), whose docstring says 'Computes endogenous values for the incomplete market case' and whose body implements {eq}`cs_12` and {eq}`cs_13` - neither of which has been derived yet; `## Model 2 (one-period risk-free debt only)` only opens at 759 and derives them at 866-880, then line 900 has to say 'The code above also contains a function called `consumption_incomplete()`'. Inside that cell, the comment at 737 reads `# Optimal decisions from (12) and (13)`, hard-coding the rendered numbers of two auto-numbered equations, so it goes stale the moment a display is added above. Then `### The incomplete markets model` at 898 sits *after* `### Summary of outcomes` (882) inside the section that is already the incomplete markets model, so the reader meets a heading announcing a model they finished reading about sixteen lines earlier. And line 26 promises a library it never names - 'this lecture uses the  library:' - where the double space is the hole the word `quantecon` fell out of"},
-    {"rule": "qe-writing-005", "count": 6, "lines": [39, 42, 199, 431, 462, 461],
-     "detail": "the two terms the lecture is built on are bolded in the bullets that mention them and italicised in the paragraphs that define them: **complete markets** / **incomplete markets** at 39-40 (a passing reference), then '*Complete markets* allow a consumer to buy and sell claims contingent on all possible states of the world' at 42 and '*Incomplete markets* allow a consumer to buy and sell a limited set of securities' at 44 - the actual definitions, in italic. The same inversion recurs: '*Exogenous* means that they are unaffected by the consumer's decisions' (431) and 'so-called *natural debt limits* that assure that it is feasible for the consumer to repay debts due' (462) are definitions in italic, while the emphasis at 199 - 'is the **value** of time $t+1$ state-contingent claims' - is bold. Bold is also used as a label rather than a definition at 461 (`**Remark:**`). The genuinely correct uses are all italic emphasis (*smooth* 98, *for sure* 474, *tomorrow's* 519, *guess and verify* 508) and bold definitions (**pricing kernel** 146, **one-period ahead Arrow securities** 426, **financial income** 458, **expenditures** 459, **implied price** 477), so the rule is understood - it is applied inconsistently to the four terms above"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [158, 413, 487, 606, 364],
-     "detail": "158 garbles its own object: 'we can price claims to consumption at time $t+1$ consumption that pay off when $x_{t+1} \\in S$' - 'consumption' twice, the second one stranded. 413-416 spends 41 words saying one thing twice: 'differ in how thoroughly the market structure allows a consumer to transfer resources across time and Markov states, there being more transfer opportunities in the complete markets setting than in the incomplete markets setting'. 487 is 'It is timely please to recall that...', which is not grammatical and is the fourth of four 'please' asides in the lecture (187, 263, 349, 487) - a tic that adds no information. 606-607 is a 48-word single sentence whose first eleven words ('To summarize what we have achieved up to now, we have computed') are pure throat-clearing. And 364 says 'In that incomplete markerts setting'"},
-    {"rule": "qe-math-009", "count": 4, "lines": [855, 151, 70, 135],
-     "detail": "the vector arrows at 855-871 are decoration the rest of the lecture does without: $\\vec v$ and $\\vec y$ appear at 855, 858, 863 and 871 for two-element vectors, while every other vector in the file - $x_t$ (135), $b(x_{t+1})$ (170), the `bmatrix` stacks at 537-552 - is a plain letter, and the code calls the same object plain `v` (731). Second, `\\,|\\,` is used as the conditioning bar in about twenty displays (151, 154, 158, 162, 167, 378, 434, 450, 471, 481, 493, 515, 529-530, 569, 588-589) while the plain `|` appears at 436, 461, 603 and 606 for the same thing - `\\mid` is the one-token form that means it. Third, $\\mathbb R^n$ is braced at 70 (`${\\mathbb R}^n$`) and bare at 165. Fourth, `\\cr` is the line break inside `aligned` and `bmatrix` at 135-136, 528-531, 538-552 and 858, while `\\\\` does the job at 388-389 and 847-848; `\\cr` is the deprecated plain-TeX form and mixing the two in one file is gratuitous"},
-    {"rule": "qe-code-001", "count": 6, "lines": [312, 316, 302, 920, 323, 282],
-     "detail": "312-314 indents the continuation of `A = np.array([[1., 0., 0.],` to 12 spaces against a visual indent of 14 (E128), and 313 has two spaces after the comma in `[α,  ρ1, ρ2],` (E241) - as does 316, `S_y = np.array([[1,  1.0, 0.]])`. 302-303 are two consecutive blank lines inside the body of `complete_ss`, immediately before its `return` (E303). 920-921 over-indents the continuation of `ax[0].plot(...)` to 20 spaces where the visual indent is 12 (E127), while the identical construction at 928-929 uses the correct 11 - so the same file does it both ways. 323 passes the simulation length positionally as a literal, `complete_ss(β, b0, x0, A, C, S_y, 80)`, fifteen lines after `N_simul = 80` was defined at 308, so the two can drift apart. And 282-285 plus 290 are five lines of commented-out `Atilde`/`Ctilde`/`S_ytilde` scaffolding left inside the function, together with a comment at 279-281 explaining what that dead code was for"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [634, 461],
-     "detail": "the lecture's whole point is a contrast between two market structures, and the object that creates the contrast - the two-state chain $P = \\begin{bmatrix} .8 & .2 \\\\ .4 & .6 \\end{bmatrix}$ (634-635, written only as a Python default) with Arrow prices $q(j|i) = \\beta P_{ij}$ (471) - is never drawn. A two-node transition diagram with the persistence probabilities on the loops would make 'debt returns to the initial debt level when the state returns to $s_0$' (614) visible rather than asserted, and it is the one figure the reference example for this rule (kolmogorov_fwd) exists to illustrate. Second, the file contains no admonitions at all, and has two passages that are exactly what admonitions are for: the `**Remark:**` at 461-463 about natural debt limits (a caveat set off with bold and a colon, three sentences long, ending 'We shall discuss such debt limits in another lecture') wants a `{note}`, and the unanswered rhetorical question at 519, '(Why is this is a plausible guess?)', wants an `{exercise}` with a `{solution}`"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        617,
+        737,
+        898,
+        26
+      ],
+      "detail": "the code for Model 2 arrives 140 lines before Model 2 does. The `### Code` cell under `## Model 1 (complete markets)` (617-745) defines `consumption_incomplete` (714-744), whose docstring says 'Computes endogenous values for the incomplete market case' and whose body implements {eq}`cs_12` and {eq}`cs_13` - neither of which has been derived yet; `## Model 2 (one-period risk-free debt only)` only opens at 759 and derives them at 866-880, then line 900 has to say 'The code above also contains a function called `consumption_incomplete()`'. Inside that cell, the comment at 737 reads `# Optimal decisions from (12) and (13)`, hard-coding the rendered numbers of two auto-numbered equations, so it goes stale the moment a display is added above. Then `### The incomplete markets model` at 898 sits *after* `### Summary of outcomes` (882) inside the section that is already the incomplete markets model, so the reader meets a heading announcing a model they finished reading about sixteen lines earlier. And line 26 promises a library it never names - 'this lecture uses the  library:' - where the double space is the hole the word `quantecon` fell out of"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        39,
+        42,
+        199,
+        431,
+        462,
+        461
+      ],
+      "detail": "the two terms the lecture is built on are bolded in the bullets that mention them and italicised in the paragraphs that define them: **complete markets** / **incomplete markets** at 39-40 (a passing reference), then '*Complete markets* allow a consumer to buy and sell claims contingent on all possible states of the world' at 42 and '*Incomplete markets* allow a consumer to buy and sell a limited set of securities' at 44 - the actual definitions, in italic. The same inversion recurs: '*Exogenous* means that they are unaffected by the consumer's decisions' (431) and 'so-called *natural debt limits* that assure that it is feasible for the consumer to repay debts due' (462) are definitions in italic, while the emphasis at 199 - 'is the **value** of time $t+1$ state-contingent claims' - is bold. Bold is also used as a label rather than a definition at 461 (`**Remark:**`). The genuinely correct uses are all italic emphasis (*smooth* 98, *for sure* 474, *tomorrow's* 519, *guess and verify* 508) and bold definitions (**pricing kernel** 146, **one-period ahead Arrow securities** 426, **financial income** 458, **expenditures** 459, **implied price** 477), so the rule is understood - it is applied inconsistently to the four terms above"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        158,
+        413,
+        487,
+        606,
+        364
+      ],
+      "detail": "158 garbles its own object: 'we can price claims to consumption at time $t+1$ consumption that pay off when $x_{t+1} \\in S$' - 'consumption' twice, the second one stranded. 413-416 spends 41 words saying one thing twice: 'differ in how thoroughly the market structure allows a consumer to transfer resources across time and Markov states, there being more transfer opportunities in the complete markets setting than in the incomplete markets setting'. 487 is 'It is timely please to recall that...', which is not grammatical and is the fourth of four 'please' asides in the lecture (187, 263, 349, 487) - a tic that adds no information. 606-607 is a 48-word single sentence whose first eleven words ('To summarize what we have achieved up to now, we have computed') are pure throat-clearing. And 364 says 'In that incomplete markerts setting'"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        855,
+        151,
+        70,
+        135
+      ],
+      "detail": "the vector arrows at 855-871 are decoration the rest of the lecture does without: $\\vec v$ and $\\vec y$ appear at 855, 858, 863 and 871 for two-element vectors, while every other vector in the file - $x_t$ (135), $b(x_{t+1})$ (170), the `bmatrix` stacks at 537-552 - is a plain letter, and the code calls the same object plain `v` (731). Second, `\\,|\\,` is used as the conditioning bar in about twenty displays (151, 154, 158, 162, 167, 378, 434, 450, 471, 481, 493, 515, 529-530, 569, 588-589) while the plain `|` appears at 436, 461, 603 and 606 for the same thing - `\\mid` is the one-token form that means it. Third, $\\mathbb R^n$ is braced at 70 (`${\\mathbb R}^n$`) and bare at 165. Fourth, `\\cr` is the line break inside `aligned` and `bmatrix` at 135-136, 528-531, 538-552 and 858, while `\\\\` does the job at 388-389 and 847-848; `\\cr` is the deprecated plain-TeX form and mixing the two in one file is gratuitous"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        312,
+        316,
+        302,
+        920,
+        323,
+        282
+      ],
+      "detail": "312-314 indents the continuation of `A = np.array([[1., 0., 0.],` to 12 spaces against a visual indent of 14 (E128), and 313 has two spaces after the comma in `[α,  ρ1, ρ2],` (E241) - as does 316, `S_y = np.array([[1,  1.0, 0.]])`. 302-303 are two consecutive blank lines inside the body of `complete_ss`, immediately before its `return` (E303). 920-921 over-indents the continuation of `ax[0].plot(...)` to 20 spaces where the visual indent is 12 (E127), while the identical construction at 928-929 uses the correct 11 - so the same file does it both ways. 323 passes the simulation length positionally as a literal, `complete_ss(β, b0, x0, A, C, S_y, 80)`, fifteen lines after `N_simul = 80` was defined at 308, so the two can drift apart. And 282-285 plus 290 are five lines of commented-out `Atilde`/`Ctilde`/`S_ytilde` scaffolding left inside the function, together with a comment at 279-281 explaining what that dead code was for"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        634,
+        461
+      ],
+      "detail": "the lecture's whole point is a contrast between two market structures, and the object that creates the contrast - the two-state chain $P = \\begin{bmatrix} .8 & .2 \\\\ .4 & .6 \\end{bmatrix}$ (634-635, written only as a Python default) with Arrow prices $q(j|i) = \\beta P_{ij}$ (471) - is never drawn. A two-node transition diagram with the persistence probabilities on the loops would make 'debt returns to the initial debt level when the state returns to $s_0$' (614) visible rather than asserted, and it is the one figure the reference example for this rule (kolmogorov_fwd) exists to illustrate. Second, the file contains no admonitions at all, and has two passages that are exactly what admonitions are for: the `**Remark:**` at 461-463 about natural debt limits (a caveat set off with bold and a colon, three sentences long, ending 'We shall discuss such debt limits in another lecture') wants a `{note}`, and the unanswered rhetorical question at 519, '(Why is this is a plausible guess?)', wants an `{exercise}` with a `{solution}`"
+    }
   ],
   "strengths": [
     "The guess-and-verify argument is run as an actual proof and the reader is told where they are in it at every step: the guess is displayed and labelled at 512-517 ({eq}`eq_guess`), the two Markov-state budget constraints it implies are written out at 528-531, the count of equations against unknowns is stated explicitly ('These are $2$ equations in the $3$ unknowns', 555-556), the missing third equation is supplied by an assumption that is named as an assumption (558-562), and 613 comes back and says 'We have verified guess {eq}`eq_guess`'",
@@ -34,5 +91,9 @@
     "Note that the qe-writing-004 finding at line 87 is a false positive: the capitalised 'Savings' is inside the link label `[Optimal Savings II: LQ Techniques]`, which is the actual H1 title of another lecture and correctly title-cased. Leave it alone",
     "This file is byte-identical to `lecture-python-advanced.myst/lectures/smoothing.md`, so every fix above should be made once, upstream, and both series clear. Remaining sweep: 52 double spaces, the two multi-sentence paragraphs at 461 and 519 (and the 'Why is this is' typo in 519), 'markerts' at 364, 'he consumers zero forevermore' at 462, and the `{code-cell} python3` / `{code-cell} ipython` mismatch between 271/624/749/907 and 28/78"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "e781f9e08cda9e32034544b2f0d960ddfd776ab9"
+  }
 }

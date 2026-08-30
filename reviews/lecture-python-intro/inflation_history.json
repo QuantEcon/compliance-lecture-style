@@ -2,14 +2,52 @@
   "series": "lecture-python-intro",
   "lecture": "inflation_history",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 7, "lines": [76, 162, 164, 207, 401, 666, 932],
-     "detail": "seven sentences of 34-57 words, each carrying two or more ideas: 76 (39w, definition of hard currency plus the mechanics of coin valuation), 162 (35w), 164 (39w, announces a figure, names the historical turning point and cites the source in one breath), 207 (42w), 401 (34w), 666 (57w, four countries' stabilisation ratios in a single sentence - a table would carry this better), 932 (37w)"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [164, 454],
-     "detail": "164-174 announces {numref}`lrpl_lg`, then describes what it shows (166), then interrupts with a note about logarithms (168) and an unrelated sentence about 1914 (172) before the figure finally appears at 174; and line 452 promises \"We'll see similar patterns in the next three episodes that we'll study now\", but the Hungary, Poland and Germany sections (454-630) contain six figures and not one sentence of interpretation - the reader gets no commentary again until 632"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [153],
-     "detail": "\"issuing **limited supplies** of paper currency\" - bold used for emphasis inside a bullet, where the rule reserves bold for definitions and italic for emphasis; contrast line 49, where **inflation** is correctly bolded as a definition"},
-    {"rule": "qe-code-001", "count": 8, "lines": [238, 271, 280, 284, 721, 724, 728, 789],
-     "detail": "`if type(entry) == str` instead of `isinstance(entry, str)` (238); backslash line-continuations where the enclosing parentheses already allow implicit continuation (271, 280, 284); and alignment padding that PEP8 rules out - extra spaces after the dict colons at 721 and 789 and two spaces before `=` at 724 and 728"}
+    {
+      "rule": "qe-writing-002",
+      "count": 7,
+      "lines": [
+        76,
+        162,
+        164,
+        207,
+        401,
+        666,
+        932
+      ],
+      "detail": "seven sentences of 34-57 words, each carrying two or more ideas: 76 (39w, definition of hard currency plus the mechanics of coin valuation), 162 (35w), 164 (39w, announces a figure, names the historical turning point and cites the source in one breath), 207 (42w), 401 (34w), 666 (57w, four countries' stabilisation ratios in a single sentence - a table would carry this better), 932 (37w)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        164,
+        454
+      ],
+      "detail": "164-174 announces {numref}`lrpl_lg`, then describes what it shows (166), then interrupts with a note about logarithms (168) and an unrelated sentence about 1914 (172) before the figure finally appears at 174; and line 452 promises \"We'll see similar patterns in the next three episodes that we'll study now\", but the Hungary, Poland and Germany sections (454-630) contain six figures and not one sentence of interpretation - the reader gets no commentary again until 632"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        153
+      ],
+      "detail": "\"issuing **limited supplies** of paper currency\" - bold used for emphasis inside a bullet, where the rule reserves bold for definitions and italic for emphasis; contrast line 49, where **inflation** is correctly bolded as a definition"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        238,
+        271,
+        280,
+        284,
+        721,
+        724,
+        728,
+        789
+      ],
+      "detail": "`if type(entry) == str` instead of `isinstance(entry, str)` (238); backslash line-continuations where the enclosing parentheses already allow implicit continuation (271, 280, 284); and alignment padding that PEP8 rules out - extra spaces after the dict colons at 721 and 789 and two spaces before `=` at 724 and 728"
+    }
   ],
   "strengths": [
     "The two plotting helpers `pe_plot` and `pr_plot` (297-351) are defined once and reused across all four country sections, so the eight country figures are guaranteed to share axes, log scaling and date formatting",
@@ -29,5 +67,9 @@
   ],
   "scanner_doubts": [
     "inflation_history.md:502 - qe-writing-004 is reported with count 2, both on this one line, and the example word is 'Price'. The capitalised words on 502 are quoted spreadsheet column names (\"Wholesale Price Index: On paper currency basis\", \"Wholesale Price Index: On zloty basis\") and the package name \"Pandas\"; the column names are proper names of the source series, so at most one of the two hits is a real violation"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "4516954d36ecbb65d7673ba9d007b1e78aa5dc23"
+  }
 }

@@ -2,14 +2,44 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "classical_filtering",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 3, "lines": [278, 390, 909],
-     "detail": "1047 lines with no figure at all, and three passages that ask for one: line 278 and 286 tell the reader to \"notice how the lower rows ... are converging\" in the raw `print(Li)` / `print(L)` output of 281-291; lines 390-401 state the central convergence result (bottom rows of $L^{-1}$ tend to the Wold moving-average coefficients) without plotting a single coefficient sequence; and the Blaschke-factor section at 909-930 turns entirely on which zeros lie inside the unit circle, which is a picture of the complex plane"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [767, 907, 973],
-     "detail": "bold is used as a substitute for a heading or a directive in three places - `**Proposition**` at 767 (which should be a `{prf:proposition}`), `**Blaschke factors**` at 907 (a subsection in all but markup), and `**Multivariable Prediction:**` at 973 (an exercise title) - none of the three is a definition or an emphasis, which is what the rule reserves bold and italic for"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [210, 240, 384],
-     "detail": "line 210-212 is a 44-word sentence that names both halves of an orthogonal decomposition, the space each lies in, and defines \"orthogonal complement\" on the way past; 240-241 is 38 words of forward reference before the point of the example arrives; 384-388 is 41 words with the covariance-stationarity qualification nested inside the claim it qualifies"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [312],
-     "detail": "Example 2 (294-341) says \"We proceed in the same way as in example 1\" and then fires five code cells in a row (314, 324, 328, 333, 338) with no prose between any of them, dropping the step-by-step narration that made Example 1 readable at 255, 267-271, 278 and 286; line 335 silently switches to `Li[-3:, :]` and never says that the last three rows are the point"}
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        278,
+        390,
+        909
+      ],
+      "detail": "1047 lines with no figure at all, and three passages that ask for one: line 278 and 286 tell the reader to \"notice how the lower rows ... are converging\" in the raw `print(Li)` / `print(L)` output of 281-291; lines 390-401 state the central convergence result (bottom rows of $L^{-1}$ tend to the Wold moving-average coefficients) without plotting a single coefficient sequence; and the Blaschke-factor section at 909-930 turns entirely on which zeros lie inside the unit circle, which is a picture of the complex plane"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        767,
+        907,
+        973
+      ],
+      "detail": "bold is used as a substitute for a heading or a directive in three places - `**Proposition**` at 767 (which should be a `{prf:proposition}`), `**Blaschke factors**` at 907 (a subsection in all but markup), and `**Multivariable Prediction:**` at 973 (an exercise title) - none of the three is a definition or an emphasis, which is what the rule reserves bold and italic for"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        210,
+        240,
+        384
+      ],
+      "detail": "line 210-212 is a 44-word sentence that names both halves of an orthogonal decomposition, the space each lies in, and defines \"orthogonal complement\" on the way past; 240-241 is 38 words of forward reference before the point of the example arrives; 384-388 is 41 words with the covariance-stationarity qualification nested inside the claim it qualifies"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        312
+      ],
+      "detail": "Example 2 (294-341) says \"We proceed in the same way as in example 1\" and then fires five code cells in a row (314, 324, 328, 333, 338) with no prose between any of them, dropping the step-by-step narration that made Example 1 readable at 255, 267-271, 278 and 286; line 335 silently switches to `Li[-3:, :]` and never says that the last three rows are the point"
+    }
   ],
   "strengths": [
     "`\\mathbb{E}` is written with braces in all 40 places it appears, and the conditional-expectation operator is consistently the distinct `\\mathbb{\\hat E}` - the notation for expectation never wobbles across 1047 lines",
@@ -30,5 +60,9 @@
   "scanner_doubts": [
     "classical_filtering.md:81 - qe-math-010 (proposed) is reported nowhere in this file, but line 81 writes the expectation as a bare `E`: `$E x_i x_j$`. The mechanical regex looks for `E[`, `E_t`, `\\mathbb E`, `\\Pr(` and `\\Var(`, so a bare `E` followed by a space and a symbol slips through. The count for this file should be at least 1.",
     "classical_filtering.md:225 - Code is scored 10/10, but the only Python the scanner can see in this file is `import numpy as np` (68) and a dozen lines of driver calls; the substantive implementation is `:load:`-ed from `_static/lecture_specific/lu_tricks/control_and_filter.py` at line 225, which is neither measured nor present in the sparse corpus checkout. The 10/10 is a statement about 15 lines, not about the lecture's code."
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "75267d9aed5e007e45a204e41b0dd3a60c3fb3d0"
+  }
 }

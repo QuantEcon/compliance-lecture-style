@@ -4,5 +4,7 @@ lectures/_build/
 __pycache__/
 *.pyc
 .venv/
-# Corpus clone for an unattended resume (see .claude/RESUME.md)
+# Corpus clones: blobless sparse checkouts, kept inside the tree so an
+# unattended run needs no permission prompt to read them
+# (see .claude/skills/pass-measure/SKILL.md § 2)
 .corpus/

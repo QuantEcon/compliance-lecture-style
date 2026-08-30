@@ -2,16 +2,64 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "tax_smoothing_2",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 7, "lines": [409, 544, 589, 605, 620, 641, 836],
-     "detail": "the second half of the lecture silently changes notation and then contradicts itself. (i) Debt is $b_{t,t+1}$ and $b_{t,t+2}$ - issue date first, maturity second - from 99 through 229, and from 544 onward it is $b^{t}_{t+1}$, with the issue date moved to a superscript; nothing announces the change, and the two conventions never appear side by side to be reconciled. (ii) Prices are $p_{t,t+j}$ at 105-108, 550 and 579 but $p^t_{t+j}$ in the rearranged budget constraint at 605, one display before they are used as $p_t$ at 611. (iii) 589 writes the vector $[b^{t-1}_{t+1}, \\ldots, b^{t-1}_{t+T-1}]'$, using $T$ for the horizon that 535, 558 and 596 call $H$ - the code's parameter name (`T` at 709) has leaked into the mathematics, in a lecture where $T_t$ is tax collections. (iv) 641 states the Markov-state convention as \"$R_t \\equiv R_{s_t}, Q_t \\equiv W_{s_t}$\". (v) 620 repeats the definition of $S_t$ from 617 with Unicode right single quotes in place of primes, `p_t’S_s’S_x`. (vi) 697 gives the left-hand side as $C$ where 691 and 315 write $C_t$. (vii) Both examples are introduced as \"two Markov states, one with a flatter yield curve, and one with a steeper yield curve\" (409-410, 760-761) without ever saying which state is which - the prices at 415-421 and 767-773 determine it - and no later sentence uses the distinction. The restructuring section then ends at 845 on five figures with no interpretation of any kind after 776"},
-    {"rule": "qe-code-001", "count": 8, "lines": [443, 471, 709, 782, 784, 793],
-     "detail": "709 names the maximum maturity `T` - `def LQ_markov_mapping_restruct(A22, C2, Ug, T, p_t, c=0)`, documented at 714 as \"p_t should be a T by 1 matrix\" - in a lecture whose objective is built from tax collections $T_t$, and where 471, 518 and 813 bind `t` to the returned Markov-state path and then never use it. 782-783 rebind `p1` and `p2` from the scalars they were at 440 to (3,1) price vectors, so the same two names mean four different objects across two cells of one notebook; 440 itself packs maturity and Markov state into `p1, p2, p3, p4` while the function's own parameters `p1, p2` mean maturities only. 784 assigns `Pi = np.array([[0.9, 0.1], [0.1, 0.9]])` which is never used - the model at 809 takes `Π` from 462 - so the same matrix exists twice under two spellings. 793-798 apply the no-Ponzi penalty with six longhand `R1[i, i] = R1[i, i] + 1e-9` lines hard-coded for $H = 3$, which will silently stop covering the diagonal if $H$ changes. 443 writes `np.array([[1, 0], [Gbar, ρ] ,])`, with a space before the comma and a trailing comma; and 444 introduces `C_2` one line before `C2` is bound to something else entirely at 448, 499 and 790"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [474, 819, 836],
-     "detail": "the lecture's central experiment is the comparison between $c_1 = 0$ and $c_1 = 0.01$, and the two figures that carry it (474-481, 521-528) are produced by identical code with identical titles - 'One-period debt issuance' and 'Two-period debt issuance' - no captions, no `name:`, and nothing anywhere in either figure recording which penalty produced it; the reader has only the intervening sentence at 488. The claim at 484-486 that the government \"has an incentive to take large long-short positions\" and at 490-492 that the penalty \"is big enough to motivate the government to issue positive quantities of both\" can only be checked from two auto-scaled vertical axes on separate figures. The restructuring example is worse served: 819 packs four panels into `figsize=(11, 3)` with independent y-axes and three-word titles, and 836-843 plots the short-term issuance share as the last object in the lecture, with no sentence after it. There are no admonitions in 845 lines, and the two modelling decisions that most need one - the no-Ponzi penalty added to $R$ (450-452, 792-798) and the rescheduling cost - exist only as code comments, one of which (787) mislabels $c_2$ as a penalty \"on different issuance across maturities\", which is what $c_1$ was"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [32, 35, 101, 119, 787],
-     "detail": "32 has \"toimplement\" and closes with a stray parenthesis after `{cite}`barro2003religion``, both inherited from the same sentence in tax_smoothing_1 (41). The possessive is dropped from the same construction twice: \"{cite}`Barro1979` model is about a government\" (35) and \"{cite}`Barro1979` model looks a lot like a consumption-smoothing model\" (39). 101 reads \"$b_{t,t+2}$ betime $t+2$ goods\". 116-119 ends the sentence that introduces the objective with a full stop before the display, \"the government chooses a contingency plan for $\\{b_{t, t+1}, b_{t,t+2}, T_t\\}_{t=0}^\\infty$ to maximize.\" And the comment at 787, \"Put penalty on different issuance across maturities\", describes $c_1$ (151-158) rather than the $c_2$ rescheduling cost it actually sets (540-544). The bullet lists at 96-108 and 141-149 also mix one-space and two-space markers, so several items render as nested sub-lists"},
-    {"rule": "qe-math-009", "count": 2, "lines": [138, 403],
-     "detail": "138 uses $\\sim$, which the same display uses two lines earlier in its ordinary sense ($w_{t+1} \\sim {\\cal N}(0,I)$ at 142), to mean \"are functions of\": a column vector of five objects $\\sim \\textrm{functions of Markov state with transition matrix } \\Pi$. A sentence would say it, and would not put a distributional symbol between a matrix and an English phrase. Separately, 22 inter-equation separators are hard-coded as `\\hspace{2mm}` (18 occurrences, e.g. 403, 415, 421, 559, 579) and `\\hspace{5mm}` (4, e.g. 637, 697), so the same visual separator has two widths and neither is `\\quad`; 617 and 620 also write $Ug$ where every other appearance of the same matrix is $U_g$ (403) or $U_{g,s_t}$ (130)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 7,
+      "lines": [
+        409,
+        544,
+        589,
+        605,
+        620,
+        641,
+        836
+      ],
+      "detail": "the second half of the lecture silently changes notation and then contradicts itself. (i) Debt is $b_{t,t+1}$ and $b_{t,t+2}$ - issue date first, maturity second - from 99 through 229, and from 544 onward it is $b^{t}_{t+1}$, with the issue date moved to a superscript; nothing announces the change, and the two conventions never appear side by side to be reconciled. (ii) Prices are $p_{t,t+j}$ at 105-108, 550 and 579 but $p^t_{t+j}$ in the rearranged budget constraint at 605, one display before they are used as $p_t$ at 611. (iii) 589 writes the vector $[b^{t-1}_{t+1}, \\ldots, b^{t-1}_{t+T-1}]'$, using $T$ for the horizon that 535, 558 and 596 call $H$ - the code's parameter name (`T` at 709) has leaked into the mathematics, in a lecture where $T_t$ is tax collections. (iv) 641 states the Markov-state convention as \"$R_t \\equiv R_{s_t}, Q_t \\equiv W_{s_t}$\". (v) 620 repeats the definition of $S_t$ from 617 with Unicode right single quotes in place of primes, `p_t’S_s’S_x`. (vi) 697 gives the left-hand side as $C$ where 691 and 315 write $C_t$. (vii) Both examples are introduced as \"two Markov states, one with a flatter yield curve, and one with a steeper yield curve\" (409-410, 760-761) without ever saying which state is which - the prices at 415-421 and 767-773 determine it - and no later sentence uses the distinction. The restructuring section then ends at 845 on five figures with no interpretation of any kind after 776"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        443,
+        471,
+        709,
+        782,
+        784,
+        793
+      ],
+      "detail": "709 names the maximum maturity `T` - `def LQ_markov_mapping_restruct(A22, C2, Ug, T, p_t, c=0)`, documented at 714 as \"p_t should be a T by 1 matrix\" - in a lecture whose objective is built from tax collections $T_t$, and where 471, 518 and 813 bind `t` to the returned Markov-state path and then never use it. 782-783 rebind `p1` and `p2` from the scalars they were at 440 to (3,1) price vectors, so the same two names mean four different objects across two cells of one notebook; 440 itself packs maturity and Markov state into `p1, p2, p3, p4` while the function's own parameters `p1, p2` mean maturities only. 784 assigns `Pi = np.array([[0.9, 0.1], [0.1, 0.9]])` which is never used - the model at 809 takes `Π` from 462 - so the same matrix exists twice under two spellings. 793-798 apply the no-Ponzi penalty with six longhand `R1[i, i] = R1[i, i] + 1e-9` lines hard-coded for $H = 3$, which will silently stop covering the diagonal if $H$ changes. 443 writes `np.array([[1, 0], [Gbar, ρ] ,])`, with a space before the comma and a trailing comma; and 444 introduces `C_2` one line before `C2` is bound to something else entirely at 448, 499 and 790"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        474,
+        819,
+        836
+      ],
+      "detail": "the lecture's central experiment is the comparison between $c_1 = 0$ and $c_1 = 0.01$, and the two figures that carry it (474-481, 521-528) are produced by identical code with identical titles - 'One-period debt issuance' and 'Two-period debt issuance' - no captions, no `name:`, and nothing anywhere in either figure recording which penalty produced it; the reader has only the intervening sentence at 488. The claim at 484-486 that the government \"has an incentive to take large long-short positions\" and at 490-492 that the penalty \"is big enough to motivate the government to issue positive quantities of both\" can only be checked from two auto-scaled vertical axes on separate figures. The restructuring example is worse served: 819 packs four panels into `figsize=(11, 3)` with independent y-axes and three-word titles, and 836-843 plots the short-term issuance share as the last object in the lecture, with no sentence after it. There are no admonitions in 845 lines, and the two modelling decisions that most need one - the no-Ponzi penalty added to $R$ (450-452, 792-798) and the rescheduling cost - exist only as code comments, one of which (787) mislabels $c_2$ as a penalty \"on different issuance across maturities\", which is what $c_1$ was"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        32,
+        35,
+        101,
+        119,
+        787
+      ],
+      "detail": "32 has \"toimplement\" and closes with a stray parenthesis after `{cite}`barro2003religion``, both inherited from the same sentence in tax_smoothing_1 (41). The possessive is dropped from the same construction twice: \"{cite}`Barro1979` model is about a government\" (35) and \"{cite}`Barro1979` model looks a lot like a consumption-smoothing model\" (39). 101 reads \"$b_{t,t+2}$ betime $t+2$ goods\". 116-119 ends the sentence that introduces the objective with a full stop before the display, \"the government chooses a contingency plan for $\\{b_{t, t+1}, b_{t,t+2}, T_t\\}_{t=0}^\\infty$ to maximize.\" And the comment at 787, \"Put penalty on different issuance across maturities\", describes $c_1$ (151-158) rather than the $c_2$ rescheduling cost it actually sets (540-544). The bullet lists at 96-108 and 141-149 also mix one-space and two-space markers, so several items render as nested sub-lists"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        138,
+        403
+      ],
+      "detail": "138 uses $\\sim$, which the same display uses two lines earlier in its ordinary sense ($w_{t+1} \\sim {\\cal N}(0,I)$ at 142), to mean \"are functions of\": a column vector of five objects $\\sim \\textrm{functions of Markov state with transition matrix } \\Pi$. A sentence would say it, and would not put a distributional symbol between a matrix and an English phrase. Separately, 22 inter-equation separators are hard-coded as `\\hspace{2mm}` (18 occurrences, e.g. 403, 415, 421, 559, 579) and `\\hspace{5mm}` (4, e.g. 637, 697), so the same visual separator has two widths and neither is `\\quad`; 617 and 620 also write $Ug$ where every other appearance of the same matrix is $U_g$ (403) or $U_{g,s_t}$ (130)"
+    }
   ],
   "strengths": [
     "The mapping into the Markov jump LQ framework is carried out twice, once for each specification, and both times every object is constructed on its own line before being used: for the two-maturity model, $\\hat b_t$ (172-176), the endogenous state $\\bar b_t$ (180-185), the full state (189-193), the control (197-202), the law of motion with its two explicit matrices (206-235), the selector matrices (239-257) and finally $R_t, Q_t, W_t$ (267-281)",
@@ -33,5 +81,9 @@
   ],
   "scanner_doubts": [
     "tax_smoothing_2.md:122,142 - qe-math-010 (proposed) is reported with count 0, but the objective at 122 is written $- E_0 \\sum_{t=0}^\\infty \\beta^t [\\ldots]$ with a plain, unbraced $E_0$, which is exactly what the rule targets. It escapes for the reason recorded in the tax_smoothing_1 and smoothing overlays: the `bare_E` branch of `check_math_010` requires a delimiter (`[`, `\\{` or `(`) immediately after the optional subscript, and here `E_0` is followed by `\\sum`; and because that same pattern computes the `e_is_operator` gate, a file whose only expectations are written this way disables the branch entirely. This lecture and tax_smoothing_1 both use a plain `E_0` for their single objective and both score 0 on a Very-High-weight rule"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "fb046a1724d09c4c2219e6c645c43435b4d37646"
+  }
 }

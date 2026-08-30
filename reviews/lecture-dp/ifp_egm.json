@@ -2,16 +2,58 @@
   "series": "lecture-dp",
   "lecture": "ifp_egm",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [180, 637],
-     "detail": "line 180 sends the reader to {eq}`eqvfs`, but the label defined in this file at 170 is `eqvfs_egm` - `eqvfs` is the label in {doc}`ifp_discrete`, so the reference resolves to nothing and the definition of an optimal consumption path points at an empty target. The larger break is at 637-649: the text says 'To verify the correctness of our JAX implementation, let's compare it with the NumPy version' and then 'These numbers confirm that we are computing essentially the same policy'. They are not the same model. `create_ifp` is defined twice - at 358 with `β=0.96` and again at 509 with `β=0.94` - so `ifp_numpy` (463) and `ifp` (628) differ in the discount factor, and the printed 'Maximum difference in consumption policy' at 644 is measuring that difference, not floating-point agreement. The timing comparison at 668-688 inherits the same mismatch"},
-    {"rule": "qe-math-009", "count": 7, "lines": [120, 145, 167, 211, 222, 322, 387],
-     "detail": "`\\mathsf Z` and `\\mathsf S` used decoratively for the exogenous state support and the state space: 120, 145 (both symbols), 167, 211, 222, 322 and 387. Plain $Z$ and $S$ would carry the same meaning; neither sans-serif symbol reaches the code, where the same objects are `z_grid` and the `(a, z)` pair, and the lecture already writes $\\mathbb{R}_+$, $\\Pi$ and $\\sigma$ without any face decoration"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [156, 178, 528, 695],
-     "detail": "line 156 'consumption at time $t$ cannot be a function of outcomes are yet to be observed' is missing a 'that'; line 178 writes 'the maximization is overall feasible consumption paths' where 'over all' is meant. The other two are duplication rather than length: lines 528-529 repeat 376-377 word for word ('Here is the operator $K$ that transforms current guess $\\sigma$ into next period guess $K\\sigma$'), and the two operator docstrings at 397-404 and 538-544 are byte-identical - so the JAX section opens by telling the reader nothing new. Worse, the figure at 693-702 is an exact copy of the figure at 474-484, down to the labels, and both plot `a_vec`/`c_vec`, the NumPy solution from line 469 - the JAX section's plot never shows the JAX policy"},
-    {"rule": "qe-code-001", "count": 3, "lines": [576, 731, 780],
-     "detail": "line 576 has trailing whitespace after `compute_c(jnp.arange(1, len(s)))` (W291); line 731 writes `+ y_bar(k) , label=label` with a space before the comma (E203); line 780 writes `β ** (1/γ)` with spaces around the exponentiation operator, while line 784 two lines below writes `β**(1 / γ)` - the rule asks for the tight `a**b` form, and the two adjacent lines should at least agree with each other"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [279],
-     "detail": "the Solution Method section (251-322) is 70 lines describing a construction that is entirely geometric - an exogenous savings grid $s_0 < \\cdots < s_m$, the consumption values $c_{ij}$ read off the Euler equation, the endogenous asset grid $a_{ij} = c_{ij} + s_i$, the anchor at the origin, and a piecewise-linear interpolant through $\\{(a_{0j}, c_{0j}), \\ldots\\}$ - and it carries no figure. The one picture that would make EGM click, the interpolation points sitting on an unevenly spaced asset grid with the policy drawn through them, appears nowhere; every other section of this lecture gets a panel"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        180,
+        637
+      ],
+      "detail": "line 180 sends the reader to {eq}`eqvfs`, but the label defined in this file at 170 is `eqvfs_egm` - `eqvfs` is the label in {doc}`ifp_discrete`, so the reference resolves to nothing and the definition of an optimal consumption path points at an empty target. The larger break is at 637-649: the text says 'To verify the correctness of our JAX implementation, let's compare it with the NumPy version' and then 'These numbers confirm that we are computing essentially the same policy'. They are not the same model. `create_ifp` is defined twice - at 358 with `β=0.96` and again at 509 with `β=0.94` - so `ifp_numpy` (463) and `ifp` (628) differ in the discount factor, and the printed 'Maximum difference in consumption policy' at 644 is measuring that difference, not floating-point agreement. The timing comparison at 668-688 inherits the same mismatch"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 7,
+      "lines": [
+        120,
+        145,
+        167,
+        211,
+        222,
+        322,
+        387
+      ],
+      "detail": "`\\mathsf Z` and `\\mathsf S` used decoratively for the exogenous state support and the state space: 120, 145 (both symbols), 167, 211, 222, 322 and 387. Plain $Z$ and $S$ would carry the same meaning; neither sans-serif symbol reaches the code, where the same objects are `z_grid` and the `(a, z)` pair, and the lecture already writes $\\mathbb{R}_+$, $\\Pi$ and $\\sigma$ without any face decoration"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        156,
+        178,
+        528,
+        695
+      ],
+      "detail": "line 156 'consumption at time $t$ cannot be a function of outcomes are yet to be observed' is missing a 'that'; line 178 writes 'the maximization is overall feasible consumption paths' where 'over all' is meant. The other two are duplication rather than length: lines 528-529 repeat 376-377 word for word ('Here is the operator $K$ that transforms current guess $\\sigma$ into next period guess $K\\sigma$'), and the two operator docstrings at 397-404 and 538-544 are byte-identical - so the JAX section opens by telling the reader nothing new. Worse, the figure at 693-702 is an exact copy of the figure at 474-484, down to the labels, and both plot `a_vec`/`c_vec`, the NumPy solution from line 469 - the JAX section's plot never shows the JAX policy"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        576,
+        731,
+        780
+      ],
+      "detail": "line 576 has trailing whitespace after `compute_c(jnp.arange(1, len(s)))` (W291); line 731 writes `+ y_bar(k) , label=label` with a space before the comma (E203); line 780 writes `β ** (1/γ)` with spaces around the exponentiation operator, while line 784 two lines below writes `β**(1 / γ)` - the rule asks for the tight `a**b` form, and the two adjacent lines should at least agree with each other"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        279
+      ],
+      "detail": "the Solution Method section (251-322) is 70 lines describing a construction that is entirely geometric - an exogenous savings grid $s_0 < \\cdots < s_m$, the consumption values $c_{ij}$ read off the Euler equation, the endogenous asset grid $a_{ij} = c_{ij} + s_i$, the anchor at the origin, and a piecewise-linear interpolant through $\\{(a_{0j}, c_{0j}), \\ldots\\}$ - and it carries no figure. The one picture that would make EGM click, the interpolation points sitting on an unevenly spaced asset grid with the policy drawn through them, appears nowhere; every other section of this lecture gets a panel"
+    }
   ],
   "strengths": [
     "The `{note}` at 122-137 does not just change the budget constraint from the previous two lectures - it says which constraint was used before, why the discretization-friendly timing was chosen then, what it costs (a bigger state space), and where the consequence will show up ({doc}`ifp_egm_transient_shocks`). A reader arriving from {doc}`ifp_discrete` is told exactly what moved",
@@ -34,5 +76,9 @@
     "ifp_egm.md, lines 260, 261, 267 - all 3 `qe-math-002` hits are false positives: every one is `u'`, the derivative of the utility function, inside `(u' \\circ \\sigma)`. Line 268 of the lecture says so out loud: 'primes indicate next period states (as well as derivatives)'. Note the pattern - the same `u'(c_t)` at 142, 187, 197, 201 and 218 was correctly skipped, so the guard is working in general; what leaks is `u'` followed by `\\circ` or by an opening parenthesis, which §9's 'superscript followed by a factor rather than a relation' test reads as multiplication. Adding `\\circ` to the relation side, and treating a single lowercase italic base as non-matrix-like even when followed by a factor, would clear these three.",
     "ifp_egm.md, line 761 vs line 209 - the single `qe-ref-001` hit looks like the wrong one of the two candidates. Line 761 is `* For details see {cite}`ma2020income`` - a bullet-list citation, which the rule text explicitly permits ('Use `{cite}` for standard citations at end of sentences or in lists'). Meanwhile line 209 reads 'As shown in {cite}`ma2020income`,' which is the rule's canonical in-flow case and should be `{cite:t}`; it was not flagged. Line 46 ('The primary source ... is {cite}`ma2020income`') is arguably a third. So the check appears to be keying on 'see {cite}' rather than on author-in-sentence-position, and is both over- and under-firing here.",
     "ifp_egm.md, line 180 - a missing check rather than a wrong count. `{eq}`eqvfs`` names a label that does not exist in this file (the label at 170 is `eqvfs_egm`; `eqvfs` lives in ifp_discrete.md). Per spec §5 a broken `{eq}` ref is Critical severity, but nothing fired: `qe-math-013` catches malformed `{eq}` syntax, as it did in cross_product_trick.md, and this reference is syntactically perfect - it just points nowhere. Since the scanner already collects every `:label:` in the corpus, a same-file label-resolution check would be cheap and would catch the class of copy-paste error that produced this one."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "cd3aff3d20c56a4488cf13874fd4994a82486907"
+  }
 }

@@ -25,5 +25,9 @@
     "Split the two-sentence paragraph at 65 and close the double space in 'possible.  Tell' (qe-writing-001 and qe-writing-008, 1 occurrence each)",
     "Consider making the rhetorical question at 32 ('You have installed Anaconda, haven't you...?') a plain statement - a reader who arrives on this page is already stuck"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "1cfa95f53f27019a7b991daea71b5c74ab2e4398"
+  }
 }

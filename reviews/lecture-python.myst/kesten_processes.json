@@ -2,14 +2,44 @@
   "series": "lecture-python.myst",
   "lecture": "kesten_processes",
   "judgment": [
-    {"rule": "qe-math-009", "count": 3, "lines": [227, 368, 449],
-     "detail": "four letters do double duty. Line 227 is the clearest case: `\\int \\mathbb P\\{ R_{t+1} s w + y_{t+1} \\leq y\\} F^*(dw)` uses $s$ for the savings fraction (148-157), $y_{t+1}$ for labor income (150) and $y$ for the argument of the distribution function (219) - three meanings for two letters inside one integral. Then 368 makes $s_t$ firm size while $s$ is still the savings fraction at 264, and 612 adds the threshold $\\bar s$. And 449-451 introduces $\\alpha_0$, $\\alpha_1$ as GARCH parameters while $\\alpha$ is the Pareto tail index at 286-305, alongside $\\sigma_t$ as volatility (129-144) against $\\sigma$, $\\sigma_a$, $\\sigma_b$, $\\sigma_e$ as lognormal scale parameters (333, 534, 650-654)"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [329, 408, 421],
-     "detail": "329 says \"the following simulation, which generates 10 paths when $a_t$ and $b_t$ are lognormal\" - but the lecture's Kesten process is $X_{t+1} = a_{t+1}X_t + \\eta_{t+1}$ and $b_t$ has not been introduced; it first appears at 398, seventy lines later, as the additive term in the firm-size law, and the code at 339 uses `b` for what the surrounding text calls $\\eta$. 408 opens \"### Heavy tails\" inside the firm-dynamics section although \"## Heavy tails\" is already an H2 at 266, so the table of contents lists the same title twice. And 421-422 promises \"We also try to illustrate why the Pareto tail finding is significant for quantitative analysis\" - none of the four exercises does that; kp_ex1 simulates GARCH, kp_ex2 compares growth laws, kp_ex3 solves for $\\alpha$ and kp_ex4 produces the rank-size plot"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [317, 357, 497],
-     "detail": "313-327 uses six one-sentence paragraphs to make two points: 317 and 321 both restate the role of $\\mathbb E \\ln a_t < 0$ (\"has a large amount of probability mass below 1\", then \"gives us existence of the stationary condition\"), and 319 and 323 both restate the role of $\\mathbb E a_t^\\alpha = 1$ - and 321 misnames its own subject, since what the condition delivers is a stationary *distribution*, not a stationary condition. 497-499 is broken and unpunctuated: \"Gibrat's law is generally found to be a reasonable approximation for large firms than for small firms\" is missing its comparative and its full stop, and it garbles what 389-390 said correctly. 357 packs a cross-reference, two size measures and two citations into 33 words"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [307],
-     "detail": "\"### Intuition\" (307-327) exists to explain why the two Kesten-Goldie conditions pull in opposite directions - $\\mathbb E \\ln a_t < 0$ putting mass below one, $\\mathbb E a_t^\\alpha = 1$ requiring mass at or above one - and delivers that explanation in six prose sentences with no picture, in a lecture that is otherwise willing to plot. Both halves are one-liners to draw: the lognormal density of $a_t$ with a vertical rule at $a = 1$ showing the mass on each side, and the curve $\\alpha \\mapsto \\mathbb E a_t^\\alpha = \\exp(\\alpha\\mu + \\alpha^2\\sigma^2/2)$ crossing one at $\\alpha = -2\\mu/\\sigma^2$, which is exactly the root that exercise kp_ex3 derives at 571-574. The second plot would also show at a glance why the tail gets heavier as $\\mu \\to 0$"}
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        227,
+        368,
+        449
+      ],
+      "detail": "four letters do double duty. Line 227 is the clearest case: `\\int \\mathbb P\\{ R_{t+1} s w + y_{t+1} \\leq y\\} F^*(dw)` uses $s$ for the savings fraction (148-157), $y_{t+1}$ for labor income (150) and $y$ for the argument of the distribution function (219) - three meanings for two letters inside one integral. Then 368 makes $s_t$ firm size while $s$ is still the savings fraction at 264, and 612 adds the threshold $\\bar s$. And 449-451 introduces $\\alpha_0$, $\\alpha_1$ as GARCH parameters while $\\alpha$ is the Pareto tail index at 286-305, alongside $\\sigma_t$ as volatility (129-144) against $\\sigma$, $\\sigma_a$, $\\sigma_b$, $\\sigma_e$ as lognormal scale parameters (333, 534, 650-654)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        329,
+        408,
+        421
+      ],
+      "detail": "329 says \"the following simulation, which generates 10 paths when $a_t$ and $b_t$ are lognormal\" - but the lecture's Kesten process is $X_{t+1} = a_{t+1}X_t + \\eta_{t+1}$ and $b_t$ has not been introduced; it first appears at 398, seventy lines later, as the additive term in the firm-size law, and the code at 339 uses `b` for what the surrounding text calls $\\eta$. 408 opens \"### Heavy tails\" inside the firm-dynamics section although \"## Heavy tails\" is already an H2 at 266, so the table of contents lists the same title twice. And 421-422 promises \"We also try to illustrate why the Pareto tail finding is significant for quantitative analysis\" - none of the four exercises does that; kp_ex1 simulates GARCH, kp_ex2 compares growth laws, kp_ex3 solves for $\\alpha$ and kp_ex4 produces the rank-size plot"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        317,
+        357,
+        497
+      ],
+      "detail": "313-327 uses six one-sentence paragraphs to make two points: 317 and 321 both restate the role of $\\mathbb E \\ln a_t < 0$ (\"has a large amount of probability mass below 1\", then \"gives us existence of the stationary condition\"), and 319 and 323 both restate the role of $\\mathbb E a_t^\\alpha = 1$ - and 321 misnames its own subject, since what the condition delivers is a stationary *distribution*, not a stationary condition. 497-499 is broken and unpunctuated: \"Gibrat's law is generally found to be a reasonable approximation for large firms than for small firms\" is missing its comparative and its full stop, and it garbles what 389-390 said correctly. 357 packs a cross-reference, two size measures and two citations into 33 words"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        307
+      ],
+      "detail": "\"### Intuition\" (307-327) exists to explain why the two Kesten-Goldie conditions pull in opposite directions - $\\mathbb E \\ln a_t < 0$ putting mass below one, $\\mathbb E a_t^\\alpha = 1$ requiring mass at or above one - and delivers that explanation in six prose sentences with no picture, in a lecture that is otherwise willing to plot. Both halves are one-liners to draw: the lognormal density of $a_t$ with a vertical rule at $a = 1$ showing the mass on each side, and the curve $\\alpha \\mapsto \\mathbb E a_t^\\alpha = \\exp(\\alpha\\mu + \\alpha^2\\sigma^2/2)$ crossing one at $\\alpha = -2\\mu/\\sigma^2$, which is exactly the root that exercise kp_ex3 derives at 571-574. The second plot would also show at a glance why the tail gets heavier as $\\mu \\to 0$"
+    }
   ],
   "strengths": [
     "Every probability in the lecture puts its event in braces - `\\mathbb P\\{a_{t+1} x + \\eta_{t+1} \\leq y\\}` (190), `\\mathbb P\\{R_{t+1} s w + y_{t+1} \\leq y\\}` (227), `\\mathbb P\\{a_t x + \\eta_t = x\\}` (285), `\\mathbb P\\{X^* > x\\}` (302) - so proposed qe-math-014 holds without exception",
@@ -29,5 +59,9 @@
     "Compress 313-327 to two sentences, one per condition, dropping the duplicates at 321 and 323 and correcting \"stationary condition\" to \"stationary distribution\"; and repair the sentence at 497-499",
     "Lower-case \"Theorem\" mid-sentence at 281, 309, 359 and 414 (qe-writing-004), add `lw=2` at 112, 349 and 469, close the double space at 494, move the JAX imports from 675-678 up to the opening import cell at 59, and replace the deprecated `jax.random.PRNGKey` at 705 with `jax.random.key`"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "db88000bee22883df0836c416314bf9b37b73983"
+  }
 }

@@ -2,14 +2,53 @@
   "series": "lecture-python-intro",
   "lecture": "cons_smooth",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 9, "lines": [19, 27, 51, 57, 136, 254, 348, 428, 670],
-     "detail": "nine over-long or redundant sentences. Line 27-30 is a single 48-word sentence carrying three ideas (what inspired Friedman, that wages are a dividend stream, that asset-pricing formulas then apply); line 19 is 41 words and opens the lecture; lines 51, 57, 136, 254, 428 and 670 run 30-36 words each. Line 348 contains a duplicated word - 'different sequences sequences of non-financial income'"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [110, 542, 673],
-     "detail": "bold doing emphasis work at line 110 ('there are **many** budget feasible consumption paths') and line 673 ('**lowers** the government expenditure multiplier'), both of which want italic; and line 542 uses bold as a pseudo-heading ('**Key Idea:**'). The lecture's other eight bolds correctly mark definitions"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [92],
-     "detail": "lines 92-105 walk the reader through an iterative procedure - guess a consumption path, compute wealth, check the terminal condition, and 'if the candidate consumption path is not budget feasible, propose a less greedy consumption path and start over'. The lecture never implements it: section 201 computes c_0 in closed form from eq:conssmoothing and no search ever happens, so the reader has been taught an algorithm the lecture abandons"},
-    {"rule": "qe-code-001", "count": 6, "lines": [316, 366, 451, 463, 475, 579],
-     "detail": "lines 316 and 366 write `figsize=(12,5)` with no space after the comma; line 579 writes `ϕs= [.95, 1.02]` with a space after the equals sign and none before; lines 451, 463 and 475 put spaces around the exponentiation operator (`λ ** np.arange(t_max)`) where the rest of the file consistently writes it tight (`β**i` at 148, `growth**(T+1)` at 558, `ϕ**t` at 562)"}
+    {
+      "rule": "qe-writing-002",
+      "count": 9,
+      "lines": [
+        19,
+        27,
+        51,
+        57,
+        136,
+        254,
+        348,
+        428,
+        670
+      ],
+      "detail": "nine over-long or redundant sentences. Line 27-30 is a single 48-word sentence carrying three ideas (what inspired Friedman, that wages are a dividend stream, that asset-pricing formulas then apply); line 19 is 41 words and opens the lecture; lines 51, 57, 136, 254, 428 and 670 run 30-36 words each. Line 348 contains a duplicated word - 'different sequences sequences of non-financial income'"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        110,
+        542,
+        673
+      ],
+      "detail": "bold doing emphasis work at line 110 ('there are **many** budget feasible consumption paths') and line 673 ('**lowers** the government expenditure multiplier'), both of which want italic; and line 542 uses bold as a pseudo-heading ('**Key Idea:**'). The lecture's other eight bolds correctly mark definitions"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        92
+      ],
+      "detail": "lines 92-105 walk the reader through an iterative procedure - guess a consumption path, compute wealth, check the terminal condition, and 'if the candidate consumption path is not budget feasible, propose a less greedy consumption path and start over'. The lecture never implements it: section 201 computes c_0 in closed form from eq:conssmoothing and no search ever happens, so the reader has been taught an algorithm the lecture abandons"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        316,
+        366,
+        451,
+        463,
+        475,
+        579
+      ],
+      "detail": "lines 316 and 366 write `figsize=(12,5)` with no space after the comma; line 579 writes `ϕs= [.95, 1.02]` with a space after the equals sign and none before; lines 451, 463 and 475 put spaces around the exponentiation operator (`λ ** np.arange(t_max)`) where the rest of the file consistently writes it tight (`β**i` at 148, `growth**(T+1)` at 558, `ϕ**t` at 562)"
+    }
   ],
   "strengths": [
     "The four income experiments (one-time windfall, permanent raise, late starter, geometric earner) all run through the `plot_cs` helper introduced at line 350, and the text at line 352 says why - so the four sets of panels are drawn on the same footing and are directly comparable",
@@ -27,5 +66,9 @@
     "Switch the emphasis bolds at lines 110 and 673 to italic and turn the '**Key Idea:**' at line 542 into a real heading or an ordinary sentence",
     "Fix the six PEP8 spacing sites, the two-sentence paragraphs at lines 746 and 822, and the typos: 'streams on non-financial income' (136), 'consumption-smoothingmodel' (673), 'Compute an time 0 consumption' (218), 'two given initial equations' (796), and the missing full stop at the end of line 428"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "9ecf7ee173f60da9f03fe31d8b3fa200d4297881"
+  }
 }

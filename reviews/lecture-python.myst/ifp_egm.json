@@ -2,14 +2,45 @@
   "series": "lecture-python.myst",
   "lecture": "ifp_egm",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [167, 776],
-     "detail": "the value function is introduced with a labelled display, $V \\colon \\mathsf S \\to \\mathbb{R}$ at {eq}`eqvfs_egm` (167-176), and then never used again: optimality is characterised through the Euler equations, the algorithm computes a policy, and $V$ appears nowhere in the code or the figures. The same happens in the sanity check, where 776 announces 'the value function and optimal consumption policy are given by' and `v_star` is defined at 783 but only `c_star` is ever called (798-800)"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [156, 178, 693],
-     "detail": "two sentences do not parse: 'consumption at time $t$ cannot be a function of outcomes are yet to be observed' (156) and 'where the maximization is overall feasible consumption paths' (178, for 'over all'). And the policy figure is presented twice with the same sentence - 'Here's a plot of the optimal consumption policy for each $z$ state' (474) and 'Here's a plot of the optimal policy for each $z$ state' (693) - producing the same picture from the same arrays"},
-    {"rule": "qe-code-001", "count": 4, "lines": [396, 408, 576, 731],
-     "detail": "line 396 closes a hanging-indent signature with `    ) -> np.ndarray:` at 4 spaces, leaving the arguments at body indent (E121/E125); the pattern recurs at 442, 537, 597, 830 and 869. Lambdas are bound to names in eleven places, which PEP8 rules out in favour of `def` (408-410, 549-551, 713, 843-844, 885; E731). Line 576 leaves trailing whitespace, and line 731 puts a space before the comma in `+ y_bar(k) , label=label` (E203)"},
-    {"rule": "qe-math-009", "count": 2, "lines": [120, 382],
-     "detail": "both sets are set in sans-serif for no reason - $\\mathsf Z$ (120, 322, 387) and $\\mathsf S$ (145, 147, 167, 211, 222) - where plain $Z$ and $S$ would sit better beside the $R$, $\\Pi$, $K$ used around them. And the endogenous asset grid is $a_{ij}$ where it is derived (307, 310, 318) but $a^e_{ij}$ where it is described to the reader (382, 385), so the same object carries a superscript in one place and not the other"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        167,
+        776
+      ],
+      "detail": "the value function is introduced with a labelled display, $V \\colon \\mathsf S \\to \\mathbb{R}$ at {eq}`eqvfs_egm` (167-176), and then never used again: optimality is characterised through the Euler equations, the algorithm computes a policy, and $V$ appears nowhere in the code or the figures. The same happens in the sanity check, where 776 announces 'the value function and optimal consumption policy are given by' and `v_star` is defined at 783 but only `c_star` is ever called (798-800)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        156,
+        178,
+        693
+      ],
+      "detail": "two sentences do not parse: 'consumption at time $t$ cannot be a function of outcomes are yet to be observed' (156) and 'where the maximization is overall feasible consumption paths' (178, for 'over all'). And the policy figure is presented twice with the same sentence - 'Here's a plot of the optimal consumption policy for each $z$ state' (474) and 'Here's a plot of the optimal policy for each $z$ state' (693) - producing the same picture from the same arrays"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        396,
+        408,
+        576,
+        731
+      ],
+      "detail": "line 396 closes a hanging-indent signature with `    ) -> np.ndarray:` at 4 spaces, leaving the arguments at body indent (E121/E125); the pattern recurs at 442, 537, 597, 830 and 869. Lambdas are bound to names in eleven places, which PEP8 rules out in favour of `def` (408-410, 549-551, 713, 843-844, 885; E731). Line 576 leaves trailing whitespace, and line 731 puts a space before the comma in `+ y_bar(k) , label=label` (E203)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        120,
+        382
+      ],
+      "detail": "both sets are set in sans-serif for no reason - $\\mathsf Z$ (120, 322, 387) and $\\mathsf S$ (145, 147, 167, 211, 222) - where plain $Z$ and $S$ would sit better beside the $R$, $\\Pi$, $K$ used around them. And the endogenous asset grid is $a_{ij}$ where it is derived (307, 310, 318) but $a^e_{ij}$ where it is described to the reader (382, 385), so the same object carries a superscript in one place and not the other"
+    }
   ],
   "strengths": [
     "The two implementations are cross-validated before either is trusted: the JAX policy is differenced against the NumPy policy and the maximum gap printed (637-649), and only then are they timed against each other (655-689)",
@@ -30,5 +61,9 @@
   ],
   "scanner_doubts": [
     "qe-math-002 x3 at ifp_egm.md:260, 261 and 267 flags `u'`, but all three are the derivative of the utility function in the composition $(u' \\circ \\sigma)$, and line 268 of this same lecture states the convention explicitly: 'primes indicate next period states (as well as derivatives)'. The documented derivative-prime exception is not firing when the prime is followed by `\\circ`; the same false positive appears in ifp_advanced.md (179, 182, 213, 234, 235, 294) and ifp_discrete.md (130)"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "985fc3971cc657703ad77337f995935ccec0cb32"
+  }
 }

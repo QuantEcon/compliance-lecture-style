@@ -2,16 +2,53 @@
   "series": "lecture-dp",
   "lecture": "os",
   "judgment": [
-    {"rule": "qe-math-009", "count": 7, "lines": [338, 361, 362, 466, 469, 498, 508],
-     "detail": "the derivative is written two ways in one lecture. Seven displays use the verbose `u^{\\prime}` / `v^{\\prime}` - {eq}`euler-cep` (338), {eq}`euler_pol` (361-362), {eq}`bellman_FOC` (466), the text at 469, {eq}`bellman_envelope` (498) and {eq}`bellman_v_prime` (508) - while the plain `'` is used for exactly the same object at 396, 399, 422, 446, 483, 495 and in both exercise solutions (643, 649, 655). `u'` renders identically, is four characters shorter and is what the rest of the file already uses, so the `\\prime` spelling is decoration; picking one would also remove the collision with the transpose convention that qe-math-002 polices"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [513],
-     "detail": "Derivation II ends on the wrong equation. Line 513 says 'Combining this fact with {eq}`bellman_envelope` recovers the Euler equation', where 'this fact' is $u'(c) = v'(x)$ from {eq}`bellman_v_prime` (508). But `bellman_envelope` (495-499) says $v'(x) = \\beta v'(x-c)$, so combining the two just returns {eq}`bellman_FOC` (466) - the reader is walked in a circle. The Euler equation needs {eq}`bellman_v_prime` applied one period ahead: $v'(x-c) = u'(\\sigma(x-c))$, substituted into {eq}`bellman_FOC`. That step is the whole point of the derivation and it is missing"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [115, 411],
-     "detail": "the two things in this lecture a reader is most likely to need a picture of are the two with no picture. '### Trade-off' (115-125) argues from the concavity of $u$ to consumption smoothing in prose alone, and the perturbation at 411-417 - 'reduces consumption at time $t$ to $c^*_t - h$ and increases it in the next period to $c^*_{t+1} + h$', with everything else held fixed - is a two-bar sketch that would make $U'(c^*) = 0$ concrete before four displays of algebra (421-447). The lecture's only two figures (245, 305) both come from the closed-form solution, so the entire Euler-equation half of the file (317-513) is unillustrated"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [179],
-     "detail": "'the value function will satisfy a version of the *Bellman equation*' (179) italicises the term at the point where the lecture first names it - the pattern the rule gives as incorrect. Every other term the lecture introduces is bolded (**feasible** 107, **state variable** 111, **consumption smoothing** 123, **optimal policy** 270, **Euler equation** 323, **functional equation** 374), and the H3 two lines earlier is '### The Bellman equation' (159), so this one is out of step with the file's own convention"},
-    {"rule": "qe-code-001", "count": 1, "lines": [299],
-     "detail": "`return (1 - β ** (1/γ)) * x` (299) and `return (1 - β**(1 / γ))**(-γ) * u(x, γ)` (240) write the same subexpression $1 - \\beta^{1/\\gamma}$ two different ways in adjacent cells - spaces around `**` and none around `/` in one, the reverse in the other. PEP8 and this rule both prefer the tight `**`, so 240 is the one to copy"}
+    {
+      "rule": "qe-math-009",
+      "count": 7,
+      "lines": [
+        338,
+        361,
+        362,
+        466,
+        469,
+        498,
+        508
+      ],
+      "detail": "the derivative is written two ways in one lecture. Seven displays use the verbose `u^{\\prime}` / `v^{\\prime}` - {eq}`euler-cep` (338), {eq}`euler_pol` (361-362), {eq}`bellman_FOC` (466), the text at 469, {eq}`bellman_envelope` (498) and {eq}`bellman_v_prime` (508) - while the plain `'` is used for exactly the same object at 396, 399, 422, 446, 483, 495 and in both exercise solutions (643, 649, 655). `u'` renders identically, is four characters shorter and is what the rest of the file already uses, so the `\\prime` spelling is decoration; picking one would also remove the collision with the transpose convention that qe-math-002 polices"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        513
+      ],
+      "detail": "Derivation II ends on the wrong equation. Line 513 says 'Combining this fact with {eq}`bellman_envelope` recovers the Euler equation', where 'this fact' is $u'(c) = v'(x)$ from {eq}`bellman_v_prime` (508). But `bellman_envelope` (495-499) says $v'(x) = \\beta v'(x-c)$, so combining the two just returns {eq}`bellman_FOC` (466) - the reader is walked in a circle. The Euler equation needs {eq}`bellman_v_prime` applied one period ahead: $v'(x-c) = u'(\\sigma(x-c))$, substituted into {eq}`bellman_FOC`. That step is the whole point of the derivation and it is missing"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        115,
+        411
+      ],
+      "detail": "the two things in this lecture a reader is most likely to need a picture of are the two with no picture. '### Trade-off' (115-125) argues from the concavity of $u$ to consumption smoothing in prose alone, and the perturbation at 411-417 - 'reduces consumption at time $t$ to $c^*_t - h$ and increases it in the next period to $c^*_{t+1} + h$', with everything else held fixed - is a two-bar sketch that would make $U'(c^*) = 0$ concrete before four displays of algebra (421-447). The lecture's only two figures (245, 305) both come from the closed-form solution, so the entire Euler-equation half of the file (317-513) is unillustrated"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        179
+      ],
+      "detail": "'the value function will satisfy a version of the *Bellman equation*' (179) italicises the term at the point where the lecture first names it - the pattern the rule gives as incorrect. Every other term the lecture introduces is bolded (**feasible** 107, **state variable** 111, **consumption smoothing** 123, **optimal policy** 270, **Euler equation** 323, **functional equation** 374), and the H3 two lines earlier is '### The Bellman equation' (159), so this one is out of step with the file's own convention"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 1,
+      "lines": [
+        299
+      ],
+      "detail": "`return (1 - β ** (1/γ)) * x` (299) and `return (1 - β**(1 / γ))**(-γ) * u(x, γ)` (240) write the same subexpression $1 - \\beta^{1/\\gamma}$ two different ways in adjacent cells - spaces around `**` and none around `/` in one, the reverse in the other. PEP8 and this rule both prefer the tight `**`, so 240 is the one to copy"
+    }
   ],
   "strengths": [
     "The parameter intuition is set up as a falsifiable guess and then actually checked: 'Here's an educated guess' with two numbered predictions (131-136), a summary claim at 147, and then 288-292 returning to it - 'We guessed that consumption would be decreasing in both parameters. This is in fact the case, as can be seen from {eq}`crra_opt_pol`' - so the reader sees the prediction confirmed against a formula rather than being told",
@@ -31,5 +68,9 @@
   ],
   "scanner_doubts": [
     "os.md, lines 338, 361, 362, 466, 469, 498, 508 - all 10 qe-math-002 hits are false positives, and they are the lecture's only High-severity finding and the sole reason Math scores 5.5/10 instead of 10/10. Every one is `u^{\\prime}(...)` or `v^{\\prime}(...)`: the derivative of a scalar utility or value function, where `\\top` would be meaningless. The cause is asymmetry inside check_math_002 (tools/qestyle_rules.py:382-411): the apostrophe branch carefully excludes a base applied to an argument via `(?!\\s*\\()` at line 391, precisely so `u'(c)` is not counted, but the `\\prime` branch at line 401 is a bare `\\^\\{?\\\\prime\\}?` with no such guard. Applying the same `(?!\\s*\\()` lookahead to `lprime` would clear all 10. Scale: `^{\\prime}` occurs 339 times across the five series (lecture-python-advanced.myst 222, lecture-python.myst 73, lecture-dp 44) and 77 of those are immediately followed by an argument list. Within lecture-dp the affected files are os (10 of 10 derivative-shaped), lagrangian_lqdp, lq_inventories, markov_jump_lq and mccall_q."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "8c6491330cdee34c4dbf8427e00c0b2d901fed74"
+  }
 }

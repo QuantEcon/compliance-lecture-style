@@ -2,18 +2,75 @@
   "series": "lecture-python-intro",
   "lecture": "olg",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [39, 306, 545, 616, 712],
-     "detail": "the lecture's stated reason for existing is dropped. 39-48 motivates the whole model with one concrete question - \"suppose, for example, that we are interested in predicting the effect of a new tax on long-run growth ... this ignores the fact that households will change their savings and consumption behavior when they face the new tax rate\" - and no tax appears anywhere in the remaining 800 lines, so the reader never sees the endogenous-savings response that was the argument for leaving Solow-Swan. Second, the CRRA utility function is written $u(c) = \\frac{c^{1-\\gamma}-1}{1-\\gamma}$ at 545 and coded as `c**(1 - γ) / (1 - γ)` at 562, without the $-1$; the $-1$ is exactly what makes 554's claim true (\"The log utility case studied above is a special case, obtained when $\\gamma \\to 1$\"), and the coded version diverges in that limit - and `crra` is never called anywhere, so the discrepancy is invisible at runtime. Third, `k_update` is defined twice with incompatible signatures - `def k_update(k, α, β)` at 437, used at 446 and 505, then `def k_update(k, model)` at 712, used at 725 and 840 - so the exercise solution silently shadows the main-text function and re-running the earlier cell breaks the later one; `capital_demand` is redefined the same way at 300 and 576. Fourth, `R_vals = np.linspace(0.3, 1)` is created at 384 inside the log-utility figure cell and reused 230 lines later at 616-618 for the CRRA figure, where the parameters are no longer the same ($\\alpha = 0.5$ at 385 versus the `create_olg_model` default $\\alpha = 0.4$ at 569), so the second figure inherits an interest-rate range chosen for a different economy. Fifth, `capital_supply` (305-307) takes `R` and destroys it on the next line, `R = np.ones_like(R)`, purely to broadcast - the reader who is being told at 372 that \"capital supply does not depend on the interest rate\" has to decode a discarded argument to see it"},
-    {"rule": "qe-code-001", "count": 17, "lines": [301, 368, 390, 438, 446, 450, 607, 842],
-     "detail": "seven code lines carry trailing whitespace (301, 390, 392, 577, 607, 616, 618) - part of a wider source problem, 43 lines in the file end in a space. 368 has whitespace after an opening paren, `α * ( (β * w) / (1 + β))**(α - 1)`. 438 has two spaces after the division operator, `β * (1 - α) * k**α /  (1 + β)`. 398, 446 (twice) omit the space after a comma - `ax.plot(R_e, k_e, 'o',label='equilibrium')` and `k_update(k_grid,α,β)` - while 450 and 729 have two spaces after one (`ax.plot(k_grid, k_grid_next,  lw=2, ...)`). 842 writes `%k_init` with no space around the operator. 564 and 569 are blank-line counts around top-level defs. Separately, `savings_crra` unpacks the whole namedtuple at 606 (`α, β, γ = model`) and then never uses `α`, and `capital_supply` overwrites its own `R` parameter at 306"},
-    {"rule": "qe-writing-005", "count": 6, "lines": [79, 99, 119, 237, 245],
-     "detail": "the lecture introduces most of its terms in scare quotes where bold is the convention, and bolds only two things in 858 lines. \"young\" and \"old\" (79-80) are the two roles the entire model is built on; the \"flow\" utility function (119), one \"unit\" of labor (99) and the \"output elasticity of capital\" (245) are the same pattern - each is a term being defined on first use, in quotes. Against that, **Euler equation** (158) is bolded correctly, and 237 wraps the bold around a hyperlink label, `**[Cobb-Douglas production function](https://...)**`, so the definition marker and the link marker are stacked on the same phrase. Italic is used correctly and sparingly for emphasis (*prices*, 190)"},
-    {"rule": "qe-math-009", "count": 3, "lines": [251, 422, 638],
-     "detail": "the same quantity is written four ways across the lecture: $k_t^{\\alpha}$ (241, 273), $k^{\\alpha}_t$ (251), $(k_t)^{\\alpha}$ (422, 470, 778) and $k^{\\alpha-1}_{t+1}$ (648, 688) - the parenthesised form at 422 and 470 adds a pair of brackets that the identical expression at 241 does not need. 638 restates capital demand as $\\left(\\frac{R_{t+1}}{\\alpha}\\right)^{1/(\\alpha - 1)}$ two lines after 629 has told the reader to compare it with {eq}`aggregate_demand_capital_olg`, which writes the same thing as $\\left(\\frac{\\alpha}{R_{t+1}}\\right)^{1/(1-\\alpha)}$ - both the fraction and the sign of the exponent are flipped, with no note that the two are equal, in the one place the lecture asks for a comparison. And the two maximands at 132 and 251 are wrapped in $\\left\\{ \\cdots \\right\\}$, using the curly braces the series reserves for sequences and sets as a plain grouping delimiter around an objective function"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [610, 718],
-     "detail": "the log case and the CRRA case are the lecture's before and after, and the two supply-demand figures that would show the difference are 230 lines apart and drawn on separate axes (383-403 and 610-624). 602 states the difference in words - \"Notice how, unlike the log case, savings now depends on the interest rate\" - and the picture that would make it obvious, a vertical (or flat) log supply line against the sloping CRRA one on the same axes, is not drawn although both functions are in scope at 616. Second, $\\gamma$ is presented at 550-552 as the parameter that matters (it \"controls the coefficient of relative risk aversion\" and \"the elasticity of intertemporal substitution\"), and it is then fixed at 0.5 by `create_olg_model` (569) and never varied: no figure shows the 45-degree map, the steady state $k^*$ or the interest rate as $\\gamma$ changes, so the generalisation the section exists to make is never seen. The Newton machinery from olg_ex2 (784-797) already computes $k^*$ for a given model, so a $k^*$-against-$\\gamma$ curve is a two-line loop"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [48, 230, 312, 408],
-     "detail": "three section openers restate their own headings and nothing else: \"## Demand for capital\" then \"First we describe the firm's problem and then we write down an equation describing demand for capital given prices\" (230-231), \"## Equilibrium\" then \"In this section we derive equilibrium conditions and investigate an example\" (312), and the emptiest, \"## Dynamics\" then \"In this section we discuss dynamics\" (408). And the motivation runs four sentences past its point: 45-46 has already said that households change behaviour when taxed, and 48, 50-51, 57 and 59-60 then say in turn that such changes \"can substantially alter the predictions of the model\", that \"if we care about accurate predictions, we should model the decision problems of the agents\", that \"The OLG model takes up this challenge\", and that \"We will present a simple version of the OLG model that clarifies the decision problem of households\" - four ways of announcing the same intention"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        39,
+        306,
+        545,
+        616,
+        712
+      ],
+      "detail": "the lecture's stated reason for existing is dropped. 39-48 motivates the whole model with one concrete question - \"suppose, for example, that we are interested in predicting the effect of a new tax on long-run growth ... this ignores the fact that households will change their savings and consumption behavior when they face the new tax rate\" - and no tax appears anywhere in the remaining 800 lines, so the reader never sees the endogenous-savings response that was the argument for leaving Solow-Swan. Second, the CRRA utility function is written $u(c) = \\frac{c^{1-\\gamma}-1}{1-\\gamma}$ at 545 and coded as `c**(1 - γ) / (1 - γ)` at 562, without the $-1$; the $-1$ is exactly what makes 554's claim true (\"The log utility case studied above is a special case, obtained when $\\gamma \\to 1$\"), and the coded version diverges in that limit - and `crra` is never called anywhere, so the discrepancy is invisible at runtime. Third, `k_update` is defined twice with incompatible signatures - `def k_update(k, α, β)` at 437, used at 446 and 505, then `def k_update(k, model)` at 712, used at 725 and 840 - so the exercise solution silently shadows the main-text function and re-running the earlier cell breaks the later one; `capital_demand` is redefined the same way at 300 and 576. Fourth, `R_vals = np.linspace(0.3, 1)` is created at 384 inside the log-utility figure cell and reused 230 lines later at 616-618 for the CRRA figure, where the parameters are no longer the same ($\\alpha = 0.5$ at 385 versus the `create_olg_model` default $\\alpha = 0.4$ at 569), so the second figure inherits an interest-rate range chosen for a different economy. Fifth, `capital_supply` (305-307) takes `R` and destroys it on the next line, `R = np.ones_like(R)`, purely to broadcast - the reader who is being told at 372 that \"capital supply does not depend on the interest rate\" has to decode a discarded argument to see it"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 17,
+      "lines": [
+        301,
+        368,
+        390,
+        438,
+        446,
+        450,
+        607,
+        842
+      ],
+      "detail": "seven code lines carry trailing whitespace (301, 390, 392, 577, 607, 616, 618) - part of a wider source problem, 43 lines in the file end in a space. 368 has whitespace after an opening paren, `α * ( (β * w) / (1 + β))**(α - 1)`. 438 has two spaces after the division operator, `β * (1 - α) * k**α /  (1 + β)`. 398, 446 (twice) omit the space after a comma - `ax.plot(R_e, k_e, 'o',label='equilibrium')` and `k_update(k_grid,α,β)` - while 450 and 729 have two spaces after one (`ax.plot(k_grid, k_grid_next,  lw=2, ...)`). 842 writes `%k_init` with no space around the operator. 564 and 569 are blank-line counts around top-level defs. Separately, `savings_crra` unpacks the whole namedtuple at 606 (`α, β, γ = model`) and then never uses `α`, and `capital_supply` overwrites its own `R` parameter at 306"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        79,
+        99,
+        119,
+        237,
+        245
+      ],
+      "detail": "the lecture introduces most of its terms in scare quotes where bold is the convention, and bolds only two things in 858 lines. \"young\" and \"old\" (79-80) are the two roles the entire model is built on; the \"flow\" utility function (119), one \"unit\" of labor (99) and the \"output elasticity of capital\" (245) are the same pattern - each is a term being defined on first use, in quotes. Against that, **Euler equation** (158) is bolded correctly, and 237 wraps the bold around a hyperlink label, `**[Cobb-Douglas production function](https://...)**`, so the definition marker and the link marker are stacked on the same phrase. Italic is used correctly and sparingly for emphasis (*prices*, 190)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        251,
+        422,
+        638
+      ],
+      "detail": "the same quantity is written four ways across the lecture: $k_t^{\\alpha}$ (241, 273), $k^{\\alpha}_t$ (251), $(k_t)^{\\alpha}$ (422, 470, 778) and $k^{\\alpha-1}_{t+1}$ (648, 688) - the parenthesised form at 422 and 470 adds a pair of brackets that the identical expression at 241 does not need. 638 restates capital demand as $\\left(\\frac{R_{t+1}}{\\alpha}\\right)^{1/(\\alpha - 1)}$ two lines after 629 has told the reader to compare it with {eq}`aggregate_demand_capital_olg`, which writes the same thing as $\\left(\\frac{\\alpha}{R_{t+1}}\\right)^{1/(1-\\alpha)}$ - both the fraction and the sign of the exponent are flipped, with no note that the two are equal, in the one place the lecture asks for a comparison. And the two maximands at 132 and 251 are wrapped in $\\left\\{ \\cdots \\right\\}$, using the curly braces the series reserves for sequences and sets as a plain grouping delimiter around an objective function"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        610,
+        718
+      ],
+      "detail": "the log case and the CRRA case are the lecture's before and after, and the two supply-demand figures that would show the difference are 230 lines apart and drawn on separate axes (383-403 and 610-624). 602 states the difference in words - \"Notice how, unlike the log case, savings now depends on the interest rate\" - and the picture that would make it obvious, a vertical (or flat) log supply line against the sloping CRRA one on the same axes, is not drawn although both functions are in scope at 616. Second, $\\gamma$ is presented at 550-552 as the parameter that matters (it \"controls the coefficient of relative risk aversion\" and \"the elasticity of intertemporal substitution\"), and it is then fixed at 0.5 by `create_olg_model` (569) and never varied: no figure shows the 45-degree map, the steady state $k^*$ or the interest rate as $\\gamma$ changes, so the generalisation the section exists to make is never seen. The Newton machinery from olg_ex2 (784-797) already computes $k^*$ for a given model, so a $k^*$-against-$\\gamma$ curve is a two-line loop"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        48,
+        230,
+        312,
+        408
+      ],
+      "detail": "three section openers restate their own headings and nothing else: \"## Demand for capital\" then \"First we describe the firm's problem and then we write down an equation describing demand for capital given prices\" (230-231), \"## Equilibrium\" then \"In this section we derive equilibrium conditions and investigate an example\" (312), and the emptiest, \"## Dynamics\" then \"In this section we discuss dynamics\" (408). And the motivation runs four sentences past its point: 45-46 has already said that households change behaviour when taxed, and 48, 50-51, 57 and 59-60 then say in turn that such changes \"can substantially alter the predictions of the model\", that \"if we care about accurate predictions, we should model the decision problems of the agents\", that \"The OLG model takes up this challenge\", and that \"We will present a simple version of the OLG model that clarifies the decision problem of households\" - four ways of announcing the same intention"
+    }
   ],
   "strengths": [
     "The lecture is organised as supply, demand, equilibrium, dynamics, and it says so before each step and again at each junction: 221-224 (\"In the next section we investigate demand for capital. Equating supply and demand will allow us to determine equilibrium\"), 230-231, 317-318, 414-416 - so a first-course reader always knows which half of the market they are in",
@@ -39,5 +96,9 @@
     "Sweep the source: 43 lines end in trailing whitespace (7 of them inside code cells at 301, 390, 392, 577, 607, 616, 618), the three double-space runs at 244, 629 and 750, the three bare `+++` markers at 519, 538 and 656, the raw URL to this series' own `solow` lecture at 34 (should be `{doc}`, qe-link-001) and the raw `python.quantecon.org` URL at 676 (should be `{doc}` cross-series, qe-link-002), `mystnb` metadata for the six un-named figures (383, 441, 500, 523, 610, 718), and the two `figsize=(6, 6)` overrides at 448 and 727",
     "Cut the three heading-restating openers (230, 312, 408) and trim 48-60 to the two sentences that carry the argument"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "302fa44b5268fdb66f987c76340fbed90cabe875"
+  }
 }

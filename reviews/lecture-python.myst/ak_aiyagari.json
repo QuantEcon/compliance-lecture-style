@@ -73,5 +73,9 @@
   "scanner_doubts": [
     "ak_aiyagari.md:1 - qe-code-003 reports \"non-Anaconda import with no install cell: ['jax']\" at line 1, but there is an install cell at 22-26; it carries `:tags: [skip-execution]` rather than `:tags: [hide-output]`. As with back_prop.md, the finding may be defensible but the stated reason is wrong and the line number is a placeholder inside the YAML front matter",
     "ak_aiyagari.md:33-35 - qe-ref-001 flags three `{cite}` calls as \"in narrative flow\", quoting `'in   {cite}`'. All three are of the form \"as in {cite}`auerbach1987dynamic`\" inside bullet items, which renders as \"as in (Auerbach and Kotlikoff, 1987)\" - ordinary parenthetical usage, which is what plain `{cite}` is for. The trigger appears to be the preposition immediately before the role, which would also fire on correct usage; these three look like false positives"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "bf3c450ee4ff333041a63cf91a0b53bbef7bd909"
+  }
 }

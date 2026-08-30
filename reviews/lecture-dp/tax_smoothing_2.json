@@ -2,16 +2,61 @@
   "series": "lecture-dp",
   "lecture": "tax_smoothing_2",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [544, 589, 641, 787, 812],
-     "detail": "the debt notation changes at line 544 and nothing says so. Everything up to 531 writes debt issued at $t$ maturing at $t+j$ as $b_{t,t+j}$ (99-108, 118, 129, 147, 173, 183, 199-200, 209, 226-227); from 544 on the same objects are $b^{t}_{t+j}$ with the issue date raised to a superscript (544, 550, 559, 589, 593, 605, 649), and prices flip too - $p_{t,t+j}$ at 550 becomes $p^t_{t+j}$ at 605. A reader who has just followed the two-period mapping has to re-learn the notation to follow the restructuring section. Second, 589 writes the vector as ending in $b^{t-1}_{t+T-1}$ where every other line in the section says $H$ (535, 544, 550, 559, 579, 585, 596, 758), and the code then makes $T$ the *name* of the horizon (`LQ_markov_mapping_restruct(A22, C2, Ug, T, p_t, c=0)` at 709, `np.eye(T-1)` at 729-730, 'p_t should be a T by 1 matrix' at 714) in a lecture whose central variable $T_t$ is tax collections - so $T$ means the horizon in the code, the horizon at 589, and taxes everywhere else. Third, 641 states the notational convention wrongly: '$R_t \\equiv R_{s_t}, Q_t \\equiv W_{s_t}$ and so on' - the second should be $Q_{s_t}$, and this same convention has already been declared at 164-166 and is declared again at 643. Fourth, the comment at 786-787 is wrong: `# Put penalty on different issuance across maturities` / `c2 = 0.5`, where $c_2$ is the *rescheduling* cost (544, 645-646, and the function's own docstring at 715, 'c is the rescheduling cost') - the comment has been copied from the $c_1$ cell at 495. Fifth, `x0` jumps from `[[100, 50, 1, 10]]` (470) to `[[5000, 5000, 5000, 1, 10]]` (812) with no word about scale, and the four panels at 819-833 are read in those units"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [32, 35, 101, 119],
-     "detail": "32 runs two words together and closes a parenthesis it never opened: 'toimplement suggestions by {cite}`barro1999determinants` and {cite}`barro2003religion`) for extending his classic 1979 model'. 35 and 39 use a citation as a possessive without the possessive: ' {cite}`Barro1979` model is about a government' and 'Technically, {cite}`Barro1979` model looks a lot like a consumption-smoothing model' - both need 'Barro's {cite}`Barro1979` model', which is also the fix for the three qe-ref-001 hits. 101 has 'betime': '$b_{t,t+2}$ betime $t+2$ goods that the government promises to pay'. 119 ends the sentence that introduces the objective with a full stop before the display - 'the government chooses a contingency plan for $\\{b_{t, t+1}, b_{t,t+2}, T_t\\}_{t=0}^\\infty$ to maximize.' - where the parallel construction at 125 ('subject to the constraints') has none. And 66 reads 'this lecture  deploys the quantecon library', where the house form, used verbatim in the previous lecture of this same series, is 'In addition to what's in Anaconda, this lecture will need the following libraries'"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [474, 819, 412],
-     "detail": "there are 20 panels in this lecture and not one has a y-axis label. Every panel sets `set_xlabel('Time')` (477, 480, 524, 527, 822, 825, 828, 831, 842) and identifies its own contents only through an embedded `set_title` - which qe-fig-003 asks to be moved into a caption, so acting on that finding alone would leave the panels unlabelled on both axes. Second, the comparison the section is built around cannot be cross-referenced: 474-481 and 521-528 are the same seven lines of plotting code run against two different models, and 484-492 then compares them ('The above simulations show that when no penalty is imposed ... the government has an incentive to take large \"long-short\" positions') with neither figure carrying a name - putting the $c_1 = 0$ and $c_1 = 0.01$ cases in one 2x2 figure would make the penalty's effect a single visual comparison instead of two figures 50 lines apart. Third, the yield-curve structure that drives everything is given only as numbers: 415-421 and 767-773 list six prices, and 409-410 and 760-761 assert 'one with a flatter yield curve, and one with a steeper yield curve' - a two-line plot of the two price vectors against maturity would show the two curves crossing, and would also make visible the fact that $p_{t,t+2} = 0.902$ is *identical* in both states (767, 773), which is what makes the pivot clean and is never mentioned"},
-    {"rule": "qe-code-001", "count": 5, "lines": [440, 444, 471, 443, 793],
-     "detail": "440 flattens a two-index object into four flat names: `p1, p2, p3, p4 = β, β**2 - 0.02, β, β**2 + 0.02` for what the algebra calls $p^1_{t,t+1}, p^1_{t,t+2}, p^2_{t,t+1}, p^2_{t,t+2}$ (415-421), so 447-448 have to be read character by character to see which state gets which pair - and the same names are then reused at 782-783 for whole price *vectors*, a different type. 444 defines the primitive `C_2` one underscore away from `C2`, which 448 immediately rebinds to state 2's LQ noise matrix, so `C_2` and `C2` are different objects that coexist for the rest of the lecture (489, 499, 789-790, 803). 471, 518 and 813 bind the Markov-state path to `t` (`x, u, w, t = lqm.compute_sequence(...)`), the symbol used for the time index throughout the algebra, and never use it. 443 has a space before the comma and a stray trailing comma, `np.array([[1, 0], [Gbar, ρ] ,])` (E203). And 793-798 writes the same no-Ponzi perturbation out six times by hand; a loop over `np.arange(H)` or `R1[np.diag_indices(H)] += 1e-9` says it once and does not silently need editing when $H$ changes from 3"},
-    {"rule": "qe-math-009", "count": 3, "lines": [403, 637, 617],
-     "detail": "`\\hspace{2mm}` and `\\hspace{5mm}` are used as display separators fourteen times (403 x2, 415, 421, 559, 585 implicitly, 637 x2, 697 x2, 767 x2, 773 x2) where `\\quad` and `\\qquad` are the standard one-token forms, and the comma is placed before the space in some (403, 415) and the spacing is 2mm in one half of the file and 5mm in the other (637, 697) with no reason for the split. Second, 617 and 620 write the selection matrix as bare `Ug` inside math, where 403 correctly writes `U_g` - so the same symbol appears subscripted and unsubscripted in displays 200 lines apart. Third, 550 sets `\\sum_{j=1}^Hp_{t,t+j}` with no space after the limit, so the $H$ and the $p$ collide in the source and the reader parsing it has to check whether the exponent is $H$ or $Hp$"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        544,
+        589,
+        641,
+        787,
+        812
+      ],
+      "detail": "the debt notation changes at line 544 and nothing says so. Everything up to 531 writes debt issued at $t$ maturing at $t+j$ as $b_{t,t+j}$ (99-108, 118, 129, 147, 173, 183, 199-200, 209, 226-227); from 544 on the same objects are $b^{t}_{t+j}$ with the issue date raised to a superscript (544, 550, 559, 589, 593, 605, 649), and prices flip too - $p_{t,t+j}$ at 550 becomes $p^t_{t+j}$ at 605. A reader who has just followed the two-period mapping has to re-learn the notation to follow the restructuring section. Second, 589 writes the vector as ending in $b^{t-1}_{t+T-1}$ where every other line in the section says $H$ (535, 544, 550, 559, 579, 585, 596, 758), and the code then makes $T$ the *name* of the horizon (`LQ_markov_mapping_restruct(A22, C2, Ug, T, p_t, c=0)` at 709, `np.eye(T-1)` at 729-730, 'p_t should be a T by 1 matrix' at 714) in a lecture whose central variable $T_t$ is tax collections - so $T$ means the horizon in the code, the horizon at 589, and taxes everywhere else. Third, 641 states the notational convention wrongly: '$R_t \\equiv R_{s_t}, Q_t \\equiv W_{s_t}$ and so on' - the second should be $Q_{s_t}$, and this same convention has already been declared at 164-166 and is declared again at 643. Fourth, the comment at 786-787 is wrong: `# Put penalty on different issuance across maturities` / `c2 = 0.5`, where $c_2$ is the *rescheduling* cost (544, 645-646, and the function's own docstring at 715, 'c is the rescheduling cost') - the comment has been copied from the $c_1$ cell at 495. Fifth, `x0` jumps from `[[100, 50, 1, 10]]` (470) to `[[5000, 5000, 5000, 1, 10]]` (812) with no word about scale, and the four panels at 819-833 are read in those units"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        32,
+        35,
+        101,
+        119
+      ],
+      "detail": "32 runs two words together and closes a parenthesis it never opened: 'toimplement suggestions by {cite}`barro1999determinants` and {cite}`barro2003religion`) for extending his classic 1979 model'. 35 and 39 use a citation as a possessive without the possessive: ' {cite}`Barro1979` model is about a government' and 'Technically, {cite}`Barro1979` model looks a lot like a consumption-smoothing model' - both need 'Barro's {cite}`Barro1979` model', which is also the fix for the three qe-ref-001 hits. 101 has 'betime': '$b_{t,t+2}$ betime $t+2$ goods that the government promises to pay'. 119 ends the sentence that introduces the objective with a full stop before the display - 'the government chooses a contingency plan for $\\{b_{t, t+1}, b_{t,t+2}, T_t\\}_{t=0}^\\infty$ to maximize.' - where the parallel construction at 125 ('subject to the constraints') has none. And 66 reads 'this lecture  deploys the quantecon library', where the house form, used verbatim in the previous lecture of this same series, is 'In addition to what's in Anaconda, this lecture will need the following libraries'"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        474,
+        819,
+        412
+      ],
+      "detail": "there are 20 panels in this lecture and not one has a y-axis label. Every panel sets `set_xlabel('Time')` (477, 480, 524, 527, 822, 825, 828, 831, 842) and identifies its own contents only through an embedded `set_title` - which qe-fig-003 asks to be moved into a caption, so acting on that finding alone would leave the panels unlabelled on both axes. Second, the comparison the section is built around cannot be cross-referenced: 474-481 and 521-528 are the same seven lines of plotting code run against two different models, and 484-492 then compares them ('The above simulations show that when no penalty is imposed ... the government has an incentive to take large \"long-short\" positions') with neither figure carrying a name - putting the $c_1 = 0$ and $c_1 = 0.01$ cases in one 2x2 figure would make the penalty's effect a single visual comparison instead of two figures 50 lines apart. Third, the yield-curve structure that drives everything is given only as numbers: 415-421 and 767-773 list six prices, and 409-410 and 760-761 assert 'one with a flatter yield curve, and one with a steeper yield curve' - a two-line plot of the two price vectors against maturity would show the two curves crossing, and would also make visible the fact that $p_{t,t+2} = 0.902$ is *identical* in both states (767, 773), which is what makes the pivot clean and is never mentioned"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        440,
+        444,
+        471,
+        443,
+        793
+      ],
+      "detail": "440 flattens a two-index object into four flat names: `p1, p2, p3, p4 = β, β**2 - 0.02, β, β**2 + 0.02` for what the algebra calls $p^1_{t,t+1}, p^1_{t,t+2}, p^2_{t,t+1}, p^2_{t,t+2}$ (415-421), so 447-448 have to be read character by character to see which state gets which pair - and the same names are then reused at 782-783 for whole price *vectors*, a different type. 444 defines the primitive `C_2` one underscore away from `C2`, which 448 immediately rebinds to state 2's LQ noise matrix, so `C_2` and `C2` are different objects that coexist for the rest of the lecture (489, 499, 789-790, 803). 471, 518 and 813 bind the Markov-state path to `t` (`x, u, w, t = lqm.compute_sequence(...)`), the symbol used for the time index throughout the algebra, and never use it. 443 has a space before the comma and a stray trailing comma, `np.array([[1, 0], [Gbar, ρ] ,])` (E203). And 793-798 writes the same no-Ponzi perturbation out six times by hand; a loop over `np.arange(H)` or `R1[np.diag_indices(H)] += 1e-9` says it once and does not silently need editing when $H$ changes from 3"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        403,
+        637,
+        617
+      ],
+      "detail": "`\\hspace{2mm}` and `\\hspace{5mm}` are used as display separators fourteen times (403 x2, 415, 421, 559, 585 implicitly, 637 x2, 697 x2, 767 x2, 773 x2) where `\\quad` and `\\qquad` are the standard one-token forms, and the comma is placed before the space in some (403, 415) and the spacing is 2mm in one half of the file and 5mm in the other (637, 697) with no reason for the split. Second, 617 and 620 write the selection matrix as bare `Ug` inside math, where 403 correctly writes `U_g` - so the same symbol appears subscripted and unsubscripted in displays 200 lines apart. Third, 550 sets `\\sum_{j=1}^Hp_{t,t+j}` with no space after the limit, so the $H$ and the $p$ collide in the source and the reader parsing it has to check whether the exponent is $H$ or $Hp$"
+    }
   ],
   "strengths": [
     "The two specifications are separated and named before either is developed (83-92): one where 'the maturity structure of government debt at each date is partly inherited from the past' and one where 'the government redesigns the maturity structure of the debt each period' - and the lecture then treats them in that order, in two self-contained mappings (94-529 and 531-844), each ending in its own worked example",
@@ -33,5 +78,9 @@
     "Tidy the code per the findings above: name the four prices by state and maturity rather than `p1..p4` (440), rename `C_2` or `C2` (444, 448), stop binding the Markov path to `t` (471, 518, 813), remove the stray comma at 443, and collapse the six hand-written no-Ponzi perturbations at 793-798 into one indexed statement",
     "Clear the 19 double spaces, and note that this file is byte-identical to `lecture-python-advanced.myst/lectures/tax_smoothing_2.md`, so every fix should be made once, upstream, and both series clear - the same holds for `tax_smoothing_1` and `smoothing_tax`"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "fb046a1724d09c4c2219e6c645c43435b4d37646"
+  }
 }

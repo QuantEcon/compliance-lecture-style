@@ -50,5 +50,9 @@
     "Clean the code cells: `rnormX`/`rnormY` to snake_case (306-307), the bracket and unary-minus spacing at 481, the whitespace-only line at 358, the trailing whitespace at 399, and the unused `Axes3D` import at 202",
     "Bold the three terms at first definition (42, 44, 267) and replace the code-span emphasis at 410 with italic; consider splitting \"Style Sheets\" into its own H2"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "4f860d224af06fedb2108437a1cff3fd0f5576d6"
+  }
 }

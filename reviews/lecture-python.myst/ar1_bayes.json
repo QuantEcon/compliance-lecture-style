@@ -54,5 +54,9 @@
   "scanner_doubts": [
     "ar1_bayes.md - qe-code-002 is reported with count 8 but only five line numbers (244, 250, 327, 334, 337); three line numbers appear to be missing from the evidence. The NumPyro half has the same `'rho'`/`'sigma'` string names at 463, 464, 512, 513, so the true set of sites is probably larger than either number suggests",
     "ar1_bayes.md:244, 327 - qe-code-002 flags `sigma` here, but on those lines the token is the PyMC keyword argument `pm.HalfNormal('sigma', sigma=np.sqrt(10))`, i.e. part of the library's API and not an author-chosen variable name. The author-chosen part is the string label `'sigma'`, which is a real hit; the keyword is not"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "cebf7f72a91d6bd4d72e7c85754d3b519a340eb2"
+  }
 }

@@ -2,10 +2,39 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "discrete_dp",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 16, "lines": [144, 164, 165, 171, 172, 173, 175, 177, 179, 195, 228, 230, 239, 258, 300, 711],
-     "detail": "the lecture's whole formal apparatus is defined in italic rather than bold - *stationary Markov policies* (144), *states* (164), *feasible actions* and *feasible state-action pairs* (165), *reward function* (171), *transition probability function* (172), *discount factor* (173), *action space* (175), *policy* (177), *feasible* (179), *controlled chain* (195), *policy value function* (228), *optimal value function* / *value function* (230), *optimal* (239), *Bellman operator* (258), *Bellman equation* (300) - which is the exact reversal the rule warns about; the file contains one bold span in 1010 lines and it is `**Notes**` at 711, used as a pseudo-heading rather than for a definition or an emphasis"},
-    {"rule": "qe-code-001", "count": 3, "lines": [631, 865, 925],
-     "detail": "line 631 binds a lambda to a name (`f = lambda k: k**α`) where PEP8 asks for `def` (E731); lines 865 and 925 write `figsize=(8,5)` with no space after the comma, while the same file writes `figsize=(14, 4)` at 751 and `figsize=(8, 10)` at 885 - the spacing is inconsistent within the lecture, not just against PEP8"}
+    {
+      "rule": "qe-writing-005",
+      "count": 16,
+      "lines": [
+        144,
+        164,
+        165,
+        171,
+        172,
+        173,
+        175,
+        177,
+        179,
+        195,
+        228,
+        230,
+        239,
+        258,
+        300,
+        711
+      ],
+      "detail": "the lecture's whole formal apparatus is defined in italic rather than bold - *stationary Markov policies* (144), *states* (164), *feasible actions* and *feasible state-action pairs* (165), *reward function* (171), *transition probability function* (172), *discount factor* (173), *action space* (175), *policy* (177), *feasible* (179), *controlled chain* (195), *policy value function* (228), *optimal value function* / *value function* (230), *optimal* (239), *Bellman operator* (258), *Bellman equation* (300) - which is the exact reversal the rule warns about; the file contains one bold span in 1010 lines and it is `**Notes**` at 711, used as a pseudo-heading rather than for a definition or an emphasis"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        631,
+        865,
+        925
+      ],
+      "detail": "line 631 binds a lambda to a name (`f = lambda k: k**α`) where PEP8 asks for `def` (E731); lines 865 and 925 write `figsize=(8,5)` with no space after the comma, while the same file writes `figsize=(14, 4)` at 751 and `figsize=(8, 10)` at 885 - the spacing is inconsistent within the lecture, not just against PEP8"
+    }
   ],
   "strengths": [
     "The formal definition at 160-175 gives every object in a discrete DP an explicit type signature - $r\\colon \\mathit{SA} \\to \\mathbb{R}$, $Q\\colon \\mathit{SA} \\to \\Delta(S)$, $\\sigma\\colon S \\to A$ - so the later `DiscreteDP(R, Q, β, s_indices, a_indices)` call reads as a direct transcription of the mathematics",
@@ -26,5 +55,9 @@
   "scanner_doubts": [
     "discrete_dp.md:247,264,273,305,319,419 - qe-math-002 reports 6 apostrophe transposes and drops Math to 4/10, but every one of them is `s'` meaning the next-period state inside $\\sum_{s' \\in S}$ (and at 419, $a \\leq s' \\leq a+B$). None is a transpose - a prime on a scalar state index cannot be one. All 6 hits look like false positives, and with them removed this file has essentially no math violations beyond the single missing `\\mathbb{E}` braces at 202.",
     "discrete_dp.md:614-944 - Admonitions is scored 10/10, but that is because the file has no exercise or solution directives at all: the exercise is prose under an `## Exercises` heading (614) and the solution is 320 lines of live code under an `## Solutions` heading (620). The admonition rules can only fire on directives that exist, so a lecture that skips the machinery entirely scores the same as one that uses it correctly."
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "845cbaed0a389f806e95d7f951f6ce8126fa7f52"
+  }
 }

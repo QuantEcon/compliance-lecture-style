@@ -2,18 +2,81 @@
   "series": "lecture-python.myst",
   "lecture": "von_neumann_model",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 12, "lines": [574, 576, 592, 594, 681, 706, 748, 760, 893, 921, 1042, 1065],
-     "detail": "the file assigns the two markers inconsistently and the two systems sit side by side. Bold is used correctly for twenty-odd definitions - **positive** (330), **non-negative** (333), **semi-positive** (336), **activities** (367), **goods** (368), **input matrix** (369), **output matrix** (371), **intensity** (391), **productive** (400), **cost**/**revenue** (407), **irreducibility** (412), **independent subset** (418), **irreducible** (427), **balanced growth** (516), **interest factor** (529), **value** (715) - and then twelve equally definitional terms arrive in italic: *technological expansion rate* (574), *optimal intensity vector* (576), *economic expansion rate* (592), *optimal price vector* (594), *economic solutions* (681), *solution* (706, inside a `{prf:definition}` that is defining it), *max-min problem* / *primal* (748-749), *min-max problem* / *dual* (760-761), *Existence* (921) and *simple* (1042, again inside the `{prf:definition}` that defines it). 427 bolds **irreducible** and 1042 italicises *simple* - two definitions of the same kind, two markers, in the same lecture. Separately, four Python method names are set in italic where the file uses backticks for `Neumann` itself (33, 61, 457): the *bounds* method (893), the *zerosum* method (925), the *expansion* method (962), the *interest* method (972). 884 and 890 double up, bolding an inline code span: `**``UB``**`"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [61, 851, 1016, 1073],
-     "detail": "the 258-line `Neumann` class arrives at line 63 under one sentence, \"The code below provides the `Neumann` class\", six hundred lines before any of the material its methods implement. Every docstring forward-references what has not been written yet: `bounds` (150-154) cites \"the proof of Theorem 9.8 in Gale (1960)\" for bounds that are derived at 873-891; `zerosum` (168-201) writes out the primal and dual linear programs that are derived at 739-770; `expansion` and `interest` (252-264, 287-300) cite the Hamburger-Thompson-Weil bisection introduced at 869. Second, the proof at 837-854 is half inside its directive and half outside: `{prf:proof}` closes at 840, and the argument then continues as loose body text through two displays and two \"hence\" sentences to 854 - and line 851 has an error, `M(\\gamma)p'' = M(\\gamma'') + (\\gamma'' - \\gamma)Ap''`, where the first right-hand term must be $M(\\gamma'')p''$; without the $p''$ a matrix is added to a vector. Third, 1016 attributes the finiteness result to \"Kemeny et al. (1967)\" where 35 and 675 cite the same authors as 1956 (`kemeny1956generalization`) and 1967 is Hamburger-Thompson-Weil's year - and the surrounding prose cites Nash (729), Hamburger-Thompson-Weil (690), Gale (69, 153) and Kemeny et al. (69) by author and year with no `{cite}` at all, while the same works are properly cited elsewhere (772, 859, 869, 1024). Fourth, the lecture stops mid-argument: 1078-1080 is a displayed formula, and 1080 is the last line of the file - no closing sentence, no summary, no exercise, and nothing computed for the special case set up at 1035"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [435, 899, 1035],
-     "detail": "the lecture's organising contrast is Example 1 against Example 2 - irreducible with $\\alpha_0 = \\beta_0$ against reducible with $\\beta_0 < \\alpha_0$ - and irreducibility is never shown, only defined (412-429) and asserted (434, 443, 985, 992). The two economies appear at 435-454 as raw zero-one literals, a $3\\times4$ pair and a $5\\times6$ pair, and the reader is left to find the independent subset by hand; a bipartite activity-good diagram, or `imshow` of the four matrices with the independent block outlined, would make the whole \"Uniqueness and Irreducibility\" section (989-1033) visible. The author evidently wanted this: line 138 is a commented-out `# Irreducible : {irr}` row in `__str__`, so the class prints the two assumption flags at 461-469 and stays silent on the property that decides the answer. Second, the bisection of 899-923 is described in two nested bullet lists and then only its answer is printed (966-979, 996-1006), while the figure at 939-959 already plots $V(M(\\gamma))$ against $\\gamma$ with both bounds marked - drawing the successive brackets on that curve would show the algorithm working on the object it is working on. Third, \"A Special Case\" (1035-1080) derives that $1/\\alpha_0$ is an eigenvalue of $A$ with $x_0$ the left eigenvector, and then never checks it: one `np.linalg.eig(A1)` against the `α_0` already computed at 966 would close the loop, and the decomposition $\\alpha_0 = \\max_i\\{\\alpha_i\\}$ of 1078 is left as pure algebra"},
-    {"rule": "qe-code-001", "count": 6, "lines": [106, 206, 242, 268, 279, 943],
-     "detail": "106-109 continues two assert messages with a backslash and indents the continuation fourteen spaces, so the message a user actually sees is \"The input and output matrices               must have the same dimensions!\" with the indentation embedded in the string. 206 tests `if dual == False:` (E712) where `if not dual:` is meant. 242-243 prints `res.message` on a failed solve and then falls straight through to `res.x[-1]` at 246, which raises on `res.x is None`. 268 and 304 both write `for iter in range(maxit):`, shadowing the builtin. 279-285 and 314-320 assign `x` and `p` only inside the `if abs(UB - LB) < tol:` branch and then `return γ, x, p` unconditionally, so a run that exhausts `maxit` raises `UnboundLocalError` instead of reporting non-convergence. 943-946 indexes a numpy array through `range` (`[n1.zerosum(γ=γ_grid[i])[0] for i in range(numb_grid)]`) with continuations one column short of the opening bracket (E128), and the same solve is repeated wastefully throughout: 932 and 934 call `n1.zerosum(γ=γ)` twice to print the two halves of one return value, 281-282 and 316-317 re-solve both LPs after the bisection has already solved them, and 956-957 call `N.bounds()` twice per panel where each call runs `fsolve` twice. Smaller items: the lambdas bound to names at 159-160 (E731), the dead commented-out `{irr}` row at 138, the trailing space inside the `__str__` template at 134 that prints as a trailing space, and the blank first line of the code cell at 64"},
-    {"rule": "qe-math-009", "count": 4, "lines": [513, 625, 736, 1058],
-     "detail": "513-519 introduces an operator to use once: \"Let $./$ denote an elementwise division of one vector by another\", then writes $x_{t+1}./x_t = \\alpha$ - and 522 immediately restates it as $x_{t+1} = \\alpha x_t$, which is the whole content and needs no new notation. One symbol has three spellings: `\\gamma^{* }` with a space inside the braces at 625, 626, 627, 638, 642-644 and 647, `\\gamma^{*}` at 618, 651, 660 and 689, and `\\gamma^*` at 829, 982, 1011, 1018 and 1032. Manual spacing is used instead of the standard macros in more than twenty displays - `\\hspace{5mm}` at 380 and 387, `\\hspace{1cm}` at 478, 499, 526, 540, 1057 and 1079, `\\hspace{2mm}` at 564-565, 585-586, 736 and 745-746 - with the amounts chosen ad hoc where `\\quad` and `\\qquad` are meant. And 1058 wraps a bare fraction in `\\left(\\frac{1}{\\alpha_0}\\right)x_0^\\top` where nothing needs bracketing. The transpose also drifts across the subscript in adjacent lines: `x_{t}^\\top A` at 492 against `x^\\top_{t}B` at 493, 499 and 526"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [41, 596, 658, 1016],
-     "detail": "41-44 spends 34 ornamental words getting to a bullet list: \"In addition to watching how the towering mind of John von Neumann formulated an equilibrium model of price and quantity vectors in balanced growth, this lecture shows how fruitfully to employ the following important tools\". 596-599 is 34 words that also fails to agree with itself and misnames its own subject: \"Because the criterion functions in the *technological expansion* problem and the *economical expansion problem* are both linearly homogeneous, the optimality of $x_0$ and $p_0$ are defined only up to a positive scale factor\" - \"the optimality ... are\", and \"economical\" for \"economic\", which 579 gets right. 658-662 is 48 words joined by a semicolon carrying two separate complementary-slackness statements. 1016-1022 is 60 words defining finitely many economic solutions, the condition they satisfy, and the sub-economy interpretation, all in one sentence. 653-656 also doubles its verb (\"We have already encountered and discussed the first two inequalities\")"}
+    {
+      "rule": "qe-writing-005",
+      "count": 12,
+      "lines": [
+        574,
+        576,
+        592,
+        594,
+        681,
+        706,
+        748,
+        760,
+        893,
+        921,
+        1042,
+        1065
+      ],
+      "detail": "the file assigns the two markers inconsistently and the two systems sit side by side. Bold is used correctly for twenty-odd definitions - **positive** (330), **non-negative** (333), **semi-positive** (336), **activities** (367), **goods** (368), **input matrix** (369), **output matrix** (371), **intensity** (391), **productive** (400), **cost**/**revenue** (407), **irreducibility** (412), **independent subset** (418), **irreducible** (427), **balanced growth** (516), **interest factor** (529), **value** (715) - and then twelve equally definitional terms arrive in italic: *technological expansion rate* (574), *optimal intensity vector* (576), *economic expansion rate* (592), *optimal price vector* (594), *economic solutions* (681), *solution* (706, inside a `{prf:definition}` that is defining it), *max-min problem* / *primal* (748-749), *min-max problem* / *dual* (760-761), *Existence* (921) and *simple* (1042, again inside the `{prf:definition}` that defines it). 427 bolds **irreducible** and 1042 italicises *simple* - two definitions of the same kind, two markers, in the same lecture. Separately, four Python method names are set in italic where the file uses backticks for `Neumann` itself (33, 61, 457): the *bounds* method (893), the *zerosum* method (925), the *expansion* method (962), the *interest* method (972). 884 and 890 double up, bolding an inline code span: `**``UB``**`"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        61,
+        851,
+        1016,
+        1073
+      ],
+      "detail": "the 258-line `Neumann` class arrives at line 63 under one sentence, \"The code below provides the `Neumann` class\", six hundred lines before any of the material its methods implement. Every docstring forward-references what has not been written yet: `bounds` (150-154) cites \"the proof of Theorem 9.8 in Gale (1960)\" for bounds that are derived at 873-891; `zerosum` (168-201) writes out the primal and dual linear programs that are derived at 739-770; `expansion` and `interest` (252-264, 287-300) cite the Hamburger-Thompson-Weil bisection introduced at 869. Second, the proof at 837-854 is half inside its directive and half outside: `{prf:proof}` closes at 840, and the argument then continues as loose body text through two displays and two \"hence\" sentences to 854 - and line 851 has an error, `M(\\gamma)p'' = M(\\gamma'') + (\\gamma'' - \\gamma)Ap''`, where the first right-hand term must be $M(\\gamma'')p''$; without the $p''$ a matrix is added to a vector. Third, 1016 attributes the finiteness result to \"Kemeny et al. (1967)\" where 35 and 675 cite the same authors as 1956 (`kemeny1956generalization`) and 1967 is Hamburger-Thompson-Weil's year - and the surrounding prose cites Nash (729), Hamburger-Thompson-Weil (690), Gale (69, 153) and Kemeny et al. (69) by author and year with no `{cite}` at all, while the same works are properly cited elsewhere (772, 859, 869, 1024). Fourth, the lecture stops mid-argument: 1078-1080 is a displayed formula, and 1080 is the last line of the file - no closing sentence, no summary, no exercise, and nothing computed for the special case set up at 1035"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        435,
+        899,
+        1035
+      ],
+      "detail": "the lecture's organising contrast is Example 1 against Example 2 - irreducible with $\\alpha_0 = \\beta_0$ against reducible with $\\beta_0 < \\alpha_0$ - and irreducibility is never shown, only defined (412-429) and asserted (434, 443, 985, 992). The two economies appear at 435-454 as raw zero-one literals, a $3\\times4$ pair and a $5\\times6$ pair, and the reader is left to find the independent subset by hand; a bipartite activity-good diagram, or `imshow` of the four matrices with the independent block outlined, would make the whole \"Uniqueness and Irreducibility\" section (989-1033) visible. The author evidently wanted this: line 138 is a commented-out `# Irreducible : {irr}` row in `__str__`, so the class prints the two assumption flags at 461-469 and stays silent on the property that decides the answer. Second, the bisection of 899-923 is described in two nested bullet lists and then only its answer is printed (966-979, 996-1006), while the figure at 939-959 already plots $V(M(\\gamma))$ against $\\gamma$ with both bounds marked - drawing the successive brackets on that curve would show the algorithm working on the object it is working on. Third, \"A Special Case\" (1035-1080) derives that $1/\\alpha_0$ is an eigenvalue of $A$ with $x_0$ the left eigenvector, and then never checks it: one `np.linalg.eig(A1)` against the `α_0` already computed at 966 would close the loop, and the decomposition $\\alpha_0 = \\max_i\\{\\alpha_i\\}$ of 1078 is left as pure algebra"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        106,
+        206,
+        242,
+        268,
+        279,
+        943
+      ],
+      "detail": "106-109 continues two assert messages with a backslash and indents the continuation fourteen spaces, so the message a user actually sees is \"The input and output matrices               must have the same dimensions!\" with the indentation embedded in the string. 206 tests `if dual == False:` (E712) where `if not dual:` is meant. 242-243 prints `res.message` on a failed solve and then falls straight through to `res.x[-1]` at 246, which raises on `res.x is None`. 268 and 304 both write `for iter in range(maxit):`, shadowing the builtin. 279-285 and 314-320 assign `x` and `p` only inside the `if abs(UB - LB) < tol:` branch and then `return γ, x, p` unconditionally, so a run that exhausts `maxit` raises `UnboundLocalError` instead of reporting non-convergence. 943-946 indexes a numpy array through `range` (`[n1.zerosum(γ=γ_grid[i])[0] for i in range(numb_grid)]`) with continuations one column short of the opening bracket (E128), and the same solve is repeated wastefully throughout: 932 and 934 call `n1.zerosum(γ=γ)` twice to print the two halves of one return value, 281-282 and 316-317 re-solve both LPs after the bisection has already solved them, and 956-957 call `N.bounds()` twice per panel where each call runs `fsolve` twice. Smaller items: the lambdas bound to names at 159-160 (E731), the dead commented-out `{irr}` row at 138, the trailing space inside the `__str__` template at 134 that prints as a trailing space, and the blank first line of the code cell at 64"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        513,
+        625,
+        736,
+        1058
+      ],
+      "detail": "513-519 introduces an operator to use once: \"Let $./$ denote an elementwise division of one vector by another\", then writes $x_{t+1}./x_t = \\alpha$ - and 522 immediately restates it as $x_{t+1} = \\alpha x_t$, which is the whole content and needs no new notation. One symbol has three spellings: `\\gamma^{* }` with a space inside the braces at 625, 626, 627, 638, 642-644 and 647, `\\gamma^{*}` at 618, 651, 660 and 689, and `\\gamma^*` at 829, 982, 1011, 1018 and 1032. Manual spacing is used instead of the standard macros in more than twenty displays - `\\hspace{5mm}` at 380 and 387, `\\hspace{1cm}` at 478, 499, 526, 540, 1057 and 1079, `\\hspace{2mm}` at 564-565, 585-586, 736 and 745-746 - with the amounts chosen ad hoc where `\\quad` and `\\qquad` are meant. And 1058 wraps a bare fraction in `\\left(\\frac{1}{\\alpha_0}\\right)x_0^\\top` where nothing needs bracketing. The transpose also drifts across the subscript in adjacent lines: `x_{t}^\\top A` at 492 against `x^\\top_{t}B` at 493, 499 and 526"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        41,
+        596,
+        658,
+        1016
+      ],
+      "detail": "41-44 spends 34 ornamental words getting to a bullet list: \"In addition to watching how the towering mind of John von Neumann formulated an equilibrium model of price and quantity vectors in balanced growth, this lecture shows how fruitfully to employ the following important tools\". 596-599 is 34 words that also fails to agree with itself and misnames its own subject: \"Because the criterion functions in the *technological expansion* problem and the *economical expansion problem* are both linearly homogeneous, the optimality of $x_0$ and $p_0$ are defined only up to a positive scale factor\" - \"the optimality ... are\", and \"economical\" for \"economic\", which 579 gets right. 658-662 is 48 words joined by a semicolon carrying two separate complementary-slackness statements. 1016-1022 is 60 words defining finitely many economic solutions, the condition they satisfy, and the sub-economy interpretation, all in one sentence. 653-656 also doubles its verb (\"We have already encountered and discussed the first two inequalities\")"
+    }
   ],
   "strengths": [
     "The notation section (323-360) is complete before it is needed and defines exactly the things that are non-standard here: the three vector orderings $\\gg$, $\\geq$ and $>$ with **positive**, **non-negative** and **semi-positive** each given its own line (330-337), the extension to pairs of vectors (339-341), the column-vector convention and $x^\\top$ (343), $\\iota_n$ for a vector of ones (346-348), $e^i$ for a unit vector (350-352), and the row/column slice notation $a_{\\cdot j}$, $a_{i \\cdot}$ (358-360) that the two assumptions at 380 and 387 then use",
@@ -38,5 +101,9 @@
   "scanner_doubts": [
     "von_neumann_model.md:152,153,170,173,185,262,291,298 - qe-code-002 is measured at 11 and every one of the eleven is an English word inside a docstring, not a variable name: \"the trivial upper and lower bounds for alpha (expansion rate) and beta (interest factor)\" (152-153), \"Given gamma, calculate the value\" (170), \"M(gamma) = B - gamma * A\" (173), \"Zero-sum game as an LP (dual --> beta)\" (185), \"alpha: scalar / optimal expansion rate\" (262), \"for a given gamma (= alpha or beta)\" (291), \"beta: scalar\" (298). The code itself already uses `α`, `β` and `γ` throughout (159-160, 168, 204, 270, 305) - the rule is satisfied. The mechanism is in `check_code_002` (tools/qestyle_rules.py:887-892), which calls `_strip_py(l.raw)` one line at a time. `_strip_py` masks string literals correctly when it is given a whole block - `_strip_py('\\\"\\\"\\\"\\\\n bounds for alpha and beta\\\\n\\\"\\\"\\\"')` returns blank lines - but a single interior line of a triple-quoted string carries no quote characters, so nothing is masked and `GREEK_RE` matches the prose. `check_code_003` gets this right by stripping the whole cell body (909, 922); `check_code_002` needs the same treatment: strip once per cell, then index the masked text by line. qe-code-002 is reported for 89 lectures and 475 occurrences corpus-wide, and any lecture with a numpydoc-style docstring that names its Greek parameters will be over-counted the same way, so this is worth re-running after the fix.",
     "von_neumann_model.md:262,298 - a related note that is a lecture defect rather than a scanner one, recorded here because it is what the false positives above are sitting on: the `Outputs:` sections of `expansion` (260-264) and `interest` (296-300) document return values named `alpha` and `beta`, but both methods return `γ, x, p` (285, 320), so the docstrings name identifiers that do not exist. Whatever happens to the check, those two lines need editing."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "70c7afd9a4e86d86915e1487ec1b56277ed64ce5"
+  }
 }

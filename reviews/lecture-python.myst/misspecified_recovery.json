@@ -2,16 +2,62 @@
   "series": "lecture-python.myst",
   "lecture": "misspecified_recovery",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [294, 393, 1371, 1635, 2234],
-     "detail": "393-403 tells the reader what the output shows and the output does not show it. The print block at 374-390 reports the eigenfunction against $c^\\gamma$, the matrix $\\hat h_{ij}$, the conditional means and $\\max|\\hat h - 1|$; the prose then says \"The output separates a short-horizon risk adjustment from the Perron--Frobenius approach\" and asserts that \"$\\bar{\\mathbf{P}}$ is close to, but not the same as, $\\mathbf{P}$\" - a claim about a matrix that is never printed. The cell at 293-298 computes exactly those unused objects: `q_bonds` is never used anywhere in the lecture, `π_bar` and `π_hat` are never used, and `P_bar` is not used again until an exercise solution 1900 lines later at 2219. Second, the calibration cell at 1371-1385 supplies `β_c0`, `β_c1`, `β_c2` and `α_c`, which are the coefficients of the consumption-growth process, and the lecture never writes that process down: the SDF at 1357 is $-\\delta dt - d\\log C_t + d\\log H^*_t$, so $d \\log C_t$ is central, yet its dynamics appear only as four dict keys that the code then uses at 1454, 1484 and 1491-1493 while the prose at 1391-1440 explains $v_1$, $v_2$, $\\alpha_{H^*}$, $\\alpha_S$, $e_1$ and $e_2$ and skips them. Third, the stationary-density section is written back to front: 1635-1667 gives eleven paragraphs of interpretation, including reading instructions for elements the reader cannot yet see (\"The dashed contour adds the one-period risk-neutral probability measure\", \"The horizontal line marks $X_1=0$\"), announces the plot only at 1662, and leaves one sentence after it at 1766. Fourth, exercises 2 and 3 ask for work the lecture has already done: 2234-2249 asks the reader to show $\\hat e_i = c_i^\\gamma$ and $\\hat{\\mathbf{P}} = \\mathbf{P}$ and its solution at 2255-2270 is a near-verbatim copy of the derivation at 354-371, while 2292-2302 asks for the stationary distribution of $\\hat{\\mathbf{P}}$ at $\\gamma \\in \\{1,5,10,15\\}$, all four of which lie on the 80-point grid already computed and plotted at 1215-1249, and whose answer is stated at 1255-1262 before the exercise is posed"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [249, 408, 1130, 2132],
-     "detail": "the lecture defines $\\mathbf{P}$, $\\bar{\\mathbf{P}}$ and $\\hat{\\mathbf{P}}$ precisely and then declines to use them, so the prose carries the definitions instead: \"the correctly specified probability measure\" appears 15 times, \"the correctly specified transition matrix\" 8 more, and \"the transition matrix associated with the long-term risk-neutral probability\" is written out in full at 249-251, 290-291, 323-324 and 1264-1266. The last of these is 32 words to say $\\hat{\\mathbf{P}} \\neq \\mathbf{P}$. One sentence is repeated verbatim 77 lines apart - \"This is the condition under which Ross recovery returns the correctly specified transition matrix\" at 408-409 and again at 485-486 - and the same fact about the power-utility benchmark is stated four times (405-406, 411-412, 548-550, and again in the exercise at 2246). 1128-1136 chains three inference words across three consecutive one-sentence paragraphs (\"Therefore the last fraction has conditional mean one\", \"It is therefore a martingale increment\", \"That variation is why...\"). And 2132-2138 is 33 words carrying three nested qualifications: \"it measures the discrepancy between subjective beliefs and the correctly specified probability measure only after imposing that the subjective SDF itself has no martingale component\""},
-    {"rule": "qe-code-001", "count": 5, "lines": [113, 294, 1679, 1731, 2277],
-     "detail": "1679 and 1689-1694 floor the volatility state at `1e-9` inside the Euler loop (`X2_prev = max(X2[t-1], 1e-9)` and `X2[t] = max(..., 1e-9)`), so the simulated CIR-like process is silently truncated whenever a step would go negative, and nothing counts how often that happens over 180,000 steps - yet the whole figure at 1745-1763 is a kernel density estimate of that path, and 1652-1657 draws a quantitative conclusion from it. 113-121 uses a `for ... else: raise` to pick the Perron root, with `exp_eta` and `e` leaking out of the loop by name rather than being returned by a helper; the search stops at the first eigenvalue with a positive eigenvector rather than checking that it is the largest, and the sign fix at 116-117 (`if e.sum() < 0: e = -e`) is applied before the positivity test, so a mixed-sign eigenvector can pass the sum test and fail the elementwise one silently. 294 binds `q_bonds` and never uses it (F841), as do `π_bar` and `π_hat` at 297-298. 1731-1739 copies seven keys out of `lrr_params` one line at a time to build `dyn_true` where `{k: lrr_params[k] for k in (...)}` says it once. And 2277 normalises `e_theory` by its sum while 380 normalises the same array by its middle element, so the lecture and its own exercise solution print the eigenfunction on two different scales"},
-    {"rule": "qe-math-009", "count": 3, "lines": [156, 1354, 2042],
-     "detail": "the three transition matrices carry up to three decorations each and appear that way forty-odd times: `\\mathbf{P}`, `\\mathbf{Q}`, `\\bar{\\mathbf{P}}`, `\\hat{\\mathbf{P}}`, alongside entries written `p_{ij}`, `\\bar p_{ij}`, `\\hat p_{ij}` in plain italic. Dropping the `\\mathbf` - which qe-math-004 requires anyway, at 49 sites - leaves $P$, $Q$, $\\bar P$, $\\hat P$, which is the whole content and matches the entry notation. Second, $\\varepsilon$ names two unrelated objects: the permanent consumption shock at 1281, 1288 and 1304-1305 ($\\varepsilon_{t+1}$, $\\exp(-\\gamma\\sigma\\varepsilon_{t+1})$) and an eigenfunction candidate at 2042-2051 ($\\varepsilon(x,y) = \\exp(\\zeta\\cdot y)e_\\zeta(x)$), in a lecture that already uses $\\hat e$ and $e_\\zeta$ for eigenfunctions. Third, four related symbols in the H family have to be held apart by the reader - $\\hat h_{ij}$ the one-period increment (439), $\\hat H_t$ the cumulated martingale (2141), $H^*$ the continuation-value martingale (1354), and `H` in the code (148) which is the matrix of $\\hat h_{ij}$ - and 1362-1366 has to say explicitly that two of them \"need not coincide\""},
-    {"rule": "qe-writing-005", "count": 4, "lines": [434, 2182, 2237, 2295],
-     "detail": "the file contains no italics at all in 2324 lines and six bold spans. Three are correct definitions (**transition independence** 33, **one-period risk-neutral matrix** 173, **long-term risk-neutral** 230) and three are whole-line exercise titles used as pseudo-headings inside the directive body - **A two-state martingale component.** (2182), **Power utility benchmark.** (2237), **Recursive utility and risk aversion.** (2295) - where MyST takes the title as the directive argument. Meanwhile the terms the lecture actually turns on go unmarked: the **one-period martingale increment** defined at 434-440 and again at 333-339, the **martingale component** named at 460-461, \"correctly specified\" glossed at 159-160, and the multiplicative functional of the section heading at 676. Three of a dozen defined terms carry the marker; nine do not"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        294,
+        393,
+        1371,
+        1635,
+        2234
+      ],
+      "detail": "393-403 tells the reader what the output shows and the output does not show it. The print block at 374-390 reports the eigenfunction against $c^\\gamma$, the matrix $\\hat h_{ij}$, the conditional means and $\\max|\\hat h - 1|$; the prose then says \"The output separates a short-horizon risk adjustment from the Perron--Frobenius approach\" and asserts that \"$\\bar{\\mathbf{P}}$ is close to, but not the same as, $\\mathbf{P}$\" - a claim about a matrix that is never printed. The cell at 293-298 computes exactly those unused objects: `q_bonds` is never used anywhere in the lecture, `π_bar` and `π_hat` are never used, and `P_bar` is not used again until an exercise solution 1900 lines later at 2219. Second, the calibration cell at 1371-1385 supplies `β_c0`, `β_c1`, `β_c2` and `α_c`, which are the coefficients of the consumption-growth process, and the lecture never writes that process down: the SDF at 1357 is $-\\delta dt - d\\log C_t + d\\log H^*_t$, so $d \\log C_t$ is central, yet its dynamics appear only as four dict keys that the code then uses at 1454, 1484 and 1491-1493 while the prose at 1391-1440 explains $v_1$, $v_2$, $\\alpha_{H^*}$, $\\alpha_S$, $e_1$ and $e_2$ and skips them. Third, the stationary-density section is written back to front: 1635-1667 gives eleven paragraphs of interpretation, including reading instructions for elements the reader cannot yet see (\"The dashed contour adds the one-period risk-neutral probability measure\", \"The horizontal line marks $X_1=0$\"), announces the plot only at 1662, and leaves one sentence after it at 1766. Fourth, exercises 2 and 3 ask for work the lecture has already done: 2234-2249 asks the reader to show $\\hat e_i = c_i^\\gamma$ and $\\hat{\\mathbf{P}} = \\mathbf{P}$ and its solution at 2255-2270 is a near-verbatim copy of the derivation at 354-371, while 2292-2302 asks for the stationary distribution of $\\hat{\\mathbf{P}}$ at $\\gamma \\in \\{1,5,10,15\\}$, all four of which lie on the 80-point grid already computed and plotted at 1215-1249, and whose answer is stated at 1255-1262 before the exercise is posed"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        249,
+        408,
+        1130,
+        2132
+      ],
+      "detail": "the lecture defines $\\mathbf{P}$, $\\bar{\\mathbf{P}}$ and $\\hat{\\mathbf{P}}$ precisely and then declines to use them, so the prose carries the definitions instead: \"the correctly specified probability measure\" appears 15 times, \"the correctly specified transition matrix\" 8 more, and \"the transition matrix associated with the long-term risk-neutral probability\" is written out in full at 249-251, 290-291, 323-324 and 1264-1266. The last of these is 32 words to say $\\hat{\\mathbf{P}} \\neq \\mathbf{P}$. One sentence is repeated verbatim 77 lines apart - \"This is the condition under which Ross recovery returns the correctly specified transition matrix\" at 408-409 and again at 485-486 - and the same fact about the power-utility benchmark is stated four times (405-406, 411-412, 548-550, and again in the exercise at 2246). 1128-1136 chains three inference words across three consecutive one-sentence paragraphs (\"Therefore the last fraction has conditional mean one\", \"It is therefore a martingale increment\", \"That variation is why...\"). And 2132-2138 is 33 words carrying three nested qualifications: \"it measures the discrepancy between subjective beliefs and the correctly specified probability measure only after imposing that the subjective SDF itself has no martingale component\""
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        113,
+        294,
+        1679,
+        1731,
+        2277
+      ],
+      "detail": "1679 and 1689-1694 floor the volatility state at `1e-9` inside the Euler loop (`X2_prev = max(X2[t-1], 1e-9)` and `X2[t] = max(..., 1e-9)`), so the simulated CIR-like process is silently truncated whenever a step would go negative, and nothing counts how often that happens over 180,000 steps - yet the whole figure at 1745-1763 is a kernel density estimate of that path, and 1652-1657 draws a quantitative conclusion from it. 113-121 uses a `for ... else: raise` to pick the Perron root, with `exp_eta` and `e` leaking out of the loop by name rather than being returned by a helper; the search stops at the first eigenvalue with a positive eigenvector rather than checking that it is the largest, and the sign fix at 116-117 (`if e.sum() < 0: e = -e`) is applied before the positivity test, so a mixed-sign eigenvector can pass the sum test and fail the elementwise one silently. 294 binds `q_bonds` and never uses it (F841), as do `π_bar` and `π_hat` at 297-298. 1731-1739 copies seven keys out of `lrr_params` one line at a time to build `dyn_true` where `{k: lrr_params[k] for k in (...)}` says it once. And 2277 normalises `e_theory` by its sum while 380 normalises the same array by its middle element, so the lecture and its own exercise solution print the eigenfunction on two different scales"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        156,
+        1354,
+        2042
+      ],
+      "detail": "the three transition matrices carry up to three decorations each and appear that way forty-odd times: `\\mathbf{P}`, `\\mathbf{Q}`, `\\bar{\\mathbf{P}}`, `\\hat{\\mathbf{P}}`, alongside entries written `p_{ij}`, `\\bar p_{ij}`, `\\hat p_{ij}` in plain italic. Dropping the `\\mathbf` - which qe-math-004 requires anyway, at 49 sites - leaves $P$, $Q$, $\\bar P$, $\\hat P$, which is the whole content and matches the entry notation. Second, $\\varepsilon$ names two unrelated objects: the permanent consumption shock at 1281, 1288 and 1304-1305 ($\\varepsilon_{t+1}$, $\\exp(-\\gamma\\sigma\\varepsilon_{t+1})$) and an eigenfunction candidate at 2042-2051 ($\\varepsilon(x,y) = \\exp(\\zeta\\cdot y)e_\\zeta(x)$), in a lecture that already uses $\\hat e$ and $e_\\zeta$ for eigenfunctions. Third, four related symbols in the H family have to be held apart by the reader - $\\hat h_{ij}$ the one-period increment (439), $\\hat H_t$ the cumulated martingale (2141), $H^*$ the continuation-value martingale (1354), and `H` in the code (148) which is the matrix of $\\hat h_{ij}$ - and 1362-1366 has to say explicitly that two of them \"need not coincide\""
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        434,
+        2182,
+        2237,
+        2295
+      ],
+      "detail": "the file contains no italics at all in 2324 lines and six bold spans. Three are correct definitions (**transition independence** 33, **one-period risk-neutral matrix** 173, **long-term risk-neutral** 230) and three are whole-line exercise titles used as pseudo-headings inside the directive body - **A two-state martingale component.** (2182), **Power utility benchmark.** (2237), **Recursive utility and risk aversion.** (2295) - where MyST takes the title as the directive argument. Meanwhile the terms the lecture actually turns on go unmarked: the **one-period martingale increment** defined at 434-440 and again at 333-339, the **martingale component** named at 460-461, \"correctly specified\" glossed at 159-160, and the multiplicative functional of the section heading at 676. Three of a dozen defined terms carry the marker; nine do not"
+    }
   ],
   "strengths": [
     "The lecture opens by naming the three objects it will keep apart and refuses to let them blur afterwards: the correctly specified measure, the one-period risk-neutral measure obtained by normalising Arrow prices by bond prices, and the long-term risk-neutral measure from Perron--Frobenius (39-48), with the central question stated as one sentence at 50-51 and the paper's answer at 53",
@@ -34,5 +80,9 @@
     "Give the nine spelled-out Greek names unicode (124, 132, 147, 151, 1511, 1513, 1516, 1517, 1981 - `eta`, `exp_eta`), write `\\mathbb{E}` for the 16 bare expectation operators (730, 741, 773, 779, 858, 877, 880, 1792, 1793, 1809 and the rest), recast the two `pmatrix` displays at 2188 and 2194 as `bmatrix`, and use `\\top` for the transpose prime at 1333",
     "Sweep the remaining items: \"Perron--Frobenius Theory\" lower-cased at 47, 493 and 1136 to match \"Perron--Frobenius approach\" elsewhere; the four Title Case headings at 253, 414, 1268 and 1633; `mystnb` caption and name metadata on the cell at 1668 with the two `set_title` calls at 1235 and 1248 moved into captions; the verbatim repeat at 408-409 and 485-486; and the forward reference at 460-461 to {eq}`eq-mr-finite-sdf-decomposition`, which is not defined until 467"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "7b360a5c18f1d5a36f9535f259c22cc838c89595"
+  }
 }

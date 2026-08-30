@@ -2,16 +2,64 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "hs_recursive_models",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 26, "lines": [553, 758, 1419, 2149, 2340, 2412],
-     "detail": "bold is used as a substitute for headings, for admonitions and for emphasis, and only occasionally for definitions. 26 lines consist of nothing but a bold span acting as a heading - the six preference examples (553, 560, 583, 598, 624, 665, 710), the four-part framework summary (758, 767, 776, 785), the econometrics labels (1419, 1436, 1457, 1474, 1489), and the permanent-income and mongrel-aggregation labels (2121, 2149, 2171, 2190, 2260, 2320, 2340, 2352, 2412) - and two of them carry a stray full stop after the closing asterisks (`**Adjustment Costs**.` 665, `**Kalman Filter:**.` 1457). Separately, structured claims are bolded where a directive belongs: `**Definition:**` (1270, 1620, 2039), `**Assumption:**` (401, 419, 541), `**Key Insight:**` (1563, 2377), `**Key Property:**` (1572), `**Key invertibility property:**` (1627), `**Remark:**` (2070), `**Punchline:**` (2254, 2404), `**Secret Weapon:**` (2454), `**Verification:**` (1317), `**Step 1:**`/`**Step 2:**` (1283, 1288). And bold is used for plain emphasis at 70 (`**no frictions**`), 84, 86-87, 213 (`**and**`), 959 (`**let**`), 1285-1286 (`**quantities**`, `**are**`) and 2458 (`**are all alike**`, `**gives the same name to different things**`), where the rule asks for italic - the lecture uses italic nowhere"},
-    {"rule": "qe-writing-003", "count": 6, "lines": [430, 788, 1495, 1702, 1743, 2408],
-     "detail": "the same objects are restated many times over 2400 lines and the restatements have drifted apart. The household objective is written six times; 525, 802, 1197, 2208, 2301 and 2344 all carry the leading minus sign, but 430 and 788-789 drop it, so as printed the household maximises a quadratic loss, and 2425-2430 likewise asks the reader to \"maximize the criterion\" $\\sum \\beta^t[\\lambda(s_{1t}-b_{1t})\\cdot(s_{1t}-b_{1t}) + \\ldots]$ with no minus. Five further symbols are stale: 1702 calls $\\mu_0^2$ \"the marginal utility of individual wealth\" one clause before naming the same object $\\mu_0^w$; 1495 keeps the time subscript in $K = A^o \\Sigma_t G^\\prime(G\\Sigma G^\\prime + R)^{-1}$ inside the *limiting time-invariant* representation, where every other $\\Sigma$ in the display has lost it; 1743 sums the denominator of $\\mu^w_t$ over $t$ while its numerator sums over $j$; 2387 writes $\\mu_{02}\\Pi_2\\Pi_2^{-1\\prime}$ and 2408 writes $\\mu_{01}\\Pi_1^{-1}\\Pi_2^{-1\\prime}$, where 2395-2400 pairs each $\\Pi_i^{-1}$ with its own transpose; and 2437 writes $s_{jt} = \\Delta_j h_{jt-1} + \\Pi_j c_{jt}$ where 2307 has $\\Lambda_i$. A reader checking the mongrel-aggregation punchline at 2404-2410 against the derivation it follows cannot make them agree"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [1419, 1762, 2048],
-     "detail": "2469 lines, no figure, no diagram and no admonition, in a lecture whose whole purpose is to show that superficially different models share one architecture. Three places ask for a picture and get none: the \"tale of two state-space representations\" (1415-1455) compares an original and an innovations representation on shock count ($n_w + n_y$ versus $n_y$) and spanned space ($H(y^t) \\subset H(w^t,v^t)$, $H(y^t) = H(a^t)$) - two boxes and two arrows would carry it; the time-to-build household technology at 2048-2057 is a $(k+1)\\times(k+1)$ shift matrix whose only content is that a student entering at $t$ becomes an engineer at $t+k$, which is a chain diagram; and the three-agent competitive equilibrium built at 1189-1264 (household, type I firm, type II firm) is never drawn, so which agent faces which of $p^0_t, w^0_t, \\alpha^0_t, q^0_t, r^0_t, v_0$ has to be reassembled from six separate subsections. The enumeration at 1762-1777 also loses its layout: \"the time $t$ vector of demands for $c_t$ is influenced by:\" is followed by four bare paragraphs that are plainly list items but carry no markers, so the colon dangles and the four influences read as continuous prose"},
-    {"rule": "qe-math-009", "count": 4, "lines": [850, 1137, 1624, 2185],
-     "detail": "the calligraphic multipliers are spelled three ways, sometimes inside a single line: 850 opens the Lagrangian with `{\\mathcal L}` and 852-856 writes its multipliers `{\\cal M}`; 1137 has `{\\mathcal M}_t^k` and `{\\cal M}_t^h` in the same equation; 2185 has `{\\mathcal M}_t^c = (\\Phi_c)^\\prime {\\mathcal M}_t^d = \\phi_c {\\cal M}_t^e`. Across the file `{\\cal ` appears on 42 lines and `\\mathcal` on 14. The decoration also collides with the plain letters the lecture chooses for the very same quantities - 1137-1161 defines $M_k, M_h, M_s, M_d, M_c, M_i$ as the matrices for which ${\\cal M}_t^k = M_k x_t$, so a reader has two symbols one macro apart for a multiplier and its gradient matrix. Finally $\\color{blue}{\\Pi}$ and $\\color{blue}{(\\Delta_h - \\Theta_h\\Pi^{-1}\\Lambda)}$ at 1624-1625 are the only coloured symbols in the lecture; the colour carries no information the surrounding definition does not already give"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [89, 2044, 2086, 2451],
-     "detail": "89-91 is a 58-word single sentence that names five model ingredients, two solution technologies and two other lectures before it ends; 2044-2046 mismatches its verbs - \"We sweep the time-to-build structure and the demand for engineers into the household technology and putting the supply of new engineers into the technology for producing goods\"; 2084-2087 runs two items of a four-item enumeration together with no break, \"...and $\\epsilon_{1t}$ is a vector of demand shifters second, time-to-train specifications for skilled and unskilled labor, respectively:\"; and 2451-2455 leaves a sentence unfinished, \"please see {cite}`HS2013` where they deploy a\", with the object arriving only after a paragraph break as the bold label `**Secret Weapon:** Another application of the spectral factorization identity`. 1332 is a smaller instance of the same inattention: \"To compute $ao$ we proceed as follows\", for $a_0$"}
+    {
+      "rule": "qe-writing-005",
+      "count": 26,
+      "lines": [
+        553,
+        758,
+        1419,
+        2149,
+        2340,
+        2412
+      ],
+      "detail": "bold is used as a substitute for headings, for admonitions and for emphasis, and only occasionally for definitions. 26 lines consist of nothing but a bold span acting as a heading - the six preference examples (553, 560, 583, 598, 624, 665, 710), the four-part framework summary (758, 767, 776, 785), the econometrics labels (1419, 1436, 1457, 1474, 1489), and the permanent-income and mongrel-aggregation labels (2121, 2149, 2171, 2190, 2260, 2320, 2340, 2352, 2412) - and two of them carry a stray full stop after the closing asterisks (`**Adjustment Costs**.` 665, `**Kalman Filter:**.` 1457). Separately, structured claims are bolded where a directive belongs: `**Definition:**` (1270, 1620, 2039), `**Assumption:**` (401, 419, 541), `**Key Insight:**` (1563, 2377), `**Key Property:**` (1572), `**Key invertibility property:**` (1627), `**Remark:**` (2070), `**Punchline:**` (2254, 2404), `**Secret Weapon:**` (2454), `**Verification:**` (1317), `**Step 1:**`/`**Step 2:**` (1283, 1288). And bold is used for plain emphasis at 70 (`**no frictions**`), 84, 86-87, 213 (`**and**`), 959 (`**let**`), 1285-1286 (`**quantities**`, `**are**`) and 2458 (`**are all alike**`, `**gives the same name to different things**`), where the rule asks for italic - the lecture uses italic nowhere"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        430,
+        788,
+        1495,
+        1702,
+        1743,
+        2408
+      ],
+      "detail": "the same objects are restated many times over 2400 lines and the restatements have drifted apart. The household objective is written six times; 525, 802, 1197, 2208, 2301 and 2344 all carry the leading minus sign, but 430 and 788-789 drop it, so as printed the household maximises a quadratic loss, and 2425-2430 likewise asks the reader to \"maximize the criterion\" $\\sum \\beta^t[\\lambda(s_{1t}-b_{1t})\\cdot(s_{1t}-b_{1t}) + \\ldots]$ with no minus. Five further symbols are stale: 1702 calls $\\mu_0^2$ \"the marginal utility of individual wealth\" one clause before naming the same object $\\mu_0^w$; 1495 keeps the time subscript in $K = A^o \\Sigma_t G^\\prime(G\\Sigma G^\\prime + R)^{-1}$ inside the *limiting time-invariant* representation, where every other $\\Sigma$ in the display has lost it; 1743 sums the denominator of $\\mu^w_t$ over $t$ while its numerator sums over $j$; 2387 writes $\\mu_{02}\\Pi_2\\Pi_2^{-1\\prime}$ and 2408 writes $\\mu_{01}\\Pi_1^{-1}\\Pi_2^{-1\\prime}$, where 2395-2400 pairs each $\\Pi_i^{-1}$ with its own transpose; and 2437 writes $s_{jt} = \\Delta_j h_{jt-1} + \\Pi_j c_{jt}$ where 2307 has $\\Lambda_i$. A reader checking the mongrel-aggregation punchline at 2404-2410 against the derivation it follows cannot make them agree"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        1419,
+        1762,
+        2048
+      ],
+      "detail": "2469 lines, no figure, no diagram and no admonition, in a lecture whose whole purpose is to show that superficially different models share one architecture. Three places ask for a picture and get none: the \"tale of two state-space representations\" (1415-1455) compares an original and an innovations representation on shock count ($n_w + n_y$ versus $n_y$) and spanned space ($H(y^t) \\subset H(w^t,v^t)$, $H(y^t) = H(a^t)$) - two boxes and two arrows would carry it; the time-to-build household technology at 2048-2057 is a $(k+1)\\times(k+1)$ shift matrix whose only content is that a student entering at $t$ becomes an engineer at $t+k$, which is a chain diagram; and the three-agent competitive equilibrium built at 1189-1264 (household, type I firm, type II firm) is never drawn, so which agent faces which of $p^0_t, w^0_t, \\alpha^0_t, q^0_t, r^0_t, v_0$ has to be reassembled from six separate subsections. The enumeration at 1762-1777 also loses its layout: \"the time $t$ vector of demands for $c_t$ is influenced by:\" is followed by four bare paragraphs that are plainly list items but carry no markers, so the colon dangles and the four influences read as continuous prose"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        850,
+        1137,
+        1624,
+        2185
+      ],
+      "detail": "the calligraphic multipliers are spelled three ways, sometimes inside a single line: 850 opens the Lagrangian with `{\\mathcal L}` and 852-856 writes its multipliers `{\\cal M}`; 1137 has `{\\mathcal M}_t^k` and `{\\cal M}_t^h` in the same equation; 2185 has `{\\mathcal M}_t^c = (\\Phi_c)^\\prime {\\mathcal M}_t^d = \\phi_c {\\cal M}_t^e`. Across the file `{\\cal ` appears on 42 lines and `\\mathcal` on 14. The decoration also collides with the plain letters the lecture chooses for the very same quantities - 1137-1161 defines $M_k, M_h, M_s, M_d, M_c, M_i$ as the matrices for which ${\\cal M}_t^k = M_k x_t$, so a reader has two symbols one macro apart for a multiplier and its gradient matrix. Finally $\\color{blue}{\\Pi}$ and $\\color{blue}{(\\Delta_h - \\Theta_h\\Pi^{-1}\\Lambda)}$ at 1624-1625 are the only coloured symbols in the lecture; the colour carries no information the surrounding definition does not already give"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        89,
+        2044,
+        2086,
+        2451
+      ],
+      "detail": "89-91 is a 58-word single sentence that names five model ingredients, two solution technologies and two other lectures before it ends; 2044-2046 mismatches its verbs - \"We sweep the time-to-build structure and the demand for engineers into the household technology and putting the supply of new engineers into the technology for producing goods\"; 2084-2087 runs two items of a four-item enumeration together with no break, \"...and $\\epsilon_{1t}$ is a vector of demand shifters second, time-to-train specifications for skilled and unskilled labor, respectively:\"; and 2451-2455 leaves a sentence unfinished, \"please see {cite}`HS2013` where they deploy a\", with the object arriving only after a paragraph break as the bold label `**Secret Weapon:** Another application of the spectral factorization identity`. 1332 is a smaller instance of the same inattention: \"To compute $ao$ we proceed as follows\", for $a_0$"
+    }
   ],
   "strengths": [
     "The lecture is framed by a quotation and then earns it: the Poincare and Lucas epigraphs at 26-36 are picked up at 111-112 (\"the diversity of these models conceals an essential unity\"), and the closing epigraph at 2466-2467 supplies the second half of the Lucas sentence - \"but each incomplete market economy is incomplete in its own individual way\" - which is exactly what motivates the closing question at 2461",
@@ -35,5 +83,9 @@
     "hs_recursive_models.md:1695,1892 - qe-writing-006 is reported with count 2, but both hits look like false positives. The H2 headings are \"Gorman aggregation and Engel curves\" (1695) and \"A Rosen-Topel housing model\" (1892); `Engel` (Ernst Engel) and `Topel` (Robert Topel) are surnames, so both headings are already sentence case. `PROPER_NOUNS` in tools/qestyle_rules.py contains `gorman` and `rosen` but not `engel` or `topel`, and `_is_proper` splits a hyphenated word and requires every part to be known, so `Rosen-Topel` fails on its second half. Adding `engel` and `topel` would clear both; the same gap will affect rosen_schooling_model and any lecture citing Engel curves",
     "hs_recursive_models.md:233,244,1433 - qe-math-011 (proposed) is reported with count 0, but the Gaussian is written `{\\mathcal N}` three times as a distribution name: `$x_0\\sim {\\mathcal N}(\\hat x_0, \\Sigma_0)$` (233), `${\\mathcal N}(Ax_t, CC')$` (244) and `x_0 \\sim {\\mathcal N}(\\hat x_0,\\Sigma_0)` (1433). The `check_math_011` pattern does match the `\\mathcal\\s+N` alternative, but the context gate then rejects it: `DIST_BEFORE` requires `\\sim` to sit immediately before the match, and here the intervening `{` breaks it, while `DIST_AFTER` looks for `(` immediately after the match and finds the closing `}`. Allowing an optional `{` on either side of the macro would catch the `{\\mathcal N}` brace style, which is the form this series uses",
     "hs_recursive_models.md:91 - qe-writing-004 is reported with count 28. Most are genuine (\"production Technologies\" 436, \"Dynamic Programming\" 959, and the Title Case bold labels at 598, 710, 1419, 1436, 1474, 1489), but the two hits on line 91 are the link texts `[Linear State Space Models]` and `[Linear Quadratic Control]`, which reproduce the Title Case H1 titles of the two lectures being linked. Capitalisation inside markdown link text that names another lecture is arguably correct, so the count may be 2 high here; the fix is a scanner exemption, not an edit to the file"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "f1a2849773bd1c232dfddbbf2ccff29b08c68f46"
+  }
 }

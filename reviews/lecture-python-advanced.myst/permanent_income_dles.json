@@ -5,31 +5,54 @@
     {
       "rule": "qe-writing-003",
       "count": 4,
-      "lines": [160, 186, 231, 269],
+      "lines": [
+        160,
+        186,
+        231,
+        269
+      ],
       "detail": "the mapping into the DLE framework - the whole content of the lecture - is asserted without the equations it lives in. 156-158 says the problem is mapped \"into the framework outlined in Section 4.8 of {cite}`HS2013`\" and 160-176 then lists twelve matrices ($\\phi_c$, $\\phi_g$, $\\phi_i$, $\\Gamma$, $\\Delta_k$, $\\Theta_k$, $A_{22}$, $C_2$, $U_b$, $U_d$, $\\Lambda$, $\\Pi$, $\\Delta_h$, $\\Theta_h$) without ever writing down the technology, information or preference equations they enter, so a reader who has not opened HS2013 cannot check a single entry. 186-196 then presents the three equations those matrices imply and introduces $k_{t-1}$, $i_t$ and $l_t$ for the first time: $k$ is tied back at 199 (\"where $k_t = b_{t+1}$\"), $i_t$ is never defined, and $l_t$ at 195 appears nowhere else in the lecture - the $\\phi_g$ row of 163 and 165 gives $g_t = -0.00001\\,i_t$, so both the symbol and the exponent in $l_t^2 = (0.00001)^2 i_t$ look wrong. The code at 231 sets `x0 = np.array([[0], [0], [1], [0], [0]])`, five elements whose ordering $[h_{t-1}, k_{t-1}, z_t]$ is only given 25 lines later at 256-260, and the third entry (the constant in $z_t$, per row 1 of `a22` at 222) is never explained. And 269 says the elements of `econ1.Sc` \"are the same as in $-F$\" where $F$ is never defined in this lecture at all"
     },
     {
       "rule": "qe-code-001",
       "count": 6,
-      "lines": [209, 216, 222, 279, 287, 289],
+      "lines": [
+        209,
+        216,
+        222,
+        279,
+        287,
+        289
+      ],
       "detail": "the rule explicitly permits capitals for matrices, and the cell at 207-236 takes both choices at once: the scalars and small matrices keep their unicode symbols (`ϕ_c`, `ϕ_g`, `ϕ_i`, `δ_k`, `θ_k`, `γ`) while $A_{22}$, $C_2$, $U_b$, $U_d$ are downcased to `a22`, `c2`, `ub`, `ud` (222-229). Worse, `γ` at 209 is the *technology* matrix $\\Gamma$ of 166, not the bliss level $\\gamma$ of 85 and 172 - which is what `ub = np.array([[100, 0, 0]])` at 229 actually sets - so the one glyph the lecture reuses is the one that changes meaning between prose and code. 216 `β = np.array([[β]])` rebinds the scalar `β` set at 207 to a 2-D array, so 215 (`θ_k = np.array([[1 / β]])`) must run before it and the cell cannot be re-executed. 222 pads the first matrix row for column alignment (`[[1,   0,   0],`) but leaves the third unpadded (`[0, 1, 0]`), so the alignment the extra spaces were for does not survive. 279 and 287 write `for i in range(25):` with `i` unused where `_` is the convention. And 289 uses `color='r'` where the five sibling calls at 281-284 and 290 all use `c=`"
     },
     {
       "rule": "qe-writing-002",
       "count": 4,
-      "lines": [38, 46, 239, 268],
+      "lines": [
+        38,
+        46,
+        239,
+        268
+      ],
       "detail": "268-271 is spliced together from two sentences and reads as neither: \"Consequently, the relevant elements of `econ1.Sc` are the same as in $-F$ occur when we apply other approaches to the same model in the lecture ...\". 38-42 is a 45-word sentence that chains three destinations with two bare \"and\"s (\"complementing the other two solution methods described in [Optimal Savings I ...] and [Optimal Savings II ...] and [this Jupyter notebook]\"). 46-48 restates what 26-27 has already said - 26-27 gives the {cite}`HS2013` label and the {doc} link with the book's title, and 46-48 repeats the author, year and full title again three sentences later. And 239 says \"To check the solution of this model with that from the **LQ** problem\", where the verb wanted is compare"
     },
     {
       "rule": "qe-writing-007",
       "count": 2,
-      "lines": [160, 250],
+      "lines": [
+        160,
+        250
+      ],
       "detail": "the lecture's claim is an equality between two solutions and the equality is never put on the page. 250 prints `econ1.Sc` on its own; 268-271 asserts its relevant elements match $-F$ from another lecture, so the check is left to the reader holding two browser tabs, when printing $-F$ (or an `np.allclose`) beside it would settle it in one cell. Second, the correspondence between the permanent-income objects and the DLE matrices (160-176 in one direction, 253-266 in the other) is carried entirely in running prose with the two state vectors written 10 lines apart; a two-column table - permanent-income object against DLE matrix, with $k_{t-1} = b_t$ as one of its rows - is exactly the kind of layout the rule asks for and would replace the hardest paragraph in the file"
     },
     {
       "rule": "qe-writing-005",
       "count": 2,
-      "lines": [44, 239],
+      "lines": [
+        44,
+        239
+      ],
       "detail": "bold is used for emphasis in the two places it is not marking a definition: \"uses the **DLE** class\" (44) and \"that from the **LQ** problem\" (239) both emphasise a name the reader already has - `DLE` is set plain at 26 and imported plain at 55 - where the rule assigns emphasis to italic. The genuine definition in the file is bolded correctly (**savings problem**, 62), and the three paragraph labels **Technology:** / **Information:** / **Preferences:** (160, 169, 175) are labels rather than emphasis; no italic appears anywhere in the lecture"
     }
   ],
@@ -53,5 +76,9 @@
   ],
   "scanner_doubts": [
     "permanent_income_dles.md:40,41,48,270 - qe-writing-004 is reported with count 7 across those four lines, but every hit is inside the title of another work, where the capitalisation is correct. 40 and 41 are markdown link labels naming other lectures (`[Optimal Savings I: The Permanent Income Model](...)`, `[Optimal Savings II: LQ Techniques](...)`), 270 repeats the second of those, and 47-48 is a quoted book title (`Hansen & Sargent (2013) \"Recursive Models of Dynamic Linear Economies\"`). The narrative text of this lecture has no unnecessary capitalisation that I can find. Suggested fix: have the qe-writing-004 check skip the label text of a markdown link `[...](...)` and text inside double quotes, the same way it presumably already skips inline code and math"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "c8253e6608df7af7829a9c02cc421aace9c1ee79"
+  }
 }

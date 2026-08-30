@@ -2,16 +2,57 @@
   "series": "lecture-python.myst",
   "lecture": "ak2",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [40, 246, 498, 885],
-     "detail": "line 40 promises that the model \"is a good setting for illustrating a **shooting method** for solving a system of non-linear difference equations with initial and terminal condition\", and no shooting method appears anywhere - the lecture uses a closed form (348-493) and then a sequence-space fixed point (864-1123). Line 246 introduces the initial old person's assets as $A_0$, a symbol never defined: assets are only ever written $A_{t+1}$ (192, 280, 317), and the same equation charges the $t=0$ old person $\\delta_{ot}$ rather than $\\delta_{o0}$ (249, 256), with the same index slip at 281. Lines 498-500 are a commented-out HTML block still carrying a drafting note to a co-author (\"<font color='red'>Zejin: I tried to edit the following part...\"). And the lecture defines \"competitive equilibrium\" twice, differently: the definition at 324-328 requires the allocation to solve the firms' problems, the one at 885-895 drops that requirement and adds the lump-sum taxes"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [229, 507, 859, 1207],
-     "detail": "line 229 is a 48-word sentence with three semicolon-joined clauses, and line 232 then restates its content in full (\"The firm thus sells output to old people, young people, and the government\"); the three bullets at 509-511 give the $t=0$ shock twice - bullet one is \"a time-varying government policy sequences that disrupts an original steady state\" and bullet three is \"sudden revelation of a new government policy in the form of sequences starting at time $t=0$\"; line 859 is a 44-word sentence; line 1207 uses \"comparing to\" twice in 27 words"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [176],
-     "detail": "a lecture titled \"Transitions in an Overlapping Generations Model\" never draws the overlap. \"Setting\" (52-113) and \"Activities in Factor Markets\" (176-196) describe entirely in prose who is alive at each date, that the old bring $K_t$ and $D_t$ in and sell $K_t$ to the young, and that the young buy $D_{t+1}$ maturing at $t+1$ - a two-row generations timeline with the transfers drawn as arrows between cohorts is the standard figure for exactly this, and all eight figures in the lecture are transition-path panels instead"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [178, 187, 324, 885],
-     "detail": "the lecture uses bold for four structural labels rather than for defined terms - `**Old people:**` (178) and `**Young people:**` (187) as headings over bullet lists, and `**Definition:**` (324, 885) as a label introducing a definition rather than naming the thing defined - while using italic nowhere at all in 1280 lines. The genuine definitions in the file (**policy** 82, **allocation** 92, **price system** 109, **numeraire** 212, **state variables**/**control variables** 537) are correctly bolded, so the convention is otherwise sound"},
-    {"rule": "qe-code-001", "count": 3, "lines": [946, 1075, 1142],
-     "detail": "lines 946 and 1052 write the `brent_max` upper bound as `W*(1-τ)-δy-1e-6` with no space around any of the four binary operators, and `**` is the only operator the rule exempts; lines 1075-1076 join the two convergence tests with a backslash continuation where PEP8 asks for parentheses; three lines reach exactly 80 characters (1142, 1166, 1201) and line 1085 carries trailing whitespace. `class AK2():` at 957 also has empty parentheses where `class ClosedFormTrans:` at 540 does not"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        40,
+        246,
+        498,
+        885
+      ],
+      "detail": "line 40 promises that the model \"is a good setting for illustrating a **shooting method** for solving a system of non-linear difference equations with initial and terminal condition\", and no shooting method appears anywhere - the lecture uses a closed form (348-493) and then a sequence-space fixed point (864-1123). Line 246 introduces the initial old person's assets as $A_0$, a symbol never defined: assets are only ever written $A_{t+1}$ (192, 280, 317), and the same equation charges the $t=0$ old person $\\delta_{ot}$ rather than $\\delta_{o0}$ (249, 256), with the same index slip at 281. Lines 498-500 are a commented-out HTML block still carrying a drafting note to a co-author (\"<font color='red'>Zejin: I tried to edit the following part...\"). And the lecture defines \"competitive equilibrium\" twice, differently: the definition at 324-328 requires the allocation to solve the firms' problems, the one at 885-895 drops that requirement and adds the lump-sum taxes"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        229,
+        507,
+        859,
+        1207
+      ],
+      "detail": "line 229 is a 48-word sentence with three semicolon-joined clauses, and line 232 then restates its content in full (\"The firm thus sells output to old people, young people, and the government\"); the three bullets at 509-511 give the $t=0$ shock twice - bullet one is \"a time-varying government policy sequences that disrupts an original steady state\" and bullet three is \"sudden revelation of a new government policy in the form of sequences starting at time $t=0$\"; line 859 is a 44-word sentence; line 1207 uses \"comparing to\" twice in 27 words"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        176
+      ],
+      "detail": "a lecture titled \"Transitions in an Overlapping Generations Model\" never draws the overlap. \"Setting\" (52-113) and \"Activities in Factor Markets\" (176-196) describe entirely in prose who is alive at each date, that the old bring $K_t$ and $D_t$ in and sell $K_t$ to the young, and that the young buy $D_{t+1}$ maturing at $t+1$ - a two-row generations timeline with the transfers drawn as arrows between cohorts is the standard figure for exactly this, and all eight figures in the lecture are transition-path panels instead"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        178,
+        187,
+        324,
+        885
+      ],
+      "detail": "the lecture uses bold for four structural labels rather than for defined terms - `**Old people:**` (178) and `**Young people:**` (187) as headings over bullet lists, and `**Definition:**` (324, 885) as a label introducing a definition rather than naming the thing defined - while using italic nowhere at all in 1280 lines. The genuine definitions in the file (**policy** 82, **allocation** 92, **price system** 109, **numeraire** 212, **state variables**/**control variables** 537) are correctly bolded, so the convention is otherwise sound"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        946,
+        1075,
+        1142
+      ],
+      "detail": "lines 946 and 1052 write the `brent_max` upper bound as `W*(1-τ)-δy-1e-6` with no space around any of the four binary operators, and `**` is the only operator the rule exempts; lines 1075-1076 join the two convergence tests with a backslash continuation where PEP8 asks for parentheses; three lines reach exactly 80 characters (1142, 1166, 1201) and line 1085 carries trailing whitespace. `class AK2():` at 957 also has empty parentheses where `class ClosedFormTrans:` at 540 does not"
+    }
   ],
   "strengths": [
     "The fixed-point solver is validated against the closed form before it is trusted with anything new: line 1131 says so explicitly and the run at 1133-1156 reproduces the {ref}`exp-tax-cut` experiment with the lump-sum taxes muted",
@@ -29,5 +70,9 @@
     "Add a generations diagram to \"Activities in Factor Markets\", and give the `-D/K` figure at 816-819 an axis label instead of `plt.title('-D/K')` (part of qe-fig-003, 3 occurrences at 819, 1026, 1031)",
     "Delete the commented-out drafting note at 498-500, add `mystnb: figure: caption/name` metadata to the five bare figures at 734, 801, 816, 843 and 1154 (qe-fig-005, 5 occurrences), fix the PEP8 spacing at 946 and 1052, and correct the spellings \"Equilbrium\" (322), \"caluations\" (866), \"expeditures\" (841), \"perople\" (861), \"goverment\" (190), \"the the\" (1274) and \"is good laboratory\" (38)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "cdcf78c0b0635fa0d115725658b50ed22fd09843"
+  }
 }

@@ -2,18 +2,70 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "entropy",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 10, "lines": [119, 236, 372, 450, 539],
-     "detail": "both figure captions that carry content are wrong. 112 sends the reader to {numref}`fig1` to see the coin result of 96-110, but the caption at 119 reads \"Entropy as a function of $\\hat \\pi_1$ when $\\pi_1 = .5$\" - neither $\\pi_1$ nor $\\hat\\pi_1$ occurs anywhere in this lecture, which writes the coin probability as $p$ throughout. And 512-515 introduces {numref}`figure-example4` as the case whose denominator density is ${\\mathcal N}(0,.95)$, but its caption at 539-540 names ${\\mathcal N}(0,1.5)$ twice, duplicating figure-example3's caption at 530-531. Four items of algebra are also wrong or stale: 236 defines the cross-entropy as $H(p,q) = \\sum_i p_i \\log q_i$, dropping the minus sign that 231-232 requires; 450 writes the Wold representation as $y_t = D(L)\\epsilon_t \\equiv \\sum_{j=0}^\\infty D_j \\epsilon_t$, with no lag on $\\epsilon$; 372 asserts $L_t(p^*_{t+1}/p_{t+1}) = D_{KL,t}(p^*_{t+1}|p_{t+1})$, but with $E_t$ taken under $p_{t+1}$ (362) and $D$ defined as at 224, $-E_t\\log(p^*/p)$ is $D_{KL,t}(p_{t+1}|p^*_{t+1})$, the other order; and 458-462 writes the one-step-ahead prediction error as $D(0)D(0)'$ while 484 writes $\\log\\det[D(0)'D(0)]$ for the same object. Three smaller slips: 157 has the density as $p(x_i, y_i)$ where 163 needs $p(x_i,y_j)$; 217 assumes $\\frac{p_i}{q_t} \\in (0,\\infty)$ for $q_i$; 205 calls Boltzmann's constant $k_b$ where 200 and 203 write $k_B$; and the $-k$ in {eq}`eq:Shannon5` at 331 is the only symbol in the formula that is never defined"},
-    {"rule": "qe-math-009", "count": 3, "lines": [200, 341, 450],
-     "detail": "a lecture whose subject is that one word names many objects reuses two letters for three objects each. $S$ is Gibbs thermodynamic entropy at 200-207, von Neumann entropy at 351, and the spectral density at 402, 407, 413, 429, 444, 462 and 475 - so $S$ appears in {eq}`eq:Gibbs` and in {eq}`eq:Shannon6` meaning unrelated things nine sections apart. $D$ is Kullback-Leibler divergence at 224-246 and 329, the von Neumann divergence at 341, and the Wold lag polynomial at 450-462 and 484, which puts $D(p|q)$ and $D(0)D(0)'$ in the same lecture. Separately the same two operators are spelled four ways: `\\mathrm{trace}` (269, 289, 304, 311), `\\mathrm {trace}` (329), `\\textrm{trace}` (341, 351), and `\\mathrm {det }` with the space inside the braces (330, twice) beside plain `\\det` (268, 310, 330, 462, 475, 484); and the matrix logarithm is `\\ln` at 341 and 351 where every other logarithm in the lecture is `\\log`"},
-    {"rule": "qe-writing-005", "count": 6, "lines": [146, 264, 273, 321, 421],
-     "detail": "bold is used well for the defined terms - **uncertainty** (25), **surprisal** (77, 81), **expected surprisal** (84), **conditional surprisal** (166), **relative entropy** (220), **entropy bound** (391), **frequency domain entropy** (472), **maximum entropy** (490) - which makes the four exceptions stand out: `**Claim**` (264), `**Proof**` (273), `**Extension**` (321) and `**Problem:**` (421) are structural labels, not definitions, and each stands alone on its own line as a heading. In the other direction, the two properties named at 146-147 are defined in italic - $H$ is *continuous*, $H$ is *symmetric* - where the same list's other four items simply state the property, so within five lines the lecture both italicises a definition and leaves definitions unmarked"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [23, 435, 519],
-     "detail": "the lecture's own frame is a list of six senses of entropy (23-30) taken up in eight sections, and it never comes back as a table - one row per sense with its symbol, its formula and the section it lives in would be the single most useful object on the page, and it is exactly what a reader who arrives to reconcile $H(p)$, $S$, $D(p|q)$, $L_t$, $\\sigma^2_\\epsilon$ and the frequency-domain criterion needs. The claim the lecture builds to at 432-436, that a flat spectral density is the time-series analogue of the uniform distribution, is asserted in prose where two small panels - a flat $S_x(\\omega)$ beside a uniform $p$ - would show it, and the lecture plots nothing at all in its five frequency-domain and prediction sections (399-490). All four figures that do exist are static raster files checked into the repository (115, 519, 526, 535), one of them a `.jpg` (526), so none can be regenerated when the notation changes - which is how the caption at 119 came to describe a figure in symbols the lecture does not use. There are also no admonitions at all: the Claim, Proof, Extension and Problem at 264-421 would be `{prf:}` directives, and 62 (\"we set $p \\log p = 0$\") is a convention that belongs in a `{note}`"},
-    {"rule": "qe-math-014", "count": 2, "lines": [44, 92],
-     "detail": "both probability statements in the lecture write an event with parentheses: $p_i = \\textrm{Prob}(X = x_i)$ at 44 and $p = {\\rm Prob}(X=1)$ at 92. `X = x_i` is an event, not a named set, so the rule asks for braces; converting the Roman operator to `\\mathbb{P}` (qe-math-010, proposed) and the parentheses to braces gives $\\mathbb{P}\\{X = x_i\\}$ and fixes both rules in one edit. These are the lecture's only two probability expressions, so the whole of its use of the notation is affected"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [92, 128, 151, 338],
-     "detail": "92 defines the same letter twice inside one clause and misuses set membership: \"Take a possibly unfair coin, so $X = \\{0,1\\}$ with $p = {\\rm Prob}(X=1) = p \\in [0,1]$\" - $X$ takes values in $\\{0,1\\}$ rather than equalling the set, and the chain asserts $p = p$. 151 drops two words, \"Entropy is not affected by events zero probability\". 338 reads \"A measure of the divergence between two $P$ and $Q$\". 128 has \"Among all dies, a fair die maximizes entropy\", where 125-126 has already introduced the die correctly. 344 also leaves the matrix logarithm defined by a bare parenthesised URL, \"where the log of a matrix is defined here  (https://en.wikipedia.org/wiki/Logarithm_of_a_matrix)\", as does 197 for Gibbs"}
+    {
+      "rule": "qe-writing-003",
+      "count": 10,
+      "lines": [
+        119,
+        236,
+        372,
+        450,
+        539
+      ],
+      "detail": "both figure captions that carry content are wrong. 112 sends the reader to {numref}`fig1` to see the coin result of 96-110, but the caption at 119 reads \"Entropy as a function of $\\hat \\pi_1$ when $\\pi_1 = .5$\" - neither $\\pi_1$ nor $\\hat\\pi_1$ occurs anywhere in this lecture, which writes the coin probability as $p$ throughout. And 512-515 introduces {numref}`figure-example4` as the case whose denominator density is ${\\mathcal N}(0,.95)$, but its caption at 539-540 names ${\\mathcal N}(0,1.5)$ twice, duplicating figure-example3's caption at 530-531. Four items of algebra are also wrong or stale: 236 defines the cross-entropy as $H(p,q) = \\sum_i p_i \\log q_i$, dropping the minus sign that 231-232 requires; 450 writes the Wold representation as $y_t = D(L)\\epsilon_t \\equiv \\sum_{j=0}^\\infty D_j \\epsilon_t$, with no lag on $\\epsilon$; 372 asserts $L_t(p^*_{t+1}/p_{t+1}) = D_{KL,t}(p^*_{t+1}|p_{t+1})$, but with $E_t$ taken under $p_{t+1}$ (362) and $D$ defined as at 224, $-E_t\\log(p^*/p)$ is $D_{KL,t}(p_{t+1}|p^*_{t+1})$, the other order; and 458-462 writes the one-step-ahead prediction error as $D(0)D(0)'$ while 484 writes $\\log\\det[D(0)'D(0)]$ for the same object. Three smaller slips: 157 has the density as $p(x_i, y_i)$ where 163 needs $p(x_i,y_j)$; 217 assumes $\\frac{p_i}{q_t} \\in (0,\\infty)$ for $q_i$; 205 calls Boltzmann's constant $k_b$ where 200 and 203 write $k_B$; and the $-k$ in {eq}`eq:Shannon5` at 331 is the only symbol in the formula that is never defined"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        200,
+        341,
+        450
+      ],
+      "detail": "a lecture whose subject is that one word names many objects reuses two letters for three objects each. $S$ is Gibbs thermodynamic entropy at 200-207, von Neumann entropy at 351, and the spectral density at 402, 407, 413, 429, 444, 462 and 475 - so $S$ appears in {eq}`eq:Gibbs` and in {eq}`eq:Shannon6` meaning unrelated things nine sections apart. $D$ is Kullback-Leibler divergence at 224-246 and 329, the von Neumann divergence at 341, and the Wold lag polynomial at 450-462 and 484, which puts $D(p|q)$ and $D(0)D(0)'$ in the same lecture. Separately the same two operators are spelled four ways: `\\mathrm{trace}` (269, 289, 304, 311), `\\mathrm {trace}` (329), `\\textrm{trace}` (341, 351), and `\\mathrm {det }` with the space inside the braces (330, twice) beside plain `\\det` (268, 310, 330, 462, 475, 484); and the matrix logarithm is `\\ln` at 341 and 351 where every other logarithm in the lecture is `\\log`"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        146,
+        264,
+        273,
+        321,
+        421
+      ],
+      "detail": "bold is used well for the defined terms - **uncertainty** (25), **surprisal** (77, 81), **expected surprisal** (84), **conditional surprisal** (166), **relative entropy** (220), **entropy bound** (391), **frequency domain entropy** (472), **maximum entropy** (490) - which makes the four exceptions stand out: `**Claim**` (264), `**Proof**` (273), `**Extension**` (321) and `**Problem:**` (421) are structural labels, not definitions, and each stands alone on its own line as a heading. In the other direction, the two properties named at 146-147 are defined in italic - $H$ is *continuous*, $H$ is *symmetric* - where the same list's other four items simply state the property, so within five lines the lecture both italicises a definition and leaves definitions unmarked"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        23,
+        435,
+        519
+      ],
+      "detail": "the lecture's own frame is a list of six senses of entropy (23-30) taken up in eight sections, and it never comes back as a table - one row per sense with its symbol, its formula and the section it lives in would be the single most useful object on the page, and it is exactly what a reader who arrives to reconcile $H(p)$, $S$, $D(p|q)$, $L_t$, $\\sigma^2_\\epsilon$ and the frequency-domain criterion needs. The claim the lecture builds to at 432-436, that a flat spectral density is the time-series analogue of the uniform distribution, is asserted in prose where two small panels - a flat $S_x(\\omega)$ beside a uniform $p$ - would show it, and the lecture plots nothing at all in its five frequency-domain and prediction sections (399-490). All four figures that do exist are static raster files checked into the repository (115, 519, 526, 535), one of them a `.jpg` (526), so none can be regenerated when the notation changes - which is how the caption at 119 came to describe a figure in symbols the lecture does not use. There are also no admonitions at all: the Claim, Proof, Extension and Problem at 264-421 would be `{prf:}` directives, and 62 (\"we set $p \\log p = 0$\") is a convention that belongs in a `{note}`"
+    },
+    {
+      "rule": "qe-math-014",
+      "count": 2,
+      "lines": [
+        44,
+        92
+      ],
+      "detail": "both probability statements in the lecture write an event with parentheses: $p_i = \\textrm{Prob}(X = x_i)$ at 44 and $p = {\\rm Prob}(X=1)$ at 92. `X = x_i` is an event, not a named set, so the rule asks for braces; converting the Roman operator to `\\mathbb{P}` (qe-math-010, proposed) and the parentheses to braces gives $\\mathbb{P}\\{X = x_i\\}$ and fixes both rules in one edit. These are the lecture's only two probability expressions, so the whole of its use of the notation is affected"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        92,
+        128,
+        151,
+        338
+      ],
+      "detail": "92 defines the same letter twice inside one clause and misuses set membership: \"Take a possibly unfair coin, so $X = \\{0,1\\}$ with $p = {\\rm Prob}(X=1) = p \\in [0,1]$\" - $X$ takes values in $\\{0,1\\}$ rather than equalling the set, and the chain asserts $p = p$. 151 drops two words, \"Entropy is not affected by events zero probability\". 338 reads \"A measure of the divergence between two $P$ and $Q$\". 128 has \"Among all dies, a fair die maximizes entropy\", where 125-126 has already introduced the die correctly. 344 also leaves the matrix logarithm defined by a bare parenthesised URL, \"where the log of a matrix is defined here  (https://en.wikipedia.org/wiki/Logarithm_of_a_matrix)\", as does 197 for Gibbs"
+    }
   ],
   "strengths": [
     "The lecture does exactly what its opening list promises: the six senses of entropy set out at 23-30 are then taken in that order - information theory (38), thermodynamics (195), Kullback-Leibler divergence (212), Backus-Chernov-Zin volatility of stochastic discount factors (356), Wiener-Kolmogorov prediction error (399) and frequency-domain robust control (469) - so a reader can enter at whichever sense they arrived for",
@@ -37,5 +89,9 @@
     "entropy.md:323,515,530,531,539,540 - qe-math-011 (proposed) is reported with count 2, both on line 256, where the Gaussian is written `{\\cal N}(0,I)` and `{\\cal N}(w, \\Sigma)`. Eleven further occurrences on lines 323, 515, 530, 531, 539 and 540 are written `{\\mathcal N}(...)` and are not counted. The reason is precise: the `\\{\\s*\\\\cal\\s*(N|U)\\s*\\}` alternative in `check_math_011` consumes the braces, so `DIST_AFTER` sees `(0,I)` and matches, while the `\\\\mathcal\\s+(N|U)\\b` alternative stops before the closing brace, so `DIST_AFTER` sees `}` and rejects. Accepting an optional `}` (and an optional preceding `{`) around the macro would raise this file's count from 2 to 13, and would also pick up hs_recursive_models.md (233, 244, 1433) and knowing_forecasts_of_others.md (164)",
     "entropy.md:44,92 - qe-math-010 (proposed) is reported with count 0, but both probability operators in the lecture are Roman spellings that the rule exists to catch: `\\textrm{Prob}(X = x_i)` at 44 and `{\\rm Prob}(X=1)` at 92. The `other` branch of `check_math_010` looks for `\\text`, `\\mathrm` or `\\operatorname` wrapping one of `Var|Cov|Pr|E|Cor` - it lists neither the `\\textrm` and `{\\rm ...}` spellings nor the token `Prob`, so both miss. Adding `textrm|rm|Bbb`-style spellings and `Prob|Prb` to that alternation would catch them; the same `{\\rm ...}` gap is noted in the amss overlay for amss2 and amss3",
     "entropy.md:14 - the report scores Code as N/A with the note \"no executable code cells\", which is right in effect but not literally: lines 14-16 are a `{code-cell} ipython3` block containing only a blank line. It executes to nothing and renders an empty input cell at the top of the page. The N/A is the correct score; the cell itself should be deleted from the lecture"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "81c6f7d7374fe64fe26486837fa1e1b1cc9e9216"
+  }
 }

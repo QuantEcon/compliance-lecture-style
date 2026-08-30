@@ -2,18 +2,72 @@
   "series": "lecture-dp",
   "lecture": "perm_income",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 5, "lines": [997, 848, 935, 173, 683],
-     "detail": "the footnote at 997 contradicts itself in three lines: it says 'Suppose instead that we had imposed the following more standard assumptions on the utility function: $u'(c) >0, u''(c)<0, u'''(c) > 0$', and then two sentences later 'But the fact that $u''' <0$ implies via Jensen's inequality that $\\mathbb{E}_t [u'(c_{t+1})] > u'(\\mathbb{E}_t [c_{t+1}])$' - the sign has flipped, and the flipped sign is the one the argument runs on (the inequality as stated needs $u''' > 0$, i.e. $u'$ convex). 848 says the same word twice with opposite meanings intended: 'notice how most of a transitory income shock is saved and only a small amount is saved' - the second should be 'consumed', and the sentence is contradicting 784-786 as written. 935 has lost its reference: 'Application of formula to this example shows that', where the parallel sentence at 788 reads 'Application of the formula for debt in {eq}`pi_ssr` to this example shows that'. 173 packs two sentences and a double space into one `{note}` line. And 687 states a result by describing a picture instead of showing one: 'The impulse response function of $\\{c_t\\}$ to the innovation $\\{w_t\\}$ is a box'"},
-    {"rule": "qe-writing-005", "count": 6, "lines": [264, 270, 41, 621, 553, 856],
-     "detail": "the same term is italic and bold six lines apart: 'consumption equals *economic income*' at 264, then '**economic income** equals' at 270. The pattern runs through the lecture - the cointegration family is italic when introduced (*cointegration* 41, *cointegrating residual* 633) and bold in between (**cointegrating vector** 621); the innovation family likewise (*innovation* 97, *innovation to the expected present value* 553, *innovation representation* 856, against **present value of the moving average coefficients** 730). Eight definitions are bolded (**random walk** 91, the five wealth terms at 266-270, **cointegrating vector** 621, **present value of the moving average coefficients** 730, **fundamental** 1005) and twelve are italicised (*state* 40 and 276, *cointegration* 41, *information set* 77, *innovation* 97, *no Ponzi scheme* 176, *Euler equations* 196, *dynamic programming* 222, *innovation to the expected present value* 553, *cointegrating residual* 633, *innovation representation* 856, *random walks* 89), so the file is close to a coin flip. The three genuine italic emphases (*necessary* 209, *is* 609, *permanent* 922) are correct"},
-    {"rule": "qe-code-001", "count": 5, "lines": [810, 829, 516, 513, 498],
-     "detail": "810 redefines `time_path`, a function already defined at 482 with a different signature and a different meaning - the first returns `w, b, c` for the IID-income example, the second returns `b, c` for the impulse-response example and takes a `permanent` flag - 328 lines apart with no note that the name is being reused, so a reader who re-executes the earlier cell silently gets the wrong function. 829 binds `L = 0.175` as a plot limit in a lecture that has just told the reader '$L$ is the lag operator' (705) and written $d(L) = \\sum_j d_j L^j$ (705, 1001). 516 pulls in the stdlib `random` module (imported at 52) solely to randomise line colours, `rcolor = random.choice(('c', 'g', 'b', 'k'))`, so the figure mixes two unseeded RNGs and its colours carry no information. 513 assigns `b_sum = np.zeros(T+1)` and never uses it. 498 has a space after the opening parenthesis, `ax.plot( b, 'b-', label=\"Debt\")` (E201), where 496 and 497 do not. And 836 draws the impulse date as a two-point series, `ax.plot((S, S), (-L, L), 'k-', lw=0.5)`, where `axvline(S)` is the one-call form"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [683, 656, 601],
-     "detail": "the section headed '### Impulse Response Functions' (683-689) contains no impulse response function. It asserts the shape in prose ('is a box', 687) and gives the height as a formula (689), and the figure that actually draws it appears 120 lines later inside '### Example 1' (803-843), after which 850 refers back to 'The box-like impulse responses' - so the reader meets the claim, the formula, and the picture in three different places. Second, 656-681 derives the lecture's one testable cross-sectional prediction, $\\mathrm{Var}[c_t] = \\mathrm{Var}[c_0] + t\\,\\hat\\sigma^2$, and reports that 'A number of different studies have investigated this prediction and found some support for it' - while the 250-path fan at 510-522, which is exactly that prediction rendered, sits 150 lines earlier with no cross-reference; overlaying $\\pm\\sqrt{\\mathrm{Var}[c_0] + t\\hat\\sigma^2}$ on those paths would make the linear-in-$t$ spread a visible check rather than a citation. Third, the Cointegration section (598-633) builds to '$(1-\\beta) b_t + c_t$ is asymptotically stationary' (619) and never plots the residual, even though the sequel `perm_income_cons` plots precisely this object (its 701-719) - a figure here, or a forward pointer to that one, would close the argument"},
-    {"rule": "qe-math-009", "count": 3, "lines": [259, 276, 234],
-     "detail": "the same fraction is written two ways in one derivation: `{r \\over 1+r}` at 259 and 304 against `\\frac{r}{1+r}` at 269, and `{1 \\over 1-\\beta}` at 560 and 584 against `\\frac{c_t}{1-\\beta}` at 249 - `\\over` is the deprecated plain-TeX primitive and four of the file's nine fractions use it. 276 writes the state as the row vector `\\begin{bmatrix} b_t & z_t \\end{bmatrix}` while 349-353 writes the same object as the column $x_t = [z_t; b_t]$ with the components in the opposite order, and 623 writes a third variant, `\\begin{bmatrix} b_t & c_t \\end{bmatrix}'`. 234 puts a `\\frac` in an exponent, $\\beta^{\\frac{t}{2}}$, which renders as a two-storey fraction at superscript size; $\\beta^{t/2}$ is both simpler and legible"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [896, 492],
-     "detail": "896 defines the innovation with a bare `E` - '$a_t := y_t - E [ y_t \\,|\\, y_{t-1}, \\ldots, y_0]$' - the only bare expectation operator in a lecture that writes `\\mathbb{E}` more than thirty times (73, 76, 114, 119, 158, 181, 193, 206, 249, 258, 293, 394, 540, 550, 560, 571-573, 630, 977, 983, 990, 997), so the definition of the object Example 2 is built on looks like a different operator from the one used everywhere else. Second, the two figures in the IID example (492-503, 510-522) draw from `np.random.randn` with no seed, and the claims made about them are specific - 'consumption is considerably smoother than income' (506) and the cross-sectional fan at 508 - so both the picture and the strength of the claim change on every build; the copy of this file in `lecture-python.myst` has already been converted to a seeded `np.random.default_rng` generator threaded through `time_path`"}
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        997,
+        848,
+        935,
+        173,
+        683
+      ],
+      "detail": "the footnote at 997 contradicts itself in three lines: it says 'Suppose instead that we had imposed the following more standard assumptions on the utility function: $u'(c) >0, u''(c)<0, u'''(c) > 0$', and then two sentences later 'But the fact that $u''' <0$ implies via Jensen's inequality that $\\mathbb{E}_t [u'(c_{t+1})] > u'(\\mathbb{E}_t [c_{t+1}])$' - the sign has flipped, and the flipped sign is the one the argument runs on (the inequality as stated needs $u''' > 0$, i.e. $u'$ convex). 848 says the same word twice with opposite meanings intended: 'notice how most of a transitory income shock is saved and only a small amount is saved' - the second should be 'consumed', and the sentence is contradicting 784-786 as written. 935 has lost its reference: 'Application of formula to this example shows that', where the parallel sentence at 788 reads 'Application of the formula for debt in {eq}`pi_ssr` to this example shows that'. 173 packs two sentences and a double space into one `{note}` line. And 687 states a result by describing a picture instead of showing one: 'The impulse response function of $\\{c_t\\}$ to the innovation $\\{w_t\\}$ is a box'"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        264,
+        270,
+        41,
+        621,
+        553,
+        856
+      ],
+      "detail": "the same term is italic and bold six lines apart: 'consumption equals *economic income*' at 264, then '**economic income** equals' at 270. The pattern runs through the lecture - the cointegration family is italic when introduced (*cointegration* 41, *cointegrating residual* 633) and bold in between (**cointegrating vector** 621); the innovation family likewise (*innovation* 97, *innovation to the expected present value* 553, *innovation representation* 856, against **present value of the moving average coefficients** 730). Eight definitions are bolded (**random walk** 91, the five wealth terms at 266-270, **cointegrating vector** 621, **present value of the moving average coefficients** 730, **fundamental** 1005) and twelve are italicised (*state* 40 and 276, *cointegration* 41, *information set* 77, *innovation* 97, *no Ponzi scheme* 176, *Euler equations* 196, *dynamic programming* 222, *innovation to the expected present value* 553, *cointegrating residual* 633, *innovation representation* 856, *random walks* 89), so the file is close to a coin flip. The three genuine italic emphases (*necessary* 209, *is* 609, *permanent* 922) are correct"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        810,
+        829,
+        516,
+        513,
+        498
+      ],
+      "detail": "810 redefines `time_path`, a function already defined at 482 with a different signature and a different meaning - the first returns `w, b, c` for the IID-income example, the second returns `b, c` for the impulse-response example and takes a `permanent` flag - 328 lines apart with no note that the name is being reused, so a reader who re-executes the earlier cell silently gets the wrong function. 829 binds `L = 0.175` as a plot limit in a lecture that has just told the reader '$L$ is the lag operator' (705) and written $d(L) = \\sum_j d_j L^j$ (705, 1001). 516 pulls in the stdlib `random` module (imported at 52) solely to randomise line colours, `rcolor = random.choice(('c', 'g', 'b', 'k'))`, so the figure mixes two unseeded RNGs and its colours carry no information. 513 assigns `b_sum = np.zeros(T+1)` and never uses it. 498 has a space after the opening parenthesis, `ax.plot( b, 'b-', label=\"Debt\")` (E201), where 496 and 497 do not. And 836 draws the impulse date as a two-point series, `ax.plot((S, S), (-L, L), 'k-', lw=0.5)`, where `axvline(S)` is the one-call form"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        683,
+        656,
+        601
+      ],
+      "detail": "the section headed '### Impulse Response Functions' (683-689) contains no impulse response function. It asserts the shape in prose ('is a box', 687) and gives the height as a formula (689), and the figure that actually draws it appears 120 lines later inside '### Example 1' (803-843), after which 850 refers back to 'The box-like impulse responses' - so the reader meets the claim, the formula, and the picture in three different places. Second, 656-681 derives the lecture's one testable cross-sectional prediction, $\\mathrm{Var}[c_t] = \\mathrm{Var}[c_0] + t\\,\\hat\\sigma^2$, and reports that 'A number of different studies have investigated this prediction and found some support for it' - while the 250-path fan at 510-522, which is exactly that prediction rendered, sits 150 lines earlier with no cross-reference; overlaying $\\pm\\sqrt{\\mathrm{Var}[c_0] + t\\hat\\sigma^2}$ on those paths would make the linear-in-$t$ spread a visible check rather than a citation. Third, the Cointegration section (598-633) builds to '$(1-\\beta) b_t + c_t$ is asymptotically stationary' (619) and never plots the residual, even though the sequel `perm_income_cons` plots precisely this object (its 701-719) - a figure here, or a forward pointer to that one, would close the argument"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        259,
+        276,
+        234
+      ],
+      "detail": "the same fraction is written two ways in one derivation: `{r \\over 1+r}` at 259 and 304 against `\\frac{r}{1+r}` at 269, and `{1 \\over 1-\\beta}` at 560 and 584 against `\\frac{c_t}{1-\\beta}` at 249 - `\\over` is the deprecated plain-TeX primitive and four of the file's nine fractions use it. 276 writes the state as the row vector `\\begin{bmatrix} b_t & z_t \\end{bmatrix}` while 349-353 writes the same object as the column $x_t = [z_t; b_t]$ with the components in the opposite order, and 623 writes a third variant, `\\begin{bmatrix} b_t & c_t \\end{bmatrix}'`. 234 puts a `\\frac` in an exponent, $\\beta^{\\frac{t}{2}}$, which renders as a two-storey fraction at superscript size; $\\beta^{t/2}$ is both simpler and legible"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        896,
+        492
+      ],
+      "detail": "896 defines the innovation with a bare `E` - '$a_t := y_t - E [ y_t \\,|\\, y_{t-1}, \\ldots, y_0]$' - the only bare expectation operator in a lecture that writes `\\mathbb{E}` more than thirty times (73, 76, 114, 119, 158, 181, 193, 206, 249, 258, 293, 394, 540, 550, 560, 571-573, 630, 977, 983, 990, 997), so the definition of the object Example 2 is built on looks like a different operator from the one used everywhere else. Second, the two figures in the IID example (492-503, 510-522) draw from `np.random.randn` with no seed, and the claims made about them are specific - 'consumption is considerably smoother than income' (506) and the cross-sectional fan at 508 - so both the picture and the strength of the claim change on every build; the copy of this file in `lecture-python.myst` has already been converted to a seeded `np.random.default_rng` generator threaded through `time_path`"
+    }
   ],
   "strengths": [
     "The martingale machinery is set up before it is needed and at exactly the level required: 66-105 defines a discrete-time martingale, says what the information set is and who chooses it ('just a collection of random variables that the modeler declares to be visible at $t$', 79-80), gives the gambler's fair game as the intuition, specialises to random walks, and then closes the loop with a caution that the specialisation is strict ('Not every martingale arises as a random walk', 105) - so when {eq}`sprob5` arrives at 206 the reader already knows what it claims",
@@ -37,5 +91,9 @@
     "Note two things a contributor working from the report alone would get wrong. First, of the four qe-writing-001 hits, 997 and 1005 are `[^label]:` footnote bodies - the already-filed false-positive class - so only the two `{note}` bodies at 173 and 222 need splitting. Second, qe-fig-006 reports one capitalised axis label (501) but there are three: 520 and 838 set the label through `ax.set(xlabel=...)`, which the check cannot see, so lowercase all three and drop the pointless raw string at 838 (`r'Time'`)",
     "Remaining sweep: 29 double spaces, the three `{cite}`-as-subject constructions (858, 898), the three `figsize` overrides (494, 511, 826), `lw=2` on the five unwidened line plots (496, 497, 498, 834, 835 - the `lw=0.8` at 517 and `lw=0.5` at 836 are deliberate and correct), the embedded title at 833 (which also spells 'reponse'), and the stray double blank lines at 800-802"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "b33a1f19b987d8c849c6193a15bd087aec6a5e6f"
+  }
 }

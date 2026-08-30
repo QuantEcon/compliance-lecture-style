@@ -2,14 +2,43 @@
   "series": "lecture-python.myst",
   "lecture": "ifp_discrete",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 2, "lines": [353, 383],
-     "detail": "the lecture solves for $v^*$ and the greedy policy and then plots neither of them. Its single figure (359-372) is a 45-degree diagram of next-period assets against current assets; the value function defined at 113-122 and computed at 323 never appears, and the consumption policy $c = Ra + y - a'$ implied by `σ_star_jax` is never drawn either, although both are one line of plotting away. Line 383 then asserts that 'the dynamics suggest convergence to a stationary distribution' with nothing shown - no simulation, no cross-section, no invariant density"},
-    {"rule": "qe-math-009", "count": 2, "lines": [110, 113],
-     "detail": "the value function is $V$ where it is defined (113, 118) and $v$ everywhere it is used (130, 132, 145) and in the code, so one object carries two symbols eighteen lines apart. And both sets are set in sans-serif for no reason - $\\mathsf Y$ for the finite income set (106, 110) and $\\mathsf S$ for the state space (110, 113) - where plain $Y$ and $S$ would read the same and match the $Q$, $R$, $B$ used around them"},
-    {"rule": "qe-code-001", "count": 3, "lines": [176, 210, 447],
-     "detail": "line 176 closes a hanging-indent signature with `    ):` at 4 spaces, leaving the arguments at the same indent as the body (E121/E125). Lines 210-211 pad before `=` to align the three reshape assignments (E221), 438 does the same (`a, y, ap  = ...`), and 447-449 pad both before `=` and inside the `in_axes` tuples (E221, E241)"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [148, 191],
-     "detail": "line 148 reads 'the encapsulate the right hand side of the Bellman equation' - the sentence introducing $B$, the function the whole implementation is built around, does not parse. Line 191 reads 'Your are invited to explore an alternative style based around `jax.vmap` in the Exercises'"}
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        353,
+        383
+      ],
+      "detail": "the lecture solves for $v^*$ and the greedy policy and then plots neither of them. Its single figure (359-372) is a 45-degree diagram of next-period assets against current assets; the value function defined at 113-122 and computed at 323 never appears, and the consumption policy $c = Ra + y - a'$ implied by `σ_star_jax` is never drawn either, although both are one line of plotting away. Line 383 then asserts that 'the dynamics suggest convergence to a stationary distribution' with nothing shown - no simulation, no cross-section, no invariant density"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        110,
+        113
+      ],
+      "detail": "the value function is $V$ where it is defined (113, 118) and $v$ everywhere it is used (130, 132, 145) and in the code, so one object carries two symbols eighteen lines apart. And both sets are set in sans-serif for no reason - $\\mathsf Y$ for the finite income set (106, 110) and $\\mathsf S$ for the state space (110, 113) - where plain $Y$ and $S$ would read the same and match the $Q$, $R$, $B$ used around them"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        176,
+        210,
+        447
+      ],
+      "detail": "line 176 closes a hanging-indent signature with `    ):` at 4 spaces, leaving the arguments at the same indent as the body (E121/E125). Lines 210-211 pad before `=` to align the three reshape assignments (E221), 438 does the same (`a, y, ap  = ...`), and 447-449 pad both before `=` and inside the `in_axes` tuples (E221, E241)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        148,
+        191
+      ],
+      "detail": "line 148 reads 'the encapsulate the right hand side of the Bellman equation' - the sentence introducing $B$, the function the whole implementation is built around, does not parse. Line 191 reads 'Your are invited to explore an alternative style based around `jax.vmap` in the Exercises'"
+    }
   ],
   "strengths": [
     "The `{note}` at 49-59 states the trade-off that organises the whole series - faster algorithms exploit more structure and are therefore less robust to changes in the model - and gives the reason rather than just the rule, right where the reader is asked to accept a slow method",
@@ -30,5 +59,9 @@
   "scanner_doubts": [
     "qe-code-002 x2 at ifp_discrete.md:182 flags `rho` and `sigma`, but line 182 is `mc = qe.tauchen(n=y_size, rho=ρ, sigma=ν)` - those are QuantEcon's own keyword-argument names, which the lecture cannot rename, and the values passed are already the unicode `ρ` and `ν`. The check needs to skip the left-hand side of a keyword argument in a call",
     "qe-math-002 x1 at ifp_discrete.md:130 flags the apostrophe in `\\max_{0 \\leq a' \\leq Ra + y}`, but $a'$ is next-period assets - a prime, not a transpose - and the same convention runs through the file ($y'$, $v(a', y')$ at 132 and 145, `a′` in the docstrings at 200 and 433). This is the same gap as the `u'` false positives in ifp_advanced.md: the derivative/next-period prime exception is not firing on lowercase state variables"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "f6d91bdaf3c94e855b7db8f9aa64d91e8d4d078a"
+  }
 }

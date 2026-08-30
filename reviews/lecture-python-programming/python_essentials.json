@@ -71,5 +71,9 @@
   ],
   "scanner_doubts": [
     "qe-writing-004 x1 (python_essentials.md:47) flags 'Point' in 'floating point arithmetic is implemented on most machines by a specialized Floating Point Unit (FPU)'. That is the expansion of the acronym given on the same line, so the capitals are correct and the lecture has no qe-writing-004 violation."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "ab8a4a8441ec6d722872f2f20e5a6ef4bda2e11c"
+  }
 }

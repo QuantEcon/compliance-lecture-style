@@ -2,12 +2,37 @@
   "series": "lecture-dp",
   "lecture": "mccall_fitted_vfi",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [35, 190, 367],
-     "detail": "line 34-35 names the wrong predecessor. It says 'This lecture follows on from the job search model with separation presented in the {doc}`previous lecture <mccall_model_with_separation>`' and then describes it as the lecture that 'combined exogenous job separation events and a Markov wage offer process' (37-38) - which is `mccall_model_with_sep_markov` (Job Search III), not `mccall_model_with_separation` (Job Search II, IID offers, no Markov chain). Every other cross-reference in the file points to the right place (94, 107, 112, 369), so the very first link is the odd one out. Second, step 4 of the fitted-VFI algorithm says 'take this as the new array and go to step 1' (190), which would re-initialise the guess; the loop has to return to step 2, and the informal version of the same list ten lines earlier gets it right ('go to step 2', 164). Third, $v_e$ and $h$ are used as named objects from 367 onward - in the plot labels (410, 453), in the sentence about the reservation wage (418) and in the code (327-328, 390-391) - but neither is ever defined in this lecture; {eq}`bell2mcmc` (114-126) displays both expressions and names neither"},
-    {"rule": "qe-code-001", "count": 6, "lines": [315, 378, 457, 543, 725, 776],
-     "detail": "`vf = lambda x: jnp.interp(...)` is assigned rather than defined at 315 and 378 (E731), and those two lines head an eleven-line block - `compute_expectation`, `compute_exp_on_grid`, `Pv`, `d`, `v_e` (314-327 and 377-390) - that is duplicated almost verbatim between `T` and `compute_solution_functions`. Line 457 is an f-string whose only braces are escaped (`f'reservation wage $\\\\bar{{w}}$'`), so the `f` prefix exists only to have to double the braces. Line 543 is `for t in range(T)` with `t` never used in the body. Line 725 is 89 characters (E501). Lines 776-778 pass `density=True` and a `weights` array that already sums to one, so the histogram is normalised twice over while the comment above it (774) claims a single normalisation"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [176],
-     "detail": "'**fitted value function iteration**' is bolded twice - at 66-67, where it is genuinely being defined ('The combination of VFI and this interpolation step is called **fitted value function iteration** (fitted VFI)') and again at 176 ('What we will do instead is use **fitted value function iteration**'), where it is the name of the section heading two lines above (174) and the term is 110 lines old. There is no italic anywhere in the file, so the second bolding reads as emphasis rather than definition"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        35,
+        190,
+        367
+      ],
+      "detail": "line 34-35 names the wrong predecessor. It says 'This lecture follows on from the job search model with separation presented in the {doc}`previous lecture <mccall_model_with_separation>`' and then describes it as the lecture that 'combined exogenous job separation events and a Markov wage offer process' (37-38) - which is `mccall_model_with_sep_markov` (Job Search III), not `mccall_model_with_separation` (Job Search II, IID offers, no Markov chain). Every other cross-reference in the file points to the right place (94, 107, 112, 369), so the very first link is the odd one out. Second, step 4 of the fitted-VFI algorithm says 'take this as the new array and go to step 1' (190), which would re-initialise the guess; the loop has to return to step 2, and the informal version of the same list ten lines earlier gets it right ('go to step 2', 164). Third, $v_e$ and $h$ are used as named objects from 367 onward - in the plot labels (410, 453), in the sentence about the reservation wage (418) and in the code (327-328, 390-391) - but neither is ever defined in this lecture; {eq}`bell2mcmc` (114-126) displays both expressions and names neither"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        315,
+        378,
+        457,
+        543,
+        725,
+        776
+      ],
+      "detail": "`vf = lambda x: jnp.interp(...)` is assigned rather than defined at 315 and 378 (E731), and those two lines head an eleven-line block - `compute_expectation`, `compute_exp_on_grid`, `Pv`, `d`, `v_e` (314-327 and 377-390) - that is duplicated almost verbatim between `T` and `compute_solution_functions`. Line 457 is an f-string whose only braces are escaped (`f'reservation wage $\\\\bar{{w}}$'`), so the `f` prefix exists only to have to double the braces. Line 543 is `for t in range(T)` with `t` never used in the body. Line 725 is 89 characters (E501). Lines 776-778 pass `density=True` and a `weights` array that already sums to one, so the histogram is normalised twice over while the comment above it (774) claims a single normalisation"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        176
+      ],
+      "detail": "'**fitted value function iteration**' is bolded twice - at 66-67, where it is genuinely being defined ('The combination of VFI and this interpolation step is called **fitted value function iteration** (fitted VFI)') and again at 176 ('What we will do instead is use **fitted value function iteration**'), where it is the name of the section heading two lines above (174) and the term is 110 lines old. There is no italic anywhere in the file, so the second bolding reads as emphasis rather than definition"
+    }
   ],
   "strengths": [
     "The interpolation figure at 210-231 is exactly the use of a visual the style guide asks for: an arbitrary oscillating function, six grid points, the piecewise-linear reconstruction on top of it, and dashed verticals marking the grid - so 'the function approximation scheme must not only produce a good approximation' (196) is something the reader sees rather than takes on trust",
@@ -26,5 +51,9 @@
     "Factor the eleven-line block duplicated between `T` (314-327) and `compute_solution_functions` (377-390) into one function; while there, drop the dead model unpacking at 400, 429, 487, 533, 679 and 750, where `c, α, β, ρ, ν, γ, w_grid, z_draws = model` binds up to seven names that the function never reads",
     "Small items: line 714 reads `unemployed_indicator`, which is created at 585 inside a plotting cell 130 lines earlier, so the comparison cell breaks if the figure cell is skipped - compute it where it is used; the two-bar histogram at 776-787 conveys only the unemployment rate already printed at 718 and could be dropped; make line 203 `{cite:t}` (qe-ref-001), split the two-sentence paragraph at 842, fix 'this set' to 'this setting' at 40, and clear the trailing whitespace at 162 and 318"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "34068d00bd5a647be850a6c945e6819e60eab657"
+  }
 }

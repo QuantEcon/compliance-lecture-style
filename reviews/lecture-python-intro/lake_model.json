@@ -2,14 +2,52 @@
   "series": "lecture-python-intro",
   "lecture": "lake_model",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 6, "lines": [189, 191, 214, 217, 425, 427],
-     "detail": "six sentences are missing words and have to be re-read to parse: \"the fact there is only one inflow source\" (189), \"The inflow and outflow of labor market system is determined by constant exit rate and entry rate\" (191), \"Since by intuition if we consider unemployment pool and employment pool as a closed system...\" (214, a fragment), \"whether the long-run growth rates of $e_t$ and $u_t$ also dominated by $1+b-d$ as labor force\" (217, no verb), \"as $t$ is large enough\" (425, a dangling clause after a display equation) and \"the growth of $u_t$ and $e_t$ also dominated by $r(A) = 1+g$\" (427, no verb)"},
-    {"rule": "qe-code-001", "count": 8, "lines": [127, 128, 153, 292, 340, 349, 357, 473],
-     "detail": "the whole body of `plot_time_paths` is indented eight spaces instead of four (292-360); column-alignment padding inside the `np.array` literal (127-128); `x_ts= np.zeros((2, T))` with a space on only one side of `=` (153); a dangling comma in `ax.scatter(..., s=4,)` (340); spaces around `=` in the `dict(arrowstyle = \"->\")` keyword arguments (349, 357); and `label='u_bar'` where the surrounding labels are LaTeX (473)"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [404, 490],
-     "detail": "the \"### Properties\" heading at 404 names nothing (properties of what?) and opens by asserting \"the column sums of $A$ are $r(A)=1$\", which contradicts the result two sections earlier that $r(A) = 1 + b - d$ (269-272); and 490-517 is a second, self-contained derivation of the same convergence result \"without the Perron-Frobenius theorem\" - 28 lines of diagonalisation algebra tacked onto the end of another section with no heading of its own"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [258, 286],
-     "detail": "the lecture bolds **lake model** at 27 and then nothing else, so the two terms it goes on to define in the body - the dominant eigenvalue (\"$r(A)$ can be considered as the dominant eigenvalue in this lecture\", 258) and the dominant eigenvector (\"we call $\\bar{x}$ the dominant eigenvector\", 286) - are introduced in plain text"}
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        189,
+        191,
+        214,
+        217,
+        425,
+        427
+      ],
+      "detail": "six sentences are missing words and have to be re-read to parse: \"the fact there is only one inflow source\" (189), \"The inflow and outflow of labor market system is determined by constant exit rate and entry rate\" (191), \"Since by intuition if we consider unemployment pool and employment pool as a closed system...\" (214, a fragment), \"whether the long-run growth rates of $e_t$ and $u_t$ also dominated by $1+b-d$ as labor force\" (217, no verb), \"as $t$ is large enough\" (425, a dangling clause after a display equation) and \"the growth of $u_t$ and $e_t$ also dominated by $r(A) = 1+g$\" (427, no verb)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        127,
+        128,
+        153,
+        292,
+        340,
+        349,
+        357,
+        473
+      ],
+      "detail": "the whole body of `plot_time_paths` is indented eight spaces instead of four (292-360); column-alignment padding inside the `np.array` literal (127-128); `x_ts= np.zeros((2, T))` with a space on only one side of `=` (153); a dangling comma in `ax.scatter(..., s=4,)` (340); spaces around `=` in the `dict(arrowstyle = \"->\")` keyword arguments (349, 357); and `label='u_bar'` where the surrounding labels are LaTeX (473)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        404,
+        490
+      ],
+      "detail": "the \"### Properties\" heading at 404 names nothing (properties of what?) and opens by asserting \"the column sums of $A$ are $r(A)=1$\", which contradicts the result two sections earlier that $r(A) = 1 + b - d$ (269-272); and 490-517 is a second, self-contained derivation of the same convergence result \"without the Perron-Frobenius theorem\" - 28 lines of diagonalisation algebra tacked onto the end of another section with no heading of its own"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        258,
+        286
+      ],
+      "detail": "the lecture bolds **lake model** at 27 and then nothing else, so the two terms it goes on to define in the body - the dominant eigenvalue (\"$r(A)$ can be considered as the dominant eigenvalue in this lecture\", 258) and the dominant eigenvector (\"we call $\\bar{x}$ the dominant eigenvector\", 286) - are introduced in plain text"
+    }
   ],
   "strengths": [
     "The two labelled equations are both genuinely re-used: `lake_model` (56) is cited at 64 when the system is put in matrix form, and `steady_x` (278) is cited in the exercise solution at 540",
@@ -27,5 +65,9 @@
     "Give the \"Properties\" section at 404 a descriptive heading, and put the alternative derivation at 490-517 under its own subheading",
     "Lower-case the H2 at 25 to \"The lake model\", bold the definitions of the dominant eigenvalue (258) and dominant eigenvector (286), fix the `e_o` typo at 96, keep the figure spines at 322-324, and replace the static PNG at 41 with a code-generated diagram"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "7a02138b1a58401a37b73d8a77563ee022894135"
+  }
 }

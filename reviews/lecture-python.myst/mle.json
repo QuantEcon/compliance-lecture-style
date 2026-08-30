@@ -2,18 +2,72 @@
   "series": "lecture-python.myst",
   "lecture": "mle",
   "judgment": [
-    {"rule": "qe-code-001", "count": 7, "lines": [66, 433, 500, 550, 611, 631, 785],
-     "detail": "the name `logL` is bound to four different functions - 403 (scalar quadratic), 497 (`logL(\\u03b2, model)` for the Poisson), 611 (scalar quadratic again) and 946 (the Probit) - and `G_logL` / `H_logL` are rebound twice, at 515-516 and 953-954. `newton_raphson` (536-565) then reads `G_logL` and `H_logL` out of module globals at 550 instead of taking them as arguments, so the Probit call at 1027 silently depends on 953-954 having run, and the Poisson call at 583 stops working once they have. `\\u03b2` is likewise three different objects: a coefficient vector at 221 and 577, a `jnp.linspace` grid at 416 and 627, and a float loop variable at 631, where the loop shadows the grid the previous line just plotted. Two imports are dead - `gammaln` (66) and `Axes3D` (73, the 3-D axes come from `add_subplot(projection=\"3d\")` at 302) - and `gammaln` is exactly what 500 needs: `jnp.log(factorial(y))` overflows for the sample it is written for, while `gammaln(y + 1)` is the stable form and is already imported. 498 binds `y = model.y` and 500 then uses both `model.y` and `y` in one expression. 404 and 612 space the exponentiation (`-((\\u03b2 - 10) ** 2)`). 433 puts two calls on one line as a tuple, `ax1.grid(), ax2.grid()`. And 785-786 uses a backslash continuation *inside* a string literal, so the printed table title reads \"Explaining the Number of Billionaires\" followed by twenty-four spaces before \"in 2008\""},
-    {"rule": "qe-writing-003", "count": 4, "lines": [262, 503, 543, 606],
-     "detail": "the parameter count contradicts itself three ways. 262 says the conditional distribution \"contains 4 ($k = 4$) parameters\"; 267-272 displays $\\boldsymbol{\\beta}$ as $(\\beta_0, \\beta_1, \\beta_2, \\beta_3)$, which is four entries and therefore $k = 3$ under the convention set at 208 ($\\mu_i = \\exp(\\beta_0 + \\beta_1 x_{i1} + \\ldots + \\beta_k x_{ik})$); and the simulation immediately below uses five, `\\u03b2 = jnp.array([0.26, 0.18, 0.25, -0.1, -0.22])` at 221 with five-element $\\mathbf{x}_i$ at 225-228. The Treisman specification the section is building towards has four (const plus the three regressors listed at 686-689, matching `reg1` at 704), so 221 is the odd one out and 262's \"$k = 4$\" is off by one either way. Next, 503 says \"To find the gradient of the `poisson_logL`\" - there is no `poisson_logL` anywhere in the file; the function is `logL` (497). Third, the printed header at 543 labels the parameter column `\"\\u03b8\"` while everything around it - 536, 551-553, 556, 563 - calls the parameter `\\u03b2`, so the algorithm's own output uses a symbol the lecture never defines. Fourth, 606-607 says \"The iterative process can be visualized in the following diagram, where the maximum is found at $\\beta = 10$\", but the iterative process the reader has just watched (583) fitted a three-parameter Poisson model, and the diagram at 624-646 draws tangents to the toy quadratic redefined at 611 - two unrelated objects joined by \"the following\""},
-    {"rule": "qe-math-009", "count": 5, "lines": [288, 398, 424, 469, 686],
-     "detail": "the likelihood is written both ways, and one of them is wrong: `\\mathcal{L}(\\boldsymbol{\\beta})` at 280, 339, 351, 594, 898, 916 and 926, but `\\mathcal{L(\\beta)}` - argument inside the calligraphic group, so the parenthesis and the $\\beta$ render calligraphic too - at 398, 424, 427, 439, 464, 465 and 643. In the same axis labels, `log` is typed as three italic letters rather than `\\log` (424 `$log \\mathcal{L(\\beta)}$`, 427 `\\frac{dlog \\mathcal{L(\\beta)}}{d \\beta}`, 643), where 351, 398, 439, 594, 898 and 916 use `\\log`. The Poisson mean is $\\mu$ in every display (115, 202, 208, 318, 363) and in the code (123, 235, 292, 499), but 288 calls it $\\lambda$ once - \"If $y_i$ follows a Poisson distribution with $\\lambda = 7$\" - immediately above a cell that passes `\\u03bc=7`. 686-689 typesets four multi-word prose labels as italic math with manual spacers, `${number\\ of\\ billionaires}_i$`, `$\\log{GDP\\ per\\ capita}_i$`, `$\\log{population}_i$`, `${years\\ in\\ GATT}_i$`, where `\\text{...}` is both shorter and correct. And 469 writes `< tol` in math mode, rendering the tolerance as the product of three variables"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [282, 324, 510, 905],
-     "detail": "324-326 tells the reader something false about the central object of the lecture: \"The likelihood function is the same as the joint pmf, but treats the parameter $\\boldsymbol{\\beta}$ as a random variable and takes the observations $(y_i, \\mathbf{x}_i)$ as given.\" In maximum likelihood $\\boldsymbol{\\beta}$ is the *argument* of the function, not a random variable - treating it as random is the Bayesian reading, which this lecture is not doing. 905 and 911 make a second terminology error twice over: \"the derivative of a cumulative probability distribution is its marginal distribution\" and \"$\\phi$ is the marginal normal distribution\" - $\\phi$ is the density, and \"marginal\" means something else. 282 writes \"Assume we have some data $y_i = \\{y_1, y_2\\}$\", setting a subscripted scalar equal to a two-element set, where $y_i$ is a scalar observation everywhere else in the file. And 510 is ungrammatical: \"(The documentation also states that when matrices that are near-square, `jax.jacfwd` probably has an edge over `jax.jacrev`.)\""},
-    {"rule": "qe-writing-007", "count": 2, "lines": [557, 624],
-     "detail": "the Newton-Raphson section makes three claims about the iteration path - 586-587 (\"convergence in only 7 iterations\"), 589 (\"with each iteration, the log-likelihood value increased\") and 594-598 (\"the increase in $\\log \\mathcal{L}(\\boldsymbol{\\beta}_{(k)})$ becomes smaller with each iteration ... because the gradient is approaching 0\") - and all three are left for the reader to read off the printed table produced at 543-558. The seven log-likelihood values are already in hand; plotting them against $k$ makes all three claims visible at once and is two lines. Instead the figure that does appear, at 624-646, illustrates a different function (the scalar quadratic redefined at 611) with tangent lines at $\\beta = 7, 8.5, 9.5, 10$ - a good picture of *why* Newton-Raphson works, but not of the run just performed, which is what 606 says it shows"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [88, 904],
-     "detail": "only five emphasis spans exist in the file and two of them are the wrong weight. 88 introduces a term in italic where the rule asks for bold - \"we need to make an assumption as to which *parametric class* of distributions is generating the data\" - and it is a definition, since 92 then explains what such a class is. 904 does the reverse, bolding a named theorem that is being used rather than defined: \"Using the **fundamental theorem of calculus**, the derivative of a cumulative probability distribution ...\". The other three are right: **maximum likelihood estimates** (99) and **Poisson regression** (197) are definitions in bold, *maximum* (444) is emphasis in italic, and *Forbes'* (158) is a publication title"}
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        66,
+        433,
+        500,
+        550,
+        611,
+        631,
+        785
+      ],
+      "detail": "the name `logL` is bound to four different functions - 403 (scalar quadratic), 497 (`logL(\\u03b2, model)` for the Poisson), 611 (scalar quadratic again) and 946 (the Probit) - and `G_logL` / `H_logL` are rebound twice, at 515-516 and 953-954. `newton_raphson` (536-565) then reads `G_logL` and `H_logL` out of module globals at 550 instead of taking them as arguments, so the Probit call at 1027 silently depends on 953-954 having run, and the Poisson call at 583 stops working once they have. `\\u03b2` is likewise three different objects: a coefficient vector at 221 and 577, a `jnp.linspace` grid at 416 and 627, and a float loop variable at 631, where the loop shadows the grid the previous line just plotted. Two imports are dead - `gammaln` (66) and `Axes3D` (73, the 3-D axes come from `add_subplot(projection=\"3d\")` at 302) - and `gammaln` is exactly what 500 needs: `jnp.log(factorial(y))` overflows for the sample it is written for, while `gammaln(y + 1)` is the stable form and is already imported. 498 binds `y = model.y` and 500 then uses both `model.y` and `y` in one expression. 404 and 612 space the exponentiation (`-((\\u03b2 - 10) ** 2)`). 433 puts two calls on one line as a tuple, `ax1.grid(), ax2.grid()`. And 785-786 uses a backslash continuation *inside* a string literal, so the printed table title reads \"Explaining the Number of Billionaires\" followed by twenty-four spaces before \"in 2008\""
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        262,
+        503,
+        543,
+        606
+      ],
+      "detail": "the parameter count contradicts itself three ways. 262 says the conditional distribution \"contains 4 ($k = 4$) parameters\"; 267-272 displays $\\boldsymbol{\\beta}$ as $(\\beta_0, \\beta_1, \\beta_2, \\beta_3)$, which is four entries and therefore $k = 3$ under the convention set at 208 ($\\mu_i = \\exp(\\beta_0 + \\beta_1 x_{i1} + \\ldots + \\beta_k x_{ik})$); and the simulation immediately below uses five, `\\u03b2 = jnp.array([0.26, 0.18, 0.25, -0.1, -0.22])` at 221 with five-element $\\mathbf{x}_i$ at 225-228. The Treisman specification the section is building towards has four (const plus the three regressors listed at 686-689, matching `reg1` at 704), so 221 is the odd one out and 262's \"$k = 4$\" is off by one either way. Next, 503 says \"To find the gradient of the `poisson_logL`\" - there is no `poisson_logL` anywhere in the file; the function is `logL` (497). Third, the printed header at 543 labels the parameter column `\"\\u03b8\"` while everything around it - 536, 551-553, 556, 563 - calls the parameter `\\u03b2`, so the algorithm's own output uses a symbol the lecture never defines. Fourth, 606-607 says \"The iterative process can be visualized in the following diagram, where the maximum is found at $\\beta = 10$\", but the iterative process the reader has just watched (583) fitted a three-parameter Poisson model, and the diagram at 624-646 draws tangents to the toy quadratic redefined at 611 - two unrelated objects joined by \"the following\""
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 5,
+      "lines": [
+        288,
+        398,
+        424,
+        469,
+        686
+      ],
+      "detail": "the likelihood is written both ways, and one of them is wrong: `\\mathcal{L}(\\boldsymbol{\\beta})` at 280, 339, 351, 594, 898, 916 and 926, but `\\mathcal{L(\\beta)}` - argument inside the calligraphic group, so the parenthesis and the $\\beta$ render calligraphic too - at 398, 424, 427, 439, 464, 465 and 643. In the same axis labels, `log` is typed as three italic letters rather than `\\log` (424 `$log \\mathcal{L(\\beta)}$`, 427 `\\frac{dlog \\mathcal{L(\\beta)}}{d \\beta}`, 643), where 351, 398, 439, 594, 898 and 916 use `\\log`. The Poisson mean is $\\mu$ in every display (115, 202, 208, 318, 363) and in the code (123, 235, 292, 499), but 288 calls it $\\lambda$ once - \"If $y_i$ follows a Poisson distribution with $\\lambda = 7$\" - immediately above a cell that passes `\\u03bc=7`. 686-689 typesets four multi-word prose labels as italic math with manual spacers, `${number\\ of\\ billionaires}_i$`, `$\\log{GDP\\ per\\ capita}_i$`, `$\\log{population}_i$`, `${years\\ in\\ GATT}_i$`, where `\\text{...}` is both shorter and correct. And 469 writes `< tol` in math mode, rendering the tolerance as the product of three variables"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        282,
+        324,
+        510,
+        905
+      ],
+      "detail": "324-326 tells the reader something false about the central object of the lecture: \"The likelihood function is the same as the joint pmf, but treats the parameter $\\boldsymbol{\\beta}$ as a random variable and takes the observations $(y_i, \\mathbf{x}_i)$ as given.\" In maximum likelihood $\\boldsymbol{\\beta}$ is the *argument* of the function, not a random variable - treating it as random is the Bayesian reading, which this lecture is not doing. 905 and 911 make a second terminology error twice over: \"the derivative of a cumulative probability distribution is its marginal distribution\" and \"$\\phi$ is the marginal normal distribution\" - $\\phi$ is the density, and \"marginal\" means something else. 282 writes \"Assume we have some data $y_i = \\{y_1, y_2\\}$\", setting a subscripted scalar equal to a two-element set, where $y_i$ is a scalar observation everywhere else in the file. And 510 is ungrammatical: \"(The documentation also states that when matrices that are near-square, `jax.jacfwd` probably has an edge over `jax.jacrev`.)\""
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        557,
+        624
+      ],
+      "detail": "the Newton-Raphson section makes three claims about the iteration path - 586-587 (\"convergence in only 7 iterations\"), 589 (\"with each iteration, the log-likelihood value increased\") and 594-598 (\"the increase in $\\log \\mathcal{L}(\\boldsymbol{\\beta}_{(k)})$ becomes smaller with each iteration ... because the gradient is approaching 0\") - and all three are left for the reader to read off the printed table produced at 543-558. The seven log-likelihood values are already in hand; plotting them against $k$ makes all three claims visible at once and is two lines. Instead the figure that does appear, at 624-646, illustrates a different function (the scalar quadratic redefined at 611) with tangent lines at $\\beta = 7, 8.5, 9.5, 10$ - a good picture of *why* Newton-Raphson works, but not of the run just performed, which is what 606 says it shows"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        88,
+        904
+      ],
+      "detail": "only five emphasis spans exist in the file and two of them are the wrong weight. 88 introduces a term in italic where the rule asks for bold - \"we need to make an assumption as to which *parametric class* of distributions is generating the data\" - and it is a definition, since 92 then explains what such a class is. 904 does the reverse, bolding a named theorem that is being used rather than defined: \"Using the **fundamental theorem of calculus**, the derivative of a cumulative probability distribution ...\". The other three are right: **maximum likelihood estimates** (99) and **Poisson regression** (197) are definitions in bold, *maximum* (444) is emphasis in italic, and *Forbes'* (158) is a publication title"
+    }
   ],
   "strengths": [
     "The case convention for densities and distributions (proposed `qe-math-015`) is right everywhere it appears: lowercase $f$ for the Poisson pmf (115, 202, 286, 318, 353-360, 870) and for the conditional pmf plotted at 147 and 251, uppercase $\\Phi$ for the normal CDF against lowercase $\\phi$ for its density in the probit exercise (871, 875, 900-901, 908, 916-932), and $\\Phi(s)$ differentiated to $\\phi(s)$ at 908 - the one place where getting the case wrong would break the derivation",
@@ -37,5 +91,9 @@
   ],
   "scanner_doubts": [
     "Cleared, not filed. (1) `qe-math-002` at 19 and `qe-math-004` at 106 both looked high, so I checked their shapes: every prime is `\\mathbf{x}_i'` or `\\boldsymbol{\\beta}'` in a genuine transpose position (207, 465, 871, 900-901, 918-919, 926-932), and none of the derivative primes in the file - $\\partial / \\partial s$, $d/d\\beta$ - is written with an apostrophe, so there is no derivative false positive here. (2) `qe-math-010` (proposed) at zero is right rather than a miss: this lecture never writes an expectation or a probability operator at all - `grep mathbb` returns nothing and the likelihood is built from pmfs directly - so there is no site for the rule to fire on. (3) `qe-math-014` (proposed) does not apply for the same reason: no `\\mathbb{P}` anywhere. (4) `qe-code-003` at zero is right: `!pip install jax` sits in the first code cell at 33-37 with `:tags: [hide-output]`, and `statsmodels`, `pandas`, `numpy` and `matplotlib` are all Anaconda packages, so nothing else needs an install cell"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "fb87d79baf03b3c0707ae3df67e0340fe8fb032c"
+  }
 }

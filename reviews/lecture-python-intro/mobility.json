@@ -2,18 +2,67 @@
   "series": "lecture-python-intro",
   "lecture": "mobility",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [426, 947, 1237],
-     "detail": "426-431 reuses $t$ for a second meaning. The lecture fixes $t$ as the *horizon* at 80 (\"two dates, $s$ and $s + t$\"), carries that through the definition of $m_{ij}$ at 92-93 and states at 106 that \"the time unit of the chain is the horizon $t$\"; then 426 writes \"$t$ for the vector of these unknowns\" and 429-431 display $t = \\mathbb 1 + M_{-j} \\, t$, so the same letter is the length of a period and a vector of expected waiting times measured in those periods. 947 drops a closed form into the mob_ex2 solution with no derivation and no sentence naming it - `mfp_measure(M2), 8 * α * β / ((1 + α + β) * (α + β))` - so the reader sees two numbers agreeing and has to reverse-engineer what the second expression is; every other claim in this lecture is either derived or explicitly deferred to a citation. And the `{note}` at 1236-1240 inverts its own reason: \"This section describes the shape of Shorrocks' impossibility result rather than stating it formally, since the precise axiom list matters\" - if the precise axiom list matters, that is an argument for stating it, not for paraphrasing it"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [461, 564, 787],
-     "detail": "the lecture visualises the empirical matrices well (five figures, four of them named and captioned) and then leaves its three most argument-carrying objects as raw numeric output. 545-567 is the pedagogical core - three hand-built 3x3 matrices constructed so that each measure is provably blind to something - and the reader only ever sees them as a `mobility_table(...)` DataFrame at 564-567; the matrices themselves are never drawn, even though the file already has the exact idiom for it at 666-675, a 1x3 `imshow` row of the same shape. 461 prints the 5x5 mean-first-passage matrix with `np.round(..., 1)` and then 464 asks the reader to read \"the top right entry\" out of it, which is the one place in the lecture where a heatmap or an annotated table would do real work. And 787-793 tests whether the quintile chain is Markov by tabulating $M$, $M^2$ and $M^4$ against the data; the claim at 796-798 is about a *gap* (\"$\\mu_S$ is 0.87 under the Markov prediction against 0.74 in the data\"), which is a comparison a two-line bar chart shows and a four-row table does not"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [652, 802, 1118, 1224],
-     "detail": "652 packs a two-part answer into one 44-word sentence directly after announcing it as two: 650 says \"Two things push them off\", and then a single sentence delivers both causes joined by \"and\" with an em-dash aside inside the second. 802 - \"Also, unobserved features are at work.\" - is filler between the substantive 800 and the concrete example at 804 that actually names the unobserved features. 1116-1120 restates 1112-1114 in different words five lines later: 1114 already said Bartholomew's measure \"counts only distance travelled\", and 1118 says it again as \"counts distance travelled and so favours a matrix that shifts mass towards the corners\". And 1224 is a 60-word sentence containing an embedded four-item list of Shorrocks' axioms between em-dashes, in a lecture whose house style is one short sentence per paragraph; the four axioms are exactly the material a bulleted list carries better"},
-    {"rule": "qe-code-001", "count": 4, "lines": [515, 516, 729, 788],
-     "detail": "the code is otherwise clean - no line over 79 characters, no trailing whitespace anywhere in the file, and Unicode Greek used exactly as intended (`ψ_star`, `λ`, `α`, `β`, `Δ_B`, `Δ_T`). Four items remain. 515 and 523 use single-quoted one-line docstrings (`\"Return the four mobility measures for stochastic matrix M.\"`) where PEP 257 asks for triple quotes even on one-liners - and the file's other three docstrings (442-448, 1145 region) are correctly triple-quoted, so it disagrees with itself. 516-519 and 788-791 pad after the dict colon to align the values (`'μ_S':   shorrocks(M),`), which is the \"more than one space around an operator to align it with another\" that PEP8 lists under Pet Peeves. And 729-734 and 736-741 indent the continuation to a flat 28 spaces under `long_horizon['1989-2009'] = normalize_rows(`, whose opening delimiter sits at column 42 - neither a visual indent nor a 4-space hanging one"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [1244, 1246, 1248],
-     "detail": "the body is exemplary - ten definitions, all bold, all at first mention - and then the Further reading section defines three more terms and bolds none of them. 1244 defines a term with a colon and a gloss in italic: \"This lecture has studied *intragenerational* mobility: the movement of a given family through the distribution over its own lifetime\"; 1246 does the same with \"meaning\": \"studies *intergenerational* mobility, meaning the relationship between the economic position of parents and that of their children\". 1248 defines the intergenerational elasticity - \"the coefficient from regressing a child's log earnings on the parent's\" - with no emphasis at all, three lines before **Great Gatsby curve** at 1250 is correctly bolded. Two lesser instances of the same drift: the three toy economies are named in italic at 558, 560 and 562 (*ladder*, *jumper*, *sticky*), and those names are what the rest of the section refers to them by"},
-    {"rule": "qe-math-009", "count": 2, "lines": [473, 483],
-     "detail": "the same three letters are typeset two ways four lines apart: 473 and 478 write the mean first passage functional as `\\text{MFP}(M)`, upright, while 483 writes the normalized measure as `\\mu_{MFP}(M)`, so MFP is italic there and upright above it - and $\\mu_{MFP}$ is then the form carried through 501, 716, 944, 1048 and the code label `'μ_MFP'`. The same slip affects $\\mu_{2E}$ (357 onward) and $\\mu_{NB}$ (326 onward), whose multi-character subscripts are set in maths italic and so read as products of variables. One `\\mathrm{...}` convention across all four subscripts, matching the `\\mathrm{trace}`, `\\mathrm{corr}`, `\\mathrm{cov}` and `\\mathrm{var}` the lecture already uses correctly (253, 880, 912, 920), would settle it"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        426,
+        947,
+        1237
+      ],
+      "detail": "426-431 reuses $t$ for a second meaning. The lecture fixes $t$ as the *horizon* at 80 (\"two dates, $s$ and $s + t$\"), carries that through the definition of $m_{ij}$ at 92-93 and states at 106 that \"the time unit of the chain is the horizon $t$\"; then 426 writes \"$t$ for the vector of these unknowns\" and 429-431 display $t = \\mathbb 1 + M_{-j} \\, t$, so the same letter is the length of a period and a vector of expected waiting times measured in those periods. 947 drops a closed form into the mob_ex2 solution with no derivation and no sentence naming it - `mfp_measure(M2), 8 * α * β / ((1 + α + β) * (α + β))` - so the reader sees two numbers agreeing and has to reverse-engineer what the second expression is; every other claim in this lecture is either derived or explicitly deferred to a citation. And the `{note}` at 1236-1240 inverts its own reason: \"This section describes the shape of Shorrocks' impossibility result rather than stating it formally, since the precise axiom list matters\" - if the precise axiom list matters, that is an argument for stating it, not for paraphrasing it"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        461,
+        564,
+        787
+      ],
+      "detail": "the lecture visualises the empirical matrices well (five figures, four of them named and captioned) and then leaves its three most argument-carrying objects as raw numeric output. 545-567 is the pedagogical core - three hand-built 3x3 matrices constructed so that each measure is provably blind to something - and the reader only ever sees them as a `mobility_table(...)` DataFrame at 564-567; the matrices themselves are never drawn, even though the file already has the exact idiom for it at 666-675, a 1x3 `imshow` row of the same shape. 461 prints the 5x5 mean-first-passage matrix with `np.round(..., 1)` and then 464 asks the reader to read \"the top right entry\" out of it, which is the one place in the lecture where a heatmap or an annotated table would do real work. And 787-793 tests whether the quintile chain is Markov by tabulating $M$, $M^2$ and $M^4$ against the data; the claim at 796-798 is about a *gap* (\"$\\mu_S$ is 0.87 under the Markov prediction against 0.74 in the data\"), which is a comparison a two-line bar chart shows and a four-row table does not"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        652,
+        802,
+        1118,
+        1224
+      ],
+      "detail": "652 packs a two-part answer into one 44-word sentence directly after announcing it as two: 650 says \"Two things push them off\", and then a single sentence delivers both causes joined by \"and\" with an em-dash aside inside the second. 802 - \"Also, unobserved features are at work.\" - is filler between the substantive 800 and the concrete example at 804 that actually names the unobserved features. 1116-1120 restates 1112-1114 in different words five lines later: 1114 already said Bartholomew's measure \"counts only distance travelled\", and 1118 says it again as \"counts distance travelled and so favours a matrix that shifts mass towards the corners\". And 1224 is a 60-word sentence containing an embedded four-item list of Shorrocks' axioms between em-dashes, in a lecture whose house style is one short sentence per paragraph; the four axioms are exactly the material a bulleted list carries better"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        515,
+        516,
+        729,
+        788
+      ],
+      "detail": "the code is otherwise clean - no line over 79 characters, no trailing whitespace anywhere in the file, and Unicode Greek used exactly as intended (`ψ_star`, `λ`, `α`, `β`, `Δ_B`, `Δ_T`). Four items remain. 515 and 523 use single-quoted one-line docstrings (`\"Return the four mobility measures for stochastic matrix M.\"`) where PEP 257 asks for triple quotes even on one-liners - and the file's other three docstrings (442-448, 1145 region) are correctly triple-quoted, so it disagrees with itself. 516-519 and 788-791 pad after the dict colon to align the values (`'μ_S':   shorrocks(M),`), which is the \"more than one space around an operator to align it with another\" that PEP8 lists under Pet Peeves. And 729-734 and 736-741 indent the continuation to a flat 28 spaces under `long_horizon['1989-2009'] = normalize_rows(`, whose opening delimiter sits at column 42 - neither a visual indent nor a 4-space hanging one"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        1244,
+        1246,
+        1248
+      ],
+      "detail": "the body is exemplary - ten definitions, all bold, all at first mention - and then the Further reading section defines three more terms and bolds none of them. 1244 defines a term with a colon and a gloss in italic: \"This lecture has studied *intragenerational* mobility: the movement of a given family through the distribution over its own lifetime\"; 1246 does the same with \"meaning\": \"studies *intergenerational* mobility, meaning the relationship between the economic position of parents and that of their children\". 1248 defines the intergenerational elasticity - \"the coefficient from regressing a child's log earnings on the parent's\" - with no emphasis at all, three lines before **Great Gatsby curve** at 1250 is correctly bolded. Two lesser instances of the same drift: the three toy economies are named in italic at 558, 560 and 562 (*ladder*, *jumper*, *sticky*), and those names are what the rest of the section refers to them by"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        473,
+        483
+      ],
+      "detail": "the same three letters are typeset two ways four lines apart: 473 and 478 write the mean first passage functional as `\\text{MFP}(M)`, upright, while 483 writes the normalized measure as `\\mu_{MFP}(M)`, so MFP is italic there and upright above it - and $\\mu_{MFP}$ is then the form carried through 501, 716, 944, 1048 and the code label `'μ_MFP'`. The same slip affects $\\mu_{2E}$ (357 onward) and $\\mu_{NB}$ (326 onward), whose multi-character subscripts are set in maths italic and so read as products of variables. One `\\mathrm{...}` convention across all four subscripts, matching the `\\mathrm{trace}`, `\\mathrm{corr}`, `\\mathrm{cov}` and `\\mathrm{var}` the lecture already uses correctly (253, 880, 912, 920), would settle it"
+    }
   ],
   "strengths": [
     "The two benchmarks are argued for, not assumed. 192 raises the objection a careful reader would raise - \"You might object that $M^*$ is not the only matrix with this property\" - then 198-207 derives double stochasticity from the fact that quantiles hold equal numbers of households at *both* dates, and 209-213 shows that within that setting the uniform matrix is the unique origin-independent one. That is the whole justification for calibrating four measures to 0 and 1, and it is done in fifteen lines",
@@ -37,5 +86,9 @@
     "Finish the figure hygiene: add mystnb `caption`/`name` metadata to the `mob_ex4` figure cell at 1013 (the only one without it), and decide what to do about `ax.set_title(label)` at 669 - this is the hard case for `qe-fig-003`, because one mystnb caption cannot label three panels, so either name the three horizons inside the caption at 662 and drop the titles, or keep the titles and record the exception. If the `figsize=(11, 4)` at 666 stays (qe-fig-001), a comment saying it is there for the three-panel row would make it defensible",
     "Sweep the smaller items: trim the caption at 662 to six words or fewer (qe-fig-004), replace the two single-quoted docstrings at 515 and 523 with triple quotes, un-align the dict colons at 516-519 and 788-791, re-indent the two continuations at 729-734 and 736-741, and drop the filler sentence at 802 and the restatement at 1116-1118"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "76d10094bdfcda2d4f3da552b3efacc859e4ae5f"
+  }
 }

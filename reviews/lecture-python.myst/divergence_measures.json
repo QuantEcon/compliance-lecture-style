@@ -2,18 +2,61 @@
   "series": "lecture-python.myst",
   "lecture": "divergence_measures",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 4, "lines": [217, 250, 290, 319],
-     "detail": "results already established are restated: the KL-cross-entropy identity is displayed as {eq}`eq:KLcross` (127-129) and proved (134-140), then given again as a bullet at 217; $H(f)$ is defined and named the entropy at 81-84 and then defined a third time at 319. Line 250 ends the asymmetry discussion with 'and vice versa', which undoes the point the sentence exists to make - $D_{KL}(f\\|g)$ penalises exactly one of the two directions. The bullet at 290 is one 49-word sentence carrying the mutual-information characterisation, the Bernoulli source variable and both of its branches"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [510, 527],
-     "detail": "'## KL divergence and maximum-likelihood estimation' (510) opens after 'Comparing divergence measures' (366-508) has synthesised all three measures and reads as the close of the lecture; it then introduces empirical distributions and the Dirac delta with no transition, and it is the only section with no code. Inside it, the bullet block at 526-528 introduces $\\langle X \\rangle_{p_e}$ and $\\bar{\\mu}$, neither of which appears anywhere else in the lecture, and neither is needed for the derivation at 531-554"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [38],
-     "detail": "'A statistical divergence is a **function** that maps two probability distributions into a nonnegative real number' bolds 'function' - an ordinary word given emphasis - while the term actually being defined, 'statistical divergence', is left unmarked. Elsewhere the file uses bold correctly for the terms it defines (**surprise**, **entropy**, **Cross-Entropy**, **Chernoff coefficient**)"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [343],
-     "detail": "the Chernoff entropy section defines $C(f,g)$ as a minimisation of $\\int f^\\phi g^{1-\\phi}$ over $\\phi \\in (0,1)$ and then reports only two printed numbers (362-363). The Chernoff coefficient plotted against $\\phi$ with the minimiser marked is the picture that makes the definition legible, and the lecture draws a figure for every other concept it introduces (185, 274, 438, 473)"},
-    {"rule": "qe-math-009", "count": 1, "lines": [207],
-     "detail": "one object carries three notations: `\\parallel` at 122 and 533, `\\|` at 207, 214, 215 and 250, and the alias `KL(f, g)` introduced by the double equality at 207 and then never used in the mathematics again (only in the Python names). Picking one of the three would cost nothing"},
-    {"rule": "qe-code-001", "count": 4, "lines": [174, 493, 495, 498],
-     "detail": "line 174 spaces the same exponentiation two ways inside one expression - `x** (a-1)` with a space on only one side of `**`, then `(1 - x) ** (b-1)` - and lines 493, 495 and 498 under-indent continuation lines to 24 spaces against a visual-indent target of 28 (E128)"}
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        217,
+        250,
+        290,
+        319
+      ],
+      "detail": "results already established are restated: the KL-cross-entropy identity is displayed as {eq}`eq:KLcross` (127-129) and proved (134-140), then given again as a bullet at 217; $H(f)$ is defined and named the entropy at 81-84 and then defined a third time at 319. Line 250 ends the asymmetry discussion with 'and vice versa', which undoes the point the sentence exists to make - $D_{KL}(f\\|g)$ penalises exactly one of the two directions. The bullet at 290 is one 49-word sentence carrying the mutual-information characterisation, the Bernoulli source variable and both of its branches"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        510,
+        527
+      ],
+      "detail": "'## KL divergence and maximum-likelihood estimation' (510) opens after 'Comparing divergence measures' (366-508) has synthesised all three measures and reads as the close of the lecture; it then introduces empirical distributions and the Dirac delta with no transition, and it is the only section with no code. Inside it, the bullet block at 526-528 introduces $\\langle X \\rangle_{p_e}$ and $\\bar{\\mu}$, neither of which appears anywhere else in the lecture, and neither is needed for the derivation at 531-554"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        38
+      ],
+      "detail": "'A statistical divergence is a **function** that maps two probability distributions into a nonnegative real number' bolds 'function' - an ordinary word given emphasis - while the term actually being defined, 'statistical divergence', is left unmarked. Elsewhere the file uses bold correctly for the terms it defines (**surprise**, **entropy**, **Cross-Entropy**, **Chernoff coefficient**)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        343
+      ],
+      "detail": "the Chernoff entropy section defines $C(f,g)$ as a minimisation of $\\int f^\\phi g^{1-\\phi}$ over $\\phi \\in (0,1)$ and then reports only two printed numbers (362-363). The Chernoff coefficient plotted against $\\phi$ with the minimiser marked is the picture that makes the definition legible, and the lecture draws a figure for every other concept it introduces (185, 274, 438, 473)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        207
+      ],
+      "detail": "one object carries three notations: `\\parallel` at 122 and 533, `\\|` at 207, 214, 215 and 250, and the alias `KL(f, g)` introduced by the double equality at 207 and then never used in the mathematics again (only in the Python names). Picking one of the three would cost nothing"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        174,
+        493,
+        495,
+        498
+      ],
+      "detail": "line 174 spaces the same exponentiation two ways inside one expression - `x** (a-1)` with a space on only one side of `**`, then `(1 - x) ** (b-1)` - and lines 493, 495 and 498 under-indent continuation lines to 24 spaces against a visual-indent target of 28 (E128)"
+    }
   ],
   "strengths": [
     "Density case discipline is exact: lowercase $f$, $g$, $m$, $p_e$, $p_\\theta$ for every density and mass function (67, 204, 261, 515, 531), with uppercase reserved for the functionals $H$, $D_{KL}$ and $C$ - the proposed qe-math-015 convention holds without exception",
@@ -34,5 +77,9 @@
   "scanner_doubts": [
     "qe-code-002 x4 at divergence_measures.md:56 and :173 flags `gamma`, but this is `math.gamma` - the standard-library Gamma function, imported at 56 and called three times at 173 - not a spelled-out Greek variable name. The lecture does use unicode elsewhere (`ϕ` at 344-363), so the check appears to be matching Greek-letter words in function names as well as identifiers",
     "qe-writing-006 x1 at divergence_measures.md:148 flags 'Two Beta distributions: running example' on the word 'Beta'. The heading is otherwise sentence case, and 'Beta' is a distribution name capitalised consistently in the surrounding prose (150, 152, 186-187) - this looks like the proper-noun list missing distribution names rather than a real Title Case heading"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "747b815b33acea3a358ec682bd7f591c9a014f39"
+  }
 }

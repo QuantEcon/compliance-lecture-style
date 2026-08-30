@@ -2,18 +2,72 @@
   "series": "lecture-python.myst",
   "lecture": "long_run_risk_operator",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [1772, 1956, 2560, 2948],
-     "detail": "the \"### Recursive preferences (optional)\" section runs 125 lines (1772-1896) and the lecture then twice says it will not use it - 1792 \"the numerical example uses the simpler Breeden parameters above\" and 1896 \"The numerical example below uses the simpler Breeden specification\" - so the reader is asked to work through a derivation whose only role is to be set aside. Lines 1956-1968 recompute the discriminant, the two $c_f$ roots and the twisted mean reversion that `solve_affine_eigenfunction` already computes at 1695-1712, re-inlining even the `mean_reversion` helper defined at 1709, so the root-selection demonstration and the solver can drift apart. Line 2544 announces that stability of the growth-twisted process \"needs three conditions\", lists them at 2546-2558, and then 2560 adds \"The Feller inequality is necessary but not sufficient on its own\" with no stated relation to the list, immediately followed by a `{note}` at 2562-2567 making a third point. And the two exercise-solution figures (2948, 3025) carry no `mystnb` metadata where all ten body figures carry `caption` and `name`, so exercise 3's instruction to \"Plot ... on a logarithmic scale\" (3002-3013) produces an uncaptioned figure that cannot be `{numref}`-referenced"},
-    {"rule": "qe-math-009", "count": 4, "lines": [391, 2419, 2699, 2996],
-     "detail": "$V$ carries two unrelated meanings: the valuation functional, defined at 408-413 and given the semigroup $\\{\\mathbb V_t\\}$ at 391, and the Lyapunov function of the existence argument at 2698-2703 (\"there is a function $V \\geq 1$ on the state space\" with $\\mathbb A V / V \\leq a_0$). `\\mathbb` itself does three jobs - expectation ($\\mathbb{E}$, everywhere), the generator ($\\mathbb A$, 881-885, 2703) and the five semigroups ($\\mathbb M_t$, $\\mathbb S_t$, $\\mathbb V_t$, $\\mathbb G_t$, $\\mathbb Q_t$, 386-393) - which is what makes $\\mathbb V_t$ ambiguous with the variance operator. The affine displays at 2398-2440 stack three index dimensions on every symbol ($\\bar\\beta^v$, $\\beta_f^v$, $c_o^v$, $(\\gamma_f^s+\\gamma_f^v)^2$, $(c_o^v)^2\\frac{\\sigma_o^2}{2}$) with no notation table anywhere in 3400 lines, so a reader meeting {eq}`eq:valuation-rho-affine` must hold functional, factor and coefficient-type simultaneously. And 2996 writes the twisted stationary distribution as $\\hat\\varsigma$ - a final-sigma variant - in a lecture where $\\sigma_f$ and $\\sigma_o$ are the diffusion coefficients, so the two share a glyph family for no gain over a plain letter"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [370, 2161, 2725, 2948],
-     "detail": "the bottom-right panel of the lecture's title figure (2161-2166) plots $\\exp(\\rho t)$, $\\hat M_t$ and $\\phi(X_0)/\\phi(X_t)$ on one linear axis over $t \\in [0, 40]$; the exponential trend spans orders of magnitude the other two do not, so the martingale and transient components - the two the lecture exists to explain - are flattened onto the axis, and 2172's \"The figure shows how the three components evolve over time\" is all the prose the reader gets. The semigroup identity at 370-384 is explained as a choice between two discounting routes and is exactly a two-path commuting diagram, drawn in no form. The dependency chain at 2725-2762 - which assumption buys which conclusion, across three failure modes and four rows of a table - is the lecture's structural spine and is carried by a markdown table and three prose subsections. And the lecture has no picture at all of the eigenfunction $\\phi$ it spends 300 lines constructing: `solve_affine_eigenfunction` returns $c_f$ and $c_o$, so $\\phi(x) = \\exp(c_f x^f + c_o x^o)$ is one contour plot away, and the finite-state $\\phi$ is a two- or three-vector already printed as numbers at 1475 and 3043-3045"},
-    {"rule": "qe-code-001", "count": 5, "lines": [1466, 1681, 2045, 2599, 2954],
-     "detail": "fifteen expressions surround `**` with spaces where the rule asks explicitly for `a**b` - 1695, 1696, 1703, 1704, 1718, 1721, 1956, 1957, 1961, 1962, 2469, 2471, 2599, 2600, 2876 (`disc = (λ + μ + r1) ** 2 - 4 * μ * r1`). 1466-1467 and 3028-3030 put a space after the opening bracket of an array literal (`np.array([[ 0.0, -0.20],`, `[ 0.20, -0.50,  0.30]`), which PEP8 lists as E201, and pad with double spaces for column alignment. 1681-1691 unpacks eleven string-keyed dict entries one per line because the model parameters are a `dict` rather than a `NamedTuple`, which also puts unicode Greek inside string literals where no tool can see it, and 2597-2604 then rebuilds one with `dict(params_sdf)` and five overrides. 2045, 2051 and 2066 repeat the magic floor `max(Xf[k], 1e-10)` three times without naming it. And 2954 names the loop variables `lp` and `lrp`"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [44, 2095, 2172, 2659],
-     "detail": "line 44-46 inverts and then overloads: \"At center stage will be a stochastic discount factor process and a return process that are multiplicative across time in the sense that conditional expectations define a *semigroup* of valuation operators indexed by horizon $t$\" is 38 words carrying the two primitives, the multiplicativity property and the definition of the semigroup. Line 2095 says the identity error is \"up to machine precision\" where the sense wanted is *at* machine precision. Line 2172 is a sentence that could describe any figure in any lecture. And 2659 and 2764-2766 break the file's own one-sentence-per-paragraph discipline with semicolon-joined compounds (\"For finite-state chains and the affine model, it really is; Perron-Frobenius theory and closed-form algebra handle every requirement\"; \"In the finite-state case, all four follow from one Perron-Frobenius calculation; in the affine model, they reduce to picking the right root of a quadratic. In general, each must be checked separately.\") - three sentences in one block in the second case"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [2192, 2727, 2740],
-     "detail": "the lecture's bold/italic discipline is otherwise the best in this batch - every one of its twenty-plus defined terms is bold (**principal eigenvalue** 67, **generator** 106, **valuation operator** 336, **local martingale restriction** 498, **twisted probability measure** 951, **Girsanov construction** 2675, **resolvent operator** 2709, and the rest inside `{prf:definition}` directives) and its emphasis is italic (*short end* 34, *long end* 39, *any* 999, *local* 964, *immediate*/*cumulative* 2188-2189, *rejected* 2689, *existence* 2695). Three slips: 2192-2193 puts the closing full stop inside the italic span (`*plus a persistence correction.*`); 2727, 2732 and 2743 use bold for run-in step labels inside a numbered list (`**Irreducibility for the resolvent.**`, `**Nummelin minorization.**`, `**Eigenfunction extraction.**`), which are headings rather than definitions; and 2740 then italicises *minorization function*, which is a definition, eight lines after bolding the label of the step that introduces it"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        1772,
+        1956,
+        2560,
+        2948
+      ],
+      "detail": "the \"### Recursive preferences (optional)\" section runs 125 lines (1772-1896) and the lecture then twice says it will not use it - 1792 \"the numerical example uses the simpler Breeden parameters above\" and 1896 \"The numerical example below uses the simpler Breeden specification\" - so the reader is asked to work through a derivation whose only role is to be set aside. Lines 1956-1968 recompute the discriminant, the two $c_f$ roots and the twisted mean reversion that `solve_affine_eigenfunction` already computes at 1695-1712, re-inlining even the `mean_reversion` helper defined at 1709, so the root-selection demonstration and the solver can drift apart. Line 2544 announces that stability of the growth-twisted process \"needs three conditions\", lists them at 2546-2558, and then 2560 adds \"The Feller inequality is necessary but not sufficient on its own\" with no stated relation to the list, immediately followed by a `{note}` at 2562-2567 making a third point. And the two exercise-solution figures (2948, 3025) carry no `mystnb` metadata where all ten body figures carry `caption` and `name`, so exercise 3's instruction to \"Plot ... on a logarithmic scale\" (3002-3013) produces an uncaptioned figure that cannot be `{numref}`-referenced"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        391,
+        2419,
+        2699,
+        2996
+      ],
+      "detail": "$V$ carries two unrelated meanings: the valuation functional, defined at 408-413 and given the semigroup $\\{\\mathbb V_t\\}$ at 391, and the Lyapunov function of the existence argument at 2698-2703 (\"there is a function $V \\geq 1$ on the state space\" with $\\mathbb A V / V \\leq a_0$). `\\mathbb` itself does three jobs - expectation ($\\mathbb{E}$, everywhere), the generator ($\\mathbb A$, 881-885, 2703) and the five semigroups ($\\mathbb M_t$, $\\mathbb S_t$, $\\mathbb V_t$, $\\mathbb G_t$, $\\mathbb Q_t$, 386-393) - which is what makes $\\mathbb V_t$ ambiguous with the variance operator. The affine displays at 2398-2440 stack three index dimensions on every symbol ($\\bar\\beta^v$, $\\beta_f^v$, $c_o^v$, $(\\gamma_f^s+\\gamma_f^v)^2$, $(c_o^v)^2\\frac{\\sigma_o^2}{2}$) with no notation table anywhere in 3400 lines, so a reader meeting {eq}`eq:valuation-rho-affine` must hold functional, factor and coefficient-type simultaneously. And 2996 writes the twisted stationary distribution as $\\hat\\varsigma$ - a final-sigma variant - in a lecture where $\\sigma_f$ and $\\sigma_o$ are the diffusion coefficients, so the two share a glyph family for no gain over a plain letter"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        370,
+        2161,
+        2725,
+        2948
+      ],
+      "detail": "the bottom-right panel of the lecture's title figure (2161-2166) plots $\\exp(\\rho t)$, $\\hat M_t$ and $\\phi(X_0)/\\phi(X_t)$ on one linear axis over $t \\in [0, 40]$; the exponential trend spans orders of magnitude the other two do not, so the martingale and transient components - the two the lecture exists to explain - are flattened onto the axis, and 2172's \"The figure shows how the three components evolve over time\" is all the prose the reader gets. The semigroup identity at 370-384 is explained as a choice between two discounting routes and is exactly a two-path commuting diagram, drawn in no form. The dependency chain at 2725-2762 - which assumption buys which conclusion, across three failure modes and four rows of a table - is the lecture's structural spine and is carried by a markdown table and three prose subsections. And the lecture has no picture at all of the eigenfunction $\\phi$ it spends 300 lines constructing: `solve_affine_eigenfunction` returns $c_f$ and $c_o$, so $\\phi(x) = \\exp(c_f x^f + c_o x^o)$ is one contour plot away, and the finite-state $\\phi$ is a two- or three-vector already printed as numbers at 1475 and 3043-3045"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        1466,
+        1681,
+        2045,
+        2599,
+        2954
+      ],
+      "detail": "fifteen expressions surround `**` with spaces where the rule asks explicitly for `a**b` - 1695, 1696, 1703, 1704, 1718, 1721, 1956, 1957, 1961, 1962, 2469, 2471, 2599, 2600, 2876 (`disc = (λ + μ + r1) ** 2 - 4 * μ * r1`). 1466-1467 and 3028-3030 put a space after the opening bracket of an array literal (`np.array([[ 0.0, -0.20],`, `[ 0.20, -0.50,  0.30]`), which PEP8 lists as E201, and pad with double spaces for column alignment. 1681-1691 unpacks eleven string-keyed dict entries one per line because the model parameters are a `dict` rather than a `NamedTuple`, which also puts unicode Greek inside string literals where no tool can see it, and 2597-2604 then rebuilds one with `dict(params_sdf)` and five overrides. 2045, 2051 and 2066 repeat the magic floor `max(Xf[k], 1e-10)` three times without naming it. And 2954 names the loop variables `lp` and `lrp`"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        44,
+        2095,
+        2172,
+        2659
+      ],
+      "detail": "line 44-46 inverts and then overloads: \"At center stage will be a stochastic discount factor process and a return process that are multiplicative across time in the sense that conditional expectations define a *semigroup* of valuation operators indexed by horizon $t$\" is 38 words carrying the two primitives, the multiplicativity property and the definition of the semigroup. Line 2095 says the identity error is \"up to machine precision\" where the sense wanted is *at* machine precision. Line 2172 is a sentence that could describe any figure in any lecture. And 2659 and 2764-2766 break the file's own one-sentence-per-paragraph discipline with semicolon-joined compounds (\"For finite-state chains and the affine model, it really is; Perron-Frobenius theory and closed-form algebra handle every requirement\"; \"In the finite-state case, all four follow from one Perron-Frobenius calculation; in the affine model, they reduce to picking the right root of a quadratic. In general, each must be checked separately.\") - three sentences in one block in the second case"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        2192,
+        2727,
+        2740
+      ],
+      "detail": "the lecture's bold/italic discipline is otherwise the best in this batch - every one of its twenty-plus defined terms is bold (**principal eigenvalue** 67, **generator** 106, **valuation operator** 336, **local martingale restriction** 498, **twisted probability measure** 951, **Girsanov construction** 2675, **resolvent operator** 2709, and the rest inside `{prf:definition}` directives) and its emphasis is italic (*short end* 34, *long end* 39, *any* 999, *local* 964, *immediate*/*cumulative* 2188-2189, *rejected* 2689, *existence* 2695). Three slips: 2192-2193 puts the closing full stop inside the italic span (`*plus a persistence correction.*`); 2727, 2732 and 2743 use bold for run-in step labels inside a numbered list (`**Irreducibility for the resolvent.**`, `**Nummelin minorization.**`, `**Eigenfunction extraction.**`), which are headings rather than definitions; and 2740 then italicises *minorization function*, which is a definition, eight lines after bolding the label of the step that introduces it"
+    }
   ],
   "strengths": [
     "The destination is on the first page: {eq}`eq:hs-factorization` appears at 58-63 with all three factors glossed in a bulleted list (67-74), the finite-state special case named as Perron-Frobenius (76-77), and a five-step plan at 101-117 that the section headings then follow in order",
@@ -39,5 +93,9 @@
   "scanner_doubts": [
     "long_run_risk_operator.md:391 - qe-math-010 (proposed) is reported with count 4 and one of the four is a false positive. The hit at line 391 is `missing braces: \\mathbb V`, on the table row `| $V$ | cumulated return on an asset | $\\{\\mathbb V_t\\}$ |`. That `\\mathbb V_t` is not a variance operator: it is the *valuation semigroup* generated by the return functional $V$, and the lecture says so outright. Line 336 defines \"a **valuation operator** for each horizon $t$\" as $\\mathbb M_t \\psi(x) = \\mathbb{E}[M_t\\psi(X_t) \\mid X_0=x]$, and the table at 386-393 lists the four members of that family - $\\{\\mathbb S_t\\}$, $\\{\\mathbb V_t\\}$, $\\{\\mathbb G_t\\}$, $\\{\\mathbb Q_t\\}$ - of which only the V row can be matched because S, G and Q are not in the check's letter class. The mechanism: branch (a) of `check_math_010` is `bare_mathbb = re.compile(r\"\\\\(?:mathbb|Bbb)\\s+[PEV](?![A-Za-z])\")` (tools/qestyle_rules.py:665), which fires on the letter alone with no requirement that the operator be *applied* to anything - unlike branch (b), whose `applied` group at 668 requires a following `[`, `\\{` or `(`. Verified by running the checks over this file: the four hits are 391 (`\\mathbb V`) plus the three genuine `\\Pr` sites at 955, 1011 and 1066. A safe narrowing: on branch (a), skip an occurrence whose next non-space token (after an optional subscript) is a *closing* delimiter - here `\\{\\mathbb V_t\\}` is followed by `\\}`, i.e. the operator is being named rather than used. I checked that this cannot cost real hits: `grep -rno '\\\\mathbb\\s\\+V'` over all five series returns just 7 occurrences in 4 files, and the other 6 - `black_litterman.md:1117,1124,1132`, `bivariate_dist.md:470`, `kesten_processes.md` - are all applied to a random variable (`\\mathbb V X`, `\\mathbb V[Y]`), so they would all still fire. Adding a delimiter requirement to branch (a) in general would be wrong (`\\mathbb E \\sum_{t=0}^\\infty \\beta^t u(c_t)` in os_stochastic is a genuine hit with no delimiter), which is why the closing-delimiter test rather than an opening-delimiter test is the one to use",
     "long_run_risk_operator.md:1726 - qe-writing-006's single hit, `H3 Title Case: 'A Breeden SDF' (Breeden)`, is another instance of the author-surname false positive I filed under `util_rand_resp`: Breeden is Douglas Breeden, cited by `{cite:t}`Breeden1979`` five lines below at 1731 and referred to by name at 1729, 1792, 1837, 1896 and 2642. I record it here because it changes the fix. The year-in-parentheses heuristic I suggested for util_rand_resp's five hits ('Leysieffer and Warner (1976)' etc.) would not catch this one - the heading carries no year - so the durable fix is to seed the exemption from the bibliography rather than from the heading's shape: exempt a capitalised heading word that matches the surname component of a `{cite}`/`{cite:t}` key appearing in the same file (`Breeden1979` to Breeden, `leysieffer1976respondent` to Leysieffer), or simply extend `PROPER_NOUNS` with the corpus's citation-author surnames. With 1726 removed this lecture's qe-writing-006 count is 0, not 1"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "079a5dbfd7b61ce5720c8ca92bfd4ab0b17d80d7"
+  }
 }

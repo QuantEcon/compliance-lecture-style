@@ -2,18 +2,79 @@
   "series": "lecture-python.myst",
   "lecture": "navy_captain",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 6, "lines": [228, 259, 265, 835, 925, 1092],
-     "detail": "six places where the text does not join up with what surrounds it. 259-260 defines $PD$ as \"the probability of a **detection error**, i.e., not rejecting $H_0$ when $H_1$ is true\", but 251 sets $PD = \\Pr\\{L(z^t) < d \\mid q = f_1\\}$ and {eq}`val1` at 244 charges $\\bar L_0$ on $(1-PD)$ - so $PD$ is the probability of *detection* and the sentence describes $1-PD$; a reader checking the equation against the definition is stopped cold. 228-229 says the loss parameters are \"$\\bar L_1$ and $\\bar L_2$\" - there is no $\\bar L_2$ in the lecture, the pair defined at 89-92 is $\\bar L_0$ and $\\bar L_1$. 265-266 defers receiver operating characteristic curves to another lecture (\"please see this lecture {doc}`Likelihood Ratio Processes`\") and then 305-328 draws them here, forty lines later. The H2 \"More Details\" at 835 promises \"more insights by focusing on the case in which $\\pi^*=0.5=\\pi_0$\" and contains no insight at all - three code cells that set `π_star = 0.5`, print `t_optimal` and define `t_idx`. 925-926 promises \"Later we'll figure out how these distributions ultimately affect objective expected values under the Neyman-Pearson and Bayesian decision rules\", but that comparison was already made at 809-833 and nothing after 925 returns to it. And 1092-1094 says \"The next graph plots the unconditional distribution of Bayesian times to decide\" when the cell at 1096-1107 plots the unconditional distribution of $\\log L$ at the frequentist $t$ - the times-to-decide graph it describes is back at 981-992"},
-    {"rule": "qe-code-001", "count": 7, "lines": [294, 366, 488, 579, 893, 916, 1070],
-     "detail": "294 is `l = lambda z: wf.f0(z) / wf.f1(z)` - the ambiguous single-character name PEP8 singles out in E741 and a lambda binding (E731) in the same line, and `l0_arr`/`l1_arr` at 298-299 inherit the name; 488 binds a second lambda, `h_func = lambda p: np.interp(p, π_grid, h)`. Twenty code lines exceed 79 characters (E501): 366 (93), 893 (101), 911, 942, 943, 949, 950, 1015, 1016, 1017, 1040, 1043, 1078, 1079, 1081, 1082, 1099, 1100, 733, 740. 579 omits the space after a comma, `np.column_stack([h_star, cost_L0, cost_L1]),axis=1` (E231). 1070 and 1071 both put two spaces after the operator, `(1 - π_star) *  A / (...)` (E222). 916 ends `plt.legend();` with a semicolon (E703), the only one in the file. 558-565 wraps `np.searchsorted(` so that the closing bracket and `- 1]` sit alone at 30 and 15 columns of indent, and 1021, 1023, 1038, 1043 and 1097 indent continuations under `plt.plot(` to a flat 8 spaces instead of aligning with the opening bracket (E128). 688, 690 and 734 write `B+0.01`, `A+0.01`, `π_optimal+0.05` where 582-583 write `B + 0.01`"},
-    {"rule": "qe-math-009", "count": 5, "lines": [220, 244, 410, 639, 823],
-     "detail": "`\\left`/`\\right` is used where plain delimiters would do throughout - `\\left\\{ z_{i}\\right\\} _{i=0}^{t}` (80, 220), `L\\left(z^{t}\\right)` (218), `\\bar{V}_{fre}\\left(t,d\\right)` (244, 268, 336), `V^{0}\\left(\\pi\\right)` (614, 624), `\\left(1-\\pi\\right)` (633, 639) - and nothing in the file is taller than a one-line fraction. $PFA$ and $PD$ (244, 250, 251, 257, 259, 262, 263, 307, 443) are multi-letter names set in italic math, so they render as the products $P\\cdot F\\cdot A$ and $P\\cdot D$; `\\mathrm{PFA}` would read correctly. 410 puts a code identifier into math as $t_{\\rm optimal}$. The same two objects carry two names and two bar commands: $\\bar{V}_{fre}$/$\\bar{V}_{Bayes}$ in the prose (244, 336, 639, 699, 831) against $\\overline{V}_{baye}$ in the figures (737, 740, 766, 802, 819). And 823 labels the lecture's punchline series `label='$diff$'`, four italic letters in math mode where the prose two lines later (830-831) names it $\\bar{V}_{fre}-\\bar{V}_{Bayes}$"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [64, 306, 845, 875, 876],
-     "detail": "definitions are bolded correctly - **frequentist decision rule** (51), **type I error** (89), **type II error** (91), **false alarm** (257), **detection error** (259), **receiver operating characteristic curve** (262) - but bold is then reused for plain emphasis in four places the rule assigns to italic: **frequentist** and **Bayesian** at 64 (contrastive emphasis, and 51 has already defined the first of them), **ex ante** at 845, and **earlier**/**later** at 875-876, which carry the lecture's headline result. 306 re-bolds **receiver operating characteristic curves** as though defining it again, 44 lines after the definition at 262. The one correct italic emphasis in the file is *and* at 1007, so the two markers are doing each other's jobs"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [55, 59, 64, 867, 1000],
-     "detail": "64 is one 48-word sentence (301 characters) carrying two bolded terms, a spelled-out cross-reference title and both decision rules; 55 is 33 words that reach their point through \"proceeded to try to solve\"; 59-62 is 45 words that name two lectures as \"this lecture {doc}`Exchangeability and Bayesian Updating`\" and \"this lecture {doc}`Likelihood Ratio Processes`\" in one breath, and the full title \"A Bayesian Formulation of Friedman and Wald's Problem\" is spelled out six times over the file (42, 64, 98, 229, 466, 473). 867-868 says it twice and ungrammatically: \"the frequency distribution of Bayesian times to decide of Bayesian decision maker\". 1000-1003 is 43 words whose \"and similarly it equals $1$ minus the optimal probability of a false alarm under $f_0$\" attaches \"it\" to the wrong probability - the sentence starts from the correct decision under $f_1$ and ends by describing the correct decision under $f_0$"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [823, 875, 935],
-     "detail": "the figure that answers the question in the section title \"Was the Navy Captain's Hunch Correct?\" (815-828) is the least labelled in the lecture - neither panel gets a title, the left panel's two series are distinguished only by legend, and the right panel's sole label is `'$diff$'` (823). Second, the continuation region $B \\leq \\pi \\leq A$ is the whole content of the Bayesian rule (600-605), but it is only ever shown as two annotations on the value-function plot (582-586) and two `vlines` at 687-690; the belief paths that actually wander inside it are computed at 935-936 and then immediately collapsed to a mean and a variance (942-956), so the reader never sees one $\\pi_t$ path crossing a cutoff even though the data is in hand. Third, the file contains no admonition of any kind, and the two results it exists to deliver - 833 \"It is always positive\" and 875-876 \"the Bayesian rule decides **earlier** ... and **later**\" - are bare paragraphs using bold to do the work a `{note}` would do"}
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        228,
+        259,
+        265,
+        835,
+        925,
+        1092
+      ],
+      "detail": "six places where the text does not join up with what surrounds it. 259-260 defines $PD$ as \"the probability of a **detection error**, i.e., not rejecting $H_0$ when $H_1$ is true\", but 251 sets $PD = \\Pr\\{L(z^t) < d \\mid q = f_1\\}$ and {eq}`val1` at 244 charges $\\bar L_0$ on $(1-PD)$ - so $PD$ is the probability of *detection* and the sentence describes $1-PD$; a reader checking the equation against the definition is stopped cold. 228-229 says the loss parameters are \"$\\bar L_1$ and $\\bar L_2$\" - there is no $\\bar L_2$ in the lecture, the pair defined at 89-92 is $\\bar L_0$ and $\\bar L_1$. 265-266 defers receiver operating characteristic curves to another lecture (\"please see this lecture {doc}`Likelihood Ratio Processes`\") and then 305-328 draws them here, forty lines later. The H2 \"More Details\" at 835 promises \"more insights by focusing on the case in which $\\pi^*=0.5=\\pi_0$\" and contains no insight at all - three code cells that set `π_star = 0.5`, print `t_optimal` and define `t_idx`. 925-926 promises \"Later we'll figure out how these distributions ultimately affect objective expected values under the Neyman-Pearson and Bayesian decision rules\", but that comparison was already made at 809-833 and nothing after 925 returns to it. And 1092-1094 says \"The next graph plots the unconditional distribution of Bayesian times to decide\" when the cell at 1096-1107 plots the unconditional distribution of $\\log L$ at the frequentist $t$ - the times-to-decide graph it describes is back at 981-992"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        294,
+        366,
+        488,
+        579,
+        893,
+        916,
+        1070
+      ],
+      "detail": "294 is `l = lambda z: wf.f0(z) / wf.f1(z)` - the ambiguous single-character name PEP8 singles out in E741 and a lambda binding (E731) in the same line, and `l0_arr`/`l1_arr` at 298-299 inherit the name; 488 binds a second lambda, `h_func = lambda p: np.interp(p, π_grid, h)`. Twenty code lines exceed 79 characters (E501): 366 (93), 893 (101), 911, 942, 943, 949, 950, 1015, 1016, 1017, 1040, 1043, 1078, 1079, 1081, 1082, 1099, 1100, 733, 740. 579 omits the space after a comma, `np.column_stack([h_star, cost_L0, cost_L1]),axis=1` (E231). 1070 and 1071 both put two spaces after the operator, `(1 - π_star) *  A / (...)` (E222). 916 ends `plt.legend();` with a semicolon (E703), the only one in the file. 558-565 wraps `np.searchsorted(` so that the closing bracket and `- 1]` sit alone at 30 and 15 columns of indent, and 1021, 1023, 1038, 1043 and 1097 indent continuations under `plt.plot(` to a flat 8 spaces instead of aligning with the opening bracket (E128). 688, 690 and 734 write `B+0.01`, `A+0.01`, `π_optimal+0.05` where 582-583 write `B + 0.01`"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 5,
+      "lines": [
+        220,
+        244,
+        410,
+        639,
+        823
+      ],
+      "detail": "`\\left`/`\\right` is used where plain delimiters would do throughout - `\\left\\{ z_{i}\\right\\} _{i=0}^{t}` (80, 220), `L\\left(z^{t}\\right)` (218), `\\bar{V}_{fre}\\left(t,d\\right)` (244, 268, 336), `V^{0}\\left(\\pi\\right)` (614, 624), `\\left(1-\\pi\\right)` (633, 639) - and nothing in the file is taller than a one-line fraction. $PFA$ and $PD$ (244, 250, 251, 257, 259, 262, 263, 307, 443) are multi-letter names set in italic math, so they render as the products $P\\cdot F\\cdot A$ and $P\\cdot D$; `\\mathrm{PFA}` would read correctly. 410 puts a code identifier into math as $t_{\\rm optimal}$. The same two objects carry two names and two bar commands: $\\bar{V}_{fre}$/$\\bar{V}_{Bayes}$ in the prose (244, 336, 639, 699, 831) against $\\overline{V}_{baye}$ in the figures (737, 740, 766, 802, 819). And 823 labels the lecture's punchline series `label='$diff$'`, four italic letters in math mode where the prose two lines later (830-831) names it $\\bar{V}_{fre}-\\bar{V}_{Bayes}$"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        64,
+        306,
+        845,
+        875,
+        876
+      ],
+      "detail": "definitions are bolded correctly - **frequentist decision rule** (51), **type I error** (89), **type II error** (91), **false alarm** (257), **detection error** (259), **receiver operating characteristic curve** (262) - but bold is then reused for plain emphasis in four places the rule assigns to italic: **frequentist** and **Bayesian** at 64 (contrastive emphasis, and 51 has already defined the first of them), **ex ante** at 845, and **earlier**/**later** at 875-876, which carry the lecture's headline result. 306 re-bolds **receiver operating characteristic curves** as though defining it again, 44 lines after the definition at 262. The one correct italic emphasis in the file is *and* at 1007, so the two markers are doing each other's jobs"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        55,
+        59,
+        64,
+        867,
+        1000
+      ],
+      "detail": "64 is one 48-word sentence (301 characters) carrying two bolded terms, a spelled-out cross-reference title and both decision rules; 55 is 33 words that reach their point through \"proceeded to try to solve\"; 59-62 is 45 words that name two lectures as \"this lecture {doc}`Exchangeability and Bayesian Updating`\" and \"this lecture {doc}`Likelihood Ratio Processes`\" in one breath, and the full title \"A Bayesian Formulation of Friedman and Wald's Problem\" is spelled out six times over the file (42, 64, 98, 229, 466, 473). 867-868 says it twice and ungrammatically: \"the frequency distribution of Bayesian times to decide of Bayesian decision maker\". 1000-1003 is 43 words whose \"and similarly it equals $1$ minus the optimal probability of a false alarm under $f_0$\" attaches \"it\" to the wrong probability - the sentence starts from the correct decision under $f_1$ and ends by describing the correct decision under $f_0$"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        823,
+        875,
+        935
+      ],
+      "detail": "the figure that answers the question in the section title \"Was the Navy Captain's Hunch Correct?\" (815-828) is the least labelled in the lecture - neither panel gets a title, the left panel's two series are distinguished only by legend, and the right panel's sole label is `'$diff$'` (823). Second, the continuation region $B \\leq \\pi \\leq A$ is the whole content of the Bayesian rule (600-605), but it is only ever shown as two annotations on the value-function plot (582-586) and two `vlines` at 687-690; the belief paths that actually wander inside it are computed at 935-936 and then immediately collapsed to a mean and a variance (942-956), so the reader never sees one $\\pi_t$ path crossing a cutoff even though the data is in hand. Third, the file contains no admonition of any kind, and the two results it exists to deliver - 833 \"It is always positive\" and 875-876 \"the Bayesian rule decides **earlier** ... and **later**\" - are bare paragraphs using bold to do the work a `{note}` would do"
+    }
   ],
   "strengths": [
     "The value-function figure at 573-592 makes the cutoff rule readable rather than asserted: it overlays the two terminal payoffs `cost_L0` and `cost_L1` (570-571, 576-577) on the continuation value, draws their pointwise minimum as a wide translucent band (578-580), and then annotates $A$ and $B$ exactly where the band switches branch (582-586) - so the rule stated at 600-605 can be checked against the picture",
@@ -36,5 +97,9 @@
   "scanner_doubts": [
     "navy_captain.md:616,626,633 - qe-math-002 is reported x6 and every one of the six is a next-period state, not a transpose. The sites are `\\pi^{\\prime}` at 616, 626 and 633 and `z^{\\prime}` three times at 633, and 633 is the line that *defines* the prime: $\\pi^{\\prime}=\\pi f_0(z^{\\prime})/(\\pi f_0(z^{\\prime})+(1-\\pi)f_1(z^{\\prime}))$, the posterior after one more draw. The file contains no matrix or vector at all - no `bmatrix`, `pmatrix`, `\\top` or `^T` anywhere - and $\\pi$ is a scalar in $[0,1]$, so a transpose is not available in this lecture. In `tools/qestyle_rules.py` the first `lprime` branch is `(?:\\\\[A-Za-z]+|[A-Z]|\\)|\\}|\\])(?:_\\{[^}]*\\}|_[A-Za-z0-9])?` + `PRIME_SUP`, which carries no juxtaposed-factor and no following-argument guard, so any `\\command^{\\prime}` counts and `\\pi^{\\prime}` matches there; `z^{\\prime}` takes the lowercase branch, whose guard `(?!\\s*(?:\\(|\\\\left\\s*\\())` only excludes a following `(`, and here the prime is followed by `\\right)`. Suggested narrowing: gate the `\\prime` branches on the same `evident` juxtaposition test the two bare-apostrophe branches already use, or exempt a Greek-command base that carries no following factor. This is the difference between Math 4.5/10 and a high Math score for this file",
     "navy_captain.md:33,115 - qe-code-002 x4 is a false positive. Line 33 is `from math import gamma` and line 115 is `r = gamma(a + b) / (gamma(a) * gamma(b))`, the gamma *function* from the standard library used to normalise the beta density at 112-117. It is an imported name, not a spelled-out Greek variable; renaming it to `γ` breaks the import and means the wrong thing. This is the same defect already reported for `likelihood_bayes.md`:56,152, `imp_sample.md` and `lagrangian_lqdp.md`:476 - four lectures now, all of them importing `gamma` or `beta` from `math`/`scipy`, which suggests an import-aware exemption rather than four per-file notes"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "a7df21c53aa8448186f82c085a3081e07f524059"
+  }
 }

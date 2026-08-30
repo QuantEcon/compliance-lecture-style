@@ -17,5 +17,9 @@
     "Drop the trailing space at the end of line 21",
     "Reconcile the five series' copies of this page: this file is byte-identical to `lecture-python-programming/lectures/status.md`, while `lecture-python-intro`, `lecture-python-advanced.myst` and `lecture-dp` carry a 33-line version with no GPU or JAX-backend probe - the page is hand-maintained in five places and has already diverged"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "2ec414c48821b28f9f2a478295f4f75dd433ed43"
+  }
 }

@@ -2,18 +2,68 @@
   "series": "lecture-python.myst",
   "lecture": "information_market_equilibrium",
   "judgment": [
-    {"rule": "qe-math-009", "count": 3, "lines": [762, 791, 1221],
-     "detail": "three symbols carry unrelated meanings in the same lecture. $P$ is a subjective probability measure ($P^i$, 137), a probability ($P(\\bar a = a_s \\mid \\tilde y = y)$, 192), a probability indexed by structure ($P_\\lambda$, 768) and, at 759-762, \"any measurable price set $P$\" - while the set of realized prices is written $\\mathcal{P}$ (286), so the lecture has a plain and a calligraphic $P$ both meaning sets of prices plus $P$ meaning probability. $\\mu$ is the insider's posterior over states through the whole first half (186-441) and then, from 791 on, an equivalence class of structural parameters, with $\\mu_1$ and $\\mu_2$ at 933 being reduced forms rather than posteriors. $W$ is the endowment set $W(P)$ at 762 and agent wealth at 522 and 1221. Each of the three could be renamed once and the collision disappears"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [34, 181, 234, 236, 1199],
-     "detail": "the lecture's bold-for-definition usage is mostly right (**competitive equilibrium** 166, **posterior** 189, **elasticity of substitution** 360, **structural parameter vector** 753, **reduced form** 796, **CARA** 1212), which makes the exceptions conspicuous: 34, 181, 236 and 1199 use bold for pure emphasis - \"the **informational role of prices**\", \"Suppose **agent 1** (the insider)\", \"**independent of** $\\bar{a}$\", \"the observer's **price expectations** converge\" - and 234 does the reverse, italicising the term the `prf:definition` exists to define (\"A random variable $\\tilde{y}$ is *sufficient* for $\\tilde{y}'$\") six lines after the same word was bolded at 229"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [213, 322, 478, 783],
-     "detail": "213 is the first of nine formulaic bridge sentences that carry no content - \"To answer that question, we now translate...\" (213), \"Before turning to invertibility itself, it helps to keep in mind...\" (327), \"Before stating the theorem, it helps to see...\" (363), \"With that example in hand, we can compute...\" (513), \"The numerical plot shows monotonicity, and the next subsection connects...\" (632), \"The static analysis asks whether... whereas the next section asks...\" (731), \"The next issue is therefore what an observer can and cannot infer...\" (778), \"Once that distinction is clear, Bayesian updating can be written down directly\" (802), \"We can now sharpen the point by...\" (1110); 478-483 states the Cobb-Douglas intuition and then 535-539, 616-617, 687-691 and 724-725 state it four more times; 322-325 is a 50-word sentence with three clauses and a report of what \"the paper shows formally\"; and 783-786 stacks two because-clauses ahead of its main clause across 40 words"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [293, 781],
-     "detail": "293-296 wants to be a diagram and settles for typesetting one inside `$$`: `\\tilde y \\longrightarrow \\mu_{\\tilde y} \\longrightarrow p(\\mu_{\\tilde y})`, with the two arrows then explained in prose at 298-300 as \"loses no information\" and \"the theorem asks when the second arrow also loses no information\". Labelling those two arrows in a real figure is the whole logical structure of the price-revelation result on one line. And \"### The identification problem\" (781-800) partitions $\\Lambda$ into equivalence classes under a many-to-one map $\\lambda \\mapsto g(\\cdot \\mid \\lambda)$ - a mapping diagram - and gets no picture, even though the entire second half of the lecture and the three-panel simulation at 1134-1190 turn on that partition"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [145, 358],
-     "detail": "145-162 sets up a production side in detail - the firm's technology $y_1 = f(y_2)$ with $f' < 0$, the profit problem $\\pi(p) = \\max_{y_2 \\leq 0}\\{p f(y_2) + y_2\\}$, and the shares $\\theta^i$ - and 174-177 then discards it (\"we will suppress production\"); after that, $f$, $y_2$ and $\\pi$ never reappear except inside the definition of $W_1$ at 522, so the reader carries three displays of machinery for 350 lines to no purpose. And 358 opens the invertibility section by citing `ime_theorem_invertibility_conditions` for its main claim, but the theorem is not stated until 461, after two lemmas and a first-order condition"},
-    {"rule": "qe-code-001", "count": 4, "lines": [1082, 1275, 1389, 1414],
-     "detail": "1082 pads `palette   = plt.cm.Blues(...)` with extra spaces before `=` to align with the line above (PEP8 E221); 1389 has two spaces after a comma inside a list literal, `[(\"Easy\",  2.0, 1.2), (\"Hard\", 2.0, 1.8)]` (E241); 1414 leaves a trailing space after `fontsize=11` inside the `set_title` call; and 1275 re-imports `brentq` from `scipy.optimize` in an exercise-solution cell although it is already imported at 112, which is the only import statement in the file that is not in the opening cell"}
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        762,
+        791,
+        1221
+      ],
+      "detail": "three symbols carry unrelated meanings in the same lecture. $P$ is a subjective probability measure ($P^i$, 137), a probability ($P(\\bar a = a_s \\mid \\tilde y = y)$, 192), a probability indexed by structure ($P_\\lambda$, 768) and, at 759-762, \"any measurable price set $P$\" - while the set of realized prices is written $\\mathcal{P}$ (286), so the lecture has a plain and a calligraphic $P$ both meaning sets of prices plus $P$ meaning probability. $\\mu$ is the insider's posterior over states through the whole first half (186-441) and then, from 791 on, an equivalence class of structural parameters, with $\\mu_1$ and $\\mu_2$ at 933 being reduced forms rather than posteriors. $W$ is the endowment set $W(P)$ at 762 and agent wealth at 522 and 1221. Each of the three could be renamed once and the collision disappears"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        34,
+        181,
+        234,
+        236,
+        1199
+      ],
+      "detail": "the lecture's bold-for-definition usage is mostly right (**competitive equilibrium** 166, **posterior** 189, **elasticity of substitution** 360, **structural parameter vector** 753, **reduced form** 796, **CARA** 1212), which makes the exceptions conspicuous: 34, 181, 236 and 1199 use bold for pure emphasis - \"the **informational role of prices**\", \"Suppose **agent 1** (the insider)\", \"**independent of** $\\bar{a}$\", \"the observer's **price expectations** converge\" - and 234 does the reverse, italicising the term the `prf:definition` exists to define (\"A random variable $\\tilde{y}$ is *sufficient* for $\\tilde{y}'$\") six lines after the same word was bolded at 229"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        213,
+        322,
+        478,
+        783
+      ],
+      "detail": "213 is the first of nine formulaic bridge sentences that carry no content - \"To answer that question, we now translate...\" (213), \"Before turning to invertibility itself, it helps to keep in mind...\" (327), \"Before stating the theorem, it helps to see...\" (363), \"With that example in hand, we can compute...\" (513), \"The numerical plot shows monotonicity, and the next subsection connects...\" (632), \"The static analysis asks whether... whereas the next section asks...\" (731), \"The next issue is therefore what an observer can and cannot infer...\" (778), \"Once that distinction is clear, Bayesian updating can be written down directly\" (802), \"We can now sharpen the point by...\" (1110); 478-483 states the Cobb-Douglas intuition and then 535-539, 616-617, 687-691 and 724-725 state it four more times; 322-325 is a 50-word sentence with three clauses and a report of what \"the paper shows formally\"; and 783-786 stacks two because-clauses ahead of its main clause across 40 words"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        293,
+        781
+      ],
+      "detail": "293-296 wants to be a diagram and settles for typesetting one inside `$$`: `\\tilde y \\longrightarrow \\mu_{\\tilde y} \\longrightarrow p(\\mu_{\\tilde y})`, with the two arrows then explained in prose at 298-300 as \"loses no information\" and \"the theorem asks when the second arrow also loses no information\". Labelling those two arrows in a real figure is the whole logical structure of the price-revelation result on one line. And \"### The identification problem\" (781-800) partitions $\\Lambda$ into equivalence classes under a many-to-one map $\\lambda \\mapsto g(\\cdot \\mid \\lambda)$ - a mapping diagram - and gets no picture, even though the entire second half of the lecture and the three-panel simulation at 1134-1190 turn on that partition"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        145,
+        358
+      ],
+      "detail": "145-162 sets up a production side in detail - the firm's technology $y_1 = f(y_2)$ with $f' < 0$, the profit problem $\\pi(p) = \\max_{y_2 \\leq 0}\\{p f(y_2) + y_2\\}$, and the shares $\\theta^i$ - and 174-177 then discards it (\"we will suppress production\"); after that, $f$, $y_2$ and $\\pi$ never reappear except inside the definition of $W_1$ at 522, so the reader carries three displays of machinery for 350 lines to no purpose. And 358 opens the invertibility section by citing `ime_theorem_invertibility_conditions` for its main claim, but the theorem is not stated until 461, after two lemmas and a first-order condition"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        1082,
+        1275,
+        1389,
+        1414
+      ],
+      "detail": "1082 pads `palette   = plt.cm.Blues(...)` with extra spaces before `=` to align with the line above (PEP8 E221); 1389 has two spaces after a comma inside a list literal, `[(\"Easy\",  2.0, 1.2), (\"Hard\", 2.0, 1.8)]` (E241); 1414 leaves a trailing space after `fontsize=11` inside the `set_title` call; and 1275 re-imports `brentq` from `scipy.optimize` in an exercise-solution cell although it is already imported at 112, which is the only import statement in the file that is not in the opening cell"
+    }
   ],
   "strengths": [
     "The proof apparatus is fully typed and fully wired: `prf:definition` (231), three `prf:lemma` (251, 367, 417), a `prf:proof` (258) and two `prf:theorem` (278, 461, 856), every one labelled, and every one actually reached by `{prf:ref}` from the place that needs it - 299, 318, 358, 435, 608, 633, 660, 1108, 1337, 1435",
@@ -36,5 +86,9 @@
     "qe-math-002 x6 in `lectures/information_market_equilibrium.md` (59, 61, 234, 235, 239, 245) is a false positive and is one of the two findings that put Math at 3.5/10. Every hit is `\\tilde{y}'`, the second random variable in the Blackwell sufficiency definition - the lecture states the convention at 57-61 and 234-235 (\"$\\tilde{y}$ is sufficient for $\\tilde{y}'$ with respect to $\\bar{a}$\"). There is no transpose anywhere in this lecture. Note that the same file's `\\mu'` (375, 376, 379, 386), `\\lambda'` (792, 815, 828, 834, 839) and `\\phi'_a` (239) primes were not flagged, which suggests the matrix-like-base list contains `y` but not `mu` or `lambda`; the fix is to treat a prime as a transpose only where the lecture has matrices at all.",
     "qe-math-010 x7 in `lectures/information_market_equilibrium.md` reports \"non-blackboard `\\mathcal{P}`\" and lists 286, 373, 425, 472, 475 - but `\\mathcal{P}` here is not a probability operator. It is defined at 285-288 as the set of equilibrium prices, $\\mathcal{P} = \\{p(\\mu_y) : \\ldots\\}$, and used at 373, 425, 472 and 475 as \"$p \\in \\mathcal{P}$\" and \"invertible on $\\mathcal{P}$\". Rewriting it as `\\mathbb{P}` would make the lecture say the opposite of what it means. The genuine hits in this file are the bare `E_h` at 1567 and the two `\\Pr(` axis labels at 601 and 1295, which are not in the reported line list.",
     "qe-code-002 x3 in `lectures/information_market_equilibrium.md` (548, 702) does not point at any identifier. Line 548 is English prose inside a docstring - \"Use the Cobb-Douglas limit near rho = 0.\" - describing the parameter, whose actual name is the unicode `ρ` at 544, 550 and 554. Line 702 is `name: fig-mrs-alpha-beta`, a MyST figure slug in YAML metadata, where \"alpha\" and \"beta\" are parts of a hyphenated ASCII label and could not be unicode. The check appears to scan the whole code cell including docstrings and cell front matter rather than identifiers only."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "2fb1f9257766490129d00ee2168f55c03f318146"
+  }
 }

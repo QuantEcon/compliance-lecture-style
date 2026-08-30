@@ -2,14 +2,47 @@
   "series": "lecture-python-intro",
   "lecture": "equalizing_difference",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 5, "lines": [22, 34, 44, 178, 368],
-     "detail": "line 22 is a 38-word sentence carrying Friedman's motive, the dentists/doctors comparison and the entry-barrier alternative at once; line 34 runs 31 words and ends with the redundant \"between going to college and not going to college but instead going to work immediately\"; line 44 \"And doing that will let illustrate how good Python is at doing calculus!\" is ungrammatical; line 178 restates line 170 almost verbatim across the section break (\"write Python code to compute $\\phi$ and plot it as a function of ... its determinants\"); and 362-372 spends five sentences re-announcing the calculus section that lines 42-46 already announced in the Overview"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [428],
-     "detail": "\"Thus, as with our earlier graph, we find that raising $R$ increases the initial college wage premium $\\phi$\" sits directly under the cells at 417-425, which compute and evaluate $\\partial\\phi/\\partial D$, not $\\partial\\phi/\\partial R$ - the $R$ derivative is not computed until 480 and is correctly discussed at 490, so the reader meets the conclusion 60 lines before its evidence"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [38, 244],
-     "detail": "bold used where italic is called for: **Wealth of Nations** at 38 is a book title, and **waiting** at 244 is emphasis (\"must rise to compensate a prospective high school student for **waiting** to start receiving income\") - neither is a definition, while the genuine definitions **equalizing difference** (130) and **free college** (160) use the same weight"},
-    {"rule": "qe-code-001", "count": 5, "lines": [190, 316, 565, 569, 611],
-     "detail": "the closing `):` of `create_edm` at 190 and of `create_edm_π` at 316 is indented three columns short of the visually-aligned arguments above it; the exercise solutions pad assignments and arguments to align them - `gaps_free   = [...]` / `gaps_costly = [...]` at 565-566, `ax.plot(T_arr, gaps_free,   'o-', ...)` at 569-570, `gap_plus  = ...` / `dϕ_dR_fd  = ...` at 611-613 - which PEP8 rules out (multiple spaces before an operator, multiple spaces after a comma) and which the body of the lecture does not do"}
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        22,
+        34,
+        44,
+        178,
+        368
+      ],
+      "detail": "line 22 is a 38-word sentence carrying Friedman's motive, the dentists/doctors comparison and the entry-barrier alternative at once; line 34 runs 31 words and ends with the redundant \"between going to college and not going to college but instead going to work immediately\"; line 44 \"And doing that will let illustrate how good Python is at doing calculus!\" is ungrammatical; line 178 restates line 170 almost verbatim across the section break (\"write Python code to compute $\\phi$ and plot it as a function of ... its determinants\"); and 362-372 spends five sentences re-announcing the calculus section that lines 42-46 already announced in the Overview"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        428
+      ],
+      "detail": "\"Thus, as with our earlier graph, we find that raising $R$ increases the initial college wage premium $\\phi$\" sits directly under the cells at 417-425, which compute and evaluate $\\partial\\phi/\\partial D$, not $\\partial\\phi/\\partial R$ - the $R$ derivative is not computed until 480 and is correctly discussed at 490, so the reader meets the conclusion 60 lines before its evidence"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        38,
+        244
+      ],
+      "detail": "bold used where italic is called for: **Wealth of Nations** at 38 is a book title, and **waiting** at 244 is emphasis (\"must rise to compensate a prospective high school student for **waiting** to start receiving income\") - neither is a definition, while the genuine definitions **equalizing difference** (130) and **free college** (160) use the same weight"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        190,
+        316,
+        565,
+        569,
+        611
+      ],
+      "detail": "the closing `):` of `create_edm` at 190 and of `create_edm_π` at 316 is indented three columns short of the visually-aligned arguments above it; the exercise solutions pad assignments and arguments to align them - `gaps_free   = [...]` / `gaps_costly = [...]` at 565-566, `ax.plot(T_arr, gaps_free,   'o-', ...)` at 569-570, `gap_plus  = ...` / `dϕ_dR_fd  = ...` at 611-613 - which PEP8 rules out (multiple spaces before an operator, multiple spaces after a comma) and which the body of the lecture does not do"
+    }
   ],
   "strengths": [
     "The model is packaged once as a `namedtuple` plus a `create_edm` factory with the economics written into the default comments (181-192), so every comparative-statics cell reduces to one list comprehension over `create_edm(...)` (235, 251, 270, 347) instead of re-deriving $A_h$ and $A_c$",
@@ -29,5 +62,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 count 9 in equalizing_difference.md (lines 54, 384, 391, 398, 424, 439, 456, 471, 486) is 9 false positives. Every hit is SymPy's `Lambda` class, imported at line 54 (`from sympy import Symbol, Lambda, symbols`) and then called at 384, 391, 398, 424, 439, 456, 471, 486. It is a library class name, not an author-chosen variable, and renaming it to `Λ` would break the code. GREEK_WORDS in tools/qestyle_rules.py matches the bare word `Lambda`; the guard `(?<![\\w.])` at line 662 only exempts the attribute form `sympy.Lambda`. This is the whole of the lecture's Code score (7.5/10) - with the false positives removed the category is clean. Same shape as the `beta` false positive already noted in ar1_processes.md."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "b9622c5b94af7d100e743964679934528b25e8bc"
+  }
 }

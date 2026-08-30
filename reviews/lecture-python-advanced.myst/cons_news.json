@@ -2,16 +2,75 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "cons_news",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 21, "lines": [42, 62, 63, 80, 140, 275, 313, 316, 320, 351, 383, 443, 451, 452, 497, 760, 777, 816, 842, 847, 848],
-     "detail": "bold is the lecture's emphasis marker and italic is essentially unused - the whole file contains 2 italic spans against roughly 50 bold ones, and at least 21 of the bold spans emphasise an ordinary word rather than define a term: `**regardless**` (42), `**today's**`/`**future**` (62, 63, 80), `**same**` (140, 275, 497), `**increases**`/`**all**`/`**decreases all**` (313, 316, 320), `**increase**` (351), `**exactly**` (383), `**saving**`/`**permanent**` (443, 451, 452), `**decreases**` (760), `**permanently**` (777), `**single**` (816), `**evaluate**`/`**simulate**` (842), `**identical**`/`**different**` (847, 848); each of these should be italic, leaving bold for the genuine definitions the lecture does mark well (115, 116, 120, 158, 269, 279)"},
-    {"rule": "qe-writing-002", "count": 7, "lines": [94, 101, 269, 441, 449, 753, 774],
-     "detail": "line 441-447 is a single 71-word sentence covering the shock, the consumer's response, the saving decision, the future taxes and the government's bond issuance; 449 is 51 words, 753-757 is 59 words, 269-273 is 46, 101 is 42, 94 is 40 and 774-777 is 39 - the pattern is one sentence per causal chain instead of one sentence per link, and every one of these splits at a comma into two or three sentences"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [820, 869],
-     "detail": "the last code cell in the lecture is at 805, but two sections after it promise computations that never run: 820-844 lays out a four-step procedure for building a single shared $\\{y_t\\}$ realization and using it to evaluate both decision rules, and 852-870 derives $a_{t+1}$ from the $\\epsilon$ history and then says \"We can verify that we recover the same $\\{a_t\\}$ sequence computed earlier\" - no verification, and no simulation of the shared path, appears anywhere in the file"},
-    {"rule": "qe-code-001", "count": 3, "lines": [618, 731, 770],
-     "detail": "inline comments at 618 (`1e-12]]) # put penalty on debt`) and 731 (`J = 5 # Number of coefficients that we want`) are preceded by one space where PEP8 asks for two; line 770 writes `[0, J-1]` without spaces round the subtraction while the same cell spaces every other operator"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [796],
-     "detail": "the experiment the lecture exists to display - two consumers with identical income and different information - is drawn as two separate single-axis figures at 796-803 and 805-812, each with its own independent vertical scale and its own title, so the consumption paths the reader is asked to compare are never on the same axes; the same is true of the impulse responses at 746 and 766"}
+    {
+      "rule": "qe-writing-005",
+      "count": 21,
+      "lines": [
+        42,
+        62,
+        63,
+        80,
+        140,
+        275,
+        313,
+        316,
+        320,
+        351,
+        383,
+        443,
+        451,
+        452,
+        497,
+        760,
+        777,
+        816,
+        842,
+        847,
+        848
+      ],
+      "detail": "bold is the lecture's emphasis marker and italic is essentially unused - the whole file contains 2 italic spans against roughly 50 bold ones, and at least 21 of the bold spans emphasise an ordinary word rather than define a term: `**regardless**` (42), `**today's**`/`**future**` (62, 63, 80), `**same**` (140, 275, 497), `**increases**`/`**all**`/`**decreases all**` (313, 316, 320), `**increase**` (351), `**exactly**` (383), `**saving**`/`**permanent**` (443, 451, 452), `**decreases**` (760), `**permanently**` (777), `**single**` (816), `**evaluate**`/`**simulate**` (842), `**identical**`/`**different**` (847, 848); each of these should be italic, leaving bold for the genuine definitions the lecture does mark well (115, 116, 120, 158, 269, 279)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 7,
+      "lines": [
+        94,
+        101,
+        269,
+        441,
+        449,
+        753,
+        774
+      ],
+      "detail": "line 441-447 is a single 71-word sentence covering the shock, the consumer's response, the saving decision, the future taxes and the government's bond issuance; 449 is 51 words, 753-757 is 59 words, 269-273 is 46, 101 is 42, 94 is 40 and 774-777 is 39 - the pattern is one sentence per causal chain instead of one sentence per link, and every one of these splits at a comma into two or three sentences"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        820,
+        869
+      ],
+      "detail": "the last code cell in the lecture is at 805, but two sections after it promise computations that never run: 820-844 lays out a four-step procedure for building a single shared $\\{y_t\\}$ realization and using it to evaluate both decision rules, and 852-870 derives $a_{t+1}$ from the $\\epsilon$ history and then says \"We can verify that we recover the same $\\{a_t\\}$ sequence computed earlier\" - no verification, and no simulation of the shared path, appears anywhere in the file"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        618,
+        731,
+        770
+      ],
+      "detail": "inline comments at 618 (`1e-12]]) # put penalty on debt`) and 731 (`J = 5 # Number of coefficients that we want`) are preceded by one space where PEP8 asks for two; line 770 writes `[0, J-1]` without spaces round the subtraction while the same cell spaces every other operator"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        796
+      ],
+      "detail": "the experiment the lecture exists to display - two consumers with identical income and different information - is drawn as two separate single-axis figures at 796-803 and 805-812, each with its own independent vertical scale and its own title, so the consumption paths the reader is asked to compare are never on the same axes; the same is true of the impulse responses at 746 and 766"
+    }
   ],
   "strengths": [
     "Code uses Unicode Greek throughout (`β`, `σϵ`, `σa` at 610-611, 628, 658, 743, 763) so the variable names read the same as the equations they implement",
@@ -32,5 +91,9 @@
   "scanner_doubts": [
     "cons_news.md:631,660 - qe-code-002 flags 2 spelled-out Greek names, but both are `beta=β` in `qe.LQ(QLQ, RLQ, ALQ1, BLQ1, C=CLQ1, beta=β)`: `beta` is the keyword-argument name in the `quantecon` LQ constructor, not a name the author chose, and the value passed is already the Unicode `β`. Both hits look like false positives.",
     "cons_news.md:485-486 - qe-writing-004 reports 8 mid-sentence capitalizations across 4 lines, but the ones at 485 (`Difference`) and 486 (`Equation Approach`) sit inside a quoted section title, \"Comparison with the Difference Equation Approach\", which is correctly capitalised as a title. Three of the eight hits look like false positives."
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "56fbf746574ecb370360dbd8c2e95c74d01e7570"
+  }
 }

@@ -2,18 +2,78 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "five_preferences",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 6, "lines": [653, 733, 1146, 1158, 1279, 1750],
-     "detail": "prose and figures disagree in five places, and one block of the lecture is a set of notes to the author. (a) 1143-1155 is billed at 1141 as \"a brief literary description of the method we use\" for the figure just drawn, but its **Parameters** list gives \"Penalty parameter $θ=2$\" where the cell at 1060-1100 sets `θ = 1.`, and it omits η entirely (`η = 0.12` at 1067); θ=2 is the value of the *next* figure (1192). (b) 1279-1284 and 1310-1314 are figure captions stranded in the body text, and both describe curves that are not drawn: each lists \"*ex post* Bayesian (dotted lines)\" preferences, and neither the cell at 1231-1251 nor the one at 1342-1357 plots an ex post Bayesian curve or any dotted line - 1342-1357 also has no expected-utility curve, which 1312 says is there. (c) 733 calls the entropy bound \"the horizontal dotted line at an entropy level of $\\eta = .25$\" while 854-855 calls the same object \"the entropy constraint dashed vertical line\", and the code (766, 824) draws it as a `fill_between` band with no line at all. (d) 1750-1751 says \"expected utility is on the co-ordinate axis while entropy is on the ordinate axis\", and 1755, 1759, 1764 and 1773 then say \"the ordinate axis\" four more times meaning the horizontal one - the cell at 1741-1747 puts η on x and expected utility on y, so the terminology is inverted throughout the passage. (e) 648-658 sets the reader in the left panel at 650 and then describes the right panel's green dot at 653 (\"the mathematical expectation of $\\exp(-u(c)/\\theta)$\"), and 658 writes the inverse transformation as $\\theta\\log E[\\cdot]$, dropping the minus sign that {eq}`tom14` and the code at 607 both carry. (f) 1158-1172 leaves development notes in the published text: \"It seems that the constraint problem is hard to solve in its original form\", \"**Conjecture:** when our numerical method fails it because the derivative of the objective doesn't exist\", \"**Remark:** It is tricky to get the algorithm to work properly for all values of $c_1$. In particular, parameters were chosen with [graduate student descent]\" - joined at 1254 by \"which confirms that the code seems to be working properly\""},
-    {"rule": "qe-writing-005", "count": 9, "lines": [166, 864, 882, 1125, 1143, 1316],
-     "detail": "bold is doing three different jobs. Correctly, it marks definitions (**expected utility preferences** 342, **constraint preferences** 356, **multiplier preferences** 461, **risk-sensitivity** 516, **moment generating function** 673, **undominated** 893). It is also used as a run-in heading nine times where a `###` heading or an admonition is the MyST device - **Remark:** (166, 1158, 1172), **Kink at 45 degree line** (1125), **Parameters** (1143), **Algorithm:** (1150), **Conjecture:** (1170), **Tangent indifference curves off 45 degree line** (1175), **Figure 2.7:** (1316), **Figure 2.8:** (1379). And it is used for plain emphasis, which the rule assigns to italic: **set** (142), **increase** (873), **fixed numbers** (1132), **pessimism** (888), **any** (1595). Line 882 sets an entire quoted sentence in bold and indents it with two `\\quad`s in math mode: \"**$\\quad \\quad$ The probability of anything happening is in inverse ratio to its desirability.**\". The reverse error also appears: 862-864 bolds **concern about misspecification** and **ambiguity** and then italicises *aversion to model misspecification* in the same sentence, though all three are terms being introduced"},
-    {"rule": "qe-code-001", "count": 12, "lines": [132, 230, 577, 746, 1000, 1026],
-     "detail": "203 of the file's lines carry trailing whitespace, including inside docstrings (90, 93, 126) and after `else:` (131, 1020, 1023); 26 statements end in a semicolon to suppress Jupyter output (230-232, 558-562, 617, 631, 645, 771-772, 831-832, 1117, 1122, 1246, 1251, 1357, 1436, 1744-1747, 1856, 1896) while equivalent cells elsewhere (1581, 1589) do not, so the convention is neither consistent nor PEP8's. 132 writes `c ** (1 - α)` with spaces around the exponentiation the rule explicitly asks to be written `a**b`. 577 is `θ= 0.8`, with the space on the wrong side of the operator. 1026 and 1054 are bare `except:` clauses, and they are load-bearing - they are what turns a failed root-find into `np.nan`, so a typo inside the `try` would be silently reported as non-convergence. 1000 assigns `Δ = ent_val - η` and never uses it; 1002 recomputes the same expression to return it. 746 writes `η_line = np.ones_like(π_hat_0_vals.size) * η`, and `np.ones_like` of a Python int returns a 0-dimensional array, so this produces a scalar that happens to broadcast where `np.full(π_hat_0_vals.size, η)` was meant. Several lines run past any reasonable width (828, 965, 1007, 1089, 1211, 1218)"},
-    {"rule": "qe-math-009", "count": 4, "lines": [148, 464, 571, 697],
-     "detail": "the risk-sensitivity operator is written three ways for one object: `{\\sf T}` in seventeen places (464, 513, 516, 526, 565, 567, 665, 667, 690, 693, 700, 1608, 1622, 1633, 1637, 1778, 1780), `$\\sf{T}$` at 571 - where `\\sf` is a font switch, so the braces do not do what the author intends - and `\\mathbf{T}` in the axis label at 560, which is what the reader of the figure actually sees. A plain $T$ would carry the same meaning and would match the code, which names it `T_θ_factory` and `T_θ` (97, 102, 1733). The state space is `{\\cal I}` at 148 although the lecture immediately uses a plain $I$ for its cardinality on the same line and everywhere after (151, 359, 371, 470), and the normal distribution gets two spellings, `{\\mathcal N}` at 697 and `{\\cal N}` at 1901. The multi-line displays are also built with plain-TeX constructs where the modern ones are simpler and shorter: `& = &` with `\\cr` at 435-441 and 448-452, and `\\nonumber` (which does nothing inside `aligned`) at 1608-1610"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [53, 1139, 1170, 1787, 1820],
-     "detail": "the text has not had a proofreading pass, and several sentences do not parse. 1139: \"The code for generating the preceding figure is somewhat intricate we formulate a root finding problem for finding indifference curves\" - two clauses fused with no conjunction. 1170: \"when our numerical method fails it because the derivative of the objective doesn't exist\" - the verb is missing. 53: \"We begin with some that we'll use to create some graphs\" - a noun is missing. 1787-1790 is 50 words that also drop two words and a space: \"The slope of straight line depicting a bound is $-\\theta$ and the projection of the point of tangency with the curved depicting the lower bound of expected utility is the entropy associated with that $\\theta$ ... in the constraint problem .\". 1820 runs a citation into the next word, \"{cite}`BHS_2009`describe\". And single-word typos change meaning in five more places: \"misppecification\" (335), \"The green lot\" for \"dot\" (653), \"constinuent\" (667), \"multipler\" (890), \"Constuct\"/\"Conustruct\" (1070, 1196)"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [69, 226, 1150],
-     "detail": "the Overview promises at 47 that \"this lecture also describes some interesting code for computing and graphing some representations of indifference curves, utility functions, and related objects\", and then every one of the thirty-odd code cells is tagged `hide-input` (69, 83, 196, 223, 243, 266, 529, 555, 574, 611, 738, 762, 781, 803, 946, 1061, 1103, 1189, 1232, 1319, 1343, 1382, 1408, 1483, 1577, 1585, 1648, 1708, 1729, 1739, 1849, 1861, 1883), so the code the reader is told to look at is collapsed by default. Second, the lecture contains no admonition directive in 1921 lines, although it writes eight bold run-in blocks that are exactly what `{note}` and `{admonition}` render - the Remarks at 166, 1158 and 1172, the Conjecture at 1170, and the Parameters/Algorithm pair at 1143-1155. Third, the twelve figures are captioned by hand or not at all: `caption: 'Figure 1'` at 226 is the only mystnb caption in the file, 1316 and 1379 carry the source book's numbers as bold text (\"**Figure 2.7:**\", \"**Figure 2.8:**\"), which mean nothing here, and three paragraphs that read as captions (1279-1284, 1310-1314, 1750-1773) are left floating in the body instead"}
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        653,
+        733,
+        1146,
+        1158,
+        1279,
+        1750
+      ],
+      "detail": "prose and figures disagree in five places, and one block of the lecture is a set of notes to the author. (a) 1143-1155 is billed at 1141 as \"a brief literary description of the method we use\" for the figure just drawn, but its **Parameters** list gives \"Penalty parameter $θ=2$\" where the cell at 1060-1100 sets `θ = 1.`, and it omits η entirely (`η = 0.12` at 1067); θ=2 is the value of the *next* figure (1192). (b) 1279-1284 and 1310-1314 are figure captions stranded in the body text, and both describe curves that are not drawn: each lists \"*ex post* Bayesian (dotted lines)\" preferences, and neither the cell at 1231-1251 nor the one at 1342-1357 plots an ex post Bayesian curve or any dotted line - 1342-1357 also has no expected-utility curve, which 1312 says is there. (c) 733 calls the entropy bound \"the horizontal dotted line at an entropy level of $\\eta = .25$\" while 854-855 calls the same object \"the entropy constraint dashed vertical line\", and the code (766, 824) draws it as a `fill_between` band with no line at all. (d) 1750-1751 says \"expected utility is on the co-ordinate axis while entropy is on the ordinate axis\", and 1755, 1759, 1764 and 1773 then say \"the ordinate axis\" four more times meaning the horizontal one - the cell at 1741-1747 puts η on x and expected utility on y, so the terminology is inverted throughout the passage. (e) 648-658 sets the reader in the left panel at 650 and then describes the right panel's green dot at 653 (\"the mathematical expectation of $\\exp(-u(c)/\\theta)$\"), and 658 writes the inverse transformation as $\\theta\\log E[\\cdot]$, dropping the minus sign that {eq}`tom14` and the code at 607 both carry. (f) 1158-1172 leaves development notes in the published text: \"It seems that the constraint problem is hard to solve in its original form\", \"**Conjecture:** when our numerical method fails it because the derivative of the objective doesn't exist\", \"**Remark:** It is tricky to get the algorithm to work properly for all values of $c_1$. In particular, parameters were chosen with [graduate student descent]\" - joined at 1254 by \"which confirms that the code seems to be working properly\""
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 9,
+      "lines": [
+        166,
+        864,
+        882,
+        1125,
+        1143,
+        1316
+      ],
+      "detail": "bold is doing three different jobs. Correctly, it marks definitions (**expected utility preferences** 342, **constraint preferences** 356, **multiplier preferences** 461, **risk-sensitivity** 516, **moment generating function** 673, **undominated** 893). It is also used as a run-in heading nine times where a `###` heading or an admonition is the MyST device - **Remark:** (166, 1158, 1172), **Kink at 45 degree line** (1125), **Parameters** (1143), **Algorithm:** (1150), **Conjecture:** (1170), **Tangent indifference curves off 45 degree line** (1175), **Figure 2.7:** (1316), **Figure 2.8:** (1379). And it is used for plain emphasis, which the rule assigns to italic: **set** (142), **increase** (873), **fixed numbers** (1132), **pessimism** (888), **any** (1595). Line 882 sets an entire quoted sentence in bold and indents it with two `\\quad`s in math mode: \"**$\\quad \\quad$ The probability of anything happening is in inverse ratio to its desirability.**\". The reverse error also appears: 862-864 bolds **concern about misspecification** and **ambiguity** and then italicises *aversion to model misspecification* in the same sentence, though all three are terms being introduced"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 12,
+      "lines": [
+        132,
+        230,
+        577,
+        746,
+        1000,
+        1026
+      ],
+      "detail": "203 of the file's lines carry trailing whitespace, including inside docstrings (90, 93, 126) and after `else:` (131, 1020, 1023); 26 statements end in a semicolon to suppress Jupyter output (230-232, 558-562, 617, 631, 645, 771-772, 831-832, 1117, 1122, 1246, 1251, 1357, 1436, 1744-1747, 1856, 1896) while equivalent cells elsewhere (1581, 1589) do not, so the convention is neither consistent nor PEP8's. 132 writes `c ** (1 - α)` with spaces around the exponentiation the rule explicitly asks to be written `a**b`. 577 is `θ= 0.8`, with the space on the wrong side of the operator. 1026 and 1054 are bare `except:` clauses, and they are load-bearing - they are what turns a failed root-find into `np.nan`, so a typo inside the `try` would be silently reported as non-convergence. 1000 assigns `Δ = ent_val - η` and never uses it; 1002 recomputes the same expression to return it. 746 writes `η_line = np.ones_like(π_hat_0_vals.size) * η`, and `np.ones_like` of a Python int returns a 0-dimensional array, so this produces a scalar that happens to broadcast where `np.full(π_hat_0_vals.size, η)` was meant. Several lines run past any reasonable width (828, 965, 1007, 1089, 1211, 1218)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        148,
+        464,
+        571,
+        697
+      ],
+      "detail": "the risk-sensitivity operator is written three ways for one object: `{\\sf T}` in seventeen places (464, 513, 516, 526, 565, 567, 665, 667, 690, 693, 700, 1608, 1622, 1633, 1637, 1778, 1780), `$\\sf{T}$` at 571 - where `\\sf` is a font switch, so the braces do not do what the author intends - and `\\mathbf{T}` in the axis label at 560, which is what the reader of the figure actually sees. A plain $T$ would carry the same meaning and would match the code, which names it `T_θ_factory` and `T_θ` (97, 102, 1733). The state space is `{\\cal I}` at 148 although the lecture immediately uses a plain $I$ for its cardinality on the same line and everywhere after (151, 359, 371, 470), and the normal distribution gets two spellings, `{\\mathcal N}` at 697 and `{\\cal N}` at 1901. The multi-line displays are also built with plain-TeX constructs where the modern ones are simpler and shorter: `& = &` with `\\cr` at 435-441 and 448-452, and `\\nonumber` (which does nothing inside `aligned`) at 1608-1610"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        53,
+        1139,
+        1170,
+        1787,
+        1820
+      ],
+      "detail": "the text has not had a proofreading pass, and several sentences do not parse. 1139: \"The code for generating the preceding figure is somewhat intricate we formulate a root finding problem for finding indifference curves\" - two clauses fused with no conjunction. 1170: \"when our numerical method fails it because the derivative of the objective doesn't exist\" - the verb is missing. 53: \"We begin with some that we'll use to create some graphs\" - a noun is missing. 1787-1790 is 50 words that also drop two words and a space: \"The slope of straight line depicting a bound is $-\\theta$ and the projection of the point of tangency with the curved depicting the lower bound of expected utility is the entropy associated with that $\\theta$ ... in the constraint problem .\". 1820 runs a citation into the next word, \"{cite}`BHS_2009`describe\". And single-word typos change meaning in five more places: \"misppecification\" (335), \"The green lot\" for \"dot\" (653), \"constinuent\" (667), \"multipler\" (890), \"Constuct\"/\"Conustruct\" (1070, 1196)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        69,
+        226,
+        1150
+      ],
+      "detail": "the Overview promises at 47 that \"this lecture also describes some interesting code for computing and graphing some representations of indifference curves, utility functions, and related objects\", and then every one of the thirty-odd code cells is tagged `hide-input` (69, 83, 196, 223, 243, 266, 529, 555, 574, 611, 738, 762, 781, 803, 946, 1061, 1103, 1189, 1232, 1319, 1343, 1382, 1408, 1483, 1577, 1585, 1648, 1708, 1729, 1739, 1849, 1861, 1883), so the code the reader is told to look at is collapsed by default. Second, the lecture contains no admonition directive in 1921 lines, although it writes eight bold run-in blocks that are exactly what `{note}` and `{admonition}` render - the Remarks at 166, 1158 and 1172, the Conjecture at 1170, and the Parameters/Algorithm pair at 1143-1155. Third, the twelve figures are captioned by hand or not at all: `caption: 'Figure 1'` at 226 is the only mystnb caption in the file, 1316 and 1379 carry the source book's numbers as bold text (\"**Figure 2.7:**\", \"**Figure 2.8:**\"), which mean nothing here, and three paragraphs that read as captions (1279-1284, 1310-1314, 1750-1773) are left floating in the body instead"
+    }
   ],
   "strengths": [
     "The five orderings are named once in the Overview (30-34) and then given one section each in exactly that order (340, 354, 459, 508, 707), each opening in the same form - \"A decision maker is said to have **X preferences** when he ranks plans $c$ according to\" (342, 356, 461, 709) - so the parallel structure the lecture is built on is visible in the table of contents",
@@ -36,5 +96,9 @@
   ],
   "scanner_doubts": [
     "five_preferences.md:166 - this lecture's Math 10/10 and Code 10/10 and its qe-writing-008 count of 24 are all understated, because a single unbalanced backtick in the narrative blinds the lexer over half the file. Line 166 writes \"the expected value under the $\\pi$ distribution of the product of $x_i$ times the `shock'  $m_i$\", opening an inline-code span with a backtick and closing it with an apostrophe. `_resolve_inline` in tools/qestyle_lex.py concatenates every narrative line into one stream and runs `STREAM_CODE_RE` over it, so that unmatched backtick pairs with the next backtick hundreds of lines later, and each subsequent `{cite}`/`{eq}` role backtick then pairs with the wrong neighbour. Measured: 381 of the 798 narrative lines come back entirely NUL-masked, and only 18 inline math spans are recovered from the whole lecture. Replacing that one character (the backtick before \"shock\" becomes an apostrophe) and re-lexing drops the fully masked lines from 381 to 2, recovers 318 inline spans, and changes four counts: qe-math-001 0 to 1 (line 1146 writes `$θ=2$`, a unicode theta inside math), qe-math-010 (proposed) 0 to 1 (line 658, bare `E\\left[`), qe-math-011 (proposed) 0 to 2 (line 697 `{\\mathcal N}` and line 1901 `{\\cal N}`, both after `\\sim`), and qe-writing-008 24 to 103. The lecture typo should be fixed, but the fix I would ask for is in the lexer: an inline-code span should not be allowed to run across a blank line, since `STREAM_CODE_RE`'s `\\n(?!\\s*\\n)` guard cannot fire - blank lines are dropped when the narrative stream is built, so consecutive paragraphs are joined by a single newline. Bounding the span the way `STREAM_MATH_RE` bounds its own (a length cap, plus a real paragraph break) would contain the damage to one paragraph. I checked the whole corpus for the same signature: only three lectures have an odd number of backticks in their narrative lines - this one, and `cross_product_trick` in lecture-dp and lecture-python.myst (3 backticks, but no lines lost) - so the blast radius is this file, and a lexer guard would close it for good"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "d565a3bd5473263e04407b67cf1d000a96e54a78"
+  }
 }

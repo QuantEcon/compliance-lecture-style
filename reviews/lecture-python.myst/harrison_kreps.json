@@ -2,14 +2,45 @@
   "series": "lecture-python.myst",
   "lecture": "harrison_kreps",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 4, "lines": [32, 155, 185, 460],
-     "detail": "line 460 packs three errors into one sentence: 'Notice from the sixth row of that the pessimistic price $p_o$ is lower than the homogeneous belief prices' - the noun after 'of' is missing, the pessimistic price is $p_p$ not $p_o$, and it is the fourth row of the table, not the sixth. '### Ownership rights' opens at 155 by restating what 97-101 have just said about entitlement to the next dividend and the right to resell; '### Optimism and pessimism' restates at 185-188 what 129-131 and 147-151 have already established, stationary distributions included. Line 32 reads 'this lecture uses following libraries'"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [219, 400],
-     "detail": "the lecture has no figures at all, and its central object is six price functions over a two-state space - exactly the comparison a single grouped bar chart or a pair of step plots would make instantly legible. The summary table at 219-226 is explained row by row over the following 300 lines with the reader holding six numbers in their head, and the resale-option story at 396-402 ('the asset changes hands whenever the state changes') is a simulated state path with holdings marked, which the `quantecon` MarkovChain already imported at 57 could generate in a few lines"},
-    {"rule": "qe-code-001", "count": 3, "lines": [408, 421, 585],
-     "detail": "the two solver signatures under-indent their continuation line to 28 spaces against a visual indent of 30 (408, 476; E128) and line 421 then over-indents the closing `axis=0)` of the same call (E127), while the equivalent call at 489 aligns it correctly - the same expression is laid out two ways in one file. Line 585 names a variable `dividendreturn` and 581-583 use `qopt` and `qpess`, none of which is the snake_case PEP8 asks for"},
-    {"rule": "qe-math-009", "count": 2, "lines": [253, 323],
-     "detail": "line 323 writes `$max$` in prose, which renders as three italic letters rather than the operator - `\\max` is used correctly inside the displays at 313 and 352, so the inline form is inconsistent with the lecture's own math. Matrix rows are separated by `\\cr` at 253 and 266-267 but by `\\\\` at 114-115 and 124-125, two spellings of one thing in the same file"}
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        32,
+        155,
+        185,
+        460
+      ],
+      "detail": "line 460 packs three errors into one sentence: 'Notice from the sixth row of that the pessimistic price $p_o$ is lower than the homogeneous belief prices' - the noun after 'of' is missing, the pessimistic price is $p_p$ not $p_o$, and it is the fourth row of the table, not the sixth. '### Ownership rights' opens at 155 by restating what 97-101 have just said about entitlement to the next dividend and the right to resell; '### Optimism and pessimism' restates at 185-188 what 129-131 and 147-151 have already established, stationary distributions included. Line 32 reads 'this lecture uses following libraries'"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        219,
+        400
+      ],
+      "detail": "the lecture has no figures at all, and its central object is six price functions over a two-state space - exactly the comparison a single grouped bar chart or a pair of step plots would make instantly legible. The summary table at 219-226 is explained row by row over the following 300 lines with the reader holding six numbers in their head, and the resale-option story at 396-402 ('the asset changes hands whenever the state changes') is a simulated state path with holdings marked, which the `quantecon` MarkovChain already imported at 57 could generate in a few lines"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        408,
+        421,
+        585
+      ],
+      "detail": "the two solver signatures under-indent their continuation line to 28 spaces against a visual indent of 30 (408, 476; E128) and line 421 then over-indents the closing `axis=0)` of the same call (E127), while the equivalent call at 489 aligns it correctly - the same expression is laid out two ways in one file. Line 585 names a variable `dividendreturn` and 581-583 use `qopt` and `qpess`, none of which is the snake_case PEP8 asks for"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        253,
+        323
+      ],
+      "detail": "line 323 writes `$max$` in prose, which renders as three italic letters rather than the operator - `\\max` is used correctly inside the displays at 313 and 352, so the inline form is inconsistent with the lecture's own math. Matrix rows are separated by `\\cr` at 253 and 266-267 but by `\\\\` at 114-115 and 124-125, two spellings of one thing in the same file"
+    }
   ],
   "strengths": [
     "The table-first structure works: all six price functions are tabulated at 219-226 with a legend naming each one, followed by 'We'll explain these values and how they are calculated one row at a time' (237) - and the lecture then does exactly that, so the reader always knows where in the argument they are",
@@ -27,5 +58,9 @@
     "Tidy the code: fix the continuation indents at 408, 421 and 476; rename `dividendreturn`, `qopt` and `qpess`; replace the three Title Case docstrings ('Function to Solve Single Beliefs', 277, 410, 478) with a line saying what is returned; and fold the three near-identical max/min iterations at 419-429 and 487-489 into one helper",
     "Sweep the 30 double-space runs (78, 97, 119, 129, 131, 174, 177, 202, 214, 216, ...), split the two-sentence footnote paragraph at 621, and close the gap in 'investors(i.e.,' at 544"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "7fff2156d8682f9bb1e73be2d6d1ac86a825c0e5"
+  }
 }

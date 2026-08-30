@@ -2,16 +2,61 @@
   "series": "lecture-dp",
   "lecture": "calvo_machine_learn",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 5, "lines": [18, 24, 59, 72, 389],
-     "detail": "five concept names are wrapped in double backticks and so render as inline code rather than as defined terms: ``machine learning`` (18 and again 389), ``dynamic programming squared`` (24), ``gradient descent`` (59), ``artificial intelligence`` (72). None is a code identifier. The file itself shows what these should look like - '**machine learning** approach' at 48, '**human intelligence**' and '**artificial intelligence**' at 1167 - so the same terms appear in two different formats within one lecture, and the code font wrongly suggests the reader should look for a function of that name"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [383, 843],
-     "detail": "line 383 sends the reader to a formula that does not exist: 'where $\\tilde \\theta_t, \\ t = 0, 1, \\ldots, T-1$ satisfies formula (1)'. Nothing in this lecture is numbered (1) - its equations carry labels (`eq_grad_old1`, `eq:inflation101`, `eq:Ramseyvalue`, `eq:valueformula101`), and the intended target is presumably {eq}`eq:inflation101`. Second, the truncated objective is written two incompatible ways within the same lecture: at 379-380 the tail term is $(h_0 + h_1\\bar\\mu + h_2\\bar\\mu^2 - \\frac{c}{2}\\bar\\mu^2)$, while at 841-845 the same tail is $(h_0 + h_1\\theta_T + h_2\\theta_T^2 - \\frac{c}{2}\\mu_T^2)$; then 860, 865, 870 and 878 equate infinite sums $\\sum_{t=0}^\\infty$ to finite $(T+1)$-dimensional quadratic forms. A reader following the affine-quadratic derivation - the whole point of the second, 'less lazy' approach - has to guess which convention is in force at each step"},
-    {"rule": "qe-math-009", "count": 3, "lines": [865, 870, 872],
-     "detail": "the diagonal matrix built from $\\vec\\beta$ is written as a vector times an identity: $B^{T}(h_2 \\cdot \\vec{\\beta} \\cdot \\mathbf{I})B$ at 865, $(\\frac{c}{2} \\cdot \\vec{\\beta} \\cdot \\mathbf{I})$ at 870, and again at 872. A vector dotted with an identity matrix is not a defined product, and the object meant - $\\operatorname{diag}(\\vec\\beta)$ - is both simpler to read and correct. Fixing this also removes three of the four `\\mathbf` uses the mechanical check flags"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [46, 391, 417, 1184, 1191, 1328],
-     "detail": "line 46 has 'money growh rates'; line 391 has 'answers will agree with those found obtained by other more structured methods'; line 417 doubles a clause - 'compare the results we obtain here to those that we obtain in those obtained in this quantecon lecture'; line 1184 reads 'it will worthwhile to study the reasoning that let Chang {cite}`chang1998credible` to choose' (missing 'be', and 'let ... to choose' for 'led ... to choose'); line 1191 has 'inflation at time $t$ is determined $\\{\\mu_s\\}_{s=t}^\\infty$' with the preposition missing; line 1328 has 'the peak of the function quadratic function'. Line 1163 is a seventh of the same kind and a notation slip besides - 'both of them converge from above to the same constant $\\vec \\mu$' uses the vector symbol for what the rest of the lecture calls $\\bar\\mu$"},
-    {"rule": "qe-code-001", "count": 4, "lines": [556, 591, 602, 1131],
-     "detail": "line 556 writes `λ ** jnp.arange(T + 1)` with spaces around the exponentiation operator while line 563 seven lines below writes `λ**(T - jnp.arange(T))` and 574 writes `α**2` tight - the rule asks for the tight form; line 560 writes `λ_powers[:T-t]` unspaced. Line 591 runs to about 89 characters (E501). Line 602 puts one space before an inline comment and the comment says nothing: `print(...) # good!` (E261). Lines 1131, 1133 and 1317 write `max(Ts)*0.07` unspaced immediately after a spaced `+` in the same expression. Trailing whitespace is scattered through the JAX cells (554, 557, 561, 564, 566, 576, 578, 582, 584, 587, 589, 592)"}
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        18,
+        24,
+        59,
+        72,
+        389
+      ],
+      "detail": "five concept names are wrapped in double backticks and so render as inline code rather than as defined terms: ``machine learning`` (18 and again 389), ``dynamic programming squared`` (24), ``gradient descent`` (59), ``artificial intelligence`` (72). None is a code identifier. The file itself shows what these should look like - '**machine learning** approach' at 48, '**human intelligence**' and '**artificial intelligence**' at 1167 - so the same terms appear in two different formats within one lecture, and the code font wrongly suggests the reader should look for a function of that name"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        383,
+        843
+      ],
+      "detail": "line 383 sends the reader to a formula that does not exist: 'where $\\tilde \\theta_t, \\ t = 0, 1, \\ldots, T-1$ satisfies formula (1)'. Nothing in this lecture is numbered (1) - its equations carry labels (`eq_grad_old1`, `eq:inflation101`, `eq:Ramseyvalue`, `eq:valueformula101`), and the intended target is presumably {eq}`eq:inflation101`. Second, the truncated objective is written two incompatible ways within the same lecture: at 379-380 the tail term is $(h_0 + h_1\\bar\\mu + h_2\\bar\\mu^2 - \\frac{c}{2}\\bar\\mu^2)$, while at 841-845 the same tail is $(h_0 + h_1\\theta_T + h_2\\theta_T^2 - \\frac{c}{2}\\mu_T^2)$; then 860, 865, 870 and 878 equate infinite sums $\\sum_{t=0}^\\infty$ to finite $(T+1)$-dimensional quadratic forms. A reader following the affine-quadratic derivation - the whole point of the second, 'less lazy' approach - has to guess which convention is in force at each step"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        865,
+        870,
+        872
+      ],
+      "detail": "the diagonal matrix built from $\\vec\\beta$ is written as a vector times an identity: $B^{T}(h_2 \\cdot \\vec{\\beta} \\cdot \\mathbf{I})B$ at 865, $(\\frac{c}{2} \\cdot \\vec{\\beta} \\cdot \\mathbf{I})$ at 870, and again at 872. A vector dotted with an identity matrix is not a defined product, and the object meant - $\\operatorname{diag}(\\vec\\beta)$ - is both simpler to read and correct. Fixing this also removes three of the four `\\mathbf` uses the mechanical check flags"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        46,
+        391,
+        417,
+        1184,
+        1191,
+        1328
+      ],
+      "detail": "line 46 has 'money growh rates'; line 391 has 'answers will agree with those found obtained by other more structured methods'; line 417 doubles a clause - 'compare the results we obtain here to those that we obtain in those obtained in this quantecon lecture'; line 1184 reads 'it will worthwhile to study the reasoning that let Chang {cite}`chang1998credible` to choose' (missing 'be', and 'let ... to choose' for 'led ... to choose'); line 1191 has 'inflation at time $t$ is determined $\\{\\mu_s\\}_{s=t}^\\infty$' with the preposition missing; line 1328 has 'the peak of the function quadratic function'. Line 1163 is a seventh of the same kind and a notation slip besides - 'both of them converge from above to the same constant $\\vec \\mu$' uses the vector symbol for what the rest of the lecture calls $\\bar\\mu$"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        556,
+        591,
+        602,
+        1131
+      ],
+      "detail": "line 556 writes `λ ** jnp.arange(T + 1)` with spaces around the exponentiation operator while line 563 seven lines below writes `λ**(T - jnp.arange(T))` and 574 writes `α**2` tight - the rule asks for the tight form; line 560 writes `λ_powers[:T-t]` unspaced. Line 591 runs to about 89 characters (E501). Line 602 puts one space before an inline comment and the comment says nothing: `print(...) # good!` (E261). Lines 1131, 1133 and 1317 write `max(Ts)*0.07` unspaced immediately after a spaced `+` in the same expression. Trailing whitespace is scattered through the JAX cells (554, 557, 561, 564, 566, 576, 578, 582, 584, 587, 589, 592)"
+    }
   ],
   "strengths": [
     "The lecture states its own methodological bet plainly and defends the label it uses for it: 39-41 says it will proceed 'without knowing the mathematical structure imparted by dynamic programming squared' and simply pick two infinite sequences, and 48 explains that it is called machine learning precisely because it discards structure and proliferates parameters - which is honest about the point being made rather than dressing the approach up",
@@ -33,5 +78,9 @@
   "scanner_doubts": [
     "calvo_machine_learn.md, line 454 - the single `qe-code-002` hit is the keyword-argument false positive (`LQ(..., beta=self.β)`) for the seventh time in this series. It also illustrates a second problem: this exact line appears in calvo.md (931), calvo_abreu.md (422) and here, because the `ChangLQ` class is copy-pasted three times. So one authored line is contributing three hits to the corpus totals for this rule, and the same is true of every other finding inside that class. Worth knowing when reading rule-reach counts for the calvo family - deduplicating the class would reduce several counts at once without any behaviour changing.",
     "calvo_machine_learn.md, line 383 - the single `qe-math-013` hit is correct and its neighbours are worth checking. 'satisfies formula (1)' is a genuine manual reference to an equation in this lecture (it should be {eq}`eq:inflation101`), so the check fires rightly here. Contrast amss3.md line 422, where the same check fired on 'equation (42) of BEGS {cite}`BEGS1`' - a reference to another paper's numbering, which cannot be a `{eq}` label. The discriminator between the two is the presence of a `{cite}` role in the same clause; adding that test would keep this hit and drop the amss3 one."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "ef41a369fb543274c178f3780abb6723a0caac8c"
+  }
 }

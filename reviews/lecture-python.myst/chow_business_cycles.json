@@ -66,5 +66,9 @@
     "Collapse the sixteen double spaces at 34, 35, 46, 50, 304, 847, 1199, 1203, 1227, 1230 and the rest (qe-writing-008, 16 occurrences), and set `lw=2` on the plot call at 1475 (qe-fig-008)",
     "Sweep the code hygiene: strip the six trailing-whitespace lines (78, 633, 640, 1010, 1297, 1597), wrap the four over-length lines (716, 1163, 1476, 1484), align the five stray continuation indents (79, 236, 238, 282, 827), and give the second binding of `ω_peak` at 833 a distinct name - at 618-627 it is an array of peak frequencies, at 833 a scalar"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "245f0429151855bd53a0c283ce6ec81d291b1d17"
+  }
 }

@@ -2,18 +2,69 @@
   "series": "lecture-python.myst",
   "lecture": "morris_learn",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 4, "lines": [40, 238, 620, 146],
-     "detail": "two sentences are garbled in ways that change what they say. 40: \"Morris replaced Harrison and Kreps's traders with  hard-wired beliefs about the dividend stream with traders who use Bayes' Law to update their beliefs\" - the first \"with\" reads as the thing the traders are replaced by, so the sentence has to be re-parsed to recover \"traders with hard-wired beliefs ... with traders who use Bayes' Law\". 238-239: \"Fundamental valuations equal expected present values of dividends that our heterogeneous traders attach to the option of holding the asset *forever*\" - a valuation cannot attach to an option; the intended object is the present value the traders attach to holding the asset forever. 620 carries a stray word: \"opening market prices of initial public offerings seem higher than values  prices that emerge later\". And 146-147 is 48 words with \"the model\" three times in one clause (\"economic theorists reduce the set of models to a single model by imputing to all agents inside the model the same prior\"), with 142 a further 42. Smaller items in the same vein: 598 has no full stop, and the message printed at 613, \"No global optimist and speculative premium exists\", says the opposite of what it means to report"},
-    {"rule": "qe-math-009", "count": 4, "lines": [499, 104, 267, 96],
-     "detail": "the two figures use a symbol the lecture never defines. 499 and 531 label their axes $p^*(0,0,r)$ and $p^*(t/2,t,0.05)$, and 506 and 508 discuss $p^*(0,0,r)$ - but the star in this lecture belongs to $\\mu$: {prf:definition} `most_optimistic_valuation` at 249-256 defines $\\mu^*(s,t) = \\max_i \\mu_i(s,t)$, and the normalized price is plain $p(s,t,r)$ at 280. So the only notation a reader sees drawn is notation that appears nowhere in the definitions, and $p^*$ invites reading it as \"the price under the most optimistic trader\", which is not what it is. Second, the mean of trader $i$'s posterior has two names: $\\hat\\theta_i$ at 104-105, where the fundamental value is $\\sum_{j\\ge1}\\beta^j\\hat\\theta_i = \\hat\\theta_i/r$, and $\\mu_i(s,t)$ from 227 onward; $\\hat\\theta_i$ appears once and never again. Third, braces carry two jobs: they are sets at 82 ($\\{d_t\\}$), 85 ($\\{0,1\\}$), 358 ($\\max\\{\\mu_1, \\mu_2\\}$) and 548 ($\\{(a_i,b_i)\\}_{i=1}^N$), and plain grouping delimiters inside an already-bracketed expression at 267 and 375 ($\\mu^*(s,t) \\{1 + \\tilde p(s+1,t+1,r)\\}$), where parentheses would read unambiguously. And $\\mathcal{I}$ (96, 255, 319) is the lecture's only calligraphic symbol - $\\Theta$ at 146 is plain - for a set of traders that is never used as anything but an index range"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [252, 632, 53, 117],
-     "detail": "definitions are bolded in some blocks and italicised in others, including in two adjacent `prf:definition` directives. {prf:definition} `most_optimistic_valuation` italicises its own term at 252 (\"the *most optimistic fundamental valuation* is\") while {prf:definition} `speculative_premium` bolds its own at 322 (\"Define the **speculative premium** as\"), and 230 bolds **fundamental valuation** - the parent term of the one italicised at 252. The same split runs through the prose: bold for **rate-dominates** (337) and **global optimist** (349), italic for *prior distributions* (53), *posterior distributions* (54), *risk-neutral* (96), *ex dividend* (113), *heterogeneous priors* (132), *Harsanyi Common Priors Doctrine* (154) and *global optimist* again at 632 - the same term bolded at 349. Separately 117 sets an entire sentence in italic, \"*Short sales are prohibited*\", where the lecture's own correct emphasis is a single word (*can* / *cannot* at 121-122, *every* at 314, *forever* at 239)"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [300, 344, 428],
-     "detail": "the algorithm described is not the algorithm implemented. 300-309 sets out value-function iteration - \"Set $p^0(s,t,r) = 0$ for all $(s,t,r)$\", then the recursion for $p^{n+1}$, then \"The sequence $\\{p^n(s,t,r)\\}$ converges to the equilibrium price\" - and the code that follows does finite-horizon backward induction instead (365, 399-418), initialised not at zero but at a perpetuity terminal condition under the most optimistic belief (378, 402-405). Neither is wrong, but nothing links them: the note at 367-370 justifies working with finite $T$ without mentioning that the iterative scheme just described has been dropped. Second, the units shift silently. 104-105 says the fundamental value is $\\hat\\theta_i/r$; 230 says $\\mu_i(s,t)$ *is* the fundamental valuation; 280 reconciles them with $p = r\\tilde p$. {prf:theorem} `two_trader_optimist` then asserts $p(s,t,r) = \\mu_1(s,t)$ (350) - a normalized statement - and Case A verifies it in dollars, printing $\\tilde p(0,0) = 2.0$ against trader 1's perpetuity value of $2.0$ (443-448). The arithmetic is right (I checked: $\\beta/(1-\\beta) \\cdot 2/3 = 2$), but the identity stated is never the identity tested, and item 2 of the theorem reads \"In this case where $p(s,t,r) = \\mu_1(s,t)$\", which is not a sentence. Third, two labels belong to a different lecture: the anchor `(hk_go)=` at 428 is never referenced, and the lecture's only exercise is labelled `hk_ex3` (627), numbering it as the third exercise of {doc}`harrison_kreps`"},
-    {"rule": "qe-code-001", "count": 4, "lines": [484, 572, 589, 412],
-     "detail": "395 and 484 put LaTeX inside non-raw docstrings, so `\\t` is a tab escape and the docstrings are corrupted at import time: `\"\"\"Return p(s,t,r) = r \\tilde p(s,t,r) for two traders.\"\"\"` renders as `r <TAB>ilde p(s,t,r)`, and `Compute \\tilde p(s,t) for two Beta-prior traders` the same way (verified with `repr()`). Both need an `r` prefix. 572-574 breaks one expression across three lines with a trailing operator and three different indents: `conts.append(μ * ` / `(1.0 + price_array[s+1, t+1]) ` / `     + (1.0 - μ) * price_array[s, t+1])`, where the equivalent two-trader code at 414-417 uses backslash continuations and the surrounding style is neither. Three f-strings carry no placeholders (589, 613, 693), which is F541. And 412 is a whitespace-only line inside a loop body; top-level `def`s are separated by one blank line where PEP8 asks for two (385/387, 391/393), and the two nested `def`s at 420-423 have none between them"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [454, 528],
-     "detail": "the mechanism the lecture is about is never drawn. 353 (\"the identity of the most optimistic trader can switch as dividends accrue\") and 454 (\"These produce crossing posteriors, so there is no global optimist\") are the pivot of the whole argument, and no figure shows $\\mu_1(s,t)$ and $\\mu_2(s,t)$ against $t$ along a dividend path with the crossings marked - four lines of code given `posterior_mean` at 381, and the one picture that would make rate dominance and its failure visible side by side. Second, the speculative premium is defined as the gap $p(s,t,r) - \\mu^*(s,t) > 0$ (325) and never drawn as a gap: the figure at 528-533 plots the price against a horizontal line at $0.5$, which equals $\\mu^*$ only because that figure walks the symmetric path $s = t/2$ (as 543 explains); a second line for $\\mu^*(s,t)$ would show the definition directly and would survive off the symmetric path. Relatedly, Case A - the no-premium half of the lecture's central contrast - is reported as three printed numbers (443-445) while Case B gets both figures, so only one side of the result is ever seen"}
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        40,
+        238,
+        620,
+        146
+      ],
+      "detail": "two sentences are garbled in ways that change what they say. 40: \"Morris replaced Harrison and Kreps's traders with  hard-wired beliefs about the dividend stream with traders who use Bayes' Law to update their beliefs\" - the first \"with\" reads as the thing the traders are replaced by, so the sentence has to be re-parsed to recover \"traders with hard-wired beliefs ... with traders who use Bayes' Law\". 238-239: \"Fundamental valuations equal expected present values of dividends that our heterogeneous traders attach to the option of holding the asset *forever*\" - a valuation cannot attach to an option; the intended object is the present value the traders attach to holding the asset forever. 620 carries a stray word: \"opening market prices of initial public offerings seem higher than values  prices that emerge later\". And 146-147 is 48 words with \"the model\" three times in one clause (\"economic theorists reduce the set of models to a single model by imputing to all agents inside the model the same prior\"), with 142 a further 42. Smaller items in the same vein: 598 has no full stop, and the message printed at 613, \"No global optimist and speculative premium exists\", says the opposite of what it means to report"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        499,
+        104,
+        267,
+        96
+      ],
+      "detail": "the two figures use a symbol the lecture never defines. 499 and 531 label their axes $p^*(0,0,r)$ and $p^*(t/2,t,0.05)$, and 506 and 508 discuss $p^*(0,0,r)$ - but the star in this lecture belongs to $\\mu$: {prf:definition} `most_optimistic_valuation` at 249-256 defines $\\mu^*(s,t) = \\max_i \\mu_i(s,t)$, and the normalized price is plain $p(s,t,r)$ at 280. So the only notation a reader sees drawn is notation that appears nowhere in the definitions, and $p^*$ invites reading it as \"the price under the most optimistic trader\", which is not what it is. Second, the mean of trader $i$'s posterior has two names: $\\hat\\theta_i$ at 104-105, where the fundamental value is $\\sum_{j\\ge1}\\beta^j\\hat\\theta_i = \\hat\\theta_i/r$, and $\\mu_i(s,t)$ from 227 onward; $\\hat\\theta_i$ appears once and never again. Third, braces carry two jobs: they are sets at 82 ($\\{d_t\\}$), 85 ($\\{0,1\\}$), 358 ($\\max\\{\\mu_1, \\mu_2\\}$) and 548 ($\\{(a_i,b_i)\\}_{i=1}^N$), and plain grouping delimiters inside an already-bracketed expression at 267 and 375 ($\\mu^*(s,t) \\{1 + \\tilde p(s+1,t+1,r)\\}$), where parentheses would read unambiguously. And $\\mathcal{I}$ (96, 255, 319) is the lecture's only calligraphic symbol - $\\Theta$ at 146 is plain - for a set of traders that is never used as anything but an index range"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        252,
+        632,
+        53,
+        117
+      ],
+      "detail": "definitions are bolded in some blocks and italicised in others, including in two adjacent `prf:definition` directives. {prf:definition} `most_optimistic_valuation` italicises its own term at 252 (\"the *most optimistic fundamental valuation* is\") while {prf:definition} `speculative_premium` bolds its own at 322 (\"Define the **speculative premium** as\"), and 230 bolds **fundamental valuation** - the parent term of the one italicised at 252. The same split runs through the prose: bold for **rate-dominates** (337) and **global optimist** (349), italic for *prior distributions* (53), *posterior distributions* (54), *risk-neutral* (96), *ex dividend* (113), *heterogeneous priors* (132), *Harsanyi Common Priors Doctrine* (154) and *global optimist* again at 632 - the same term bolded at 349. Separately 117 sets an entire sentence in italic, \"*Short sales are prohibited*\", where the lecture's own correct emphasis is a single word (*can* / *cannot* at 121-122, *every* at 314, *forever* at 239)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        300,
+        344,
+        428
+      ],
+      "detail": "the algorithm described is not the algorithm implemented. 300-309 sets out value-function iteration - \"Set $p^0(s,t,r) = 0$ for all $(s,t,r)$\", then the recursion for $p^{n+1}$, then \"The sequence $\\{p^n(s,t,r)\\}$ converges to the equilibrium price\" - and the code that follows does finite-horizon backward induction instead (365, 399-418), initialised not at zero but at a perpetuity terminal condition under the most optimistic belief (378, 402-405). Neither is wrong, but nothing links them: the note at 367-370 justifies working with finite $T$ without mentioning that the iterative scheme just described has been dropped. Second, the units shift silently. 104-105 says the fundamental value is $\\hat\\theta_i/r$; 230 says $\\mu_i(s,t)$ *is* the fundamental valuation; 280 reconciles them with $p = r\\tilde p$. {prf:theorem} `two_trader_optimist` then asserts $p(s,t,r) = \\mu_1(s,t)$ (350) - a normalized statement - and Case A verifies it in dollars, printing $\\tilde p(0,0) = 2.0$ against trader 1's perpetuity value of $2.0$ (443-448). The arithmetic is right (I checked: $\\beta/(1-\\beta) \\cdot 2/3 = 2$), but the identity stated is never the identity tested, and item 2 of the theorem reads \"In this case where $p(s,t,r) = \\mu_1(s,t)$\", which is not a sentence. Third, two labels belong to a different lecture: the anchor `(hk_go)=` at 428 is never referenced, and the lecture's only exercise is labelled `hk_ex3` (627), numbering it as the third exercise of {doc}`harrison_kreps`"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        484,
+        572,
+        589,
+        412
+      ],
+      "detail": "395 and 484 put LaTeX inside non-raw docstrings, so `\\t` is a tab escape and the docstrings are corrupted at import time: `\"\"\"Return p(s,t,r) = r \\tilde p(s,t,r) for two traders.\"\"\"` renders as `r <TAB>ilde p(s,t,r)`, and `Compute \\tilde p(s,t) for two Beta-prior traders` the same way (verified with `repr()`). Both need an `r` prefix. 572-574 breaks one expression across three lines with a trailing operator and three different indents: `conts.append(μ * ` / `(1.0 + price_array[s+1, t+1]) ` / `     + (1.0 - μ) * price_array[s, t+1])`, where the equivalent two-trader code at 414-417 uses backslash continuations and the surrounding style is neither. Three f-strings carry no placeholders (589, 613, 693), which is F541. And 412 is a whitespace-only line inside a loop body; top-level `def`s are separated by one blank line where PEP8 asks for two (385/387, 391/393), and the two nested `def`s at 420-423 have none between them"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        454,
+        528
+      ],
+      "detail": "the mechanism the lecture is about is never drawn. 353 (\"the identity of the most optimistic trader can switch as dividends accrue\") and 454 (\"These produce crossing posteriors, so there is no global optimist\") are the pivot of the whole argument, and no figure shows $\\mu_1(s,t)$ and $\\mu_2(s,t)$ against $t$ along a dividend path with the crossings marked - four lines of code given `posterior_mean` at 381, and the one picture that would make rate dominance and its failure visible side by side. Second, the speculative premium is defined as the gap $p(s,t,r) - \\mu^*(s,t) > 0$ (325) and never drawn as a gap: the figure at 528-533 plots the price against a horizontal line at $0.5$, which equals $\\mu^*$ only because that figure walks the symmetric path $s = t/2$ (as 543 explains); a second line for $\\mu^*(s,t)$ would show the definition directly and would survive off the symmetric path. Relatedly, Case A - the no-premium half of the lecture's central contrast - is reported as three printed numbers (443-445) while Case B gets both figures, so only one side of the result is ever seen"
+    }
   ],
   "strengths": [
     "The lecture is explicit about exactly what it inherits from Harrison-Kreps and what it changes, three times over and at increasing detail: 34-40 states the substitution in one sentence, 47-56 lists the five features of Morris's environment as a bulleted contrast ending in the consequence (\"therefore they disagree about the value of the asset\"), and 90-94 repeats the contrast at the point in the model where it bites",
@@ -33,5 +84,9 @@
     "Settle bold for definitions: {prf:definition} `most_optimistic_valuation` italicises its term at 252 while the definition four blocks later bolds its own at 322, and *global optimist* is italic at 632 and bold at 349. Then reduce the whole-sentence italic at 117 to the words that need it",
     "Sweep the remaining items: rename or remove the two Harrison-Kreps labels (`(hk_go)=` at 428, `hk_ex3` at 627); close the 48 runs of double spaces and the trailing whitespace on 412 and 22 other lines; \"i.i.d.\" to \"IID\" at 82 and 104; sentence-case the H2 at 330 and the six Title Case `prf:` directive titles (249, 259, 274, 311, 334, 344) to match the lecture's own sentence-case headings; switch the author-position citations to `{cite:t}` at 158, 620 and 630, and replace the manual \"Morris (1996, Section IV)\" at 510 with a `{cite:t}` call; drop the three empty f-strings (589, 613, 693); and change the en dash in \"General N-trader extension\" (546) to a hyphen"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "b41d81da401b10a15fe6b51baa09a4662730d5ff"
+  }
 }

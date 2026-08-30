@@ -2,14 +2,51 @@
   "series": "lecture-dp",
   "lecture": "dyn_stack",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [685, 1447],
-     "detail": "line 685 says 'We'll report results of implementing this code soon' - no code has been shown at that point. The duopoly section has been pure algebra since line 58, and the first cell that builds $A$, $B$, $R$, $Q$ and calls the LQ solver is roughly 300 lines further on (around 980-1013), so 'this code' has no referent for a reader who has just been handed the matrices at 640-683. Second, the lecture ends on an uninterpreted number: the final cell (1445-1447) evaluates `vt_leader[0] + vt_follower[0] - 2 * vt_MPE[0]` with a comment saying it is 'the difference in total value between the Stackelberg and the MPE', and then the file stops. Nothing states what sign to expect or what the comparison establishes, although 1406-1411 promised it would be 'enlightening to compare equilibrium values for firms 1 and 2 under two alternative settings'"},
-    {"rule": "qe-writing-005", "count": 7, "lines": [252, 470, 476, 494, 538, 718, 813],
-     "detail": "line 252 uses bold for emphasis three times in one sentence - a component that is unstable if solved **backwards** and **stable** if solved **forwards**. Lines 470, 476, 494 and 538 use '**Subproblem 1**' and '**Subproblem 2**' as bold pseudo-headings, each label appearing twice (once to announce the decomposition, once to head the solution), where real subheadings would let the reader navigate between the statement and the solution. The **Big K, little k** device is bolded at 703, bolded again at 718 in a sentence that adds nothing to 703-706, bolded a third time at 809, and then written a fourth way at 813 as “Big $K$, little $k$” inside curly quotes - one device, four presentations"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [42, 690, 718, 1100, 1406],
-     "detail": "line 42 drops a preposition - 'our calculations are closely related to ones described [this lecture]'; lines 690-694 announce 'several reasons' and give two; lines 717-719 restate 703-706 without adding anything ('That we distinguish $\\check z_t$ from $z_t$ is part and parcel of the Big K, little k device in this instance'); line 1100 has a double space inside a figure legend string, `label='reborn  at t Stackelberg leader'`, so the extra space is rendered into the published figure rather than just sitting in the source; and 'equilbrium' is misspelled twice, at 1406 and 1410, in the heading paragraph of the lecture's concluding comparison"},
-    {"rule": "qe-code-001", "count": 3, "lines": [1005, 1097, 1098],
-     "detail": "line 1005 writes `π_matrix = (R + F. T @ Q @ F)` - a space between `F.` and `T`. It is legal Python and it works, but it is plainly a typo for `F.T`, and every other transpose in the same block is written tight (`yt[:, t].T` at 1008, `z[:, t].T` at 1421, `yt_tilde[:, t].T` at 1422). Line 1097 and 1099 write `(- F @ yt).flatten()` with a space after the unary minus. Lines 1098 and 1100 indent the continuation of `axes[0].plot(...)` by four spaces instead of aligning it with the opening delimiter (E128), where the parallel calls at 1105-1111 keep their arguments on one line"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        685,
+        1447
+      ],
+      "detail": "line 685 says 'We'll report results of implementing this code soon' - no code has been shown at that point. The duopoly section has been pure algebra since line 58, and the first cell that builds $A$, $B$, $R$, $Q$ and calls the LQ solver is roughly 300 lines further on (around 980-1013), so 'this code' has no referent for a reader who has just been handed the matrices at 640-683. Second, the lecture ends on an uninterpreted number: the final cell (1445-1447) evaluates `vt_leader[0] + vt_follower[0] - 2 * vt_MPE[0]` with a comment saying it is 'the difference in total value between the Stackelberg and the MPE', and then the file stops. Nothing states what sign to expect or what the comparison establishes, although 1406-1411 promised it would be 'enlightening to compare equilibrium values for firms 1 and 2 under two alternative settings'"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 7,
+      "lines": [
+        252,
+        470,
+        476,
+        494,
+        538,
+        718,
+        813
+      ],
+      "detail": "line 252 uses bold for emphasis three times in one sentence - a component that is unstable if solved **backwards** and **stable** if solved **forwards**. Lines 470, 476, 494 and 538 use '**Subproblem 1**' and '**Subproblem 2**' as bold pseudo-headings, each label appearing twice (once to announce the decomposition, once to head the solution), where real subheadings would let the reader navigate between the statement and the solution. The **Big K, little k** device is bolded at 703, bolded again at 718 in a sentence that adds nothing to 703-706, bolded a third time at 809, and then written a fourth way at 813 as “Big $K$, little $k$” inside curly quotes - one device, four presentations"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        42,
+        690,
+        718,
+        1100,
+        1406
+      ],
+      "detail": "line 42 drops a preposition - 'our calculations are closely related to ones described [this lecture]'; lines 690-694 announce 'several reasons' and give two; lines 717-719 restate 703-706 without adding anything ('That we distinguish $\\check z_t$ from $z_t$ is part and parcel of the Big K, little k device in this instance'); line 1100 has a double space inside a figure legend string, `label='reborn  at t Stackelberg leader'`, so the extra space is rendered into the published figure rather than just sitting in the source; and 'equilbrium' is misspelled twice, at 1406 and 1410, in the heading paragraph of the lecture's concluding comparison"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        1005,
+        1097,
+        1098
+      ],
+      "detail": "line 1005 writes `π_matrix = (R + F. T @ Q @ F)` - a space between `F.` and `T`. It is legal Python and it works, but it is plainly a typo for `F.T`, and every other transpose in the same block is written tight (`yt[:, t].T` at 1008, `z[:, t].T` at 1421, `yt_tilde[:, t].T` at 1422). Line 1097 and 1099 write `(- F @ yt).flatten()` with a space after the unary minus. Lines 1098 and 1100 indent the continuation of `axes[0].plot(...)` by four spaces instead of aligning it with the opening delimiter (E128), where the parallel calls at 1105-1111 keep their arguments on one line"
+    }
   ],
   "strengths": [
     "The two-subproblem decomposition is set up and then closed: Subproblem 1 is solved as an ordinary LQ problem yielding the Riccati equation and $F$ (500-536), Subproblem 2 is solved in closed form for the free initial jump, $x_0 = -P_{22}^{-1}P_{21}z_0$ (538-551) - and that formula reappears verbatim as the first line of the recursive representation at 725 and as `H_0_0 = -P22inv @ P21` in the code at 994, so the algebra and the implementation are visibly the same object",
@@ -32,5 +69,9 @@
     "dyn_stack.md, lines 987, 1144, 1340, 1398 - all 4 `qe-code-002` hits are the keyword-argument false positive: every one is `LQ(..., beta=β)`, where `beta` is `quantecon.LQ`'s parameter name and the value passed is the author's own Unicode `β`. This is the eighth file in the series where every qe-code-002 hit is a library keyword or an imported function name (career.md, ifp_opi.md, ifp_discrete.md, cons_news.md, discrete_dp.md, calvo.md, calvo_abreu.md, calvo_machine_learn.md and here). Across those files the rule is reporting roughly 18 hits and, as far as I can see, exactly one of them (discrete_dp.md line 933, `for beta in discount_factors`) is a name the author could change. Skipping identifiers in keyword-argument and attribute-access position would make this rule's corpus counts meaningful.",
     "dyn_stack.md, lines 42, 324, 519 - rule attribution, as in cons_news.md and calvo.md. Of the 5 `qe-link-002` hits, three target lectures that live in lecture-dp itself (`lagrangian_lqdp` at 42, `lqcontrol` at 324 and 519), so they are same-series references and belong to qe-link-001; only `rational_expectations` (814) and `markov_perf` (1411) are genuinely cross-series. This file also shows the host list is doing real damage in two directions: 42 and 1411 use `python.quantecon.org` while 324, 519 and 814 use `python-intro.quantecon.org`, and lecture-dp's intersphinx mapping contains neither `python-intro` nor a `dp` entry - so a mechanical 'convert to {doc}' fix derived from the flagged host would produce an unresolvable reference in three of the five cases.",
     "dyn_stack.md - worth recording as a positive control for the qe-math-002 heuristic, given how many false positives I reported on it elsewhere in this series. All 26 hits here are correct: $y'Ry$, $u'Qu$, $A'PA$, $B'PB$, $z_t'R_1z_t$, $\\check y_t'$ and the rest are transposes of vectors and matrices, and the check found them on matrix-like bases exactly as §9 describes. The failures I flagged in the ifp files, discrete_dp.md and the two Chang lectures all involve a single lowercase or set-valued base ($u'$, $s'$, $Z'$); nothing here suggests the check needs weakening on genuinely matrix-like bases."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "40aa128bc51d835e41f4906fdf8cb32c4b80cdb6"
+  }
 }

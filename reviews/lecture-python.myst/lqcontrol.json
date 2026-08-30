@@ -2,18 +2,70 @@
   "series": "lecture-python.myst",
   "lecture": "lqcontrol",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [109, 731, 766, 838, 1481],
-     "detail": "five breaks. (a) Four headings, two names: `#### Example 1` appears at 109 and again at 252, `#### Example 2` at 131 and again at 274 - one pair under \"The law of motion\", one under \"Preferences\" - so the TOC carries two entries called \"Example 1\" and the labelled references have to route around them (`lq_hhp` at 130 and `{ref}`studied above <lq_hhp>`` at 276 do exactly that). (b) 731 defines cumulative unanticipated income as $z_t := \\sum_{j=0}^t \\sigma w_t$ - the summation index $j$ never appears in the summand, so as written the sum is $(t+1)\\sigma w_t$; the code at 702 computes `np.cumsum(income - \\u03bc)`, i.e. $\\sum_j \\sigma w_j$. (c) 766-768 says \"we've chosen not to treat this extension in our implementation given below\", but the implementation is above it: the `LQ` interface is described at 544-563 and the model built and simulated at 634-716. (d) 838-842 joins two statements with \"In other words\" that are not restatements of each other - \"optimal policies can depend on time only if time itself is a component of the state vector $x_t$\" followed by \"In other words, there exists a fixed matrix $F$ such that $u_t = -Fx_t$ for all $t$\"; the second follows from time *not* being in the state, which the first sentence does not say. (e) `lqc_ex3` at 1480-1482 asks the reader to reproduce three figures, \"while $\\gamma$ varies between 1 and 50 (see figures)\", and the solution at 1525-1579 sets `\\u03b3 = 1` once and draws one figure - two of the three static images at 1164-1174 are never reproduced"},
-    {"rule": "qe-code-001", "count": 5, "lines": [698, 1272, 1293, 1298, 1556],
-     "detail": "the lecture builds an `LQModel` NamedTuple with `create_lq_model` and `simulate_and_plot` (635-716), and 746 makes a point of the pattern - \"Since `LQModel` is a `NamedTuple`, we can obtain the new model by copying the old one with a single field changed\" - and then not one of the three exercise solutions uses it: 1255-1319, 1372-1469 and 1525-1579 all rebuild raw parameters and re-inline the plotting. The consequence is that the twenty-line plotting block at 688-712 is copied nearly verbatim at 1297-1319 and again at 1447-1469 (same `n_rows`, `subplots_adjust(hspace=0.5)`, `bbox`, `legend_args`, `p_args`, same loop over `axes`), three copies to keep in step. The matrices are built two different ways for the same purpose: `np.array` at 661-669 in the body, bare nested lists at 1272-1283, 1391-1424 and 1542-1554 in the solutions. `time` is used as a variable name at 1293, 1442 and 1572, shadowing the standard-library module. `LQ` is called with `C` positional at 679, 1286, 1405 and 1427 but `C=C` at 1556. And the continuation lines at 699, 1308 and 1458 are indented to column 12 under a call whose opening delimiter is at column 20, so they neither align with the delimiter nor use a plain hanging indent"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [355, 889, 1164],
-     "detail": "the three static images at 1164, 1168 and 1172 are presented as a controlled comparison - 1162 says \"The only difference in parameters across the figures is the size of $\\gamma$\" - and nothing on the page says which figure is which $\\gamma$: all three `{figure}` directives have an empty body (1165, 1169, 1173), so there is no caption, and the value lives only in the file names `..._g1.png`, `..._g10.png`, `..._g50.png`. The reader is asked to compare three unlabelled images. The same emptiness applies to the two life-cycle figures at 1018 and 1088. Second, the backward-induction derivation at 355-542 is the analytical core and has no figure at all, although the object it constructs - the sequence $\\{P_t\\}$ running backwards from $R_f$ to $P_0$, and the policy sequence $\\{F_t\\}$ with it - is directly plottable, and `LQ.update_values` (561) already exposes exactly that iteration. Third, certainty equivalence (889-897) is a striking property and its only verification is \"This can be confirmed by inspecting {eq}`lq_oc_ih` or {eq}`lq_oc_cp`\" (895) - solving the same model at two values of $C$ and printing the identical $F$ is three lines and would make the claim checkable"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [861, 863, 891],
-     "detail": "there is no bold anywhere in the 1583 lines, and three of the four italic spans are definitions, which is the case the rule reserves for bold: 861 \"Equation {eq}`lq_pr_ih` is also called the *LQ Bellman equation*\", 863 \"the map that sends a given $P$ into the right-hand side ... is called the *LQ Bellman operator*\", and 891 \"have the property of *certainty equivalence*\" - each one an explicit naming of a term the lecture then reuses. Only 160 (*affine*) is emphasis and correctly italic. The rest of the lecture's defined terms get no emphasis at all and are marked with quotation marks instead - \"control\" vector (100), \"linear\" and \"quadratic\" (81), \"ideal\" quantity (141), \"loss-to-go\" (391), \"cost\" (402) - so the convention is not applied in either direction"},
-    {"rule": "qe-math-009", "count": 3, "lines": [492, 925, 1496],
-     "detail": "$m_0, m_1, m_2$ are the coefficients of the income polynomial at 925-931 and 1055, and then at 1496 the same letters become the monopoly constants, \"Letting $m_0 := (a_0 - c) / 2a_1$ and $m_1 := 1 / 2 a_1$\" - and the code carries the collision, with `m1`/`m2` as polynomial coefficients at 1264-1265 and 1383-1384 and `m0`/`m1` as monopoly constants at 1537-1538. Worse, both definitions at 1496 are missing their braces: `(a_0 - c) / 2a_1` renders as $\\tfrac{a_0-c}{2}a_1$ and `1 / 2 a_1` as $\\tfrac12 a_1$, where the code at 1537-1538 computes `(a0-c)/(2 * a1)` and `1/(2 * a1)` - the display and the code compute different things. And the trace operator is written `\\mathop{\\mathrm{trace}}` at 492, 513 and 881, where `\\mathrm{tr}` is both the conventional spelling and shorter, and the `\\mathop{}` wrapper adds nothing `\\mathrm{}` does not already give"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [335, 462, 1238],
-     "detail": "335-341 spends three paragraphs and about ninety words establishing a measurability condition and then tells the reader to ignore it: \"The fancy measure-theoretic way of saying this is that $u_t$ must be measurable with respect to the $\\sigma$-algebra generated by $x_0, w_1, w_2, \\ldots, w_t$\", then the equivalent function form, then \"(Just about every function that's useful for applications is Borel measurable, so, for the purposes of intuition, you can read that last phrase as \\\"for some function $g_t$\\\")\" - which is the whole content, and could be the whole passage. The lecture also apologises twice for its own plotting code rather than simplifying it: 1238-1239 \"We use some fancy plot commands to get a certain style -- feel free to use simpler ones\" and the comment at 1567 \"# Some fancy plotting stuff -- simplify if you prefer\"; what is being apologised for is the same six-line `bbox_to_anchor` legend block copied three times. And 462 abbreviates \"the r.h.s.\" where 101 writes \"the right-hand side\" in full for the same thing"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        109,
+        731,
+        766,
+        838,
+        1481
+      ],
+      "detail": "five breaks. (a) Four headings, two names: `#### Example 1` appears at 109 and again at 252, `#### Example 2` at 131 and again at 274 - one pair under \"The law of motion\", one under \"Preferences\" - so the TOC carries two entries called \"Example 1\" and the labelled references have to route around them (`lq_hhp` at 130 and `{ref}`studied above <lq_hhp>`` at 276 do exactly that). (b) 731 defines cumulative unanticipated income as $z_t := \\sum_{j=0}^t \\sigma w_t$ - the summation index $j$ never appears in the summand, so as written the sum is $(t+1)\\sigma w_t$; the code at 702 computes `np.cumsum(income - \\u03bc)`, i.e. $\\sum_j \\sigma w_j$. (c) 766-768 says \"we've chosen not to treat this extension in our implementation given below\", but the implementation is above it: the `LQ` interface is described at 544-563 and the model built and simulated at 634-716. (d) 838-842 joins two statements with \"In other words\" that are not restatements of each other - \"optimal policies can depend on time only if time itself is a component of the state vector $x_t$\" followed by \"In other words, there exists a fixed matrix $F$ such that $u_t = -Fx_t$ for all $t$\"; the second follows from time *not* being in the state, which the first sentence does not say. (e) `lqc_ex3` at 1480-1482 asks the reader to reproduce three figures, \"while $\\gamma$ varies between 1 and 50 (see figures)\", and the solution at 1525-1579 sets `\\u03b3 = 1` once and draws one figure - two of the three static images at 1164-1174 are never reproduced"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        698,
+        1272,
+        1293,
+        1298,
+        1556
+      ],
+      "detail": "the lecture builds an `LQModel` NamedTuple with `create_lq_model` and `simulate_and_plot` (635-716), and 746 makes a point of the pattern - \"Since `LQModel` is a `NamedTuple`, we can obtain the new model by copying the old one with a single field changed\" - and then not one of the three exercise solutions uses it: 1255-1319, 1372-1469 and 1525-1579 all rebuild raw parameters and re-inline the plotting. The consequence is that the twenty-line plotting block at 688-712 is copied nearly verbatim at 1297-1319 and again at 1447-1469 (same `n_rows`, `subplots_adjust(hspace=0.5)`, `bbox`, `legend_args`, `p_args`, same loop over `axes`), three copies to keep in step. The matrices are built two different ways for the same purpose: `np.array` at 661-669 in the body, bare nested lists at 1272-1283, 1391-1424 and 1542-1554 in the solutions. `time` is used as a variable name at 1293, 1442 and 1572, shadowing the standard-library module. `LQ` is called with `C` positional at 679, 1286, 1405 and 1427 but `C=C` at 1556. And the continuation lines at 699, 1308 and 1458 are indented to column 12 under a call whose opening delimiter is at column 20, so they neither align with the delimiter nor use a plain hanging indent"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        355,
+        889,
+        1164
+      ],
+      "detail": "the three static images at 1164, 1168 and 1172 are presented as a controlled comparison - 1162 says \"The only difference in parameters across the figures is the size of $\\gamma$\" - and nothing on the page says which figure is which $\\gamma$: all three `{figure}` directives have an empty body (1165, 1169, 1173), so there is no caption, and the value lives only in the file names `..._g1.png`, `..._g10.png`, `..._g50.png`. The reader is asked to compare three unlabelled images. The same emptiness applies to the two life-cycle figures at 1018 and 1088. Second, the backward-induction derivation at 355-542 is the analytical core and has no figure at all, although the object it constructs - the sequence $\\{P_t\\}$ running backwards from $R_f$ to $P_0$, and the policy sequence $\\{F_t\\}$ with it - is directly plottable, and `LQ.update_values` (561) already exposes exactly that iteration. Third, certainty equivalence (889-897) is a striking property and its only verification is \"This can be confirmed by inspecting {eq}`lq_oc_ih` or {eq}`lq_oc_cp`\" (895) - solving the same model at two values of $C$ and printing the identical $F$ is three lines and would make the claim checkable"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        861,
+        863,
+        891
+      ],
+      "detail": "there is no bold anywhere in the 1583 lines, and three of the four italic spans are definitions, which is the case the rule reserves for bold: 861 \"Equation {eq}`lq_pr_ih` is also called the *LQ Bellman equation*\", 863 \"the map that sends a given $P$ into the right-hand side ... is called the *LQ Bellman operator*\", and 891 \"have the property of *certainty equivalence*\" - each one an explicit naming of a term the lecture then reuses. Only 160 (*affine*) is emphasis and correctly italic. The rest of the lecture's defined terms get no emphasis at all and are marked with quotation marks instead - \"control\" vector (100), \"linear\" and \"quadratic\" (81), \"ideal\" quantity (141), \"loss-to-go\" (391), \"cost\" (402) - so the convention is not applied in either direction"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        492,
+        925,
+        1496
+      ],
+      "detail": "$m_0, m_1, m_2$ are the coefficients of the income polynomial at 925-931 and 1055, and then at 1496 the same letters become the monopoly constants, \"Letting $m_0 := (a_0 - c) / 2a_1$ and $m_1 := 1 / 2 a_1$\" - and the code carries the collision, with `m1`/`m2` as polynomial coefficients at 1264-1265 and 1383-1384 and `m0`/`m1` as monopoly constants at 1537-1538. Worse, both definitions at 1496 are missing their braces: `(a_0 - c) / 2a_1` renders as $\\tfrac{a_0-c}{2}a_1$ and `1 / 2 a_1` as $\\tfrac12 a_1$, where the code at 1537-1538 computes `(a0-c)/(2 * a1)` and `1/(2 * a1)` - the display and the code compute different things. And the trace operator is written `\\mathop{\\mathrm{trace}}` at 492, 513 and 881, where `\\mathrm{tr}` is both the conventional spelling and shorter, and the `\\mathop{}` wrapper adds nothing `\\mathrm{}` does not already give"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        335,
+        462,
+        1238
+      ],
+      "detail": "335-341 spends three paragraphs and about ninety words establishing a measurability condition and then tells the reader to ignore it: \"The fancy measure-theoretic way of saying this is that $u_t$ must be measurable with respect to the $\\sigma$-algebra generated by $x_0, w_1, w_2, \\ldots, w_t$\", then the equivalent function form, then \"(Just about every function that's useful for applications is Borel measurable, so, for the purposes of intuition, you can read that last phrase as \\\"for some function $g_t$\\\")\" - which is the whole content, and could be the whole passage. The lecture also apologises twice for its own plotting code rather than simplifying it: 1238-1239 \"We use some fancy plot commands to get a certain style -- feel free to use simpler ones\" and the comment at 1567 \"# Some fancy plotting stuff -- simplify if you prefer\"; what is being apologised for is the same six-line `bbox_to_anchor` legend block copied three times. And 462 abbreviates \"the r.h.s.\" where 101 writes \"the right-hand side\" in full for the same thing"
+    }
   ],
   "strengths": [
     "The backward induction is derived one step at a time rather than stated: 360 introduces $J_T(x) = x^\\top R_f x$ and says why (\"For reasons that will soon become clear\"), 362-391 solves the $T-1$ problem in full, 393-423 steps back to $T-2$ and explicitly says what plays the role of what (\"the value $J_{T-1}(x)$ plays a role analogous to that played by the terminal loss\"), 425-438 generalises, and only then does 440 name the result the Bellman equation - so the reader arrives at the recursion having watched it being built twice",
@@ -38,5 +90,9 @@
   "scanner_doubts": [
     "lqcontrol.md:679,1286,1405,1427,1556 - all five `qe-code-002` hits are the same shape and none is the lecture's own naming: every one is `beta=\\u03b2` inside a call to `quantecon.LQ` (`LQ(Q, R, A, B, C, beta=\\u03b2, T=T, Rf=Rf)`). `beta` there is the third-party API's parameter name; renaming it to `\\u03b2` breaks the call. The lecture in fact complies with the rule for everything it does control - `\\u03b2`, `\\u03c3`, `\\u03bc`, `\\u03b3`, `\\u03c1` at 637-641, 654-657, 1258-1265, 1529-1532 - so the measured 5 penalises it for the one thing it cannot change, and the Code score of 7.5 is entirely this. `check_code_002` (tools/qestyle_rules.py:911-926) already exempts *imported* names, but the guard at 924 is `if word in imported and not re.match(r\"\\s*=(?!=)\", ...)`: a keyword argument is followed by `=`, so it is read as an assignment and the exemption is switched off precisely where it is needed. Suggested fix: exempt `name=` when it appears inside an unclosed argument list whose callee is not defined in the lecture - the guard needs the callee, not the name, and the lexer already has the code cells to collect `def`/`class` names from. Corpus scale, measured by re-running the checker over all 348 lectures at the pinned snapshot: 122 of 447 `qe-code-002` hits are `name=` inside a call, and 112 of those (25% of all hits, across 45 lectures) are calls to a name the lecture never defines - 53 to `LQ`, 28 to `LQMarkov`, 9 to `quantecon.tauchen`, 6 to pymc's `Normal`, 6 to `dict`. By name: `beta` 84, `sigma` 11, `alpha` 6, `rho` 5, `tau` 5. Keeping the exemption callee-based rather than blanket matters: a lecture's own `def f(alpha=0.5)` is the author's choice and should still count, and the one real assignment the current guard exists to catch - `beta = np.array(...)` in `likelihood_ratio_process` - is a statement, not an argument, so it stays caught",
     "Cleared, not filed. (1) `qe-math-002` at zero is right: every transpose in the file is `^\\top` (101, 236, 258, 280, 303, 311, 372-437, 458-525, 602, 788-884, 1180, 1493) and the file contains no apostrophe or `^T` transpose at all. (2) `qe-math-014` and `qe-math-015` (proposed) do not apply - the only blackboard letters are `\\mathbb E` (15 sites) and one `\\mathbb N` at 294, there is no `\\mathbb{P}`, and no density or CDF is named. (3) `qe-fig-002` at 5 and `qe-fig-005` at 8 overlap on the same five static-image lines (1018, 1088, 1164, 1168, 1172) but they are different findings - no code, and no `:name:` - so the double appearance is correct rather than double counting; the three remaining `qe-fig-005` hits (1255, 1372, 1525) are the code-cell figures in the solutions"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "82059dbfbd8d7e36d83d97ed357021f60fdb43de"
+  }
 }

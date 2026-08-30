@@ -2,19 +2,81 @@
   "series": "lecture-dp",
   "lecture": "mccall_q",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [537, 698],
-     "detail": "the `quit_allowed` flag means the opposite of its name, and as a result the lecture's two headline figures are swapped. In `temp_diff`, the branch `if self.quit_allowed == 0` takes `β*np.max(qtable[state_next, :])` (538) - a max over both actions at the same state, i.e. the employed worker may switch to reject, which is quitting - while `else` takes `β*qtable[state_next, 1]` (540), locking the worker into the accept column, i.e. quitting forbidden. Match that against the math: {eq}`eq:old4` (406-407) carries the `\\max_{a'}` and is the version the text says allows quitting; {eq}`eq:temp-diff` (727-728) replaces it with `\\widetilde{Q}^{old}(w,\\text{accept})` and is the version that forbids it. So `plot_epochs(...)` at 698, which sits under '## Q-Learning' where quitting is allowed, defaults to `quit_allowed=1` (667) and actually forbids it, while `plot_epochs(..., quit_allowed=0)` at 744, under the heading '## Employed Worker Can't Quit', actually allows it. Each figure illustrates the other section"},
-    {"rule": "qe-code-001", "count": 17,
-     "lines": [186, 192, 193, 214, 494, 532, 534, 538, 540, 560, 572, 574, 591, 602, 660, 670, 679],
-     "detail": "binary operators and comparisons are written without surrounding spaces throughout the file, against the same file's own practice elsewhere (`v_next - v` at 190, `c + β * (v @ q)` at 174): `flag=0` / `flag=1` (186, 193), `))<=eps` (192), `params=[` (494), `accept==0` (532), `β*np.max(...)` (534, 538, 540), `random()<=eps` (560), `lr*TD` (572), `qtable_new-qtable))<=δ` (574), `n%(N/10)==0` (591), `valfunc-valfunc_VFI` (602), `n%(max_epochs/10)==0` (679), `(len(w_new),2)` with no space after the comma (670). Line 214 is the substantive one: `for i in range(n)` is nested inside `for i in range(num_plots)` (211) and clobbers the outer index - it works today only because the label `f\"iterate {i}\"` is consumed at 212 before the inner loop runs. Line 660-663 also re-runs the two lines already executed at 656-657 verbatim"},
-    {"rule": "qe-math-009", "count": 4, "lines": [258, 349, 385, 461],
-     "detail": "the same Q estimate wears three different decorations: `\\hat Q_t` in the informal derivation (349, 350, 357, 358, 365, 368), `\\widetilde{Q}` in the algorithm (385, 399, 406, 407, 421-440, 457, 727, 728), and `\\tilde{Q}` in step 6 of the pseudo-code (461) - the last differing from the second only in macro, so the same symbol is typeset two widths apart on the page. `\\widetilde{TD}` puts an accent over a two-letter operator name (406, 411), and `\\textrm{argmax}` / `\\textrm{argmin}` (421, 427, 434, 440) hand-set what the series already provides as `\\argmax` (`_config.yml:109`). The state and action spaces are calligraphic, $\\mathcal{W}$ and $\\mathcal{A}$ (258, 260), where plain $W$ and $A$ are unused and would do; the sibling lecture `inventory_q` writes the same two sets as $\\mathsf X$ and $\\mathsf A$"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [42, 245, 264, 298, 459],
-     "detail": "lines 42-51 spend five separate paragraphs establishing that what Q-learning learns is a Q-table, including 'But it is something that is closely affiliated with it' (47) and 'Sometimes a Q-function or Q-table is called a quality-function or quality-table' (51), before the definition arrives. Four sentences are broken as written: 'A **quality function** $Q$ map state-action pairs into optimal values. / They are tightly linked...' (245-247, singular subject, plural pronoun, missing verb agreement); 'equals the maximum value of that a previously unemployed worker' (264); 'This fact provides us with an / an alternative' (298-299, doubled word across the line break); 'Either draw a new state $w'$ if required or else take existing wage if and update the Q-table again' (459). Four words are misspelled: 'illegitmate' (329), 'previos' (477), 'prematurally' (734), 'algorthm' (749)"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [62, 245, 345],
-     "detail": "'**on average**' (345) is bold used for emphasis, which the rule reverses - italic is what that sentence wants. And the same term is bolded three times as if new each time: **Q-function** at 49, again at 62 alongside **quality function**, and **quality function** again at 245 opening its own section. There is no italic anywhere in the file, so the bold is carrying both jobs"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [615, 701],
-     "detail": "the Q-table is the object the whole lecture is about - it is a $(n+1) \\times 2$ matrix, described at 53-54 and 489 - and the only time the reader sees one it is `print(qtable)` at 615, a wall of floats. A heatmap over (state, action) would show at a glance the thing the lecture claims at 703, that 'the Q-learning algorithm has trouble learning the Q-table well for wages that are rarely drawn'. That claim also needs the wage distribution next to the value functions: the distribution is plotted at 648 and the value functions at 698, fifty lines apart and never overlaid, so the reader has to hold one figure in mind while reading the other"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        537,
+        698
+      ],
+      "detail": "the `quit_allowed` flag means the opposite of its name, and as a result the lecture's two headline figures are swapped. In `temp_diff`, the branch `if self.quit_allowed == 0` takes `β*np.max(qtable[state_next, :])` (538) - a max over both actions at the same state, i.e. the employed worker may switch to reject, which is quitting - while `else` takes `β*qtable[state_next, 1]` (540), locking the worker into the accept column, i.e. quitting forbidden. Match that against the math: {eq}`eq:old4` (406-407) carries the `\\max_{a'}` and is the version the text says allows quitting; {eq}`eq:temp-diff` (727-728) replaces it with `\\widetilde{Q}^{old}(w,\\text{accept})` and is the version that forbids it. So `plot_epochs(...)` at 698, which sits under '## Q-Learning' where quitting is allowed, defaults to `quit_allowed=1` (667) and actually forbids it, while `plot_epochs(..., quit_allowed=0)` at 744, under the heading '## Employed Worker Can't Quit', actually allows it. Each figure illustrates the other section"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 17,
+      "lines": [
+        186,
+        192,
+        193,
+        214,
+        494,
+        532,
+        534,
+        538,
+        540,
+        560,
+        572,
+        574,
+        591,
+        602,
+        660,
+        670,
+        679
+      ],
+      "detail": "binary operators and comparisons are written without surrounding spaces throughout the file, against the same file's own practice elsewhere (`v_next - v` at 190, `c + β * (v @ q)` at 174): `flag=0` / `flag=1` (186, 193), `))<=eps` (192), `params=[` (494), `accept==0` (532), `β*np.max(...)` (534, 538, 540), `random()<=eps` (560), `lr*TD` (572), `qtable_new-qtable))<=δ` (574), `n%(N/10)==0` (591), `valfunc-valfunc_VFI` (602), `n%(max_epochs/10)==0` (679), `(len(w_new),2)` with no space after the comma (670). Line 214 is the substantive one: `for i in range(n)` is nested inside `for i in range(num_plots)` (211) and clobbers the outer index - it works today only because the label `f\"iterate {i}\"` is consumed at 212 before the inner loop runs. Line 660-663 also re-runs the two lines already executed at 656-657 verbatim"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        258,
+        349,
+        385,
+        461
+      ],
+      "detail": "the same Q estimate wears three different decorations: `\\hat Q_t` in the informal derivation (349, 350, 357, 358, 365, 368), `\\widetilde{Q}` in the algorithm (385, 399, 406, 407, 421-440, 457, 727, 728), and `\\tilde{Q}` in step 6 of the pseudo-code (461) - the last differing from the second only in macro, so the same symbol is typeset two widths apart on the page. `\\widetilde{TD}` puts an accent over a two-letter operator name (406, 411), and `\\textrm{argmax}` / `\\textrm{argmin}` (421, 427, 434, 440) hand-set what the series already provides as `\\argmax` (`_config.yml:109`). The state and action spaces are calligraphic, $\\mathcal{W}$ and $\\mathcal{A}$ (258, 260), where plain $W$ and $A$ are unused and would do; the sibling lecture `inventory_q` writes the same two sets as $\\mathsf X$ and $\\mathsf A$"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        42,
+        245,
+        264,
+        298,
+        459
+      ],
+      "detail": "lines 42-51 spend five separate paragraphs establishing that what Q-learning learns is a Q-table, including 'But it is something that is closely affiliated with it' (47) and 'Sometimes a Q-function or Q-table is called a quality-function or quality-table' (51), before the definition arrives. Four sentences are broken as written: 'A **quality function** $Q$ map state-action pairs into optimal values. / They are tightly linked...' (245-247, singular subject, plural pronoun, missing verb agreement); 'equals the maximum value of that a previously unemployed worker' (264); 'This fact provides us with an / an alternative' (298-299, doubled word across the line break); 'Either draw a new state $w'$ if required or else take existing wage if and update the Q-table again' (459). Four words are misspelled: 'illegitmate' (329), 'previos' (477), 'prematurally' (734), 'algorthm' (749)"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        62,
+        245,
+        345
+      ],
+      "detail": "'**on average**' (345) is bold used for emphasis, which the rule reverses - italic is what that sentence wants. And the same term is bolded three times as if new each time: **Q-function** at 49, again at 62 alongside **quality function**, and **quality function** again at 245 opening its own section. There is no italic anywhere in the file, so the bold is carrying both jobs"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        615,
+        701
+      ],
+      "detail": "the Q-table is the object the whole lecture is about - it is a $(n+1) \\times 2$ matrix, described at 53-54 and 489 - and the only time the reader sees one it is `print(qtable)` at 615, a wall of floats. A heatmap over (state, action) would show at a glance the thing the lecture claims at 703, that 'the Q-learning algorithm has trouble learning the Q-table well for wages that are rarely drawn'. That claim also needs the wage distribution next to the value functions: the distribution is plotted at 648 and the value functions at 698, fifty lines apart and never overlaid, so the reader has to hold one figure in mind while reading the other"
+    }
   ],
   "strengths": [
     "The lecture earns its Q-learning derivation instead of asserting it: the exact Q-factor system {eq}`eq:impliedq` (271-275), then the scalar reduction $Q_r$ (295) exploiting IID wages, then the deliberately 'illegitimate' step of erasing the integral (329-339), then the temporal-difference errors (357-358) and the adaptive rule (365) - and line 329 tells the reader in advance that the step is not legitimate, which is more honest than most treatments",
@@ -35,5 +97,9 @@
   "scanner_doubts": [
     "mccall_q.md - all 24 qe-math-002 hits are false positives; I confirmed the list by running check_math_002 over the file directly. They break down as `w'` x7 (111 twice, 273, 304, 323, 407, 728), `a'` x14 (406, 407, 421, 427, 434, 440, 728, two each), `\\prime` x2 (119 for the next value-function iterate, 304 for the improved $Q_r$ estimate) and `Q_r'` x1 (301). The lecture contains no matrix transpose at all. Two separate defects in tools/qestyle_rules.py produce this: the `prime_vec` branch (line 393) lacks the `NOT_A_PRODUCT` guard that the `supT` branch applies at line 400, so `a' \\in \\mathcal{A}` and `w' \\right` are read as vector products; and the `lprime` branch (line 401) is a bare `\\^\\{?\\\\prime\\}?` with no derivative or next-iterate exception, unlike the `prime` branch which excludes an applied base at line 391. This file is the worst case in the corpus for the first defect.",
     "Rule-scope question rather than a miscount: no check covers a mismatched `\\left` / `\\right` pair. Line 287 of this file writes `\\left\\{ Q(w, \\text{accept} \\right)` - an opening brace closed by a parenthesis - and MathJax accepts it silently, so it renders and no rule fires. `qe-math-006` already exists to catch a math construct that is legal input but wrong output; a companion check that counts `\\left` and `\\right` delimiters per math span and flags a mismatch would be cheap and would catch a class of latent breakage. Worth deciding once whether that belongs under qe-math-006 or a new ID."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "79950a097348a34faabeecc3327c161d0a70855d"
+  }
 }

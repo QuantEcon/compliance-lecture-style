@@ -2,16 +2,66 @@
   "series": "lecture-python.myst",
   "lecture": "rs_inventory_q",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 8, "lines": [381, 387, 395, 434, 439, 517, 522, 533],
-     "detail": "the file contains no bold definition at all and fourteen bold emphases. Eight are plain emphasis that the rule assigns to italic: **deterministic** (381), **revenue** (387), **caps the randomness of revenue** (395-396), **decreasing** (439), **minimum** (440), **positive** (517), **minimize** (518), **power** (522). Six more are whole-phrase bold used as pseudo-headings inside the prose and inside a numbered list: **Step 1.** (434), **Step 2.** (455), **Initialize** (533), **At each step:** (535), **Extract the greedy policy** (547), **Compare** (549). Meanwhile the terms actually being defined go unmarked - \"certainty equivalent\" (115, 120, 165), \"Q-factor\" (412), \"optimistic initialization\" (551), \"risk-sensitivity parameter\" (113) - and the one place the italic marker is used, 557 (*minimizes*, *below*), is correct emphasis, so the file has the two markers exactly the wrong way round"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [45, 542, 559, 712],
-     "detail": "the roadmap at 45-47 lists only value function iteration and the risk-sensitivity comparative static - \"We show how the model can be solved using value function iteration. We then investigate how risk sensitivity affects the optimal policy\" - and never mentions Q-learning, which is the second half of the lecture (405-756, 350 of 774 lines) and is in the H1 title at 23. Second, $n$ names two things inside the Q-learning section: visit counts at 534 and 542 ($n_t(x,a)$, and `n = np.zeros((K+1, K+1))` in the kernel at 593), then the number of training steps at 658 (\"We run $n$ = 5 million steps ... and $n$\") and `n = 5_000_000` at 661. Third, 559-560 asserts that \"the true Q-values are on the order of $\\exp(-\\gamma v^*) \\approx 10^{-8}$ to $10^{-6}$\" and initialises at $10^{-9}$, but nothing in the lecture computes that range and it holds only at $\\gamma = 1$ - at the $\\gamma = 0.01$ case solved at 298-304 the Q-values are of order 1, so a reader who reuses `q_init=1e-9` after changing $\\gamma$ gets a table initialised far *above* the truth, reversing the optimism the section is about. Fourth, 707-712 says \"The top panel shows the optimal policy from VFI\" and \"how the agent's policy evolves\", but every panel of the figure at 714-744 is a simulated *inventory path*, not a policy; the policies themselves are plotted only for the final Q-table (694-699)"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [36, 555, 557, 758],
-     "detail": "36-40 spends two sentences and 40 words on one idea, the first padded (\"Injection of risk-sensitivity acknowledges the fact that, in incomplete markets with financial and informational frictions, firms typically take risk into account in their decision making\") and the second a restatement (\"In other words, the actions of firms are not, in general, risk neutral\"). 555 is 33 words around a mid-sentence em-dash parenthetical, and 557 packs 55 words and two sentences into one block. The Conclusion (758-774) is the third statement of the same three points: that risk-sensitive firms order less aggressively (already at 295 and 370-371), that the update replaces addition with multiplication and max with min (already at 517-523 and restated at 584-586), and that the agent needs only states, actions and profits (already at 525-526)"},
-    {"rule": "qe-code-001", "count": 6, "lines": [151, 153, 212, 625, 653, 678],
-     "detail": "153 names the geometric mass function `demand_pdf` and returns `(1 - p)**d * p`, contradicting the lecture's own line 111 (\"$\\phi(d)$ denotes the demand probability mass function\") - `demand_pmf` is the name the prose implies. 151 closes the multi-line signature at an indent of 4, `    ) -> RSModel:`, which matches neither the opening line nor the 8-space argument block (E124). 212 and 254 unpack all eight NamedTuple fields to use six, leaving `x_values` and `p` bound and unused (F841) where `model.d_values` would read better. Exponentiation spacing is inconsistent: 154 writes `(1 - p)**d` as the rule asks, while 625 and 627 write `best_next ** β` and `n[x, a] ** 0.51`. 653 runs to 84 characters (E501). 678 writes `-(1/γ_base) * np.log(...)` with no spaces around the division where 202, 243 and 627 all write `1.0 / γ`. And 644 carries a default `n_steps=20_000_000` that 663 always overrides and that contradicts the \"5 million\" of 658 - dead, and misleading to anyone calling the function directly"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [368, 559, 714],
-     "detail": "the section that carries the lecture's whole intuition, \"Interpreting the Outcomes\" (368-402), has no figure. Its claim is about a distribution: revenue is $\\min(x, D)$, which \"inherits the full variance of demand\" when $x$ is high (389-390) and is \"nearly deterministic, capped at the inventory level\" when $x$ is low (392-393). One panel of $\\mathrm{sd}[\\min(x, D)]$ against $x$ on the demand grid already in `model.d_values`, or two histograms of $\\min(x, D)$ at a low and a high $x$, would settle in a picture what 373-402 argues in eleven paragraphs against a reader's first instinct. Second, the convergence claims at 746-751 (\"barely explored\", \"still differs noticeably\", \"nearly indistinguishable\") are asked of three noisy 200-period paths at 714-744; $\\max_x |\\sigma_{\\rm snap}(x) - \\sigma^*(x)|$ against training step is one line and is the quantity the sentences actually assert. Third, the two passages that most need setting apart - the log-sum-exp shift at 165-178 and the reversed sense of \"optimistic\" at 551-560, where the $10^{-9}$ constant is easy to copy wrongly - are plain prose; the lecture uses no admonition anywhere"}
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        381,
+        387,
+        395,
+        434,
+        439,
+        517,
+        522,
+        533
+      ],
+      "detail": "the file contains no bold definition at all and fourteen bold emphases. Eight are plain emphasis that the rule assigns to italic: **deterministic** (381), **revenue** (387), **caps the randomness of revenue** (395-396), **decreasing** (439), **minimum** (440), **positive** (517), **minimize** (518), **power** (522). Six more are whole-phrase bold used as pseudo-headings inside the prose and inside a numbered list: **Step 1.** (434), **Step 2.** (455), **Initialize** (533), **At each step:** (535), **Extract the greedy policy** (547), **Compare** (549). Meanwhile the terms actually being defined go unmarked - \"certainty equivalent\" (115, 120, 165), \"Q-factor\" (412), \"optimistic initialization\" (551), \"risk-sensitivity parameter\" (113) - and the one place the italic marker is used, 557 (*minimizes*, *below*), is correct emphasis, so the file has the two markers exactly the wrong way round"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        45,
+        542,
+        559,
+        712
+      ],
+      "detail": "the roadmap at 45-47 lists only value function iteration and the risk-sensitivity comparative static - \"We show how the model can be solved using value function iteration. We then investigate how risk sensitivity affects the optimal policy\" - and never mentions Q-learning, which is the second half of the lecture (405-756, 350 of 774 lines) and is in the H1 title at 23. Second, $n$ names two things inside the Q-learning section: visit counts at 534 and 542 ($n_t(x,a)$, and `n = np.zeros((K+1, K+1))` in the kernel at 593), then the number of training steps at 658 (\"We run $n$ = 5 million steps ... and $n$\") and `n = 5_000_000` at 661. Third, 559-560 asserts that \"the true Q-values are on the order of $\\exp(-\\gamma v^*) \\approx 10^{-8}$ to $10^{-6}$\" and initialises at $10^{-9}$, but nothing in the lecture computes that range and it holds only at $\\gamma = 1$ - at the $\\gamma = 0.01$ case solved at 298-304 the Q-values are of order 1, so a reader who reuses `q_init=1e-9` after changing $\\gamma$ gets a table initialised far *above* the truth, reversing the optimism the section is about. Fourth, 707-712 says \"The top panel shows the optimal policy from VFI\" and \"how the agent's policy evolves\", but every panel of the figure at 714-744 is a simulated *inventory path*, not a policy; the policies themselves are plotted only for the final Q-table (694-699)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        36,
+        555,
+        557,
+        758
+      ],
+      "detail": "36-40 spends two sentences and 40 words on one idea, the first padded (\"Injection of risk-sensitivity acknowledges the fact that, in incomplete markets with financial and informational frictions, firms typically take risk into account in their decision making\") and the second a restatement (\"In other words, the actions of firms are not, in general, risk neutral\"). 555 is 33 words around a mid-sentence em-dash parenthetical, and 557 packs 55 words and two sentences into one block. The Conclusion (758-774) is the third statement of the same three points: that risk-sensitive firms order less aggressively (already at 295 and 370-371), that the update replaces addition with multiplication and max with min (already at 517-523 and restated at 584-586), and that the agent needs only states, actions and profits (already at 525-526)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        151,
+        153,
+        212,
+        625,
+        653,
+        678
+      ],
+      "detail": "153 names the geometric mass function `demand_pdf` and returns `(1 - p)**d * p`, contradicting the lecture's own line 111 (\"$\\phi(d)$ denotes the demand probability mass function\") - `demand_pmf` is the name the prose implies. 151 closes the multi-line signature at an indent of 4, `    ) -> RSModel:`, which matches neither the opening line nor the 8-space argument block (E124). 212 and 254 unpack all eight NamedTuple fields to use six, leaving `x_values` and `p` bound and unused (F841) where `model.d_values` would read better. Exponentiation spacing is inconsistent: 154 writes `(1 - p)**d` as the rule asks, while 625 and 627 write `best_next ** β` and `n[x, a] ** 0.51`. 653 runs to 84 characters (E501). 678 writes `-(1/γ_base) * np.log(...)` with no spaces around the division where 202, 243 and 627 all write `1.0 / γ`. And 644 carries a default `n_steps=20_000_000` that 663 always overrides and that contradicts the \"5 million\" of 658 - dead, and misleading to anyone calling the function directly"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        368,
+        559,
+        714
+      ],
+      "detail": "the section that carries the lecture's whole intuition, \"Interpreting the Outcomes\" (368-402), has no figure. Its claim is about a distribution: revenue is $\\min(x, D)$, which \"inherits the full variance of demand\" when $x$ is high (389-390) and is \"nearly deterministic, capped at the inventory level\" when $x$ is low (392-393). One panel of $\\mathrm{sd}[\\min(x, D)]$ against $x$ on the demand grid already in `model.d_values`, or two histograms of $\\min(x, D)$ at a low and a high $x$, would settle in a picture what 373-402 argues in eleven paragraphs against a reader's first instinct. Second, the convergence claims at 746-751 (\"barely explored\", \"still differs noticeably\", \"nearly indistinguishable\") are asked of three noisy 200-period paths at 714-744; $\\max_x |\\sigma_{\\rm snap}(x) - \\sigma^*(x)|$ against training step is one line and is the quantity the sentences actually assert. Third, the two passages that most need setting apart - the log-sum-exp shift at 165-178 and the reversed sense of \"optimistic\" at 551-560, where the $10^{-9}$ constant is easy to copy wrongly - are plain prose; the lecture uses no admonition anywhere"
+    }
   ],
   "strengths": [
     "The certainty equivalent is never left abstract: 92-94 gives $\\psi(t) = \\exp(-\\gamma t)$ and $\\psi^{-1}(y) = -\\frac{1}{\\gamma}\\ln y$, 96-109 substitutes both to get an explicit sum over the demand grid, and 189-202 is that sum term for term - so `T_rs_kernel` is checkable against the displayed equation without guessing",
@@ -36,5 +86,9 @@
   "scanner_doubts": [
     "rs_inventory_q.md:347,717 - qe-fig-001 is measured at 4 (308, 347, 685, 717), but two of those are the case the rule's own title carves out. 347 is `figsize=(8, 2.0 * len(γ_values))` and 717 is `figsize=(8, 2.0 * (n_snaps + 1))`: the height is computed from the number of stacked subplots, so without it a three- or four-panel `sharex` column is squeezed into the default single-figure height. That is \"necessary\" in the sense of \"Do not set figure size unless necessary\", and it is not a judgment a regex on `figsize=` can make. The pattern is common across the corpus wherever `plt.subplots(n, 1, ...)` is driven by a list length, so if the count is to mean anything the check could exempt a `figsize` whose value is a non-literal expression, or one paired with a subplot count that is itself non-literal. Flagging as a rule-definition question rather than a defect - the current behaviour is defensible, but the two hits here are not deviations a contributor should fix.",
     "rs_inventory_q.md:471 - qe-writing-004's single hit is \"mid-sentence 'Step'\" at 471, `From Step 1, $\\exp(-\\gamma v^*(x')) = \\min_{a'} q(x', a')$`. This is a cross-reference to the heading **Step 1.** the lecture itself sets at 434, so it is the same family as the \"Example N\" false positive already recorded as known-and-left; I note it only because the earlier note names \"Example N\" specifically and \"Step N\" is the identical pattern, so anyone re-testing that exemption should test both spellings together."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "fdf448440efdf297bdf8892e8133b04d562037c4"
+  }
 }

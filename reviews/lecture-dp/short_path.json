@@ -2,12 +2,36 @@
   "series": "lecture-dp",
   "lecture": "short_path",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 1, "lines": [122],
-     "detail": "the one idea the lecture exists to teach is the only step it does not argue. Line 41 states the purpose - 'the shortest path problem also provides a nice introduction to the logic of **dynamic programming**' - and the Bellman equation {eq}`spbell` then arrives at 122-129 on the strength of 'Some thought will convince you that, for every node $v$, the function $J$ satisfies'. Two sentences would supply it: moving to $w$ first costs $c(v,w)$ and then $J(w)$ at best, so the best route from $v$ is the best over $w \\in F_v$ of that sum - which is also exactly the reading of {eq}`spprebell` given twelve lines earlier at 104-116, so the material is already on the page in the wrong order. The contrast with 164-167 makes the gap sharper: there the lecture is explicit that it omits the convergence proof and says where it is proved, whereas here the omission is not flagged at all"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [34, 72, 210, 272],
-     "detail": "(1) 101 of this lecture's 474 lines - 21% of the file - are the exercise's graph data pasted into the body as a `%%file graph.txt` cell (272-372). The lecture already keeps assets in `_static/lecture_specific/short_path/` (it loads four PNGs from there at 57, 78, 84 and 96), so the data has a home; as it stands the reader scrolls a hundred lines of `node57, node86 701.09, ...` between the exercise statement and its solution. (2) Two bulleted lists end with the non-item 'etc., etc.' (34, 72), one of them in a list whose previous item is already 'Telecommunication network design and routing'. (3) 'the principle diagonal' at 210 should be 'principal' - and the sentence is about `Q`'s diagonal, which the code at 201-207 sets to `inf` off-destination and 0 at the destination, so the word matters to a reader checking the array"},
-    {"rule": "qe-code-001", "count": 4, "lines": [221, 231, 404, 436],
-     "detail": "four PEP8-level defects in a lecture reported clean on all five mechanical code rules. (1) `J = np.zeros_like(nodes, dtype=int)` and `next_J = np.empty_like(nodes, dtype=int)` (221-222) build integer arrays from `range(7)` via `*_like`, where `np.zeros(7, dtype=int)` is the direct spelling; the integer dtype also silently truncates any non-integer cost, which is precisely the change the exercise then makes (266-269 warns the reader that costs become floats), and the two comments on those lines are aligned at two different columns. (2) Trailing whitespace on three lines of that same cell - 231 and 234 are whitespace-only, and 232 carries sixteen trailing spaces after the colon (W291/W293). (3) `Q[destination_node, destination_node] = 0` at 404 sits inside the per-line loop, so it is re-executed once per input row; it belongs beside the `np.full` at 391. (4) `return(J)` at 436 reads as a call rather than a return statement; every other function in the file writes `return X`. Also `map_graph_to_distance_matrix` reads `num_nodes` and `destination_node` from module scope (385-386) while `compute_cost_to_go` derives `num_nodes` from its argument at 423, shadowing the global with the same value - two conventions in adjacent functions"}
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        122
+      ],
+      "detail": "the one idea the lecture exists to teach is the only step it does not argue. Line 41 states the purpose - 'the shortest path problem also provides a nice introduction to the logic of **dynamic programming**' - and the Bellman equation {eq}`spbell` then arrives at 122-129 on the strength of 'Some thought will convince you that, for every node $v$, the function $J$ satisfies'. Two sentences would supply it: moving to $w$ first costs $c(v,w)$ and then $J(w)$ at best, so the best route from $v$ is the best over $w \\in F_v$ of that sum - which is also exactly the reading of {eq}`spprebell` given twelve lines earlier at 104-116, so the material is already on the page in the wrong order. The contrast with 164-167 makes the gap sharper: there the lecture is explicit that it omits the convergence proof and says where it is proved, whereas here the omission is not flagged at all"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        34,
+        72,
+        210,
+        272
+      ],
+      "detail": "(1) 101 of this lecture's 474 lines - 21% of the file - are the exercise's graph data pasted into the body as a `%%file graph.txt` cell (272-372). The lecture already keeps assets in `_static/lecture_specific/short_path/` (it loads four PNGs from there at 57, 78, 84 and 96), so the data has a home; as it stands the reader scrolls a hundred lines of `node57, node86 701.09, ...` between the exercise statement and its solution. (2) Two bulleted lists end with the non-item 'etc., etc.' (34, 72), one of them in a list whose previous item is already 'Telecommunication network design and routing'. (3) 'the principle diagonal' at 210 should be 'principal' - and the sentence is about `Q`'s diagonal, which the code at 201-207 sets to `inf` off-destination and 0 at the destination, so the word matters to a reader checking the array"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        221,
+        231,
+        404,
+        436
+      ],
+      "detail": "four PEP8-level defects in a lecture reported clean on all five mechanical code rules. (1) `J = np.zeros_like(nodes, dtype=int)` and `next_J = np.empty_like(nodes, dtype=int)` (221-222) build integer arrays from `range(7)` via `*_like`, where `np.zeros(7, dtype=int)` is the direct spelling; the integer dtype also silently truncates any non-integer cost, which is precisely the change the exercise then makes (266-269 warns the reader that costs become floats), and the two comments on those lines are aligned at two different columns. (2) Trailing whitespace on three lines of that same cell - 231 and 234 are whitespace-only, and 232 carries sixteen trailing spaces after the colon (W291/W293). (3) `Q[destination_node, destination_node] = 0` at 404 sits inside the per-line loop, so it is re-executed once per input row; it belongs beside the `np.full` at 391. (4) `return(J)` at 436 reads as a call rather than a return statement; every other function in the file writes `return X`. Also `map_graph_to_distance_matrix` reads `num_nodes` and `destination_node` from module scope (385-386) while `compute_cost_to_go` derives `num_nodes` from its argument at 423, shadowing the global with the same value - two conventions in adjacent functions"
+    }
   ],
   "strengths": [
     "The abstract argument is carried by four pictures of one concrete graph, each doing a different job: the problem (57), the two optimal paths drawn separately so the reader can see the tie at cost 8 (78, 84), and the cost-to-go function labelled on every node (96) - which is what makes 'Note that $J(G) = 0$' (100) and the check at 241 ('This matches with the numbers we obtained by inspection above') land without further explanation",
@@ -27,5 +51,9 @@
     "Also worth fixing while there: the two `{figure}` directives at 78 and 84 are placed between the items of one bulleted list (76-86), which ends the list and starts a new one at each directive; and `np.allclose()` is written as bare prose at 439 where 268 writes it as inline code",
     "This file is byte-identical to `lecture-python-intro/lectures/short_path.md`, so fix it once upstream and re-sync - the findings are counted twice in the corpus totals until then"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "3ecc45ac74943d57a8b437b1a3ce8cab5c54e96a"
+  }
 }

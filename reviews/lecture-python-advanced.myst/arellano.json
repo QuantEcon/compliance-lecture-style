@@ -2,16 +2,56 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "arellano",
   "judgment": [
-    {"rule": "qe-code-001", "count": 8, "lines": [343, 346, 359, 394, 417, 492, 535, 573],
-     "detail": "line 346 writes `B_grid_size= 251` - a space after `=` but not before, in a keyword default that should have neither; 359 leaves a dangling comma in `self.β, self.γ, self.r, = β, γ, r`; 394 writes `c**(1-γ)/(1-γ)` with no spaces around `-` or `/` while 417 three lines later writes `(1 - delta ) / (1 + r)` - which itself has a stray space before the closing paren (E202); 493's continuation is indented 44 columns against an opening paren at 48 (E128); 535 is 88 characters (E501); 573 writes `T+1` unspaced; and the class docstring at 343 is a single-quoted string padded with spaces rather than a `\"\"\"` docstring"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [323, 624],
-     "detail": "the algorithm at 325-330 is numbered `1. 2. 2. 4.` in the source, so the rendered list reads 1-2-3-4 and step 4's instruction \"go to step 2\" lands on what the source calls step 2 but the reader sees as step 2 *or* 3 depending on which numbering they trust - and the two sub-steps at 328-329 are the part that actually repeats; and the Results section (612-678) shows four figures as static PNGs while telling the reader at 624 that \"Details on how to compute the figures are reported as solutions to the exercises\", so the code producing every result in the lecture sits 90 lines later inside a dropdown"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [187, 288],
-     "detail": "the lecture contains no bold at all and exactly one italic, at 288 - \"An *equilibrium* is\" - which italicises a term at its point of definition, the reverse of the rule; and the definition of the lecture's central action at 187, \"Defaulting means declining to repay all of its current obligations\", carries no emphasis on the defined term either"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [128, 505],
-     "detail": "line 128 ends mid-thought - \"To purchase $B'$  next period costs $q B'$ now, or, what is equivalent.\" - with a full stop where the equivalent statement should follow, and that statement is then a separate bullet at 129; 505-507 is a 40-word sentence carrying two relative clauses (\"take an instance of `ArellanoEconomy`, which is hard for the JIT compiler to handle, and strip it down to more basic objects, which are then passed out to jitted functions\"). The rest of the prose is unusually tight - one short sentence per paragraph throughout - so these are the only two places the rule bites"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [198],
-     "detail": "the default/exclusion/reentry structure - pay or default at 181-196, output falling from $y$ to $h(y)$ on default, loss of market access, then reentry each period with probability $\\theta$ at 200-201 - is a three-state timing diagram and is given entirely in prose bullets. Every other mechanism in the lecture gets a picture (bond price schedule, value functions, default-probability heat map, simulated series), which makes this the one unillustrated piece of the model"}
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        343,
+        346,
+        359,
+        394,
+        417,
+        492,
+        535,
+        573
+      ],
+      "detail": "line 346 writes `B_grid_size= 251` - a space after `=` but not before, in a keyword default that should have neither; 359 leaves a dangling comma in `self.β, self.γ, self.r, = β, γ, r`; 394 writes `c**(1-γ)/(1-γ)` with no spaces around `-` or `/` while 417 three lines later writes `(1 - delta ) / (1 + r)` - which itself has a stray space before the closing paren (E202); 493's continuation is indented 44 columns against an opening paren at 48 (E128); 535 is 88 characters (E501); 573 writes `T+1` unspaced; and the class docstring at 343 is a single-quoted string padded with spaces rather than a `\"\"\"` docstring"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        323,
+        624
+      ],
+      "detail": "the algorithm at 325-330 is numbered `1. 2. 2. 4.` in the source, so the rendered list reads 1-2-3-4 and step 4's instruction \"go to step 2\" lands on what the source calls step 2 but the reader sees as step 2 *or* 3 depending on which numbering they trust - and the two sub-steps at 328-329 are the part that actually repeats; and the Results section (612-678) shows four figures as static PNGs while telling the reader at 624 that \"Details on how to compute the figures are reported as solutions to the exercises\", so the code producing every result in the lecture sits 90 lines later inside a dropdown"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        187,
+        288
+      ],
+      "detail": "the lecture contains no bold at all and exactly one italic, at 288 - \"An *equilibrium* is\" - which italicises a term at its point of definition, the reverse of the rule; and the definition of the lecture's central action at 187, \"Defaulting means declining to repay all of its current obligations\", carries no emphasis on the defined term either"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        128,
+        505
+      ],
+      "detail": "line 128 ends mid-thought - \"To purchase $B'$  next period costs $q B'$ now, or, what is equivalent.\" - with a full stop where the equivalent statement should follow, and that statement is then a separate bullet at 129; 505-507 is a 40-word sentence carrying two relative clauses (\"take an instance of `ArellanoEconomy`, which is hard for the JIT compiler to handle, and strip it down to more basic objects, which are then passed out to jitted functions\"). The rest of the prose is unusually tight - one short sentence per paragraph throughout - so these are the only two places the rule bites"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        198
+      ],
+      "detail": "the default/exclusion/reentry structure - pay or default at 181-196, output falling from $y$ to $h(y)$ on default, loss of market access, then reentry each period with probability $\\theta$ at 200-201 - is a three-state timing diagram and is given entirely in prose bullets. Every other mechanism in the lecture gets a picture (bond price schedule, value functions, default-probability heat map, simulated series), which makes this the one unillustrated piece of the model"
+    }
   ],
   "strengths": [
     "The three Bellman equations at 239-261 map one-to-one onto the code that implements them: `T_d` at 424 is the default value, `T_c` at 441 the repayment value, and `np.maximum(v_c, v_d)` at 434 and 459 is the max that links them, so the reader can check each operator against its equation",
@@ -31,5 +71,9 @@
   ],
   "scanner_doubts": [
     "arellano.md:126,128,129,131,132,133,134,145,224,250 and 21 more - qe-math-002 is reported with count 31 and drops the Math score to 3.5/10, which is what puts this lecture in the HIGH priority bucket. Every one of those apostrophes is next-period notation, not a transpose: line 148 states it explicitly - \"Here and below, a prime denotes a next period value or a claim maturing next period\" - and the flagged objects are the scalar bond level $B'$, the price $q(B', y)$ and the income draw $y'$. There is not a single transpose in this lecture. The matrix-like-base heuristic is firing on the capital $B$; a prime on a capital letter in a lecture that declares prime-means-next-period should not count. I have deliberately left \"replace apostrophe transposes\" out of the action list for this reason, and the Math score of 3.5 and the HIGH priority both need revisiting once the check is fixed"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "203e6cf2aa20a9fc3677f91b55747505a40779e7"
+  }
 }

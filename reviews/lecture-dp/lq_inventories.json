@@ -2,14 +2,47 @@
   "series": "lecture-dp",
   "lecture": "lq_inventories",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [129, 358, 425],
-     "detail": "three symbols carry two meanings each, and the lecture knows about only one of them. (i) $Q_t$ is production and $Q$ is the quadratic-form matrix; the lecture apologises for this at 129-132 ('we ask that you please forgive us') instead of renaming one of them. (ii) The demand shock is $v_t$ - Latin vee - at 79, 92, 366, 372 and 619, and $\\nu_t$ - Greek nu - at 358, 445, 474, 520, 523, 713, 726 and 769; the two render as visibly different glyphs, and a reader meeting `\\nu_t = \\alpha + \\rho \\nu_{t-1}` at 358 has no way to know it is the $v_t$ defined at 79. (iii) $C$ is the noise-loading matrix in `x_{t+1} = A x_t + B u_t + C \\epsilon_{t+1}` (126) and then the production cost function at 425, 439, 458 and 468, while the same cost function is lowercase $c$ at 71 and 430 - so `C(Q_t)` at 425 collides with a matrix defined three hundred lines earlier"},
-    {"rule": "qe-code-001", "count": 6, "lines": [226, 271, 292, 333, 640, 743],
-     "detail": "line 292 writes the demand shock as `𝜈_path`, where the character is U+1D708 MATHEMATICAL ITALIC SMALL NU, not Greek nu U+03BD - it looks right in a browser but will not match a search for `ν`, is not what qe-code-002 means by a Greek identifier, and is a hazard for any tool that normalises identifiers. Lines 333-336 use a backslash continuation inside a string literal, so the label becomes 'production when  $I_t$             forced to be zero' with the next line's indentation baked into it (and a double space before `$I_t$`). Then: three spaces after the comma in `A22=[[1,   0],` (226, E241); a space after the unary minus in `N[1, 0] = - d2` (271) and `N[1, 1:] = - a0 / 2 * Sc` (273); the bare trailing-dot float `b = 3.` (640); and `A22 =[[1,  0,  0],` (743) with no space after `=` and continuation lines indented 10 against a visual indent of 6 (744-745)"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [71, 177, 489],
-     "detail": "the bullet at 71-72 defines the production cost function and then contradicts itself in the same breath: '$c(Q_t) = c_1 Q_t + c_2 Q_t^2$, be a cost of production function, where $c_1>0, c_2>0$, be an inventory cost function' - the trailing clause belongs to the next bullet, which defines the inventory cost function properly at 73-78. The '**Remark on notation:**' at 177-178 says only that the cross-product matrix is called $N$, which lines 137 and 140 have already established, and bolds the label for it. And the point that the no-inventory production path can start below the optimal one takes five paragraphs (489-508): a claim, a two-sentence gloss, '\"typical\" does not mean \"always\"', 'Thus, if we look closely, we notice that...', and then a forward pointer to Example 6"},
-    {"rule": "qe-math-009", "count": 1, "lines": [144],
-     "detail": "the derivation of $R$, $Q$ and $N$ from the profit function is a single display 30 lines long (144-173) whose last step nests three `\\underset{\\equiv R}{\\underbrace{\\left[\\begin{array}...\\end{array}\\right]}}` groups, plus three more `array` blocks for the vectors, inside one `aligned` (150-171). Splitting it into three short displays - one per matrix, each with the term of the profit function it comes from - would say the same thing, would let each matrix be labelled and cited, and would remove most of the 17 `array` environments that qe-math-003 is reporting"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        129,
+        358,
+        425
+      ],
+      "detail": "three symbols carry two meanings each, and the lecture knows about only one of them. (i) $Q_t$ is production and $Q$ is the quadratic-form matrix; the lecture apologises for this at 129-132 ('we ask that you please forgive us') instead of renaming one of them. (ii) The demand shock is $v_t$ - Latin vee - at 79, 92, 366, 372 and 619, and $\\nu_t$ - Greek nu - at 358, 445, 474, 520, 523, 713, 726 and 769; the two render as visibly different glyphs, and a reader meeting `\\nu_t = \\alpha + \\rho \\nu_{t-1}` at 358 has no way to know it is the $v_t$ defined at 79. (iii) $C$ is the noise-loading matrix in `x_{t+1} = A x_t + B u_t + C \\epsilon_{t+1}` (126) and then the production cost function at 425, 439, 458 and 468, while the same cost function is lowercase $c$ at 71 and 430 - so `C(Q_t)` at 425 collides with a matrix defined three hundred lines earlier"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        226,
+        271,
+        292,
+        333,
+        640,
+        743
+      ],
+      "detail": "line 292 writes the demand shock as `𝜈_path`, where the character is U+1D708 MATHEMATICAL ITALIC SMALL NU, not Greek nu U+03BD - it looks right in a browser but will not match a search for `ν`, is not what qe-code-002 means by a Greek identifier, and is a hazard for any tool that normalises identifiers. Lines 333-336 use a backslash continuation inside a string literal, so the label becomes 'production when  $I_t$             forced to be zero' with the next line's indentation baked into it (and a double space before `$I_t$`). Then: three spaces after the comma in `A22=[[1,   0],` (226, E241); a space after the unary minus in `N[1, 0] = - d2` (271) and `N[1, 1:] = - a0 / 2 * Sc` (273); the bare trailing-dot float `b = 3.` (640); and `A22 =[[1,  0,  0],` (743) with no space after `=` and continuation lines indented 10 against a visual indent of 6 (744-745)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        71,
+        177,
+        489
+      ],
+      "detail": "the bullet at 71-72 defines the production cost function and then contradicts itself in the same breath: '$c(Q_t) = c_1 Q_t + c_2 Q_t^2$, be a cost of production function, where $c_1>0, c_2>0$, be an inventory cost function' - the trailing clause belongs to the next bullet, which defines the inventory cost function properly at 73-78. The '**Remark on notation:**' at 177-178 says only that the cross-product matrix is called $N$, which lines 137 and 140 have already established, and bolds the label for it. And the point that the no-inventory production path can start below the optimal one takes five paragraphs (489-508): a claim, a two-sentence gloss, '\"typical\" does not mean \"always\"', 'Thus, if we look closely, we notice that...', and then a forward pointer to Example 6"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        144
+      ],
+      "detail": "the derivation of $R$, $Q$ and $N$ from the profit function is a single display 30 lines long (144-173) whose last step nests three `\\underset{\\equiv R}{\\underbrace{\\left[\\begin{array}...\\end{array}\\right]}}` groups, plus three more `array` blocks for the vectors, inside one `aligned` (150-171). Splitting it into three short displays - one per matrix, each with the term of the profit function it comes from - would say the same thing, would let each matrix be labelled and cited, and would remove most of the 17 `array` environments that qe-math-003 is reporting"
+    }
   ],
   "strengths": [
     "The two comparison benchmarks are motivated as economics before they are computed: '## Inventories Not Useful' (417-446) and '## Inventories Useful but are Hardwired to be Zero Always' (448-475) each set out a distinct firm problem with its own objective and constraint, derive a closed-form decision rule, and say what the comparison is for ('in order to shed light on the role that inventories play', 477-479) - so the third and fourth lines in the bottom-right panel mean something",
@@ -30,5 +63,9 @@
   "scanner_doubts": [
     "lq_inventories.md, lines 131 and 137 - qe-math-002 is reported as 15 but only 11 transposes exist; the count is inflated by double counting, not by false positives (unlike the other lecture-dp reports, every prime in this file really is a transpose). A subscripted symbol matches twice: the `prime` branch of check_math_002 catches `x_t'` and then the `prime_vec` branch catches the `t'` inside it, because the lookbehind at tools/qestyle_rules.py:393 is `(?<![A-Za-z0-9\\\\])` and `_` is none of those. Line 137 (`x_t' R x_t + u_t' Q u_t + 2 u_t' N x_t`) has 3 primes and yields 6 hits; line 131 has 1 and yields 2. Adding `_` to the lookbehind class fixes it. This matters beyond one file: `[A-Za-z]_[a-z]'` followed by a symbol matches 180 lines across the five series, 74 of them in lecture-dp, and qe-math-002 at 509 occurrences is the headline number in this series' summary page - so the published figure is overstated by an amount worth measuring before it is quoted again.",
     "lq_inventories.md, line 278 - the 1 qe-code-002 hit is a false positive. The line is `self.LQ = qe.LQ(Q, R, A, B, C, N, beta=β)`: `beta` is `quantecon.LQ`'s own keyword-argument name and `β` is the Unicode variable being passed into it, so the author is already doing what the rule asks and cannot rename the library's parameter. check_code_002 has a targeted exception for matplotlib's `alpha=` (tools/qestyle_rules.py, the `drawing` test) but no general one for keyword-argument names; the same class of miss produced the `scipy.special.beta` false positive reported against career.md. A keyword-argument name immediately followed by `=` and receiving a Unicode Greek value is a reliable signal to skip."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "e9b23aef9b8cd3372187f75aefef3b7dbd57d046"
+  }
 }

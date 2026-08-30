@@ -54,5 +54,9 @@
     "Add a forward reference at 56 so the reader knows what a notebook is before being sent to run one in the cloud, or move the Colab recommendation after 131",
     "Delete the double space at 144 and the trailing double-space line breaks at 372, 383, 390, 392"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "62a5c53c51d15d3e26957ec157575b557e40a3dd"
+  }
 }

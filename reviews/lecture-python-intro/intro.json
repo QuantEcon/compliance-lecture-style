@@ -12,5 +12,9 @@
     "Consider two or three more sentences of orientation before `{tableofcontents}`: who the series is for, what background it assumes, and how it relates to `lecture-python-programming`; a single sentence is thin for a series landing page",
     "Leave the rest as it is - this file needs no style remediation, and it is a useful reference point for what a clean MyST page looks like"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "d0bfe9a5dc768971ac05d879f9e964b0a99a4f69"
+  }
 }

@@ -2,16 +2,56 @@
   "series": "lecture-python.myst",
   "lecture": "back_prop",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 3, "lines": [92, 101, 262],
-     "detail": "the lecture promises to describe \"a neuron\", \"a network of neurons\" and \"a neural network as a composition of functions\" (65-68) and then does all of it in formulas: the layer definition at 92-98, the composition at 134 and the recursion at 145 have no node-and-arrow diagram anywhere in the file, in a lecture whose subject is a graph; the three activation functions at 101-119 (sigmoid, ReLU, identity) are given as three formulas and never plotted, though three curves on one axes is a two-line cell; and the lower-triangular structure that the whole back-propagation argument turns on (262-282, $D$ and $L$) is shown only as a 25-line `array` display where a sparsity sketch would carry it. The two figures the lecture does have (528, 606) are approximation plots"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [328, 538],
-     "detail": "lines 328-470 are fourteen consecutive code cells with no prose between them at all - the reader goes from \"The update rule {eq}`eq:sgd` ... amounts to a stochastic gradient descent algorithm\" (326) straight to `jnp.block([[δ * xs[:-1]], [δ]])` (411), `L = jnp.diag(δ * ws, k=-1)` (415) and `D = jax.scipy.linalg.block_diag(...)` (418) with nothing saying that these are the $D$ and $L$ of the display at 262-282, and the two verification cells at 423-435 have only a comment to explain what is being checked against what. Separately, \"How Deep?\" (538-545) is placed between the two examples but its content belongs to Example 2, which is the one that actually compares one-, two- and three-layer networks (566-610) - and its third bullet asserts a one-layer identity network \"would probably work best\" for Example 1 without ever running it"},
-    {"rule": "qe-code-001", "count": 6, "lines": [49, 342, 418, 430, 442, 453],
-     "detail": "fifteen code lines exceed 79 characters, several badly: 98 at line 49, 100 at 418, 104 at 452, 108 at 430 (`jnp.block([dx.reshape((-1, 1)) for dx_tuple in grad(loss)(params, x, y) for dx in dx_tuple ])`, which also has a space before the closing bracket, as does 407); the continuation line at 443 is indented to column 10 under a bracket opened at column 11; fifteen lines carry trailing whitespace (357, 359, 364, 373, 379, 381, 386, 453, 455, 457, 458, 460, 507, 508, 519); and the two top-level `def`s at 340 and 345 are separated by one blank line where PEP8 asks for two"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [78, 156, 231],
-     "detail": "line 78 defines width as \"the number of right hand side variables on the right hand side of the function being approximated\" - the same phrase twice in one clause; lines 156-162 restate the model that 92-151 has just built (\"As mentioned above, for a given input $x_1$, our approximating function $\\hat f$ evaluated at $x_1$ equals the 'output' $x_{N+1}$ ... computed by iterating on $x_{i+1}=h_i(w_i x_i + b_i)$\" is {eq}`eq:recursion` again in words); and line 231 is a one-word paragraph (\"Here goes.\") followed by five blank lines"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [54],
-     "detail": "line 54 bolds **machine learning** and **artificial intelligence**, neither of which the lecture defines - they are field names being emphasised, and the rule reserves bold for definitions; the lecture uses no italic anywhere, so emphasis has nowhere else to go"}
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        92,
+        101,
+        262
+      ],
+      "detail": "the lecture promises to describe \"a neuron\", \"a network of neurons\" and \"a neural network as a composition of functions\" (65-68) and then does all of it in formulas: the layer definition at 92-98, the composition at 134 and the recursion at 145 have no node-and-arrow diagram anywhere in the file, in a lecture whose subject is a graph; the three activation functions at 101-119 (sigmoid, ReLU, identity) are given as three formulas and never plotted, though three curves on one axes is a two-line cell; and the lower-triangular structure that the whole back-propagation argument turns on (262-282, $D$ and $L$) is shown only as a 25-line `array` display where a sparsity sketch would carry it. The two figures the lecture does have (528, 606) are approximation plots"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        328,
+        538
+      ],
+      "detail": "lines 328-470 are fourteen consecutive code cells with no prose between them at all - the reader goes from \"The update rule {eq}`eq:sgd` ... amounts to a stochastic gradient descent algorithm\" (326) straight to `jnp.block([[δ * xs[:-1]], [δ]])` (411), `L = jnp.diag(δ * ws, k=-1)` (415) and `D = jax.scipy.linalg.block_diag(...)` (418) with nothing saying that these are the $D$ and $L$ of the display at 262-282, and the two verification cells at 423-435 have only a comment to explain what is being checked against what. Separately, \"How Deep?\" (538-545) is placed between the two examples but its content belongs to Example 2, which is the one that actually compares one-, two- and three-layer networks (566-610) - and its third bullet asserts a one-layer identity network \"would probably work best\" for Example 1 without ever running it"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        49,
+        342,
+        418,
+        430,
+        442,
+        453
+      ],
+      "detail": "fifteen code lines exceed 79 characters, several badly: 98 at line 49, 100 at 418, 104 at 452, 108 at 430 (`jnp.block([dx.reshape((-1, 1)) for dx_tuple in grad(loss)(params, x, y) for dx in dx_tuple ])`, which also has a space before the closing bracket, as does 407); the continuation line at 443 is indented to column 10 under a bracket opened at column 11; fifteen lines carry trailing whitespace (357, 359, 364, 373, 379, 381, 386, 453, 455, 457, 458, 460, 507, 508, 519); and the two top-level `def`s at 340 and 345 are separated by one blank line where PEP8 asks for two"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        78,
+        156,
+        231
+      ],
+      "detail": "line 78 defines width as \"the number of right hand side variables on the right hand side of the function being approximated\" - the same phrase twice in one clause; lines 156-162 restate the model that 92-151 has just built (\"As mentioned above, for a given input $x_1$, our approximating function $\\hat f$ evaluated at $x_1$ equals the 'output' $x_{N+1}$ ... computed by iterating on $x_{i+1}=h_i(w_i x_i + b_i)$\" is {eq}`eq:recursion` again in words); and line 231 is a one-word paragraph (\"Here goes.\") followed by five blank lines"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        54
+      ],
+      "detail": "line 54 bolds **machine learning** and **artificial intelligence**, neither of which the lecture defines - they are field names being emphasised, and the rule reserves bold for definitions; the lecture uses no italic anywhere, so emphasis has nowhere else to go"
+    }
   ],
   "strengths": [
     "The linear-algebra route to back-propagation is verified against automatic differentiation rather than asserted: `jnp.max(jnp.abs(dxs_ad_mat - dxs_la))` at 426 checks the derivative matrices agree and 435 checks the loss gradients agree, so the $(I-L)^{-1}D$ identity at 293 is demonstrated numerically",
@@ -31,5 +71,9 @@
   "scanner_doubts": [
     "back_prop.md:1 - qe-fig-010 (plotly needs an {only} latex directive) is reported at line 1, which is inside the YAML front matter. Plotly is imported at 334 and used at 528 and 606; line 1 looks like a placeholder the rule emits when it cannot localise the finding, which makes the evidence unactionable as printed",
     "back_prop.md:21 - qe-code-003 says \"non-Anaconda import with no install cell: ['jax']\", but there IS a jax install cell, at 41-45. It carries `:tags: [skip-execution]` rather than `:tags: [hide-output]`. The finding is arguably still right (the rule asks for hide-output) but the stated reason is wrong, and an author reading \"no install cell\" will look for something that is already there"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "03c6d881dba3443277a437a0a216e20cd71c79af"
+  }
 }

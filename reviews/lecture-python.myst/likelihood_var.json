@@ -2,18 +2,73 @@
   "series": "lecture-python.myst",
   "lecture": "likelihood_var",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [344, 503, 559, 736, 793],
-     "detail": "793 describes something the code does not do: \"In both cases, we applied a lower and upper threshold for the log likelihood ratio process for numerical stability since they grow unbounded very quickly\" - `compute_likelihood_ratio_var` (269-300) contains no clip, no threshold and no bound of any kind, and neither does `log_likelihood_transition`. 559-561 is one period out relative to the matrix directly above it: the observation equation at 542-554 multiplies the row $[\\gamma+G, \\rho_1, \\rho_2]$ into the state $[1, Y_t, Y_{t-1}]'$, which gives $(\\gamma+G) + \\rho_1 Y_t + \\rho_2 Y_{t-1}$, but the bullet reads \"$Y_t = (\\gamma + G)\\cdot 1 + \\rho_1 Y_{t-1} + \\rho_2 Y_{t-2}$\", and the same shift appears in the $C_t$ and $I_t$ bullets and again in the code comments at 591-593. 736-740 builds the whole observation apparatus and then abandons it: `G_obs` (591-593), the observables branch of `simulate_samuelson` (695-705) and `obs_f`/`obs_g` are computed, but the likelihood ratios at 769-770 are taken from `states_f`/`states_g`, the latent state, and only column 0 of the observables is ever used (739-740) - so $C_t$ and $I_t$, the multiplier and the accelerator that name the section, are constructed and never looked at. 503 is ungrammatical and cites nothing (\"Equations yields the second-order difference equation\"). And 344 asserts a limit about an unseeded simulation - `rng = np.random.default_rng()` at 66 takes no seed - so the figure the sentence describes is different on every build"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [245, 493, 517],
-     "detail": "the file contains no bold and no italic anywhere in 795 lines - `grep` finds zero `**` pairs and zero single-asterisk emphasis - so every term the lecture introduces arrives unmarked: \"likelihood ratio process\" as a section title only (245), \"cumulative log likelihood ratio process\" (257), \"marginal propensity to consume\" and \"accelerator coefficient\" (493-494), \"augmented state vector\" (517), \"multiplier-accelerator\" (487). The one place bold does appear is inside mathematics, $\\mathbf{x}_t$ and $\\mathbf{y}_t$ at 517, 520 and 542, which is the one use of bold that qe-math-004 forbids - so the marker is present only where it should be absent and absent everywhere it should be present"},
-    {"rule": "qe-code-001", "count": 6, "lines": [60, 92, 184, 361, 478, 739],
-     "detail": "six of the nine imports are never used (F401): `LinearStateSpace` (60), `qe` (61), `jit` (62), and `NamedTuple`, `Optional` and `Tuple` (63) - the file uses only the lowercase `namedtuple` from 64, plus `np`, `plt`, `linalg` and `mvn`. 92 starts a top-level `def` with zero blank lines after the preceding statement (E302). 184-185 and 202-203 indent the continuation of a `return` expression to a column that matches nothing (E128), and both continuation lines carry trailing whitespace. 478-479 indents a continuation to column 1 - `ax.plot(T_values, 0.5 * (errors_f + errors_g), 'g--',` followed by ` linewidth=2, label='average error')` - the worst-formatted line in the file. 361-371 misaligns all four matrix literals by one column: the opening bracket sits at column 16 and the second row at 17, where the equivalent literals at 581-583 and 591-593 line up correctly. And 86 lines in the file end in trailing whitespace (41, 74, 76, 89, 90, 97, 102, 104, 109, 120, 126, 137, 147, 184, 202, 216, 219, 229, 235, 241, 275, 279, 282, 287, 292, 295, 348, 351, 354, 455, 739 and 55 more), including blank lines padded with four to twelve spaces inside every function body"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [331, 742, 755, 769],
-     "detail": "five of the seven figures label only one axis: 331-341, 403-408, 410-414, 774-779 and 781-785 all set a y-label or a title and no x-label, so the horizontal axis of every likelihood-ratio figure - time - is unlabelled. 755-764 passes a two-element list to `ax.legend()` after forty `plot` calls, so matplotlib attaches 'model f' and 'model g' to whichever two lines were drawn first rather than to the two series; it happens to be correct here only because the loop alternates colours. 742-752 delivers by `print` exactly what the figure beneath it should show - $\\rho_1$, $\\rho_2$, the characteristic roots and a four-way dynamics classification for both models - where the roots plotted in the complex plane against the unit circle, or the classification annotated on the paths, would make \"Damped oscillations\" visible instead of asserted. And the Samuelson section's own decomposition is never drawn: 542-561 constructs $Y_t$, $C_t$ and $I_t$, and the one figure at 755-764 plots $Y_t$ alone, so the multiplier-accelerator split that motivates the section is invisible. The file has no admonition at all, though 127-146's singular-covariance fallback and the caveat 793 attempts are both note material"},
-    {"rule": "qe-math-009", "count": 4, "lines": [252, 337, 506, 517],
-     "detail": "337, 407, 414, 778 and 785 all label the plotted series `$\\log L_t$`, but 259-261 defines $L_t = \\sum_{s=1}^t \\log(p_f/p_g)$ - already a log - so every figure in the lecture is labelled the log of a log, five times. 252 renames the conditional densities from $f(x_{t+1}\\mid x_t)$, used throughout 155-192, to $p_f$ and $p_g$, in a section where $f$ and $g$ have simultaneously become the *names of the two models* (\"models $f$ and $g$\", 255) - so $f$ carries two meanings and the density carries two names. 517 switches the state vector to bold, $\\mathbf{x}_t$, after 440 lines of plain $x_t$ (75, 81, 172, 249), and $\\mathbf{y}_t$ at 542 is the only appearance of an observation vector in the file. And the shock is named three ways: $w_{t+1}$ in the general VAR (75, 82), $\\epsilon_t$ in the difference equation (506, 512) and $\\epsilon_{t+1}$ in the state-space form (536)"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [206, 263, 789],
-     "detail": "789-795 spends four one-sentence paragraphs restating what 397 and 344 have already said - \"In the figure on the left, data are generated by $f$ and the likelihood ratio diverges to plus infinity\" / \"In the figure on the right, data are generated by $g$ and the likelihood ratio diverges to negative infinity\" / ... / \"In both cases, the likelihood ratio processes eventually lead us to select the correct model\" - where 397 already said both directions in one sentence. 263 repeats 255 with more words (\"where $p_f$ and $p_g$ are the conditional densities under models $f$ and $g$ respectively\" then \"where $p_f(x_t | x_{t-1})$ and $p_g(x_t | x_{t-1})$ are given by their respective conditional densities defined in {eq}`eq:cond_den`\"). And 206 announces \"a single function that computes the log likelihood of an entire path\" for a cell that defines two functions, the second of which (`simulate_var`, 222-242) is a simulator with nothing to do with likelihood"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        344,
+        503,
+        559,
+        736,
+        793
+      ],
+      "detail": "793 describes something the code does not do: \"In both cases, we applied a lower and upper threshold for the log likelihood ratio process for numerical stability since they grow unbounded very quickly\" - `compute_likelihood_ratio_var` (269-300) contains no clip, no threshold and no bound of any kind, and neither does `log_likelihood_transition`. 559-561 is one period out relative to the matrix directly above it: the observation equation at 542-554 multiplies the row $[\\gamma+G, \\rho_1, \\rho_2]$ into the state $[1, Y_t, Y_{t-1}]'$, which gives $(\\gamma+G) + \\rho_1 Y_t + \\rho_2 Y_{t-1}$, but the bullet reads \"$Y_t = (\\gamma + G)\\cdot 1 + \\rho_1 Y_{t-1} + \\rho_2 Y_{t-2}$\", and the same shift appears in the $C_t$ and $I_t$ bullets and again in the code comments at 591-593. 736-740 builds the whole observation apparatus and then abandons it: `G_obs` (591-593), the observables branch of `simulate_samuelson` (695-705) and `obs_f`/`obs_g` are computed, but the likelihood ratios at 769-770 are taken from `states_f`/`states_g`, the latent state, and only column 0 of the observables is ever used (739-740) - so $C_t$ and $I_t$, the multiplier and the accelerator that name the section, are constructed and never looked at. 503 is ungrammatical and cites nothing (\"Equations yields the second-order difference equation\"). And 344 asserts a limit about an unseeded simulation - `rng = np.random.default_rng()` at 66 takes no seed - so the figure the sentence describes is different on every build"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        245,
+        493,
+        517
+      ],
+      "detail": "the file contains no bold and no italic anywhere in 795 lines - `grep` finds zero `**` pairs and zero single-asterisk emphasis - so every term the lecture introduces arrives unmarked: \"likelihood ratio process\" as a section title only (245), \"cumulative log likelihood ratio process\" (257), \"marginal propensity to consume\" and \"accelerator coefficient\" (493-494), \"augmented state vector\" (517), \"multiplier-accelerator\" (487). The one place bold does appear is inside mathematics, $\\mathbf{x}_t$ and $\\mathbf{y}_t$ at 517, 520 and 542, which is the one use of bold that qe-math-004 forbids - so the marker is present only where it should be absent and absent everywhere it should be present"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        60,
+        92,
+        184,
+        361,
+        478,
+        739
+      ],
+      "detail": "six of the nine imports are never used (F401): `LinearStateSpace` (60), `qe` (61), `jit` (62), and `NamedTuple`, `Optional` and `Tuple` (63) - the file uses only the lowercase `namedtuple` from 64, plus `np`, `plt`, `linalg` and `mvn`. 92 starts a top-level `def` with zero blank lines after the preceding statement (E302). 184-185 and 202-203 indent the continuation of a `return` expression to a column that matches nothing (E128), and both continuation lines carry trailing whitespace. 478-479 indents a continuation to column 1 - `ax.plot(T_values, 0.5 * (errors_f + errors_g), 'g--',` followed by ` linewidth=2, label='average error')` - the worst-formatted line in the file. 361-371 misaligns all four matrix literals by one column: the opening bracket sits at column 16 and the second row at 17, where the equivalent literals at 581-583 and 591-593 line up correctly. And 86 lines in the file end in trailing whitespace (41, 74, 76, 89, 90, 97, 102, 104, 109, 120, 126, 137, 147, 184, 202, 216, 219, 229, 235, 241, 275, 279, 282, 287, 292, 295, 348, 351, 354, 455, 739 and 55 more), including blank lines padded with four to twelve spaces inside every function body"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        331,
+        742,
+        755,
+        769
+      ],
+      "detail": "five of the seven figures label only one axis: 331-341, 403-408, 410-414, 774-779 and 781-785 all set a y-label or a title and no x-label, so the horizontal axis of every likelihood-ratio figure - time - is unlabelled. 755-764 passes a two-element list to `ax.legend()` after forty `plot` calls, so matplotlib attaches 'model f' and 'model g' to whichever two lines were drawn first rather than to the two series; it happens to be correct here only because the loop alternates colours. 742-752 delivers by `print` exactly what the figure beneath it should show - $\\rho_1$, $\\rho_2$, the characteristic roots and a four-way dynamics classification for both models - where the roots plotted in the complex plane against the unit circle, or the classification annotated on the paths, would make \"Damped oscillations\" visible instead of asserted. And the Samuelson section's own decomposition is never drawn: 542-561 constructs $Y_t$, $C_t$ and $I_t$, and the one figure at 755-764 plots $Y_t$ alone, so the multiplier-accelerator split that motivates the section is invisible. The file has no admonition at all, though 127-146's singular-covariance fallback and the caveat 793 attempts are both note material"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        252,
+        337,
+        506,
+        517
+      ],
+      "detail": "337, 407, 414, 778 and 785 all label the plotted series `$\\log L_t$`, but 259-261 defines $L_t = \\sum_{s=1}^t \\log(p_f/p_g)$ - already a log - so every figure in the lecture is labelled the log of a log, five times. 252 renames the conditional densities from $f(x_{t+1}\\mid x_t)$, used throughout 155-192, to $p_f$ and $p_g$, in a section where $f$ and $g$ have simultaneously become the *names of the two models* (\"models $f$ and $g$\", 255) - so $f$ carries two meanings and the density carries two names. 517 switches the state vector to bold, $\\mathbf{x}_t$, after 440 lines of plain $x_t$ (75, 81, 172, 249), and $\\mathbf{y}_t$ at 542 is the only appearance of an observation vector in the file. And the shock is named three ways: $w_{t+1}$ in the general VAR (75, 82), $\\epsilon_t$ in the difference equation (506, 512) and $\\epsilon_{t+1}$ in the state-space form (536)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        206,
+        263,
+        789
+      ],
+      "detail": "789-795 spends four one-sentence paragraphs restating what 397 and 344 have already said - \"In the figure on the left, data are generated by $f$ and the likelihood ratio diverges to plus infinity\" / \"In the figure on the right, data are generated by $g$ and the likelihood ratio diverges to negative infinity\" / ... / \"In both cases, the likelihood ratio processes eventually lead us to select the correct model\" - where 397 already said both directions in one sentence. 263 repeats 255 with more words (\"where $p_f$ and $p_g$ are the conditional densities under models $f$ and $g$ respectively\" then \"where $p_f(x_t | x_{t-1})$ and $p_g(x_t | x_{t-1})$ are given by their respective conditional densities defined in {eq}`eq:cond_den`\"). And 206 announces \"a single function that computes the log likelihood of an entire path\" for a cell that defines two functions, the second of which (`simulate_var`, 222-242) is a simulator with nothing to do with likelihood"
+    }
   ],
   "strengths": [
     "The likelihood is assembled in the order the factorisation gives, and each factor is coded directly beneath the display that defines it: the Markov factorisation at 155-161, {eq}`eq:cond_den` at 171-173 with `log_likelihood_transition` at 176-185 under it, the initial density at 190-192 with `log_likelihood_initial` at 195-203, and `log_likelihood_path` at 209-220 combining exactly those two",
@@ -36,5 +91,9 @@
   ],
   "scanner_doubts": [
     "likelihood_var.md:351,357 - qe-math-006 is reported as 0 for this file, but both of these displays contain a top-level alignment tab inside a bare `$$` with no alignment environment: line 351 is `A_f & = \\begin{bmatrix} 0.7 & 0.2 \\\\ 0.1 & 0.6 \\end{bmatrix}, \\quad C_f = ...` and 357 is the same shape for $A_g$ and $C_g$. A `$$` display compiles as `\\[ ... \\]`, where `&` is \"Misplaced alignment tab character &\" - the same class of PDF build failure that makes qe-math-006 a Critical rule, but with the environment missing altogether rather than being the wrong one, so the existing check (which looks for `align`/`align*` inside `$$`) does not see it. The detection has to be position-aware, because the `&` characters *inside* `\\begin{bmatrix} ... \\end{bmatrix}` on the same line are legitimate: flag an `&` that is not enclosed by any `\\begin{...}...\\end{...}` group within the display. These two lines are the only such sites in this lecture, and the pattern (an author writing an aligned pair of definitions and forgetting the environment) is common enough that it is worth a corpus-wide pass."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "5d044900aeb7b056009589863a34b08f84e4f66b"
+  }
 }

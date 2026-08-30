@@ -2,18 +2,71 @@
   "series": "lecture-python.myst",
   "lecture": "wealth_dynamics",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [489, 250, 237, 316, 479],
-     "detail": "five breaks, the first two flat contradictions. (1) 489-491 ends on a colon promising a picture - \"first consider the following image of our system resources when the code above is executing:\" - and no image follows; 493 simply resumes with \"Since the code is both efficiently JIT compiled...\", and there is no `{figure}` or `{image}` directive anywhere in the file. The paragraph at 493-495 then reasons *from* the absent evidence. (2) The savings rule is defined with $\\hat w$ at 244 and 247, and 249-251 immediately restates it with two different symbols: \"for $w < \\hat w$, the household saves nothing. For $w \\geq \\bar w$, the household saves a fraction $s_0$\" - $\\bar w$ is never defined. (3) 237 states \"we will assume all shocks are idiosyncratic (i.e., specific to individual households and independent across them)\", but the type spec at 271-273 labels $a$, $b$, $\\sigma_z$ \"aggregate shock parameter\", and 410-412 justifies the parallelisation with \"the time path of each household can be calculated independently once the path for the aggregate state is known\" - whereas `update_cross_section` draws a *fresh* $z$ per household inside the loop at 402 and never computes an aggregate path at all. So the prose, the comments and the code give three different answers to whether $z_t$ is common. (4) 316-318 raises `ValueError(\"Stability condition failed.\")` when `R_mean * s_0 >= 1`, but no stability condition appears anywhere in the mathematics - 234-235 only remarks that $c_r$ \"should be close to zero\" - so a reader who trips the error has nothing to look up. (5) The figure legends at 479 and 524 print `$\\psi^*$` and the code names `ψ_0`/`ψ_star` (452, 455, 620, 637, 640), but $\\psi$ is never introduced in the maths; the stationary cross-section has no symbol in §\"A Model of Wealth Dynamics\""},
-    {"rule": "qe-writing-007", "count": 3, "lines": [489, 244, 429],
-     "detail": "the one figure the lecture explicitly says it is showing is the one that is missing (489-491, see qe-writing-003). Second, the savings rule {eq}`sav_ah` at 244 is the whole mechanism of the model - a discontinuous kink, zero below $\\hat w$ and $s_0 w$ above - and it is never drawn, although it is a three-line plot and its kink is what the prose at 253-254 and the Kesten discussion at 596-599 both turn on. Third, six of the nine figures carry no axis label of any kind: 108-116 and 136-148 (Lorenz curves, axes are population share and wealth share), 429-433 (`ax.plot(w)` alone - wealth against time, no label, no title, no legend), 469-485 and 514-530 (Lorenz curves again), 564-578 (Gini against tail index). Only 173-190 and 645-653 label both axes, and 499-505 labels $x$ but leaves the $y$ quantity to the legend string `'gini coefficient'`. That is also why qe-fig-006 measures almost nothing here - there are hardly any labels to miscapitalise"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [463, 350, 377, 386, 450],
-     "detail": "463-495 spends five consecutive one-sentence paragraphs on the runtime of the cell rather than on inequality - \"it will take one or two minutes to execute\", \"This is unavoidable because we are executing a CPU intensive task\", \"In fact the code, which is JIT compiled and parallelized, runs extremely fast relative to the number of computations\", and then again at 493-495 \"it's close to impossible to make this sequence of tasks run faster without changing hardware\" - and the last of those rests on the image that is not there. Four sentences also arrive garbled: 350 \"Here's function to simulate the time series of wealth for in individual households\" (two errors in one line), 377 \"Now here's function to simulate\", 386 \"Shifts a cross-section of household forward in time\", and 450 \"corresponding to a WealthDynamics mode\""},
-    {"rule": "qe-math-009", "count": 3, "lines": [216, 137, 164],
-     "detail": "the single letter $a$ carries three unrelated meanings in a 657-line lecture, and two of them collide in one namespace. 216 makes $a$ the AR(1) persistence of the state process (bound as `a=0.5` at 298 and documented as \"aggregate shock parameter\" at 271); 137 and 542-549 make $a$ the Pareto tail index (`a_vals = (1, 2, 5)`, `a_vals = np.linspace(1, 10, 25)`); 164 and 174 make $a$ the Weibull shape parameter (`a_vals = range(1, 20)`). The loop variable `a` at 140 and 180 shadows nothing only because the AR coefficient lives on `self`. A reader who reaches the exercise at 542 has met three $a$'s. Separately, `α` at 316 names the stability product $\\mathbb E R \\cdot s_0$ that no equation defines, so the one Greek letter in the code has no counterpart in the maths"},
-    {"rule": "qe-code-001", "count": 4, "lines": [453, 261, 274, 372],
-     "detail": "`z_0 = wdy.z_mean` is computed and never used, three times: 453 (flake8 F841 - `update_cross_section` takes no `z_0` argument and draws its own $z$ at 402), 621 and 638, the last two at module level where pyflakes cannot see them. Four of the thirteen code cells open with a blank line before their first statement (261, 285, 353, 382) while the other nine do not. The comment column in the Numba type spec is aligned for the first eleven entries (263-273, `('w_hat',  float64),`) and then abandoned for the last four (274-277, `('z_var', float64),     #`), so the block half-aligns. And `range(n-1)` at 372, `range(shift_length-1)` at 404 and `1 - 2**(-1/a)` at 183 omit the spaces the rule asks for around `-` and `/` (E226), which is defensible for the exponent but not inside `range(...)`. Beyond that flake8 is clean: no long lines, no trailing whitespace, and the Unicode Greek parameter names (`μ_y`, `σ_z`, `μ_r`, `σ_r`, `ψ_0`) are exactly the mathematical-notation exemption the rule allows"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [92, 156, 58],
-     "detail": "the file contains no bold and no italic at all - not one `**` or `*` span in 657 lines - yet it introduces its three central terms in prose and leaves each unmarked: \"One popular graphical measure of inequality is the [Lorenz curve]\" (92), \"The definition and interpretation of the Gini coefficient can be found on the corresponding [Wikipedia page]\" (156), and \"a way to quantify such concentration, in terms of the tail index\" (58), the last of which is used six more times (137, 150, 539, 542, 546, 549) and never defined here or linked"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        489,
+        250,
+        237,
+        316,
+        479
+      ],
+      "detail": "five breaks, the first two flat contradictions. (1) 489-491 ends on a colon promising a picture - \"first consider the following image of our system resources when the code above is executing:\" - and no image follows; 493 simply resumes with \"Since the code is both efficiently JIT compiled...\", and there is no `{figure}` or `{image}` directive anywhere in the file. The paragraph at 493-495 then reasons *from* the absent evidence. (2) The savings rule is defined with $\\hat w$ at 244 and 247, and 249-251 immediately restates it with two different symbols: \"for $w < \\hat w$, the household saves nothing. For $w \\geq \\bar w$, the household saves a fraction $s_0$\" - $\\bar w$ is never defined. (3) 237 states \"we will assume all shocks are idiosyncratic (i.e., specific to individual households and independent across them)\", but the type spec at 271-273 labels $a$, $b$, $\\sigma_z$ \"aggregate shock parameter\", and 410-412 justifies the parallelisation with \"the time path of each household can be calculated independently once the path for the aggregate state is known\" - whereas `update_cross_section` draws a *fresh* $z$ per household inside the loop at 402 and never computes an aggregate path at all. So the prose, the comments and the code give three different answers to whether $z_t$ is common. (4) 316-318 raises `ValueError(\"Stability condition failed.\")` when `R_mean * s_0 >= 1`, but no stability condition appears anywhere in the mathematics - 234-235 only remarks that $c_r$ \"should be close to zero\" - so a reader who trips the error has nothing to look up. (5) The figure legends at 479 and 524 print `$\\psi^*$` and the code names `ψ_0`/`ψ_star` (452, 455, 620, 637, 640), but $\\psi$ is never introduced in the maths; the stationary cross-section has no symbol in §\"A Model of Wealth Dynamics\""
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        489,
+        244,
+        429
+      ],
+      "detail": "the one figure the lecture explicitly says it is showing is the one that is missing (489-491, see qe-writing-003). Second, the savings rule {eq}`sav_ah` at 244 is the whole mechanism of the model - a discontinuous kink, zero below $\\hat w$ and $s_0 w$ above - and it is never drawn, although it is a three-line plot and its kink is what the prose at 253-254 and the Kesten discussion at 596-599 both turn on. Third, six of the nine figures carry no axis label of any kind: 108-116 and 136-148 (Lorenz curves, axes are population share and wealth share), 429-433 (`ax.plot(w)` alone - wealth against time, no label, no title, no legend), 469-485 and 514-530 (Lorenz curves again), 564-578 (Gini against tail index). Only 173-190 and 645-653 label both axes, and 499-505 labels $x$ but leaves the $y$ quantity to the legend string `'gini coefficient'`. That is also why qe-fig-006 measures almost nothing here - there are hardly any labels to miscapitalise"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        463,
+        350,
+        377,
+        386,
+        450
+      ],
+      "detail": "463-495 spends five consecutive one-sentence paragraphs on the runtime of the cell rather than on inequality - \"it will take one or two minutes to execute\", \"This is unavoidable because we are executing a CPU intensive task\", \"In fact the code, which is JIT compiled and parallelized, runs extremely fast relative to the number of computations\", and then again at 493-495 \"it's close to impossible to make this sequence of tasks run faster without changing hardware\" - and the last of those rests on the image that is not there. Four sentences also arrive garbled: 350 \"Here's function to simulate the time series of wealth for in individual households\" (two errors in one line), 377 \"Now here's function to simulate\", 386 \"Shifts a cross-section of household forward in time\", and 450 \"corresponding to a WealthDynamics mode\""
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        216,
+        137,
+        164
+      ],
+      "detail": "the single letter $a$ carries three unrelated meanings in a 657-line lecture, and two of them collide in one namespace. 216 makes $a$ the AR(1) persistence of the state process (bound as `a=0.5` at 298 and documented as \"aggregate shock parameter\" at 271); 137 and 542-549 make $a$ the Pareto tail index (`a_vals = (1, 2, 5)`, `a_vals = np.linspace(1, 10, 25)`); 164 and 174 make $a$ the Weibull shape parameter (`a_vals = range(1, 20)`). The loop variable `a` at 140 and 180 shadows nothing only because the AR coefficient lives on `self`. A reader who reaches the exercise at 542 has met three $a$'s. Separately, `α` at 316 names the stability product $\\mathbb E R \\cdot s_0$ that no equation defines, so the one Greek letter in the code has no counterpart in the maths"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        453,
+        261,
+        274,
+        372
+      ],
+      "detail": "`z_0 = wdy.z_mean` is computed and never used, three times: 453 (flake8 F841 - `update_cross_section` takes no `z_0` argument and draws its own $z$ at 402), 621 and 638, the last two at module level where pyflakes cannot see them. Four of the thirteen code cells open with a blank line before their first statement (261, 285, 353, 382) while the other nine do not. The comment column in the Numba type spec is aligned for the first eleven entries (263-273, `('w_hat',  float64),`) and then abandoned for the last four (274-277, `('z_var', float64),     #`), so the block half-aligns. And `range(n-1)` at 372, `range(shift_length-1)` at 404 and `1 - 2**(-1/a)` at 183 omit the spaces the rule asks for around `-` and `/` (E226), which is defensible for the exponent but not inside `range(...)`. Beyond that flake8 is clean: no long lines, no trailing whitespace, and the Unicode Greek parameter names (`μ_y`, `σ_z`, `μ_r`, `σ_r`, `ψ_0`) are exactly the mathematical-notation exemption the rule allows"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        92,
+        156,
+        58
+      ],
+      "detail": "the file contains no bold and no italic at all - not one `**` or `*` span in 657 lines - yet it introduces its three central terms in prose and leaves each unmarked: \"One popular graphical measure of inequality is the [Lorenz curve]\" (92), \"The definition and interpretation of the Gini coefficient can be found on the corresponding [Wikipedia page]\" (156), and \"a way to quantify such concentration, in terms of the tail index\" (58), the last of which is used six more times (137, 150, 539, 542, 546, 549) and never defined here or linked"
+    }
   ],
   "strengths": [
     "The Gini implementation is validated rather than trusted: 164-168 gives the closed form $G = 1 - 2^{-1/a}$ for the Weibull, 173-190 plots the sampled coefficient and the theoretical one on the same axes across nineteen values of $a$, and 192 states the verdict in one line - and this is one of only two figures in the lecture that labels both axes",
@@ -40,5 +93,9 @@
   "scanner_doubts": [
     "wealth_dynamics.md:187 - qe-fig-006 (count 1) is a false positive and the fix is one word. `check_fig_006` (tools/qestyle_rules.py:1258-1274) exempts a label whose first word is in `PROPER_NOUNS`, which is why `ax.set_ylabel(\"Gini coefficient\")` at 188 passes; but `weibull` is absent from that set while `gini`, `pareto` and `lorenz` are all present, so `ax.set_xlabel(\"Weibull parameter $a$\")` at 187 is flagged. Confirmed by running the check over all five series with and without `PROPER_NOUNS.add('weibull')`: 298 hits in 60 files before, 297 hits in 59 files after - so the one-word addition removes exactly this hit and nothing else in the corpus. Weibull is a surname (Waloddi Weibull) on the same footing as Gini, Pareto and Lorenz; recommend adding it. While in that set, note that the same check's `core.isupper()` acronym escape and the `^[A-Z][a-z]` gate mean a label like `\"Weibull param\"` would be caught but `\"WEIBULL\"` would not - not worth changing, just recording.",
     "Cleared, not filed. (1) qe-math-014 (proposed) has nothing to score: `\\mathbb{P}` does not appear in the file, and the only `\\mathbb` uses are $\\mathbb R^3$ (232) and the indicator $\\mathbb 1\\{w \\geq \\hat w\\}$ (244) - which `check_math_008` correctly exempts, since its `indicator` regex at qestyle_rules.py:650 matches the `\\{` that follows even in the unbraced `\\mathbb 1` form. (2) qe-math-015 (proposed) likewise: there is no density or CDF named by a letter anywhere. The nearest candidate is `f_vals` (109, 143, 478), the cumulative population share returned by `qe.lorenz_curve`, which is lower-case for a cumulative quantity - but it is a code variable following the library's own API, not mathematical notation, so I am not counting it. (3) All seven qe-writing-006 hits are genuine Title Case in H2/H3 headings; the flagged words are Note, Assumptions, Curves, Coefficient, Model, Dynamics, Series, Measures, all common nouns. (4) The qe-fig-005 count of 9 matches the nine figure-producing cells exactly, and qe-fig-008's 14 matches the fourteen `plot` calls that omit `lw` (112, 113, 144, 145, 184, 185, 431, 479, 482, 501, 524, 527, 574, 575) - the `loglog` call at 649 is correctly not counted."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "0329f128c908e67f2d7756a5431aebcde91b0971"
+  }
 }

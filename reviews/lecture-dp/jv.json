@@ -2,16 +2,57 @@
   "series": "lecture-dp",
   "lecture": "jv",
   "judgment": [
-    {"rule": "qe-code-001", "count": 6, "lines": [205, 247, 287, 308, 329, 378],
-     "detail": "line 205 is the substantive one: `ɛ = 1e-4` inside `__init__` rebinds the constructor's own `ɛ` parameter (195), so `grid_max` (206) and `x_grid` (209) silently ignore whatever the caller passed while `self.ɛ` (198) keeps it - `JVWorker(ɛ=1e-2)` therefore changes the tolerance the operator uses but not the grid it was supposed to change. Beyond that: lines 287 and 308 are 89 characters (E501); a blank line separates `def` from its docstring in `operator_factory` (246-247) and `solve_model` (328-329); and `titles = [\"s policy\", \"ϕ policy\",  \"value function\"]` has two spaces after the second comma (378, E241)"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [236, 366],
-     "detail": "lines 236-239 tell the reader that $w$ 'is maximized over all feasible $(s, \\phi)$ pairs', but the code does no maximization - it evaluates a fixed 15x15 grid and keeps the best point (283-290, and again 304-312). That is the reason the $s$ and $\\phi$ policies in the figure at 376 come out as visible steps rather than smooth curves, and the prose leaves the reader with no way to connect the two. The same three sentences also introduce $w(z)$ with $z = (s, \\phi)$ (237), notation that appears nowhere else in the lecture. Separately, the `(jv_policies)=` anchor at 366 sits on the solve cell (368-372), which draws nothing, so 'Referring back to the figure {ref}`here <jv_policies>`' at 486 sends the reader to a cell with no figure - the plotting cell is 376-389"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [87, 143, 166, 395],
-     "detail": "the substitutes prediction is stated three times in almost the same words - 'Our risk-neutral worker should focus on whatever instrument has the highest expected return' (143), 'worker will focus on whichever instrument has the higher expected return' (166), 'Worker switches from one investment strategy to the other depending on relative return' (395) - and the third is presented as a finding from the computation when it is a restatement of the second. The lecture also drops articles into note form at several points, so sentences read as slides rather than prose: 'Agent's objective: maximize expected discounted sum of wages via controls' (87), 'marginal cost of investment via either $\\phi$ or $s$ is identical' (141), 'Return from investment via $\\phi$ dominates expected return from search' (161), 'worker does better by investing' (397)"},
-    {"rule": "qe-math-009", "count": 2, "lines": [99, 227],
-     "detail": "`\\vee` is defined at 104 as `a \\vee b := \\max\\{a, b\\}` purely so it can be used twice, in {eq}`jvbell` (99) and {eq}`defw` (227). The identical quantity is written out as `\\max \\{ g(x_t, \\phi_t), u_{t+1}\\}` in {eq}`jd` (84) and as `max(g(x, ϕ), u)` in the code (266, 456), so the join symbol saves nothing, costs the reader a definition to carry, and leaves the lecture using two notations for one operation"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [58, 63],
-     "detail": "no term anywhere in the file is bolded, including the two objects the whole model is built from: 'Let $x_t$ denote the time-$t$ job-specific human capital of a worker' (58) and '$s_t$ is search effort, devoted to obtaining new offers from other firms' (63). 'job-specific human capital' then recurs at 50, 69 and 168 as if already established, and 'search effort' at 67. Italic is used correctly and sparingly - once, at 501 (*infinitely* patient) - so the emphasis half of the rule is clean and only the definition half is missing"}
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        205,
+        247,
+        287,
+        308,
+        329,
+        378
+      ],
+      "detail": "line 205 is the substantive one: `ɛ = 1e-4` inside `__init__` rebinds the constructor's own `ɛ` parameter (195), so `grid_max` (206) and `x_grid` (209) silently ignore whatever the caller passed while `self.ɛ` (198) keeps it - `JVWorker(ɛ=1e-2)` therefore changes the tolerance the operator uses but not the grid it was supposed to change. Beyond that: lines 287 and 308 are 89 characters (E501); a blank line separates `def` from its docstring in `operator_factory` (246-247) and `solve_model` (328-329); and `titles = [\"s policy\", \"ϕ policy\",  \"value function\"]` has two spaces after the second comma (378, E241)"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        236,
+        366
+      ],
+      "detail": "lines 236-239 tell the reader that $w$ 'is maximized over all feasible $(s, \\phi)$ pairs', but the code does no maximization - it evaluates a fixed 15x15 grid and keeps the best point (283-290, and again 304-312). That is the reason the $s$ and $\\phi$ policies in the figure at 376 come out as visible steps rather than smooth curves, and the prose leaves the reader with no way to connect the two. The same three sentences also introduce $w(z)$ with $z = (s, \\phi)$ (237), notation that appears nowhere else in the lecture. Separately, the `(jv_policies)=` anchor at 366 sits on the solve cell (368-372), which draws nothing, so 'Referring back to the figure {ref}`here <jv_policies>`' at 486 sends the reader to a cell with no figure - the plotting cell is 376-389"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        87,
+        143,
+        166,
+        395
+      ],
+      "detail": "the substitutes prediction is stated three times in almost the same words - 'Our risk-neutral worker should focus on whatever instrument has the highest expected return' (143), 'worker will focus on whichever instrument has the higher expected return' (166), 'Worker switches from one investment strategy to the other depending on relative return' (395) - and the third is presented as a finding from the computation when it is a restatement of the second. The lecture also drops articles into note form at several points, so sentences read as slides rather than prose: 'Agent's objective: maximize expected discounted sum of wages via controls' (87), 'marginal cost of investment via either $\\phi$ or $s$ is identical' (141), 'Return from investment via $\\phi$ dominates expected return from search' (161), 'worker does better by investing' (397)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        99,
+        227
+      ],
+      "detail": "`\\vee` is defined at 104 as `a \\vee b := \\max\\{a, b\\}` purely so it can be used twice, in {eq}`jvbell` (99) and {eq}`defw` (227). The identical quantity is written out as `\\max \\{ g(x_t, \\phi_t), u_{t+1}\\}` in {eq}`jd` (84) and as `max(g(x, ϕ), u)` in the code (266, 456), so the join symbol saves nothing, costs the reader a definition to carry, and leaves the lecture using two notations for one operation"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        58,
+        63
+      ],
+      "detail": "no term anywhere in the file is bolded, including the two objects the whole model is built from: 'Let $x_t$ denote the time-$t$ job-specific human capital of a worker' (58) and '$s_t$ is search effort, devoted to obtaining new offers from other firms' (63). 'job-specific human capital' then recurs at 50, 69 and 168 as if already established, and 'search effort' at 67. Italic is used correctly and sparingly - once, at 501 (*infinitely* patient) - so the emphasis half of the rule is clean and only the definition half is missing"
+    }
   ],
   "strengths": [
     "The back-of-the-envelope section (129-170) is the best thing in the lecture: two arithmetic comparisons at $x = 0.05$ and $x = 0.4$ (147-159) yield two numbered predictions (165-168), and line 393 returns to them and checks them against the computed policies - the loop is actually closed rather than left for the reader",
@@ -29,5 +70,9 @@
     "Replace `\\vee` at 99 and 227 with the explicit `\\max\\{\\cdot, \\cdot\\}` already used in {eq}`jd` (84) and in the code, and delete its definition at 104",
     "Write the substitutes prediction once (keep 165-166, drop the restatements at 143 and 395), restore the dropped articles at 87, 141, 161 and 397, and turn line 34 into `{cite:t}`Ljungqvist2012`, exercise 6.18, and {cite:t}`Jovanovic1979`` since the citations are the object of 'based on' rather than parenthetical (qe-ref-001). While in the code, factor the grid search duplicated verbatim between `T` (282-290) and `get_greedy` (303-312) into one helper"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "bd41ece9dc4a672a4909a9d2a4fa5e356f179087"
+  }
 }

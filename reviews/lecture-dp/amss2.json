@@ -2,16 +2,66 @@
   "series": "lecture-dp",
   "lecture": "amss2",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [123, 539],
-     "detail": "the lecture does not run in the order its own plan sets out, and one section points forward at work already done. The plan at 117-129 lists: describe the economy, run a long simulation from positive debt, observe convergence to $\\bar b$, then reverse-engineer the special $b_0$. The file does reverse engineering first (297-423), then the short simulation (425-481), and only then the long simulation (482-526) - so 'Remarks about long simulation' ends at line 539 with 'We now describe how to find such an initial level of government debt', two hundred lines after that description was given. Second, plan item 123-124 promises that the par value converges to the same $\\bar b$ 'for alternative realizations of the Markov government expenditure process and for alternative settings of initial government debt $b_0$'. Exactly one long simulation is run, from one realization and $b_0 = 0.5$; line 501 gestures at 'other simulations we have run' without showing any"},
-    {"rule": "qe-writing-005", "count": 11, "lines": [36, 58, 59, 61, 73, 111, 113, 128, 302, 474, 486],
-     "detail": "bold used for stress rather than definition: **measurable** (36), **constant over time** (58), the single word **to** (59), **particular** / **loans** / **never** all in one bullet (61), **assets** (73), **weak** (111), **assets** / **constant** (113), **identical** (128 and again 474), **same** (302 and again 486). Italic is what these want. The file's genuine definitional bolds - **implementability constraints** (41), **measurability constraints** (44), **par value** / **market value** (63, 65), **fiscal risk** (572) - are outnumbered roughly two to one by the emphasis ones"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [53, 66, 70, 337, 501, 639],
-     "detail": "three bullets trail off into a literal ellipsis rather than finishing - 'bind for many periods, but $\\ldots$.' (53), 'eventually, they stop binding evermore, so that $\\ldots$' (54), 'is constant across time and states, but $\\ldots$.' (64) - which reads as an unfinished draft in published prose. Line 66 is ungrammatical and carries an unparseable compound: 'fluctuations in the interest rate make gross earnings on government debt fully insure the gross-of-gross-interest-payments government budget'. Line 70 ends 'restricted to exchange only risk-free debt debt'. Line 337 says 'Put steps 2 through 6 in a function minimizer' inside Step 6 itself - it means steps 2 through 5. Line 501 says the par value 'converges to about $1.07$' where lines 499-500 have just established $\\bar b \\approx -1.07$ and $\\bar b < 0$, so the sign is dropped at the one place a reader would quote. Line 639 reads 'let $x(s), s = 1,2$ be an arbitrary random variables'"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [598, 749],
-     "detail": "the lecture's two quantitative claims about the BEGS approximation are both delivered as printed scalars where a figure would settle them. First, ${\\mathcal B}^*$ is characterised at 595-602 as the minimiser of a one-dimensional variance criterion, and the code at 726-729 evaluates that criterion at the minimiser and reports 'machine zero' - but $J({\\mathcal B})$ as a function of ${\\mathcal B}$ is never drawn, so the reader never sees the parabola, its minimum, or where $\\bar b$ and $\\hat b$ sit on it. Second, line 749-750 asserts that the convergence rate at 736-739 and the implied time-to-convergence at 744-746 'do a good job of approximating our long simulation above' - the long simulation is a figure 250 lines earlier (507-526) and the approximating exponential path is never overlaid on it, so the comparison the sentence claims to make is left entirely to the reader"},
-    {"rule": "qe-code-001", "count": 4, "lines": [408, 518, 691, 738],
-     "detail": "line 408 writes `(u.Uc(c0, 1)  + u.Un(1, c0 + g0))` with two spaces before the `+` (E221 family); line 518 uses `id` as a loop variable - `for ax, title, id in zip(...)` - shadowing the builtin; line 691 continues an expression with a backslash although it is already inside parentheses (`u.β * (u.Uc(...) * u.π[0, 0] \\`), where PEP8 asks for implicit continuation, and 359-360 and 408-410 do the same; line 738 writes `1/den2` unspaced immediately after line 737 writes the same kind of arithmetic spaced"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        123,
+        539
+      ],
+      "detail": "the lecture does not run in the order its own plan sets out, and one section points forward at work already done. The plan at 117-129 lists: describe the economy, run a long simulation from positive debt, observe convergence to $\\bar b$, then reverse-engineer the special $b_0$. The file does reverse engineering first (297-423), then the short simulation (425-481), and only then the long simulation (482-526) - so 'Remarks about long simulation' ends at line 539 with 'We now describe how to find such an initial level of government debt', two hundred lines after that description was given. Second, plan item 123-124 promises that the par value converges to the same $\\bar b$ 'for alternative realizations of the Markov government expenditure process and for alternative settings of initial government debt $b_0$'. Exactly one long simulation is run, from one realization and $b_0 = 0.5$; line 501 gestures at 'other simulations we have run' without showing any"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 11,
+      "lines": [
+        36,
+        58,
+        59,
+        61,
+        73,
+        111,
+        113,
+        128,
+        302,
+        474,
+        486
+      ],
+      "detail": "bold used for stress rather than definition: **measurable** (36), **constant over time** (58), the single word **to** (59), **particular** / **loans** / **never** all in one bullet (61), **assets** (73), **weak** (111), **assets** / **constant** (113), **identical** (128 and again 474), **same** (302 and again 486). Italic is what these want. The file's genuine definitional bolds - **implementability constraints** (41), **measurability constraints** (44), **par value** / **market value** (63, 65), **fiscal risk** (572) - are outnumbered roughly two to one by the emphasis ones"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        53,
+        66,
+        70,
+        337,
+        501,
+        639
+      ],
+      "detail": "three bullets trail off into a literal ellipsis rather than finishing - 'bind for many periods, but $\\ldots$.' (53), 'eventually, they stop binding evermore, so that $\\ldots$' (54), 'is constant across time and states, but $\\ldots$.' (64) - which reads as an unfinished draft in published prose. Line 66 is ungrammatical and carries an unparseable compound: 'fluctuations in the interest rate make gross earnings on government debt fully insure the gross-of-gross-interest-payments government budget'. Line 70 ends 'restricted to exchange only risk-free debt debt'. Line 337 says 'Put steps 2 through 6 in a function minimizer' inside Step 6 itself - it means steps 2 through 5. Line 501 says the par value 'converges to about $1.07$' where lines 499-500 have just established $\\bar b \\approx -1.07$ and $\\bar b < 0$, so the sign is dropped at the one place a reader would quote. Line 639 reads 'let $x(s), s = 1,2$ be an arbitrary random variables'"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        598,
+        749
+      ],
+      "detail": "the lecture's two quantitative claims about the BEGS approximation are both delivered as printed scalars where a figure would settle them. First, ${\\mathcal B}^*$ is characterised at 595-602 as the minimiser of a one-dimensional variance criterion, and the code at 726-729 evaluates that criterion at the minimiser and reports 'machine zero' - but $J({\\mathcal B})$ as a function of ${\\mathcal B}$ is never drawn, so the reader never sees the parabola, its minimum, or where $\\bar b$ and $\\hat b$ sit on it. Second, line 749-750 asserts that the convergence rate at 736-739 and the implied time-to-convergence at 744-746 'do a good job of approximating our long simulation above' - the long simulation is a figure 250 lines earlier (507-526) and the approximating exponential path is never overlaid on it, so the comparison the sentence claims to make is left entirely to the reader"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        408,
+        518,
+        691,
+        738
+      ],
+      "detail": "line 408 writes `(u.Uc(c0, 1)  + u.Un(1, c0 + g0))` with two spaces before the `+` (E221 family); line 518 uses `id` as a loop variable - `for ax, title, id in zip(...)` - shadowing the builtin; line 691 continues an expression with a backslash although it is already inside parentheses (`u.β * (u.Uc(...) * u.π[0, 0] \\`), where PEP8 asks for implicit continuation, and 359-360 and 408-410 do the same; line 738 writes `1/den2` unspaced immediately after line 737 writes the same kind of arithmetic spaced"
+    }
   ],
   "strengths": [
     "The reverse-engineering argument is given as seven numbered steps (313-340), each pinned to a labelled equation - Step 2 to {eq}`amss2_TS_barg10`, Step 3 to {eq}`LSA_xsola`, Step 4 to {eq}`amss2_LSA_bsol`, Step 7 to {eq}`amss2_TS_barg11` and {eq}`eqn_AMSS2_10` - and the code at 346-421 implements them in that order, so a reader can put step and line side by side",
@@ -33,5 +83,9 @@
   "scanner_doubts": [
     "amss2.md, lines 95 and 562 - of the 2 `qe-ref-001` hits, 562 is right and 95 is arguable, which continues the pattern I reported for ifp_egm.md, ifp_advanced.md and ifp_egm_transient_shocks.md. Line 562 ('equation (44) of {cite}`BEGS1` expresses the time $t$ ... constraint as') is in-flow and wants `{cite:t}`. Line 95 ('a more general class of incomplete markets models analyzed in {cite}`BEGS1` (BEGS)') is the sentence that introduces the acronym, and reads naturally either way - it is the citation's own parenthetical gloss that makes it look in-flow. Across five files the check has now over-fired on 'see {cite}' / 'in {cite}' inside parentheticals and lists while missing several genuine author-as-subject cases; keying on sentence position rather than the preposding word would reduce both errors.",
     "amss2.md - not a miscount; a note that Math scoring 10/10 here is correct and worth preserving. The file is dense with `{\\mathcal B}`, `{\\mathcal R}`, `{\\mathcal X}` (550-661), which is exactly the shape qe-math-009 exists to catch - and it should not fire, because lines 545-548 adopt BEGS's notation deliberately and $B_t$ and ${\\mathcal B}_t$ are distinct objects displayed together at 550-557. If a mechanical heuristic for qe-math-009 is ever attempted, this file is the counterexample to test it against: calligraphic letters can be load-bearing when a lecture is deliberately bridging two papers' notations."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "ef61b0dca25eaeaf8eba5f33bbd3bdff128d6528"
+  }
 }

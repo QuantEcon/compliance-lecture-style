@@ -2,18 +2,71 @@
   "series": "lecture-python.myst",
   "lecture": "uncertainty_traps",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 4, "lines": [45, 147, 204, 510],
-     "detail": "the lecture's whole subject is a three-step feedback loop, set out as three bullets at 45-47 (high uncertainty discourages activity, low participation cuts the information flow, less information raises uncertainty) and restated at 49 as a positive externality - and it is never drawn, though a three-node cycle is the one diagram this lecture obviously wants. The three figures it does have (147, 302, 321) are static PNGs with empty caption bodies, so all of the description has to be carried in prose: 142-145 has to say that the image is \"a 45 degree diagram, with one curve for each $M \\in \\{0,\\ldots,6\\}$\" and list the parameter values, and 318-319 has to say what the third one contains. The participation threshold {eq}`firm_test` at 204-215 is what makes $M$ collapse, and nothing plots $\\psi(\\mu,\\gamma,F_m)$ or the active-set boundary in $(\\mu,\\gamma)$ space, so the mechanism behind the collapse is never visible. And the lecture carries no admonition at all: 178 (what \"pre-visible\" means, on which {eq}`pref1` depends) and 510-512 (the parenthetical about non-Gaussian shocks taking you outside the Kalman filter) are both `{note}` material written as plain paragraphs"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [140, 385, 409, 447],
-     "detail": "the code for the lecture's three body figures is not in the lecture - it is in the solution to exercise 2 (408-423, 434-466, 471-477, 482-502), so the reader who wants to know how the 45-degree diagram at 147 was made must open a dropdown 260 lines later, and the body's narrative at 142-160 is describing a picture whose construction is deliberately hidden. Exercise 2 then asks to \"replicate the simulation figures shown above\" (385) *modulo randomness*, but its own solution cannot be replicated at all: 447 calls `np.random.default_rng()` with no seed, and 505 concedes \"If you run the code above you'll get different plots, of course\" - even though `gen_aggregates` was given an `rng` parameter (281) precisely so a seed could be passed in. The `econ` object created at 409 for the 45-degree plot is the same object the simulation mutates in place at 455-456, so re-running the cell at 434-466 without re-running 408 continues from the previous run's `self.μ`, `self.γ`, `self.θ` and silently gives a different series. And 140 points at \"Exercise 1\" by number rather than `{ref}`uncertainty_traps_ex1``, so the pointer does not resolve to the exercise 190 lines below"},
-    {"rule": "qe-code-001", "count": 5, "lines": [237, 249, 251, 258, 435],
-     "detail": "251 ends the assignment target with a stray comma - `self.num_firms, self.σ_F, self.c, = num_firms, σ_F, c` - which unpacks a 3-tuple into a 3-element target list only by accident of Python's grammar; 237-247 indents all ten `__init__` parameters to 16 columns where the opening paren puts `self,` at 17, so every continuation is off by one; 249 and 254 use decorative banner comments (`# == Record values == #`) while 266 and 268 in the same class use plain `# Simplify names`; 258-259 and 269-270 name the two halves of an exponent `temp1` and `temp2`, which is neither PEP8-meaningful nor the mathematical-notation exception the rule allows - they are $-a(\\mu - F)$ and $a^2(1/\\gamma + 1/\\gamma_x)/2$ from {eq}`firm_test`; 435 writes the module-level assignment `sim_length=2000` with no spaces round `=`; and 417-418 introduces `label_string` only to pass it to `label=` on the next line"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [49, 60, 154, 358],
-     "detail": "49 does not agree with itself - \"high aggregate economic activity levels generates valuable information\" - and stacks four modifiers before the noun; 60-62 restates line 29, which has already said the lecture studies \"a simplified version of an uncertainty traps model of Fajgelbaum, Schaal and Taschereau-Dumouchel\", as two further sentences saying the original has many moving parts and this is a simplified version; 154 has no full stop and reads awkwardly (\"Thus, if one of these values for $M$ remains fixed, a corresponding steady state is the equilibrium level of precision\") where 426-429 says the same thing cleanly; and the solution at 358-362 opens by restating the exercise prompt back to the reader and uses \"the stated result\" twice in two sentences"},
-    {"rule": "qe-math-009", "count": 3, "lines": [91, 117, 343],
-     "detail": "the same variance is written two ways in the same lecture: $\\gamma_x^{-1}$ and $\\gamma^{-1}$ in the body (91, 109) against $1/\\gamma_x$ and $1/\\gamma$ in the exercise and its solution (337, 339, 343, 351, 365, 371, 373) and in the display at 212 - so `$N(0, \\gamma_x^{-1})$` and `$N(\\theta, 1/\\gamma_x)$` are the same distribution. Line 117 uses blackboard bold for a finite index set, $\\mathbb M \\subset \\{1,\\ldots,\\bar M\\}$, giving the letter M three decorations in three consecutive lines ($\\bar M$ at 81, $\\mathbb M$ at 117, $M$ at 118) where a plain letter would do and where `\\mathbb` is otherwise reserved for $\\mathbb E$ at 169 and 195. And the posterior is written with subscript zero in the exercise ($\\mu_0$, $\\gamma_0$ at 343-351) where the body uses primes for the same update ($\\mu'$, $\\gamma'$ at 126, 132, declared as the convention at 121), so the solution at 371-379 has to translate between the two"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [232, 336, 387],
-     "detail": "232 and 387 write `__init__` bare in narrative markdown, where the paired double underscores are emphasis delimiters - so \"The __init__ method encodes as default values\" renders as \"The **init** method\", producing bold text that is neither a definition nor emphasis (and losing the method name); backticks fix both. Line 336 uses bold as a structural label, `**Fact** Let $\\mathbf x = ...$`, running the label straight into the sentence with no punctuation, in a repo that has `{prf:theorem}`/`{prf:lemma}` directives for exactly this. The lecture's two genuine definitions are correctly bold (**precision** 96, **propagation mechanism** 326) and it uses no italic anywhere"}
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        45,
+        147,
+        204,
+        510
+      ],
+      "detail": "the lecture's whole subject is a three-step feedback loop, set out as three bullets at 45-47 (high uncertainty discourages activity, low participation cuts the information flow, less information raises uncertainty) and restated at 49 as a positive externality - and it is never drawn, though a three-node cycle is the one diagram this lecture obviously wants. The three figures it does have (147, 302, 321) are static PNGs with empty caption bodies, so all of the description has to be carried in prose: 142-145 has to say that the image is \"a 45 degree diagram, with one curve for each $M \\in \\{0,\\ldots,6\\}$\" and list the parameter values, and 318-319 has to say what the third one contains. The participation threshold {eq}`firm_test` at 204-215 is what makes $M$ collapse, and nothing plots $\\psi(\\mu,\\gamma,F_m)$ or the active-set boundary in $(\\mu,\\gamma)$ space, so the mechanism behind the collapse is never visible. And the lecture carries no admonition at all: 178 (what \"pre-visible\" means, on which {eq}`pref1` depends) and 510-512 (the parenthetical about non-Gaussian shocks taking you outside the Kalman filter) are both `{note}` material written as plain paragraphs"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        140,
+        385,
+        409,
+        447
+      ],
+      "detail": "the code for the lecture's three body figures is not in the lecture - it is in the solution to exercise 2 (408-423, 434-466, 471-477, 482-502), so the reader who wants to know how the 45-degree diagram at 147 was made must open a dropdown 260 lines later, and the body's narrative at 142-160 is describing a picture whose construction is deliberately hidden. Exercise 2 then asks to \"replicate the simulation figures shown above\" (385) *modulo randomness*, but its own solution cannot be replicated at all: 447 calls `np.random.default_rng()` with no seed, and 505 concedes \"If you run the code above you'll get different plots, of course\" - even though `gen_aggregates` was given an `rng` parameter (281) precisely so a seed could be passed in. The `econ` object created at 409 for the 45-degree plot is the same object the simulation mutates in place at 455-456, so re-running the cell at 434-466 without re-running 408 continues from the previous run's `self.μ`, `self.γ`, `self.θ` and silently gives a different series. And 140 points at \"Exercise 1\" by number rather than `{ref}`uncertainty_traps_ex1``, so the pointer does not resolve to the exercise 190 lines below"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        237,
+        249,
+        251,
+        258,
+        435
+      ],
+      "detail": "251 ends the assignment target with a stray comma - `self.num_firms, self.σ_F, self.c, = num_firms, σ_F, c` - which unpacks a 3-tuple into a 3-element target list only by accident of Python's grammar; 237-247 indents all ten `__init__` parameters to 16 columns where the opening paren puts `self,` at 17, so every continuation is off by one; 249 and 254 use decorative banner comments (`# == Record values == #`) while 266 and 268 in the same class use plain `# Simplify names`; 258-259 and 269-270 name the two halves of an exponent `temp1` and `temp2`, which is neither PEP8-meaningful nor the mathematical-notation exception the rule allows - they are $-a(\\mu - F)$ and $a^2(1/\\gamma + 1/\\gamma_x)/2$ from {eq}`firm_test`; 435 writes the module-level assignment `sim_length=2000` with no spaces round `=`; and 417-418 introduces `label_string` only to pass it to `label=` on the next line"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        49,
+        60,
+        154,
+        358
+      ],
+      "detail": "49 does not agree with itself - \"high aggregate economic activity levels generates valuable information\" - and stacks four modifiers before the noun; 60-62 restates line 29, which has already said the lecture studies \"a simplified version of an uncertainty traps model of Fajgelbaum, Schaal and Taschereau-Dumouchel\", as two further sentences saying the original has many moving parts and this is a simplified version; 154 has no full stop and reads awkwardly (\"Thus, if one of these values for $M$ remains fixed, a corresponding steady state is the equilibrium level of precision\") where 426-429 says the same thing cleanly; and the solution at 358-362 opens by restating the exercise prompt back to the reader and uses \"the stated result\" twice in two sentences"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        91,
+        117,
+        343
+      ],
+      "detail": "the same variance is written two ways in the same lecture: $\\gamma_x^{-1}$ and $\\gamma^{-1}$ in the body (91, 109) against $1/\\gamma_x$ and $1/\\gamma$ in the exercise and its solution (337, 339, 343, 351, 365, 371, 373) and in the display at 212 - so `$N(0, \\gamma_x^{-1})$` and `$N(\\theta, 1/\\gamma_x)$` are the same distribution. Line 117 uses blackboard bold for a finite index set, $\\mathbb M \\subset \\{1,\\ldots,\\bar M\\}$, giving the letter M three decorations in three consecutive lines ($\\bar M$ at 81, $\\mathbb M$ at 117, $M$ at 118) where a plain letter would do and where `\\mathbb` is otherwise reserved for $\\mathbb E$ at 169 and 195. And the posterior is written with subscript zero in the exercise ($\\mu_0$, $\\gamma_0$ at 343-351) where the body uses primes for the same update ($\\mu'$, $\\gamma'$ at 126, 132, declared as the convention at 121), so the solution at 371-379 has to translate between the two"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        232,
+        336,
+        387
+      ],
+      "detail": "232 and 387 write `__init__` bare in narrative markdown, where the paired double underscores are emphasis delimiters - so \"The __init__ method encodes as default values\" renders as \"The **init** method\", producing bold text that is neither a definition nor emphasis (and losing the method name); backticks fix both. Line 336 uses bold as a structural label, `**Fact** Let $\\mathbf x = ...$`, running the label straight into the sentence with no punctuation, in a repo that has `{prf:theorem}`/`{prf:lemma}` directives for exactly this. The lecture's two genuine definitions are correctly bold (**precision** 96, **propagation mechanism** 326) and it uses no italic anywhere"
+    }
   ],
   "strengths": [
     "The feedback loop is stated before any mathematics: 43-47 gives the three steps of the trap and 49 names the externality that drives it, so a reader knows what the model is for before meeting $\\gamma$",
@@ -33,5 +86,9 @@
     "Clear the mechanical list: sentence-case the two headings at 58 and 102, replace `\\mathbf x` with plain $x$ at 336, 340 and 343 (qe-math-004), brace the two `\\mathbb E [` at 169 and 195, give the three `{figure}` directives captions and `:name:` fields (147, 302, 321) plus the three code-cell figures (408, 471, 482), remove the five double spaces (35, 37, 39, 151, 338), and make 60's citation `{cite:t}`",
     "Fix the code items: the stray comma at 251, the off-by-one parameter indent at 237-247, the banner comments at 249 and 254, `temp1`/`temp2` at 258-259 and 269-270, `sim_length=2000` at 435, the redundant `label_string` at 417, and the six `fontsize=` overrides (419, 420, 421, 475, 488, 499) together with the three `figsize` overrides (412, 472, 483)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "0a18004b615604ddc012ad69ab00cba29e16855f"
+  }
 }

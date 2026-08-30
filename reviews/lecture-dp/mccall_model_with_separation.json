@@ -2,14 +2,46 @@
   "series": "lecture-dp",
   "lecture": "mccall_model_with_separation",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [511, 532],
-     "detail": "the '## Implementation' section presents its two functions in the wrong order and then mis-describes one of them. `update_h` (514-520) is introduced first and its body calls `compute_v_e` at 518, but `compute_v_e` is not shown until 526 - so the reader meets the update rule in terms of a function that does not yet exist, when the sentence at 523 ('Also, we provide a function to compute $v_e$') would work just as well one cell earlier. Then line 532 says of `compute_v_e` 'This function will be applied once convergence is achieved', which the code contradicts twice over: `update_h` calls it on every iteration (518), and `solve_model` calls it again after the loop (561)"},
-    {"rule": "qe-code-001", "count": 5, "lines": [256, 318, 516, 527, 539],
-     "detail": "three docstrings are single-line, single-quoted strings padded with spaces - `\" One update of the scalar h. \"` (516), `\" Compute v_e from h using the closed-form expression. \"` (527), `\" Iterates to convergence on the Bellman equations. \"` (539) - where the other six functions in the file use `\"\"\"` (284, 296, 319, 376, 571); `dist = BetaBinomial(n-1, a, b)` (256) drops the spaces around `-` that the same file uses in `1 - γ` (246) and `1 - β` (326); and the closing bracket of `solve_full_model` is indented four spaces against a hanging indent of eight (318, E124)"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [77, 132, 431],
-     "detail": "line 132 defines the second of the model's two value functions as '$v_u(w)$ be maximum lifetime for a worker who who enters the current period unemployed' - the noun is missing (line 130 has 'maximum lifetime value') and 'who' is doubled, in the sentence that introduces the object the rest of the lecture solves for. Line 431 reads 'But we can go further, but eliminating $v_e$ from the above equation' where the second 'but' should be 'by'. Line 77 spends a parenthesis on '(let's say he to save one character)', a note about the authors' typing rather than the model, and the lecture then mixes 'his' (78, 79) with 'their' (109) anyway"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [100, 360],
-     "detail": "the figure at 354-366 plots $v_e$ against the flat line $h$ and the prose immediately says 'The reservation wage is the $w$ where these lines meet' (370) - but nothing in the figure marks that point, so line 392 has to hedge with 'This value seems close to where the two lines meet' after the exact value is computed at 388. One `axvline` at `w_bar` would turn a hedge into a demonstration. Separately, '### Timing and decisions' (100-118) describes a two-state chain - employed to unemployed with probability $\\alpha$, unemployed to employed on acceptance - which is the lecture's whole structural addition over the baseline model and is given in prose and bullets only"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        511,
+        532
+      ],
+      "detail": "the '## Implementation' section presents its two functions in the wrong order and then mis-describes one of them. `update_h` (514-520) is introduced first and its body calls `compute_v_e` at 518, but `compute_v_e` is not shown until 526 - so the reader meets the update rule in terms of a function that does not yet exist, when the sentence at 523 ('Also, we provide a function to compute $v_e$') would work just as well one cell earlier. Then line 532 says of `compute_v_e` 'This function will be applied once convergence is achieved', which the code contradicts twice over: `update_h` calls it on every iteration (518), and `solve_model` calls it again after the loop (561)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        256,
+        318,
+        516,
+        527,
+        539
+      ],
+      "detail": "three docstrings are single-line, single-quoted strings padded with spaces - `\" One update of the scalar h. \"` (516), `\" Compute v_e from h using the closed-form expression. \"` (527), `\" Iterates to convergence on the Bellman equations. \"` (539) - where the other six functions in the file use `\"\"\"` (284, 296, 319, 376, 571); `dist = BetaBinomial(n-1, a, b)` (256) drops the spaces around `-` that the same file uses in `1 - γ` (246) and `1 - β` (326); and the closing bracket of `solve_full_model` is indented four spaces against a hanging indent of eight (318, E124)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        77,
+        132,
+        431
+      ],
+      "detail": "line 132 defines the second of the model's two value functions as '$v_u(w)$ be maximum lifetime for a worker who who enters the current period unemployed' - the noun is missing (line 130 has 'maximum lifetime value') and 'who' is doubled, in the sentence that introduces the object the rest of the lecture solves for. Line 431 reads 'But we can go further, but eliminating $v_e$ from the above equation' where the second 'but' should be 'by'. Line 77 spends a parenthesis on '(let's say he to save one character)', a note about the authors' typing rather than the model, and the lecture then mixes 'his' (78, 79) with 'their' (109) anyway"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        100,
+        360
+      ],
+      "detail": "the figure at 354-366 plots $v_e$ against the flat line $h$ and the prose immediately says 'The reservation wage is the $w$ where these lines meet' (370) - but nothing in the figure marks that point, so line 392 has to hedge with 'This value seems close to where the two lines meet' after the exact value is computed at 388. One `axvline` at `w_bar` would turn a hedge into a demonstration. Separately, '### Timing and decisions' (100-118) describes a two-state chain - employed to unemployed with probability $\\alpha$, unemployed to employed on acceptance - which is the lecture's whole structural addition over the baseline model and is given in prose and bullets only"
+    }
   ],
   "strengths": [
     "The lecture solves the same model twice on purpose and then checks the two answers against each other: the direct two-vector iteration (262-392) and the scalar reduction (395-583), with 587-594 printing both reservation wages and their difference - so 'the simplified method is far more efficient' (596) rests on a computation the reader watches rather than an assertion",
@@ -29,5 +61,9 @@
   ],
   "scanner_doubts": [
     "mccall_model_with_separation.md, lines 156, 181, 214, 480, 498 - all 5 qe-math-002 hits are false positives and they are the file's only High-severity finding, taking Math from 10/10 to 5/10. Each is the string `w' \\in \\mathbb W` inside a summation index: a next-period wage, which line 126 states explicitly ('primes denote next period values'). The cause is that the `prime_vec` branch of check_math_002 (tools/qestyle_rules.py:393) matches a lowercase letter plus apostrophe followed by any letter or control sequence - `(?<![A-Za-z0-9\\\\])([a-z])'(?=\\s*(?:[A-Za-z]|\\\\[A-Za-z]))` - without the `NOT_A_PRODUCT` guard that the sibling `supT` branch already applies at line 400. `\\in` is in `NOT_A_PRODUCT` (line 374), so reusing it in `prime_vec` fixes this. Scale: `[a-z]'` followed by `\\in`, `\\leq`, `\\geq`, `\\to`, `\\sim`, `\\neq` or `\\mapsto` matches 112 lines across the five series; within lecture-dp it hits mccall_model (12), mccall_q (7), discrete_dp (6), this file (5), rs_inventory_q (4), chang_ramsey (3), inventory_q (3), opt_tax_recur (3), ifp_discrete (1) and odu (1)."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "fc39e1b5135551e27a8bedb94a7539562b024cf2"
+  }
 }

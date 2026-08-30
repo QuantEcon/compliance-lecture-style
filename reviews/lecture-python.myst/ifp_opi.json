@@ -2,12 +2,34 @@
   "series": "lecture-python.myst",
   "lecture": "ifp_opi",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 3, "lines": [60, 109, 376],
-     "detail": "roughly a hundred lines are restated from {doc}`ifp_discrete` rather than referenced: `B` (114-127) is that lecture's 428-441 verbatim, the three staged `vmap` calls (133-135) are its 447-449, `T` and `get_greedy` (141-157) are its 456-469, and `value_function_iteration` (224-243) is its 475-492. The lecture says why - 'We repeat the key elements here for convenience' (60), 'We repeat some functions' (109) - but the material it repeats is the predecessor's *exercise solution*, so the duplication also silently makes this lecture depend on an answer the reader may not have seen. Separately, the same conclusion is drawn twice: 'confirming both algorithms converge to the same solution' (349) and 'confirming both methods produce the same solution' (376)"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [473],
-     "detail": "the exercise computes speedup factors over a 3x3 grid of $(\\rho, \\nu)$ values and reports them as nine `print` lines (473-476), in a lecture whose entire subject is comparative speed and which plots its other sweep - OPI time against $m$ - as a figure with the VFI reference line drawn in (401-410). Nine numbers on a 3x3 grid is a small heatmap or a grouped bar chart, and the claim being tested ('the speed gains achieved by OPI are quite robust to parameter changes', 425) is a statement about a surface"},
-    {"rule": "qe-code-001", "count": 3, "lines": [96, 124, 133],
-     "detail": "line 96 closes the `create_consumption_model` signature with `    ):` at 4 spaces, leaving the arguments at the same indent as the body (E121/E125). Line 124 pads before `=` to align with the line above (E221), and the two staged-`vmap` blocks pad both before `=` and inside the `in_axes` tuples (133-135 and 194-195; E221, E241)"}
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        60,
+        109,
+        376
+      ],
+      "detail": "roughly a hundred lines are restated from {doc}`ifp_discrete` rather than referenced: `B` (114-127) is that lecture's 428-441 verbatim, the three staged `vmap` calls (133-135) are its 447-449, `T` and `get_greedy` (141-157) are its 456-469, and `value_function_iteration` (224-243) is its 475-492. The lecture says why - 'We repeat the key elements here for convenience' (60), 'We repeat some functions' (109) - but the material it repeats is the predecessor's *exercise solution*, so the duplication also silently makes this lecture depend on an answer the reader may not have seen. Separately, the same conclusion is drawn twice: 'confirming both algorithms converge to the same solution' (349) and 'confirming both methods produce the same solution' (376)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        473
+      ],
+      "detail": "the exercise computes speedup factors over a 3x3 grid of $(\\rho, \\nu)$ values and reports them as nine `print` lines (473-476), in a lecture whose entire subject is comparative speed and which plots its other sweep - OPI time against $m$ - as a figure with the VFI reference line drawn in (401-410). Nine numbers on a 3x3 grid is a small heatmap or a grouped bar chart, and the claim being tested ('the speed gains achieved by OPI are quite robust to parameter changes', 425) is a statement about a surface"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        96,
+        124,
+        133
+      ],
+      "detail": "line 96 closes the `create_consumption_model` signature with `    ):` at 4 spaces, leaving the arguments at the same indent as the body (E121/E125). Line 124 pads before `=` to align with the line above (E221), and the two staged-`vmap` blocks pad both before `=` and inside the `in_axes` tuples (133-135 and 194-195; E221, E241)"
+    }
   ],
   "strengths": [
     "The speed comparison is set up so that its numbers mean something: both algorithms are run once to compile and once to time (303-341), the two value functions are then checked with `jnp.allclose` (346) and the two policies compared side by side (353-374), so the speedup at 381 rests on both methods having solved the same problem",
@@ -27,5 +49,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 x2 at ifp_opi.md:102 flags `rho` and `sigma`, but the line is `mc = qe.tauchen(n=y_size, rho=ρ, sigma=ν)` - those are QuantEcon's own keyword-argument names and cannot be renamed, while the values passed are already unicode `ρ` and `ν`. Identical false positive to ifp_discrete.md:182; the check needs to ignore the left-hand side of a keyword argument in a call"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "d1e67328a81b619e5dc5b3575799c5277a1e6e4b"
+  }
 }

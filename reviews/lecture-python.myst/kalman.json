@@ -2,16 +2,55 @@
   "series": "lecture-python.myst",
   "lecture": "kalman",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 5, "lines": [335, 530, 551, 701, 713],
-     "detail": "335 is a 41-word sentence that introduces a new random vector, an independence assumption and a distribution in one breath; 701 is 45 words with a trailing parenthetical that duplicates its own main clause; 713-715 restates the comparison already set up at 703-711. Two passages say the same thing twice: the `{note}` at 467-471 explains that $\\mu_t$ is written $\\hat x_t$ in the literature, and the parenthetical at 530 explains it again; and the phrase \"The class `Kalman` from the [QuantEcon.py](https://quantecon.org/quantecon-py/) package\" appears in full, with the same link, at both 527 and 551"},
-    {"rule": "qe-code-001", "count": 4, "lines": [163, 626, 680, 774],
-     "detail": "163 binds `X, Y = np.meshgrid(x_grid, y_grid)` - the lecture's own $X_t$ (hidden state) and $Y_t$ (signal) reused as plotting grids, and both then sit in the same cells as `μ`, `Σ` and the scalar `y` observation at 157, so `X`, `Y`, `y` and `Z` mean four unrelated things in 40 lines; 774 puts spaces around `=` in the keyword argument `mu_0 = np.zeros(2)` (PEP8 E251), the only such call in the file; 680 binds a lambda to a name (E731) whose parameter `x` shadows the simulated state path `x` returned at 673; and 626 escapes LaTeX inside an f-string (`f'... $\\\\theta = {θ:.1f}$'`) where an `rf''` string would carry the backslash directly"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [148, 381],
-     "detail": "the first code cell defines `G` and `R` at 148-151 under the comment \"Define the matrices G and R from the measurement equation Y = G X + v\", and `A` and `Q` at 152-155 - but the measurement equation is not introduced until {eq}`kl_measurement_model` at 211, and the law of motion not until {eq}`kl_xdynam` at 328, so the reader meets four matrices and a signal value `y` roughly 60 to 180 lines before any of them is defined, and the sentence that finally explains the choices ($G = I$, $R = 0.5\\Sigma$) arrives at 302, after the figure that used them; separately, 381-382 breaks off mid-thought - \"the following figure, where the update has used parameters\" - and hands the reader a bare display of $A$ and $Q$"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [274, 704],
-     "detail": "the bold-for-definition pattern is right everywhere else (**prior** 102, **filtering distribution** 314, **Kalman gain** 362, **predictive distribution** 379), which isolates two reversals: 274 italicises a term as it is coined (\"the *signal surprise* $Y_t - G\\mu$\") where the rule asks for bold, and 704 bolds a word used purely for emphasis (\"a competitor who **is** allowed to observe $X_{t-1}$\") where it asks for italic"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [473],
-     "detail": "\"## Convergence\" (473-520) is the only substantial section of this lecture with no figure, in a lecture that spends four cumulative contour plots on the two preceding steps. It argues that $\\Sigma_t$ follows a Riccati difference equation {eq}`kalman_sdy`, that a fixed point solves {eq}`kalman_dare`, and that $\\{\\Sigma_t\\}$ converges from any nonnegative definite $\\Sigma_0$ when $A$ is stable - all of it a picture the lecture is already equipped to draw, since `Kalman.stationary_values()` (used at 790) gives the limit and `kn.update` gives the path. One plot of the diagonal entries of $\\Sigma_t$ against $t$, approaching the dashed stationary values from two different $\\Sigma_0$, would make the whole section concrete, and exercise `kalman_ex4` at 822-830 asks the reader to observe exactly that behaviour with nothing to observe it against"}
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        335,
+        530,
+        551,
+        701,
+        713
+      ],
+      "detail": "335 is a 41-word sentence that introduces a new random vector, an independence assumption and a distribution in one breath; 701 is 45 words with a trailing parenthetical that duplicates its own main clause; 713-715 restates the comparison already set up at 703-711. Two passages say the same thing twice: the `{note}` at 467-471 explains that $\\mu_t$ is written $\\hat x_t$ in the literature, and the parenthetical at 530 explains it again; and the phrase \"The class `Kalman` from the [QuantEcon.py](https://quantecon.org/quantecon-py/) package\" appears in full, with the same link, at both 527 and 551"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        163,
+        626,
+        680,
+        774
+      ],
+      "detail": "163 binds `X, Y = np.meshgrid(x_grid, y_grid)` - the lecture's own $X_t$ (hidden state) and $Y_t$ (signal) reused as plotting grids, and both then sit in the same cells as `μ`, `Σ` and the scalar `y` observation at 157, so `X`, `Y`, `y` and `Z` mean four unrelated things in 40 lines; 774 puts spaces around `=` in the keyword argument `mu_0 = np.zeros(2)` (PEP8 E251), the only such call in the file; 680 binds a lambda to a name (E731) whose parameter `x` shadows the simulated state path `x` returned at 673; and 626 escapes LaTeX inside an f-string (`f'... $\\\\theta = {θ:.1f}$'`) where an `rf''` string would carry the backslash directly"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        148,
+        381
+      ],
+      "detail": "the first code cell defines `G` and `R` at 148-151 under the comment \"Define the matrices G and R from the measurement equation Y = G X + v\", and `A` and `Q` at 152-155 - but the measurement equation is not introduced until {eq}`kl_measurement_model` at 211, and the law of motion not until {eq}`kl_xdynam` at 328, so the reader meets four matrices and a signal value `y` roughly 60 to 180 lines before any of them is defined, and the sentence that finally explains the choices ($G = I$, $R = 0.5\\Sigma$) arrives at 302, after the figure that used them; separately, 381-382 breaks off mid-thought - \"the following figure, where the update has used parameters\" - and hands the reader a bare display of $A$ and $Q$"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        274,
+        704
+      ],
+      "detail": "the bold-for-definition pattern is right everywhere else (**prior** 102, **filtering distribution** 314, **Kalman gain** 362, **predictive distribution** 379), which isolates two reversals: 274 italicises a term as it is coined (\"the *signal surprise* $Y_t - G\\mu$\") where the rule asks for bold, and 704 bolds a word used purely for emphasis (\"a competitor who **is** allowed to observe $X_{t-1}$\") where it asks for italic"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        473
+      ],
+      "detail": "\"## Convergence\" (473-520) is the only substantial section of this lecture with no figure, in a lecture that spends four cumulative contour plots on the two preceding steps. It argues that $\\Sigma_t$ follows a Riccati difference equation {eq}`kalman_sdy`, that a fixed point solves {eq}`kalman_dare`, and that $\\{\\Sigma_t\\}$ converges from any nonnegative definite $\\Sigma_0$ when $A$ is stable - all of it a picture the lecture is already equipped to draw, since `Kalman.stationary_values()` (used at 790) gives the limit and `kn.update` gives the path. One plot of the diagonal entries of $\\Sigma_t$ against $t$, approaching the dashed stationary values from two different $\\Sigma_0$, would make the whole section concrete, and exercise `kalman_ex4` at 822-830 asks the reader to observe exactly that behaviour with nothing to observe it against"
+    }
   ],
   "strengths": [
     "The four contour figures (140, 189, 280, 396) are one picture built in four exposures: prior, prior with the signal $Y_t$ marked, prior with the filtered density laid over it, then all three with the predictive density - each keeps the earlier densities as black contour lines, so every step is visibly a transformation of the previous one rather than a new plot",
@@ -31,5 +70,9 @@
     "Cut the duplication: keep one of the two `\\hat x_t` explanations (467-471 or 530), collapse 527 and 551 into a single description of the `Kalman` class, and trim 713-715, which restates 703-711",
     "Replace the static PNG at 586 with a code-generated figure (qe-fig-002), add `lw=2` at 623 and 689, gate `kalman_ex4` (822) with `exercise-start`/`exercise-end` to match the other three, put the definition at 274 in bold and the emphasis at 704 in italic, and give the sentences at 42, 187, 279, 314 and 379 their missing full stops"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "c51536357816ed875698ff463c582309d60ea21f"
+  }
 }

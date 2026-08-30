@@ -88,5 +88,9 @@
   "scanner_doubts": [
     "lagrangian_lqdp.md, lines 251 and 254 - qe-math-002 is reported as 73 but 71 transposes exist. Unlike the other lecture-dp reports, this file's primes really are transposes; the two extra hits are double counts. `u_t'` at 251 and `x_t'` at 254 each match twice, once via the `prime` branch of check_math_002 and again via the `prime_vec` branch catching the `t'` inside the subscripted symbol, because the lookbehind at tools/qestyle_rules.py:393 is `(?<![A-Za-z0-9\\\\])` and does not exclude `_`. Adding `_` to that class fixes it. The same defect affects 74 lines in lecture-dp overall and matters for the series' headline 509-occurrence figure - see the fuller note on lq_inventories.",
     "lagrangian_lqdp.md, line 476 - the 1 qe-code-002 hit is a false positive. The line is `lq = LQ(Q, R, A, B, beta=β)`: `beta` is `quantecon.LQ`'s own keyword-argument name and `β` is the Unicode variable being passed to it, so the author is already complying and cannot rename the library's parameter. check_code_002 has a special case for matplotlib's `alpha=` but none for keyword-argument names generally; the same miss produced the reported hits on career.md (`scipy.special.beta`) and lq_inventories.md (line 278, the identical `qe.LQ(..., beta=β)` call)."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "b5cadd1f6b1323ef9d25db14682652dcb9728ddc"
+  }
 }

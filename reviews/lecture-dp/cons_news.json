@@ -2,16 +2,74 @@
   "series": "lecture-dp",
   "lecture": "cons_news",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 23, "lines": [42, 62, 63, 80, 140, 275, 285, 292, 313, 316, 320, 351, 383, 415, 425, 443, 451, 452, 497, 760, 777, 816, 842],
-     "detail": "bold is the lecture's emphasis marker throughout, which leaves it unable to signal definitions. Single words stressed in bold: **regardless** (42), **today's** (62), **future** (63, 80), **same** (140, 275, 497), **past** (285), **not fundamental** (292), **increases** (313), **all** (316), **decreases all** (320), **increase** (351), **exactly** (383), **saving** (443, 452), **permanent** (451), **decreases** (760), **permanently** (777), **single** (816), **evaluate** / **simulate** (842), **identical** / **different** (847-848). All of these want italic. Lines 415 and 425 use bold as a pseudo-heading ('**for a consumer having the information assumed in the news representation**'). The file does use bold correctly for real definitions - **discount factor** (39), **covariance generating function** (196), **innovations representation** (158), **backcasting** (376) - so the reader has no way to tell the two uses apart"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [820, 869],
-     "detail": "the last three sections describe computations the lecture never performs. Section 'Simulating income process and two associated shock processes' (814-848) lays out a precise four-step procedure - draw $\\{\\epsilon_t\\}$ with $y_0 = 100$, build $\\{a_t\\}$ from the given formula, discard the first $S$ observations, then 'evaluate and simulate the decision rules for $c_t, b_t$ that Python has computed for us above' - and no code follows: the file's last code cell ends at line 812. Section 'Calculating innovations in another way' (850-870) then says 'Here we use formula {eq}`eqn_3` above to compute $a_{t+1}$' and closes with 'We can verify that we recover the same $\\{a_t\\}$ sequence computed earlier' (869-870) - but nothing is computed and nothing is verified. A reader following the lecture reaches the experiment it was built to run and finds it missing"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [93, 227, 439, 441, 525],
-     "detail": "lines 93-97 are a single 52-word bullet holding four nested clauses (a tax cut, a foreseen permanent tax rise, interest payments, bonds issued to finance the cut); lines 441-447 are one 68-word sentence carrying the whole better-informed-consumer result. Line 227 reads 'we can also use the the **Kalman filter**'; line 439 runs two words together - 'exactly the same histories of nonfinancial incomethe two consumers behave differently' - and is also missing a comma; line 525 says 'We formulae the problem' for 'formulate'. Two more of the same kind sit at 361 ('reprentation') and 486 ('in thid [quantecon lecture]')"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [309],
-     "detail": "the pivot of the lecture is a sign flip in one impulse response - under representation {eq}`eqn_1` the sequence is $1, 1-\\beta^{-1}, 1-\\beta^{-1}, \\ldots$ with $1 - \\beta^{-1} < 0$ (309-321), and under {eq}`eqn_2` it is $1, 1-\\beta, 1-\\beta, \\ldots$ with $1 - \\beta > 0$ (346-352). That contrast is carried entirely by prose across 40 lines. The two figures the lecture does draw (747-751, 767-772) are the responses of $c$ and $b$, not of $y$, so the reader never sees the one picture - two step responses of nonfinancial income, one settling below the axis and one above - that would make the rest of the argument obvious"},
-    {"rule": "qe-code-001", "count": 2, "lines": [618, 731],
-     "detail": "line 618 writes `[0, 0, 1e-12]]) # put penalty on debt` and line 731 writes `J = 5 # Number of coefficients that we want` - both inline comments need two spaces before the `#` (pycodestyle E261). The multi-space alignment inside the matrix literals at 655 and 624-626 is a different case and should stay: it lines the matrix columns up, which is the 'closer to mathematical notation' latitude the rule allows"}
+    {
+      "rule": "qe-writing-005",
+      "count": 23,
+      "lines": [
+        42,
+        62,
+        63,
+        80,
+        140,
+        275,
+        285,
+        292,
+        313,
+        316,
+        320,
+        351,
+        383,
+        415,
+        425,
+        443,
+        451,
+        452,
+        497,
+        760,
+        777,
+        816,
+        842
+      ],
+      "detail": "bold is the lecture's emphasis marker throughout, which leaves it unable to signal definitions. Single words stressed in bold: **regardless** (42), **today's** (62), **future** (63, 80), **same** (140, 275, 497), **past** (285), **not fundamental** (292), **increases** (313), **all** (316), **decreases all** (320), **increase** (351), **exactly** (383), **saving** (443, 452), **permanent** (451), **decreases** (760), **permanently** (777), **single** (816), **evaluate** / **simulate** (842), **identical** / **different** (847-848). All of these want italic. Lines 415 and 425 use bold as a pseudo-heading ('**for a consumer having the information assumed in the news representation**'). The file does use bold correctly for real definitions - **discount factor** (39), **covariance generating function** (196), **innovations representation** (158), **backcasting** (376) - so the reader has no way to tell the two uses apart"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        820,
+        869
+      ],
+      "detail": "the last three sections describe computations the lecture never performs. Section 'Simulating income process and two associated shock processes' (814-848) lays out a precise four-step procedure - draw $\\{\\epsilon_t\\}$ with $y_0 = 100$, build $\\{a_t\\}$ from the given formula, discard the first $S$ observations, then 'evaluate and simulate the decision rules for $c_t, b_t$ that Python has computed for us above' - and no code follows: the file's last code cell ends at line 812. Section 'Calculating innovations in another way' (850-870) then says 'Here we use formula {eq}`eqn_3` above to compute $a_{t+1}$' and closes with 'We can verify that we recover the same $\\{a_t\\}$ sequence computed earlier' (869-870) - but nothing is computed and nothing is verified. A reader following the lecture reaches the experiment it was built to run and finds it missing"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        93,
+        227,
+        439,
+        441,
+        525
+      ],
+      "detail": "lines 93-97 are a single 52-word bullet holding four nested clauses (a tax cut, a foreseen permanent tax rise, interest payments, bonds issued to finance the cut); lines 441-447 are one 68-word sentence carrying the whole better-informed-consumer result. Line 227 reads 'we can also use the the **Kalman filter**'; line 439 runs two words together - 'exactly the same histories of nonfinancial incomethe two consumers behave differently' - and is also missing a comma; line 525 says 'We formulae the problem' for 'formulate'. Two more of the same kind sit at 361 ('reprentation') and 486 ('in thid [quantecon lecture]')"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        309
+      ],
+      "detail": "the pivot of the lecture is a sign flip in one impulse response - under representation {eq}`eqn_1` the sequence is $1, 1-\\beta^{-1}, 1-\\beta^{-1}, \\ldots$ with $1 - \\beta^{-1} < 0$ (309-321), and under {eq}`eqn_2` it is $1, 1-\\beta, 1-\\beta, \\ldots$ with $1 - \\beta > 0$ (346-352). That contrast is carried entirely by prose across 40 lines. The two figures the lecture does draw (747-751, 767-772) are the responses of $c$ and $b$, not of $y$, so the reader never sees the one picture - two step responses of nonfinancial income, one settling below the axis and one above - that would make the rest of the argument obvious"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 2,
+      "lines": [
+        618,
+        731
+      ],
+      "detail": "line 618 writes `[0, 0, 1e-12]]) # put penalty on debt` and line 731 writes `J = 5 # Number of coefficients that we want` - both inline comments need two spaces before the `#` (pycodestyle E261). The multi-space alignment inside the matrix literals at 655 and 624-626 is a different case and should stay: it lines the matrix columns up, which is the 'closer to mathematical notation' latitude the rule allows"
+    }
   ],
   "strengths": [
     "The paper-and-pencil results are put to the test rather than left as claims: the decision rules derived by hand at 418-433 are re-derived by the LQ solver at 631-637 and 660-665, printed as `-F1` and `-F2`, and the text at 784-785 closes the loop - 'The preceding computations confirm what we had derived earlier using paper and pencil'",
@@ -33,5 +91,9 @@
   "scanner_doubts": [
     "cons_news.md, lines 631 and 660 - the 2 `qe-code-002` hits are false positives of the keyword-argument kind I have now flagged in career.md, ifp_opi.md and ifp_discrete.md. Both are `qe.LQ(QLQ, RLQ, ALQ1, BLQ1, C=CLQ1, beta=β)`: `beta` is the `quantecon.LQ` constructor's parameter name, and the value passed is the author's own Unicode `β` from line 610. This is now four files in one series where every qe-code-002 hit is a library keyword or an imported function name; excluding identifiers in keyword-argument position and names bound by an import would clear all of them and leave the check firing only on variables the author controls.",
     "cons_news.md, lines 36, 56, 412, 486, 498, 501 - rule attribution rather than a miscount. The 7 raw links are real and want fixing, but 6 of them target `perm_income_cons`, which exists in lecture-dp itself (lectures/perm_income_cons.md). They are therefore same-series references, which is qe-link-001's territory, and they were reported under qe-link-002 ('{doc} links for cross-series references') because the URL host matched a known-series pattern. The distinction matters for the fix: a same-series target takes `{doc}`perm_income_cons``, not `{doc}`intro:...``. It is worth checking whether the host list should be matched against the *current* series before attributing to 001 or 002 - and separately, `python-intro.quantecon.org` is not among lecture-dp's intersphinx hosts (only intro, intermediate, advanced), so the host list may be carrying a stale domain."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "2ac551ca1647bb63d557d402ee4aaa51eb022f70"
+  }
 }

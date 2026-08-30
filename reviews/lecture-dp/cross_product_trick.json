@@ -2,12 +2,32 @@
   "series": "lecture-dp",
   "lecture": "cross_product_trick",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 2, "lines": [80, 94],
-     "detail": "the two sentences that carry the lecture's main claims are also its longest. Line 80 is a single 55-word sentence naming two 4-tuples, two matrix pairs and the relation between them before it reaches its verb ('are related to ... by'); lines 94-95 run ~60 words and contain the duplicated word 'between between' plus the typo 'measurments'. Both want splitting into one clause per sentence"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [135],
-     "detail": "the algorithm's first step contradicts the formula it points at. Lines 135-136 say to 'compute $\\Sigma, K^*$ using the ordinary Kalman filtering formula with $BF' = 0$', but the displayed system at 140-143 is not the ordinary formula with $BF'=0$ - it is the ordinary formula with $A$ replaced by $A^*$ and $BB'$ by $B^*{B^*}'$, the transformed matrices defined at 126-129. A reader who follows 135 literally substitutes into 119-120 and gets $A$, not $A^*$, so the step as written does not produce the state it claims"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [74, 145],
-     "detail": "bold used for emphasis where italic is wanted: line 74 'an **equivalent** problem without cross-products' and line 145 'the original problem **with non-zero covariance** between shocks'. Neither is a definition - both are stressing a contrast with the preceding paragraph. The bold on **duality** at 94 is correct, since that sentence is where the term enters the lecture"}
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        80,
+        94
+      ],
+      "detail": "the two sentences that carry the lecture's main claims are also its longest. Line 80 is a single 55-word sentence naming two 4-tuples, two matrix pairs and the relation between them before it reaches its verb ('are related to ... by'); lines 94-95 run ~60 words and contain the duplicated word 'between between' plus the typo 'measurments'. Both want splitting into one clause per sentence"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        135
+      ],
+      "detail": "the algorithm's first step contradicts the formula it points at. Lines 135-136 say to 'compute $\\Sigma, K^*$ using the ordinary Kalman filtering formula with $BF' = 0$', but the displayed system at 140-143 is not the ordinary formula with $BF'=0$ - it is the ordinary formula with $A$ replaced by $A^*$ and $BB'$ by $B^*{B^*}'$, the transformed matrices defined at 126-129. A reader who follows 135 literally substitutes into 119-120 and gets $A$, not $A^*$, so the step as written does not produce the state it claims"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        74,
+        145
+      ],
+      "detail": "bold used for emphasis where italic is wanted: line 74 'an **equivalent** problem without cross-products' and line 145 'the original problem **with non-zero covariance** between shocks'. Neither is a definition - both are stressing a contrast with the preceding paragraph. The bold on **duality** at 94 is correct, since that sentence is where the term enters the lecture"
+    }
   ],
   "strengths": [
     "The duality table at 160-168 pairs each LQ matrix with its Kalman counterpart ($A \\leftrightarrow A'$, $H \\leftrightarrow FB'$, $P \\leftrightarrow \\Sigma$), so the two halves of the lecture are explicitly tied together instead of being left as two parallel derivations the reader has to align",
@@ -24,5 +44,9 @@
     "Break the 55-60 word sentences at 80 and 94 into one idea each, and fix the four typos along the way: 'between between' (95), 'measurments' (95), 'distibuted' (110), 'tranformed' (124) and 'reconstrution' (151)",
     "Clear the 24 double spaces (qe-writing-008), switch the emphasis bolds at 74 and 145 to italic, and delete the empty `{code-cell}` at 173-175, which renders as a blank input cell at the foot of the published page"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "7824c6c3acc8652a67c20f382a1eb470391c2b4a"
+  }
 }

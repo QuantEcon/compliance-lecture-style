@@ -2,19 +2,82 @@
   "series": "lecture-python.myst",
   "lecture": "mccall_q",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [537, 487, 483],
-     "detail": "(1) the `quit_allowed` flag means the opposite of its name, and as a result the lecture's two headline figures are swapped. In `temp_diff`, the branch `if self.quit_allowed == 0` takes `β*np.max(qtable[state_next, :])` (538) - a max over both actions at the same state, i.e. the employed worker may switch to reject, which is quitting - while `else` takes `β*qtable[state_next, 1]` (540), locking the worker into the accept column (489: \"the second represents accepting the wage\"), i.e. quitting forbidden. Match that against the math: {eq}`eq:old4` (405-409) carries the `\\max_{a'}` and is the version the text says allows quitting; {eq}`eq:temp-diff` (723-728) replaces it with $\\widetilde{Q}^{old}(w,\\text{accept})$ and is the version that forbids it. So `plot_epochs(...)` at 696, which sits under '## Q-learning' where quitting is allowed, takes `plot_epochs`'s default `quit_allowed=1` (663) and actually forbids it, while `plot_epochs(..., quit_allowed=0)` at 742, under '## Employed worker can't quit', actually allows it. Each figure illustrates the other section. The two defaults disagree with each other as well: the class defaults to `quit_allowed=0` (509), which is why the earlier run at 607 is the right way round. (2) 487 tells the reader \"we let `s` represent the state index between $0$ and $n=50$\", but $n$ is 10 at 129 and 30 at 640, and 50 appears nowhere in the lecture. (3) The **Remark** at 483 says $\\widetilde{TD}$ is \"defined in {eq}`eq:old3` automatically above\" - $\\widetilde{TD}$ is defined in {eq}`eq:old4` (409), `eq:old3` (400) is the update rule, and \"automatically above\" is a stray word"},
-    {"rule": "qe-code-001", "count": 17,
-     "lines": [133, 136, 186, 192, 193, 214, 494, 532, 549, 560, 574, 602, 627, 644, 648, 666, 669],
-     "detail": "binary operators and comparisons are written without surrounding spaces throughout, against the same file's own practice elsewhere (`v_next - v` at 190, `c + β * (v @ q)` at 174). flake8 confirms: E225 at `flag=0` (186), `))<=eps` (192), `flag=1` (193), `params=[` (494), `accept==0` (532), `random()<=eps` (560) and `))<=δ` (574); E231 (no space after a comma) at the five `figsize=(10,6)` calls (136, 225, 627, 648, 669) and at `np.zeros((len(w_new),2))` (666); and unspaced additive operators at `n+1` (133, 644), `qtable_new-qtable` (574) and `valfunc-valfunc_VFI` (602) - the tight `β*np.max(...)` (534, 538, 540) and `lr*TD` (572) are *not* findings, since PEP8 endorses binding the higher-priority operator tighter inside a mixed expression. Three substantive items a spacing sweep would miss: 214's `for i in range(n)` is nested inside `for i in range(num_plots)` (211) and clobbers the outer index - it works today only because the label `f\"iterate {i}\"` is consumed at 212 before the inner loop runs; 549 unpacks `c, β, w = self.c, self.β, self.w` in `run_one_epoch` and never uses any of the three (flake8 F841 x3); and the convergence `flag` that `VFI` computes and returns (186, 193, 197) is unpacked at 223 and 658 and never tested, so a run that hits `max_iter=500` without converging is indistinguishable from one that converged. Line 538 is also 92 characters"},
-    {"rule": "qe-math-009", "count": 4, "lines": [258, 349, 385, 461],
-     "detail": "the same Q estimate wears three different decorations: `\\hat Q_t` in the informal derivation (349, 350, 357, 358, 365, 368), `\\widetilde{Q}` in the algorithm (385, 399, 406, 407, 421-440, 457, 725, 726) and `\\tilde{Q}` in step 6 of the pseudo-code (461) - the last differing from the second only in macro, so the same symbol is typeset two widths apart on the page. `\\widetilde{TD}` puts an accent over a two-letter operator name (406, 411, 457, 483, 725-726), and `\\textrm{argmax}` / `\\textrm{argmin}` (421, 427, 434, 440) hand-set what the series already provides as `\\argmax` (`lectures/_config.yml:110`, `\"argmax\" : [\"\\\\operatorname*{argmax}\", 0]`). The state and action spaces are calligraphic, $\\mathcal{W}$ and $\\mathcal{A}$ (258, 260), where plain $W$ and $A$ are unused in the file and would do; the sibling lecture `inventory_q` writes the same two sets as $\\mathsf X$ and $\\mathsf A$"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [42, 245, 264, 298, 699],
-     "detail": "lines 42-51 spend five separate paragraphs establishing that what Q-learning learns is a Q-table, including \"But it is something that is closely affiliated with it\" (47) and \"Sometimes a Q-function or Q-table is called a quality-function or quality-table\" (51), before the definition arrives at 245. Four sentences are broken as written: \"A **quality function** $Q$ maps state-action pairs into optimal values. / They are tightly linked to optimal value functions\" (245-247, singular subject, plural pronoun); \"equals the maximum value of that a previously unemployed worker\" (264); \"This fact provides us with an / an alternative\" (298-299, a doubled word across the line break); and \"The above graphs indicates that\" (699, subject-verb disagreement, and there is one graph, not several). Line 58 also ends without a full stop"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [62, 245, 345],
-     "detail": "\"**on average**\" (345) is bold used for emphasis, which the rule reverses - italic is what that sentence wants. And the same term is bolded three times as if new each time: **Q-function** at 49, again at 62 alongside **quality function**, and **quality function** again at 245 opening its own section. There is no italic anywhere in the file - a grep for single-asterisk spans returns nothing - so bold is carrying both jobs, definitions and emphasis alike (**statistical learning** 42, **value function** 44, **Q-table** 49, **temporal difference learning** 64, **gain** 368, **temporal difference errors** 411, **experimentation** 417, **deep Q-learning** 751 are the definitional uses)"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [615, 696],
-     "detail": "the Q-table is the object the whole lecture is about - it is a $(n+1) \\times 2$ matrix, described at 53-54 and 489 - and the only time the reader sees one it is `print(qtable)` at 615, a wall of floats. A heatmap over (state, action) would show at a glance the thing the lecture claims at 701, that \"the Q-learning algorithm has trouble learning the Q-table well for wages that are rarely drawn\". That claim also needs the wage distribution next to the value functions: the distribution is plotted at 648 and the value functions at 696, fifty lines apart and never overlaid, so the reader has to hold one figure in mind while reading the other"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        537,
+        487,
+        483
+      ],
+      "detail": "(1) the `quit_allowed` flag means the opposite of its name, and as a result the lecture's two headline figures are swapped. In `temp_diff`, the branch `if self.quit_allowed == 0` takes `β*np.max(qtable[state_next, :])` (538) - a max over both actions at the same state, i.e. the employed worker may switch to reject, which is quitting - while `else` takes `β*qtable[state_next, 1]` (540), locking the worker into the accept column (489: \"the second represents accepting the wage\"), i.e. quitting forbidden. Match that against the math: {eq}`eq:old4` (405-409) carries the `\\max_{a'}` and is the version the text says allows quitting; {eq}`eq:temp-diff` (723-728) replaces it with $\\widetilde{Q}^{old}(w,\\text{accept})$ and is the version that forbids it. So `plot_epochs(...)` at 696, which sits under '## Q-learning' where quitting is allowed, takes `plot_epochs`'s default `quit_allowed=1` (663) and actually forbids it, while `plot_epochs(..., quit_allowed=0)` at 742, under '## Employed worker can't quit', actually allows it. Each figure illustrates the other section. The two defaults disagree with each other as well: the class defaults to `quit_allowed=0` (509), which is why the earlier run at 607 is the right way round. (2) 487 tells the reader \"we let `s` represent the state index between $0$ and $n=50$\", but $n$ is 10 at 129 and 30 at 640, and 50 appears nowhere in the lecture. (3) The **Remark** at 483 says $\\widetilde{TD}$ is \"defined in {eq}`eq:old3` automatically above\" - $\\widetilde{TD}$ is defined in {eq}`eq:old4` (409), `eq:old3` (400) is the update rule, and \"automatically above\" is a stray word"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 17,
+      "lines": [
+        133,
+        136,
+        186,
+        192,
+        193,
+        214,
+        494,
+        532,
+        549,
+        560,
+        574,
+        602,
+        627,
+        644,
+        648,
+        666,
+        669
+      ],
+      "detail": "binary operators and comparisons are written without surrounding spaces throughout, against the same file's own practice elsewhere (`v_next - v` at 190, `c + β * (v @ q)` at 174). flake8 confirms: E225 at `flag=0` (186), `))<=eps` (192), `flag=1` (193), `params=[` (494), `accept==0` (532), `random()<=eps` (560) and `))<=δ` (574); E231 (no space after a comma) at the five `figsize=(10,6)` calls (136, 225, 627, 648, 669) and at `np.zeros((len(w_new),2))` (666); and unspaced additive operators at `n+1` (133, 644), `qtable_new-qtable` (574) and `valfunc-valfunc_VFI` (602) - the tight `β*np.max(...)` (534, 538, 540) and `lr*TD` (572) are *not* findings, since PEP8 endorses binding the higher-priority operator tighter inside a mixed expression. Three substantive items a spacing sweep would miss: 214's `for i in range(n)` is nested inside `for i in range(num_plots)` (211) and clobbers the outer index - it works today only because the label `f\"iterate {i}\"` is consumed at 212 before the inner loop runs; 549 unpacks `c, β, w = self.c, self.β, self.w` in `run_one_epoch` and never uses any of the three (flake8 F841 x3); and the convergence `flag` that `VFI` computes and returns (186, 193, 197) is unpacked at 223 and 658 and never tested, so a run that hits `max_iter=500` without converging is indistinguishable from one that converged. Line 538 is also 92 characters"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        258,
+        349,
+        385,
+        461
+      ],
+      "detail": "the same Q estimate wears three different decorations: `\\hat Q_t` in the informal derivation (349, 350, 357, 358, 365, 368), `\\widetilde{Q}` in the algorithm (385, 399, 406, 407, 421-440, 457, 725, 726) and `\\tilde{Q}` in step 6 of the pseudo-code (461) - the last differing from the second only in macro, so the same symbol is typeset two widths apart on the page. `\\widetilde{TD}` puts an accent over a two-letter operator name (406, 411, 457, 483, 725-726), and `\\textrm{argmax}` / `\\textrm{argmin}` (421, 427, 434, 440) hand-set what the series already provides as `\\argmax` (`lectures/_config.yml:110`, `\"argmax\" : [\"\\\\operatorname*{argmax}\", 0]`). The state and action spaces are calligraphic, $\\mathcal{W}$ and $\\mathcal{A}$ (258, 260), where plain $W$ and $A$ are unused in the file and would do; the sibling lecture `inventory_q` writes the same two sets as $\\mathsf X$ and $\\mathsf A$"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        42,
+        245,
+        264,
+        298,
+        699
+      ],
+      "detail": "lines 42-51 spend five separate paragraphs establishing that what Q-learning learns is a Q-table, including \"But it is something that is closely affiliated with it\" (47) and \"Sometimes a Q-function or Q-table is called a quality-function or quality-table\" (51), before the definition arrives at 245. Four sentences are broken as written: \"A **quality function** $Q$ maps state-action pairs into optimal values. / They are tightly linked to optimal value functions\" (245-247, singular subject, plural pronoun); \"equals the maximum value of that a previously unemployed worker\" (264); \"This fact provides us with an / an alternative\" (298-299, a doubled word across the line break); and \"The above graphs indicates that\" (699, subject-verb disagreement, and there is one graph, not several). Line 58 also ends without a full stop"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        62,
+        245,
+        345
+      ],
+      "detail": "\"**on average**\" (345) is bold used for emphasis, which the rule reverses - italic is what that sentence wants. And the same term is bolded three times as if new each time: **Q-function** at 49, again at 62 alongside **quality function**, and **quality function** again at 245 opening its own section. There is no italic anywhere in the file - a grep for single-asterisk spans returns nothing - so bold is carrying both jobs, definitions and emphasis alike (**statistical learning** 42, **value function** 44, **Q-table** 49, **temporal difference learning** 64, **gain** 368, **temporal difference errors** 411, **experimentation** 417, **deep Q-learning** 751 are the definitional uses)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        615,
+        696
+      ],
+      "detail": "the Q-table is the object the whole lecture is about - it is a $(n+1) \\times 2$ matrix, described at 53-54 and 489 - and the only time the reader sees one it is `print(qtable)` at 615, a wall of floats. A heatmap over (state, action) would show at a glance the thing the lecture claims at 701, that \"the Q-learning algorithm has trouble learning the Q-table well for wages that are rarely drawn\". That claim also needs the wage distribution next to the value functions: the distribution is plotted at 648 and the value functions at 696, fifty lines apart and never overlaid, so the reader has to hold one figure in mind while reading the other"
+    }
   ],
   "strengths": [
     "The lecture earns its Q-learning derivation instead of asserting it: the exact Q-factor system {eq}`eq:impliedq` (270-275), then the scalar reduction $Q_r$ (295) exploiting IID wages, then the deliberately \"illegitimate\" step of erasing the integral (329-339), then the temporal-difference errors (355-360) and the adaptive rule (364-366) - and 329 tells the reader in advance that the step is not legitimate, which is more honest than most treatments",
@@ -38,5 +101,9 @@
   "scanner_doubts": [
     "Nothing new to file for this lecture, and two things deliberately not re-filed. (1) The 24 qe-math-002 false positives that the `lecture-dp` copy of this lecture reported (`w'`, `a'`, `v^{\\prime}`, `Q_r'`, all next-period or next-iterate primes, no transpose anywhere in the file) are gone: Math is 10/10 here, so the per-file prime exemption listed as already fixed is working on exactly the file that motivated it. I re-ran `check_math_002` over this file directly to confirm zero hits. (2) The mismatched `\\left\\{ ... \\right)` at 287 is a real latent fault that no rule can see, but it is already recorded as a rule-scope question in the `lecture-dp/mccall_q` overlay for the same source text, so I have put it in the actions here rather than filing it twice.",
     "Cleared, not filed. (1) qe-math-014 (proposed): no `\\mathbb{P}` and no probability written with either delimiter anywhere; the only distributional objects are $F$, $dF(w')$ and the discrete $q(j)$. (2) qe-math-015 (proposed) is satisfied: $F$ is the wage *distribution* and appears only as a CDF, in $\\int \\cdots dF(w')$ (111, 273, 304, 323) and \"draw a long sample of wage offers from $F$\" (348), while the discrete mass function is lowercase $q(j)$ (119) and `q_default` / `q_new` in code - uppercase for the CDF, lowercase for the pmf, which is exactly the rule. (3) The single qe-writing-001 hit (483) and the single qe-writing-004 hit (344, 'Law of Large numbers') are both genuine. (4) flake8's E226 hits on `β*np.max(...)` (534, 538, 540) and `lr*TD` (572) are not qe-code-001 findings: PEP8 explicitly recommends binding the higher-priority operator tighter in a mixed-priority expression, and these keep the code close to {eq}`eq:old4`."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "dcefdcf43818f179656f2d5640143803fed4b9c4"
+  }
 }

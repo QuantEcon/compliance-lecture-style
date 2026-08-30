@@ -2,16 +2,61 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "hansen_richard_1987",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 3, "lines": [482, 543, 620],
-     "detail": "this is a lecture about geometry - orthogonal decompositions, spans, and frontiers - and in 1153 lines it draws exactly one picture: `plt.show()` appears once, at 736. The central construction, $R = \\{r^* + w z^* + n\\}$ built in stages at 482-531, is an orthogonal decomposition of the return space into a benchmark direction, a conditional-mean direction and a residual space, and it is carried entirely by algebra; one diagram of the three components with the right angle marked would do more than the six displays. The conditional two-fund theorem (543-559) and its unconditional counterpart (591-...) say that the frontier is spanned by $r^*$ and $z^*$ with a *random* weight - again a picture. And the result the lecture is named for, that \"a return that is on the conditional frontier [can] fall *off* the unconditional frontier\" (81-82, restated at 620-622), gets the one figure it has (716-737), which shows a single star against one curve; the natural version of that figure - two conditional frontiers, one per regime, and the unconditional frontier through the same point cloud - would show the mechanism rather than the symptom. Meanwhile four of the six computational cells report their results as hand-aligned text tables built with f-string padding (444-446, 459-460, 877-879, 1008-1026, 1138-1145), and `pandas` is imported at 98 and never used anywhere in the lecture"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [128, 330, 340, 916],
-     "detail": "the same two sentences are written twice, ten lines apart: \"The payoff $p^*$ is the **stochastic discount factor** (SDF), also called the **benchmark payoff**.\" (330-331) and \"The payoff $p^*$ is called the **stochastic discount factor** (SDF) or **benchmark payoff**.\" (340-341), with 337-338 in between restating the theorem the box at 316-328 has just given (\"The theorem says that *any* such $\\pi$ can be represented concretely as $\\pi(p) = E(p\\,p^*\\mid\\mathcal{G})$\"). The term **strictly stationary** is likewise defined twice, in the text at 128 and again in the note at 131-136. And 916 is a 35-word sentence that would read better split at its \"i.e.\": \"For $\\pi^*$ to be well defined on $P^*$, the benchmark payoff $p^*$ must itself have a finite unconditional second moment, i.e., $p^* \\in P^*$\", where the two halves are also the two halves of {prf:ref}`hr87_thm41`'s hypothesis at 925"},
-    {"rule": "qe-code-001", "count": 8, "lines": [98, 426, 449, 653, 681, 848, 1138, 1140],
-     "detail": "98 imports `pandas as pd` and nothing in the lecture uses it. 426 writes `mu_m = -0.5 * σ_m**2` one line after `σ_m = 0.15`, so the same Greek letter is spelled out and unicode in adjacent lines of one function; the same split runs through the file (`mu_vec` and `Sigma` at 658 against `σ` at 684, `alphas` at 832 against `αs` at 432). 653 drops the spaces from `2*B*frontier_means` four lines after writing `A * C - B**2` at 649. 449 leaves one blank line before the top-level `def objective` where PEP8 asks for two (439 and 656 in the same lecture use two). Assignments are padded to align in seven places - `mu_low  =`, `rets_low  =`, `returns   =`, `w_low  =`, `alphas_dynamic  =` (681-682, 690-692, 696-697, 845-846, 853-854, 866-867, 874-875) - which PEP8 asks not to do. Continuation lines are indented one column past their opening bracket at 848-851 and 870-872. 1138 and 1140 are f-strings with no placeholders. And the SLSQP block at 1133-1135 is a verbatim copy of 454-456, objective, constraint and bounds included, so the exercise solution re-implements the cell the lecture already ran at 450-457"},
-    {"rule": "qe-math-009", "count": 4, "lines": [65, 383, 500, 907],
-     "detail": "the asterisk is doing three unrelated jobs at once. On $p^*$ (65), $r^*$ (383) and $z^*$ (500) it marks a distinguished element - the benchmark payoff, the benchmark return, the conditional-mean direction. On $w^*$ (558) it marks the solution of an optimisation. And on $\\pi^*$ (907) and $P^*$ (907, 916, 925, 941) it marks *unconditional* objects, which is a different idea again - so $\\pi^*(p) = E[\\pi(p)]$ has a star that means \"unconditional\" applied to a function whose value is built from $p^*$, whose star means \"benchmark\". A reader meeting $\\pi^*(p) = E(p\\,p^*)$ at 934 has to keep two meanings of the same mark apart in one equation. Since the paper's own $r^*$ and $z^*$ are fixed by convention, the two that could move are the unconditional ones - a subscript or an overbar on $\\pi$ and $P$ would separate the two ideas at no cost"},
-    {"rule": "qe-math-014", "count": 1, "lines": [355],
-     "detail": "the lecture follows the convention throughout - braces for events, and every probability statement in it is an event: $\\Pr\\{\\|p_j - p_0\\|_{\\mathcal{G}} > \\varepsilon\\}$ (292), $\\Pr\\{\\|p_j - p_k\\|_{\\mathcal{G}} > \\varepsilon\\}$ (299), $\\Pr\\{\\|p^*\\|_{\\mathcal{G}} > 0\\}$ (327), $\\Pr\\{p > 0\\}$ (352), $\\Pr\\{p^* > 0\\}$ (370). The one that goes wrong is the no-arbitrage definition at 355, `\\Pr\\{\\pi(p) \\leq 0\\} \\cap \\{p > 0\\}\\} = 0`, which has three closing braces and two opening ones: the intersection of the two events sits outside the probability operator, so the display reads as a probability intersected with a set. It should be $\\Pr\\{\\{\\pi(p) \\leq 0\\} \\cap \\{p > 0\\}\\} = 0$ - the delimiters this rule is about, in the definition that the rest of section 3 depends on"}
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        482,
+        543,
+        620
+      ],
+      "detail": "this is a lecture about geometry - orthogonal decompositions, spans, and frontiers - and in 1153 lines it draws exactly one picture: `plt.show()` appears once, at 736. The central construction, $R = \\{r^* + w z^* + n\\}$ built in stages at 482-531, is an orthogonal decomposition of the return space into a benchmark direction, a conditional-mean direction and a residual space, and it is carried entirely by algebra; one diagram of the three components with the right angle marked would do more than the six displays. The conditional two-fund theorem (543-559) and its unconditional counterpart (591-...) say that the frontier is spanned by $r^*$ and $z^*$ with a *random* weight - again a picture. And the result the lecture is named for, that \"a return that is on the conditional frontier [can] fall *off* the unconditional frontier\" (81-82, restated at 620-622), gets the one figure it has (716-737), which shows a single star against one curve; the natural version of that figure - two conditional frontiers, one per regime, and the unconditional frontier through the same point cloud - would show the mechanism rather than the symptom. Meanwhile four of the six computational cells report their results as hand-aligned text tables built with f-string padding (444-446, 459-460, 877-879, 1008-1026, 1138-1145), and `pandas` is imported at 98 and never used anywhere in the lecture"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        128,
+        330,
+        340,
+        916
+      ],
+      "detail": "the same two sentences are written twice, ten lines apart: \"The payoff $p^*$ is the **stochastic discount factor** (SDF), also called the **benchmark payoff**.\" (330-331) and \"The payoff $p^*$ is called the **stochastic discount factor** (SDF) or **benchmark payoff**.\" (340-341), with 337-338 in between restating the theorem the box at 316-328 has just given (\"The theorem says that *any* such $\\pi$ can be represented concretely as $\\pi(p) = E(p\\,p^*\\mid\\mathcal{G})$\"). The term **strictly stationary** is likewise defined twice, in the text at 128 and again in the note at 131-136. And 916 is a 35-word sentence that would read better split at its \"i.e.\": \"For $\\pi^*$ to be well defined on $P^*$, the benchmark payoff $p^*$ must itself have a finite unconditional second moment, i.e., $p^* \\in P^*$\", where the two halves are also the two halves of {prf:ref}`hr87_thm41`'s hypothesis at 925"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        98,
+        426,
+        449,
+        653,
+        681,
+        848,
+        1138,
+        1140
+      ],
+      "detail": "98 imports `pandas as pd` and nothing in the lecture uses it. 426 writes `mu_m = -0.5 * σ_m**2` one line after `σ_m = 0.15`, so the same Greek letter is spelled out and unicode in adjacent lines of one function; the same split runs through the file (`mu_vec` and `Sigma` at 658 against `σ` at 684, `alphas` at 832 against `αs` at 432). 653 drops the spaces from `2*B*frontier_means` four lines after writing `A * C - B**2` at 649. 449 leaves one blank line before the top-level `def objective` where PEP8 asks for two (439 and 656 in the same lecture use two). Assignments are padded to align in seven places - `mu_low  =`, `rets_low  =`, `returns   =`, `w_low  =`, `alphas_dynamic  =` (681-682, 690-692, 696-697, 845-846, 853-854, 866-867, 874-875) - which PEP8 asks not to do. Continuation lines are indented one column past their opening bracket at 848-851 and 870-872. 1138 and 1140 are f-strings with no placeholders. And the SLSQP block at 1133-1135 is a verbatim copy of 454-456, objective, constraint and bounds included, so the exercise solution re-implements the cell the lecture already ran at 450-457"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        65,
+        383,
+        500,
+        907
+      ],
+      "detail": "the asterisk is doing three unrelated jobs at once. On $p^*$ (65), $r^*$ (383) and $z^*$ (500) it marks a distinguished element - the benchmark payoff, the benchmark return, the conditional-mean direction. On $w^*$ (558) it marks the solution of an optimisation. And on $\\pi^*$ (907) and $P^*$ (907, 916, 925, 941) it marks *unconditional* objects, which is a different idea again - so $\\pi^*(p) = E[\\pi(p)]$ has a star that means \"unconditional\" applied to a function whose value is built from $p^*$, whose star means \"benchmark\". A reader meeting $\\pi^*(p) = E(p\\,p^*)$ at 934 has to keep two meanings of the same mark apart in one equation. Since the paper's own $r^*$ and $z^*$ are fixed by convention, the two that could move are the unconditional ones - a subscript or an overbar on $\\pi$ and $P$ would separate the two ideas at no cost"
+    },
+    {
+      "rule": "qe-math-014",
+      "count": 1,
+      "lines": [
+        355
+      ],
+      "detail": "the lecture follows the convention throughout - braces for events, and every probability statement in it is an event: $\\Pr\\{\\|p_j - p_0\\|_{\\mathcal{G}} > \\varepsilon\\}$ (292), $\\Pr\\{\\|p_j - p_k\\|_{\\mathcal{G}} > \\varepsilon\\}$ (299), $\\Pr\\{\\|p^*\\|_{\\mathcal{G}} > 0\\}$ (327), $\\Pr\\{p > 0\\}$ (352), $\\Pr\\{p^* > 0\\}$ (370). The one that goes wrong is the no-arbitrage definition at 355, `\\Pr\\{\\pi(p) \\leq 0\\} \\cap \\{p > 0\\}\\} = 0`, which has three closing braces and two opening ones: the intersection of the two events sits outside the probability operator, so the display reads as a probability intersected with a set. It should be $\\Pr\\{\\{\\pi(p) \\leq 0\\} \\cap \\{p > 0\\}\\} = 0$ - the delimiters this rule is about, in the definition that the rest of section 3 depends on"
+    }
   ],
   "strengths": [
     "The formal skeleton is built out of `prf:` directives and then referenced by label rather than by phrase: four assumptions (198-247), three definitions (288, 295, 348), two theorems (316, 922) and four lemmas (389, 543, 591, 776), each cited where it is used - `hr87_assumption_21` at 309 and 480, `hr87_lemma31` at 409, 419 and 490, `hr87_cor31` at 822, 826, 882, 884 and 888 - so a reader who loses the thread can jump to the exact statement being invoked",
@@ -34,5 +79,9 @@
   ],
   "scanner_doubts": [
     "hansen_richard_1987.md:426,663,681,704,832,845,874 - qe-code-002 is reported ×2, both for `Sigma` at 658 and 661, and this is the same missed-suffix gap I described at length in the `gorman_heterogeneous_households` overlay: `GREEK_RE` ends in `(?![\\w])`, so only a Greek word that is a whole identifier counts. This lecture's spelled-out names all carry a suffix and none are counted - `mu_m` (426, 428), `mu_vec` and `target_mu` (658, 663, 664, 669), `mu_low`/`mu_high` (681-682, 690-697, 845-846, 853-854, 866-869), `mu_unc`/`mu_port` (704, 712, 859), `alphas` (832, 835, 836, 886), `alphas_frontier`/`alphas_dynamic` (874-875, 879) - even though the same file writes `σ_m` (425), `σ` (684), `βs`/`αs` (431-432) and `δ, γ` (1031), so these are the lecture's own names and are freely renameable. Line 426 is the sharpest case: `mu_m = -0.5 * σ_m**2` spells one Greek letter out and leaves the other in unicode inside a single expression. Relaxing the trailing guard to `s?(?![A-Za-z])` would catch all of them"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "ae956fe64feb1f2cf776ed3e21b0d046f7af1db4"
+  }
 }

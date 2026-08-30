@@ -64,5 +64,9 @@
     "Add a cobweb to the $G$ figure at 499-512 so the cycling claimed at 516 is visible, and lower-case the mid-sentence capitals at 78 (\"Dynamics\") and 692 (qe-writing-004, 2 occurrences)",
     "Sweep the small mechanical items: sentence-case the H2 at 98 to `## The economy` (qe-writing-006), brace `\\mathbb E` to `\\mathbb{E}` at 109 (qe-math-010, proposed), convert the raw `dp.quantecon.org` link at 692 to a `{doc}` reference (qe-link-002), and collapse the double spaces at 104, 106 and 215 (qe-writing-008, 3 occurrences)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "fe7bb37083d62d594baf4a014b7931bb022b74e8"
+  }
 }

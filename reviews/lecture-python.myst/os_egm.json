@@ -2,18 +2,63 @@
   "series": "lecture-python.myst",
   "lecture": "os_egm",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [351, 149, 155],
-     "detail": "the lecture's headline claim is the one thing it never measures. 351 states \"EGM is faster than time iteration because it avoids numerical root-finding\" and the only timing in the file is of EGM alone (346-348); no time-iteration number appears anywhere, and the comparison quoted at 41 (\"We found time iteration to be significantly more accurate and efficient\") was made in a different lecture against a different method. The note at 260-264 then pulls the other way - \"The routine is still not particularly fast because we are using pure Python loops\" - so within ninety lines the reader is told the routine is fast because it avoids root-finding and slow because it uses Python loops, with nothing reconciling the two and no number attached to either. Second, the production function is never written down: 149 says only \"the function $f$ has a Cobb-Douglas specification\", the displays at 81 and 131 give $f$ one argument ($f(x-c)$, $f(s_i)$), and the code's $f$ takes two - `f = lambda k, α: k**α` at 275, called as `f(s, α)` at 247 - so the algebra and the implementation disagree about the arity of the model's central function and $f(k) = k^\\alpha$ is never displayed. Third, `v_star` (155-163) is defined with a docstring and never called, so the analytical *value* function is computed nowhere, while 152 promises \"This will allow us to make comparisons with the analytical solutions\" - only the policy comparison happens (331, 341)"},
-    {"rule": "qe-code-001", "count": 4, "lines": [202, 240, 341, 237],
-     "detail": "202-204 declare three required callables as optional - `u_prime: Callable = None`, `f_prime: Callable = None`, `u_prime_inv: Callable = None` - and `K` calls all three unconditionally (247, 250), so omitting any one of them produces a `TypeError: 'NoneType' object is not callable` from inside the operator rather than a clear failure at construction; either make them positional or validate in `create_model`. Six lambdas are bound to names (240, 272, 273, 274, 275, 276), which is E731 - for the five one-line formulas at 272-276 the rule's mathematical-notation exemption is arguable, since `u = lambda c: np.log(c)` really does sit close to $u(c) = \\ln c$, but 240 (`σ = lambda x: np.interp(x, x_in, c_in)`) is a closure over two captured arrays rather than a formula and a nested `def` would document what it captures. 341 is a bare expression relying on the notebook to auto-display an unlabelled float, `np.max(np.abs(c - σ_star(x, model.α, model.β)))`, where the sibling lecture prints the same quantity with a label ({doc}`os_egm_jax`:240-241). And 237 unpacks all eleven fields of `Model` to use seven: `u`, `μ` and `ν` are bound and never read - which is what makes the drafted `qe-code-002` finding actively dangerous rather than merely wrong (see actions)"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [122, 325],
-     "detail": "the lecture is named after a grid transformation and no figure shows a grid. 122-135 sets out the whole idea in three steps - fix a uniform exogenous $\\{s_i\\}$, compute $c_i$ from {eq}`egm_getc`, then set $x_i = c_i + s_i$ - and 141 says the method's name comes from $\\{x_i\\}$ being determined endogenously. One panel putting the uniform $s$ grid above the resulting non-uniform $x$ grid, or plotting $s_i$ and $x_i$ against $i$ on the same axes, would show what \"endogenous grid\" means in a glance; the array is already in hand at 320, and the sibling lecture later has to *explain in prose* that the endogenous grid shifts with the policy ({doc}`os_egm_jax`:402-404), which is exactly what such a figure would have made unnecessary. Second, the one figure the lecture does have (325-335) shows that the approximation is good, and the informative version of it is the error: the next cell collapses $c - \\sigma^*(x)$ to a single number (341), so plotting that deviation across the grid instead would show *where* the approximation is worst - presumably near the lower bound $s = 10^{-4}$ (210), where the interpolation has least support"},
-    {"rule": "qe-math-009", "count": 3, "lines": [81, 129, 100],
-     "detail": "the defining integral is written with measure notation in the displays and density notation in the code that implements it: $\\phi(dz)$ at 81 and 131 against `ϕ(z)dz` in the comment at 246 (and at {doc}`os_egm_jax`:156). Second, {eq}`egm_getc` at 128-132 uses `\\left\\{ ... \\right\\}` as the argument delimiter of $(u')^{-1}$, in a lecture that otherwise reserves braces for sets - $\\{x_i\\}$ (94), $\\{(x_i, c_i)\\}$ (100), $\\{s_i\\}$ (122) - so the one place braces are not a set is the place a reader is most likely to be parsing carefully. Third, the pair set loses its inner parentheses halfway through the section that introduces it: $\\{(x_i, c_i)\\}$ at 100 and 137, then $\\{x_i, c_i\\}$ at 139"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [351, 102],
-     "detail": "351-353 makes one point in two sentences and repeats the operative word: \"EGM is faster than time iteration because it avoids numerical root-finding. / Instead, we invert the marginal utility function directly, which is much more efficient\" - \"much more efficient\" adds nothing to \"faster\", and the causal clause is already in the first sentence. 102 is not a sentence: \"Iteration then continues...\" closes the exogenous-grid section on an ellipsis where the parallel section closes properly at 139-141"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [141],
-     "detail": "141 uses bold for emphasis - \"the grid $\\{x_i\\}$ is determined **endogenously**\" - where the lecture's own emphasis on the opposite term nineteen lines earlier is correctly italic: 122, \"we fix an *exogenous* grid $\\{s_i\\}$ for savings\". The two words are a matched contrast and are set two different ways. The file's only other emphasis span, **endogenous grid method** at 43, is a definition and correctly bold"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        351,
+        149,
+        155
+      ],
+      "detail": "the lecture's headline claim is the one thing it never measures. 351 states \"EGM is faster than time iteration because it avoids numerical root-finding\" and the only timing in the file is of EGM alone (346-348); no time-iteration number appears anywhere, and the comparison quoted at 41 (\"We found time iteration to be significantly more accurate and efficient\") was made in a different lecture against a different method. The note at 260-264 then pulls the other way - \"The routine is still not particularly fast because we are using pure Python loops\" - so within ninety lines the reader is told the routine is fast because it avoids root-finding and slow because it uses Python loops, with nothing reconciling the two and no number attached to either. Second, the production function is never written down: 149 says only \"the function $f$ has a Cobb-Douglas specification\", the displays at 81 and 131 give $f$ one argument ($f(x-c)$, $f(s_i)$), and the code's $f$ takes two - `f = lambda k, α: k**α` at 275, called as `f(s, α)` at 247 - so the algebra and the implementation disagree about the arity of the model's central function and $f(k) = k^\\alpha$ is never displayed. Third, `v_star` (155-163) is defined with a docstring and never called, so the analytical *value* function is computed nowhere, while 152 promises \"This will allow us to make comparisons with the analytical solutions\" - only the policy comparison happens (331, 341)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        202,
+        240,
+        341,
+        237
+      ],
+      "detail": "202-204 declare three required callables as optional - `u_prime: Callable = None`, `f_prime: Callable = None`, `u_prime_inv: Callable = None` - and `K` calls all three unconditionally (247, 250), so omitting any one of them produces a `TypeError: 'NoneType' object is not callable` from inside the operator rather than a clear failure at construction; either make them positional or validate in `create_model`. Six lambdas are bound to names (240, 272, 273, 274, 275, 276), which is E731 - for the five one-line formulas at 272-276 the rule's mathematical-notation exemption is arguable, since `u = lambda c: np.log(c)` really does sit close to $u(c) = \\ln c$, but 240 (`σ = lambda x: np.interp(x, x_in, c_in)`) is a closure over two captured arrays rather than a formula and a nested `def` would document what it captures. 341 is a bare expression relying on the notebook to auto-display an unlabelled float, `np.max(np.abs(c - σ_star(x, model.α, model.β)))`, where the sibling lecture prints the same quantity with a label ({doc}`os_egm_jax`:240-241). And 237 unpacks all eleven fields of `Model` to use seven: `u`, `μ` and `ν` are bound and never read - which is what makes the drafted `qe-code-002` finding actively dangerous rather than merely wrong (see actions)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        122,
+        325
+      ],
+      "detail": "the lecture is named after a grid transformation and no figure shows a grid. 122-135 sets out the whole idea in three steps - fix a uniform exogenous $\\{s_i\\}$, compute $c_i$ from {eq}`egm_getc`, then set $x_i = c_i + s_i$ - and 141 says the method's name comes from $\\{x_i\\}$ being determined endogenously. One panel putting the uniform $s$ grid above the resulting non-uniform $x$ grid, or plotting $s_i$ and $x_i$ against $i$ on the same axes, would show what \"endogenous grid\" means in a glance; the array is already in hand at 320, and the sibling lecture later has to *explain in prose* that the endogenous grid shifts with the policy ({doc}`os_egm_jax`:402-404), which is exactly what such a figure would have made unnecessary. Second, the one figure the lecture does have (325-335) shows that the approximation is good, and the informative version of it is the error: the next cell collapses $c - \\sigma^*(x)$ to a single number (341), so plotting that deviation across the grid instead would show *where* the approximation is worst - presumably near the lower bound $s = 10^{-4}$ (210), where the interpolation has least support"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        81,
+        129,
+        100
+      ],
+      "detail": "the defining integral is written with measure notation in the displays and density notation in the code that implements it: $\\phi(dz)$ at 81 and 131 against `ϕ(z)dz` in the comment at 246 (and at {doc}`os_egm_jax`:156). Second, {eq}`egm_getc` at 128-132 uses `\\left\\{ ... \\right\\}` as the argument delimiter of $(u')^{-1}$, in a lecture that otherwise reserves braces for sets - $\\{x_i\\}$ (94), $\\{(x_i, c_i)\\}$ (100), $\\{s_i\\}$ (122) - so the one place braces are not a set is the place a reader is most likely to be parsing carefully. Third, the pair set loses its inner parentheses halfway through the section that introduces it: $\\{(x_i, c_i)\\}$ at 100 and 137, then $\\{x_i, c_i\\}$ at 139"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        351,
+        102
+      ],
+      "detail": "351-353 makes one point in two sentences and repeats the operative word: \"EGM is faster than time iteration because it avoids numerical root-finding. / Instead, we invert the marginal utility function directly, which is much more efficient\" - \"much more efficient\" adds nothing to \"faster\", and the causal clause is already in the first sentence. 102 is not a sentence: \"Iteration then continues...\" closes the exogenous-grid section on an ellipsis where the parallel section closes properly at 139-141"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        141
+      ],
+      "detail": "141 uses bold for emphasis - \"the grid $\\{x_i\\}$ is determined **endogenously**\" - where the lecture's own emphasis on the opposite term nineteen lines earlier is correctly italic: 122, \"we fix an *exogenous* grid $\\{s_i\\}$ for savings\". The two words are a matched contrast and are set two different ways. The file's only other emphasis span, **endogenous grid method** at 43, is a definition and correctly bold"
+    }
   ],
   "strengths": [
     "The method is motivated by the specific cost it removes, and the removal is then pointed out where it happens: 107-111 says the exogenous-grid strategy needs a root-finder and that root-finding is expensive because it takes many function evaluations, 113-114 names the one assumption EGM needs in exchange ($u'$ invertible), and 258 says plainly \"Note the lack of any root-finding algorithm\" immediately below the operator",
@@ -36,5 +81,9 @@
   ],
   "scanner_doubts": [
     "`qe-code-002` fires on `mu` at 248 and 250 where the unicode rename it asks for would shadow a variable already bound in the same function. `mu = np.mean(vals)` (248) is the averaged marginal utility - the comment on 246 spells out the integral it approximates - and line 237 unpacks the model's shock *location* parameter as `μ` into the same scope. So the fix the report implies (`mu` -> `μ`) silently rebinds a model parameter inside the operator's loop. The same pair of hits appears at 158 and 160 of {doc}`os_egm_jax`, where 151 likewise unpacks `μ`, and both files are mirrored in `lecture-dp`, so the corpus carries 8 hits of this exact shape. I tested a candidate exemption and am **recommending against it in the form I measured**. Harness: `check_code_002` and `_code_cells` driven directly over the pinned snapshot (script `scratchpad/c002.py`). Rule total is **307**. Exempting any hit whose unicode form appears anywhere in the same *file* removes **45** (307 -> 262), which is far too broad - `ar1_processes.md` alone loses 8 and `heavy_tails.md` 4, and those are separate scopes where the rename is perfectly safe. Narrowing to the same *code cell* removes **23** (307 -> 284), but inspecting those 23 shows they are two different defects wearing one disguise: 8 are the `mu`-versus-`μ` collision described here (`os_egm` x2, `os_egm_jax` x2, and their two `lecture-dp` mirrors), 2 more look like it (`ross_recovery.md`:916-917 `rho`, `misspecified_recovery.md`:1981 `alpha`), and at least 6 are the *already-filed* multi-line-kwarg case rather than a collision at all - `theil_1.md`:376, `discrete_dp.md`:933-934, `dyn_stack.md`:1340, `rob_markov_perf.md`:470, 736, 741, 797 are `beta=β` keyword arguments of `LQ`/`RBLQ` whose exemption fails only because the call is split across lines. Bundling them under one exemption would hide a defect that has its own fix. The narrow version I would file instead: skip a spelled-out Greek name only when the corresponding unicode identifier is bound *as a parameter or an unpacking target* in the enclosing function, which is 8 hits and no false negatives I could find"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "ab4a75f222c0b3cd228b44f2e11d399f44cfdf3f"
+  }
 }

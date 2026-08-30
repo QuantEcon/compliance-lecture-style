@@ -5,37 +5,64 @@
     {
       "rule": "qe-writing-003",
       "count": 4,
-      "lines": [687, 1372, 1398, 1432],
+      "lines": [
+        687,
+        1372,
+        1398,
+        1432
+      ],
       "detail": "four numbers that the notebook computes at build time are also written into the prose by hand, so they can silently stop matching: 1398 says investment along the simulated path \"is usually close to $0.10$\", 1432-1433 says \"low output exports capital about 60% of the time the borrower is in this region, against essentially never outside it\", and 1441-1442 says \"about a fifth of its time in the constrained region\" - all three are readings of the three `print` statements at 1379-1384 and of the panels above them, and any change to the grid (`N_Q = 70`, `N_I = 19`), the tolerance (`tol=2e-4`), the relaxation (0.25) or the seed will move them. Second, the simulation cell has a hidden dependency on an earlier figure cell: `Q_star = float(Q_grid[net_out_L > 0].max())` at 1372 uses `net_out_L`, which is defined at 1153 inside the loan-flow *figure* cell, so the printed regime frequencies at 1379-1384 - and the whole two-regime story at 1423-1442 - break if that figure cell has not been run. Third, 687 prints `g_low / g_high` under the label \"Likelihood ratios\" when the monotone likelihood-ratio condition the lecture states at 83-84 and 589-590 is about $g_0(Y_i)/g_1(Y_i)$, i.e. `g_high / g_low` - the reciprocal - so the diagnostic that is supposed to verify the condition prints its inverse (1587-1588 repeats this in the exercise)"
     },
     {
       "rule": "qe-writing-002",
       "count": 4,
-      "lines": [300, 434, 451, 1131],
+      "lines": [
+        300,
+        434,
+        451,
+        1131
+      ],
       "detail": "four passages say the same thing two or three times over. 434-444 is three consecutive paragraphs on one principle: \"This mirrors Bellman's principle: the *continuation of the optimal contract is itself optimal* at the updated state\", then \"Bellman's principle of optimality says that an optimal plan remains optimal from any future state it reaches\", then \"Here that means the contract chosen today does not need a separate continuation rule after tomorrow's output is realized\". 1106-1109 and 1131-1132 give the same gloss on the same dashed lines twenty-five lines apart (\"The dashed horizontal lines are no-repudiation floors\" / \"The horizontal dashed lines mark the smallest continuation states compatible with no repudiation\"). 300-306 restates item 3 of the list it has just given at 288-295 (\"The lender's expected payoff from its loan contract must be nonnegative\") and then 308's \"These restrictions are continuation restrictions\" leaves the reader unsure whether it means the five in the list or the two just discussed - and 427-428 repeats 302-304's point about individual rationality being nonbinding, 125 lines later. 451 (\"This first-order argument is not unconditional\") carries no content until the assumption block that follows it supplies the conditions"
     },
     {
       "rule": "qe-code-001",
       "count": 5,
-      "lines": [655, 901, 1074, 1149, 1360],
+      "lines": [
+        655,
+        901,
+        1074,
+        1149,
+        1360
+      ],
       "detail": "seven lines carry trailing whitespace, all of them a continuation break after a comma: 1074, 1149, 1170, 1597, 1601, 1606 and 1608 - and the continuations that follow are indented to arbitrary offsets (16 spaces at 1075 and 1150 against opening parens at columns 31 and 36, 16 at 1598 and 1602, 16 at 1607 and 1609) where the same construct is aligned to its delimiter correctly at 1296-1302 and 912-913. 655-656 defines `u(c)` and nothing calls it - every use in the code goes through `u_jax` (727, 856, 863) - so one of the three `np`/`jnp` pairs is dead. 901 and 933 declare a parameter `ε=0.0` whose only effect is `+ ε` at 914, which is never passed a non-zero value and is never mentioned in the prose. 1360 hard-codes two hex colours, `'#d73027'` and `'#4575b4'`, in a file that otherwise uses the `C0`-`C3` cycle (1083, 1089, 1091, 1500-1502). And 750-763 lets `autarky_vfi` fall out of its loop without any warning when `max_iter` is exhausted, while `program_p_vfi` at 961-964 does have the `for ... else` that reports it - the same solver pattern handled two ways in one file"
     },
     {
       "rule": "qe-math-009",
       "count": 3,
-      "lines": [47, 493, 803],
+      "lines": [
+        47,
+        493,
+        803
+      ],
       "detail": "$v$ carries five jobs, two of which are different types written identically: $v(\\sigma)$ at 96 is a functional of an allocation, $v(\\sigma \\mid Q^t)$ at 229 and 292 is the same functional conditioned on a history, $v_j$ at 476 is a promised continuation number, $v(Q'_j)$ at 798 and 803 is a value *function of the scalar state* - which is the object 419 calls $\\bar v(\\cdot)$ - and $v_{\\text{aut}}$ at 195 is autarky; so 419's $\\bar v(Y' - d'(Y'))$ and 803's $v(Q'_j)$ name the same thing with and without the bar. $\\lambda$ is used three ways inside twenty lines of one derivation: the mixture weight $\\lambda(I)$ (61-73, and `λ` in the code at 678), the feasibility multiplier $\\lambda_f$ and the lender multiplier $\\lambda_\\ell$ (493-494, 505-506) - all three appearing in {eq}`eq:atkeson_relaxed_lagrangian`. $Q^*$ likewise means the no-repudiation floor in the algebra (803, and `Q^*_L`, `Q^*_H` at 1084, 1092, 1483) and the upper edge of the outflow region in the code (`Q_star`, 1372, 1377, 1379). And two of the four calligraphic symbols are decoration where a plain letter was free: $\\mathcal{Y}$ at 47, which never appears again in the file, and $\\mathcal L$ at 491 for the Lagrangian ($\\mathcal V$ and $\\mathcal B$, a correspondence and an operator on correspondences, earn theirs)"
     },
     {
       "rule": "qe-writing-007",
       "count": 2,
-      "lines": [336, 525],
+      "lines": [
+        336,
+        525
+      ],
       "detail": "the quantity the central result turns on is the only one never plotted. 514-534 rests the whole capital-outflow argument on the log-likelihood derivative $g_{I,j}/g_j(I)$ - \"a sufficiently negative value of $g_{I,j}/g_j(I)$ forces $\\mu_j > 0$\", \"this log-likelihood derivative is most negative for the lowest output states\" - and the code already has everything needed to draw it (`g_of_I` at 673, `I_grid` at 645), yet in a lecture with six figures it is asserted in prose only, while the reader is shown value functions, investment, continuation states, net flows and a simulation. Second, the recursive machinery at 316-383 - the operator $\\mathcal B$, self-generation, factorization, and the fixed point $\\mathcal V = \\mathcal B(\\mathcal V)$ - is fifty lines of set-valued reasoning with no picture, and the standard one (a candidate correspondence $W$, its image under $\\mathcal B$, and the frontier $\\bar v(Q)$ as the upper envelope) would also connect that section to the figure at 984-994, which plots $\\bar v$ without ever saying that it is the upper envelope of $\\mathcal V$"
     },
     {
       "rule": "qe-writing-005",
       "count": 3,
-      "lines": [17, 333, 1476],
+      "lines": [
+        17,
+        333,
+        1476
+      ],
       "detail": "the file is unusually disciplined about this - twelve terms are bolded exactly where they are defined (**allocation** 125, **output net of repayment** 174, **feasible** 181, **incentive compatible** 223, **immune from repudiation** 272, **constrained Pareto optimal** 297, **self-generation**/**factorization** 325-326, **self-generating** 349, **capital outflow** 546) - which makes the three exceptions read as a different signal. 333 defines a term in italic instead: \"A pair $(A, v)$ ... is *admissible with respect to* $W$ at $Q$ if ...\", the definition that $\\mathcal B(W)(Q)$ at 336 is built from. 17-18 and 34-35 italicise two more terms at their point of introduction (*constrained optimal pattern of capital flows*, *physical state variable*), where 28's *export capital* is genuine emphasis. And 1476 and 1562 use italic as an exercise heading (*Patience and the severity of debt crises.*, *Signal quality and capital flows.*), which is neither definition nor emphasis"
     }
   ],
@@ -66,5 +93,9 @@
   ],
   "scanner_doubts": [
     "atkeson_1991.md - qe-math-002 is reported with count 71 and the file contains no transpose at all: no `\\top`, no `^T`, no matrix product anywhere. All 71 are next-period primes - $Y'$, $Q'$, $Q'_j$, $Q'_L$, $Q'_H$, $Y_j'$, $d'$, $\\bar v(Y' - d'(Y'))$ - which is the already-diagnosed primed-next-period-state gap, so I am not asking for a new fix. I record it only because this is by far the largest instance of it I have seen in the series: 71 phantom hits are the *sole* reason Math scores 5/10 here, in a lecture whose mathematics is otherwise clean, and a contributor handed \"qe-math-002, 71 occurrences\" as the top recommended action would have no way to discover there is nothing to do. If the queued fix is prioritised anywhere, this file is the case that most needs it"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "2b71657437a8d0328f3b358516dd856ae5fb2778"
+  }
 }

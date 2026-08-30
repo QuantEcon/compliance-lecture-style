@@ -2,16 +2,55 @@
   "series": "lecture-python.myst",
   "lecture": "ifp_advanced",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 2, "lines": [490, 661],
-     "detail": "the optimal consumption policy is the object the entire first half of the lecture constructs - the Coleman-Reffett operator, the endogenous grid, the interpolation scheme - and it is solved at 490 and never plotted. The three figures in the lecture are the wealth histogram (652) and the two Gini sweeps (752, 829); $\\sigma^*(a, z)$ for the two values of $z$ never appears, although every companion lecture in the series shows it. Second, the claim at 661-662 that the log histogram 'suggests a long right tail' is exactly what a rank-size or log-log tail plot would settle, and the lecture then builds a whole section on tail inequality without one"},
-    {"rule": "qe-math-009", "count": 3, "lines": [117, 166, 203],
-     "detail": "three sets get three different exotic fonts in one lecture: $\\mathsf Z$ for the Markov chain's state space (117, 305), $\\mathscr C$ for the class of candidate policies (166, 170, 172, 200, 219, 223, 228, 241-245) and $\\mathbf S$ for the state space (203, 220, 232). Plain $Z$, $C$ and $S$ would carry the same meaning; as it stands the reader has to keep three typefaces apart, and the bold one additionally violates qe-math-004"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [100, 253],
-     "detail": "the lecture names two different predecessors: line 40 says it continues 'the income fluctuation problem described in {doc}`ifp_egm`', while line 100 says 'the only difference from {doc}`ifp_egm_transient_shocks` is that $\\{R_t\\}$ ... is allowed to be stochastic'. Line 253 then opens '### Using an Endogenous Grid' with 'In the study of that model we found that it was possible to further accelerate time iteration' - 'that model' has no antecedent in this lecture, and the model meant (the optimal growth model of {doc}`os_egm`) is not named until 258"},
-    {"rule": "qe-code-001", "count": 4, "lines": [349, 425, 534, 619],
-     "detail": "line 349 closes a hanging-indent signature with `    ):` at 4 spaces, leaving the arguments at the same indent as the body (E121/E125); the pattern recurs at 394, 447, 519, 569 and 620. Line 425 pads after a comma to align `in_axes` with the line above (E241). Line 534 binds a lambda to a name where PEP8 asks for `def` (E731). Line 619 writes an annotated default without spaces, `p: float=0.01`, where PEP8 requires `p: float = 0.01` (E252)"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [305, 670, 672],
-     "detail": "line 305 says 'we held $z \\in \\mathsf Z$ in the discussion above' with the word 'fixed' missing, so the sentence does not state the assumption it is making. Line 670 opens the inequality section with 'Lets' look at wealth inequality by computing some standard measures of this phenomenon' - misplaced apostrophe, and 'of this phenomenon' adds nothing. Line 672 promises to 'examine how inequality varies with the interest rate', but both exercises vary the *volatility* of returns and of labour income (`a_r`, `a_y`), never the level of the return"}
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        490,
+        661
+      ],
+      "detail": "the optimal consumption policy is the object the entire first half of the lecture constructs - the Coleman-Reffett operator, the endogenous grid, the interpolation scheme - and it is solved at 490 and never plotted. The three figures in the lecture are the wealth histogram (652) and the two Gini sweeps (752, 829); $\\sigma^*(a, z)$ for the two values of $z$ never appears, although every companion lecture in the series shows it. Second, the claim at 661-662 that the log histogram 'suggests a long right tail' is exactly what a rank-size or log-log tail plot would settle, and the lecture then builds a whole section on tail inequality without one"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        117,
+        166,
+        203
+      ],
+      "detail": "three sets get three different exotic fonts in one lecture: $\\mathsf Z$ for the Markov chain's state space (117, 305), $\\mathscr C$ for the class of candidate policies (166, 170, 172, 200, 219, 223, 228, 241-245) and $\\mathbf S$ for the state space (203, 220, 232). Plain $Z$, $C$ and $S$ would carry the same meaning; as it stands the reader has to keep three typefaces apart, and the bold one additionally violates qe-math-004"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        100,
+        253
+      ],
+      "detail": "the lecture names two different predecessors: line 40 says it continues 'the income fluctuation problem described in {doc}`ifp_egm`', while line 100 says 'the only difference from {doc}`ifp_egm_transient_shocks` is that $\\{R_t\\}$ ... is allowed to be stochastic'. Line 253 then opens '### Using an Endogenous Grid' with 'In the study of that model we found that it was possible to further accelerate time iteration' - 'that model' has no antecedent in this lecture, and the model meant (the optimal growth model of {doc}`os_egm`) is not named until 258"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        349,
+        425,
+        534,
+        619
+      ],
+      "detail": "line 349 closes a hanging-indent signature with `    ):` at 4 spaces, leaving the arguments at the same indent as the body (E121/E125); the pattern recurs at 394, 447, 519, 569 and 620. Line 425 pads after a comma to align `in_axes` with the line above (E241). Line 534 binds a lambda to a name where PEP8 asks for `def` (E731). Line 619 writes an annotated default without spaces, `p: float=0.01`, where PEP8 requires `p: float = 0.01` (E252)"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        305,
+        670,
+        672
+      ],
+      "detail": "line 305 says 'we held $z \\in \\mathsf Z$ in the discussion above' with the word 'fixed' missing, so the sentence does not state the assumption it is making. Line 670 opens the inequality section with 'Lets' look at wealth inequality by computing some standard measures of this phenomenon' - misplaced apostrophe, and 'of this phenomenon' adds nothing. Line 672 promises to 'examine how inequality varies with the interest rate', but both exercises vary the *volatility* of returns and of labour income (`a_r`, `a_y`), never the level of the return"
+    }
   ],
   "strengths": [
     "The theory's stability requirement is enforced in code rather than left as prose: `assert β * ER < 1, \"Stability condition failed.\"` at 356 implements $\\beta G_R < 1$ from {eq}`fpbc2` under the IID simplification stated at 147-152",
@@ -32,5 +71,9 @@
   "scanner_doubts": [
     "qe-math-002 x6 at ifp_advanced.md:179, 182, 213, 234, 235 and 294 flags `u'`, but every one of these is the derivative of the utility function, always written as a composition - `(u' \\circ \\sigma)(a, z)`, `\\left(u' \\circ c \\right)(a,z)` - not a transpose. The documented derivative-prime exception did not fire; extending it to a primed symbol followed by `\\circ`, or immediately applied to a parenthesised argument, would clear all six",
     "qe-fig-003 x1 at ifp_advanced.md:654 catches the embedded title in the single-line `ax.set(xlabel='log assets', ylabel='density', title=\"Wealth Distribution\")`, but misses the identical construct at 754-756 and 831-833, where `ax.set(` opens on one line and `title=` sits two lines below. The check appears to be line-based, so every multi-line `ax.set(...)` call in the corpus is invisible to it"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "fab217b2e7a96bea4c52d63cec841fd0392213e6"
+  }
 }

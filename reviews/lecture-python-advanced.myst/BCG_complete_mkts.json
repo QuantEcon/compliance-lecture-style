@@ -5,37 +5,70 @@
     {
       "rule": "qe-writing-003",
       "count": 5,
-      "lines": [102, 643, 855, 1063, 1088],
+      "lines": [
+        102,
+        643,
+        855,
+        1063,
+        1088
+      ],
       "detail": "the Arrow-securities pricing kernel is written three different ways and the code computes a fourth. 533 ({eq}`qgeqn`) gives $q(\\epsilon) = \\beta (u'(c_1^i(\\epsilon))/u'(c_0^i)) g(\\epsilon)$; 643 ({eq}`arrowprices`, the guess the whole verification rests on) gives $\\beta \\left( u'(w_1(\\epsilon)+AK^\\alpha e^\\epsilon) / u'(w_0-K) \\right)^{-\\gamma}$ - the $g(\\epsilon)$ has vanished and a $-\\gamma$ exponent has been applied to a ratio that is already built from $u' = c^{-\\gamma}$; 809 repeats it with neither the exponent nor $g$; and the code at 977 computes `𝛽 * ((w1(𝜖) + np.exp(𝜖)*fk) / (w0 - k))**(-𝜓)`, i.e. $\\beta (C_1/C_0)^{-\\psi}$, which matches 533 and none of the two displays in between. Second, the CRRA parameter is $\\gamma$ throughout the algebra (129, 141, 214, 223, 643) and $\\psi$ in the documented parameter list at 855 (\"$\\psi$: CRRA risk parameter\") and in the code as `𝜓` (885, 899, 907), with no line saying they are the same object. Third, 99-102 promises \"Soon we'll explain how aggregate endowments are divided between type $i=1$ and type $i=2$ consumers\" and then says \"We don't need to do that in order to describe a social planning problem\", but the very next display at 110 is already written in the divided form $w_0^1 + w_0^2$. Also 1063 tells the reader to use `BCG_complete markets` - a space where the class defined at 875 has an underscore - and the comment at 1088 says \"Realizations of innovation from -3 to 3\" over `np.linspace(-1,1,1000)`"
     },
     {
       "rule": "qe-code-001",
       "count": 8,
-      "lines": [879, 910, 948, 955, 1024, 1027, 1040, 1093],
+      "lines": [
+        879,
+        910,
+        948,
+        955,
+        1024,
+        1027,
+        1040,
+        1093
+      ],
       "detail": "(1) 1093, 1094, 1103 and 1104 write `label=r'Agent 1\\'s endowment'` - a backslash-escaped apostrophe inside a *raw* string, so the backslash survives and the rendered legend reads `Agent 1\\'s endowment`. (2) Every keyword default in the constructor is spaced (`𝜒1 = 0`, `w10 = 1`, `nb_points_integ = 10`, 879-891), where PEP8 asks for no spaces around `=` in a default. (3) The rule names `a**b` explicitly and the file takes both sides: `(c**(1-𝜓))` at 907 and `(𝜒1**2)` at 923 are correct, while 910 `A * (k ** 𝛼)`, 1047 `** (-𝜓)` and 1053 `k ** (𝛼 - 1) / ((w0 - k) ** (-𝜓))` space the operator. (4) 948 `kfoc_list = [];` ends in a stray semicolon. (5) Space after comma is missing throughout the plotting and grid code - 955 `figsize=(8,7)`, 969 `def q(self,𝜖,k)`, 1009 `q(𝜖,k)`, 1089 `np.linspace(-1,1,1000)`, 1092 `(1,2,figsize=(14,6))`, 1095 `mdl1.Y(epsgrid,1)`, 1098 `r'$\\epsilon$',fontsize=12`, 1146-1147, 1190 `dict(x=1,y=1,z=1)`. (6) 1040 declares `njit(lambda 𝜖, 𝜒1, : ...)` with a dangling comma before the colon. (7) 1027 and 1032 are the same statement twice, `𝜓 = model.𝜓`. (8) 1024-1025 puts two blank lines between methods inside the class body where PEP8 asks for one, and 1045 gives the required argument `k` a meaningless default of `1e-4`"
     },
     {
       "rule": "qe-writing-007",
       "count": 3,
-      "lines": [721, 954, 1186],
+      "lines": [
+        721,
+        954,
+        1186
+      ],
       "detail": "the figure the lecture already contains is never drawn: `opt_k` takes a `plot=False` flag and 954-960 plots the capital first-order condition against the grid with the zero line marked - exactly the picture that shows the root the section is about - and every call site uses the default (1004, 1121, 1122), so the code ships a figure that no reader sees. Second, the Modigliani-Miller section (713-786) is the lecture's punchline and is entirely algebraic: the payoff kink $d^e = \\max\\{e^\\epsilon Ak^\\alpha - b, 0\\}$, $d^b = \\min\\{e^\\epsilon Ak^\\alpha/b, 1\\}$ at 721-722 and the default threshold $\\epsilon^* = \\log(b/Ak^\\alpha)$ at 729 would take two lines against $\\epsilon$ with $\\epsilon^*$ marked, and the invariance claim at 761 ($\\tilde V + p(k,b)b$ constant in $b$) is never computed by the class at all even though every ingredient is in it - one plot of firm value against $b$ would make the theorem visible rather than asserted. Third, the one 3-D result (1186-1197) is a plotly surface baked to PNG at a fixed camera (`scene_camera=dict(eye=dict(x=2, y=-2, z=1.5))`), and the question it is asked to answer - how $k$ varies with $\\chi_1$ and $\\chi_2$ - is a monotonicity claim that two 2-D slices would settle unambiguously"
     },
     {
       "rule": "qe-writing-002",
       "count": 5,
-      "lines": [338, 344, 625, 705, 772],
+      "lines": [
+        338,
+        344,
+        625,
+        705,
+        772
+      ],
       "detail": "338-339 stops mid-clause: \"an individual firm chooses its own (infinitesmimal) part $k(\\zeta)$ of $K$ taking prices as\" - the bullet ends there, with \"given\" missing. 705-707 has no verb at all: \"**Remark:** Multiple arrangements of endowments $[w_0^1, w_0^2, w_1^1(\\epsilon), w_1^2(\\epsilon), \\theta_0^1, \\theta_0^2]$ associated with the same distribution of wealth $\\eta$.\" 772 drops a preposition in the first clause of the theorem statement itself: \"The value of a firm is independent the mix of equity and bonds that it uses\". 625-628 is 37 words whose subject and verb disagree (\"the following steps that, as we'll see, relies heavily on\"). And 344-346 spends 34 words restating what 331-340 has just said - \"a powerful device for making a host of competitive agents take as given equilibrium prices that are determined by the independent decisions of hosts of agents who behave just like they do\" - the same sentence that appears at 155-158 of the incomplete-markets lecture"
     },
     {
       "rule": "qe-writing-005",
       "count": 4,
-      "lines": [425, 581, 591, 627],
+      "lines": [
+        425,
+        581,
+        591,
+        627
+      ],
       "detail": "no italic appears anywhere in the file, so bold carries emphasis as well as definition. The definitions are bolded correctly - **price taker** (333), **collateral** (482), **arbitrage** (573) - but 581 and 591 bold **negative** and **positive** purely for stress in two parallel sentences, where the rule assigns that job to italic. Emphasis is also being carried by inline code on ordinary English: `Big K, little k` (53, 250, 302, 627), `Big C, little c` (628), `Big K, Big C` (339) and, most oddly, `earnings` at 425 - none of these is an identifier, and the reader has to distinguish them from the genuine code spans `BCG_complete_markets` (790), `opt_k`, `q`, `V`, `opt_c` (796-818) and `nb_points_integ` (862) in the same document"
     },
     {
       "rule": "qe-math-009",
       "count": 2,
-      "lines": [92, 471],
+      "lines": [
+        92,
+        471
+      ],
       "detail": "92-97 sets an `aligned` display that contains no equation - two symbols and a phrase, `w_0 &` on one row and `w_1(\\epsilon) & \\textrm{ in state }\\epsilon` on the next, with nothing on either side of the alignment point - where the sentence \"aggregate endowments are $w_0$ in period 0 and $w_1(\\epsilon)$ in state $\\epsilon$ of period 1\" says it. And {eq}`debtlimit` at 471 defines $\\bar a^i(\\epsilon;\\theta^i)$ as a quantity that is never used unnegated: 471 states it as $-\\bar a^i(\\epsilon;\\theta^i) = \\dots$, 474 calls $-\\bar a^i(\\epsilon;\\theta^i)$ the maximum feasible repayment, and 477 refers to $-\\bar a^i(\\epsilon;\\theta^i)$ again, so the minus sign is written three times to recover the object actually being discussed - naming the repayment limit directly would remove it"
     }
   ],
@@ -61,5 +94,9 @@
   "scanner_doubts": [
     "BCG_complete_mkts.md:1 - qe-fig-010 is reported with count 1 at line 1, which is a file-level flag rather than a located finding, and the lecture does already solve the LaTeX problem the rule is about: the single plotly figure is rasterised in-cell with `Image(fig.to_image(format=\"png\", engine=\"kaleido\"))` at 1197 and `fig.show()` is left commented out at 1198-1199. This is the same pattern I flagged in `BCG_incomplete_mkts`, so the decision is shared: either `check_fig_010` should treat an in-cell `to_image` rasterisation as compliant, or the rule should say that a rasterised plotly figure still needs the `{only} latex` wrapper",
     "BCG_complete_mkts.md:1187-1189 - qe-fig-003 is reported with count 2 (1099, 1109), the two matplotlib `.set_title` calls, and qe-fig-006 with nothing. The plotly cell sets its axis labels through `xaxis_title='x - 𝜒1'`, `yaxis_title='y - 𝜒2'`, `zaxis_title='z - k'` (1187-1189), which are embedded axis labels of the kind the figure rules govern and are invisible to both checks because their patterns only match `set_xlabel`/`plt.xlabel` and `set_title`/`suptitle`/`plt.title`/`set(...title=)`. Adding `[xyz]axis_title\\s*=` (and `\\w*title\\s*=` inside `update_layout`) would reach them. This is the same gap I reported on `BCG_incomplete_mkts`; noting it again only so the fix is re-run against this file, where the labels also carry the redundant `x - `, `y - `, `z - ` prefixes"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "03163c21fa5055dd66ba13b02c7089072bcc8ae8"
+  }
 }

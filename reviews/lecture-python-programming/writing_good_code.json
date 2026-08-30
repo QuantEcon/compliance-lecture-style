@@ -2,18 +2,75 @@
   "series": "lecture-python-programming",
   "lecture": "writing_good_code",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 6, "lines": [228, 236, 270, 288, 304, 397],
-     "detail": "the refactored example does not deliver two of the four things the precepts asked for, and then claims it did. 288 states \"Magic numbers are avoided\", and 270 still writes `plt.subplots(3, 1, figsize=(8, 16))` with the literal `3` that 158 singled out by name (\"numbers like `50` and `49` and `3` scattered through the code\") - and the 3 is now load-bearing in a second place, since it must match the number of parameter sets defined at 273-275. The \"Minimize Global Variables\" precept (196-213) and the JIT argument built on it (215-224) fare no better: 287 claims globals are \"quarantined by collecting them together at the end\", which is true of `set_one`, `set_two`, `set_three`, `fig` and `axes`, and the section that motivated the whole discussion - type inference for JIT compilation - is never revisited, nothing is jitted, and the improved code still depends on `np` and `plt` imported inside the *bad* cell at 74-75, so it cannot run on its own. Second, 228 uses the term WET (\"the evils of global variables and WET code\") and 230 explains it two lines later in a single-item bullet. Third, the section headed \"#### Which One, Functions or Classes?\" (236-244) never answers its own question: \"Both can be useful\", \"We'll learn more about these topics over time\", \"(Personal preference is part of the story too)\", \"What's really important is that you use one or the other or both\" - four sentences, no criterion. Fourth, the exercise's second plot cell contains an unflagged bug: 390 builds `p_grid`, 393-394 compute `qs` and `qd` from it, and 397-398 then plot them against `grid` from the earlier cell at 355, leaving `p_grid` unused; it renders correctly only because both are `np.linspace(2, 4, 100)`, and the solution at 448-449 silently repairs it without saying so. Fifth, the exercise reuses $\\alpha$ and $\\delta$ for the supply and demand parameters (304, 310) after {eq}`gc_solmod` and 61 have given both letters different meanings in the same lecture, and both meanings coexist in one notebook namespace (`α` is a tuple at 85 and a float at 425)"},
-    {"rule": "qe-code-001", "count": 12, "lines": [253, 259, 270, 277, 347, 438, 444],
-     "detail": "first, a warning for anyone acting on this report: the deliberately poor cell at 73-134 is *not* a qe-code-001 site. The lecture's claim at 136 that it \"more or less follows PEP8\" is exactly right - I ran flake8 over every code cell in the file and that cell is clean; its faults are structural, which is the point being made. The real items are in the code the lecture offers as good. 438 repeats logic the class has just factored out: `q_star = np.exp(self.α * p_star) - self.β` is `self.qs(p_star)`, defined four lines above at 428-429 and used correctly at 449 - a DRY violation inside the lecture's DRY example. 444 carries the `# Now plot` comment over from the bad code into the refactored method. `compute_equilibrium` (434-441) prints its two results rather than returning them, so nothing downstream can use the equilibrium it computes. The six `f'...{p_star: .2f}'` format specs (347, 348, 384, 385, 440, 441) all carry a leading space in the format spec, which is the space flag for positive numbers and renders a stray gap after \"is\". 259 and 277 wrap `for` targets in redundant parentheses (`for (α, s, δ) in product(...)`, `for (ax, params) in zip(...)`). 253 and 270 are the two blank-line counts flake8 reports in the good cell (one blank line before the def, one after its body)"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [142, 270],
-     "detail": "a lecture about how to write code argues for 100 lines without showing any. \"Good Coding Practice\" and its four subsections (142-244) state every precept in prose - replace `50` and `49` with `time_series_length` and `time_series_length - 1` (167-169), factor the repeated loop into a function (176-194), sandbox variables so JIT type inference can work (215-224), prefer functions or classes (226-244) - and not one is shown as a two-line before-and-after, although the bad cell above supplies the \"before\" for all four. The magic-number fix in particular is described in words at 167-169 where three lines of code would settle it. Second, the lecture's central comparison is between two cells whose *output is identical*, and it prints that output twice: two 8x16 three-panel figures, 170 lines apart (73-134 and 250-282), so the reader scrolls past two full pages of the same picture. 248 says the second cell \"reproduces the plot above\", which is the right claim, and the figure is then the least informative thing on the page - a `{note}` saying the outputs match, with the second figure suppressed or reduced, would put the attention back on the code. Relatedly the lecture has no admonitions at all beyond the epigraph, where the JIT aside at 215-224 is exactly the kind of technical digression a `{note}` exists for and is currently promoted to an H4"},
-    {"rule": "qe-writing-005", "count": 6, "lines": [150, 160, 182, 188, 198, 230],
-     "detail": "bold is used three times in the lecture and all three are emphasis, not definition: \"coding style matters **a great deal**\" (150), and \"your aim should be to **automate** repetition, **not** do it yourself\" (188) - the rule asks for italic here, and no italic appears anywhere in the file. Meanwhile the four terms the lecture actually defines are all unbolded: \"magic numbers\" arrives in quotation marks (160) despite having its own heading; \"Don't repeat yourself (DRY)\" is introduced as plain text mid-sentence (182); \"global variables\" is glossed inside a parenthesis, \"(i.e., names assigned to values outside of any function or class)\" (198); and WET is defined in a single-item bullet (230), two lines after it is first used. The one arguably correct bold, **parameters** at 314, is in the exercise and restates a gloss already given at 61"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [162, 194, 230, 240],
-     "detail": "the lecture defers four times and delivers on two: \"We'll talk about how to avoid repetition below\" (194), \"(We'll discuss how just below)\" (213), \"We'll learn more about these topics over time\" (240) and \"What's really important is that you use one or the other or both\" (244) - the last two close the section that was supposed to choose between functions and classes. 162 (\"This is not a compliment.\") is a one-line aside on the word \"magic\". Two single-item bullet lists are used as footnotes rather than lists: \"* Also called DIE (duplication is evil).\" (184) and \"* WET stands for \\\"we enjoy typing\\\" and is the opposite of DRY.\" (230). And the moralising register accumulates without adding information - \"mortal sin\" (178), \"not all evil\" (164), \"the evils of\" (228), \"shaming ourselves\" (234), \"Rookie programmers ... with abandon --- as we once did ourselves\" (200) - five figures for one idea"},
-    {"rule": "qe-math-009", "count": 2, "lines": [304, 310],
-     "detail": "the exercise re-uses both Greek letters the main example has already spent. {eq}`gc_solmod` at 54 and the gloss at 61 make $\\alpha$ a productivity parameter and $\\delta$ a depreciation rate; 304 then makes $\\alpha$ the exponent in the supply curve $q_s(p) = \\exp(\\alpha p) - \\beta$ and 310 makes $\\delta$ the demand elasticity in $q_d(p) = \\gamma p^{-\\delta}$. Since the two problems share one notebook namespace, both meanings are simultaneously live in the code - `α` is the tuple `(0.25, 0.33, 0.45)` at 85 and the float `0.1` at 425 - and the simpler option was to pick letters the lecture had not used. The rest of the notation is commendably plain: $k_t$, $s$, $q_s$, $q_d$, $h$, $p^*$, $q^*$, with no decorative letters anywhere"}
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        228,
+        236,
+        270,
+        288,
+        304,
+        397
+      ],
+      "detail": "the refactored example does not deliver two of the four things the precepts asked for, and then claims it did. 288 states \"Magic numbers are avoided\", and 270 still writes `plt.subplots(3, 1, figsize=(8, 16))` with the literal `3` that 158 singled out by name (\"numbers like `50` and `49` and `3` scattered through the code\") - and the 3 is now load-bearing in a second place, since it must match the number of parameter sets defined at 273-275. The \"Minimize Global Variables\" precept (196-213) and the JIT argument built on it (215-224) fare no better: 287 claims globals are \"quarantined by collecting them together at the end\", which is true of `set_one`, `set_two`, `set_three`, `fig` and `axes`, and the section that motivated the whole discussion - type inference for JIT compilation - is never revisited, nothing is jitted, and the improved code still depends on `np` and `plt` imported inside the *bad* cell at 74-75, so it cannot run on its own. Second, 228 uses the term WET (\"the evils of global variables and WET code\") and 230 explains it two lines later in a single-item bullet. Third, the section headed \"#### Which One, Functions or Classes?\" (236-244) never answers its own question: \"Both can be useful\", \"We'll learn more about these topics over time\", \"(Personal preference is part of the story too)\", \"What's really important is that you use one or the other or both\" - four sentences, no criterion. Fourth, the exercise's second plot cell contains an unflagged bug: 390 builds `p_grid`, 393-394 compute `qs` and `qd` from it, and 397-398 then plot them against `grid` from the earlier cell at 355, leaving `p_grid` unused; it renders correctly only because both are `np.linspace(2, 4, 100)`, and the solution at 448-449 silently repairs it without saying so. Fifth, the exercise reuses $\\alpha$ and $\\delta$ for the supply and demand parameters (304, 310) after {eq}`gc_solmod` and 61 have given both letters different meanings in the same lecture, and both meanings coexist in one notebook namespace (`α` is a tuple at 85 and a float at 425)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 12,
+      "lines": [
+        253,
+        259,
+        270,
+        277,
+        347,
+        438,
+        444
+      ],
+      "detail": "first, a warning for anyone acting on this report: the deliberately poor cell at 73-134 is *not* a qe-code-001 site. The lecture's claim at 136 that it \"more or less follows PEP8\" is exactly right - I ran flake8 over every code cell in the file and that cell is clean; its faults are structural, which is the point being made. The real items are in the code the lecture offers as good. 438 repeats logic the class has just factored out: `q_star = np.exp(self.α * p_star) - self.β` is `self.qs(p_star)`, defined four lines above at 428-429 and used correctly at 449 - a DRY violation inside the lecture's DRY example. 444 carries the `# Now plot` comment over from the bad code into the refactored method. `compute_equilibrium` (434-441) prints its two results rather than returning them, so nothing downstream can use the equilibrium it computes. The six `f'...{p_star: .2f}'` format specs (347, 348, 384, 385, 440, 441) all carry a leading space in the format spec, which is the space flag for positive numbers and renders a stray gap after \"is\". 259 and 277 wrap `for` targets in redundant parentheses (`for (α, s, δ) in product(...)`, `for (ax, params) in zip(...)`). 253 and 270 are the two blank-line counts flake8 reports in the good cell (one blank line before the def, one after its body)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        142,
+        270
+      ],
+      "detail": "a lecture about how to write code argues for 100 lines without showing any. \"Good Coding Practice\" and its four subsections (142-244) state every precept in prose - replace `50` and `49` with `time_series_length` and `time_series_length - 1` (167-169), factor the repeated loop into a function (176-194), sandbox variables so JIT type inference can work (215-224), prefer functions or classes (226-244) - and not one is shown as a two-line before-and-after, although the bad cell above supplies the \"before\" for all four. The magic-number fix in particular is described in words at 167-169 where three lines of code would settle it. Second, the lecture's central comparison is between two cells whose *output is identical*, and it prints that output twice: two 8x16 three-panel figures, 170 lines apart (73-134 and 250-282), so the reader scrolls past two full pages of the same picture. 248 says the second cell \"reproduces the plot above\", which is the right claim, and the figure is then the least informative thing on the page - a `{note}` saying the outputs match, with the second figure suppressed or reduced, would put the attention back on the code. Relatedly the lecture has no admonitions at all beyond the epigraph, where the JIT aside at 215-224 is exactly the kind of technical digression a `{note}` exists for and is currently promoted to an H4"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 6,
+      "lines": [
+        150,
+        160,
+        182,
+        188,
+        198,
+        230
+      ],
+      "detail": "bold is used three times in the lecture and all three are emphasis, not definition: \"coding style matters **a great deal**\" (150), and \"your aim should be to **automate** repetition, **not** do it yourself\" (188) - the rule asks for italic here, and no italic appears anywhere in the file. Meanwhile the four terms the lecture actually defines are all unbolded: \"magic numbers\" arrives in quotation marks (160) despite having its own heading; \"Don't repeat yourself (DRY)\" is introduced as plain text mid-sentence (182); \"global variables\" is glossed inside a parenthesis, \"(i.e., names assigned to values outside of any function or class)\" (198); and WET is defined in a single-item bullet (230), two lines after it is first used. The one arguably correct bold, **parameters** at 314, is in the exercise and restates a gloss already given at 61"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        162,
+        194,
+        230,
+        240
+      ],
+      "detail": "the lecture defers four times and delivers on two: \"We'll talk about how to avoid repetition below\" (194), \"(We'll discuss how just below)\" (213), \"We'll learn more about these topics over time\" (240) and \"What's really important is that you use one or the other or both\" (244) - the last two close the section that was supposed to choose between functions and classes. 162 (\"This is not a compliment.\") is a one-line aside on the word \"magic\". Two single-item bullet lists are used as footnotes rather than lists: \"* Also called DIE (duplication is evil).\" (184) and \"* WET stands for \\\"we enjoy typing\\\" and is the opposite of DRY.\" (230). And the moralising register accumulates without adding information - \"mortal sin\" (178), \"not all evil\" (164), \"the evils of\" (228), \"shaming ourselves\" (234), \"Rookie programmers ... with abandon --- as we once did ourselves\" (200) - five figures for one idea"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        304,
+        310
+      ],
+      "detail": "the exercise re-uses both Greek letters the main example has already spent. {eq}`gc_solmod` at 54 and the gloss at 61 make $\\alpha$ a productivity parameter and $\\delta$ a depreciation rate; 304 then makes $\\alpha$ the exponent in the supply curve $q_s(p) = \\exp(\\alpha p) - \\beta$ and 310 makes $\\delta$ the demand elasticity in $q_d(p) = \\gamma p^{-\\delta}$. Since the two problems share one notebook namespace, both meanings are simultaneously live in the code - `α` is the tuple `(0.25, 0.33, 0.45)` at 85 and the float `0.1` at 425 - and the simpler option was to pick letters the lecture had not used. The rest of the notation is commendably plain: $k_t$, $s$, $q_s$, $q_d$, $h$, $p^*$, $q^*$, with no decorative letters anywhere"
+    }
   ],
   "strengths": [
     "The lecture is built as one worked comparison rather than a list of rules: a deliberately poor program (73-134), a diagnosis of what is wrong with it in four named precepts (142-244), and the same program rewritten (250-282) - and the diagnosis refers back to specific lines of the bad version (\"numbers like `50` and `49` and `3`\", 158; \"the loop to generate time series\", 180)",
@@ -39,5 +96,9 @@
     "Sweep the mechanical remainder: the three two-sentence paragraphs at 27, 319 and 327, the two double-space runs at 148 and 207, `mystnb` figure metadata for the four un-named figure cells (73, 250, 353, 388), the missing full stop at 242, and the two single-item bullet lists at 184 and 230",
     "Consider suppressing or shrinking the second figure at 281: it is identical to the one at 133, and printing the same three-panel 8x16 plot twice costs two pages in a lecture whose subject is the code"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "ea6742159d0ae9cb118f36b215fb599e98a516de"
+  }
 }

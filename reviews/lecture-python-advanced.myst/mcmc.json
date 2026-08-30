@@ -2,14 +2,49 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "mcmc",
   "judgment": [
-    {"rule": "qe-math-009", "count": 2, "lines": [149, 166],
-     "detail": "the letters $N$ and $n$ each carry two meanings, and the two clashes are the same clash twice over. $N$ is the Markov kernel from 149 through 313 ($N(\\theta, A)$, $N^t$, $\\pi N$), and from 705 onwards it is the normal distribution ($y_i \\mid \\theta \\sim N(\\theta, \\sigma_y^2)$ at 705, $\\theta \\sim N(\\mu_0,\\sigma_0^2)$ at 709, $\\pi = N(\\mu_n, \\sigma_n^2)$ at 718, $N(0,\\sigma_m^2)$ at 1074). Its lowercase twin does the same: $n$ is the sample size at 71 and again at 720-726 and in code at 734, but is the conditional density of the kernel at 166-175 and in the detailed balance equation at 230-237. Since qe-math-011 (proposed) requires the plain letter $N$ for the normal distribution, the kernel is the symbol that should move - a $K$ or $Q$ would free both letters at once, and the density $n$ with it"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [45, 626, 827, 829, 831],
-     "detail": "the same point about probabilistic programming libraries is made four times with the same two links. 45 says the lecture prepares the reader for NumPyro and BlackJAX, \"which we will use in later lectures: the implementation below is, in essence, what happens under the hood when such libraries run\"; then 827 repeats that libraries \"such as [NumPyro](...) and [BlackJAX](...) organize their MCMC computations\" this way, 829 repeats \"what runs under the hood\", and 831 repeats \"We will meet these libraries in later lectures\". Three consecutive paragraphs carry one idea. Separately, 626 runs to 55 words across four clauses (\"A clean sufficient condition for aperiodicity (defined in {ref}`mcmc_ergo`) is that the chain can *remain in place*: if $P(\\theta,\\{\\theta\\}) > 0$ on a set of positive $\\pi$-measure, then, combined with irreducibility, the chain is aperiodic, because a state that can be revisited at two consecutive times cannot belong to a nontrivial cycle\") - the one definition-plus-justification in the lecture that is not broken into its own sentences"},
-    {"rule": "qe-code-001", "count": 7, "lines": [773, 783, 820, 986, 1008, 1011, 1082],
-     "detail": "trivial but inconsistent within the file. Three one-line docstrings are written with single double-quotes - 773 (`\"Build the log unnormalized posterior from a log prior and data.\"`), 820 and 986 - while the multi-line docstring at 795-798 uses triple quotes as PEP257 asks. And the blank-line counts around top-level definitions are irregular: 783 and 1011 put one blank line between the end of a `def` and the following module-level statement where PEP8 asks for two, and 1008 and 1082 open a `def` after a single blank line, while 779-780 correctly leaves two"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [1145],
-     "detail": "the lecture's use of bold for definitions is otherwise exemplary and systematic - **posterior distribution** (73), **unnormalized posterior** (98), **Markov kernel** (149), **admit a density representation** (166), **stationary** (183), **reversible** / **satisfy detailed balance** (205), **detailed balance equation** (230), **$\\pi$-irreducible** (298), **periodic** / **aperiodic** (306), **proposal kernel** (356), **symmetric** (363), **burn-in** (833) - and italic is reserved for emphasis (*remain in place* 626, *every* 668, *is* 929, *any* 975, *shape* 1066). The single exception is 1145, where the term the exercise is introducing is italicised: \"plot the first 2,000 elements of the chain (a *trace plot*)\""}
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        149,
+        166
+      ],
+      "detail": "the letters $N$ and $n$ each carry two meanings, and the two clashes are the same clash twice over. $N$ is the Markov kernel from 149 through 313 ($N(\\theta, A)$, $N^t$, $\\pi N$), and from 705 onwards it is the normal distribution ($y_i \\mid \\theta \\sim N(\\theta, \\sigma_y^2)$ at 705, $\\theta \\sim N(\\mu_0,\\sigma_0^2)$ at 709, $\\pi = N(\\mu_n, \\sigma_n^2)$ at 718, $N(0,\\sigma_m^2)$ at 1074). Its lowercase twin does the same: $n$ is the sample size at 71 and again at 720-726 and in code at 734, but is the conditional density of the kernel at 166-175 and in the detailed balance equation at 230-237. Since qe-math-011 (proposed) requires the plain letter $N$ for the normal distribution, the kernel is the symbol that should move - a $K$ or $Q$ would free both letters at once, and the density $n$ with it"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        45,
+        626,
+        827,
+        829,
+        831
+      ],
+      "detail": "the same point about probabilistic programming libraries is made four times with the same two links. 45 says the lecture prepares the reader for NumPyro and BlackJAX, \"which we will use in later lectures: the implementation below is, in essence, what happens under the hood when such libraries run\"; then 827 repeats that libraries \"such as [NumPyro](...) and [BlackJAX](...) organize their MCMC computations\" this way, 829 repeats \"what runs under the hood\", and 831 repeats \"We will meet these libraries in later lectures\". Three consecutive paragraphs carry one idea. Separately, 626 runs to 55 words across four clauses (\"A clean sufficient condition for aperiodicity (defined in {ref}`mcmc_ergo`) is that the chain can *remain in place*: if $P(\\theta,\\{\\theta\\}) > 0$ on a set of positive $\\pi$-measure, then, combined with irreducibility, the chain is aperiodic, because a state that can be revisited at two consecutive times cannot belong to a nontrivial cycle\") - the one definition-plus-justification in the lecture that is not broken into its own sentences"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        773,
+        783,
+        820,
+        986,
+        1008,
+        1011,
+        1082
+      ],
+      "detail": "trivial but inconsistent within the file. Three one-line docstrings are written with single double-quotes - 773 (`\"Build the log unnormalized posterior from a log prior and data.\"`), 820 and 986 - while the multi-line docstring at 795-798 uses triple quotes as PEP257 asks. And the blank-line counts around top-level definitions are irregular: 783 and 1011 put one blank line between the end of a `def` and the following module-level statement where PEP8 asks for two, and 1008 and 1082 open a `def` after a single blank line, while 779-780 correctly leaves two"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        1145
+      ],
+      "detail": "the lecture's use of bold for definitions is otherwise exemplary and systematic - **posterior distribution** (73), **unnormalized posterior** (98), **Markov kernel** (149), **admit a density representation** (166), **stationary** (183), **reversible** / **satisfy detailed balance** (205), **detailed balance equation** (230), **$\\pi$-irreducible** (298), **periodic** / **aperiodic** (306), **proposal kernel** (356), **symmetric** (363), **burn-in** (833) - and italic is reserved for emphasis (*remain in place* 626, *every* 668, *is* 929, *any* 975, *shape* 1066). The single exception is 1145, where the term the exercise is introducing is italicised: \"plot the first 2,000 elements of the chain (a *trace plot*)\""
+    }
   ],
   "strengths": [
     "The theory is assembled from labelled `prf:` blocks that are then actually used by reference: {prf:ref}`mcmc_thm_stat` (245) is invoked at 352 and 499, {prf:ref}`mcmc_eg_rw` (373) at 589 and 786, {prf:ref}`mcmc_algo_mh` (411) at 425, 438 and 790, {prf:ref}`mcmc_thm_ergodic` (310) at 591, 674 and 891 - so at every point where a result is needed the reader is sent to the exact statement rather than to a remembered paragraph",
@@ -34,5 +69,9 @@
   ],
   "scanner_doubts": [
     "mcmc.md:1001 and 1032 - qe-writing-006 flags the H3 `### A Student-t prior` as Title Case, and qe-fig-004 flags the caption `Posteriors under Gaussian and Student-t priors` for the same reason. Both are false positives: \"Student\" is a proper noun (W. S. Gosset's pen name, as in Student's t-distribution) and is universally capitalised. The cause is that `student` is absent from `PROPER_NOUNS` in `tools/qestyle_rules.py:48-103`. Adding `student` alone will not fix it: `_is_proper` splits a hyphenated token and requires *every* part to be in `PROPER_NOUNS` or `STOP_SMALL` (`tools/qestyle_rules.py:171-173`), and the bare `t` is in neither - verified, `_is_proper('Student-t')`, `_is_proper('Student')` and `_is_proper('t')` all return False while `_is_proper('Gaussian')` and `_is_proper('Student’s')` return True. So the fix is either both `student` and `t`, or treating a single-letter part of a hyphenated word as always acceptable (which would also cover `t-distribution`, `F-test`, `p-value`). The same pattern should be re-checked wherever `Student-t`, `chi-squared` or similar hyphenated named distributions appear in headings and captions"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "751ee3628a21a87d96cc2b1626330114e98a1b32"
+  }
 }

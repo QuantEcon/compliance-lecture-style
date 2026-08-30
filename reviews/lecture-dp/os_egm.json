@@ -2,14 +2,41 @@
   "series": "lecture-dp",
   "lecture": "os_egm",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 1, "lines": [340, 344],
-     "detail": "the lecture's headline claim is the one thing it never measures. Line 344 states 'EGM is faster than time iteration because it avoids numerical root-finding' and 346 repeats it, but the only timing in the file is the bare `with qe.Timer():` at 340-342, which prints one number with nothing to compare it against - the os_time_iter solver is never run here, and the `{note}` at 253-257 has already warned that 'the routine is still not particularly fast because we are using pure Python loops'. So the reader is asked to accept a speed comparison from a cell that contains one half of it, in a lecture that otherwise measures everything (331-334 computes the maximal deviation from `σ_star` rather than asserting accuracy)"},
-    {"rule": "qe-math-009", "count": 2, "lines": [74, 124],
-     "detail": "the same integral is written twice, five lines of prose apart, in two different notations. {eq}`egm_coledef` (73-75) has `\\beta \\int (u' \\circ \\sigma) (f(x - c) z ) f'(x - c) z \\phi(dz)` with no spacing macros; {eq}`egm_getc` (121-126) writes the identical object as `\\beta \\int (u' \\circ \\sigma) (f(s_i) z ) \\, f'(s_i) \\, z \\, \\phi(dz)` with a `\\,` between every factor, and wraps it in `\\left\\{ \\ldots \\right\\}` as the argument of $(u')^{-1}$ where every other function application in the file uses parentheses ($u'(c)$, $f(s_i)$, $\\sigma(x)$, $\\phi(dz)$). Curly braces around a function argument also collide with the set notation the file uses two lines below ($\\{s_i\\}$, $\\{x_i\\}$, $\\{(x_i,c_i)\\}$). The code comment at 239 shows the simplest spelling of the same thing, `∫ u'(σ(f(s, α)z)) f'(s, α) z ϕ(z)dz`, without the composition operator at all"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [128, 318],
-     "detail": "the lecture's single figure (318-328) plots the approximate policy against the true one - the same check every lecture in this series ends with - and the thing that is new here, the endogenous grid itself, is never drawn. `K` computes `x_out = s_grid + c_out` at 246, so the unevenly spaced $\\{x_i\\}$ that give the method its name are in hand at the end of every iteration and are only ever consumed as an interpolation argument. One panel showing the exogenous $\\{s_i\\}$ against the resulting $\\{x_i\\}$ (or the two grids as rug marks on one axis) would make '### Exogenous Grid' (77-95) versus '### Endogenous Grid' (98-134) visible in a way that thirty lines of prose cannot"},
-    {"rule": "qe-writing-005", "count": 1, "lines": [134],
-     "detail": "line 134 bolds an adverb for emphasis - 'The name EGM comes from the fact that the grid $\\{x_i\\}$ is determined **endogenously**' - which is the job the rule gives to italics, and the file already does it correctly at 115 ('we fix an *exogenous* grid'). The one legitimate bold is at 36, where **endogenous grid method** is the term being defined; 134 re-bolds the same idea as emphasis, so the two uses are no longer distinguishable"}
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        340,
+        344
+      ],
+      "detail": "the lecture's headline claim is the one thing it never measures. Line 344 states 'EGM is faster than time iteration because it avoids numerical root-finding' and 346 repeats it, but the only timing in the file is the bare `with qe.Timer():` at 340-342, which prints one number with nothing to compare it against - the os_time_iter solver is never run here, and the `{note}` at 253-257 has already warned that 'the routine is still not particularly fast because we are using pure Python loops'. So the reader is asked to accept a speed comparison from a cell that contains one half of it, in a lecture that otherwise measures everything (331-334 computes the maximal deviation from `σ_star` rather than asserting accuracy)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        74,
+        124
+      ],
+      "detail": "the same integral is written twice, five lines of prose apart, in two different notations. {eq}`egm_coledef` (73-75) has `\\beta \\int (u' \\circ \\sigma) (f(x - c) z ) f'(x - c) z \\phi(dz)` with no spacing macros; {eq}`egm_getc` (121-126) writes the identical object as `\\beta \\int (u' \\circ \\sigma) (f(s_i) z ) \\, f'(s_i) \\, z \\, \\phi(dz)` with a `\\,` between every factor, and wraps it in `\\left\\{ \\ldots \\right\\}` as the argument of $(u')^{-1}$ where every other function application in the file uses parentheses ($u'(c)$, $f(s_i)$, $\\sigma(x)$, $\\phi(dz)$). Curly braces around a function argument also collide with the set notation the file uses two lines below ($\\{s_i\\}$, $\\{x_i\\}$, $\\{(x_i,c_i)\\}$). The code comment at 239 shows the simplest spelling of the same thing, `∫ u'(σ(f(s, α)z)) f'(s, α) z ϕ(z)dz`, without the composition operator at all"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        128,
+        318
+      ],
+      "detail": "the lecture's single figure (318-328) plots the approximate policy against the true one - the same check every lecture in this series ends with - and the thing that is new here, the endogenous grid itself, is never drawn. `K` computes `x_out = s_grid + c_out` at 246, so the unevenly spaced $\\{x_i\\}$ that give the method its name are in hand at the end of every iteration and are only ever consumed as an interpolation argument. One panel showing the exogenous $\\{s_i\\}$ against the resulting $\\{x_i\\}$ (or the two grids as rug marks on one axis) would make '### Exogenous Grid' (77-95) versus '### Endogenous Grid' (98-134) visible in a way that thirty lines of prose cannot"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        134
+      ],
+      "detail": "line 134 bolds an adverb for emphasis - 'The name EGM comes from the fact that the grid $\\{x_i\\}$ is determined **endogenously**' - which is the job the rule gives to italics, and the file already does it correctly at 115 ('we fix an *exogenous* grid'). The one legitimate bold is at 36, where **endogenous grid method** is the term being defined; 134 re-bolds the same idea as emphasis, so the two uses are no longer distinguishable"
+    }
   ],
   "strengths": [
     "The method is introduced by naming the exact cost it removes and the exact price it pays: 100-104 identifies root-finding as the expensive step, 109-111 states the single new assumption ('the only assumption required is that $u'$ is invertible on $(0,\\infty)$') and names $(u')^{-1}$, and 251 closes the loop on the code with 'Note the lack of any root-finding algorithm'",
@@ -29,5 +56,9 @@
     "Write the two copies of the Euler integral the same way (73-75 and 121-126): one spacing convention, parentheses rather than `\\left\\{ \\right\\}` around $(u')^{-1}$'s argument, and either the composition $(u' \\circ \\sigma)$ or the direct application the code comment at 239 uses - not both",
     "Small mechanical items: give the figure at 318 mystnb `name`/`caption` metadata (qe-fig-005), and remove the double spaces at 68 and 116 (qe-writing-008 x2)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "f961cf4914771a4b7d0087bfce97ab54a62ef8a4"
+  }
 }

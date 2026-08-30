@@ -2,18 +2,87 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "BCG_incomplete_mkts",
   "judgment": [
-    {"rule": "qe-code-001", "count": 9, "lines": [714, 761, 824, 898, 1021, 1030, 1060, 1839, 1864],
-     "detail": "the two code cells are the least PEP8-conformant in the series. (1) Every keyword default in the constructor signature is spaced, `𝜒1 = 0`, `w10 = 0.9`, `ktop = 0.25` (714-734), and so is every keyword at the call site, `BCG_incomplete_markets(w10 = w10, w20 = w20, ktop = 0.5, btop = 2.5)` at 1839 - PEP8 asks for no spaces around `=` in a keyword argument or default. (2) Four statements end in a stray semicolon: `rhs = const_qq1/((ww10-qq1*𝜃1)**(-𝜓1));` at 898, and the same at 943, 1461, 1536. (3) Lines 1021 and 1023 are indented 17 spaces under an `if` at 12, a five-space step that no other block in the file uses. (4) `formattedList` (1030, 1061) is camelCase with no mathematical justification; PEP8 asks for `formatted_list`. (5) Comparison and assignment operators are unspaced in the loop guards: `while V_crit>1e-4` (824), `b_crit=1` (834), `while b_crit>1e-5` (836), `k_crit=1` (844), `while k_crit>1e-5` (846), `while V_crit>1e-5` (1403). (6) Commas without a following space run through every call: `quad(intqq1,epstar,bound, args=...)` (889, 919, 937, 982, 1005, 1006), `return kss,bss,Vss,qss,pss,...` (1072), `return Q1,Q2,P1,P2` (1130), `np.linspace(kbot,ktop,N)` (1160), `eq_valuation(c10ss, c11ss, c20ss, c21ss,N=30)` (1228, 1609, 1661), `plt.subplots(3,2,figsize=(12,12))` (1864), `plot(wlist,q1list,label='agent 1',color='green')` (1911-1927). (7) `if (rhs > qq1):`, `if (kfoc > 0):`, `if (bfoc > 0):`, `if (value_x > V):` wrap their conditions in redundant parentheses (899, 929, 944, 986, 1009, 1020, 1462, 1486, 1516, 1537, 1573). (8) The banner comments `#*****...`, `#=========== Setup ===========#`, `#========` (736, 785-787, 859-862, 869-871, 954-956, 971-977, 996-998, 1041-1043, 1075-1077) have no space after the `#`, and 1060 sits at 7 spaces inside an 8-space body. (9) `self.u = njit(lambda c: (c**(1-𝜓)) / (1-𝜓))` at 761 references a name `𝜓` that the constructor never binds - it takes `𝜓1` and `𝜓2` - and only escapes a NameError because `njit` is lazy and `self.u` is never called"},
-    {"rule": "qe-writing-005", "count": 16, "lines": [59, 60, 1280, 1281, 1284, 1308, 1320, 1334, 1349, 1591, 1592, 1711],
-     "detail": "bold is used for emphasis at least as often as for definitions, and italic is used for emphasis alongside it, so neither convention is readable as a signal. Definitional bold is correct in places - **price taker** (145), **symmetric** (160), **rational conjectures** (66, 409), **out-of-equilibrium** (403) - but bold is emphasis at 59-60 (**individual**, **aggregate**, **is** in one sentence), 1280-1284 (**both**, **and**, **in equilibrium**), 1308 and 1314 (**market's**), 1320 (**stable**), 1334-1335 (**new** twice), 1349 (**both**), 1591-1592 (**not** twice) and 1711-1712 (**at the equilibrium**). Meanwhile the same emphatic job is done in italic at 73 (*different*), 1302 (*qualified*), 1311 (*unqualified*), 1582 and 1715 (*stability*), 1694 (*decrease*) and 1899 (*hedging desires*). Separately, the quotation from BCG at 534-537 is set as a whole italic paragraph with math spliced into it rather than as a blockquote or `{epigraph}`, so the italics there read as emphasis too"},
-    {"rule": "qe-writing-003", "count": 5, "lines": [566, 615, 700, 1217, 1423],
-     "detail": "the pseudo-code section is the spine of the lecture and its internal cross-references do not resolve. The list at 558-661 writes `1.` for all twelve items and gives its sub-bullets no letters, yet the prose inside it refers to \"this step 6\" (566-568), \"steps 6Aa through 6Ad\" (615), \"steps 4 through 7A\" (640), \"steps 3 through 7B\" (646), \"step 6, and the firm choices ... from step 7\" (647-648), \"steps 1 through 8\" (654) and \"In step 7, we interpret frozen $c^i$s as Big $C^i$\" (630) - labels a reader cannot match to anything rendered. The documented parameter list at 686-700 does not match the signature either: it lists a single `$\\psi$: risk parameter` where the class takes `𝜓1` and `𝜓2` (720-721), and omits `Vl, Vh, kbot, ktop, bbot, btop`, which the second example then has to set by hand (1839). At 1217-1218 the prose states \"the equilibrium firm value is $V=0.101$, with capital $k = 0.151$ and debt $b=0.484$\" while the cell immediately above (1211-1214) prints `-kss+qss+pss*bss`, `Vss` and `𝜃1ss` - so two of the three numbers claimed are never shown, and all three are hard-coded in prose against a computed cell. And `off_eq_check` still carries the comment block \"We impose the following: Agent 1 buys equity / Agent 2 buys equity and all debt\" (1423-1425) inside the very function the prose at 1347-1350 introduces by saying \"Importantly, we relax the condition that only agent 2 holds bonds\""},
-    {"rule": "qe-writing-002", "count": 6, "lines": [69, 155, 566, 629, 1896, 1932],
-     "detail": "69 is a 42-word single sentence carrying an inline `{doc}` link (\"Note that the absence of complete markets means that now we cannot compute competitive equilibrium prices and allocations by first solving the simple planning problem that we did in ...\"), and 155-158 is 41 words that say only that price-taking is consistent (\"a powerful device for making a host of competitive agents take as given the equilibrium prices that turn out to be determined by the decisions of hosts of agents who are just like them\"). Two parenthetical apologies for the notation appear instead of a fix - 566-568 (\"In this step we abuse notation by freezing $V, k, b$ ... little $k, b$ are frozen at guessed at value of $K, B$\", which is also ungrammatical) and 629-631 (\"Here we confess to abusing notation again, but now in a different way\"). And three sentences carry no information: \"Please stare at the above panels\" (1896), \"It is rewarding to stare at the above plots too\" (1932) and \"These subtle distinctions bear more thought and exploration\" (1316)"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [267, 558, 1251],
-     "detail": "the payoff functions at 267-274, $d^e = \\max\\{e^\\epsilon Ak^\\alpha - b, 0\\}$ and $d^b = \\min\\{e^\\epsilon Ak^\\alpha / b, 1\\}$, are the kink that everything else in the lecture turns on, and they are never plotted - two lines against $\\epsilon$ with $\\epsilon^*$ marked would make default and the two claims that follow it visible at once. The twelve-step, four-deep nested bisection of 558-661 is described only in prose and would be carried far better by a flow diagram, especially since its own step labels do not resolve (see qe-writing-003). And the central verification - is the red dot at the top of the surface? - is asked five times of a fixed-camera 3D plotly surface exported to PNG (1251-1276, 1614-1640, 1666-1691, 1726-1752, 1756-1782), where a 2D slice $V(k^*, b)$ against $b$ with the chosen $b$ marked would answer it unambiguously; the same 25-line plotly block is also pasted five times with only the data and the title changed"},
-    {"rule": "qe-math-009", "count": 4, "lines": [353, 485, 1333, 1805],
-     "detail": "the same derivative is written two ways: `u^\\prime` in the displays at 353-356, 365-366, 375-376, 391-392, 445-446, 458-459, 521, 580, 592, 604, 637, 643 and 1805-1806, and the simpler `u'` in the four Leibniz derivatives at 485, 490, 494 and 498 - 46 occurrences of the long form against 8 of the short. Line 1333 introduces the abbreviation \"IMRS's\" in prose for a quantity the algebra always writes out as the ratio $u'(C_1^i(\\epsilon))/u'(C_0^i)$ and the code calls `IMRS1`/`IMRS2` (1104-1105), so a third name for one object. And 1803-1808 switches to $Q^i, P^i$ for the per-agent valuations of the same equity and bond that the rest of the lecture prices as $q$ and $p$, with no statement of the relation between the two pairs"}
+    {
+      "rule": "qe-code-001",
+      "count": 9,
+      "lines": [
+        714,
+        761,
+        824,
+        898,
+        1021,
+        1030,
+        1060,
+        1839,
+        1864
+      ],
+      "detail": "the two code cells are the least PEP8-conformant in the series. (1) Every keyword default in the constructor signature is spaced, `𝜒1 = 0`, `w10 = 0.9`, `ktop = 0.25` (714-734), and so is every keyword at the call site, `BCG_incomplete_markets(w10 = w10, w20 = w20, ktop = 0.5, btop = 2.5)` at 1839 - PEP8 asks for no spaces around `=` in a keyword argument or default. (2) Four statements end in a stray semicolon: `rhs = const_qq1/((ww10-qq1*𝜃1)**(-𝜓1));` at 898, and the same at 943, 1461, 1536. (3) Lines 1021 and 1023 are indented 17 spaces under an `if` at 12, a five-space step that no other block in the file uses. (4) `formattedList` (1030, 1061) is camelCase with no mathematical justification; PEP8 asks for `formatted_list`. (5) Comparison and assignment operators are unspaced in the loop guards: `while V_crit>1e-4` (824), `b_crit=1` (834), `while b_crit>1e-5` (836), `k_crit=1` (844), `while k_crit>1e-5` (846), `while V_crit>1e-5` (1403). (6) Commas without a following space run through every call: `quad(intqq1,epstar,bound, args=...)` (889, 919, 937, 982, 1005, 1006), `return kss,bss,Vss,qss,pss,...` (1072), `return Q1,Q2,P1,P2` (1130), `np.linspace(kbot,ktop,N)` (1160), `eq_valuation(c10ss, c11ss, c20ss, c21ss,N=30)` (1228, 1609, 1661), `plt.subplots(3,2,figsize=(12,12))` (1864), `plot(wlist,q1list,label='agent 1',color='green')` (1911-1927). (7) `if (rhs > qq1):`, `if (kfoc > 0):`, `if (bfoc > 0):`, `if (value_x > V):` wrap their conditions in redundant parentheses (899, 929, 944, 986, 1009, 1020, 1462, 1486, 1516, 1537, 1573). (8) The banner comments `#*****...`, `#=========== Setup ===========#`, `#========` (736, 785-787, 859-862, 869-871, 954-956, 971-977, 996-998, 1041-1043, 1075-1077) have no space after the `#`, and 1060 sits at 7 spaces inside an 8-space body. (9) `self.u = njit(lambda c: (c**(1-𝜓)) / (1-𝜓))` at 761 references a name `𝜓` that the constructor never binds - it takes `𝜓1` and `𝜓2` - and only escapes a NameError because `njit` is lazy and `self.u` is never called"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 16,
+      "lines": [
+        59,
+        60,
+        1280,
+        1281,
+        1284,
+        1308,
+        1320,
+        1334,
+        1349,
+        1591,
+        1592,
+        1711
+      ],
+      "detail": "bold is used for emphasis at least as often as for definitions, and italic is used for emphasis alongside it, so neither convention is readable as a signal. Definitional bold is correct in places - **price taker** (145), **symmetric** (160), **rational conjectures** (66, 409), **out-of-equilibrium** (403) - but bold is emphasis at 59-60 (**individual**, **aggregate**, **is** in one sentence), 1280-1284 (**both**, **and**, **in equilibrium**), 1308 and 1314 (**market's**), 1320 (**stable**), 1334-1335 (**new** twice), 1349 (**both**), 1591-1592 (**not** twice) and 1711-1712 (**at the equilibrium**). Meanwhile the same emphatic job is done in italic at 73 (*different*), 1302 (*qualified*), 1311 (*unqualified*), 1582 and 1715 (*stability*), 1694 (*decrease*) and 1899 (*hedging desires*). Separately, the quotation from BCG at 534-537 is set as a whole italic paragraph with math spliced into it rather than as a blockquote or `{epigraph}`, so the italics there read as emphasis too"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        566,
+        615,
+        700,
+        1217,
+        1423
+      ],
+      "detail": "the pseudo-code section is the spine of the lecture and its internal cross-references do not resolve. The list at 558-661 writes `1.` for all twelve items and gives its sub-bullets no letters, yet the prose inside it refers to \"this step 6\" (566-568), \"steps 6Aa through 6Ad\" (615), \"steps 4 through 7A\" (640), \"steps 3 through 7B\" (646), \"step 6, and the firm choices ... from step 7\" (647-648), \"steps 1 through 8\" (654) and \"In step 7, we interpret frozen $c^i$s as Big $C^i$\" (630) - labels a reader cannot match to anything rendered. The documented parameter list at 686-700 does not match the signature either: it lists a single `$\\psi$: risk parameter` where the class takes `𝜓1` and `𝜓2` (720-721), and omits `Vl, Vh, kbot, ktop, bbot, btop`, which the second example then has to set by hand (1839). At 1217-1218 the prose states \"the equilibrium firm value is $V=0.101$, with capital $k = 0.151$ and debt $b=0.484$\" while the cell immediately above (1211-1214) prints `-kss+qss+pss*bss`, `Vss` and `𝜃1ss` - so two of the three numbers claimed are never shown, and all three are hard-coded in prose against a computed cell. And `off_eq_check` still carries the comment block \"We impose the following: Agent 1 buys equity / Agent 2 buys equity and all debt\" (1423-1425) inside the very function the prose at 1347-1350 introduces by saying \"Importantly, we relax the condition that only agent 2 holds bonds\""
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        69,
+        155,
+        566,
+        629,
+        1896,
+        1932
+      ],
+      "detail": "69 is a 42-word single sentence carrying an inline `{doc}` link (\"Note that the absence of complete markets means that now we cannot compute competitive equilibrium prices and allocations by first solving the simple planning problem that we did in ...\"), and 155-158 is 41 words that say only that price-taking is consistent (\"a powerful device for making a host of competitive agents take as given the equilibrium prices that turn out to be determined by the decisions of hosts of agents who are just like them\"). Two parenthetical apologies for the notation appear instead of a fix - 566-568 (\"In this step we abuse notation by freezing $V, k, b$ ... little $k, b$ are frozen at guessed at value of $K, B$\", which is also ungrammatical) and 629-631 (\"Here we confess to abusing notation again, but now in a different way\"). And three sentences carry no information: \"Please stare at the above panels\" (1896), \"It is rewarding to stare at the above plots too\" (1932) and \"These subtle distinctions bear more thought and exploration\" (1316)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        267,
+        558,
+        1251
+      ],
+      "detail": "the payoff functions at 267-274, $d^e = \\max\\{e^\\epsilon Ak^\\alpha - b, 0\\}$ and $d^b = \\min\\{e^\\epsilon Ak^\\alpha / b, 1\\}$, are the kink that everything else in the lecture turns on, and they are never plotted - two lines against $\\epsilon$ with $\\epsilon^*$ marked would make default and the two claims that follow it visible at once. The twelve-step, four-deep nested bisection of 558-661 is described only in prose and would be carried far better by a flow diagram, especially since its own step labels do not resolve (see qe-writing-003). And the central verification - is the red dot at the top of the surface? - is asked five times of a fixed-camera 3D plotly surface exported to PNG (1251-1276, 1614-1640, 1666-1691, 1726-1752, 1756-1782), where a 2D slice $V(k^*, b)$ against $b$ with the chosen $b$ marked would answer it unambiguously; the same 25-line plotly block is also pasted five times with only the data and the title changed"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        353,
+        485,
+        1333,
+        1805
+      ],
+      "detail": "the same derivative is written two ways: `u^\\prime` in the displays at 353-356, 365-366, 375-376, 391-392, 445-446, 458-459, 521, 580, 592, 604, 637, 643 and 1805-1806, and the simpler `u'` in the four Leibniz derivatives at 485, 490, 494 and 498 - 46 occurrences of the long form against 8 of the short. Line 1333 introduces the abbreviation \"IMRS's\" in prose for a quantity the algebra always writes out as the ratio $u'(C_1^i(\\epsilon))/u'(C_0^i)$ and the code calls `IMRS1`/`IMRS2` (1104-1105), so a third name for one object. And 1803-1808 switches to $Q^i, P^i$ for the per-agent valuations of the same equity and bond that the rest of the lecture prices as $q$ and $p$, with no statement of the relation between the two pairs"
+    }
   ],
   "strengths": [
     "The `Big K, little k` device is set up once and then honoured: 115-118 indexes an individual consumer by $\\omega$ and 133-135 a firm by $\\zeta$, 143-153 states exactly which objects each agent takes as given, and 160-166 says what symmetry means for consumers and firms separately - which is what lets 398-399 point at the big $C^i$ sitting on the right side of the pricing functions at 389-394 and name that as the whole content of the rational-conjectures assumption",
@@ -31,11 +100,15 @@
     "Run the PEP8 sweep listed under qe-code-001 - keyword spacing in the signature (714-734) and at 1839, the four stray semicolons (898, 943, 1461, 1536), the five-space indents at 1021 and 1023, `formattedList` (1030, 1061), the unspaced loop guards (824, 834-846, 1403), the missing spaces after commas, and the redundant parentheses in the eleven `if (...)` conditions",
     "Delete the commented-out code that shadows the live code throughout both cells - 731, 755, 853, 886-887, 916-918, 936, 979-981, 999-1003, 1060-1070, 1412, 1451-1452, 1473-1475, 1503-1505, 1528-1529, 1555 - and drop the unused `Vl, Vh, kbot, ktop, bbot, btop, w10, w20, 𝜃10, 𝜃20` reloads at 1089-1098 and 1145-1154, which no line of either method reads",
     "Plot $d^e(k,b;\\epsilon)$ and $d^b(k,b;\\epsilon)$ from 267-274 against $\\epsilon$ with $\\epsilon^*$ marked, add a 2D slice $V(k^*,b)$ to each of the five 3D surfaces so the \"is the red dot at the top?\" question is answered without reading a fixed-camera projection, and factor the five pasted plotly blocks (1251, 1614, 1666, 1726, 1756) into one function",
-    "Fix the mechanical items and the typos: `qe-fig-003` \u00d79 (1866-1926) and `qe-fig-008` \u00d713, the two `figsize=` at 1864 and 1909, the two `{\\mathcal N}` at 201 and 207 (qe-math-011, proposed), the H4 at 1278, the 41 double spaces, and \"equlibrium\" (74), \"Clemente\" for Clementi (79, cf. 39), \"infinitesmimal\" (149), \"asuming\" (207), \"intertermporal\" (1333), \"descibed\" (1312), \"would want o *decrease*\" (1694), \"`BCG_incomplete markets`\" for `BCG_incomplete_markets` (1197) and \"$(k,b) = (K, B)$ well as\" (1798)"
+    "Fix the mechanical items and the typos: `qe-fig-003` ×9 (1866-1926) and `qe-fig-008` ×13, the two `figsize=` at 1864 and 1909, the two `{\\mathcal N}` at 201 and 207 (qe-math-011, proposed), the H4 at 1278, the 41 double spaces, and \"equlibrium\" (74), \"Clemente\" for Clementi (79, cf. 39), \"infinitesmimal\" (149), \"asuming\" (207), \"intertermporal\" (1333), \"descibed\" (1312), \"would want o *decrease*\" (1694), \"`BCG_incomplete markets`\" for `BCG_incomplete_markets` (1197) and \"$(k,b) = (K, B)$ well as\" (1798)"
   ],
   "scanner_doubts": [
-    "BCG_incomplete_mkts.md:353,354,365,366,375,376,391,392,445,446,458,459,521,580,592,604,637,643,1805,1806 - qe-math-002 is reported with count 46, and all 46 are false positives. The file contains no `\\top`, no `^T` and no matrix transpose of any kind; `grep -o '\\^\\\\prime' | wc -l` returns exactly 46, and every one is a derivative of the utility function, `u^\\prime(c^i_0)`, `u^\\prime(C^1_1(\\epsilon))`. The cause is in `check_math_002` (tools/qestyle_rules.py:401): the apostrophe branch carefully excludes a derivative applied to an argument with `'(?!\\s*\\()`, but the `\\prime` branch is the bare `lprime = re.compile(r\"\\^\\{?\\\\prime\\}?\")` with no such guard, so `u^\\prime(` is counted as a transpose while the equivalent `u'(` at 485, 490, 494 and 498 is correctly ignored. Adding the same `(?!\\s*\\()` lookahead to `lprime` fixes it. This one detector gap sets the Math score to 3.5/10 and is what puts the lecture in the HIGH bucket - `qe-math-011` \u00d72 is the only other math finding",
+    "BCG_incomplete_mkts.md:353,354,365,366,375,376,391,392,445,446,458,459,521,580,592,604,637,643,1805,1806 - qe-math-002 is reported with count 46, and all 46 are false positives. The file contains no `\\top`, no `^T` and no matrix transpose of any kind; `grep -o '\\^\\\\prime' | wc -l` returns exactly 46, and every one is a derivative of the utility function, `u^\\prime(c^i_0)`, `u^\\prime(C^1_1(\\epsilon))`. The cause is in `check_math_002` (tools/qestyle_rules.py:401): the apostrophe branch carefully excludes a derivative applied to an argument with `'(?!\\s*\\()`, but the `\\prime` branch is the bare `lprime = re.compile(r\"\\^\\{?\\\\prime\\}?\")` with no such guard, so `u^\\prime(` is counted as a transpose while the equivalent `u'(` at 485, 490, 494 and 498 is correctly ignored. Adding the same `(?!\\s*\\()` lookahead to `lprime` fixes it. This one detector gap sets the Math score to 3.5/10 and is what puts the lecture in the HIGH bucket - `qe-math-011` ×2 is the only other math finding",
     "BCG_incomplete_mkts.md:1270,1633,1685,1745,1775 - qe-fig-003 is reported with count 9, all matplotlib `.set_title` calls in the last two cells. The five plotly figures each carry `fig.update_layout(title='Equilibrium firm valuation for the grid of (k,b)')` at those five lines, which is an embedded figure title of exactly the kind the rule forbids, and `check_fig_003`'s pattern (`\\.(?:set_title|suptitle)`, `plt\\.title`, `\\.set\\(...title=`, `\\.title\\.set_text`) does not reach it. The same cells set axis labels through `xaxis_title='x - Capital k'`, `yaxis_title='y - Debt b'`, `zaxis_title='z - Firm Value V'` (1262-1264, 1625-1627, 1677-1679, 1737-1739, 1767-1769), which are capitalised and prefixed with the axis letter but are invisible to `check_fig_006`, whose pattern only matches `set_xlabel`/`set_ylabel`/`plt.xlabel`. Adding `\\w*title\\s*=` inside a plotly `update_layout` and `[xyz]axis_title\\s*=` to the two patterns would pick both up; the plotly surface at 1770 also mislabels the bond price axis as `'z - Bond price q'`",
     "BCG_incomplete_mkts.md:1 - qe-fig-010 is reported with count 1 at line 1, which reads as a file-level flag rather than a located finding. The lecture does handle the LaTeX problem, just not with the `{only} latex` directive: every plotly figure is rasterised in-cell with `Image(fig.to_image(format=\"png\", engine=\"kaleido\"))` and `fig.show()` is left commented out (1272-1275, 1636-1639, 1687-1690, 1748-1751, 1778-1781). Worth deciding whether that counts as compliance before a contributor is asked to add a directive that would double the figures"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "c6a282bbde7eb826d7359307ceffeda434baf9a5"
+  }
 }

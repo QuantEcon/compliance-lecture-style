@@ -10,5 +10,9 @@
     "Consider dropping the `jupytext` and `kernelspec` front matter (1-10): the page has no code cells, so the declared Python 3 kernel is never used and the file is still converted to an executable notebook at build time",
     "Add the missing newline at end of file: `lecture-python-intro`, `lecture-python.myst` and `lecture-python-advanced.myst` all carry a byte-identical `zreferences.md`, and this copy differs from them in exactly that one character"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "ec24a3e19c9e9da8e21cac3ff4717a9a92fd3095"
+  }
 }

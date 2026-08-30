@@ -2,16 +2,54 @@
   "series": "lecture-python.myst",
   "lecture": "lq_permanent_income",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [383, 317, 300],
-     "detail": "line 383 introduces $\\Sigma$ inside the Kalman-gain formula and never says what it is - the steady-state conditional variance of the permanent component - so the reader is handed a closed form with an undefined symbol in it, and the sentence at 377 that invokes 'the Kalman filter' carries no {doc} pointer to the Kalman lecture where it is derived; the 'Debt dynamics' section at 313-317 derives $b_{t+1}-b_t = \\check{G}(I-\\beta\\check{A})^{-1}(\\check{A}-I)z_t$ as if it were new, although the same law is already the second line of representation {eq}`eq:rep1` at 217, and neither place points at the other; and item 4 of the numbered list at 295 breaks out of its own list to carry an unindented display at 300-302, so the list ends mid-item"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [526, 682, 720],
-     "detail": "three sentences run past 40 words and each carries two or three separate stipulations: line 526 sets an initial condition, a shock date, two alternative shock vectors and a no-further-shocks assumption in one breath (45 words); line 682 recalls a result, names its coefficient and states what that coefficient depends on (40 words); line 720 states a limit, its consequence for $K$, the consumer's inference and the comparison with the full-information model (42 words). The rest of the lecture keeps to one short claim per paragraph, so these stand out"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [413],
-     "detail": "lines 413-419 make the sharpest empirical point in the lecture - the first difference of income is an MA(1) while the first difference of consumption is IID - and show nothing. The figure at 464 plots only the consumption response, so the contrast that motivates the Muth example (income surprises are partly reversed, consumption changes are not) is left entirely to the algebra"},
-    {"rule": "qe-code-001", "count": 4, "lines": [449, 459, 461, 592],
-     "detail": "arithmetic inside f-strings drops the spaces the same expressions carry in ordinary statements: `{1-β:.4f}` (449), `β*(1-K)` (459, 461) and `(1-β)*σ2` (592), against `(1 - β * (1 - K))` at 476 and `(1 - β) * M @ C_check` at 441. The `**` exponentiations at 454 and 704 are correctly left unspaced"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [360, 606],
-     "detail": "line 360 bolds **zero net saving** as emphasis in the middle of a result statement (the neighbouring emphasis on the same line, *one-for-one*, is correctly italic); line 606 re-bolds **cointegration** in the exercise preamble although the term was already defined at 295, so the bold no longer marks a definition"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        383,
+        317,
+        300
+      ],
+      "detail": "line 383 introduces $\\Sigma$ inside the Kalman-gain formula and never says what it is - the steady-state conditional variance of the permanent component - so the reader is handed a closed form with an undefined symbol in it, and the sentence at 377 that invokes 'the Kalman filter' carries no {doc} pointer to the Kalman lecture where it is derived; the 'Debt dynamics' section at 313-317 derives $b_{t+1}-b_t = \\check{G}(I-\\beta\\check{A})^{-1}(\\check{A}-I)z_t$ as if it were new, although the same law is already the second line of representation {eq}`eq:rep1` at 217, and neither place points at the other; and item 4 of the numbered list at 295 breaks out of its own list to carry an unindented display at 300-302, so the list ends mid-item"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        526,
+        682,
+        720
+      ],
+      "detail": "three sentences run past 40 words and each carries two or three separate stipulations: line 526 sets an initial condition, a shock date, two alternative shock vectors and a no-further-shocks assumption in one breath (45 words); line 682 recalls a result, names its coefficient and states what that coefficient depends on (40 words); line 720 states a limit, its consequence for $K$, the consumer's inference and the comparison with the full-information model (42 words). The rest of the lecture keeps to one short claim per paragraph, so these stand out"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        413
+      ],
+      "detail": "lines 413-419 make the sharpest empirical point in the lecture - the first difference of income is an MA(1) while the first difference of consumption is IID - and show nothing. The figure at 464 plots only the consumption response, so the contrast that motivates the Muth example (income surprises are partly reversed, consumption changes are not) is left entirely to the algebra"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        449,
+        459,
+        461,
+        592
+      ],
+      "detail": "arithmetic inside f-strings drops the spaces the same expressions carry in ordinary statements: `{1-β:.4f}` (449), `β*(1-K)` (459, 461) and `(1-β)*σ2` (592), against `(1 - β * (1 - K))` at 476 and `(1 - β) * M @ C_check` at 441. The `**` exponentiations at 454 and 704 are correctly left unspaced"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        360,
+        606
+      ],
+      "detail": "line 360 bolds **zero net saving** as emphasis in the middle of a result statement (the neighbouring emphasis on the same line, *one-for-one*, is correctly italic); line 606 re-bolds **cointegration** in the exercise preamble although the term was already defined at 295, so the bold no longer marks a definition"
+    }
   ],
   "strengths": [
     "The four-item numbered summary of representation {eq}`eq:sprob16` at 283-304 is not decorative: each item is discharged later - the state claim by the representation itself, the random-walk claim by {eq}`eq:sprob13`, the box impulse response by the figure at 464, and the cointegration claim by exercise 2",
@@ -29,5 +67,9 @@
     "Remove the two `set_title` calls at 488 and 497 - the cell already carries a mystnb caption, so the title is duplicated inside the image (qe-fig-003, 2 occurrences)",
     "Split the three long sentences at 526, 682, 720; fix the double spaces at 166, 167, 266 (qe-writing-008, 3 occurrences); space the f-string arithmetic at 449, 459, 461, 592; and cite Muth at 374, which is the one named model in the lecture with no reference"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "5e1d139fa188c2c2b590371564d27165ba7b4144"
+  }
 }

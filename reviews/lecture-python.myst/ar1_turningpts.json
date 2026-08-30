@@ -2,18 +2,64 @@
   "series": "lecture-python.myst",
   "lecture": "ar1_turningpts",
   "judgment": [
-    {"rule": "qe-code-001", "count": 4, "lines": [204, 315, 545, 659],
-     "detail": "the code cells carry PEP8 whitespace problems on four distinct patterns: 29 lines have trailing whitespace (204, 210, 213, 247, 257, 269, 293, 299, 303, 311, 534, 542, 547, 550, 552, 559, 561, 569, 571, 572, 585, 594, 659, 662, 668, 670, 731, 744, 746); ten closing brackets are indented to the continuation column rather than to the opening line or its indent (315, 322, 325, 329, 541, 546, 551, 587, 702, 710); five lines exceed 79 characters (324, 540, 545, 550, 560); and the tuple unpacking at 659-661 and 731-733 under-indents its continuation line relative to the open paren"},
-    {"rule": "qe-math-009", "count": 2, "lines": [92, 98],
-     "detail": "`{\\mathcal N}` is used for the normal distribution at 92 and 98 - the only decorated symbols in the file - where the sibling lecture {doc}`ar1_bayes`, modelling exactly the same process, writes a plain `N`; the calligraphic form buys nothing here and makes the two lectures disagree on notation for the same object"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [117, 383, 515, 760],
-     "detail": "line 117 (\"Predictive distribution {eq}`ar1-tp-eq3` assumes that parameters $(\\rho,\\sigma)$ are known\") restates line 101-102 (\"The predictive distribution {eq}`ar1-tp-eq3` assumes that the parameters $\\rho, \\sigma$ are known\") almost word for word, sixteen lines later; line 383 opens \"By Wecker's definition, period $t$ is a turning point\" with no stated hypothesis, so the clause asserts something unconditionally that is only true under the case at 376; the second sentence of 515 runs to 40 words covering both columns of the trace figure; line 760 is a 37-word sentence whose object is tangled (\"we plot both the original Wecker method and the extended method with parameter values drawn from the posterior together\")"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [374],
-     "detail": "the whole of \"Predictive Distributions of Path Properties\" (357-433) defines five path statistics - $Z_t$, $W_t$, $M_t$, $T_t$, $P_t$ - purely as chains of inequalities between consecutive $Y$ values, i.e. purely as *shapes* of a sample path, and there is no figure; a single simulated path with a recession, a severe recession and a positive and a negative turn marked on it would make all five definitions readable at a glance, and the lecture already has the machinery to draw it"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [355, 447],
-     "detail": "line 355 is a one-line tangent to an unrelated lecture (\"the coverage intervals have shapes like those described in {doc}`perm_income_cons`\"), with no explanation of the connection and no closing period, dropped between a figure and a new H2; and the algorithm stated at 435-449 does not describe the code that follows - it asks for $W_t(\\omega_i), W_{t+1}(\\omega_i), \\dots, W_{t+N}$ per path and treats each date's set as a separate predictive distribution, whereas `compute_path_statistics` (529-588) returns one scalar per path (the *first* occurrence), and nothing bridges the two"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [365, 385, 391],
-     "detail": "the same term is set in italic in one place and bold in another: *time until the next turning point* is italic at 365 and 371 but bold at 385; *turning point* is italic at 391 but bold at 402 and 367. In the other direction, *stopping time* at 385 is a term being defined and is set in italic where the rule asks for bold"}
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        204,
+        315,
+        545,
+        659
+      ],
+      "detail": "the code cells carry PEP8 whitespace problems on four distinct patterns: 29 lines have trailing whitespace (204, 210, 213, 247, 257, 269, 293, 299, 303, 311, 534, 542, 547, 550, 552, 559, 561, 569, 571, 572, 585, 594, 659, 662, 668, 670, 731, 744, 746); ten closing brackets are indented to the continuation column rather than to the opening line or its indent (315, 322, 325, 329, 541, 546, 551, 587, 702, 710); five lines exceed 79 characters (324, 540, 545, 550, 560); and the tuple unpacking at 659-661 and 731-733 under-indents its continuation line relative to the open paren"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        92,
+        98
+      ],
+      "detail": "`{\\mathcal N}` is used for the normal distribution at 92 and 98 - the only decorated symbols in the file - where the sibling lecture {doc}`ar1_bayes`, modelling exactly the same process, writes a plain `N`; the calligraphic form buys nothing here and makes the two lectures disagree on notation for the same object"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        117,
+        383,
+        515,
+        760
+      ],
+      "detail": "line 117 (\"Predictive distribution {eq}`ar1-tp-eq3` assumes that parameters $(\\rho,\\sigma)$ are known\") restates line 101-102 (\"The predictive distribution {eq}`ar1-tp-eq3` assumes that the parameters $\\rho, \\sigma$ are known\") almost word for word, sixteen lines later; line 383 opens \"By Wecker's definition, period $t$ is a turning point\" with no stated hypothesis, so the clause asserts something unconditionally that is only true under the case at 376; the second sentence of 515 runs to 40 words covering both columns of the trace figure; line 760 is a 37-word sentence whose object is tangled (\"we plot both the original Wecker method and the extended method with parameter values drawn from the posterior together\")"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        374
+      ],
+      "detail": "the whole of \"Predictive Distributions of Path Properties\" (357-433) defines five path statistics - $Z_t$, $W_t$, $M_t$, $T_t$, $P_t$ - purely as chains of inequalities between consecutive $Y$ values, i.e. purely as *shapes* of a sample path, and there is no figure; a single simulated path with a recession, a severe recession and a positive and a negative turn marked on it would make all five definitions readable at a glance, and the lecture already has the machinery to draw it"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        355,
+        447
+      ],
+      "detail": "line 355 is a one-line tangent to an unrelated lecture (\"the coverage intervals have shapes like those described in {doc}`perm_income_cons`\"), with no explanation of the connection and no closing period, dropped between a figure and a new H2; and the algorithm stated at 435-449 does not describe the code that follows - it asks for $W_t(\\omega_i), W_{t+1}(\\omega_i), \\dots, W_{t+N}$ per path and treats each date's set as a separate predictive distribution, whereas `compute_path_statistics` (529-588) returns one scalar per path (the *first* occurrence), and nothing bridges the two"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        365,
+        385,
+        391
+      ],
+      "detail": "the same term is set in italic in one place and bold in another: *time until the next turning point* is italic at 365 and 371 but bold at 385; *turning point* is italic at 391 but bold at 402 and 367. In the other direction, *stopping time* at 385 is a term being defined and is set in italic where the rule asks for bold"
+    }
   ],
   "strengths": [
     "Four of the five figures already carry `mystnb: figure: caption/name` metadata (336, 462, 623, 692, 762) - the only lecture in this batch that does this by default rather than as an exception",
@@ -33,5 +79,9 @@
   ],
   "scanner_doubts": [
     "ar1_turningpts.md - Code scores 10/10 with no mechanical violations, but the file has 29 code lines with trailing whitespace and five code lines over 79 characters. If `qe-writing-008` (excessive whitespace) deliberately exempts code cells, that is correct per the rule text; but it means trailing whitespace inside code is currently invisible to every check, mechanical or judged, and only surfaces here under qe-code-001"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "b21e015d4b8762251ce643387325427800cc3714"
+  }
 }

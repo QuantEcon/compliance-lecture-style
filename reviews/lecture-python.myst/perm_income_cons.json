@@ -2,18 +2,77 @@
   "series": "lecture-python.myst",
   "lecture": "perm_income_cons",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 6, "lines": [341, 399, 482, 500, 659, 678],
-     "detail": "659 is broken: \"So at time $0$ we have $c_0 = (1-\\beta) E_0 \\sum_{t=0}^\\infty \\beta^j y_{t}$\" - the sum runs over $t$ but the discount factor is $\\beta^j$ and the summand is $y_t$, so the index does not close. It is meant to be the $t=0$ instance of {eq}`old12` six lines above, which has $\\sum_{j=0}^\\infty \\beta^j y_{t+j}$ correctly. 341 renames a matrix silently: the algebra writes the observation equation $y_t = U z_t$ with $U = [0\\ 1\\ 0]$ (131, 198, 423-425) and the code calls the same object `G` (341, 433-434, 445), with no sentence connecting the two. 482 says the second economy draws initial income \"from the invariant distribution of financial income\" - it is *non*financial income, as 743 says correctly, and the distinction between the two is the lecture's subject. 500 promises \"the population distribution that we extract from the `LinearStateSpace` instance `LSS`\": there is no `LSS`, the cell at 505 builds a `lss`, and that object is then never used, because `income_consumption_debt_series` constructs its own instance at 525 - so 505 is a dead cell described by a sentence naming a variable that does not exist. 678 says \"The following figure plots realizations of the left side of {eq}`old12`\" and then four paragraphs intervene, including the figure's own interpretation at 685-689, before the plotting function appears at 701. And 399-400 is ungrammatical with a dangling pronoun: \"We'll save the implied optimal policy function soon compare them with what we get by employing an alternative solution method\""},
-    {"rule": "qe-writing-002", "count": 5, "lines": [51, 210, 664, 666, 745],
-     "detail": "745-755 spends five consecutive one-sentence paragraphs on one fact: \"This rigs a closed economy in which people are borrowing and lending with each other at a gross risk-free interest rate of $R=\\beta^{-1}$\" / \"Across the group of people being analyzed, risk-free loans are in zero excess supply\" / \"We have arranged primitives so that $R = \\beta^{-1}$ clears the market for risk-free loans at zero aggregate excess supply\" / \"So the risk-free loans are being made from one person to another within our closed set of agents\" / \"There is no need for foreigners to lend to our group\". 664-674 does the same for the debt build-up, with 670-674 restating 664-666. 51-57 states the Barro isomorphism in four sentences, and then 137-163 restates the whole thing as its own subsection, with 161 repeating 55. 210-212 asks a question and answers it with nothing: \"Why solve a model in two distinct ways? / Because by doing so we gather insights about the structure of the model\" - the real answer follows at 214-219 and would stand on its own. And 666 changes pronoun mid-sentence: \"he or she incurs so much debt that eventually, in the stochastic steady state, he consumes less each period than his nonfinancial income\""},
-    {"rule": "qe-code-001", "count": 6, "lines": [368, 404, 553, 556, 560, 598],
-     "detail": "368, 379, 380, 548 and 549 omit the space after a comma - `np.zeros((3,1))`, `.reshape(4,1)` twice, `μ_y[1,0]`, `μ_x[3,0]` (E231) - while the same cells write `np.zeros((3, 3))` and `Σ_y[1, 1]` correctly two lines away. 556 and 583 both write `T =  bsim.shape[1]` with two spaces after the operator (E222). 553 and 580 begin a top-level `def` one blank line after the previous function's `return` rather than two (E302). 598-599 leaves two blank lines inside a function body (E303). 560 assigns `xvals = np.arange(T)` in `consumption_income_debt_figure` and never uses it, and 593 assigns `dmean = np.mean(debt_mean)` and never uses it, while its partner `cmean` at 586 is used at 610 (F841 twice). 404 writes the inline comment as `#  Form closed loop system` with two spaces after the hash (E262). And 334 names the AR coefficients `ρ1, ρ2` without underscores, against $\\rho_1,\\rho_2$ in the algebra at 170 and against the underscore convention the rest of the file keeps (`μ_z`, `Σ_z`, `β_LQ`, `A_LSS`, `C_LSS`)"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [137, 568, 646, 776],
-     "detail": "the six figures come from three functions called twice each, and the titles are hardcoded inside those functions - \"Nonfinancial Income, Consumption, and Debt\" (568), \"Consumption/Debt over time\" (609), \"Cointegration of Assets and Consumption\" (711) - so the transient economy's figures (630, 636, 717) and the Bewley economy's figures (764, 770, 789) are pixel-for-pixel identically labelled and nothing on the page says which is which. That matters because 776-784 asks the reader to compare them (\"Unlike before, the average level of debt stays at zero\") across 150 lines of intervening text, with no side-by-side panel and no marker on either figure. 646 and 674 describe the transient in words - \"$y_t$ starts far below its stationary mean $\\mu_{y,\\infty}$ and rises early in each simulation\" - without drawing $\\mu_{y,\\infty}$ on the income panel, although `μ_y` is already computed at 347. 137-163 presents a four-way variable dictionary between two models as four long bulleted sentences where a two-column table is the natural form and is the section's entire content. And the file has no admonition at all, though 303-314 introduces a deliberate approximation - a penalty $\\epsilon$ standing in for the no-Ponzi condition, \"a (hopefully) small approximation error\" - which is exactly what a `{note}` is for"},
-    {"rule": "qe-math-009", "count": 4, "lines": [247, 273, 653, 729],
-     "detail": "247 writes the trace as `{\\rm trace}(P \\tilde C \\tilde C')` where `\\operatorname{tr}` or `\\mathrm{tr}` is the standard form and shorter. 273 defines $U_\\gamma := \\begin{bmatrix}\\gamma & 0 & 0\\end{bmatrix}$, whose subscript implies a family of $U$'s that does not exist - $U = [0\\ 1\\ 0]$ selects $y_t$ from the state, $U_\\gamma = [\\gamma\\ 0\\ 0]$ selects the constant, so the two vectors have nothing in common but their shape. $R$ carries two meanings: the LQ criterion matrix at 228, 298, 301 and 310, and the gross interest rate at 729, 747 and 751 - and even the interest-rate meaning is written two ways, \"$R = r+1$\" (729) and \"$R = \\beta^{-1}$\" (747, 751), with the code adding a third name, `RLQ` (373), to disambiguate what the prose does not. And the annuity value $(1-\\beta) E_t \\sum_{j=0}^\\infty \\beta^j y_{t+j}$ is spelled out in full four times (653, 659, 683, 687) and described in words twice more (662, 681-683) instead of being given a name once - naming it would shorten the whole 648-699 argument"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [648, 693, 724, 736],
-     "detail": "the file bolds only two terms in 791 lines, and they are the same term spelled two ways: **co-integrating relationship** at 648 and **cointegrating residual** at 679, with \"cointegration\" unhyphenated again at 676, 711 and 786. Meanwhile emphasis is carried by double quotes rather than italic in six places - debt \"head north\" (724), a \"small open economy\" (728), \"foreigner lenders\" (736), a \"poor man's Bewley model\" (738), the section title \"Borrowers and Lenders\" (721), and \"stochastic steady state\" is left unmarked at 666. 693 italicises both halves of a contrast, \"the cointegrating residual is *asymptotically* covariance stationary, not *covariance stationary*\", so the reader cannot tell which italic is the emphasis and which is the term. The four *ex-ante* italics (481, 483, 670, 780) are the file's only correct use of the marker"}
+    {
+      "rule": "qe-writing-003",
+      "count": 6,
+      "lines": [
+        341,
+        399,
+        482,
+        500,
+        659,
+        678
+      ],
+      "detail": "659 is broken: \"So at time $0$ we have $c_0 = (1-\\beta) E_0 \\sum_{t=0}^\\infty \\beta^j y_{t}$\" - the sum runs over $t$ but the discount factor is $\\beta^j$ and the summand is $y_t$, so the index does not close. It is meant to be the $t=0$ instance of {eq}`old12` six lines above, which has $\\sum_{j=0}^\\infty \\beta^j y_{t+j}$ correctly. 341 renames a matrix silently: the algebra writes the observation equation $y_t = U z_t$ with $U = [0\\ 1\\ 0]$ (131, 198, 423-425) and the code calls the same object `G` (341, 433-434, 445), with no sentence connecting the two. 482 says the second economy draws initial income \"from the invariant distribution of financial income\" - it is *non*financial income, as 743 says correctly, and the distinction between the two is the lecture's subject. 500 promises \"the population distribution that we extract from the `LinearStateSpace` instance `LSS`\": there is no `LSS`, the cell at 505 builds a `lss`, and that object is then never used, because `income_consumption_debt_series` constructs its own instance at 525 - so 505 is a dead cell described by a sentence naming a variable that does not exist. 678 says \"The following figure plots realizations of the left side of {eq}`old12`\" and then four paragraphs intervene, including the figure's own interpretation at 685-689, before the plotting function appears at 701. And 399-400 is ungrammatical with a dangling pronoun: \"We'll save the implied optimal policy function soon compare them with what we get by employing an alternative solution method\""
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        51,
+        210,
+        664,
+        666,
+        745
+      ],
+      "detail": "745-755 spends five consecutive one-sentence paragraphs on one fact: \"This rigs a closed economy in which people are borrowing and lending with each other at a gross risk-free interest rate of $R=\\beta^{-1}$\" / \"Across the group of people being analyzed, risk-free loans are in zero excess supply\" / \"We have arranged primitives so that $R = \\beta^{-1}$ clears the market for risk-free loans at zero aggregate excess supply\" / \"So the risk-free loans are being made from one person to another within our closed set of agents\" / \"There is no need for foreigners to lend to our group\". 664-674 does the same for the debt build-up, with 670-674 restating 664-666. 51-57 states the Barro isomorphism in four sentences, and then 137-163 restates the whole thing as its own subsection, with 161 repeating 55. 210-212 asks a question and answers it with nothing: \"Why solve a model in two distinct ways? / Because by doing so we gather insights about the structure of the model\" - the real answer follows at 214-219 and would stand on its own. And 666 changes pronoun mid-sentence: \"he or she incurs so much debt that eventually, in the stochastic steady state, he consumes less each period than his nonfinancial income\""
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        368,
+        404,
+        553,
+        556,
+        560,
+        598
+      ],
+      "detail": "368, 379, 380, 548 and 549 omit the space after a comma - `np.zeros((3,1))`, `.reshape(4,1)` twice, `μ_y[1,0]`, `μ_x[3,0]` (E231) - while the same cells write `np.zeros((3, 3))` and `Σ_y[1, 1]` correctly two lines away. 556 and 583 both write `T =  bsim.shape[1]` with two spaces after the operator (E222). 553 and 580 begin a top-level `def` one blank line after the previous function's `return` rather than two (E302). 598-599 leaves two blank lines inside a function body (E303). 560 assigns `xvals = np.arange(T)` in `consumption_income_debt_figure` and never uses it, and 593 assigns `dmean = np.mean(debt_mean)` and never uses it, while its partner `cmean` at 586 is used at 610 (F841 twice). 404 writes the inline comment as `#  Form closed loop system` with two spaces after the hash (E262). And 334 names the AR coefficients `ρ1, ρ2` without underscores, against $\\rho_1,\\rho_2$ in the algebra at 170 and against the underscore convention the rest of the file keeps (`μ_z`, `Σ_z`, `β_LQ`, `A_LSS`, `C_LSS`)"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        137,
+        568,
+        646,
+        776
+      ],
+      "detail": "the six figures come from three functions called twice each, and the titles are hardcoded inside those functions - \"Nonfinancial Income, Consumption, and Debt\" (568), \"Consumption/Debt over time\" (609), \"Cointegration of Assets and Consumption\" (711) - so the transient economy's figures (630, 636, 717) and the Bewley economy's figures (764, 770, 789) are pixel-for-pixel identically labelled and nothing on the page says which is which. That matters because 776-784 asks the reader to compare them (\"Unlike before, the average level of debt stays at zero\") across 150 lines of intervening text, with no side-by-side panel and no marker on either figure. 646 and 674 describe the transient in words - \"$y_t$ starts far below its stationary mean $\\mu_{y,\\infty}$ and rises early in each simulation\" - without drawing $\\mu_{y,\\infty}$ on the income panel, although `μ_y` is already computed at 347. 137-163 presents a four-way variable dictionary between two models as four long bulleted sentences where a two-column table is the natural form and is the section's entire content. And the file has no admonition at all, though 303-314 introduces a deliberate approximation - a penalty $\\epsilon$ standing in for the no-Ponzi condition, \"a (hopefully) small approximation error\" - which is exactly what a `{note}` is for"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        247,
+        273,
+        653,
+        729
+      ],
+      "detail": "247 writes the trace as `{\\rm trace}(P \\tilde C \\tilde C')` where `\\operatorname{tr}` or `\\mathrm{tr}` is the standard form and shorter. 273 defines $U_\\gamma := \\begin{bmatrix}\\gamma & 0 & 0\\end{bmatrix}$, whose subscript implies a family of $U$'s that does not exist - $U = [0\\ 1\\ 0]$ selects $y_t$ from the state, $U_\\gamma = [\\gamma\\ 0\\ 0]$ selects the constant, so the two vectors have nothing in common but their shape. $R$ carries two meanings: the LQ criterion matrix at 228, 298, 301 and 310, and the gross interest rate at 729, 747 and 751 - and even the interest-rate meaning is written two ways, \"$R = r+1$\" (729) and \"$R = \\beta^{-1}$\" (747, 751), with the code adding a third name, `RLQ` (373), to disambiguate what the prose does not. And the annuity value $(1-\\beta) E_t \\sum_{j=0}^\\infty \\beta^j y_{t+j}$ is spelled out in full four times (653, 659, 683, 687) and described in words twice more (662, 681-683) instead of being given a name once - naming it would shorten the whole 648-699 argument"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        648,
+        693,
+        724,
+        736
+      ],
+      "detail": "the file bolds only two terms in 791 lines, and they are the same term spelled two ways: **co-integrating relationship** at 648 and **cointegrating residual** at 679, with \"cointegration\" unhyphenated again at 676, 711 and 786. Meanwhile emphasis is carried by double quotes rather than italic in six places - debt \"head north\" (724), a \"small open economy\" (728), \"foreigner lenders\" (736), a \"poor man's Bewley model\" (738), the section title \"Borrowers and Lenders\" (721), and \"stochastic steady state\" is left unmarked at 666. 693 italicises both halves of a contrast, \"the cointegrating residual is *asymptotically* covariance stationary, not *covariance stationary*\", so the reader cannot tell which italic is the emphasis and which is the term. The four *ex-ante* italics (481, 483, 670, 780) are the file's only correct use of the marker"
+    }
   ],
   "strengths": [
     "The lecture solves one model twice and then checks the two answers against each other in code rather than asserting agreement: 457 prints `ABF - A_LSS`, the closed-loop transition matrix from the LQ solution minus the one assembled from the difference-equation formulas at 433-447, and 463 prints `c_pol` beside `-F`, so the claim at 466 is visible in the output",
@@ -36,5 +95,9 @@
   ],
   "scanner_doubts": [
     "perm_income_cons.md:228,240 - qe-math-002 is reported x8 on lines 244, 247, 249 and 298, but two more transposes on lines 228 and 240 are missed, and the reason is the position of the apostrophe relative to the subscript. Line 228 is $\\sum_{t=0}^\\infty \\beta^t \\{x'_t R x_t + u'_t Q u_t\\}$ and line 240 is $\\mathbb E w_t w'_t = I$ - four apostrophe transposes written as `x'_t`, `u'_t`, `w'_t`, i.e. prime *before* the subscript. Line 298 writes the identical quadratic form as `x_t' R x_t + u_t' Q u_t`, prime *after* the subscript, and that one is counted. In `tools/qestyle_rules.py` the `prime` pattern requires the subscript to precede the apostrophe (`[A-Z](?:_\\{...\\}|_.)?'` or `[A-Za-z](?:_\\{...\\}|_.)'`), and `prime_vec` requires a following factor immediately after the apostrophe, which `_t` is not - so neither branch reaches `x'_t`. Adding an optional subscript *after* the apostrophe to the `prime_vec` lookahead (or a fourth branch `[a-z]'(?:_\\{[^}]*\\}|_[A-Za-z0-9])` gated on a following factor) would catch it. Both spellings appear 70 lines apart in this one file, which makes it easy to test; `lqcontrol`, `lagrangian_lqdp` and the other LQ lectures use the same `x'_t` form."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "612d06308110a010a7670f6ec5021ce38936ff12"
+  }
 }

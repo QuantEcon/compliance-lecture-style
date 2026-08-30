@@ -2,16 +2,60 @@
   "series": "lecture-dp",
   "lecture": "mccall_model",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 5, "lines": [150, 155, 952, 743, 202],
-     "detail": "150 ends in an orphaned fragment: 'More precisely, $v^*(w)$ denotes the total sum of expected discounted earnings when an agent always behaves in an optimal way. points in time.' - the last two words are the tail of a deleted clause, lower-cased, after a full stop. 155 repeats 152-153 and misspells twice while doing it: 152 already says 'Of course $v^*(w)$ is not trivial to calculate because we don't yet know what decisions are optimal and what aren't!', and 155 then says 'If we don't know what opimal choices are, it feels imposible to calculate $v^*(w)$'. 952-956 is a two-item numbered list numbered 1 and 3. 743-747 spends two sentences on a transition that needs none ('The discrete wage offer distribution used above is convenient for theory and computation, but many realistic distributions are continuous (i.e., have a density). / Fortunately, the theory changes little in our simple model when we shift to a continuous offer distribution.'). And 202-213 says the same thing four times in five short paragraphs - 'suppose for now that we do know $v^*$', 'Once we have this function in hand we can easily make optimal choices', 'All we have to do is select the maximal choice on the right-hand side of {eq}`odu_pv`', 'In other words, we make the best choice between stopping and continuing' - and then 218-219 says it a fifth time"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [739, 759, 257],
-     "detail": "739 promises a use for code that is never used: 'You can use this code to solve the exercise below', pointing at `compute_reservation_wage_two` (708-736), the whole point of the 'Take 2' section - but the solution at 1083-1183 builds its own machinery on the continuous model and says so ('Here's a solution using the continuous wage offer distribution with JAX', 1087), and `compute_reservation_wage_two` is called nowhere in the lecture or anywhere else in the series. Second, the continuous-distribution section reuses $q$ for a different measure on a different space: $q(w)$ is the wage PMF from 87 onwards, and 759 and 773 write $\\int v^*(s') q(s') ds'$, where $q$ is now the density of the standard normal *state* $s$ (784-785) - and 759 also applies $v^*$, defined on wages at 143-145, to a state, $v^*(s')$, where 772 correctly writes $w(s')$. Third, the two parallel sections are titled 'Computing the Optimal Policy: Take 1' (257) and 'Computing an Optimal Policy: Take 2' (612)"},
-    {"rule": "qe-code-001", "count": 6, "lines": [456, 453, 462, 391, 590, 1130],
-     "detail": "456-457, 552-553 and 710-711 write annotated defaults without spaces around the equals sign - `tol: float=1e-6`, `max_iter: int=500` (E252) - while 390-393 in the same file writes `c: float = 25` correctly. 453-458, 549-554 and 708-712 close the signature at an indent of 4, matching neither column 0 nor the 8-space argument indent (E124). There is trailing whitespace on eleven lines, six of them inside code cells: 391 (after `# discount factor`), 462, 464, 470, 557, 559, 571 (W291/W293), plus 162, 278, 947, 958 and 960 in the prose and in a math block. 590-595 shadows names already bound at module scope inside a nested loop - `for i, c in enumerate(c_vals): for j, β in enumerate(β_vals)` rebinds `c` and `β`, which 509 and 479 unpacked from the model - and warm-starts `v_init = v` from the previous grid point, so the contour at 597-607 depends on the iteration order. 1130 is 84 characters and 1155 is 82 (E501). And 459 uses a single-quoted one-line docstring where 968 and 1091 in the same file use triple quotes"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [597, 929, 490],
-     "detail": "the lecture draws the same contour plot twice - 597-607 for the discrete model and 858-875 for the continuous one - with identical titles ('reservation wage'), identical axis labels, identical `fontsize=13`/`16`, and 877 then says 'As with the discrete case, the reservation wage increases with both patience and unemployment compensation'. Neither figure has a name, so the comparison the sentence makes cannot be pointed at, and a reader scrolling back cannot tell the two apart. Second, the volatility section makes two claims and draws them in two separate single-line figures 100 lines apart (931-936 for the reservation wage, 1049-1054 for expected lifetime value), then 1057-1059 asserts the joint claim - 'despite workers setting higher reservation wages ... they achieve higher expected lifetime values' - which is precisely a two-panel figure. Third, the font handling is inconsistent across the lecture's eight figures: 530-533, 603-604, 869-870, 934-935 and 1052-1053 set `fontsize` at 11, 12, 13 and 16 by hand, while 376-377, 439-440 and 1179 use the defaults, so the figures do not read as one set"},
-    {"rule": "qe-math-009", "count": 2, "lines": [87, 425],
-     "detail": "$\\mathbb{W}$ is blackboard bold for a finite set of wage numbers (87, 145, 174, 221, 264, 644-674), which puts it in the same visual register as $\\mathbb{E}$ at 104 and $\\mathbb{R}^n$ at 291, 321, 343 - reserved by convention for the standard number systems and the expectation operator. A plain $W$ is not available because $W_t$ is the wage process (83), but $\\mathcal{W}$ or simply listing the set as at 264 would carry the same meaning with less decoration. Second, 425 writes Greek beta as the Unicode character inside inline math - '$v(i) = w(i) / (1 - β)$' - where every other display in the lecture writes `\\beta`; the same substitution appears in the axis labels at 604 and 870, `ax.set_ylabel(\"$β$\")`. This is the qe-math-001 hit, and the fix is one character"}
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        150,
+        155,
+        952,
+        743,
+        202
+      ],
+      "detail": "150 ends in an orphaned fragment: 'More precisely, $v^*(w)$ denotes the total sum of expected discounted earnings when an agent always behaves in an optimal way. points in time.' - the last two words are the tail of a deleted clause, lower-cased, after a full stop. 155 repeats 152-153 and misspells twice while doing it: 152 already says 'Of course $v^*(w)$ is not trivial to calculate because we don't yet know what decisions are optimal and what aren't!', and 155 then says 'If we don't know what opimal choices are, it feels imposible to calculate $v^*(w)$'. 952-956 is a two-item numbered list numbered 1 and 3. 743-747 spends two sentences on a transition that needs none ('The discrete wage offer distribution used above is convenient for theory and computation, but many realistic distributions are continuous (i.e., have a density). / Fortunately, the theory changes little in our simple model when we shift to a continuous offer distribution.'). And 202-213 says the same thing four times in five short paragraphs - 'suppose for now that we do know $v^*$', 'Once we have this function in hand we can easily make optimal choices', 'All we have to do is select the maximal choice on the right-hand side of {eq}`odu_pv`', 'In other words, we make the best choice between stopping and continuing' - and then 218-219 says it a fifth time"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        739,
+        759,
+        257
+      ],
+      "detail": "739 promises a use for code that is never used: 'You can use this code to solve the exercise below', pointing at `compute_reservation_wage_two` (708-736), the whole point of the 'Take 2' section - but the solution at 1083-1183 builds its own machinery on the continuous model and says so ('Here's a solution using the continuous wage offer distribution with JAX', 1087), and `compute_reservation_wage_two` is called nowhere in the lecture or anywhere else in the series. Second, the continuous-distribution section reuses $q$ for a different measure on a different space: $q(w)$ is the wage PMF from 87 onwards, and 759 and 773 write $\\int v^*(s') q(s') ds'$, where $q$ is now the density of the standard normal *state* $s$ (784-785) - and 759 also applies $v^*$, defined on wages at 143-145, to a state, $v^*(s')$, where 772 correctly writes $w(s')$. Third, the two parallel sections are titled 'Computing the Optimal Policy: Take 1' (257) and 'Computing an Optimal Policy: Take 2' (612)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        456,
+        453,
+        462,
+        391,
+        590,
+        1130
+      ],
+      "detail": "456-457, 552-553 and 710-711 write annotated defaults without spaces around the equals sign - `tol: float=1e-6`, `max_iter: int=500` (E252) - while 390-393 in the same file writes `c: float = 25` correctly. 453-458, 549-554 and 708-712 close the signature at an indent of 4, matching neither column 0 nor the 8-space argument indent (E124). There is trailing whitespace on eleven lines, six of them inside code cells: 391 (after `# discount factor`), 462, 464, 470, 557, 559, 571 (W291/W293), plus 162, 278, 947, 958 and 960 in the prose and in a math block. 590-595 shadows names already bound at module scope inside a nested loop - `for i, c in enumerate(c_vals): for j, β in enumerate(β_vals)` rebinds `c` and `β`, which 509 and 479 unpacked from the model - and warm-starts `v_init = v` from the previous grid point, so the contour at 597-607 depends on the iteration order. 1130 is 84 characters and 1155 is 82 (E501). And 459 uses a single-quoted one-line docstring where 968 and 1091 in the same file use triple quotes"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        597,
+        929,
+        490
+      ],
+      "detail": "the lecture draws the same contour plot twice - 597-607 for the discrete model and 858-875 for the continuous one - with identical titles ('reservation wage'), identical axis labels, identical `fontsize=13`/`16`, and 877 then says 'As with the discrete case, the reservation wage increases with both patience and unemployment compensation'. Neither figure has a name, so the comparison the sentence makes cannot be pointed at, and a reader scrolling back cannot tell the two apart. Second, the volatility section makes two claims and draws them in two separate single-line figures 100 lines apart (931-936 for the reservation wage, 1049-1054 for expected lifetime value), then 1057-1059 asserts the joint claim - 'despite workers setting higher reservation wages ... they achieve higher expected lifetime values' - which is precisely a two-panel figure. Third, the font handling is inconsistent across the lecture's eight figures: 530-533, 603-604, 869-870, 934-935 and 1052-1053 set `fontsize` at 11, 12, 13 and 16 by hand, while 376-377, 439-440 and 1179 use the defaults, so the figures do not read as one set"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        87,
+        425
+      ],
+      "detail": "$\\mathbb{W}$ is blackboard bold for a finite set of wage numbers (87, 145, 174, 221, 264, 644-674), which puts it in the same visual register as $\\mathbb{E}$ at 104 and $\\mathbb{R}^n$ at 291, 321, 343 - reserved by convention for the standard number systems and the expectation operator. A plain $W$ is not available because $W_t$ is the wage process (83), but $\\mathcal{W}$ or simply listing the set as at 264 would carry the same meaning with less decoration. Second, 425 writes Greek beta as the Unicode character inside inline math - '$v(i) = w(i) / (1 - β)$' - where every other display in the lecture writes `\\beta`; the same substitution appears in the axis labels at 604 and 870, `ax.set_ylabel(\"$β$\")`. This is the qe-math-001 hit, and the fix is one character"
+    }
   ],
   "strengths": [
     "The Bellman equation is motivated before it is written and then justified term by term: 126-131 frames dynamic programming as assign-values-then-deduce-actions and promises to do both, 135-160 builds up to $v^*$ while being honest that it cannot yet be computed, {eq}`odu_pv` appears at 164-172, and 179-197 then explains each side of the max separately, including the geometric-sum expansion $\\frac{w}{1-\\beta} = w + \\beta w + \\beta^2 w + \\cdots$ at 185 that makes the accept branch obvious",
@@ -37,5 +81,9 @@
   ],
   "scanner_doubts": [
     "mccall_model.md line 226 - qe-math-008 is reported with count 1 and it is a false positive. The math block at 225-231 reads `\\sigma(w) := \\mathbf{1}` on line 226 and `    \\left\\{` on line 227, i.e. an indicator function whose argument opens on the *next* source line. check_math_008 (tools/qestyle_rules.py:661-686) tests for exactly that shape with its `indicator` regex, but applies it only to `src[m.end():]` within a single span (line 674) - and the span for line 226 ends at the `\\mathbf{1}`, so the tail is empty, the indicator test fails, and the occurrence is counted as an unexplained ones vector. The sibling check for the same symbol already handles this: check_math_004 at 578-597 carries the comment 'The brace may sit on the next source line (``\\mathbf{1}`` then ``\\left\\{ ... \\right\\}``), so each span is matched against itself plus the following one', and line 591 does `nxt = spans[i + 1][1]`. Applying the same one-line lookahead to check_math_008 - probe the next span when the current tail is blank - and re-running over all five series at the pinned snapshot gives 7 -> 5 hits: the only two removed are `mccall_model.md` in `lecture-dp` (1 -> 0) and `mccall_model.md` in `lecture-python.myst` (1 -> 0), which are the two copies of this same file. Per series: lecture-python-intro 1 -> 1, lecture-python-programming 0 -> 0, lecture-python.myst 3 -> 2, lecture-python-advanced.myst 1 -> 1, lecture-dp 2 -> 1. I recommend the fix. It is small in effect but it is exact, it removes only hits where the symbol is provably an indicator, the shape it corrects is already documented and handled in the neighbouring check, and the residual risk is one-sided - a genuine ones vector immediately followed by a bracket on the next line would be missed, which is the same exposure check_math_004 already accepts. It is also worth noting that the hit's message ('no vector of ones explanation in the prose') would be wrong even if the occurrence were in scope: line 233 says 'Here $\\mathbf{1}\\{ P \\} = 1$ if statement $P$ is true and equals 0 otherwise', which is an explanation - just not one the prose test's four phrasings can match."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "df0b2d8c2b23991ab2f13d606c76375cc9e1d0d4"
+  }
 }

@@ -2,12 +2,40 @@
   "series": "lecture-python-intro",
   "lecture": "bivariate_dist",
   "judgment": [
-    {"rule": "qe-writing-002", "count": 11, "lines": [157, 161, 294, 296, 366, 382, 614, 616, 628, 630, 647],
-     "detail": "eleven single-sentence paragraphs run 35-44 words. The recurring mechanism is an em-dash clause bolted onto an already complete sentence: line 296 (44 words) states that neither marginal depends on rho, explains what correlation describes, then adds '--- the same lesson the discrete example taught us above'; lines 157, 161, 294, 366, 614, 616, 630 and 647 all follow the same three-clause shape. Each would read better as two paragraphs"},
-    {"rule": "qe-writing-003", "count": 1, "lines": [391],
-     "detail": "the note at lines 386-392 promises 'We will see an example of this below, in the discussion of the bivariate normal distribution' - an example of zero covariance without independence - but the bivariate normal discussion at lines 507-517 shows the opposite (for the bivariate normal, zero correlation IS equivalent to independence), and the counterexample at lines 552-620 is about normal marginals not implying joint normality, with a covariance that is not zero. The forward reference has no destination"},
-    {"rule": "qe-code-001", "count": 1, "lines": [337],
-     "detail": "the continuation line at 337 is indented 34 spaces where the visual-indent target is 33 (the column after `pd.DataFrame(` on line 336), so the second argument does not line up under the first"}
+    {
+      "rule": "qe-writing-002",
+      "count": 11,
+      "lines": [
+        157,
+        161,
+        294,
+        296,
+        366,
+        382,
+        614,
+        616,
+        628,
+        630,
+        647
+      ],
+      "detail": "eleven single-sentence paragraphs run 35-44 words. The recurring mechanism is an em-dash clause bolted onto an already complete sentence: line 296 (44 words) states that neither marginal depends on rho, explains what correlation describes, then adds '--- the same lesson the discrete example taught us above'; lines 157, 161, 294, 366, 614, 616, 630 and 647 all follow the same three-clause shape. Each would read better as two paragraphs"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 1,
+      "lines": [
+        391
+      ],
+      "detail": "the note at lines 386-392 promises 'We will see an example of this below, in the discussion of the bivariate normal distribution' - an example of zero covariance without independence - but the bivariate normal discussion at lines 507-517 shows the opposite (for the bivariate normal, zero correlation IS equivalent to independence), and the counterexample at lines 552-620 is about normal marginals not implying joint normality, with a covariance that is not zero. The forward reference has no destination"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 1,
+      "lines": [
+        337
+      ],
+      "detail": "the continuation line at 337 is indented 34 spaces where the visual-indent target is 33 (the column after `pd.DataFrame(` on line 336), so the second argument does not line up under the first"
+    }
   ],
   "strengths": [
     "Fourteen of the fifteen figures carry full mystnb metadata - both a `caption:` and a `name:` in the `fig:bivariate-*` namespace - which is the most consistent figure labelling in the series; only the exercise-solution cell at line 818 is missing it",
@@ -28,5 +56,9 @@
   "scanner_doubts": [
     "qe-code-002 in bivariate_dist.md reports 10 hits at lines 66, 441, 495, 496, 541, 577, 674, 716, 752, 827. Nine of those (all but 495) are the matplotlib `alpha=` transparency keyword, which is an API parameter name and cannot be renamed. Line 495 (`rho = ...`) is a true hit.",
     "The same qe-code-002 check misses three true hits in bivariate_dist.md: `sigma_U_vals` at line 488, `sigma_U` at line 491, and `sigma_U` at line 493 are all spelled-out Greek in author-chosen identifiers. Since it caught `rho` on line 495 in the same cell, the false-negative looks specific to compound names of the form `<greek>_<suffix>`."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "1163170243b70d6e18e43f0ddf5ecc38e9ce6730"
+  }
 }

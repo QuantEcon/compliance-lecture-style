@@ -2,18 +2,75 @@
   "series": "lecture-python.myst",
   "lecture": "svd_intro",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [24, 115, 310, 665],
-     "detail": "four breaks. (a) Seven passages promise dynamic mode decomposition *in this lecture* - 27 uses \"DMD\" before it is defined at all, 59 says \"We'll again use a singular value decomposition, but now to construct a **dynamic mode decomposition** (DMD)\", 115 \"later in this lecture when we study Dynamic Mode Decomposition\", 357, 403 \"When we study Dynamic Mode Decomposition below\", 425 \"that will concern us when we study **Dynamic Mode Decompositions** below\", 479 \"When we study Dynamic Mode Decompositions below\" - but there is no DMD section anywhere in the file, and 29 and 1041 say the opposite, that DMD is a *sequel* lecture `var_dmd`. A reader following \"below\" four times finds nothing. (b) The roadmap at 23-25 promises three things and delivers two: \"under-determined and over-determined **least squares regressions**\" never gets a section, only the pseudoinverse exercise at 989-995. (c) 257-260 states that $U_L$ is a basis for the column space of $X$ and $V_L$ for the row space, and {eq}`eq:fourspaceSVD` at 247-250 says it in algebra - then the worked example at 310-311 writes `row_space = U[:, :rank]` and `col_space = V[:, :rank]`, exactly reversed; the mislabelling is invisible in the output only because the example matrix at 293-297 is symmetric, so `U` and `V` coincide up to sign. (d) 665-668 loses the index: 665 says \"for each $k=1, \\ldots, n$, the object $\\lbrace V_{kj} \\rbrace_{j=1}^n$\", then 667 writes the loadings vector as $U_j$ on the left while every entry inside it and the range that follows are indexed by $k$"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [94, 129, 948],
-     "detail": "the lecture publishes no figures at all. `compare_pca_svd` (948-982) is the only cell that plots, and it is never called - the class `DecomAnalysis` defined at 844 is never instantiated either (`grep` finds `DecomAnalysis` only at 841 and 844, `compare_pca_svd` only at 948), so 140 lines of code and both of the lecture's two figures are dead. All six `qe-fig-003` sites and all four `qe-fig-008` sites the scanner reports live inside that unreachable function. Separately, the two most visual passages are left as prose: 94-104 describes multiplying by $X$ as **rotate** ($V^\\top y$) then **rescale** ($\\Sigma V^\\top y$) then **rotate** ($U \\Sigma V^\\top y$), with 96-97 stating explicitly that angles and lengths are preserved or rescaled - a two-panel unit-circle-to-ellipse plot is the standard illustration and would take five lines of matplotlib; and 129-274 builds two pairs of mutually orthogonal subspaces and their complements (268-274) entirely in symbols, where the reference example the rule cites uses a diagram for exactly this kind of structure"},
-    {"rule": "qe-writing-005", "count": 8, "lines": [96, 102, 117, 447, 472, 551, 559, 680],
-     "detail": "there is not one italic in the file - a search for single-asterisk emphasis returns nothing - so bold carries definitions and emphasis alike. Definitions are correctly bold (**singular value decomposition** 18, **left singular vectors** 80, **conjugate-transpose** 88, **matrix norms** 337, **economy** / **reduced** 363), but so is pure emphasis: **rotates** and **angles between vectors** / **lengths of vectors** at 96, **rescales** at 97, **rotating** / **rescaling** / **rotating** at 102-104, **tall-skinny** / **short-fat** at 383, **data** at 543, **attributes** at 553, **pre-processing** at 680. 551 and 553 then reach for a third syntax, `__times__` and `__individuals__`, for what is plainly emphasis. And bold is used as a heading eight times where a real heading belongs - `**Road Ahead**` 117, `**Properties:**` 447, `**Remarks:**` 472, and the five `**Step N: ...:**` labels at 559, 583, 591, 612, 622, which are the structure of the PCA recipe and should be `###` headings so they appear in the TOC"},
-    {"rule": "qe-code-001", "count": 6, "lines": [300, 310, 431, 505, 908, 957],
-     "detail": "`compare_pca_svd` reads attributes that do not exist: the class stores `self.\\ud835\\udf06` (U+1D706 MATHEMATICAL ITALIC SMALL LAMDA) at 872, `self.\\ud835\\udf0e` (U+1D70E) at 898 and `self.\\ud835\\udf16` (U+1D716) at 881, while 957-958, 975 and 978 read `da.\\u03bb`, `da.\\u03c3` and `da.\\u03b5` - the ordinary Greek code points U+03BB / U+03C3 / U+03B5. Two visually identical but distinct identifiers per letter; the function would raise `AttributeError` on its first line of output, which is consistent with it never having been run. On top of that: `V` names numpy's third return value at 300, 430 and 492 even though `np.linalg.svd` returns $V^\\top$ - the class itself gets this right and calls it `VT` at 891 - so 319 prints the *untransposed* matrix under the label `\"V.T:\"`; `np.linalg.svd(A,full_matrices=True)` omits the space after the comma at 300, 430, 431, 492 and 493; `SShat=np.diag(Shat)` at 505 has no spaces around `=`; 908 writes `self.\\ud835\\udf0e ** 2` with spaces around the exponentiation operator, which the rule asks be written `a**b`; 431 and 493 leave one space before an inline comment where 430 uses two; `import numpy as np` is repeated mid-file at 428 and 490 after the import cell at 280-284; and `diag_sign` is defined at 936, after the class that calls it at 874 and 900, with a single-quoted docstring at 937 where every other docstring in the file is tripled"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [57, 349, 557, 585, 991],
-     "detail": "57 is a 46-word sentence with three nested \"in which\" clauses before its main clause (\"In the $m > > n$ case in which there are many more attributes $m$ than individuals $n$ and when we are in a time-series setting in which $n$ equals the number of time periods covered in the data set $X$, we'll proceed in a different way\"); 585 is 36 words joined by a comma splice (\"Then because we want to extract the relationships between variables rather than just their magnitude, in other words, we want to know how they can explain each other, we compute the covariance matrix of $B$\"); 557 says the same thing twice in one sentence - \"to help better visualize patterns in data, using statistical tools to capture the most important patterns in data\" - and hides the content behind \"apply certain steps\"; 991 reads \"the $ (X^\\top X) $ matrix is not not invertible\"; and 349 both mis-states the theorem it is summarising and takes 40 words to do it - the Eckart-Young approximant $\\hat X_r$ of {eq}`eq:Ekart` is an $m \\times n$ matrix of rank $r$, not \"a full rank $p \\times p$ matrix\", and \"that in not full rank\" is a typo for \"that is not\""},
-    {"rule": "qe-math-009", "count": 1, "lines": [659],
-     "detail": "{eq}`eq:PCA2` at 658-660 expands the rank-one sum of {eq}`eq:PCA1` (640) into three explicit block columns whose entries are $U_{11}V_1^\\top, U_{21}V_1^\\top, \\ldots$ - each entry a scalar times a row vector, so an $m \\times n$ matrix is written as an $m \\times 1$ stack without saying so, and each block carries a stray trailing `\\\\`. The only use made of it is 662-670, which interprets $V_{kj}$, $U_{jk}$ and $\\sigma_k$ - all three of which are already visible in {eq}`eq:PCA1`. The simpler display is the one already written at 640"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        24,
+        115,
+        310,
+        665
+      ],
+      "detail": "four breaks. (a) Seven passages promise dynamic mode decomposition *in this lecture* - 27 uses \"DMD\" before it is defined at all, 59 says \"We'll again use a singular value decomposition, but now to construct a **dynamic mode decomposition** (DMD)\", 115 \"later in this lecture when we study Dynamic Mode Decomposition\", 357, 403 \"When we study Dynamic Mode Decomposition below\", 425 \"that will concern us when we study **Dynamic Mode Decompositions** below\", 479 \"When we study Dynamic Mode Decompositions below\" - but there is no DMD section anywhere in the file, and 29 and 1041 say the opposite, that DMD is a *sequel* lecture `var_dmd`. A reader following \"below\" four times finds nothing. (b) The roadmap at 23-25 promises three things and delivers two: \"under-determined and over-determined **least squares regressions**\" never gets a section, only the pseudoinverse exercise at 989-995. (c) 257-260 states that $U_L$ is a basis for the column space of $X$ and $V_L$ for the row space, and {eq}`eq:fourspaceSVD` at 247-250 says it in algebra - then the worked example at 310-311 writes `row_space = U[:, :rank]` and `col_space = V[:, :rank]`, exactly reversed; the mislabelling is invisible in the output only because the example matrix at 293-297 is symmetric, so `U` and `V` coincide up to sign. (d) 665-668 loses the index: 665 says \"for each $k=1, \\ldots, n$, the object $\\lbrace V_{kj} \\rbrace_{j=1}^n$\", then 667 writes the loadings vector as $U_j$ on the left while every entry inside it and the range that follows are indexed by $k$"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        94,
+        129,
+        948
+      ],
+      "detail": "the lecture publishes no figures at all. `compare_pca_svd` (948-982) is the only cell that plots, and it is never called - the class `DecomAnalysis` defined at 844 is never instantiated either (`grep` finds `DecomAnalysis` only at 841 and 844, `compare_pca_svd` only at 948), so 140 lines of code and both of the lecture's two figures are dead. All six `qe-fig-003` sites and all four `qe-fig-008` sites the scanner reports live inside that unreachable function. Separately, the two most visual passages are left as prose: 94-104 describes multiplying by $X$ as **rotate** ($V^\\top y$) then **rescale** ($\\Sigma V^\\top y$) then **rotate** ($U \\Sigma V^\\top y$), with 96-97 stating explicitly that angles and lengths are preserved or rescaled - a two-panel unit-circle-to-ellipse plot is the standard illustration and would take five lines of matplotlib; and 129-274 builds two pairs of mutually orthogonal subspaces and their complements (268-274) entirely in symbols, where the reference example the rule cites uses a diagram for exactly this kind of structure"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        96,
+        102,
+        117,
+        447,
+        472,
+        551,
+        559,
+        680
+      ],
+      "detail": "there is not one italic in the file - a search for single-asterisk emphasis returns nothing - so bold carries definitions and emphasis alike. Definitions are correctly bold (**singular value decomposition** 18, **left singular vectors** 80, **conjugate-transpose** 88, **matrix norms** 337, **economy** / **reduced** 363), but so is pure emphasis: **rotates** and **angles between vectors** / **lengths of vectors** at 96, **rescales** at 97, **rotating** / **rescaling** / **rotating** at 102-104, **tall-skinny** / **short-fat** at 383, **data** at 543, **attributes** at 553, **pre-processing** at 680. 551 and 553 then reach for a third syntax, `__times__` and `__individuals__`, for what is plainly emphasis. And bold is used as a heading eight times where a real heading belongs - `**Road Ahead**` 117, `**Properties:**` 447, `**Remarks:**` 472, and the five `**Step N: ...:**` labels at 559, 583, 591, 612, 622, which are the structure of the PCA recipe and should be `###` headings so they appear in the TOC"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        300,
+        310,
+        431,
+        505,
+        908,
+        957
+      ],
+      "detail": "`compare_pca_svd` reads attributes that do not exist: the class stores `self.\\ud835\\udf06` (U+1D706 MATHEMATICAL ITALIC SMALL LAMDA) at 872, `self.\\ud835\\udf0e` (U+1D70E) at 898 and `self.\\ud835\\udf16` (U+1D716) at 881, while 957-958, 975 and 978 read `da.\\u03bb`, `da.\\u03c3` and `da.\\u03b5` - the ordinary Greek code points U+03BB / U+03C3 / U+03B5. Two visually identical but distinct identifiers per letter; the function would raise `AttributeError` on its first line of output, which is consistent with it never having been run. On top of that: `V` names numpy's third return value at 300, 430 and 492 even though `np.linalg.svd` returns $V^\\top$ - the class itself gets this right and calls it `VT` at 891 - so 319 prints the *untransposed* matrix under the label `\"V.T:\"`; `np.linalg.svd(A,full_matrices=True)` omits the space after the comma at 300, 430, 431, 492 and 493; `SShat=np.diag(Shat)` at 505 has no spaces around `=`; 908 writes `self.\\ud835\\udf0e ** 2` with spaces around the exponentiation operator, which the rule asks be written `a**b`; 431 and 493 leave one space before an inline comment where 430 uses two; `import numpy as np` is repeated mid-file at 428 and 490 after the import cell at 280-284; and `diag_sign` is defined at 936, after the class that calls it at 874 and 900, with a single-quoted docstring at 937 where every other docstring in the file is tripled"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        57,
+        349,
+        557,
+        585,
+        991
+      ],
+      "detail": "57 is a 46-word sentence with three nested \"in which\" clauses before its main clause (\"In the $m > > n$ case in which there are many more attributes $m$ than individuals $n$ and when we are in a time-series setting in which $n$ equals the number of time periods covered in the data set $X$, we'll proceed in a different way\"); 585 is 36 words joined by a comma splice (\"Then because we want to extract the relationships between variables rather than just their magnitude, in other words, we want to know how they can explain each other, we compute the covariance matrix of $B$\"); 557 says the same thing twice in one sentence - \"to help better visualize patterns in data, using statistical tools to capture the most important patterns in data\" - and hides the content behind \"apply certain steps\"; 991 reads \"the $ (X^\\top X) $ matrix is not not invertible\"; and 349 both mis-states the theorem it is summarising and takes 40 words to do it - the Eckart-Young approximant $\\hat X_r$ of {eq}`eq:Ekart` is an $m \\times n$ matrix of rank $r$, not \"a full rank $p \\times p$ matrix\", and \"that in not full rank\" is a typo for \"that is not\""
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        659
+      ],
+      "detail": "{eq}`eq:PCA2` at 658-660 expands the rank-one sum of {eq}`eq:PCA1` (640) into three explicit block columns whose entries are $U_{11}V_1^\\top, U_{21}V_1^\\top, \\ldots$ - each entry a scalar times a row vector, so an $m \\times n$ matrix is written as an $m \\times 1$ stack without saying so, and each block carries a stray trailing `\\\\`. The only use made of it is 662-670, which interprets $V_{kj}$, $U_{jk}$ and $\\sigma_k$ - all three of which are already visible in {eq}`eq:PCA1`. The simpler display is the one already written at 640"
+    }
   ],
   "strengths": [
     "The four-subspace result is derived rather than asserted: 150-155 partitions the full SVD, 167-189 multiplies it out one way, 203-226 transposes and multiplies it out the other, and 242-253 collects the four identities - then 263 tells the reader exactly what the proof was, \"simply by performing the multiplications called for by the right side of {eq}`eq:fullSVDpartition` and reading them\"",
@@ -39,5 +96,9 @@
     "svd_intro.md:750,757 - `qe-math-002` is measured at 0, but 750 writes `X=\\sigma_1U_1{V_1}^{T}+\\sigma_2 U_2{V_2}^{T}+\\ldots+\\sigma_{r} U_{r}{V_{r}}^{T}` and 757 writes `${V_k}^{T}=\\tilde{\\epsilon_k}$` - four `^{T}` transposes, certainly transposes because the same object is `V^\\top` at 640, 650 and 773. Two separate gaps in `supT` (tools/qestyle_rules.py:442-445): its base alternation is a bare capital or a `DECORATED` group, so a brace-wrapped base `{V_1}^{T}` matches nothing (the character before `^` is `}`, which is not in the alternation); and its factor lookahead rejects these anyway, because what follows is `+` at 750 and `=` at 757. Adding `\\{[A-Za-z](?:_\\{[^{}]*\\}|_[A-Za-z0-9])?\\}` to the base alternation would catch the shape; the lookahead is the deliberate `Y^T` guard and I would leave it alone rather than trade these four for the data-history false positives it exists to prevent",
     "svd_intro.md:696 - `qe-math-001` is measured at 0, but 696 has `$P$ is $m\\u00d7m$ matrix of eigenvectors of $\\Omega$`, a Unicode MULTIPLICATION SIGN (U+00D7) inside math where the other ~40 sites in the file write `\\times`. The in-math half of `check_math_001` (tools/qestyle_rules.py:369-372) scans only for `GREEK_UNICODE` (line 356), which is the 33 Greek letters, so the rule's own phrasing - LaTeX, not unicode, inside math environments - is enforced for Greek alone. Extending that character class with the handful of Unicode operators that actually appear in the corpus (`\\u00d7 \\u00f7 \\u2264 \\u2265 \\u2260 \\u221e \\u2208 \\u2211 \\u221a`) would close it; it is one occurrence here, so the value is corpus-wide rather than in this file",
     "Cleared, not filed: (1) `qe-code-002` at 0 is right - every Greek identifier in the code cells is already a Unicode character (855, 867-909), and the two *distinct* code points for the same letter is a naming defect, not a spelled-out-Greek one, so I report it under `qe-code-001` instead. (2) The six `qe-fig-003` and four `qe-fig-008` sites (963-979) are correctly measured against the source even though the function containing them is never called - the source really does say `plt.suptitle`, so I have not touched the counts; the triage consequence is that fixing them changes nothing a reader sees until the dead code at 843-982 is wired up. (3) `qe-math-012` (proposed) at 0 is right for narrative math, but 979 does contain `*` as multiplication - `axs[1].set_title(r'$V^\\top *\\sqrt{\\lambda}$')` - inside a Python string in a code cell, which no math span covers; it disappears when the embedded title is removed for `qe-fig-003`, so it needs no rule change"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "daae7edc61653c8cc11265cc65b91aff3a76c52b"
+  }
 }

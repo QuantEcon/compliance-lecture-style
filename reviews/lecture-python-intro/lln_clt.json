@@ -2,12 +2,37 @@
   "series": "lecture-python-intro",
   "lecture": "lln_clt",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 1, "lines": [359],
-     "detail": "\"### Infinite first moment\" says \"We can demonstrate this using the Cauchy distribution\" (359) and then demonstrates nothing - lines 361-369 assert in prose that $\\bar X_n$ is Cauchy and therefore does not concentrate, with no simulation and no figure. This is the one place in a lecture that announces at line 26 that it \"is based around simulations\" where a claim is left unillustrated, and the non-settling sample-mean path is the single most memorable picture in the topic"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [349, 457],
-     "detail": "the \"## Breaking the LLN\" section (349-412) is asymmetric: its first subsection makes its case in prose only while its second gets a worked example, a note and a forward pointer to an exercise; and \"### Simulation 1\" (457) is the only numbered section in the lecture - there is no Simulation 2, so the numbering promises a sequence that never arrives"},
-    {"rule": "qe-code-001", "count": 7, "lines": [94, 267, 304, 305, 479, 530, 703],
-     "detail": "a six-space indent inside a four-space-indented function body (267); spaces around `=` in the default arguments `ns = [...]` and `m = 10_000` (304-305) and in the keyword argument `color = 'black'` (703); `st.beta(2,2)` with no space after the comma (530); and single-space-before-hash inline comments where PEP8 asks for two (94, 479, 530)"}
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        359
+      ],
+      "detail": "\"### Infinite first moment\" says \"We can demonstrate this using the Cauchy distribution\" (359) and then demonstrates nothing - lines 361-369 assert in prose that $\\bar X_n$ is Cauchy and therefore does not concentrate, with no simulation and no figure. This is the one place in a lecture that announces at line 26 that it \"is based around simulations\" where a claim is left unillustrated, and the non-settling sample-mean path is the single most memorable picture in the topic"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        349,
+        457
+      ],
+      "detail": "the \"## Breaking the LLN\" section (349-412) is asymmetric: its first subsection makes its case in prose only while its second gets a worked example, a note and a forward pointer to an exercise; and \"### Simulation 1\" (457) is the only numbered section in the lecture - there is no Simulation 2, so the numbering promises a sequence that never arrives"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        94,
+        267,
+        304,
+        305,
+        479,
+        530,
+        703
+      ],
+      "detail": "a six-space indent inside a four-space-indented function body (267); spaces around `=` in the default arguments `ns = [...]` and `m = 10_000` (304-305) and in the keyword argument `color = 'black'` (703); `st.beta(2,2)` with no space after the comma (530); and single-space-before-hash inline comments where PEP8 asks for two (94, 479, 530)"
+    }
   ],
   "strengths": [
     "Probability events are written with braces throughout - `\\mathbb P\\{X=1\\}` (59, 72), `\\mathbb P\\{a \\leq X_i \\leq b\\}` (154), `\\mathbb P\\{\\bar X_n \\to \\mu\\}` (183), `\\mathbb P\\{0 \\leq U < p\\}` (587) - so the proposed qe-math-014 convention holds without exception",
@@ -25,5 +50,9 @@
     "Fix the PEP8 items above and drop the three `figsize=(10, 6)` arguments (490, 541, 685) unless the wide aspect ratio is deliberate",
     "Give \"### Simulation 1\" a descriptive name (or add the missing second simulation), fix `$X_n$` -> `$\\bar X_n$` at 300, and close the space in \"Gaussian(Normal)\" at 452"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "4b6425cfcd3d18263843459f9f846ac05c434ddc"
+  }
 }

@@ -2,16 +2,57 @@
   "series": "lecture-dp",
   "lecture": "inventory_q",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 4, "lines": [273, 397, 466, 709],
-     "detail": "bold is used for emphasis three times, which is the pattern the rule gives as incorrect: 'can an agent **learn** the optimal policy without knowing the model?' (397), 'Notice what is **not** required' (466), 'All panels use the **same demand sequence**' (709) - all three want italic. And `**$v$-greedy policy**` is bolded twice, at its definition (171) and again 100 lines later at 273 ('Recall that, given a value function $v$, the **$v$-greedy policy** is computed via'), where 'Recall' already tells the reader it is not new. The genuine definitions in the file - **Q-function** (411), **Q-table** (486), **behavior policy** (511), **off-policy** (517), **optimistic initialization** (556), **S-s pattern** (371) - are all correctly bolded once, so the convention is understood and these four are slips"},
-    {"rule": "qe-math-009", "count": 3, "lines": [174, 277, 442],
-     "detail": "the argmax is written two ways and with two different relations. `\\argmax` - the series MathJax macro, which renders as `arg\\,max` - appears at 174, 496 and 670, while `\\arg\\max` appears at 277 and 442, and the two produce visibly different operator spacing in adjacent displays. More substantively, line 174 is careful to write `\\sigma(x) \\in \\argmax_{a \\in \\Gamma(x)}` because the argmax is a set and the greedy policy is a selection from it, and then 277 and 442 write `\\sigma(x) = \\arg\\max ...` and drop exactly that distinction"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [494, 513],
-     "detail": "the point that $\\max_{a'}$ in the update target is a value and not an instruction about the next action is made five times in fourteen lines: 'It is tempting to read the $\\max_{a'}$ ... as prescribing the manager's next action' (494-496), 'But the $\\max$ plays a different role' (498), 'This scalar enters the update as part of the target value' (503), 'Which action the manager *actually takes* at time $t+1$ is a separate decision' (505), 'In short, the $\\max$ is doing the work of finding the optimum; it does not dictate the action that the manager actually takes' (507) - and then a sixth time at 513-515 in the next subsection. The distinction is worth making; it is not worth six paragraphs, and the code at 616-635 already labels it in place with `best_next` against `a_next`"},
-    {"rule": "qe-code-001", "count": 6, "lines": [212, 218, 365, 376, 627, 660],
-     "detail": "`X[t+1]` (365) and `n_steps=n+1` (660) omit the spaces around `+` that the same file uses in `K - x + 1` (246, 291, 576, 620), and `n[x, a] ** 0.51` (627) adds spaces around `**` where line 215 writes `(1 - p)**d` - PEP8 and this rule both prefer the tight form. The closing bracket of `create_sdd_inventory_model` sits at indent 4 against a hanging indent of 8 (212, E124), there is trailing whitespace at 218, and `plot_ts` (376-388) reads `σ_star` and `p` out of the module namespace rather than taking them as arguments, which is why the function cannot be reused for the snapshot policies and the panel loop at 736-742 duplicates it"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [350],
-     "detail": "value function iteration produces `v_star` and `σ_star` at 347 and neither is plotted. The only figure in the exact-solution half of the lecture is a simulated inventory path (390), so the S-s policy described in prose at 371-373 is never shown as a policy, and the claim at 562 that '$v^*$ ranges from about 13 to 18' - the number that justifies initialising the Q-table at 20 - cannot be checked by the reader, because $v^*$ does not appear in a figure until line 685, 120 lines later. A two-panel plot of $v^*(x)$ and $\\sigma^*(x)$ immediately after 347 would fix all three"}
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        273,
+        397,
+        466,
+        709
+      ],
+      "detail": "bold is used for emphasis three times, which is the pattern the rule gives as incorrect: 'can an agent **learn** the optimal policy without knowing the model?' (397), 'Notice what is **not** required' (466), 'All panels use the **same demand sequence**' (709) - all three want italic. And `**$v$-greedy policy**` is bolded twice, at its definition (171) and again 100 lines later at 273 ('Recall that, given a value function $v$, the **$v$-greedy policy** is computed via'), where 'Recall' already tells the reader it is not new. The genuine definitions in the file - **Q-function** (411), **Q-table** (486), **behavior policy** (511), **off-policy** (517), **optimistic initialization** (556), **S-s pattern** (371) - are all correctly bolded once, so the convention is understood and these four are slips"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        174,
+        277,
+        442
+      ],
+      "detail": "the argmax is written two ways and with two different relations. `\\argmax` - the series MathJax macro, which renders as `arg\\,max` - appears at 174, 496 and 670, while `\\arg\\max` appears at 277 and 442, and the two produce visibly different operator spacing in adjacent displays. More substantively, line 174 is careful to write `\\sigma(x) \\in \\argmax_{a \\in \\Gamma(x)}` because the argmax is a set and the greedy policy is a selection from it, and then 277 and 442 write `\\sigma(x) = \\arg\\max ...` and drop exactly that distinction"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        494,
+        513
+      ],
+      "detail": "the point that $\\max_{a'}$ in the update target is a value and not an instruction about the next action is made five times in fourteen lines: 'It is tempting to read the $\\max_{a'}$ ... as prescribing the manager's next action' (494-496), 'But the $\\max$ plays a different role' (498), 'This scalar enters the update as part of the target value' (503), 'Which action the manager *actually takes* at time $t+1$ is a separate decision' (505), 'In short, the $\\max$ is doing the work of finding the optimum; it does not dictate the action that the manager actually takes' (507) - and then a sixth time at 513-515 in the next subsection. The distinction is worth making; it is not worth six paragraphs, and the code at 616-635 already labels it in place with `best_next` against `a_next`"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        212,
+        218,
+        365,
+        376,
+        627,
+        660
+      ],
+      "detail": "`X[t+1]` (365) and `n_steps=n+1` (660) omit the spaces around `+` that the same file uses in `K - x + 1` (246, 291, 576, 620), and `n[x, a] ** 0.51` (627) adds spaces around `**` where line 215 writes `(1 - p)**d` - PEP8 and this rule both prefer the tight form. The closing bracket of `create_sdd_inventory_model` sits at indent 4 against a hanging indent of 8 (212, E124), there is trailing whitespace at 218, and `plot_ts` (376-388) reads `σ_star` and `p` out of the module namespace rather than taking them as arguments, which is why the function cannot be reused for the snapshot policies and the panel loop at 736-742 duplicates it"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        350
+      ],
+      "detail": "value function iteration produces `v_star` and `σ_star` at 347 and neither is plotted. The only figure in the exact-solution half of the lecture is a simulated inventory path (390), so the S-s policy described in prose at 371-373 is never shown as a policy, and the claim at 562 that '$v^*$ ranges from about 13 to 18' - the number that justifies initialising the Q-table at 20 - cannot be checked by the reader, because $v^*$ does not appear in a figure until line 685, 120 lines later. A two-panel plot of $v^*(x)$ and $\\sigma^*(x)$ immediately after 347 would fix all three"
+    }
   ],
   "strengths": [
     "The three-item plan at 58-62 is delivered in order and in full: VFI (154-392), the Q-factor Bellman equation (406-443), Q-learning with a convergence demonstration (446-747) - and the third promise, 'show the learned policy converges to the optimal one', is discharged by two comparisons rather than an assertion, the value/policy overlay at 683-701 and the four inventory paths at 719-747",
@@ -31,5 +72,9 @@
   ],
   "scanner_doubts": [
     "inventory_q.md, lines 435, 457, 500 - all 3 qe-math-002 hits are false positives, and they carry real weight here: Math scores 4/10, and a single in-scope category at 4 is what promotes this lecture to HIGH priority under spec section 4. Each hit is a primed next-period variable inside a maximisation - `\\max_{a' \\in \\Gamma(x')} q(x', a')` (435), `\\max_{a' \\in \\Gamma(X_{t+1})} q_t(X_{t+1}, a')` (457, 500) - where no transpose is possible. The cause is the missing `NOT_A_PRODUCT` guard on the `prime_vec` branch of check_math_002 (tools/qestyle_rules.py:393), the same defect reported against mccall_model_with_separation; `a' \\in` is read as a vector product. Worth re-running the scan before the priority table is published, since this file's bucket depends on it."
-  ]
+  ],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "9095b572730446cb69fc9a088bb66180f825b0cd"
+  }
 }

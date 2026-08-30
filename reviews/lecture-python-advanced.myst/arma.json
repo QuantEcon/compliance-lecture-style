@@ -2,16 +2,61 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "arma",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 8, "lines": [107, 116, 121, 131, 138, 287, 321, 341],
-     "detail": "the two uses are inverted lecture-wide. Every term is defined in italic where the rule asks for bold: *stationary* (107), *covariance stationary* (116), *autocovariance function* (121), *white noise process* (131), *general linear processes* (143), *linear filter* (157), *autoregressive moving average process* (273), *lag operator* (285), *impulse response function* (331), *spectral density* (341), *real part* / *imaginary part* (351), *modulus* (353), *imaginary unit* (359), *inverse Fourier transform* (600), *Fourier coefficients* (642). The three uses of bold, meanwhile, are emphasis - **building blocks** (138) and **always assume** (321) - or a block label, `**Def.**` at 287, which wants a `{prf:definition}` directive"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [105, 699, 770, 869],
-     "detail": "four sentences are broken rather than merely long: 105 ends \"allowing us to learn from as data arrive\", with the object of \"learn from\" missing; 770 reads \"let's make sure things look right when we for the pure white noise model\"; 780 has \"which is at it should be\"; and 869-872 splits one conditional across a paragraph break with a full stop in the middle - \"If the user decides to change the value of either `theta` or `phi` ex-post by assignments such as ... .\" and then a new paragraph beginning \"then `ma_poly` and `ar_poly` should update automatically\". Line 699 is separately a 40-word sentence carrying an em-dash aside and three links"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [169, 573, 867],
-     "detail": "line 161 derives the autocovariance of a general linear process (\"With some manipulations, it is possible to confirm that ... is {eq}`ma_inf_ac`\") and then 169 says the same result follows \"by the Cauchy-Schwartz inequality\" - Cauchy-Schwarz gives the finiteness of the sum, not the formula, so the second justification both repeats and misattributes the first; the second three-panel cell (555-588) is a copy of the first (515-548) with `np.cos(np.pi * k)` changed to `np.cos(np.pi * k/3)`, and the copy carries the stale comment \"# Cycles at frequency π\" at 573 for a figure about $\\pi/3$; and the Explanation section switches API names midway - 831, 843-844 and 846 correctly say `ϕ`, `θ`, `σ`, while 867 and 869-870 talk about `phi` and `theta`, which are not what `qe.ARMA` is called with at 775"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [345],
-     "detail": "the \"Complex numbers\" section (345-375) is the one part of this figure-rich lecture with nothing to look at, and it is the most visual material in it: real and imaginary parts as coordinates in $\\mathbb R^2$ (351), the modulus as a Euclidean norm (353), and the polar form $re^{i\\omega} = r(\\cos\\omega + i\\sin\\omega)$ (369-375). One Argand-plane diagram would carry all four definitions, and it is exactly the picture a reader coming to spectral analysis needs before meeting $e^{-i\\omega k}$ at 385"},
-    {"rule": "qe-code-001", "count": 4, "lines": [559, 715, 720, 721],
-     "detail": "line 720 writes `xlim=(-0.5)`, which is a parenthesised scalar rather than the two-element tuple `xlim` expects, and writes `min(yi)-0.1` / `max(yi)+0.1` unspaced; 721's continuation is indented to column 18 against an opening paren at column 12, where the equivalent calls at 729-730 and 738-739 are correctly aligned; the five top-level `def`s at 715, 724, 733, 742 and 750 are separated by a single blank line where PEP8 asks for two; and 559 mixes conventions inside one expression, `np.cos(np.pi * k/3)`, spacing the multiplication but not the division"}
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        107,
+        116,
+        121,
+        131,
+        138,
+        287,
+        321,
+        341
+      ],
+      "detail": "the two uses are inverted lecture-wide. Every term is defined in italic where the rule asks for bold: *stationary* (107), *covariance stationary* (116), *autocovariance function* (121), *white noise process* (131), *general linear processes* (143), *linear filter* (157), *autoregressive moving average process* (273), *lag operator* (285), *impulse response function* (331), *spectral density* (341), *real part* / *imaginary part* (351), *modulus* (353), *imaginary unit* (359), *inverse Fourier transform* (600), *Fourier coefficients* (642). The three uses of bold, meanwhile, are emphasis - **building blocks** (138) and **always assume** (321) - or a block label, `**Def.**` at 287, which wants a `{prf:definition}` directive"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        105,
+        699,
+        770,
+        869
+      ],
+      "detail": "four sentences are broken rather than merely long: 105 ends \"allowing us to learn from as data arrive\", with the object of \"learn from\" missing; 770 reads \"let's make sure things look right when we for the pure white noise model\"; 780 has \"which is at it should be\"; and 869-872 splits one conditional across a paragraph break with a full stop in the middle - \"If the user decides to change the value of either `theta` or `phi` ex-post by assignments such as ... .\" and then a new paragraph beginning \"then `ma_poly` and `ar_poly` should update automatically\". Line 699 is separately a 40-word sentence carrying an em-dash aside and three links"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        169,
+        573,
+        867
+      ],
+      "detail": "line 161 derives the autocovariance of a general linear process (\"With some manipulations, it is possible to confirm that ... is {eq}`ma_inf_ac`\") and then 169 says the same result follows \"by the Cauchy-Schwartz inequality\" - Cauchy-Schwarz gives the finiteness of the sum, not the formula, so the second justification both repeats and misattributes the first; the second three-panel cell (555-588) is a copy of the first (515-548) with `np.cos(np.pi * k)` changed to `np.cos(np.pi * k/3)`, and the copy carries the stale comment \"# Cycles at frequency π\" at 573 for a figure about $\\pi/3$; and the Explanation section switches API names midway - 831, 843-844 and 846 correctly say `ϕ`, `θ`, `σ`, while 867 and 869-870 talk about `phi` and `theta`, which are not what `qe.ARMA` is called with at 775"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        345
+      ],
+      "detail": "the \"Complex numbers\" section (345-375) is the one part of this figure-rich lecture with nothing to look at, and it is the most visual material in it: real and imaginary parts as coordinates in $\\mathbb R^2$ (351), the modulus as a Euclidean norm (353), and the polar form $re^{i\\omega} = r(\\cos\\omega + i\\sin\\omega)$ (369-375). One Argand-plane diagram would carry all four definitions, and it is exactly the picture a reader coming to spectral analysis needs before meeting $e^{-i\\omega k}$ at 385"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        559,
+        715,
+        720,
+        721
+      ],
+      "detail": "line 720 writes `xlim=(-0.5)`, which is a parenthesised scalar rather than the two-element tuple `xlim` expects, and writes `min(yi)-0.1` / `max(yi)+0.1` unspaced; 721's continuation is indented to column 18 against an opening paren at column 12, where the equivalent calls at 729-730 and 738-739 are correctly aligned; the five top-level `def`s at 715, 724, 733, 742 and 750 are separated by a single blank line where PEP8 asks for two; and 559 mixes conventions inside one expression, `np.cos(np.pi * k/3)`, spacing the multiplication but not the division"
+    }
   ],
   "strengths": [
     "The hardest intuition in the lecture - why the spectral density is large at $\\omega = \\pi$ for $\\phi = -0.8$ - is built as three stacked panels showing $\\gamma(k)$, $\\cos(\\pi k)$ and their product (515-548), and then repeated for $\\omega = \\pi/3$ (555-588) so the reader sees the matched and the unmatched case side by side",
@@ -29,5 +74,9 @@
     "Brace the three expectation operators - `\\mathbb E X_t` (118), `\\mathbb E (X_t - \\mu)...` (119) and `\\mathbb E \\epsilon_t` (133) should be `\\mathbb{E}` (qe-math-010, proposed) - and fix the Cauchy-Schwarz attribution at 169",
     "Cite or drop the four dead equation labels `ar1_rep` (211), `ar_acov` (226), `arma_sd_cos` (394) and `arma_fc` (631); convert the raw URLs at 50 and 874 to `{doc}` references (qe-link-002 ×2); align the prose at 867-870 with the `ϕ`/`θ` names the code actually uses; and strip the 19 runs of double spaces"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "1371d8bd7f2320303fcaac417859a6db15cab76c"
+  }
 }

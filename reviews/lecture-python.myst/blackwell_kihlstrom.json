@@ -93,5 +93,9 @@
   "scanner_doubts": [
     "blackwell_kihlstrom.md:572 - the matplotlib label `label=\"$E[g(p^μ)] - E[g(p^ν)] \\\\geq 0$\"` puts Unicode μ and ν inside a `$...$` math span, which qe-math-001 forbids (\"Never use unicode characters inside math environments\"). No qe-math-001 violation is reported for this file, which suggests the check does not look inside code cells. That is a defensible scope decision, but math spans in matplotlib labels do render as mathematics on the site",
     "blackwell_kihlstrom.md - qe-math-004 is reported with count 2 but only one line number (818), where `\\mathbf{1}\\mathbf{1}^\\top` contains two `\\mathbf` tokens on one line. If the count is per-token and the line list is per-line, the two figures are consistent but the evidence reads as though a line number is missing"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "c6fd1245db2b40b38a3da8aa7d8eef72c21afa1b"
+  }
 }

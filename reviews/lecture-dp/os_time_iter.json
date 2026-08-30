@@ -58,5 +58,9 @@
     "Mechanical items from the draft: `\\sigma` rather than unicode `σ` inside the math at 380 and 405 (qe-math-001 x2), `qe.Timer()` in place of `%%time` at 562 (qe-code-004), `{cite:t}` at 194 where the citations are the sentence's object ('the work of {cite}`Coleman1990` and {cite}`Reffett1996`'), sentence-case the four Title-Case headings (68, 161, 215, 237), mystnb `name`/`caption` on the three code-cell figures (407, 488, 561), and `lw=2` on the three plot calls at 423, 427 and 431",
     "The upstream twin `lecture-python.myst/lectures/os_time_iter.md` differs only in already using `np.random.default_rng` at 343-344; make these fixes upstream and re-sync so both copies clear"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "f2205e78dbe6aa06b0934449a8863a7f4c503289"
+  }
 }

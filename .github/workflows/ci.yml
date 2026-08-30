@@ -1,0 +1,132 @@
+name: CI
+
+# The gate, on every change that is not already on main. deploy.yml builds and
+# publishes on push to main and runs no checks, so until this workflow existed
+# the README's integrity claim — that the reports cannot disagree with
+# lectures/data/*.csv because tools/qestyle_check.py asserts it — depended on a
+# human remembering to run the gate locally. Scheduled agents refresh this
+# ledger; that is the wrong place to keep the guarantee.
+on:
+  pull_request:
+  push:
+    # main belongs to deploy.yml. Dependabot always opens a PR, so the
+    # pull_request trigger above already covers its branches; ignoring them here
+    # just avoids running the same commit twice.
+    branches-ignore:
+      - main
+      - 'dependabot/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# A newer push supersedes the run it replaces.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    name: Gate and build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        # 3.12: quantecon-book-theme==0.15.1 does not resolve on 3.11.
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Clone the corpus at the pinned snapshot
+        # .claude/skills/pass-measure/SKILL.md §§ 2-3, unchanged: blobless sparse
+        # clones, then fetch the pinned SHA into the depth-1 clone and detach
+        # onto it. The gate's coverage check reads .corpus/<series>/lectures/*.md;
+        # the _config.yml and .bib patterns are the runbook's and are kept as-is
+        # so a scan step could be added here without inventing a second dialect.
+        # action-style-guide is not cloned: snapshot.json pins no commit for it
+        # and the gate reads no rule files, so cloning it would feed an unpinned
+        # input into a pinned check.
+        run: |
+          set -euo pipefail
+          mkdir -p .corpus
+          for s in lecture-python-intro lecture-python-programming lecture-python.myst \
+                   lecture-python-advanced.myst lecture-dp; do
+            sha=$(python -c "import json, sys; print(json.load(open('lectures/data/snapshot.json'))['snapshot'][sys.argv[1]]['commit'])" "$s")
+            git clone --depth 1 --filter=blob:none --sparse \
+                https://github.com/QuantEcon/"$s" .corpus/"$s"
+            git -C .corpus/"$s" sparse-checkout set --no-cone \
+                '/lectures/*.md' '/lectures/_config.yml' '/lectures/_static/*.bib'
+            git -C .corpus/"$s" fetch --depth 1 --filter=blob:none origin "$sha"
+            git -C .corpus/"$s" checkout --detach FETCH_HEAD
+          done
+
+      - name: Verify the corpus is at the pinned snapshot
+        # check_coverage() *skips* a series whose clone is absent — it notes
+        # "corpus not present, coverage not checked" and the gate still passes.
+        # So a clone that half failed, or a sparse pattern that matched nothing,
+        # would give a green check that measured nothing. Assert both the pinned
+        # commit and the per-series lecture count from snapshot.json first.
+        run: |
+          python - <<'PY'
+          import glob, json, subprocess, sys
+
+          snap = json.load(open("lectures/data/snapshot.json"))
+          bad = []
+          for series, meta in sorted(snap["snapshot"].items()):
+              head = subprocess.run(["git", "-C", f".corpus/{series}", "rev-parse", "HEAD"],
+                                    capture_output=True, text=True).stdout.strip()
+              have = len(glob.glob(f".corpus/{series}/lectures/*.md"))
+              want = snap["per_series"][series]
+              ok = head == meta["commit"] and have == want
+              print(f"{'OK  ' if ok else 'FAIL'} {series}: pinned {meta['commit'][:10]}, "
+                    f"got {head[:10] or '(absent)'}, {have}/{want} lectures")
+              if not ok:
+                  bad.append(series)
+          if bad:
+              sys.exit("corpus not at the pinned snapshot: " + ", ".join(bad))
+          PY
+
+      - name: Run the gate
+        run: python tools/qestyle_check.py --root lectures --data lectures/data --corpus .corpus
+
+      - name: Build the book
+        # -W --keep-going: error on any warning, but finish the build first so the
+        # log lists every one instead of stopping at the first. The build is at
+        # zero warnings (pass-measure § 8), so "any warning" and "a new warning"
+        # are the same test here. The suppressions in lectures/_config.yml still
+        # apply — a suppressed warning is never emitted, so -W does not see it.
+        run: jupyter-book build lectures -W --keep-going
+
+# What a green run proves, and what it does not.
+#
+# Proves: every lecture in the corpus at the pinned snapshot has a report and
+# every report has a lecture; each report's overall score and priority follow
+# from its own score table; no report contradicts lectures/data/*.csv; the naming
+# and (proposed)-tag conventions hold; every report's snapshot line matches
+# snapshot.json; the hand-written narrative figures still match the CSVs; and the
+# book builds with no warnings.
+#
+# Does not prove:
+#
+#  - That lectures/data/*.csv still describes the corpus. Only tools/qestyle_scan.py
+#    establishes that, and it *writes* those CSVs, so running it here would
+#    overwrite the thing under test and report on its own output. A PR that
+#    changes a count in a CSV and the matching report together passes this
+#    workflow. Re-measuring is /pass-measure's job.
+#  - Anything about the judgment overlays in reviews/. qestyle_status.py
+#    classifies them fresh/stale/missing and always exits 0; it is a report, not
+#    a gate, and is not run here.
+#  - That lectures/_toc.yml lists every report. only_build_toc_files: true means a
+#    report missing from the TOC is excluded from the build rather than warned
+#    about, so the build stays green; tools/qestyle_toc.py --check covers it, in
+#    the runbook.
+#  - That any link resolves. The linkcheck builder's result depends on third-party
+#    hosts being reachable at the moment it runs, so it fails for reasons that
+#    have nothing to do with the change under review. A flaky red is worse than no
+#    check, so it is deliberately left out rather than run and ignored.

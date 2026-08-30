@@ -5,37 +5,69 @@
     {
       "rule": "qe-writing-003",
       "count": 5,
-      "lines": [468, 492, 518, 693, 891],
+      "lines": [
+        468,
+        492,
+        518,
+        693,
+        891
+      ],
       "detail": "the `m > 1` section (434-545) is the least finished part of the lecture and four of its statements do not parse arithmetically. 468 gives the lagged state vector as $y_{N-m+1}, y_{N-m-2}, \\ldots, y_{N-2m}$ - the first entry is already inside the left-hand vector's range $y_N \\ldots y_{N-m}$ (458) and the second skips an index, where $y_{N-m-1}, y_{N-m-2}, \\ldots, y_{N-2m}$ is what the equation needs. 490 has a doubled operator, `\\phi_{m-1} y_m + + \\ldots`, and 492 has a coefficient with no variable attached, `\\phi_{m-1} y_{m-1} + \\phi_{m-2} + \\ldots + \\phi_0 y_0`. 518-519 then says \"$L^{-1}_{t,s}$ is the element in the $(t,s)$ position of $L$\" - inverse on the left, no inverse on the right - while the display it annotates (512-513) uses $L_{\\cdot,\\cdot}$ with no inverse at all, and 537-538 writes $U^{-1}_{t,t-j} \\to c_j$ where {eq}`onefivetwo` puts $U$, not $U^{-1}$, on the feedback side. Separately, the label at 693 is `:label: JUNK`, a placeholder that is cited twice in the published text (699, 707); 760 says a naive policy \"gives a finite value of {eq}`oneeleven`\" where {eq}`oneeleven` is the factorisation $c(z) = c_0(1-\\lambda_1 z)\\ldots$ and the objective is {eq}`oneone`, which 766 gets right; and the Implementation section (885-892) is a heading, one sentence and a `:load:` cell, so `LQFilter(d, h, y_m)` at 931 is the first and only mention of the class, its constructor signature, or `optimal_y`"
     },
     {
       "rule": "qe-writing-007",
       "count": 3,
-      "lines": [294, 580, 932],
+      "lines": [
+        294,
+        580,
+        932
+      ],
       "detail": "the lecture computes the objects its central claim is about and throws them away. 543-545 says \"by creating the matrix $W$ for large $N$ and factoring it into the $LU$ form, good approximations to $c(L)$ and $c(\\beta L^{-1})^{-1}$ can be obtained\" - and 932 unpacks `y_hist, L, U, y = testlq.optimal_y(a_seq)` and then uses only `y`, so the two matrices whose columns are supposed to converge to $c_j$ (537-539) are never printed, plotted or compared with the polynomial they should approximate. Second, the structure of $W$, $L$ and $U$ is carried entirely by three large symbolic matrices with `\\ldots` and `\\ddots` (294-316, 391-428) spread over two displays that a single `$$` cannot hold (the second breaks across 407 and 409); a spy plot of a numerically built $W$ for, say, $N = 8$, or one worked small instance, would show the \"almost Toeplitz\" claim of 329-336 in one look. Third, the whole selection argument turns on where roots sit relative to a circle of radius $\\sqrt\\beta$ - the $\\beta$-reciprocal pairing at 580-592, $|z_j| > \\sqrt\\beta$ for $j \\leq m$ and $< \\sqrt\\beta$ for $j > m$, and the conclusion at 665-668 - and this is described in thirteen lines of inequalities where a plot of the $2m$ roots against that circle is the natural object. Finally, the three simulations at 950, 956 and 962 are three separate figures of the same two series, so the smoothing claim at 912-914 has to be assembled across them rather than read off one set of axes"
     },
     {
       "rule": "qe-writing-005",
       "count": 5,
-      "lines": [28, 149, 220, 521, 572],
+      "lines": [
+        28,
+        149,
+        220,
+        521,
+        572
+      ],
       "detail": "the two conventions are used the wrong way round on both sides. Bold carries emphasis in the opening bullets - \"the objective function is **quadratic** in **states** and **controls**\" (28) and \"the one-step transition function is **linear**\" (29), four bolded words none of which is being defined - while italic carries definitions throughout the body: *Euler equations* (149) and *terminal conditions* (152), which are introduced there and used for the rest of the lecture, *difference equation* (220) and *characteristic equation* (572). The two genuine bold definitions (**lag operator** 66, **feedback-feedforward** 353) are then undercut by 521-522, which re-introduces the same term in quotation marks (\"the \\\"feedback\\\" part of the optimal control law ... the right-hand side is the \\\"feedforward\\\" part\"), giving one term two markups 168 lines apart; the italics that are genuinely emphasis (*past*, *current*, *future* at 355) are correct and are the only ones"
     },
     {
       "rule": "qe-math-009",
       "count": 4,
-      "lines": [84, 129, 485, 744],
+      "lines": [
+        84,
+        129,
+        485,
+        744
+      ],
       "detail": "the fraction is written both ways for the same job: plain-TeX `{1 \\over 2}` and its relatives at 84, 610, 616-617, 625-626, 695, 702, 704, 831, 1018, 1042 and 1061, against `\\frac` at 794 - and text inside math takes three commands, `\\hbox` (589-590, 653-654, 762, 793-795, 862), `\\textrm` (477-478) and `\\text` (117, 703). 485 and 488 hard-code a horizontal skip as `\\hskip.75in` inside an `aligned` block, an absolute measurement that will not scale with the rendered font. 129 and 899 write the scalar lag polynomial with an identity matrix, $d(L) := \\sqrt{2\\gamma}(I - L)$ and $\\gamma(I - L)y_t$, where $1 - L$ is both simpler and the only correct reading, since $d(L)$ has scalar coefficients $d_0, \\ldots, d_m$ by 71-74. And $\\phi$ is used for two unrelated things: the polynomial and its coefficients $\\phi(L)$, $\\phi_j$ (283-286, 296-301, 450, 483-493), and then at 744-745 a bare scalar, \"$\\{a_t\\}$ is of exponential order less than $\\phi^{-1}$ where $\\phi = \\max\\{\\beta\\lambda_i\\}$\""
     },
     {
       "rule": "qe-writing-002",
       "count": 5,
-      "lines": [34, 220, 336, 490, 760],
+      "lines": [
+        34,
+        220,
+        336,
+        490,
+        760
+      ],
       "detail": "34 is a 43-word sentence carrying two inline URLs and an em-dash aside (\"The classical approach does not use the two closely related methods -- dynamic programming and Kalman filtering -- that we describe in other lectures, namely, [...] and [...]\"), and 36 then continues it with a plural pronoun that has no plural antecedent: \"Instead, they use either\". 220-221 names the order of the difference equation wrongly - \"forms a $2 \\times m$ order linear *difference equation*\", where $2m$-th order is meant - in the sentence that first tells the reader what {eq}`onefour` is. 336 has \"the sub-diagonal elements equal $\\beta$ time the super-diagonal elements\". 490-492 loses two symbols from a display (a doubled `+`, and `\\phi_{m-2}` with no $y_{m-2}$). And 760 sends the reader to the wrong equation - \"gives a finite value of {eq}`oneeleven`\" where 766, six lines later, correctly says {eq}`oneone`"
     },
     {
       "rule": "qe-code-001",
       "count": 4,
-      "lines": [926, 932, 938, 942],
+      "lines": [
+        926,
+        932,
+        938,
+        942
+      ],
       "detail": "938 builds `p_args = {'lw' : 2, 'alpha' : 0.6}` with a space before each colon, which PEP8 forbids, and then never uses it - 940 and 941 spell `ms=4, lw=2, alpha=0.6` out inline instead, so the dict is dead code carrying the only PEP8 spacing error in the cell. 932 unpacks four names from `testlq.optimal_y(a_seq)` and uses one: `y_hist`, `L` and `U` are all discarded (and see the qe-writing-007 finding - `L` and `U` are the objects 543-545 is about). 942-945 closes `ax.set(...)` with a bare `)` on its own line at a 10-space indent that appears nowhere else in the file. And 926-927 puts a blank line between the `def plot_simulation(...)` signature and its first statement, where the function has no docstring to justify it; the parameter `m=1` in that signature is used only to reshape `y_m` at 929 and cannot actually be changed, because `d` at 928 is hard-wired to one lag"
     }
   ],
@@ -64,5 +96,9 @@
   ],
   "scanner_doubts": [
     "lu_tricks.md:25,34 - qe-writing-004 is reported with count 6 across just those two lines, and every hit is inside the label of a markdown link naming another lecture: `[Linear Quadratic Dynamic Programming Problems](https://python-intro.quantecon.org/lqcontrol.html)` on both lines, plus `[A First Look at the Kalman Filter](...)` on 34 (and `[LQ Control: Foundations](...)` at 103). Those are titles, so the capitalisation is correct, and I can find no unnecessary capitalisation in this lecture's narrative text - `LU`, `Toeplitz`, `Euler`, `Wold`, `Blaschke` are all proper. This is the same link-label gap I reported against `permanent_income_dles`, where the fix suggested was to have the check skip the `[...]` label of a markdown link; noting it again only because here it is the largest of the three items setting Writing to 5/10 in a lecture whose prose is otherwise clean"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "602ba38829247b0964bb6a5d65b5852e5d0f0725"
+  }
 }

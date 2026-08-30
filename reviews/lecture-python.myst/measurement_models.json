@@ -2,18 +2,73 @@
   "series": "lecture-python.myst",
   "lecture": "measurement_models",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [236, 343, 599, 1028, 1404],
-     "detail": "five breaks, four of them checkable line by line. (a) The state equation is written with the shock dated one period too early: 343 and 590 give $x_{t+1} = A x_t + \\varepsilon_t$ and 348 defines $\\varepsilon_t = [0, \\theta_t]^\\top$, so with $A$'s second row equal to $[0,0]$ the system says $\\theta_{t+1} = \\theta_t$ - a constant, contradicting assumption 1 at 198 that $\\theta_t$ is white noise. The code has it right in both places: the docstring at 495 writes `x_{t+1} = A x_t + w_{t+1}`, and `table2_irf` (411-419) advances the state with `x = A @ x` and no shock after $t=0$. (b) 599-601 writes $E \\begin{bmatrix}\\varepsilon_t\\end{bmatrix}\\begin{bmatrix}\\varepsilon_t^\\top & \\bar\\nu_t^\\top\\end{bmatrix}$ and equates it to a two-by-two block matrix: $\\bar\\nu_t$ is missing from the left column vector, so the dimensions on the two sides do not match. (c) 1028 defines $[K_2, S_2] = \\text{kalmanfilter}(A, G, Q_2, R_2, 0)$, a routine that appears nowhere; the implementation is `steady_state_kalman` (492) and its signature is `(A, C_obs, Q, R, W)`. (d) 1404-1407 and 1435 disagree about the same result: \"Independent measurement errors break this accounting identity ... The Kalman filter approximately restores it\" against \"the residual for the filtered data is numerically 0\". It is exact, not approximate, and for a reason the lecture never gives - all three filtered series are rows of $C\\hat x_t$ for one $\\hat x_t$, and rows 2 and 3 of $C$ (357-361) sum to row 1, so the identity is an algebraic property of $C$ rather than an artefact of good filtering. (e) 236 and 293 are the identical display carrying two different labels, `income_process` and `income_process_ma`; the second could cite the first"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [836, 863, 1188],
-     "detail": "the lecture's central results are delivered as six LaTeX tables and never plotted. Each `display(Latex(...))` at 836, 904, 1139 and 1181 renders three side-by-side panels of a 20-by-3 or 14-by-3 array - roughly 180 numbers per table - and the reader is then asked to compare them across pages: 1142-1149 compares Model 2's decomposition with Model 1's, and 1188-1191 says \"Readers can compare the left table with the table in the {ref}`true-impulse-responses` section above. / The numbers are essentially the same.\" Comparing two 14-by-3 tables 770 lines apart by eye is exactly what a two-panel line plot removes, and the lecture already has matplotlib configured and seven well-captioned figures in its simulation section (1301-1396), so the tooling is in hand. The same applies to the eigenvalue claims: 866-867 (\"The first eigenvalue is much larger than the others\") and 1126-1127 (\"$V_2$ is close to singular with one dominant eigenvalue\") each rest on a bare `print` of three numbers at 863 and 1161, where one small bar chart of the two spectra side by side would carry the whole Model 1 versus Model 2 comparison that the lecture is about"},
-    {"rule": "qe-code-001", "count": 6, "lines": [422, 492, 717, 742, 1109, 1296],
-     "detail": "`steady_state_kalman` (492-517) hand-iterates the Riccati equation up to 200,000 times to a tolerance of 1e-13 on a two-by-two state, and exits the loop silently when `max_iter` is exhausted (505-513) - while `scipy.linalg` is already imported at 83 and exposes `solve_discrete_are`, which appears nowhere in the file. `T` is bound to a matrix at 742 (`T = psi[j] @ P`) in a file where `.T` is the transpose attribute on almost every line and where $T$ is the sample length in the likelihood at 762 and 1071. The observation dimension is hardcoded seven times rather than derived from the arguments - `np.zeros((2, 3))` at 717, `np.eye(3)` at 720, 725, 1106 and 1110, `np.zeros((3, 3, n_horizons))` at 738, `np.zeros((3, 3))` at 740, `np.eye(2)` at 1111 - so `measured_wold_coeffs` and `fev_contributions` silently only work for this model. `filtered_wold_coeffs(A, C, K, ...)` at 1109 shadows the globals `A` and `C` with its own parameters. `display` is called at 422, 480-482, 836, 854, 904, 1139, 1156 and 1181 but never imported (84 brings in only `Latex`), so every one of those cells relies on the IPython builtin. `t = np.arange(1, 81)` at 1296 hardcodes 81 against the `T=80` passed at 1278 and shadows the loop variable `t` used inside `simulate_series`. And `fev_contributions` recomputes `psi[j] @ P` inside the horizon loop (741-744), doing O(H^2) work where an accumulator does O(H)"},
-    {"rule": "qe-math-009", "count": 3, "lines": [951, 988, 335],
-     "detail": "$\\tilde z_t$ names two different objects and both stay live. 578 defines it as the quasi-difference of the measured data, $\\tilde z_t = \\bar z_{t+1} - D\\bar z_t$, and it is used that way at 591, 619, 630-631, 775-776 and 780; then 951 reassigns it to the agency's *reported filtered* data, $\\tilde z_t = G\\hat x_t$, used that way at 962, 984, 1016, 1047, 1060 and 1066-1067 - so the Model 1 recursion at 775 and the Model 2 recursion at 1066 apply the same symbol to unrelated series. $\\eta_t$ does the same: 437-441 makes it the innovation to the measurement-error AR(1) with covariance $\\Sigma_\\eta$, used at 579, and 984-989 makes it a second, unrelated white noise (\"type 2 ... \\\"typos\\\"\") with covariance $R_2$. And the same number and the same object each get two names: $\\beta$, $f^{-1}$ and $1/f$ all denote the discount factor (218, 226, 231, 287, 376, 406), and the third element of $z_t$ is $\\Delta k_t$ at 335 and 418 but $\\bar k_{t+1} - \\bar k_t$ at 276 and 286, though 360's row of $C$ makes it $k_{t+1}-k_t$"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [44, 52, 535, 1435],
-     "detail": "the `{note}` at 44-47 puts its content on the directive line - `` ```{note} This is why econometrics estimation is often called an ''inverse'' problem, ... `` - so MyST reads that first sentence as the admonition's *argument*, i.e. its title, and renders a note titled with a 25-word sentence; the block also contains three sentences in one paragraph and uses `''...''` (two apostrophes) for quotation marks four times. 52-55 is a 40-word sentence whose core is hard to recover (\"a model of the data reporting agency, one that is workable enough that we can determine the mapping induced jointly by the dynamic economic model and the measurement process to the probability law for the measured data\"). 535-558 then promises the same thing four separate times before constructing anything - \"it is convenient to obtain its population vector autoregression\" (535), \"carries insights about how to interpret estimated vector autoregressions\" (543-546), \"is also useful as an intermediate step\" (548), \"also proves useful as an intermediate step\" (553) - six one-sentence paragraphs of anticipation for one construction. And 1435 says the filtered residual \"is numerically 0\" three paragraphs after 1407 said the filter \"approximately restores\" the identity"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [532, 843, 929, 934],
-     "detail": "the two definitions in the Model 2 section are italic where the rule asks for bold: 929 \"- *seasonal adjustment*: if the components of $v_t$ have strong seasonals ...\" and 934 \"- *data revisions*: if $z_t$ contains current and lagged values ...\", each introducing a term the paragraph then explains. 532 does the same for the lecture's central label - \"We refer to this as *Model 1*\" - while the same label appears unemphasised at 66, 1204 and 1450 and its counterpart \"Model 2\" is never emphasised at all (68, 1142, 1197, 1206, 1455), so one name gets three treatments. In the other direction, **Granger causality** is bolded at 843 and again at 1450, after being used plainly eight times from 209 onward (263, 265, 296-300, 318, 462, 844), so the bold arrives 630 lines after the term's first use and then repeats. Only 613 (**innovations representation**) is a definition bolded at first use, and the four emphases - *not* at 969, *cannot* at 1198 and 1456 - are correctly italic"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        236,
+        343,
+        599,
+        1028,
+        1404
+      ],
+      "detail": "five breaks, four of them checkable line by line. (a) The state equation is written with the shock dated one period too early: 343 and 590 give $x_{t+1} = A x_t + \\varepsilon_t$ and 348 defines $\\varepsilon_t = [0, \\theta_t]^\\top$, so with $A$'s second row equal to $[0,0]$ the system says $\\theta_{t+1} = \\theta_t$ - a constant, contradicting assumption 1 at 198 that $\\theta_t$ is white noise. The code has it right in both places: the docstring at 495 writes `x_{t+1} = A x_t + w_{t+1}`, and `table2_irf` (411-419) advances the state with `x = A @ x` and no shock after $t=0$. (b) 599-601 writes $E \\begin{bmatrix}\\varepsilon_t\\end{bmatrix}\\begin{bmatrix}\\varepsilon_t^\\top & \\bar\\nu_t^\\top\\end{bmatrix}$ and equates it to a two-by-two block matrix: $\\bar\\nu_t$ is missing from the left column vector, so the dimensions on the two sides do not match. (c) 1028 defines $[K_2, S_2] = \\text{kalmanfilter}(A, G, Q_2, R_2, 0)$, a routine that appears nowhere; the implementation is `steady_state_kalman` (492) and its signature is `(A, C_obs, Q, R, W)`. (d) 1404-1407 and 1435 disagree about the same result: \"Independent measurement errors break this accounting identity ... The Kalman filter approximately restores it\" against \"the residual for the filtered data is numerically 0\". It is exact, not approximate, and for a reason the lecture never gives - all three filtered series are rows of $C\\hat x_t$ for one $\\hat x_t$, and rows 2 and 3 of $C$ (357-361) sum to row 1, so the identity is an algebraic property of $C$ rather than an artefact of good filtering. (e) 236 and 293 are the identical display carrying two different labels, `income_process` and `income_process_ma`; the second could cite the first"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        836,
+        863,
+        1188
+      ],
+      "detail": "the lecture's central results are delivered as six LaTeX tables and never plotted. Each `display(Latex(...))` at 836, 904, 1139 and 1181 renders three side-by-side panels of a 20-by-3 or 14-by-3 array - roughly 180 numbers per table - and the reader is then asked to compare them across pages: 1142-1149 compares Model 2's decomposition with Model 1's, and 1188-1191 says \"Readers can compare the left table with the table in the {ref}`true-impulse-responses` section above. / The numbers are essentially the same.\" Comparing two 14-by-3 tables 770 lines apart by eye is exactly what a two-panel line plot removes, and the lecture already has matplotlib configured and seven well-captioned figures in its simulation section (1301-1396), so the tooling is in hand. The same applies to the eigenvalue claims: 866-867 (\"The first eigenvalue is much larger than the others\") and 1126-1127 (\"$V_2$ is close to singular with one dominant eigenvalue\") each rest on a bare `print` of three numbers at 863 and 1161, where one small bar chart of the two spectra side by side would carry the whole Model 1 versus Model 2 comparison that the lecture is about"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        422,
+        492,
+        717,
+        742,
+        1109,
+        1296
+      ],
+      "detail": "`steady_state_kalman` (492-517) hand-iterates the Riccati equation up to 200,000 times to a tolerance of 1e-13 on a two-by-two state, and exits the loop silently when `max_iter` is exhausted (505-513) - while `scipy.linalg` is already imported at 83 and exposes `solve_discrete_are`, which appears nowhere in the file. `T` is bound to a matrix at 742 (`T = psi[j] @ P`) in a file where `.T` is the transpose attribute on almost every line and where $T$ is the sample length in the likelihood at 762 and 1071. The observation dimension is hardcoded seven times rather than derived from the arguments - `np.zeros((2, 3))` at 717, `np.eye(3)` at 720, 725, 1106 and 1110, `np.zeros((3, 3, n_horizons))` at 738, `np.zeros((3, 3))` at 740, `np.eye(2)` at 1111 - so `measured_wold_coeffs` and `fev_contributions` silently only work for this model. `filtered_wold_coeffs(A, C, K, ...)` at 1109 shadows the globals `A` and `C` with its own parameters. `display` is called at 422, 480-482, 836, 854, 904, 1139, 1156 and 1181 but never imported (84 brings in only `Latex`), so every one of those cells relies on the IPython builtin. `t = np.arange(1, 81)` at 1296 hardcodes 81 against the `T=80` passed at 1278 and shadows the loop variable `t` used inside `simulate_series`. And `fev_contributions` recomputes `psi[j] @ P` inside the horizon loop (741-744), doing O(H^2) work where an accumulator does O(H)"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        951,
+        988,
+        335
+      ],
+      "detail": "$\\tilde z_t$ names two different objects and both stay live. 578 defines it as the quasi-difference of the measured data, $\\tilde z_t = \\bar z_{t+1} - D\\bar z_t$, and it is used that way at 591, 619, 630-631, 775-776 and 780; then 951 reassigns it to the agency's *reported filtered* data, $\\tilde z_t = G\\hat x_t$, used that way at 962, 984, 1016, 1047, 1060 and 1066-1067 - so the Model 1 recursion at 775 and the Model 2 recursion at 1066 apply the same symbol to unrelated series. $\\eta_t$ does the same: 437-441 makes it the innovation to the measurement-error AR(1) with covariance $\\Sigma_\\eta$, used at 579, and 984-989 makes it a second, unrelated white noise (\"type 2 ... \\\"typos\\\"\") with covariance $R_2$. And the same number and the same object each get two names: $\\beta$, $f^{-1}$ and $1/f$ all denote the discount factor (218, 226, 231, 287, 376, 406), and the third element of $z_t$ is $\\Delta k_t$ at 335 and 418 but $\\bar k_{t+1} - \\bar k_t$ at 276 and 286, though 360's row of $C$ makes it $k_{t+1}-k_t$"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        44,
+        52,
+        535,
+        1435
+      ],
+      "detail": "the `{note}` at 44-47 puts its content on the directive line - `` ```{note} This is why econometrics estimation is often called an ''inverse'' problem, ... `` - so MyST reads that first sentence as the admonition's *argument*, i.e. its title, and renders a note titled with a 25-word sentence; the block also contains three sentences in one paragraph and uses `''...''` (two apostrophes) for quotation marks four times. 52-55 is a 40-word sentence whose core is hard to recover (\"a model of the data reporting agency, one that is workable enough that we can determine the mapping induced jointly by the dynamic economic model and the measurement process to the probability law for the measured data\"). 535-558 then promises the same thing four separate times before constructing anything - \"it is convenient to obtain its population vector autoregression\" (535), \"carries insights about how to interpret estimated vector autoregressions\" (543-546), \"is also useful as an intermediate step\" (548), \"also proves useful as an intermediate step\" (553) - six one-sentence paragraphs of anticipation for one construction. And 1435 says the filtered residual \"is numerically 0\" three paragraphs after 1407 said the filter \"approximately restores\" the identity"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        532,
+        843,
+        929,
+        934
+      ],
+      "detail": "the two definitions in the Model 2 section are italic where the rule asks for bold: 929 \"- *seasonal adjustment*: if the components of $v_t$ have strong seasonals ...\" and 934 \"- *data revisions*: if $z_t$ contains current and lagged values ...\", each introducing a term the paragraph then explains. 532 does the same for the lecture's central label - \"We refer to this as *Model 1*\" - while the same label appears unemphasised at 66, 1204 and 1450 and its counterpart \"Model 2\" is never emphasised at all (68, 1142, 1197, 1206, 1455), so one name gets three treatments. In the other direction, **Granger causality** is bolded at 843 and again at 1450, after being used plainly eight times from 209 onward (263, 265, 296-300, 318, 462, 844), so the bold arrives 630 lines after the term's first use and then repeats. Only 613 (**innovations representation**) is a definition bolded at first use, and the four emphases - *not* at 969, *cannot* at 1198 and 1456 - are correctly italic"
+    }
   ],
   "strengths": [
     "The two measurement models are built as a matched pair and the comparison is made possible by construction: the same $[A, C, Q]$ (373-393) and the same $[D, \\Sigma_\\eta, R]$ (467-476) feed both, `steady_state_kalman` is called once for each (673, 1106), and the two Wold representations, decompositions and impulse responses are then rendered with the same three helper functions (`fev_table`, `wold_response_table`, `df_to_latex_array`) - so any difference the reader sees is a difference in the reporting scheme and nothing else",
@@ -37,5 +92,9 @@
   ],
   "scanner_doubts": [
     "Cleared, not filed. (1) `qe-math-010` (proposed) at 9 excludes line 141, `E \\sum_{t=0}^{\\infty} \\beta^t(\\ldots)` in {eq}`planner_obj`, and also 349 (`E \\varepsilon_t \\varepsilon_t^\\top = Q`), 441-442 and 663 (`V_1 = E\\, u_t u_t^\\top`). All are bare `E` followed by a command or a space rather than a delimiter, which is the already-filed bare-letter-branch gap (`E_0 \\sum` missed), so I leave the count alone; worth noting for triage that the true site count in this file is roughly double the measured 9, and that the nine that were caught are all the `E[` shape. (2) `qe-math-011` (proposed) at 1 (line 328, `$\\theta_t \\sim \\mathcal{N}(0, 1)$`) is a correct hit and not the false-positive shape I saw in `svd_intro`: here `\\mathcal{N}` really is the normal distribution, it follows `\\sim`, and it is the only decorated distribution name in the file. (3) `qe-math-014` and `qe-math-015` (proposed) do not apply - the file contains no `\\mathbb` anything and no `\\Pr`, so there is no probability operator whose delimiters could be judged, and no density or CDF is named. (4) `qe-code-002` at 8 is right and unusually informative: all eight sites are the identifier `psi` (725, 728, 730, 733, 742, 1110, 1113, 1115), and the rest of the file already uses Unicode Greek throughout (`\\u03b2` 376, `\\u03c1` 468, `\\u03c3_\\u03b7` 472, `\\u03a3_\\u03b7` 473, `\\u03b5` 1104, `\\u03b8` 1228, `\\u03b7_t` 1245), so this is one holdout rather than a lecture-wide habit. (5) `qe-fig-005` at 0 is a genuine pass, not a gap - I checked all eight figure cells and seven carry caption, `name` and `alt` (1301-1396) while the eighth (1412-1417) carries caption and `name`, which is what the rule requires"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "ea4133a819c646385b491f131cf5205971b05e6d"
+  }
 }

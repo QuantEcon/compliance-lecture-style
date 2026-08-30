@@ -2,18 +2,81 @@
   "series": "lecture-dp",
   "lecture": "opt_tax_recur",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [323, 405, 1072],
-     "detail": "three places where the argument does not connect. (1) Line 323 attaches the Lagrange multiplier to the wrong equation - 'where $\\Phi$ is a Lagrange multiplier on the implementability condition {eq}`TS_bcPV2`' - but `TS_bcPV2` (243-249) is the household's present-value budget constraint; the implementability condition is `TSs_cham1` (292-298), which is what line 495 correctly cites for the same multiplier. (2) Line 403 promises 'time $t=0$ quantities $c_0$ and $n_0$ satisfy' and the display that follows (405-415) is written entirely in $c$ and $g$ with no time-0 subscripts, so it is textually identical to {eq}`TS_barg` apart from the trailing $\\Phi(u_{cc}-u_{c,\\ell})b_0$ - the reader cannot tell which variables are the time-0 ones. (3) The state ordering breaks between the prose and the code: 1053-1056 enumerates the six states as $(0,g_l),(1,g_l),(2,g_l),(3,g_l),(3,g_h),(t\\geq4,g_l)$ and the display at 1071-1073 puts $0.2$ in the fifth component, but the code at 1109 is `g = np.array([0.1, 0.1, 0.1, 0.2, 0.1, 0.1])` with the war in the fourth. The figure is right because `sHist_h` at 1114 visits index 3, but a reader checking the code against the display finds them swapped"},
-    {"rule": "qe-math-009", "count": 15, "lines": [262, 282, 286, 351, 355, 367, 372, 504, 512, 584, 589, 659, 722, 810, 1078],
-     "detail": "three notation collisions, each with a simpler spelling already used elsewhere in the same file. (1) Division is written three ways: `{\\frac{u_l}{u_c}}` with decorative outer braces (262, 504, 512, 584, 589, 659, 1078), the TeX primitive `{u_c(s^{t}) \\over u_c(s^0)}` (282, 286), and plain `\\frac` (715, 1157). The outer braces do nothing and `\\over` is the legacy spelling of the `\\frac` the file already uses. (2) `\\rm{:}` labels the four first-order conditions (351, 355, 367, 372) where a bare `:` renders identically - `\\rm` is a font switch, so `\\rm{:}` is also a misuse of it. (3) The state set is `{\\cal S}` at 84, 820, 826, 837, 848, 858, 934 but bare `S` inside the very Bellman equation those constraints belong to, `\\sum_{s'\\in S}` at 810. Also at 722-726 a single equation with no alignment point is wrapped in `\\begin{aligned}`"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [499, 640, 1208],
-     "detail": "the same content delivered twice. (1) 499-513 re-derives what 259-271 already established: {eq}`LSA_ta` is character-for-character {eq}`LSA_taxr` and {eq}`LSA_Arro` differs from {eq}`LS101` only in writing $\\Pi(s_{t+1}|s_t)$ for $\\pi(s_{t+1}|s^t)$, so two labelled equations exist for each object and later text has to pick one. (2) 640-642 says one thing in two sentences - 'The means that a Ramsey plan is *not time consistent*.' then 'Another way to say the same thing is that a Ramsey plan is *time inconsistent*.' (3) The whole H3 '### Time 0 manipulation of interest rate' (1208-1218) restates 1146-1165 with no new content - lower the $t=0$ tax rate, raise $c_0$, lower $u_{c,0}$, lower the value of $b_0$ - and 1260-1272 then says it a third time from the figure"},
-    {"rule": "qe-writing-005", "count": 7, "lines": [214, 230, 286, 466, 745, 978, 1135],
-     "detail": "the file bolds a term at its definition seven times - **government policy** (161), **feasible allocation** (164), **price system** (167), **competitive equilibrium with distorting taxes** (173), **Ramsey problem** (187), **Ramsey allocation** (234), **continuation Ramsey planner** (793) - and then italicises five more at exactly the same moment: *primal approach* (214, 'called the *primal approach*'), *implementability constraint* (230, 'is regarded as an'), *stochastic discount factor* (286, 'what finance economists call a'), *time-inconsistency* (466) and *state-variable degeneracy* (978, 'this implies'). Line 745 puts a third format on the same job, marking the prose word `backward-looking` as inline code, and 1135 uses a bold line ('**Tax smoothing**') as a section heading where the file's other section breaks are H3s"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [747, 1053],
-     "detail": "the first figure appears at line 1119, so the 1,000 lines of theory carry no visual at all, and the two constructions most in need of one are both there. '### Intertemporal delegation' (747-800) is a hand-off across dates - a time-0 planner passing $x_1(s_1)$ to a time-1 continuation planner which passes $x_2$ onward - which is a timeline with arrows and is instead carried by eight paragraphs of prose. The war example (1053-1067) has a six-node state structure whose whole point is the 0.5/0.5 branch at $t=3$ and then a merge at $t \\geq 4$; the lecture prints the $6\\times6$ transition matrix instead of the three-line graph, and a graph would have made the state-ordering mismatch at 1072/1109 visible on sight"},
-    {"rule": "qe-code-001", "count": 3, "lines": [1174, 1245, 1393],
-     "detail": "the loop at 1393-1396 indents its body 35 columns to line up under `zip(`'s arguments rather than four columns under `for` - `ax.plot(...)`, `ax.set(...)` and `ax.grid()` all sit at the continuation indent. It runs, but the identical loop at 1123-1129 is written correctly, so the file disagrees with itself. Two smaller PEP8 points in the same cells: `figsize=(10,8)` at 1245 omits the space after the comma that 1119, 1174, 1314 and 1389 all include, and 1174 binds the figure to `fix` rather than `fig` (a typo that survives only because the name is never used again)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        323,
+        405,
+        1072
+      ],
+      "detail": "three places where the argument does not connect. (1) Line 323 attaches the Lagrange multiplier to the wrong equation - 'where $\\Phi$ is a Lagrange multiplier on the implementability condition {eq}`TS_bcPV2`' - but `TS_bcPV2` (243-249) is the household's present-value budget constraint; the implementability condition is `TSs_cham1` (292-298), which is what line 495 correctly cites for the same multiplier. (2) Line 403 promises 'time $t=0$ quantities $c_0$ and $n_0$ satisfy' and the display that follows (405-415) is written entirely in $c$ and $g$ with no time-0 subscripts, so it is textually identical to {eq}`TS_barg` apart from the trailing $\\Phi(u_{cc}-u_{c,\\ell})b_0$ - the reader cannot tell which variables are the time-0 ones. (3) The state ordering breaks between the prose and the code: 1053-1056 enumerates the six states as $(0,g_l),(1,g_l),(2,g_l),(3,g_l),(3,g_h),(t\\geq4,g_l)$ and the display at 1071-1073 puts $0.2$ in the fifth component, but the code at 1109 is `g = np.array([0.1, 0.1, 0.1, 0.2, 0.1, 0.1])` with the war in the fourth. The figure is right because `sHist_h` at 1114 visits index 3, but a reader checking the code against the display finds them swapped"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 15,
+      "lines": [
+        262,
+        282,
+        286,
+        351,
+        355,
+        367,
+        372,
+        504,
+        512,
+        584,
+        589,
+        659,
+        722,
+        810,
+        1078
+      ],
+      "detail": "three notation collisions, each with a simpler spelling already used elsewhere in the same file. (1) Division is written three ways: `{\\frac{u_l}{u_c}}` with decorative outer braces (262, 504, 512, 584, 589, 659, 1078), the TeX primitive `{u_c(s^{t}) \\over u_c(s^0)}` (282, 286), and plain `\\frac` (715, 1157). The outer braces do nothing and `\\over` is the legacy spelling of the `\\frac` the file already uses. (2) `\\rm{:}` labels the four first-order conditions (351, 355, 367, 372) where a bare `:` renders identically - `\\rm` is a font switch, so `\\rm{:}` is also a misuse of it. (3) The state set is `{\\cal S}` at 84, 820, 826, 837, 848, 858, 934 but bare `S` inside the very Bellman equation those constraints belong to, `\\sum_{s'\\in S}` at 810. Also at 722-726 a single equation with no alignment point is wrapped in `\\begin{aligned}`"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        499,
+        640,
+        1208
+      ],
+      "detail": "the same content delivered twice. (1) 499-513 re-derives what 259-271 already established: {eq}`LSA_ta` is character-for-character {eq}`LSA_taxr` and {eq}`LSA_Arro` differs from {eq}`LS101` only in writing $\\Pi(s_{t+1}|s_t)$ for $\\pi(s_{t+1}|s^t)$, so two labelled equations exist for each object and later text has to pick one. (2) 640-642 says one thing in two sentences - 'The means that a Ramsey plan is *not time consistent*.' then 'Another way to say the same thing is that a Ramsey plan is *time inconsistent*.' (3) The whole H3 '### Time 0 manipulation of interest rate' (1208-1218) restates 1146-1165 with no new content - lower the $t=0$ tax rate, raise $c_0$, lower $u_{c,0}$, lower the value of $b_0$ - and 1260-1272 then says it a third time from the figure"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 7,
+      "lines": [
+        214,
+        230,
+        286,
+        466,
+        745,
+        978,
+        1135
+      ],
+      "detail": "the file bolds a term at its definition seven times - **government policy** (161), **feasible allocation** (164), **price system** (167), **competitive equilibrium with distorting taxes** (173), **Ramsey problem** (187), **Ramsey allocation** (234), **continuation Ramsey planner** (793) - and then italicises five more at exactly the same moment: *primal approach* (214, 'called the *primal approach*'), *implementability constraint* (230, 'is regarded as an'), *stochastic discount factor* (286, 'what finance economists call a'), *time-inconsistency* (466) and *state-variable degeneracy* (978, 'this implies'). Line 745 puts a third format on the same job, marking the prose word `backward-looking` as inline code, and 1135 uses a bold line ('**Tax smoothing**') as a section heading where the file's other section breaks are H3s"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        747,
+        1053
+      ],
+      "detail": "the first figure appears at line 1119, so the 1,000 lines of theory carry no visual at all, and the two constructions most in need of one are both there. '### Intertemporal delegation' (747-800) is a hand-off across dates - a time-0 planner passing $x_1(s_1)$ to a time-1 continuation planner which passes $x_2$ onward - which is a timeline with arrows and is instead carried by eight paragraphs of prose. The war example (1053-1067) has a six-node state structure whose whole point is the 0.5/0.5 branch at $t=3$ and then a merge at $t \\geq 4$; the lecture prints the $6\\times6$ transition matrix instead of the three-line graph, and a graph would have made the state-ordering mismatch at 1072/1109 visible on sight"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        1174,
+        1245,
+        1393
+      ],
+      "detail": "the loop at 1393-1396 indents its body 35 columns to line up under `zip(`'s arguments rather than four columns under `for` - `ax.plot(...)`, `ax.set(...)` and `ax.grid()` all sit at the continuation indent. It runs, but the identical loop at 1123-1129 is written correctly, so the file disagrees with itself. Two smaller PEP8 points in the same cells: `figsize=(10,8)` at 1245 omits the space after the comma that 1119, 1174, 1314 and 1389 all include, and 1174 binds the figure to `fix` rather than `fig` (a typo that survives only because the name is never used again)"
+    }
   ],
   "strengths": [
     "The prime is defined before it is used: 553-554 states 'where $s'$ denotes a next period value of $s$ and $x'(s')$ denotes a next period value of $x$', which is what makes the roughly forty primes from 550 onward ($s'$, $x'(s')$, $x_{t+1}$) unambiguous in a literature where the same mark is a transpose",
@@ -35,5 +98,9 @@
     "Mechanical clean-up, from the drafted counts: drop `figsize=` on the 5 figures (1119, 1174, 1245, 1314, 1389), move the 5 embedded titles into mystnb captions (1127, 1175, 1250, 1316, 1395) and add `name:` metadata to the 5 code-cell figures, add `lw=2` at 1128, 1176 and 1394, lowercase the axis label at 1254, use `{cite:t}` at 55, split the multi-sentence paragraphs at 55, 286 and 654, and remove the 106 double spaces",
     "Sync with the upstream twin: `lecture-python-advanced.myst/lectures/opt_tax_recur.md` is the same file with two fixes this copy has not taken - 'describes a special case' (34) and 'government' for 'goverment' (46). Fix upstream and re-sync rather than patching here"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "c30490a2f48867d155d92c3c94a6cd6bfbda82a5",
+    "blob": "9f43db1ec04b22569a73ad3da2d793d392afc95e"
+  }
 }

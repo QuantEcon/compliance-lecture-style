@@ -89,5 +89,9 @@
   ],
   "scanner_doubts": [
     "opt_tax_recur.md:810,820,826 - qe-math-002 is reported with count 3 and all three are false positives of the same kind reported at length for tsyrennikov_2013.md: the prime here is next-period notation in a recursive problem, not a transpose. The file contains no `\\top`, no `^T` and no matrix transpose; `s'` occurs 20 times and `x'` 13 times, all as \"next period's state\" and \"next period's $x$\" (defined as such by {eq}`LSA_Bellman1` at 810). The specific branch that fires is `prime_vec` in `check_math_002` - `(?<![A-Za-z0-9\\\\])([a-z])'(?=\\s*(?:[A-Za-z]|\\\\[A-Za-z]))` - which matches `s'` whenever the next token is a LaTeX command, so `\\sum_{s'\\in S}` (810), `\\sum_{s' \\in {\\cal S}}` (820) and `$s' \\in {\\cal S}$` (826) all count while the twelve other `s'` occurrences, followed by `)` or `|`, do not. That the same construction is counted three times out of twenty is itself a sign the branch is not measuring what it names. With only 3 hits here the Math score is barely affected (`qe-math-003` ×2 and `qe-math-010` ×2 are the real findings), but the same gap costs tsyrennikov_2013 54 occurrences and a HIGH priority, so a fix there should be re-run against this file"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "844a4468c2c60d1380f9e0529683e89b5748b81e"
+  }
 }

@@ -1,0 +1,19 @@
+# Version updates for the workflows in .github/workflows/. Both of them pin
+# actions at a floating major (actions/checkout@v4, actions/setup-python@v5,
+# actions/upload-pages-artifact@v3, actions/deploy-pages@v4), which does not
+# carry a major bump — UPDATE.md § Known follow-ups already tracks
+# actions/deploy-pages@v4 needing one for the Node 20 deprecation by hand.
+# Dependabot is what every sibling repo in the lecture family uses to notice
+# those; this repo had no configuration at all.
+#
+# pip is deliberately not enabled. requirements.txt is pinned to QuantEcon's
+# known-good lecture-build combination, so a version bump there is a decision
+# about the build environment, not a security-and-freshness chore.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: ⬆️

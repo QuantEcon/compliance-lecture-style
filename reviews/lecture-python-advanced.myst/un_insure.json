@@ -2,18 +2,73 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "un_insure",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [411, 705, 700, 847],
-     "detail": "step 6 of the Algorithm at 705 states the iteration as $C_{j+1}(V) = \\min_{c,a,V^u}\\{c - \\beta[1-p(a)]C_j(V)\\}$ - a minus sign where {eq}`eq:hugo23` (489) and {eq}`eq:yad3` (662) both have a plus, and $C_j(V)$ where both have $C(V^u)$, so the one line a reader would copy to implement the algorithm is wrong in two places. Step 1 (700) also posits two grids, $grid_V$ for $V$ and $Vu_{grid}$ for $V^u$, but only `Vu_grid` is ever built (791) and `iterate_C` uses it for both, passing `Vu_grid[V_i]` as the promised value at 732. Second, 411-413 is an entirely empty `{code-cell} ipython3`, which renders as a blank input cell in the middle of the theory, followed by three blank lines. Third, the figure legend at 847 hard-codes `'$V^u_0$ = 16759 (aut)'` while the autarky value it names is computed at 635 from the calibrated $r$ - so a recalibration silently makes the legend false, and the two companion labels at 849 and 851 hard-code 16942 and 17000, the magic numbers from 823, with nothing saying where they came from"},
-    {"rule": "qe-code-001", "count": 9, "lines": [512, 554, 592, 623, 671, 711, 743, 759, 836],
-     "detail": "the module-level helpers take `self` as their first parameter without being methods of anything - `def u(self, c)` at 554, and the same at 558, 592, 609, 671, 682, 711 and 758 - and are then called as `u(self, 0)` (597) and `iterate_C(self, C_old, Vu_grid)` (766), so the name PEP8 reserves for instance methods is used throughout for a plain first argument. The class it shadows is itself misnamed: `class params_instance` at 512 uses lowercase_with_underscores where PEP8 asks for CapWords. 623-624 assign two lambdas to names (`Vu_error_Λ = lambda Vu, r: ...`), which PEP8 explicitly asks to be written as `def`. 759 binds `iter`, shadowing the builtin, inside a loop that then uses it as a counter. The three docstrings at 672-675, 683-685 and 712-714 use `'''` where the rest of the corpus and PEP257 use `\"\"\"`. 836 names a variable `fontSize` in camelCase. And 739-741 and 743-744 run past 79 columns"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [395, 66, 531, 641, 889, 566],
-     "detail": "several sentences are incomplete or mis-typed rather than merely long. 395 is missing its subject: \"The  of benefits on the duration of unemployment is  designed to provide the worker an incentive to search\". 66 reads \"we'll use assume the same $p(a)$ function\". 531 has both \"an observerd hazard rate\" and a dropped noun in \"the probability that an unemployed worker finds a job each  --  in US data\". 641 reads \"Now that we have calibrated our the parameter $r$\". 889-890 reads \"search effort rise as the duration of unemployment increases\". Separately, three equations are restated under new labels rather than referenced: {eq}`eq:yad1` at 566 repeats {eq}`eq:hugo3` (121), {eq}`eq:yad2` at 572 repeats {eq}`eq:hugo4` (128), and {eq}`eq:yad3` at 662 repeats {eq}`eq:hugo5` (192), leaving six labels for three objects. 57-58 (\"The probability of finding a job is $p(a)$\") likewise restates 49-52"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [794],
-     "detail": "the cost function $C(V)$ is the object the entire lecture solves for, its strict convexity is invoked at 178-181, 234-235, 341 and 383 to derive both central results ($V^u = V$ under full information, $V^u < V$ under private information), and it is computed on a 50-point grid at 794 - and it is never plotted. Nor are the three policy functions returned alongside it (`V_star`, `cons_star`, `a_star`, 794), which are used only to simulate paths. The single figure in the lecture (835-864) shows those simulated paths, and even there the full-information benchmark that 881-884 describes in words - a constant replacement ratio over the spell - is not drawn on the same axes as the declining private-information schedule, though that one overlay would make the lecture's central contrast visible in a single panel"},
-    {"rule": "qe-math-009", "count": 3, "lines": [566, 700, 137],
-     "detail": "the job-finding probability is written $p_r(a)$ and $p_r'(a)$ at 566 and 572 and plain $p(a)$, $p'(a)$ everywhere else (58, 62, 121, 128, 192, 278, 401, 432, 437) for the same function - the subscript adds nothing the surrounding text does not already say. 700 sets code identifiers in math mode, $grid_V$ and $Vu_{grid}$, which typeset as products of italic letters and use two different conventions for the same kind of object in one line; backticks would render them as the names they are. And $V_{\\rm aut}$ (137, 142, 145, 166, 266, 426, 810, 868, 870) uses the deprecated `\\rm` switch rather than `\\mathrm{aut}`"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [268, 272],
-     "detail": "268-269 sets **increases** and **decreases** in bold purely for contrast (\"It **increases** the unemployed worker's consumption $c$ and **decreases** his search effort $a$\") and 272 sets **higher** the same way, where the rule asks for italic - and the same passage uses italic correctly for emphasis three times, at 296 (*lowering*) and 312-313 (*both*, *and*). The bold at 78 (**insurance agency**, **planner**) and 893-899 (**carrot-and-stick**, **carrot**, **stick**) is correct definitional use, so the file already knows the distinction"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        411,
+        705,
+        700,
+        847
+      ],
+      "detail": "step 6 of the Algorithm at 705 states the iteration as $C_{j+1}(V) = \\min_{c,a,V^u}\\{c - \\beta[1-p(a)]C_j(V)\\}$ - a minus sign where {eq}`eq:hugo23` (489) and {eq}`eq:yad3` (662) both have a plus, and $C_j(V)$ where both have $C(V^u)$, so the one line a reader would copy to implement the algorithm is wrong in two places. Step 1 (700) also posits two grids, $grid_V$ for $V$ and $Vu_{grid}$ for $V^u$, but only `Vu_grid` is ever built (791) and `iterate_C` uses it for both, passing `Vu_grid[V_i]` as the promised value at 732. Second, 411-413 is an entirely empty `{code-cell} ipython3`, which renders as a blank input cell in the middle of the theory, followed by three blank lines. Third, the figure legend at 847 hard-codes `'$V^u_0$ = 16759 (aut)'` while the autarky value it names is computed at 635 from the calibrated $r$ - so a recalibration silently makes the legend false, and the two companion labels at 849 and 851 hard-code 16942 and 17000, the magic numbers from 823, with nothing saying where they came from"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 9,
+      "lines": [
+        512,
+        554,
+        592,
+        623,
+        671,
+        711,
+        743,
+        759,
+        836
+      ],
+      "detail": "the module-level helpers take `self` as their first parameter without being methods of anything - `def u(self, c)` at 554, and the same at 558, 592, 609, 671, 682, 711 and 758 - and are then called as `u(self, 0)` (597) and `iterate_C(self, C_old, Vu_grid)` (766), so the name PEP8 reserves for instance methods is used throughout for a plain first argument. The class it shadows is itself misnamed: `class params_instance` at 512 uses lowercase_with_underscores where PEP8 asks for CapWords. 623-624 assign two lambdas to names (`Vu_error_Λ = lambda Vu, r: ...`), which PEP8 explicitly asks to be written as `def`. 759 binds `iter`, shadowing the builtin, inside a loop that then uses it as a counter. The three docstrings at 672-675, 683-685 and 712-714 use `'''` where the rest of the corpus and PEP257 use `\"\"\"`. 836 names a variable `fontSize` in camelCase. And 739-741 and 743-744 run past 79 columns"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        395,
+        66,
+        531,
+        641,
+        889,
+        566
+      ],
+      "detail": "several sentences are incomplete or mis-typed rather than merely long. 395 is missing its subject: \"The  of benefits on the duration of unemployment is  designed to provide the worker an incentive to search\". 66 reads \"we'll use assume the same $p(a)$ function\". 531 has both \"an observerd hazard rate\" and a dropped noun in \"the probability that an unemployed worker finds a job each  --  in US data\". 641 reads \"Now that we have calibrated our the parameter $r$\". 889-890 reads \"search effort rise as the duration of unemployment increases\". Separately, three equations are restated under new labels rather than referenced: {eq}`eq:yad1` at 566 repeats {eq}`eq:hugo3` (121), {eq}`eq:yad2` at 572 repeats {eq}`eq:hugo4` (128), and {eq}`eq:yad3` at 662 repeats {eq}`eq:hugo5` (192), leaving six labels for three objects. 57-58 (\"The probability of finding a job is $p(a)$\") likewise restates 49-52"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        794
+      ],
+      "detail": "the cost function $C(V)$ is the object the entire lecture solves for, its strict convexity is invoked at 178-181, 234-235, 341 and 383 to derive both central results ($V^u = V$ under full information, $V^u < V$ under private information), and it is computed on a 50-point grid at 794 - and it is never plotted. Nor are the three policy functions returned alongside it (`V_star`, `cons_star`, `a_star`, 794), which are used only to simulate paths. The single figure in the lecture (835-864) shows those simulated paths, and even there the full-information benchmark that 881-884 describes in words - a constant replacement ratio over the spell - is not drawn on the same axes as the declining private-information schedule, though that one overlay would make the lecture's central contrast visible in a single panel"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        566,
+        700,
+        137
+      ],
+      "detail": "the job-finding probability is written $p_r(a)$ and $p_r'(a)$ at 566 and 572 and plain $p(a)$, $p'(a)$ everywhere else (58, 62, 121, 128, 192, 278, 401, 432, 437) for the same function - the subscript adds nothing the surrounding text does not already say. 700 sets code identifiers in math mode, $grid_V$ and $Vu_{grid}$, which typeset as products of italic letters and use two different conventions for the same kind of object in one line; backticks would render them as the names they are. And $V_{\\rm aut}$ (137, 142, 145, 166, 266, 426, 810, 868, 870) uses the deprecated `\\rm` switch rather than `\\mathrm{aut}`"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        268,
+        272
+      ],
+      "detail": "268-269 sets **increases** and **decreases** in bold purely for contrast (\"It **increases** the unemployed worker's consumption $c$ and **decreases** his search effort $a$\") and 272 sets **higher** the same way, where the rule asks for italic - and the same passage uses italic correctly for emphasis three times, at 296 (*lowering*) and 312-313 (*both*, *and*). The bold at 78 (**insurance agency**, **planner**) and 893-899 (**carrot-and-stick**, **carrot**, **stick**) is correct definitional use, so the file already knows the distinction"
+    }
   ],
   "strengths": [
     "The lecture builds its result by stacking three models that differ in exactly one assumption each, and says so as it goes: autarky (94-155), full information where the agency controls both $c$ and $a$ (157-254), and private information where it controls only $c$ (315-409) - with 311-313 stating precisely what the full-information contract rests on before that assumption is removed",
@@ -35,5 +90,9 @@
     "Sweep the measured items: the 107 double spaces, `lw=2` on the six `plot` calls (846-859), lowercase axis labels at 852, 861 and 862, the two `plt.title` calls at 854 and 863 moved into `mystnb` figure metadata on the cell at 835, the seven `plt.rc` overrides at 837-842 and the `figsize` at 844 removed, `{cite:t}` after \"Following\" at 317, and `a` put into math mode at 575",
     "Signpost the two comparisons at 265-274 so they do not read as a contradiction: 268-269 says the agency *decreases* search effort relative to autarky, 271-274 says the prescribed effort is *higher* than the worker would choose at that consumption level, and nothing in between says the baseline has changed"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "6843f5d7be110da87ed13ea923dc706b15e5550d"
+  }
 }

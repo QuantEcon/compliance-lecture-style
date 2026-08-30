@@ -19,5 +19,9 @@
   ],
   "scanner_doubts": [
     "No judgment findings, and this is a genuine zero rather than a light reading. All eight judgment rules were checked against this page: `qe-math-009`, `qe-math-014` and `qe-math-015` (proposed) have no site to fire on - the file contains no math environment and no `$...$` at all - and `qe-code-001` likewise has none, since there is no executable code cell (the two `pip` commands at 49-50 are inline code in a bullet list and are both correct). `qe-writing-005` is satisfied vacuously: the page introduces no term, so there is nothing that should be bold and nothing is emphasised in either weight. `qe-writing-002` and `qe-writing-003` hold on the merits - the ordering at 27-72 runs scope, assumption, most-likely cause, remedy, fallback, escape, escalate, with \"First\" and \"Second\" at 54 and 60 answering \"two things\" at 52, and every sentence carries information. On `qe-writing-007` I considered whether the key fact at 38 belongs in a `{note}` or `{important}` admonition, since the Admonitions category is `N/A` for this file; I decided against filing it - a 46-line support page whose one visual is a screenshot of the button its previous sentence names is using visual elements correctly, and turning a running sentence into an admonition here would be a preference, not a rule violation"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "5506ea71518d4a10f2637267d717cfd40a2e0af6"
+  }
 }

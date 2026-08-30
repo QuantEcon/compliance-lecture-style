@@ -66,5 +66,9 @@
   ],
   "scanner_doubts": [
     "qe-writing-001 ×3 at jax_intro.md:160, 900, 971 - two of the three (160, 971) are inside `{note}` directives, not running prose. qe-writing-001 counts the bodies of admonition directives as ordinary prose. tools/qestyle_rules.py:_paragraph_blocks (line 214) excludes headings, list items, tables, targets and option lines but not directive bodies, and no rule in tools/ mentions `epigraph`, `note`, `tip` or `admonition`."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "748f0eb32970d3f751eb51fa07681e1c8048895d"
+  }
 }

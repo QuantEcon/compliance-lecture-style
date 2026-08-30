@@ -2,18 +2,76 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "chang_ramsey",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [490, 594, 897, 1022],
-     "detail": "1022-1023 says \"The two sets of parameters differ only in the level of $\\beta$\", and the cell immediately below differs in five arguments: `ch1 = ChangModel(β=0.3, mbar=30, h_min=0.99, h_max=1/0.3, n_h=8, n_m=35, N_g=50)` against `ch2 = ChangModel(β=0.8, mbar=30, h_min=0.1, h_max=1/0.8, n_h=20, n_m=50, N_g=50)` (1030-1033). Worse, the $\\Omega$ bounds quoted at 1025-1027 as coming \"From the figures earlier in this lecture\" were produced by the *earlier* pair of models (929, 967), which used `h_min=0.9`, `h_max=2` and `N_g=10`, so the sets and the value functions that 1050-1051 says \"trace out the right edges of the sets of equilibrium values plotted above\" were computed from different economies; and 1038 then solves with `θ_min=0.045, θ_max=0.15` against the $\\Omega = [0.0395, 0.2193]$ just quoted. Second, $\\theta$ is defined at 353 as $u'(f(x_{t+1})) m_{t+1} h_{t+1}$ and from 490 onward is used as $u'(f(x))(m+x)$ (490, 496, 506, 514, 558, 731, 792, 874, 999) with no word about why the two agree - the reader has to notice that {eq}`eqn_chang_ramsey2a`, $-x = m(1-h)$, gives $mh = m+x$. Third, the two set-valued operators are broken across display blocks in a way that leaves their delimiters unmatched: 594-597 writes `B(Q) = \\theta \\in \\mathbb{R} \\text{ such that there is } (m,x,h,\\theta') \\in E \\times Q` with no set braces at all, and $D(Z)$ opens `\\Bigl\\{` at 713 and closes `\\Bigr\\}` at 747, five separate displays and two prose lines later. Fourth, 897 promises \"We have created a Python class that solves the model\" and the cell at 922-926 is a bare `:load:` of `_static/lecture_specific/chang_credible/changecon.py` - a file in another lecture's directory - with no listing and no link, so the nine-step algorithm just described at 837-895 cannot be checked against the code that implements it"},
-    {"rule": "qe-writing-005", "count": 11, "lines": [36, 380, 643, 669, 752, 849],
-     "detail": "the two conventions are exactly inverted through most of the lecture. Bold is spent on run-in headings - **Definition:** at 378, 386, 460, 643, 668 and 676, **Proposition:** at 473, 535, 605, 752 and 757, **Remark:** at 663, plus **Example parameterizations** (252), **The tax distortion function** (268), **Ramsey plan:** (277) and **Step 1**/**Step 2**/**Step 3** (849, 851, 894) - while the terms those blocks actually define are set in italic: *government policy*, *price system*, *allocation* (380-382), *competitive equilibrium* (389), *admissible* (643), *allocation rule* (669), *competitive* (678), *outer hyperplane approximation algorithm* (810-811). The rule's assignment does appear elsewhere in the same file - **competitive equilibria** and **Ramsey plan** (36), **dynamic programming squared** (57), **continuation Ramsey planner** (978), **sustainable** (1140) are all bolded definitions - so the lecture contradicts itself rather than following a different convention"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [199, 750, 766, 779, 919, 980],
-     "detail": "779-801 restates a definition the reader has just read: \"Above we have defined the $D(Z)$ operator as:\" is followed by the whole operator again, all four equations, in a second and differently formatted copy (the first at 712-748 uses labelled `{math}` blocks, the second at 782-800 uses `\\exists` and an inline parenthetical for the complementary-slackness clause) - twenty lines that add nothing. Three sentences are broken: 750 is \"It is possible to establish.\" with its object missing, 766-767 reads \"This $(w, \\theta)$ pair i associated with a Ramsey plan\", and 980 has \"decomposed into a two subproblems\". 199 has \"meassured\". And 919-920 leaves a note to the author in the text: \"(Here we have set the number of subgradients to 10 in order to speed up the code for now - we can increase accuracy by increasing the number of subgradients)\", where `N_g` silently becomes 50 at 1030-1033 with no comment"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [378, 815, 837],
-     "detail": "the lecture's subject is a set - $S$, approximated as an intersection of half-spaces, $\\tilde S = \\{(w,\\theta) \\mid H \\cdot (w,\\theta) \\leq C\\}$ (828) - and the algorithm that finds it is described in nine steps of prose and linear programs (837-895) with no picture of the mechanism: one sketch of a convex set with three or four supporting hyperplanes, their subgradients $h_i$ and levels $C_{i,t}$, and the next iterate nested inside, would make \"constructs the smallest convex set that contains the fixed point\" (815-816) and \"a sequence of progressively smaller sets $S_{t+1} \\subset S_t \\subset \\cdots \\subset S_0$\" (890-892) immediate. The lecture plots the converged set (938-963) but never the construction. Second, six Definitions and five Propositions are bold text (378, 386, 460, 473, 535, 605, 643, 668, 676, 752, 757) rather than `{prf:definition}` and `{prf:proposition}` directives, so none of them is numbered or linkable and the prose has to refer back by phrase - \"the proposition relies on knowing the set $\\Omega$\" (577-578), \"The proposition characterizes $\\Omega$\" (610). Third, the lecture has no admonition of any kind, although the parenthetical asides at 479 and 919-920 and the Remark at 663-666 are exactly what `{note}` renders"},
-    {"rule": "qe-math-009", "count": 5, "lines": [189, 330, 415, 655, 882],
-     "detail": "the same construct is spelled two ways throughout. Fractions: `{M_{t-1}\\over M_t}` with the plain-TeX `\\over` at 189 and 339, `\\frac` at 202, 208, 211, 261, 905. Text inside math: `{\\rm if}` at 330 and 574, `{\\rm there \\ is }` and `{\\rm with }` with hand-typed spaces at 655 and 713, against `\\text{ such that }` and `\\text{ if }` at 345, 496, 595, 634, 665, 717, 747, 782 and 800. Multi-line displays: `\\begin{aligned}` at 315 and 327, `\\begin{split}` at 415 for the same job. Spacing: `\\hspace{2mm}` hand-set at 882 where the surrounding displays use `\\quad`. Each pair is a choice between two reasonable options where the lecture makes both choices, and in each pair the simpler and more portable form is already in use elsewhere in the file"},
-    {"rule": "qe-code-001", "count": 4, "lines": [934, 943, 946, 962],
-     "detail": "934 names the function's parameter after the class it receives, `def plot_competitive(ChangModel):`, so inside the body the name `ChangModel` no longer refers to the class the `:load:` cell defined - a CapWords parameter name that PEP8 reserves for classes, and a shadowing that would break the moment the function needed to construct a second model. 946 drops the space after the comma in `ext_C[:,0]` while 947 and 948 write `ext_C[:, 1]`. 962 leaves one blank line between the end of the function and the top-level call `plot_competitive(ch1)` where PEP8 asks for two. And 943 labels the horizontal axis `'w'` as a plain string with `fontsize=16` while 944 labels the vertical one `r\"$\\theta$\"` with `fontsize=18`, so one axis of the same figure is typeset as maths and the other is not"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        490,
+        594,
+        897,
+        1022
+      ],
+      "detail": "1022-1023 says \"The two sets of parameters differ only in the level of $\\beta$\", and the cell immediately below differs in five arguments: `ch1 = ChangModel(β=0.3, mbar=30, h_min=0.99, h_max=1/0.3, n_h=8, n_m=35, N_g=50)` against `ch2 = ChangModel(β=0.8, mbar=30, h_min=0.1, h_max=1/0.8, n_h=20, n_m=50, N_g=50)` (1030-1033). Worse, the $\\Omega$ bounds quoted at 1025-1027 as coming \"From the figures earlier in this lecture\" were produced by the *earlier* pair of models (929, 967), which used `h_min=0.9`, `h_max=2` and `N_g=10`, so the sets and the value functions that 1050-1051 says \"trace out the right edges of the sets of equilibrium values plotted above\" were computed from different economies; and 1038 then solves with `θ_min=0.045, θ_max=0.15` against the $\\Omega = [0.0395, 0.2193]$ just quoted. Second, $\\theta$ is defined at 353 as $u'(f(x_{t+1})) m_{t+1} h_{t+1}$ and from 490 onward is used as $u'(f(x))(m+x)$ (490, 496, 506, 514, 558, 731, 792, 874, 999) with no word about why the two agree - the reader has to notice that {eq}`eqn_chang_ramsey2a`, $-x = m(1-h)$, gives $mh = m+x$. Third, the two set-valued operators are broken across display blocks in a way that leaves their delimiters unmatched: 594-597 writes `B(Q) = \\theta \\in \\mathbb{R} \\text{ such that there is } (m,x,h,\\theta') \\in E \\times Q` with no set braces at all, and $D(Z)$ opens `\\Bigl\\{` at 713 and closes `\\Bigr\\}` at 747, five separate displays and two prose lines later. Fourth, 897 promises \"We have created a Python class that solves the model\" and the cell at 922-926 is a bare `:load:` of `_static/lecture_specific/chang_credible/changecon.py` - a file in another lecture's directory - with no listing and no link, so the nine-step algorithm just described at 837-895 cannot be checked against the code that implements it"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 11,
+      "lines": [
+        36,
+        380,
+        643,
+        669,
+        752,
+        849
+      ],
+      "detail": "the two conventions are exactly inverted through most of the lecture. Bold is spent on run-in headings - **Definition:** at 378, 386, 460, 643, 668 and 676, **Proposition:** at 473, 535, 605, 752 and 757, **Remark:** at 663, plus **Example parameterizations** (252), **The tax distortion function** (268), **Ramsey plan:** (277) and **Step 1**/**Step 2**/**Step 3** (849, 851, 894) - while the terms those blocks actually define are set in italic: *government policy*, *price system*, *allocation* (380-382), *competitive equilibrium* (389), *admissible* (643), *allocation rule* (669), *competitive* (678), *outer hyperplane approximation algorithm* (810-811). The rule's assignment does appear elsewhere in the same file - **competitive equilibria** and **Ramsey plan** (36), **dynamic programming squared** (57), **continuation Ramsey planner** (978), **sustainable** (1140) are all bolded definitions - so the lecture contradicts itself rather than following a different convention"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        199,
+        750,
+        766,
+        779,
+        919,
+        980
+      ],
+      "detail": "779-801 restates a definition the reader has just read: \"Above we have defined the $D(Z)$ operator as:\" is followed by the whole operator again, all four equations, in a second and differently formatted copy (the first at 712-748 uses labelled `{math}` blocks, the second at 782-800 uses `\\exists` and an inline parenthetical for the complementary-slackness clause) - twenty lines that add nothing. Three sentences are broken: 750 is \"It is possible to establish.\" with its object missing, 766-767 reads \"This $(w, \\theta)$ pair i associated with a Ramsey plan\", and 980 has \"decomposed into a two subproblems\". 199 has \"meassured\". And 919-920 leaves a note to the author in the text: \"(Here we have set the number of subgradients to 10 in order to speed up the code for now - we can increase accuracy by increasing the number of subgradients)\", where `N_g` silently becomes 50 at 1030-1033 with no comment"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        378,
+        815,
+        837
+      ],
+      "detail": "the lecture's subject is a set - $S$, approximated as an intersection of half-spaces, $\\tilde S = \\{(w,\\theta) \\mid H \\cdot (w,\\theta) \\leq C\\}$ (828) - and the algorithm that finds it is described in nine steps of prose and linear programs (837-895) with no picture of the mechanism: one sketch of a convex set with three or four supporting hyperplanes, their subgradients $h_i$ and levels $C_{i,t}$, and the next iterate nested inside, would make \"constructs the smallest convex set that contains the fixed point\" (815-816) and \"a sequence of progressively smaller sets $S_{t+1} \\subset S_t \\subset \\cdots \\subset S_0$\" (890-892) immediate. The lecture plots the converged set (938-963) but never the construction. Second, six Definitions and five Propositions are bold text (378, 386, 460, 473, 535, 605, 643, 668, 676, 752, 757) rather than `{prf:definition}` and `{prf:proposition}` directives, so none of them is numbered or linkable and the prose has to refer back by phrase - \"the proposition relies on knowing the set $\\Omega$\" (577-578), \"The proposition characterizes $\\Omega$\" (610). Third, the lecture has no admonition of any kind, although the parenthetical asides at 479 and 919-920 and the Remark at 663-666 are exactly what `{note}` renders"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 5,
+      "lines": [
+        189,
+        330,
+        415,
+        655,
+        882
+      ],
+      "detail": "the same construct is spelled two ways throughout. Fractions: `{M_{t-1}\\over M_t}` with the plain-TeX `\\over` at 189 and 339, `\\frac` at 202, 208, 211, 261, 905. Text inside math: `{\\rm if}` at 330 and 574, `{\\rm there \\ is }` and `{\\rm with }` with hand-typed spaces at 655 and 713, against `\\text{ such that }` and `\\text{ if }` at 345, 496, 595, 634, 665, 717, 747, 782 and 800. Multi-line displays: `\\begin{aligned}` at 315 and 327, `\\begin{split}` at 415 for the same job. Spacing: `\\hspace{2mm}` hand-set at 882 where the surrounding displays use `\\quad`. Each pair is a choice between two reasonable options where the lecture makes both choices, and in each pair the simpler and more portable form is already in use elsewhere in the file"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 4,
+      "lines": [
+        934,
+        943,
+        946,
+        962
+      ],
+      "detail": "934 names the function's parameter after the class it receives, `def plot_competitive(ChangModel):`, so inside the body the name `ChangModel` no longer refers to the class the `:load:` cell defined - a CapWords parameter name that PEP8 reserves for classes, and a shadowing that would break the moment the function needed to construct a second model. 946 drops the space after the comma in `ext_C[:,0]` while 947 and 948 write `ext_C[:, 1]`. 962 leaves one blank line between the end of the function and the top-level call `plot_competitive(ch1)` where PEP8 asks for two. And 943 labels the horizontal axis `'w'` as a plain string with `fontsize=16` while 944 labels the vertical one `r\"$\\theta$\"` with `fontsize=18`, so one axis of the same figure is typeset as maths and the other is not"
+    }
   ],
   "strengths": [
     "The recursive representation is earned rather than assumed: 348-353 defines $\\theta_{t+1} \\equiv u'(f(x_{t+1})) m_{t+1} h_{t+1}$, 360-363 says what it does (\"$\\theta_{t+1}$ intermediates the influences of $(\\vec x_{t+1}, \\vec m_{t+1})$ on the household's choice of real balances $m_t$\"), 365-367 then defines \"intermediates\" - the future paths act on $m_t$ only through that one scalar - and 369-371 says why this is the step that makes a recursive representation possible",
@@ -34,5 +92,9 @@
     "Make the model code visible: link or list `changecon.py` where 897 promises the class, and note that it is loaded from `chang_credible`'s static directory rather than this lecture's",
     "Sweep the mechanical items: rename the `ChangModel` parameter at 934, drop the 5 `figsize=` overrides (941, 1054, 1071, 1101, 1124) and the `fontsize=` overrides (943, 944, 1072, 1080, 1081), move the 3 `suptitle`/`title` calls (1072, 1106, 1125) into `mystnb` captions and give the two figure cells names (1053, 1100), add `lw=2` to the 5 line plots, switch the 2 narrative `{cite}` roles at 44 and 581 to `{cite:t}`, lowercase \"Step\" at 852 and 887, and clear the 26 double spaces and the two two-sentence paragraphs at 831 and 851"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "2f0d62b0592da09dc9d436fea230553203ea9780"
+  }
 }

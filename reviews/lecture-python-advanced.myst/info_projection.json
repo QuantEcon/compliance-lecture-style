@@ -5,37 +5,64 @@
     {
       "rule": "qe-writing-003",
       "count": 4,
-      "lines": [56, 323, 461, 597],
+      "lines": [
+        56,
+        323,
+        461,
+        597
+      ],
       "detail": "the lecture's headline numerical check confirms nothing. 461 says \"We sweep over a grid of admissible structural parameters and confirm that $y_1 = 1$ in every case\", and 465-481 runs 270 parameter pairs and prints \"Range of y1 across all combinations\" and \"Max deviation from 1\" - but `jacobs_population_params` sets `y1 = 1.0` unconditionally at 455 (and again at 851), so the loop measures the spread of a literal. Nothing in the file derives $y_1 = 1$ numerically; 440-444 asserts it from the divergence-rate argument, and the sweep is presented as independent confirmation of it. Second, the only table in the lecture (597-604) has `$k$ (Jacobs)` as its first column and $k$ is never defined anywhere - 430 and the exercise at 895 together imply $\\alpha(1-\\lambda)$, but the reader has to reverse-engineer it. Third, 323-325 interrupts the spectral factorisation: 296-308 factors $c(z)$, 327-331 resumes with \"Matching coefficients gives $b_0 b_1 = c(1)$\", and wedged between them are two paragraphs stating the $\\hat\\delta \\to 1$ conclusion that 436-448 then states properly in its own section. Fourth, 56 opens \"This delivers the *population regression* that OLS converges to\" where \"This\" refers to the Wiener-Kolmogorov formula named at 40 - two `{note}` blocks and twelve lines earlier"
     },
     {
       "rule": "qe-math-009",
       "count": 4,
-      "lines": [126, 200, 564, 801],
+      "lines": [
+        126,
+        200,
+        564,
+        801
+      ],
       "detail": "$A$ and $B$ each carry two unrelated meanings. 200 sets $A = \\phi(1-\\lambda)+1$ and $B = \\phi(1-\\lambda)$ as covariogram shorthand, used through 206-232; 654 then sets $A = r(0) - r(1)b$ and $B = r(1)$ for the numerator coefficients of $\\Theta(z)$ - and the code carries both meanings under the same two names in two functions, `A`/`B` at 251-252 and `A`/`B` at 381-382, so a reader stepping between `structural_to_ma1` and `wiener_kolmogorov_projection` meets the same letters twice. The stability parameter accumulates five names for one quantity: $\\delta$ (132), $y_1$ (430, \"he interpreted ... $y_1 = \\delta$\"), $\\hat\\delta$ (597, 620), $\\delta_{\\text{true}}$ (564, 853) and `δ_true` in the code. 126 and 135 decorate the disturbance with a prime, $u_t'$, where 90-98 decorates the same object with a star, $u_t^*$ - and the prime is the one mark that also means transpose and derivative, so the two variants are both inconsistent and the more ambiguous choice. And the covariance generating function is $c(z)$ at 287, 299 and 305, $c(e^{-i\\omega})$ at 705, and $C(e^{-i\\omega})$ at 801 - where the same display writes the uppercase $C$ on the left and lowercase $c(-1), c(0), c(1)$ on the right"
     },
     {
       "rule": "qe-writing-007",
       "count": 3,
-      "lines": [621, 714, 761],
+      "lines": [
+        621,
+        714,
+        761
+      ],
       "detail": "the bar chart at 619-637 spends half its ink on a constant: `pop_value = [1.0] * len(countries)` (621) is drawn as six identical tomato bars at 629, next to an `axhline(1.0)` at 631 that already marks the same value across the whole axis, so the second series is redundant with the reference line in its own figure - one series of $\\hat\\delta$ against that line would carry the comparison, and the six numbers are in any case already tabulated at 597-604. Second, the inset in the approximation-criterion figure is positioned at `[0.55, -0.05, 0.50, 0.50]` (761), a negative vertical offset that pushes it below the axes and over the x-axis label set at 755, and the comment at 760 records the workaround rather than fixing it (\"right-bottom, slightly outside\"). Third, 714-718 reads both panels of that figure in prose *before* the cell that draws them and 779 then reads them again after - the second reading adds nothing the first did not say, and neither is a caption, so the interpretation that should sit under the figure is duplicated around it"
     },
     {
       "rule": "qe-writing-005",
       "count": 4,
-      "lines": [56, 95, 149, 316],
+      "lines": [
+        56,
+        95,
+        149,
+        316
+      ],
       "detail": "the Overview bolds its definitions correctly - **Cagan's estimator**, **Jacobs' estimator**, **Sargent's critique** (36-38), **information projection** (40), **stability parameter** (129) - and then the body switches to italic and quotation marks for the same job. *population regression* (56) is the term the lecture is named after and is introduced there; *consistent* (95) is defined by the orthogonality condition in the same sentence; *ignore all negative powers of $z$* (316) is the definition of the $[\\cdot]_+$ operator that {eq}`eq:theta_formula` depends on; and the \"real bills\" regime (149) is introduced in quotes. The italics that are genuinely emphasis are used correctly (*fails* 112, *invert* 120, *against* 147, *true* 830), which is what makes the four definitional italics read as the same signal"
     },
     {
       "rule": "qe-code-001",
       "count": 4,
-      "lines": [509, 539, 665, 920],
+      "lines": [
+        509,
+        539,
+        665,
+        920
+      ],
       "detail": "the module has five one-purpose functions in cells of their own (244, 334, 376, 410, 451) and then buries two more inside plotting cells - `projection_impulse_response` at 665-676 sits above the `plt.subplots` call that consumes it, and `filter_error` at 733-739 sits in the middle of the figure cell between the grid setup and the loop - so the same file uses two conventions for the same thing. 539 declares `def spectral_density_m(c0, c1, ω, eps=0.0)` with an `eps` parameter no caller ever passes (549, 749) and whose only effect is `ω + eps`. 920-922 unpacks `y0, y1, h0, h1, h2` when the loop body uses only `y0` and `y1`. And 509 puts two spaces inside a string literal, `r'$h_2$  (= $-b$)'`, which is also the only one of the three labels carrying a gloss"
     },
     {
       "rule": "qe-writing-002",
       "count": 2,
-      "lines": [532, 567],
+      "lines": [
+        532,
+        567
+      ],
       "detail": "two of the four figure captions are the only place a caption speaks to the reader and both are wrong: 532 reads \"Spectrum or money creation rate\" (for \"of\") and 616 reads \"Jacobs estimates\" without the possessive that every other mention of Jacobs in the file carries (37, 118, 138, 424, 593). And the two sentences that introduce figures - 567 (\"The figure below contrasts the true $\\delta$ with Jacobs' population value $y_1 = 1$\") and 858 (\"...relative to the true value $\\delta_{\\text{true}}$\") - both end without a full stop, in a file whose 200-odd other sentences are punctuated"
     }
   ],
@@ -65,5 +92,9 @@
   ],
   "scanner_doubts": [
     "info_projection.md:126,135 - qe-math-002 is reported with count 2 and both are false positives: $u_t'$ is Jacobs' transformed disturbance in {eq}`eq:jacobs_eqn` and in the sentence describing it, not a transpose. The file contains no `\\top`, no `^T` and no matrix transpose at all - `grep -c \"top\\|\\^T\"` returns nothing - and the only other apostrophes are outside math (`$m$'s` at 135, `Cagan's`, `Jacobs'`). This is presumably the already-diagnosed apostrophe-branch gap (any `'` not followed by `(` is counted), so I am not asking for a new fix; I flag it because these two hits alone drop Math to 3.5/10 and that single sub-4 category is what puts an 8.4-overall lecture in the HIGH priority bucket, ahead of genuinely weaker files. The 17 qe-math-010 (proposed) hits in the same category are all real - I counted the bare `E[` occurrences independently and get exactly 17 across lines 98, 108, 179 (x2), 184, 187 (x2), 194, 220, 274, 966, 969, 996, 1008, 1015 and 1021 - and line 47's `E_{g_{\\delta_0}} \\log f_\\theta(x)` is an 18th that the known bare-letter delimiter gap misses"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "4926ae8a99e0c4da94203a09df511a248553e858"
+  }
 }

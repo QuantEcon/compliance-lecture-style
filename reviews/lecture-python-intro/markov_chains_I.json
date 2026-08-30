@@ -2,12 +2,42 @@
   "series": "lecture-python-intro",
   "lecture": "markov_chains_I",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 3, "lines": [828, 990, 1122],
-     "detail": "line 828 introduces three initial distributions as $\\psi_1, \\psi_2, \\psi_3$, but $\\psi$ with a numeric subscript already means the distribution at that date everywhere else in the lecture ($\\psi_t$, $\\psi_0$, $\\psi_{t+1}$ at 534-596), so \"$\\psi_i P^t$\" at 897 reads as a distribution at date $i$; line 990 tells the reader \"The blue dot represents the unique stationary distribution\", but the code at 937-948 defines four initial distributions and four colours, so blue is $\\psi_4 = (1/3,1/3,1/3)$ and no stationary distribution is plotted in that figure at all - the colour convention also contradicts the adjacent Hamilton animation, where yellow is $\\psi^*$ (884); and exercise 1 answers part 1 (\"visualize the transition matrix\") with a static PNG at 1122 rather than the network-graph code the lecture body uses at 261-288"},
-    {"rule": "qe-writing-002", "count": 3, "lines": [236, 571, 1164],
-     "detail": "the six-state Imam-Temple matrix is printed three times in twenty lines - as a LaTeX `array` (236-247), as a Python list (249-257), and again as a `bmatrix` (292-302) - and then twice more in the exercises (1164, 1190); and the rule that postmultiplication shifts a distribution forward is stated four times in twenty-five lines (571, 573, 575, 589) with two labelled equations, `mdfmc` and `mdfmc2`, that say the same thing, prefaced by \"This is very important, so let's repeat it\" (581)"},
-    {"rule": "qe-code-001", "count": 9, "lines": [270, 836, 850, 948, 969, 978, 1197, 1217, 1228],
-     "detail": "`ψ_t[0 ]= ψ_0` - whitespace inside the subscript and no space before `=` (836); missing space after commas in `add_edge(node_start,node_end, ...)` (270), `['blue','red', 'green']` (850), `['red','yellow', ...]` (948), `Poly3DCollection(faces,alpha=0.05)` (969), `color=colors[idx],linewidth=0.75` (978) and `matrix_power(P,3)` (1197); a `##` block comment where PEP8 asks for a single `#` (1217); and spaces around the keyword-argument `=` in `color = 'black'` (1228)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        828,
+        990,
+        1122
+      ],
+      "detail": "line 828 introduces three initial distributions as $\\psi_1, \\psi_2, \\psi_3$, but $\\psi$ with a numeric subscript already means the distribution at that date everywhere else in the lecture ($\\psi_t$, $\\psi_0$, $\\psi_{t+1}$ at 534-596), so \"$\\psi_i P^t$\" at 897 reads as a distribution at date $i$; line 990 tells the reader \"The blue dot represents the unique stationary distribution\", but the code at 937-948 defines four initial distributions and four colours, so blue is $\\psi_4 = (1/3,1/3,1/3)$ and no stationary distribution is plotted in that figure at all - the colour convention also contradicts the adjacent Hamilton animation, where yellow is $\\psi^*$ (884); and exercise 1 answers part 1 (\"visualize the transition matrix\") with a static PNG at 1122 rather than the network-graph code the lecture body uses at 261-288"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 3,
+      "lines": [
+        236,
+        571,
+        1164
+      ],
+      "detail": "the six-state Imam-Temple matrix is printed three times in twenty lines - as a LaTeX `array` (236-247), as a Python list (249-257), and again as a `bmatrix` (292-302) - and then twice more in the exercises (1164, 1190); and the rule that postmultiplication shifts a distribution forward is stated four times in twenty-five lines (571, 573, 575, 589) with two labelled equations, `mdfmc` and `mdfmc2`, that say the same thing, prefaced by \"This is very important, so let's repeat it\" (581)"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 9,
+      "lines": [
+        270,
+        836,
+        850,
+        948,
+        969,
+        978,
+        1197,
+        1217,
+        1228
+      ],
+      "detail": "`ψ_t[0 ]= ψ_0` - whitespace inside the subscript and no space before `=` (836); missing space after commas in `add_edge(node_start,node_end, ...)` (270), `['blue','red', 'green']` (850), `['red','yellow', ...]` (948), `Poly3DCollection(faces,alpha=0.05)` (969), `color=colors[idx],linewidth=0.75` (978) and `matrix_power(P,3)` (1197); a `##` block comment where PEP8 asks for a single `#` (1217); and spaces around the keyword-argument `=` in `color = 'black'` (1228)"
+    }
   ],
   "strengths": [
     "Definitions are bolded exactly once at the point of definition and never re-bolded - probability mass function (75), stochastic matrix and Markov matrix (80), states (111), state space and state values (320), distribution (322), Markov chain and Markov property (324), stationary and invariant (700), asymptotic stationarity and global stability (808) - and italic is reserved for genuine emphasis (336, 632, 659)",
@@ -25,5 +55,9 @@
     "Replace the two static PNGs (105, 1122) with code-generated figures, add `mystnb: figure: caption/name` metadata to the four un-named figures (261, 844, 934, 1206), and convert the code cell inside the non-gated `{exercise}` at 1165 to gated syntax",
     "Convert the author-position citations at 711 to `{cite:t}`, swap the two `%time` magics for `qe.Timer()` (490, 494), fix the set notation at 380 ($S = \\{0, \\ldots, n-1\\}$), rename the loop variable `nodes` at 280 which shadows the state list defined at 250, and clean up the PEP8 items above"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "964df667fda878324592caf76964bf6e78d81d0a"
+  }
 }

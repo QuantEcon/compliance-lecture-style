@@ -80,5 +80,9 @@
   ],
   "scanner_doubts": [
     "cass_koopmans_1.md - qe-math-002 is reported with count 13 (lines 278, 280, 293, 295, 347, 356, 357, 977, 984, 989, ...) and the example given is \"apostrophe transpose `f'`\". Every one of those apostrophes is a derivative of a scalar function, not a transpose: 278/280/293/295 are $f'(K_t/N_t)$ inside the chain- and product-rule derivations, 347/356/357 are $u'(C_t)$ and $f'(K_{t+1})$ in the Euler equation, and 977/984/989 are $f^{\\prime}$ and $f^{\\prime-1}$ in the phase-plane algebra. The rule text restricts itself to \"transpose in matrix contexts\", and $f$ and $u$ are scalar functions of a scalar. This looks like 13 false positives, and they are the sole reason Math scores 5.5 rather than 10 - which would move the overall score and possibly the priority bucket. Worth checking whether the matrix-like-base heuristic treats a single lowercase letter followed by `\\left(` as matrix-like"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "30b9cbdb070b143532bb38b5967c9951ebde5177"
+  }
 }

@@ -49,5 +49,9 @@
   ],
   "scanner_doubts": [
     "All four qe-writing-001 occurrences in polars.md (87, 317, 532, 662) are the bodies of admonitions - `{note}` at 86-91, `{note}` at 316-320, `{tip}` at 531-536 and `{note}` at 661-668. The lecture's running prose is fully compliant with one-sentence-per-paragraph, so its Writing score of 6.5 is driven entirely by directive bodies. tools/qestyle_rules.py:_paragraph_blocks (line 214) excludes headings, list items, tables, targets and option lines from qe-writing-001 but not the bodies of directives; no rule in tools/ mentions `note`, `tip`, `admonition` or `epigraph`. This is the clearest single case in the series for deciding whether admonition bodies are in scope for qe-writing-001; polars is the only lecture where the rule's whole count comes from them."
-  ]
+  ],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "3b082d4e291214272c5783ebd93326871f9159f3"
+  }
 }

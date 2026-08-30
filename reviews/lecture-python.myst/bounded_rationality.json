@@ -71,5 +71,9 @@
     "Drop the four `figsize=` overrides at 313, 455, 690 and 1036 (qe-fig-001, 4 occurrences), add `mystnb: figure: caption/name` metadata to the figure at 1035 (qe-fig-005), and shorten the seven-word caption at 683-688 (qe-fig-004)",
     "Sweep the small items: collapse the double spaces at 34, 59 and 101 (qe-writing-008, 3 occurrences), wrap the four over-length code lines at 350, 665, 723 and 801, and add the missing sentence-ending period at line 493"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "df1efc41227d73631763abd8f3c4503cfe31cc5c"
+  }
 }

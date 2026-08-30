@@ -2,14 +2,45 @@
   "series": "lecture-python.myst",
   "lecture": "hansen_singleton_1983",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 2, "lines": [1193, 1796],
-     "detail": "1825 lines carry exactly one figure (the residual diagnostics at 1739-1770); every other result is a LaTeX table built by `display_table`. Two sections are pictures waiting to be drawn. '## Predictability and the R-squared restriction' (1193-1281) is about a proportionality - the predictable part of $R_t$ is $-\\alpha$ times the predictable part of $X_t$ ({eq}`hs83-predictable-return`) - and computes `pred_x` and `pred_r` at 1246-1248 without ever plotting one against the other. '## Connection to the equity premium puzzle' (1796-1817) states the Mehra-Prescott trade-off between the 6% premium and the 1% risk-free rate as two numbered lines (1812-1813), where the canonical exhibit is one curve of each against risk aversion with the estimated $-\\hat\\alpha$ marked"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [45, 53, 63, 1819],
-     "detail": "the Overview carries four defects in twenty lines: 'They detect a defects in their model' (45), 'restrictions on a the joint distribution' (53), 'To keep lecture this lecture narrowly focused' (63), and the equity-premium attribution given twice, at 45 and again at 61. At the other end, '## Another approach' (1819-1825) is a two-paragraph section that repeats the hand-off to {doc}`hansen_singleton_1982` already made at 1794, and line 1788 reads 'departures from bell curve with fatter tails'"},
-    {"rule": "qe-math-009", "count": 2, "lines": [217, 1216],
-     "detail": "$U$ is the period utility function at 124-134 and 199, and then $U_{i,t} := \\log u_{it}$ at 217-222, with $\\sigma_U^2$ at 311-314 belonging to the second meaning - so $U(c_t)$ and $U_{i,t}$ are unrelated objects on one letter. Similarly $R_t$ is the log return throughout while $R^2_R$ and $R^2_X$ at 1216-1229 are coefficients of determination subscripted by the same letters, giving expressions like $R_R^2$ whose two R's mean different things"},
-    {"rule": "qe-code-001", "count": 3, "lines": [100, 1129, 1331],
-     "detail": "lines 99-101 split a conditional expression across continuation lines at a 9-space indent matching neither the bracket nor a hanging indent (E128) - the same helper as in hansen_singleton_1982.md:85-87; line 1129 leaves trailing whitespace and then continues the expression at an under-indented 12 spaces (E128); and lines 1330-1331 use a backslash continuation with an over-indented second line (E127) where PEP8 asks for parentheses. The slice spacing at 412, 1351, 1352 and 1357 is correct for compound slice expressions and is left alone"}
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        1193,
+        1796
+      ],
+      "detail": "1825 lines carry exactly one figure (the residual diagnostics at 1739-1770); every other result is a LaTeX table built by `display_table`. Two sections are pictures waiting to be drawn. '## Predictability and the R-squared restriction' (1193-1281) is about a proportionality - the predictable part of $R_t$ is $-\\alpha$ times the predictable part of $X_t$ ({eq}`hs83-predictable-return`) - and computes `pred_x` and `pred_r` at 1246-1248 without ever plotting one against the other. '## Connection to the equity premium puzzle' (1796-1817) states the Mehra-Prescott trade-off between the 6% premium and the 1% risk-free rate as two numbered lines (1812-1813), where the canonical exhibit is one curve of each against risk aversion with the estimated $-\\hat\\alpha$ marked"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        45,
+        53,
+        63,
+        1819
+      ],
+      "detail": "the Overview carries four defects in twenty lines: 'They detect a defects in their model' (45), 'restrictions on a the joint distribution' (53), 'To keep lecture this lecture narrowly focused' (63), and the equity-premium attribution given twice, at 45 and again at 61. At the other end, '## Another approach' (1819-1825) is a two-paragraph section that repeats the hand-off to {doc}`hansen_singleton_1982` already made at 1794, and line 1788 reads 'departures from bell curve with fatter tails'"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 2,
+      "lines": [
+        217,
+        1216
+      ],
+      "detail": "$U$ is the period utility function at 124-134 and 199, and then $U_{i,t} := \\log u_{it}$ at 217-222, with $\\sigma_U^2$ at 311-314 belonging to the second meaning - so $U(c_t)$ and $U_{i,t}$ are unrelated objects on one letter. Similarly $R_t$ is the log return throughout while $R^2_R$ and $R^2_X$ at 1216-1229 are coefficients of determination subscripted by the same letters, giving expressions like $R_R^2$ whose two R's mean different things"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 3,
+      "lines": [
+        100,
+        1129,
+        1331
+      ],
+      "detail": "lines 99-101 split a conditional expression across continuation lines at a 9-space indent matching neither the bracket nor a hanging indent (E128) - the same helper as in hansen_singleton_1982.md:85-87; line 1129 leaves trailing whitespace and then continues the expression at an under-indented 12 spaces (E128); and lines 1330-1331 use a backslash continuation with an over-indented second line (E127) where PEP8 asks for parentheses. The slice spacing at 412, 1351, 1352 and 1357 is correct for compound slice expressions and is left alone"
+    }
   ],
   "strengths": [
     "The epigraph earns its place: Sargent's 'A rational expectations equilibrium is a likelihood function. Maximize it.' (32-39) is exactly what the lecture then does, and the companion GMM lecture is positioned as the response to its failure",
@@ -31,5 +62,9 @@
   "scanner_doubts": [
     "qe-code-002 x3 at hansen_singleton_1983.md:471 and :1317 fires on prose inside docstrings, not on identifiers: line 471 reads 'Compute V_t implied by A0 Y_t - A1 Y_{t-1} - mu.' and 1317 reads 'Simulate log nominal returns satisfying E_t[beta * exp(alpha X) * r_i] = 1.' - both are ASCII renderings of mathematics in a docstring, where unicode substitution is not what the rule asks for. Meanwhile the genuine spelled-out identifier `sigmas` at 1329-1331 is not counted, so the check appears to be scanning comment and docstring text while missing a real variable name",
     "qe-writing-004 x1 at hansen_singleton_1983.md:33 flags 'Critique' in 'the Lucas Critique', but line 33 is inside the verbatim block quote at 32-39 reproducing an interview with Sargent {cite}`evans2005interview`. Quoted text cannot be recapitalised, so block quotes look like a context the checker should skip alongside code and math"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "72b45694b17b61e202ceffd045d8a839743de232"
+  }
 }

@@ -2,14 +2,39 @@
   "series": "lecture-python-intro",
   "lecture": "commod_price",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 1, "lines": [91],
-     "detail": "line 91 names the lecture's model in italic - 'a dynamic model of supply and demand, called the *competitive storage model*' - which is the rule's own counter-example: a definition should be bold, and italic reserved for emphasis. It is the only emphasis mark in the file"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [240, 362],
-     "detail": "two breaks. (a) The central functional equation appears at lines 240-246 with no introducing sentence: line 236 says only 'we seek a p such that ... hold', then the display defines p* and line 248 picks up with 'where'. The reader is handed the defining equation without being told it is the candidate. (b) Line 190 defines P as the inverse demand function D^{-1}, but line 362 sets `D = P = lambda x: 1.0 / x`, silently relying on 1/x being its own inverse; nothing in the text says so, so the code appears to contradict the definition"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [298],
-     "detail": "lines 298-339 describe successive approximation as a sequence of functions p_1, p_2, ... converging to p*, but the code at 385-400 plots only the first iterate (the inverse demand curve) and the last. Overlaying two or three intermediate iterates would show the convergence the section spends forty lines describing"},
-    {"rule": "qe-code-001", "count": 1, "lines": [424],
-     "detail": "the loop body at lines 424-425 is indented 12 spaces inside a `for` at indent 4, where 8 is required; the block is over-indented by one level relative to its header"}
+    {
+      "rule": "qe-writing-005",
+      "count": 1,
+      "lines": [
+        91
+      ],
+      "detail": "line 91 names the lecture's model in italic - 'a dynamic model of supply and demand, called the *competitive storage model*' - which is the rule's own counter-example: a definition should be bold, and italic reserved for emphasis. It is the only emphasis mark in the file"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        240,
+        362
+      ],
+      "detail": "two breaks. (a) The central functional equation appears at lines 240-246 with no introducing sentence: line 236 says only 'we seek a p such that ... hold', then the display defines p* and line 248 picks up with 'where'. The reader is handed the defining equation without being told it is the candidate. (b) Line 190 defines P as the inverse demand function D^{-1}, but line 362 sets `D = P = lambda x: 1.0 / x`, silently relying on 1/x being its own inverse; nothing in the text says so, so the code appears to contradict the definition"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        298
+      ],
+      "detail": "lines 298-339 describe successive approximation as a sequence of functions p_1, p_2, ... converging to p*, but the code at 385-400 plots only the first iterate (the inverse demand curve) and the last. Overlaying two or three intermediate iterates would show the convergence the section spends forty lines describing"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 1,
+      "lines": [
+        424
+      ],
+      "detail": "the loop body at lines 424-425 is indented 12 spaces inside a `for` at indent 4, where 8 is required; the block is over-indented by one level relative to its header"
+    }
   ],
   "strengths": [
     "The lecture flags its own difficulty and says precisely what makes it hard - the unknown is a function rather than a number or vector (lines 26-35) - so the reader knows what they are in for before the first equation",
@@ -28,5 +53,9 @@
   ],
   "scanner_doubts": [
     "qe-code-002 flags lines 53 and 360 of commod_price.md as spelled-out Greek, but both are `scipy.stats.beta` - the import at line 53 and the call `beta(5, 5)` at line 360. Neither is renameable. Meanwhile the genuinely author-chosen `beta_a, beta_b` at line 354 is not flagged, which matches the `<greek>_<suffix>` false-negative pattern also seen in bivariate_dist.md."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "93654d18670a21767c85139b33325bd7ebe406e2"
+  }
 }

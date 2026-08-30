@@ -2,18 +2,71 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "cagan_rational_expectations",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 4, "lines": [59, 733, 1539, 1541],
-     "detail": "Table 1 (57-75) is the lecture's motivation and it does not reconcile with itself. Column (1) is $-1/\\alpha$ and column (2) is headed $(e^{1/\\alpha}-1)\\times 100$, but with $\\alpha < 0$ that expression is negative while every entry in the column is positive - the entries are in fact $(e^{-1/\\alpha}-1)\\times 100$, i.e. the exponential of column (1), so the header and the bullet that repeats it at 72 both carry the wrong sign. On those entries six of the seven rows check out (Austria .117 gives 12.4, Germany .183 gives 20.1, Greece .244 gives 27.6, Hungary I .115 gives 12.2, Poland .435 gives 54.5, Russia .327 gives 38.7) and Hungary II does not: .236 gives 26.6, not the 32 shown. Second, the four footnote definitions at 733-739 are dropped into the body of the \"Consistent estimator\" section, between the Granger-causality paragraph at 730-731 and the resumption of the maximum-likelihood argument at 741, so a continuous derivation is interrupted by four unrelated notes. Third, the Exercises section (1537) opens not with an exercise but with two paragraphs and a 45-line function definition (1543-1589), and the promise made at 1541 - \"We will use these moments to evaluate the bias in Cagan's estimator and to construct a consistent estimator\" - is not kept: the bias was already treated at 337-484 and the consistent estimator at 487-1209, and the only use of `bivariate_ma1_moments` is the positive-semidefiniteness check at 1610-1641"},
-    {"rule": "qe-code-001", "count": 8, "lines": [1108, 1136, 1199, 1301, 1436, 1631],
-     "detail": "1199 passes a non-raw string containing a LaTeX escape, `ax.set_ylabel('det$(D_a(\\lambda))$')`, so `\\l` is an invalid escape sequence and Python 3.12 emits a SyntaxWarning - every other label in the file is a raw string, including 1198 two lines above. 1136 and 1141 pad with two spaces before the operator to align assignments (`x_prev  = 0.0`), as do 1436-1438 (`λ_ml   = [...]`), which also pads after commas (`α_se   = [4.62,  1.57,  2.97,  0.40, 10.74,  0.86]`); PEP8 asks for a single space in both places. The continuation lines at 1301-1302 are indented 35 spaces against an opening parenthesis at column 34, so the visual indent is off by one. 1631-1633 write `cxx[1]*np.conj(z) + cxx[0] + cxx[1]*z` with no spaces around the multiplications, where the same lecture writes `φ**2 * (1 + λ**2) * var_diff` at 1575 - the rule reserves the tight form for `a**b`. And 1108-1109 mixes conventions inside one loop body: the lag of `ε` is named `e_prev` while the lag of `η` is named `η_prev`, four lines after both arrays were unpacked as `ε, η` at 1096"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [57, 728, 872],
-     "detail": "the lecture plots Table 2 and Table 3 (the two code cells at 1428-1489) but not Table 1 (57-75), which is the table the whole paper is about: the paradox is that column (2), the revenue-maximising inflation rate implied by Cagan's $\\hat\\alpha$, sits far below column (3), the actual average inflation - 12 against 47 for Austria, 20 against 322 for Germany, 32 against 19,800 for Hungary II - and one grouped bar chart on a log scale would carry that gap at a glance instead of asking the reader to compare two columns of a seven-row table. Second, the identification argument at 872-925 is the least intuitive claim in the lecture (offsetting movements in $\\alpha$ and $\\sigma_{\\varepsilon\\eta}$ leave $\\sigma_{11}, \\sigma_{12}, \\sigma_{22}$ and hence the likelihood unchanged) and it is carried entirely by two differentials at 884-900; a contour plot of `mle_criterion` (1150) over the $(\\alpha, \\sigma_{\\varepsilon\\eta})$ plane would show the flat ridge directly, and both functions needed already exist. Third, 728 asserts \"Their cross-spectrum has zero phase at all frequencies\" and shows nothing, although the exercise solution at 1627-1640 already assembles $S(\\omega)$ on a 50-point grid and uses it only for an eigenvalue check"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [50, 745, 809, 874],
-     "detail": "809-813 is a 50-word sentence with two em-dash asides that has to hold four parameters and five parameters in the air at once (\"On the basis of the *four* parameters $\\lambda$, $\\sigma_{11}$, $\\sigma_{12}$, and $\\sigma_{22}$ that are identified by {eq}`eq27` -- i.e., that characterize the likelihood function {eq}`eq32` -- we can think of attempting to estimate the *five* parameters of the model: ...\"). 48-52 is another 50 words carrying the paradox that motivates the lecture, with a nested \"-- and often very much less --\" between subject and verb. 744-748 is 45 words with two inline column vectors embedded in it. And 872-878 asks the same question twice in consecutive paragraphs: \"Do there exist offsetting changes in $\\alpha$ and $\\sigma_{\\varepsilon\\eta}$ that leave both {eq}`eq37` and {eq}`eq38` satisfied with $\\sigma_{11}$, $\\sigma_{22}$, and $\\sigma_{12}$ unchanged?\" then \"That is, holding $\\lambda$ and $\\sigma_\\varepsilon^2$ constant, can we change $\\alpha$ and $\\sigma_{\\varepsilon\\eta}$ in offsetting ways that leave $\\sigma_{11}$, $\\sigma_{12}$, and $\\sigma_{22}$ constant?\" - the restatement adds nothing the first sentence did not say. 1401 does the same on a smaller scale, following \"Hungary I is the only case in which $\\alpha$ is estimated with much precision\" (1398) with \"Hungary I is the standout case.\""},
-    {"rule": "qe-math-009", "count": 3, "lines": [529, 717, 768],
-     "detail": "$L$ carries two meanings. It is introduced at 148-149 as the lag operator (\"$L$ is the lag operator defined by $L^n x_t = x_{t-n}$\") and used that way in roughly thirty displays through 1239, and it is also the likelihood function at 768, 1022, 1025 and 1365 - so `\\log L` at 1022, three lines after `(1-\\lambda L)`, asks the reader to switch meaning inside the same argument; $\\mathcal L$ or $\\ell$ for the likelihood costs nothing here. Separately the fraction and spacing commands are chosen three different ways for no reason the reader can see: `\\dfrac` at 529-530 and 655-656, `\\tfrac` at 717 and 770, plain `\\frac` in every other display, with thirteen manual `\\!` thin-space corrections (169, 171, 195, 197, 297, 770, 830, 846, 849, 995, 997, 1078, 1365) and hand-set row spacing `\\\\[4pt]`, `\\\\[8pt]`, `\\\\[10pt]` at 529, 655, 958 and 1010-1013. Picking `\\frac` throughout and dropping the tuning would leave the same mathematics with less to maintain"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [103, 149, 365],
-     "detail": "bold is never used in this lecture - there is not one `**` span in 1739 lines - so the division of labour the rule asks for is not in place: every term the lecture introduces is left unmarked, including the lag operator at 149, the triangular bivariate Wold representation at 365, the fundamental noises at 375, the innovations at 643-645, and $D_a$ at 756. Italic, meanwhile, is used thirteen times, correctly for emphasis (99 *leading*, 405 *consistent*, 809 *four*, 811 *five*, 1342 *seven linear restrictions*, 1498 *single free parameter*, 1508 *inconsistent*, 1515 *not identifiable*, 1532 *not*) but at 103 for a term that is being introduced - \"*invariance with respect to an intervention*\", the concept the whole note at 91-104 exists to name - which the rule assigns to bold"}
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        59,
+        733,
+        1539,
+        1541
+      ],
+      "detail": "Table 1 (57-75) is the lecture's motivation and it does not reconcile with itself. Column (1) is $-1/\\alpha$ and column (2) is headed $(e^{1/\\alpha}-1)\\times 100$, but with $\\alpha < 0$ that expression is negative while every entry in the column is positive - the entries are in fact $(e^{-1/\\alpha}-1)\\times 100$, i.e. the exponential of column (1), so the header and the bullet that repeats it at 72 both carry the wrong sign. On those entries six of the seven rows check out (Austria .117 gives 12.4, Germany .183 gives 20.1, Greece .244 gives 27.6, Hungary I .115 gives 12.2, Poland .435 gives 54.5, Russia .327 gives 38.7) and Hungary II does not: .236 gives 26.6, not the 32 shown. Second, the four footnote definitions at 733-739 are dropped into the body of the \"Consistent estimator\" section, between the Granger-causality paragraph at 730-731 and the resumption of the maximum-likelihood argument at 741, so a continuous derivation is interrupted by four unrelated notes. Third, the Exercises section (1537) opens not with an exercise but with two paragraphs and a 45-line function definition (1543-1589), and the promise made at 1541 - \"We will use these moments to evaluate the bias in Cagan's estimator and to construct a consistent estimator\" - is not kept: the bias was already treated at 337-484 and the consistent estimator at 487-1209, and the only use of `bivariate_ma1_moments` is the positive-semidefiniteness check at 1610-1641"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        1108,
+        1136,
+        1199,
+        1301,
+        1436,
+        1631
+      ],
+      "detail": "1199 passes a non-raw string containing a LaTeX escape, `ax.set_ylabel('det$(D_a(\\lambda))$')`, so `\\l` is an invalid escape sequence and Python 3.12 emits a SyntaxWarning - every other label in the file is a raw string, including 1198 two lines above. 1136 and 1141 pad with two spaces before the operator to align assignments (`x_prev  = 0.0`), as do 1436-1438 (`λ_ml   = [...]`), which also pads after commas (`α_se   = [4.62,  1.57,  2.97,  0.40, 10.74,  0.86]`); PEP8 asks for a single space in both places. The continuation lines at 1301-1302 are indented 35 spaces against an opening parenthesis at column 34, so the visual indent is off by one. 1631-1633 write `cxx[1]*np.conj(z) + cxx[0] + cxx[1]*z` with no spaces around the multiplications, where the same lecture writes `φ**2 * (1 + λ**2) * var_diff` at 1575 - the rule reserves the tight form for `a**b`. And 1108-1109 mixes conventions inside one loop body: the lag of `ε` is named `e_prev` while the lag of `η` is named `η_prev`, four lines after both arrays were unpacked as `ε, η` at 1096"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        57,
+        728,
+        872
+      ],
+      "detail": "the lecture plots Table 2 and Table 3 (the two code cells at 1428-1489) but not Table 1 (57-75), which is the table the whole paper is about: the paradox is that column (2), the revenue-maximising inflation rate implied by Cagan's $\\hat\\alpha$, sits far below column (3), the actual average inflation - 12 against 47 for Austria, 20 against 322 for Germany, 32 against 19,800 for Hungary II - and one grouped bar chart on a log scale would carry that gap at a glance instead of asking the reader to compare two columns of a seven-row table. Second, the identification argument at 872-925 is the least intuitive claim in the lecture (offsetting movements in $\\alpha$ and $\\sigma_{\\varepsilon\\eta}$ leave $\\sigma_{11}, \\sigma_{12}, \\sigma_{22}$ and hence the likelihood unchanged) and it is carried entirely by two differentials at 884-900; a contour plot of `mle_criterion` (1150) over the $(\\alpha, \\sigma_{\\varepsilon\\eta})$ plane would show the flat ridge directly, and both functions needed already exist. Third, 728 asserts \"Their cross-spectrum has zero phase at all frequencies\" and shows nothing, although the exercise solution at 1627-1640 already assembles $S(\\omega)$ on a 50-point grid and uses it only for an eigenvalue check"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        50,
+        745,
+        809,
+        874
+      ],
+      "detail": "809-813 is a 50-word sentence with two em-dash asides that has to hold four parameters and five parameters in the air at once (\"On the basis of the *four* parameters $\\lambda$, $\\sigma_{11}$, $\\sigma_{12}$, and $\\sigma_{22}$ that are identified by {eq}`eq27` -- i.e., that characterize the likelihood function {eq}`eq32` -- we can think of attempting to estimate the *five* parameters of the model: ...\"). 48-52 is another 50 words carrying the paradox that motivates the lecture, with a nested \"-- and often very much less --\" between subject and verb. 744-748 is 45 words with two inline column vectors embedded in it. And 872-878 asks the same question twice in consecutive paragraphs: \"Do there exist offsetting changes in $\\alpha$ and $\\sigma_{\\varepsilon\\eta}$ that leave both {eq}`eq37` and {eq}`eq38` satisfied with $\\sigma_{11}$, $\\sigma_{22}$, and $\\sigma_{12}$ unchanged?\" then \"That is, holding $\\lambda$ and $\\sigma_\\varepsilon^2$ constant, can we change $\\alpha$ and $\\sigma_{\\varepsilon\\eta}$ in offsetting ways that leave $\\sigma_{11}$, $\\sigma_{12}$, and $\\sigma_{22}$ constant?\" - the restatement adds nothing the first sentence did not say. 1401 does the same on a smaller scale, following \"Hungary I is the only case in which $\\alpha$ is estimated with much precision\" (1398) with \"Hungary I is the standout case.\""
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        529,
+        717,
+        768
+      ],
+      "detail": "$L$ carries two meanings. It is introduced at 148-149 as the lag operator (\"$L$ is the lag operator defined by $L^n x_t = x_{t-n}$\") and used that way in roughly thirty displays through 1239, and it is also the likelihood function at 768, 1022, 1025 and 1365 - so `\\log L` at 1022, three lines after `(1-\\lambda L)`, asks the reader to switch meaning inside the same argument; $\\mathcal L$ or $\\ell$ for the likelihood costs nothing here. Separately the fraction and spacing commands are chosen three different ways for no reason the reader can see: `\\dfrac` at 529-530 and 655-656, `\\tfrac` at 717 and 770, plain `\\frac` in every other display, with thirteen manual `\\!` thin-space corrections (169, 171, 195, 197, 297, 770, 830, 846, 849, 995, 997, 1078, 1365) and hand-set row spacing `\\\\[4pt]`, `\\\\[8pt]`, `\\\\[10pt]` at 529, 655, 958 and 1010-1013. Picking `\\frac` throughout and dropping the tuning would leave the same mathematics with less to maintain"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        103,
+        149,
+        365
+      ],
+      "detail": "bold is never used in this lecture - there is not one `**` span in 1739 lines - so the division of labour the rule asks for is not in place: every term the lecture introduces is left unmarked, including the lag operator at 149, the triangular bivariate Wold representation at 365, the fundamental noises at 375, the innovations at 643-645, and $D_a$ at 756. Italic, meanwhile, is used thirteen times, correctly for emphasis (99 *leading*, 405 *consistent*, 809 *four*, 811 *five*, 1342 *seven linear restrictions*, 1498 *single free parameter*, 1508 *inconsistent*, 1515 *not identifiable*, 1532 *not*) but at 103 for a term that is being introduced - \"*invariance with respect to an intervention*\", the concept the whole note at 91-104 exists to name - which the rule assigns to bold"
+    }
   ],
   "strengths": [
     "The algebra from the structural model to the estimable VAR is done in full, one substitution at a time, and every step says what it is doing: 501-521 solves for $\\varepsilon_t$ and $\\eta_t$, 523-533 stacks them, 535 multiplies through by $(1-\\lambda L)I$, 568-576 names $G_0$, 578-587 gives $G_0^{-1}$ explicitly, and 605-615 lands on {eq}`eq26` - so a reader can reproduce the derivation without going to the paper",
@@ -36,5 +89,9 @@
   "scanner_doubts": [
     "cagan_rational_expectations.md:784,793,1039 - qe-math-002 is reported ×5 over lines 761, 770, 944, 997, but the same transpose written on a decorated base is not counted: `\\hat{a}_t \\hat{a}_t'` appears at 784, 793 and 1039 and is as much an apostrophe transpose as the `a_t'` at 761. In `check_math_002`, the `prime` pattern's second alternative is `[A-Za-z](?:_\\{[^}]*\\}|_[A-Za-z0-9])`, which needs a bare letter immediately before the subscript; in `\\hat{a}_t'` the character before `_t` is `}`, and the `\\}'` alternative does not fire because the apostrophe follows `_t` rather than the brace. The module already defines `DECORATED` for exactly this shape and uses it in `supT` but not in `prime`; adding `DECORATED(?:_\\{[^}]*\\}|_[A-Za-z0-9])?` as an alternative would catch `\\hat{a}_t'`, `\\bar{x}_t'`, `\\tilde{X}_t'`. Reported as a false negative only - the four counted lines are all genuine",
     "cagan_rational_expectations.md:356,357,994 - qe-math-010 (proposed) is reported ×4 (205, 209, 225, 270) and misses three more of the same kind in this file. At 994 the variance is written `\\operatorname{var}\\hat{\\alpha}`, which the rule draft names explicitly (\"Use of `\\operatorname{E}` / `\\operatorname{Var}` instead of the blackboard form\"), but `ROMAN` in `check_math_010` lists only the capitalised spellings `Var|Cov|Pr|Prob|E|Cor`, so the lowercase `var` slips through; matching case-insensitively, or adding the lowercase forms, would catch it. At 356-357 the regression coefficient is `\\frac{E[\\varepsilon_t(\\varepsilon_t - \\eta_t)]}{E[(\\varepsilon_t - \\eta_t)^2]}` - two bare `E[` operators that `bare_E` misses because its lookbehind `(?<![\\\\A-Za-z0-9_{])` excludes a preceding `{`. That exclusion is there to protect the correct `\\mathbb{E}`, but it also blinds the check to any bare `E[` that happens to open a `\\frac` or other group; since `bare_mathbb` is masked out first, the lookbehind could be narrowed to reject `{` only when it is preceded by `\\mathbb` or `\\Bbb`"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "45a49005036c6ab58edb44289b54778fd3864d91"
+  }
 }

@@ -2,16 +2,58 @@
   "series": "lecture-python-intro",
   "lecture": "geom_series",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 4, "lines": [127, 132, 140, 310],
-     "detail": "definitions italicised and claims bolded, in both directions: \"a *deposit* is a balance in a checking or savings account...\" at 127 and \"a *deposit receipt* was a *bank note* that the bank promised to convert into gold or silver\" at 132 are definitions in italics - and *deposit receipt* is the same term the lecture bolds at 121; \"- *exogenous* means *determined outside this model*\" at 310 is a definition in italics; while \"**banks create money**\" at 140 and \"**balance sheets balance**\" at 154 are bolded assertions, not defined terms"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [166, 432, 848, 852],
-     "detail": "lines 166-170 run to 53 words, appending a semicolon clause and a parenthesis about pre-1914 bank notes to an already complete sentence; lines 432-436 spend 43 words restating what a multiplier is right after naming the **government expenditures multiplier**; and the two SymPy conclusions at 848-850 and 852-853 are circular as written - \"we can see that for $\\partial p_0/\\partial r<0$ as long as $r>g$, $r>0$ and $g>0$ and $x_0$ is positive, so $\\partial p_0/\\partial r$ will always be negative\" assumes its own conclusion and is ungrammatical at the opening \"for\""},
-    {"rule": "qe-writing-003", "count": 2, "lines": [857, 869],
-     "detail": "the dynamic Keynesian model is derived at 342-436 but not plotted until 861, with the whole interest-rate, asset-pricing and SymPy material (438-853) in between - the lecture has to signpost the gap with a \"Back to the Keynesian multiplier\" heading; worse, `calculate_y` at 869-874 and the equilibrium line at 889 include a government-spending term `g` with `g_0 = 0.3`, which the derivation at 379-409 does not contain and which the introducing sentence at 857-859 does not mention: the code silently implements the generalisation of Remark 2 (422-436) while the prose describes the simple model"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [118],
-     "detail": "the money multiplier section (118-266) is the lecture's most fully derived example - eight labelled equations ending in $\\sum_{i=0}^\\infty (1-r)^i D_0 = D_0/r$ - and it has no figure, in a lecture with eight figures elsewhere; the partial sums of exactly that series are finally plotted in exercise `geom_ex2` at 1041-1059, which shows what the section itself is missing"},
-    {"rule": "qe-code-001", "count": 6, "lines": [51, 700, 761, 790, 909, 949],
-     "detail": "`#set default figure size` at 51 has no space after the hash; the `funcs = [` list at 699-702 indents its continuation lines to 8 columns instead of the bracket, and strands the explanatory comment after the closing bracket at 702; `T=np.arange(0, T_max+1)` at 761 omits the spaces around `=` that line 693 has; `plt.figure(figsize = [16, 5])` at 790 adds spaces around a keyword `=`, as does `ax.legend(loc =\"lower right\")` at 949; `fig,ax = plt.subplots()` at 909 drops the space after the comma"}
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        127,
+        132,
+        140,
+        310
+      ],
+      "detail": "definitions italicised and claims bolded, in both directions: \"a *deposit* is a balance in a checking or savings account...\" at 127 and \"a *deposit receipt* was a *bank note* that the bank promised to convert into gold or silver\" at 132 are definitions in italics - and *deposit receipt* is the same term the lecture bolds at 121; \"- *exogenous* means *determined outside this model*\" at 310 is a definition in italics; while \"**banks create money**\" at 140 and \"**balance sheets balance**\" at 154 are bolded assertions, not defined terms"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        166,
+        432,
+        848,
+        852
+      ],
+      "detail": "lines 166-170 run to 53 words, appending a semicolon clause and a parenthesis about pre-1914 bank notes to an already complete sentence; lines 432-436 spend 43 words restating what a multiplier is right after naming the **government expenditures multiplier**; and the two SymPy conclusions at 848-850 and 852-853 are circular as written - \"we can see that for $\\partial p_0/\\partial r<0$ as long as $r>g$, $r>0$ and $g>0$ and $x_0$ is positive, so $\\partial p_0/\\partial r$ will always be negative\" assumes its own conclusion and is ungrammatical at the opening \"for\""
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        857,
+        869
+      ],
+      "detail": "the dynamic Keynesian model is derived at 342-436 but not plotted until 861, with the whole interest-rate, asset-pricing and SymPy material (438-853) in between - the lecture has to signpost the gap with a \"Back to the Keynesian multiplier\" heading; worse, `calculate_y` at 869-874 and the equilibrium line at 889 include a government-spending term `g` with `g_0 = 0.3`, which the derivation at 379-409 does not contain and which the introducing sentence at 857-859 does not mention: the code silently implements the generalisation of Remark 2 (422-436) while the prose describes the simple model"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        118
+      ],
+      "detail": "the money multiplier section (118-266) is the lecture's most fully derived example - eight labelled equations ending in $\\sum_{i=0}^\\infty (1-r)^i D_0 = D_0/r$ - and it has no figure, in a lecture with eight figures elsewhere; the partial sums of exactly that series are finally plotted in exercise `geom_ex2` at 1041-1059, which shows what the section itself is missing"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        51,
+        700,
+        761,
+        790,
+        909,
+        949
+      ],
+      "detail": "`#set default figure size` at 51 has no space after the hash; the `funcs = [` list at 699-702 indents its continuation lines to 8 columns instead of the bracket, and strands the explanatory comment after the closing bracket at 702; `T=np.arange(0, T_max+1)` at 761 omits the spaces around `=` that line 693 has; `plt.figure(figsize = [16, 5])` at 790 adds spaces around a keyword `=`, as does `ax.legend(loc =\"lower right\")` at 949; `fig,ax = plt.subplots()` at 909 drops the space after the comma"
+    }
   ],
   "strengths": [
     "Every one of the nine labelled equations is cited later with `{eq}` - `infinite` (83) at 88 and 145, `balance` and `reserves` (157, 175) at 213, `deposits` and `fraction` (190, 216) at 224, `geomseries` (233) at 238, `sumdeposits` (249) at 260, `geom1` (482) at 495 and 503, `geom2` (490) at 498 and 528 - so no label is dead weight and no equation is referred to by number in prose",
@@ -31,5 +73,9 @@
   ],
   "scanner_doubts": [
     "qe-math-002 count 1 in geom_series.md line 616 is a false positive. The expression is `x_0(1+GR^{-1}+\\dots +G^{T}R^{-T})`: $T$ is the lease's terminal period, introduced at line 607 (\"$t = 1,2, \\dots,T$\"), and $G^{T}$ is the growth factor raised to that power - not a transpose. The neighbouring `R^{-T}`, `R^{-(T+1)}` (619-622) and `G^{T+1}` (625-628) show the same letter used as an exponent with arithmetic offsets, which a transpose never takes. check_math_002 (tools/qestyle_rules.py 397-400) already treats `^T` as ambiguous and requires a matrix-like base followed by a factor, which `G^{T}R` satisfies by accident; a further guard - skip when the same math span also contains that letter in an offset exponent such as `^{T+1}` or `^{-T}` - would clear it. This is the lecture's only Math violation and qe-math-002 is a Very-High-weight rule, so it alone sets Math to 8.5/10."
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "d1a8c6427400278891d988af0c046d31f5c1057c"
+  }
 }

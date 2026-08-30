@@ -2,18 +2,76 @@
   "series": "lecture-python.myst",
   "lecture": "linear_models",
   "judgment": [
-    {"rule": "qe-writing-007", "count": 4, "lines": [341, 374, 1145, 1290],
-     "detail": "the lecture's figures all sit in its first half: eight of them between 190 and 995, then nothing at all in the 390 lines from 1026 to the end. The two most expensive omissions are in that stretch. 1145-1172 \"Averages over Time\" makes the ensemble-versus-time-average distinction the point of the section - 1147 says \"in real life, we usually observe only a *single* realization\" - states three ergodic limits at 1168-1170 and plots none of them, although the ensemble side of exactly that comparison is drawn at 782-814 and the time-average version is the same loop with the axis swapped. 1290-1331 derives the $j$-step prediction-error covariance $V_j = CC' + AV_{j-1}A'$ and its Lyapunov limit and never draws the forecast fan, which is the standard picture for this material and is a few lines from the `moment_sequence()` generator the lecture already introduces at 1341. Earlier, 341-372 \"Seasonals\" defines a deterministic and an indeterministic seasonal and plots neither, even though `plot_lss` (191-207) is already defined and accepts the $A$ given at 356 as-is, and 374-444 \"Time Trends\" gives three trend models with no picture. Related: the `{note}` at 1131-1137 is the only admonition in 1413 lines, and it holds a technical aside, while the two things a reader most needs flagged - the dictum at 144 and the warning at 557-558 that the \"unconditional\" moments still depend on $N(\\mu_0,\\Sigma_0)$ - are plain paragraphs"},
-    {"rule": "qe-writing-003", "count": 5, "lines": [222, 372, 521, 1345, 1378],
-     "detail": "three promises are not kept. 222 says \"Later you'll be asked to recreate this figure\" - the Exercises section (1347-1405) has one exercise, on forecasting geometric sums, and no figure task; the anchor `lss_sode_fig` planted at 188 for that purpose is never referenced. 521 says \"We'll explain what *unconditional* and *conditional* mean soon\" and 554-555 repeats the promise (\"related objects that use conditioning information, to be defined below\"); \"unconditional\" is defined at 549-552, but \"conditional\" is never defined - it first appears in use 700 lines later at 1238-1243 with no back-reference. 1345 says \"Examples of usage are given in the solutions to the exercises\", and the single solution (1381-1403) is pure algebra with no code cell at all, so there is no example of using the `LinearStateSpace` class anywhere in the exercises. 372 asserts that \"The *indeterministic* seasonal produces recurrent, but aperiodic, seasonal fluctuations\" and stops there, while the deterministic seasonal beside it gets $A^4 = I$, a displayed consequence and a footnote (1407). And 1378 tacks \"what must the modulus for every eigenvalue of $A$ be less than?\" onto the end of an exercise after two displayed equations, in lower case and without an introduction, and then the solution answers it in its opening line (1384) before addressing the two displays the exercise actually asked about"},
-    {"rule": "qe-writing-005", "count": 5, "lines": [372, 825, 1046, 1135, 1159],
-     "detail": "the bold-for-definitions half of the rule is followed carefully - about twenty terms, from **state** and **transition matrix** (84-89) through **martingale with drift** (506), **covariance stationary** (1019) and **conditional covariance matrix** (1316) - but five terms are introduced in italic instead, and two of those are also bolded elsewhere in the same file. 372 italicises *indeterministic* where 349 bolds **indeterministic seasonal**; 1135 italicises *discrete Lyapunov equation* where 1327 bolds **discrete Lyapunov**; 825 defines *long-run average* in a parenthetical, in italic, immediately after using it in scare quotes at 823; 1046 italicises *globally stable case*, which is also the H4 heading at 1028; and 1159 italicises *ergodicity* on its introduction, with the definition following at 1161. Since 144, 521, 845, 1030 and 1147 use italic correctly for emphasis, the same marker is carrying both jobs"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [549, 583, 823, 1161, 1232],
-     "detail": "583-598 takes five consecutive paragraphs to reach \"everything here is Gaussian\": \"In general, knowing the mean and variance-covariance matrix ... is not quite as good as knowing the full distribution\" / \"However, there are some situations where these moments alone tell us all we need to know\" / \"These are situations in which the mean vector and covariance matrix are all of the **parameters** that pin down the population distribution\" / \"One such situation is when the vector in question is Gaussian\" / \"This is the case here, given ...\". 549-558 hedges three times in a row about a naming choice. 823-825 uses a term in scare quotes and then defines it in a parenthetical on the next line. 1161-1164 states ergodicity twice, the second time announced as \"More formally\" without being any more formal (\"time series and ensemble averages coincide\" / \"time series sample averages converge to their expectation under the stationary distribution\"). And 1232-1233 is the entire body of the H2 \"Prediction\": \"The theory of prediction for linear state space systems is elegant and simple\" - a value claim carrying no information, where the section's actual content starts under the next heading"},
-    {"rule": "qe-code-001", "count": 5, "lines": [191, 657, 663, 911, 914],
-     "detail": "all three function signatures mis-indent their continuation lines (E128): 191-195 opens `def plot_lss(A,` with the paren at column 13 and continues at column 10; 657-664 opens at column 23 and continues at 20; 911-918 opens at column 15 and continues at 13. Keyword defaults are spaced in five places where the same signatures get it right elsewhere: `sample_size = 20` at 663 beside `T=20` and `ymin=-0.8` at 660-661, and `T0 = 10`, `T1 = 50`, `T2 = 75`, `T4 = 100` at 915-918 (E251). 914 uses the *string* `'False'` as a boolean flag, tested as `steady_state == 'True'` at 922 and 939 and passed as `steady_state='True'` at 996 - so calling `cross_plot(..., steady_state=True)` silently takes the else branch. 800 writes `label='$\\\\bar y_t$'`, escaping the backslash in a plain string, where the adjacent call at 808 uses the raw form `r'$G\\mu_t$'`. And 74 imports the standard-library `random` purely for `random.choice` at 685 and 937, adding a second unseeded generator to a lecture built on `numpy` simulation. Note that the column-aligned matrix literals at 212-214, 278-281 and 704-707 are *not* counted here - that is the mathematical-notation exception the rule grants"},
-    {"rule": "qe-math-009", "count": 4, "lines": [908, 1033, 1081, 1305],
-     "detail": "the prime carries three different meanings in this file. It is the transpose at 239, 404, 431, 488, 543, 575, 635, 830, 1052, 1108 and 1116; it indexes time at 908 and 935 ($T, T', T''$ for three dates, with the same marks reused as tick labels at 935); and it is spelled two different ways for the same operation - `'` in most places but `^\\prime` at 444, 1305 and 1313, twice inside a single display. 1305 also mis-places one: `A^{k^\\prime}` renders as $A^{k'}$, a prime on the exponent, where the intended object is $(A^k)'$. 1081 nests the mark inside itself, $x_t = \\begin{bmatrix} x_{1t}' & 1\\end{bmatrix}'$, transposing a column to a row so it can be stacked and then transposing the stack back. And 1033 states a mathematical condition as a Python expression - \"That is, if `(np.absolute(np.linalg.eigvals(A)) < 1).all() == True`\" - restating in code what the preceding sentence has just said in words, with a redundant `== True`"}
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        341,
+        374,
+        1145,
+        1290
+      ],
+      "detail": "the lecture's figures all sit in its first half: eight of them between 190 and 995, then nothing at all in the 390 lines from 1026 to the end. The two most expensive omissions are in that stretch. 1145-1172 \"Averages over Time\" makes the ensemble-versus-time-average distinction the point of the section - 1147 says \"in real life, we usually observe only a *single* realization\" - states three ergodic limits at 1168-1170 and plots none of them, although the ensemble side of exactly that comparison is drawn at 782-814 and the time-average version is the same loop with the axis swapped. 1290-1331 derives the $j$-step prediction-error covariance $V_j = CC' + AV_{j-1}A'$ and its Lyapunov limit and never draws the forecast fan, which is the standard picture for this material and is a few lines from the `moment_sequence()` generator the lecture already introduces at 1341. Earlier, 341-372 \"Seasonals\" defines a deterministic and an indeterministic seasonal and plots neither, even though `plot_lss` (191-207) is already defined and accepts the $A$ given at 356 as-is, and 374-444 \"Time Trends\" gives three trend models with no picture. Related: the `{note}` at 1131-1137 is the only admonition in 1413 lines, and it holds a technical aside, while the two things a reader most needs flagged - the dictum at 144 and the warning at 557-558 that the \"unconditional\" moments still depend on $N(\\mu_0,\\Sigma_0)$ - are plain paragraphs"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        222,
+        372,
+        521,
+        1345,
+        1378
+      ],
+      "detail": "three promises are not kept. 222 says \"Later you'll be asked to recreate this figure\" - the Exercises section (1347-1405) has one exercise, on forecasting geometric sums, and no figure task; the anchor `lss_sode_fig` planted at 188 for that purpose is never referenced. 521 says \"We'll explain what *unconditional* and *conditional* mean soon\" and 554-555 repeats the promise (\"related objects that use conditioning information, to be defined below\"); \"unconditional\" is defined at 549-552, but \"conditional\" is never defined - it first appears in use 700 lines later at 1238-1243 with no back-reference. 1345 says \"Examples of usage are given in the solutions to the exercises\", and the single solution (1381-1403) is pure algebra with no code cell at all, so there is no example of using the `LinearStateSpace` class anywhere in the exercises. 372 asserts that \"The *indeterministic* seasonal produces recurrent, but aperiodic, seasonal fluctuations\" and stops there, while the deterministic seasonal beside it gets $A^4 = I$, a displayed consequence and a footnote (1407). And 1378 tacks \"what must the modulus for every eigenvalue of $A$ be less than?\" onto the end of an exercise after two displayed equations, in lower case and without an introduction, and then the solution answers it in its opening line (1384) before addressing the two displays the exercise actually asked about"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 5,
+      "lines": [
+        372,
+        825,
+        1046,
+        1135,
+        1159
+      ],
+      "detail": "the bold-for-definitions half of the rule is followed carefully - about twenty terms, from **state** and **transition matrix** (84-89) through **martingale with drift** (506), **covariance stationary** (1019) and **conditional covariance matrix** (1316) - but five terms are introduced in italic instead, and two of those are also bolded elsewhere in the same file. 372 italicises *indeterministic* where 349 bolds **indeterministic seasonal**; 1135 italicises *discrete Lyapunov equation* where 1327 bolds **discrete Lyapunov**; 825 defines *long-run average* in a parenthetical, in italic, immediately after using it in scare quotes at 823; 1046 italicises *globally stable case*, which is also the H4 heading at 1028; and 1159 italicises *ergodicity* on its introduction, with the definition following at 1161. Since 144, 521, 845, 1030 and 1147 use italic correctly for emphasis, the same marker is carrying both jobs"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        549,
+        583,
+        823,
+        1161,
+        1232
+      ],
+      "detail": "583-598 takes five consecutive paragraphs to reach \"everything here is Gaussian\": \"In general, knowing the mean and variance-covariance matrix ... is not quite as good as knowing the full distribution\" / \"However, there are some situations where these moments alone tell us all we need to know\" / \"These are situations in which the mean vector and covariance matrix are all of the **parameters** that pin down the population distribution\" / \"One such situation is when the vector in question is Gaussian\" / \"This is the case here, given ...\". 549-558 hedges three times in a row about a naming choice. 823-825 uses a term in scare quotes and then defines it in a parenthetical on the next line. 1161-1164 states ergodicity twice, the second time announced as \"More formally\" without being any more formal (\"time series and ensemble averages coincide\" / \"time series sample averages converge to their expectation under the stationary distribution\"). And 1232-1233 is the entire body of the H2 \"Prediction\": \"The theory of prediction for linear state space systems is elegant and simple\" - a value claim carrying no information, where the section's actual content starts under the next heading"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 5,
+      "lines": [
+        191,
+        657,
+        663,
+        911,
+        914
+      ],
+      "detail": "all three function signatures mis-indent their continuation lines (E128): 191-195 opens `def plot_lss(A,` with the paren at column 13 and continues at column 10; 657-664 opens at column 23 and continues at 20; 911-918 opens at column 15 and continues at 13. Keyword defaults are spaced in five places where the same signatures get it right elsewhere: `sample_size = 20` at 663 beside `T=20` and `ymin=-0.8` at 660-661, and `T0 = 10`, `T1 = 50`, `T2 = 75`, `T4 = 100` at 915-918 (E251). 914 uses the *string* `'False'` as a boolean flag, tested as `steady_state == 'True'` at 922 and 939 and passed as `steady_state='True'` at 996 - so calling `cross_plot(..., steady_state=True)` silently takes the else branch. 800 writes `label='$\\\\bar y_t$'`, escaping the backslash in a plain string, where the adjacent call at 808 uses the raw form `r'$G\\mu_t$'`. And 74 imports the standard-library `random` purely for `random.choice` at 685 and 937, adding a second unseeded generator to a lecture built on `numpy` simulation. Note that the column-aligned matrix literals at 212-214, 278-281 and 704-707 are *not* counted here - that is the mathematical-notation exception the rule grants"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 4,
+      "lines": [
+        908,
+        1033,
+        1081,
+        1305
+      ],
+      "detail": "the prime carries three different meanings in this file. It is the transpose at 239, 404, 431, 488, 543, 575, 635, 830, 1052, 1108 and 1116; it indexes time at 908 and 935 ($T, T', T''$ for three dates, with the same marks reused as tick labels at 935); and it is spelled two different ways for the same operation - `'` in most places but `^\\prime` at 444, 1305 and 1313, twice inside a single display. 1305 also mis-places one: `A^{k^\\prime}` renders as $A^{k'}$, a prime on the exponent, where the intended object is $(A^k)'$. 1081 nests the mark inside itself, $x_t = \\begin{bmatrix} x_{1t}' & 1\\end{bmatrix}'$, transposing a column to a row so it can be stacked and then transposing the stack back. And 1033 states a mathematical condition as a Python expression - \"That is, if `(np.absolute(np.linalg.eigvals(A)) < 1).all() == True`\" - restating in code what the preceding sentence has just said in words, with a redundant `== True`"
+    }
   ],
   "strengths": [
     "The six examples at 138-444 are ordered by how much of the state-space machinery each one needs and every one is mapped explicitly: the second-order difference equation gets its $x_t$, $A$, $C$, $G$ written out at 161-182 with $C = 0$ so the reader sees a deterministic special case first, then the AR(4) at 241-260, then its vector version at 308-337 with $I$ substituted for $1$ block by block, then seasonals and trends - and 184 asks the reader to confirm the mapping rather than asserting it",
@@ -33,5 +91,9 @@
     "Bold the five italicised definitions (372, 825, 1046, 1135, 1159) - two of them, *indeterministic seasonal* and *discrete Lyapunov equation*, are already bolded at 349 and 1327",
     "Sweep the mechanical remainder: the 25 title-case headings (77, 119, 147, 224, 293, 374, 446, 508, 516, 560 and 15 more - the largest writing-006 count in this batch), the 30 double spaces, the two `\\textrm{Var}` operators at 575 and 1218 in a file that otherwise uses `\\mathbb{E}` throughout, the two multi-sentence paragraphs at 444 and 1409, `mystnb` figure metadata at 728 and 782, `lw=2` at 689 and 946, the `figsize` override at 668, and the raw `python-programming.quantecon.org` URL at 1343 which should be a `{doc}` reference"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "76420be29597f98a07f9d384d2eea08a8f3756cb"
+  }
 }

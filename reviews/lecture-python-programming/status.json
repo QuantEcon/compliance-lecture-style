@@ -15,5 +15,9 @@
     "Make the cell language tags consistent: three cells are `ipython` (25, 31, 38) and the last is `ipython3` (44)",
     "Drop the trailing space at the end of line 21"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "ceec881028688d7b41a64ce5ed73c7f576fa46a8",
+    "blob": "2ec414c48821b28f9f2a478295f4f75dd433ed43"
+  }
 }

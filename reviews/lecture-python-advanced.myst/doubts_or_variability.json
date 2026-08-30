@@ -82,5 +82,9 @@
   ],
   "scanner_doubts": [
     "doubts_or_variability.md:339 - qe-fig-004 flags the caption as Title Case, but the caption is \"SDF moments and Hansen-Jagannathan bound\": only the first word, the acronym SDF and the proper noun Hansen-Jagannathan are capitalised, which is exactly the sentence-case convention the rule asks for. The hyphenated surname pair looks like what triggered it, so this single hit is probably a false positive."
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "1c37833761e43234a3a0418e027d957d9cbd4039"
+  }
 }

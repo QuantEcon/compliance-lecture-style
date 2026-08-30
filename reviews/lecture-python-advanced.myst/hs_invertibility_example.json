@@ -5,37 +5,62 @@
     {
       "rule": "qe-writing-003",
       "count": 4,
-      "lines": [72, 175, 180, 370],
+      "lines": [
+        72,
+        175,
+        180,
+        370
+      ],
       "detail": "72 says the endowment process is \"the sum of two orthogonal autoregressive processes\", but 155-156 states the opposite about the second one - \"$d_{1t}$ is a first-order AR process, while $d_{2t}$ is a third-order pure moving average process\" - and 152 confirms it, $d_{2t} = 4w_{2t} + 0.8(4w_{2t-1}) + 0.6(4w_{2t-2}) + 0.4(4w_{2t-3})$, an MA(3) with no lagged $d$; 138-139 gets it right by saying only \"two orthogonal processes\", so 72 is the sentence to fix. Second, the third figure's titles at 370 and 375 are the strings 'Response to $w_{1t}$' and 'Response to $w_{2t}$', character-for-character the titles already used at 269 and 277 for the *first* figure, even though 379-380 says the third one shows something else entirely (the responses of $u_t$ to $w_t$, not of $c_t$ and $c_t - d_t$) - two of the lecture's three figures are labelled identically for different content. Third, the $6 \\times 6$ information matrix displayed at 110-113 is realised in code only by the fancy-indexed assignment at 176, whose comment is `# Chase's great trick`, so the one line that has to be checked against the display gives the reader nothing to check with. And 180 sets `x0 = np.array([[5], [150], [1], [0], [0], [0], [0], [0]])` with no word anywhere about what the eight entries are - $h_{-1} = 5$ and $k_{-1} = 150$ in particular, the latter being the household's initial asset position, which the level of the deficit path in every figure depends on"
     },
     {
       "rule": "qe-code-001",
       "count": 5,
-      "lines": [160, 174, 267, 305, 306],
+      "lines": [
+        160,
+        174,
+        267,
+        305,
+        306
+      ],
       "detail": "the rule permits capitals for matrices and the setup cell declines them in exactly the places where the correspondence with the display would help: 174-179 names $A_{22}$, $C_2$, $U_b$, $U_d$ as `a22`, `c2`, `ub`, `ud` while the neighbouring objects keep their symbols (`ϕ_c`, `ϕ_g`, `ϕ_i`, `δ_k`, `θ_k`, `π_h`). Worse, `γ` at 160 is the technology *matrix* $\\Gamma$ assembled from the scalar `γ_1` of 159, which is the $\\gamma$ of equation 91 - so the two names differ by a subscript while the objects differ in rank. 305 is a no-op self-assignment, `ma_coefs = ma_coefs`. 306 sets `jj = 50` five lines after 301 has already passed `50` to `stationary_coefficients(50, 'ma')`, so the loop bound and the number of coefficients requested have to be kept equal by hand. And 267 writes `econ1.d_irf[:,0].reshape(40,1)` with no space after either comma where the identical line at 275 has both spaces, and both hardcode the `ts_length=40` set at 263 (as 295 hardcodes the state dimension in `reshape(1, 8)`)"
     },
     {
       "rule": "qe-math-009",
       "count": 3,
-      "lines": [77, 195, 212],
+      "lines": [
+        77,
+        195,
+        212
+      ],
       "detail": "the conditioning information set is attached with a bare `|` placed outside every delimiter: 77 is $-\\frac{1}{2}\\mathbb{E}\\sum_{t=0}^\\infty \\beta^t[(c_t - b_t)^2 + l_t^2]|J_0$ and 195 is $\\mathbb{E}\\sum_{j=0}^\\infty \\beta^j (c_{t+j} - d_{t+j})|J_t = \\beta^{-1}k_{t-1}$, so in both the bar sits after the closing bracket of the summand and reads as applying to the whole expression rather than as conditioning inside the expectation; $\\mathbb{E}_0$ and $\\mathbb{E}_t$ - the form the sibling DLE lectures use - is both simpler and unambiguous. Separately, 212 and 241 write the zero row vector as `[0\\,\\,\\,0]`, three stacked thin spaces faking a matrix, where $\\sigma_2(\\beta) = 0$ (or a `bmatrix`) says it"
     },
     {
       "rule": "qe-writing-002",
       "count": 3,
-      "lines": [56, 64, 337],
+      "lines": [
+        56,
+        64,
+        337
+      ],
       "detail": "56-59 is a 44-word single sentence that has to carry the lecture's central definition: \"the invertibility problem indicates a situation in which histories of the shocks in an econometrician's autoregressive or Wold moving average representation span a smaller information space than do the shocks that are seen by the agents inside the econometrician's model\". 64-65 drops its noun - \"A shock-invertibility that is technically close to the one studied here is discussed by ...\" - where 67 gets the same construction right (\"A distinct shock-invertibility issue\"). And 337-341 and 343-347 each break one sentence across a paragraph and a bullet, leaving the paragraph without terminal punctuation and starting the bullet in lower case (\"... in the econometrician's Wold representation\" / \"- this is the object that would be recovered from a high order vector autoregression\")"
     },
     {
       "rule": "qe-writing-007",
       "count": 2,
-      "lines": [260, 343],
+      "lines": [
+        260,
+        343
+      ],
       "detail": "the lecture exists to show that two sets of impulse responses do not resemble each other, and it never puts them side by side: the $w$-responses (260-279, Fig 8.E.1) and the $u$-responses (294-335, Fig 8.E.2) are drawn in separate cells on separate scales, so the comparison 235-239 promises (\"do not resemble the impulse response functions that depict the response of consumption and the net-of-interest deficit to innovations $w_t$\") has to be made from memory across two pictures - a 2x2 grid, or the two consumption responses on one set of axes, would show it in one glance. Second, the reading of the second figure at 343-347 - \"Consumption responds only to the first innovation\" - is a claim about a line being flat at zero, which is exactly the sort of thing a reader mis-sees on an autoscaled axis and which nothing in the figure marks; and the lecture's central caution at 61-62 (\"An econometrician who is unaware of the problem would misinterpret shocks and likely responses to them\") is left in running prose where a `{note}` would carry it"
     },
     {
       "rule": "qe-writing-005",
       "count": 2,
-      "lines": [191, 285],
+      "lines": [
+        191,
+        285
+      ],
       "detail": "the terms the lecture introduces are bolded in the Overview - **news and noise** (51), **shock-invertibility** (53), **fiscal foresight** (65) - and then in quotation marks once the Model section starts: \"expected present-value budget balance\" at 191 is being defined right there, by the display at 195 that immediately follows (\"in the sense that\"), and gets quotes instead of bold; \"random walk\" (285) and \"old news\" (392) are the same treatment for two more terms of art. The one italic in the file is used correctly for emphasis (*smaller*, 242)"
     }
   ],
@@ -61,5 +86,9 @@
   ],
   "scanner_doubts": [
     "hs_invertibility_example.md:65,72 - qe-ref-001 is reported with count 3 (29, 235, 257) and all three look right to me, but two clear violations of the same rule in this file are missed, and they are a different gap from the known bare-author-year one because a `{cite}` *is* present. 65 reads \"Eric Leeper, Todd Walker, and Susan Yang {cite}`Leeper_Walker_Yang` in their analysis of **fiscal foresight**\" and 72 reads \"Robert Hall's (1978) model {cite}`Hall1978`\" - the first is the rule's \"using {cite} when author is part of sentence\" case and the second is its \"manual year in text with citation\" case, both of which want `{cite:t}` and no parenthesised year. The cause is that `NARRATIVE_LEAD` (tools/qestyle_rules.py:1219) only fires when the token immediately before `{cite}` is one of `by|of|in|to|from|following|see|and|with|per|after|via`, start of line, or sentence-end punctuation; here the preceding words are \"Yang\" and \"model\", so neither matches, and `NARRATIVE_TRAIL` needs one of its 20 verbs immediately after the citation, which \"in their\" and \"in which\" are not. Adding a pattern for a capitalised surname optionally followed by `'s` and/or a parenthesised year immediately before `{cite}` would catch both"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "228e005dc2cf5b13c074a390c02642f06631381b"
+  }
 }

@@ -2,16 +2,67 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "smoothing",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [190, 308, 331, 737, 938],
-     "detail": "(i) 938-945 opens \"In the graph on the left, for the same sample path of nonfinancial income $y_t$, notice that\" and then gives two bullets, the second of which is entirely about the right-hand panel - the consumer's debt, plotted at 926-933. (ii) The comment at 737, `# Optimal decisions from (12) and (13)`, points at equation numbers that exist nowhere in the lecture; the equations meant are {eq}`cs_12` and {eq}`cs_13` at 868-880, which the prose at 900 cites correctly by label. (iii) The same conditional expectation is written two ways in adjacent displays: $\\mathbb E_t b_{t+1}$ at 177 and 184, then $E_t b_{t+1}$ at 190, 196 and 199, in the three lines whose whole purpose is to identify the two. (iv) The simulation length is stored twice - `N_simul = 80` at 308 for the axes and the literal `80` passed at 323 for the simulation - while the function's own default `T=12` (272) is never used, so the figure is correct only as long as two unconnected constants stay equal. (v) The two panels of the first figure label the same series differently, `label='income'` at 331 and `label='Income'` at 339"},
-    {"rule": "qe-writing-005", "count": 8, "lines": [39, 42, 199, 431, 461, 510],
-     "detail": "the lecture defines its two central terms twice, once in each convention, two lines apart: **complete markets** and **incomplete markets** in bold at 39-40, then *Complete markets* and *Incomplete markets* in italic at 42-44 where the actual definitions are given (\"allow a consumer to buy and sell claims contingent on all possible states of the world\"). The same split runs through the rest: bold definitions at 105 (**complete markets version**), 115 (**incomplete markets version**), 146 (**pricing kernel**), 426-427 (**one-period ahead Arrow securities**), 458-459 (**financial income**, **expenditures**) and 477 (**implied price**); italic definitions at 374 (*state*), 431 (*Exogenous* - \"means that they are unaffected by the consumer's decisions\", a definition in form as well as function), 462 (*natural debt limits*), 508 (*guess and verify*) and 834 (*Bellman equation*). 199 uses bold for emphasis, \"is the **value** of time $t+1$ state-contingent claims\", where 98 (*smooth*) and 519 (*tomorrow's*) correctly use italic for the same job; and 461 and 510 set `**Remark:**` and `**Guess:**` as bold labels standing in for directives"},
-    {"rule": "qe-code-001", "count": 8, "lines": [272, 282, 313, 632, 730, 920],
-     "detail": "730 writes `y.shape = (n, 1)`, which reshapes the caller's array in place - `y` here is `cp.y` (724), so the call at 914 permanently changes the state of the `ConsumptionProblem` instance and `consumption_complete(cp)` would fail on a (2,1) `y` at 696 if the two calls were ordered the other way; `y = y.reshape(n, 1)` avoids it. `complete_ss` carries five lines of commented-out code inside the function body (282-285, 290), including an alternative augmented state construction that the docstring's comment at 279-281 still refers to. Its signature declares `T=12` (272) but every call passes 80 (323). 632-635 uses mutable lists as default arguments for `y` and `P`. Spacing and layout: 313 and 316 carry double spaces inside array literals (`[α,  ρ1, ρ2]`, `[[1,  1.0, 0.]]`) and 316 mixes an int literal with floats; 312-314 indents the continuation to column 12 against an opening bracket at column 13; 920-921 indents a continuation to column 20 against an opening parenthesis at column 12; and 331 and 339 run past 90 characters where every other plot call in the file is wrapped"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [461, 519, 916],
-     "detail": "the lecture's central claim about complete markets is that debt \"switches between two values\" indexed by the Markov state (609-612, 942-943), and the figure that is supposed to show it (916-935) never shows the state: `debt_complete[s_path]` is plotted as a line, so the reader sees a two-valued series but has no way to tell which periods are state 1 and which are state 2, in either panel. Shading the axes by $s_t$, or adding a third panel plotting the state path that 909 already computes, would connect the two-valued debt to the Markov chain, and the two-state chain with its transition matrix $P$ is never drawn anywhere in the lecture. Second, the lecture asks the reader two direct questions - \"(Why is this is a plausible guess?)\" (519) and the parenthetical at 562 about $s_0 = 2$ - and has no `{exercise}` or `{hint}` directive anywhere to hold them, so both read as asides. Third, `**Remark:**` at 461-463, which sets aside the natural debt limits the whole complete-markets construction quietly assumes, is precisely a `{note}`"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [89, 364, 462, 487, 519, 775],
-     "detail": "six sentences carry slips that a reader stumbles on: 89 \"a prologomenon to a lecture on tax-smoothing\"; 364 \"In that incomplete markerts setting\"; 462 \"even if he consumers zero forevermore\"; 487 \"It is timely please to recall that the gross one-period risk-free interest rate...\"; 519 \"(Why is this is a plausible guess?)\"; and 775 \"where $\\beta$ is the price at time $t$ of a risk-free claim on one unit of time consumption at time $t+1$\", which has lost its \"$t+1$\" before \"consumption\". 461-463 is also a three-sentence paragraph where the rest of the lecture keeps to one"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        190,
+        308,
+        331,
+        737,
+        938
+      ],
+      "detail": "(i) 938-945 opens \"In the graph on the left, for the same sample path of nonfinancial income $y_t$, notice that\" and then gives two bullets, the second of which is entirely about the right-hand panel - the consumer's debt, plotted at 926-933. (ii) The comment at 737, `# Optimal decisions from (12) and (13)`, points at equation numbers that exist nowhere in the lecture; the equations meant are {eq}`cs_12` and {eq}`cs_13` at 868-880, which the prose at 900 cites correctly by label. (iii) The same conditional expectation is written two ways in adjacent displays: $\\mathbb E_t b_{t+1}$ at 177 and 184, then $E_t b_{t+1}$ at 190, 196 and 199, in the three lines whose whole purpose is to identify the two. (iv) The simulation length is stored twice - `N_simul = 80` at 308 for the axes and the literal `80` passed at 323 for the simulation - while the function's own default `T=12` (272) is never used, so the figure is correct only as long as two unconnected constants stay equal. (v) The two panels of the first figure label the same series differently, `label='income'` at 331 and `label='Income'` at 339"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 8,
+      "lines": [
+        39,
+        42,
+        199,
+        431,
+        461,
+        510
+      ],
+      "detail": "the lecture defines its two central terms twice, once in each convention, two lines apart: **complete markets** and **incomplete markets** in bold at 39-40, then *Complete markets* and *Incomplete markets* in italic at 42-44 where the actual definitions are given (\"allow a consumer to buy and sell claims contingent on all possible states of the world\"). The same split runs through the rest: bold definitions at 105 (**complete markets version**), 115 (**incomplete markets version**), 146 (**pricing kernel**), 426-427 (**one-period ahead Arrow securities**), 458-459 (**financial income**, **expenditures**) and 477 (**implied price**); italic definitions at 374 (*state*), 431 (*Exogenous* - \"means that they are unaffected by the consumer's decisions\", a definition in form as well as function), 462 (*natural debt limits*), 508 (*guess and verify*) and 834 (*Bellman equation*). 199 uses bold for emphasis, \"is the **value** of time $t+1$ state-contingent claims\", where 98 (*smooth*) and 519 (*tomorrow's*) correctly use italic for the same job; and 461 and 510 set `**Remark:**` and `**Guess:**` as bold labels standing in for directives"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 8,
+      "lines": [
+        272,
+        282,
+        313,
+        632,
+        730,
+        920
+      ],
+      "detail": "730 writes `y.shape = (n, 1)`, which reshapes the caller's array in place - `y` here is `cp.y` (724), so the call at 914 permanently changes the state of the `ConsumptionProblem` instance and `consumption_complete(cp)` would fail on a (2,1) `y` at 696 if the two calls were ordered the other way; `y = y.reshape(n, 1)` avoids it. `complete_ss` carries five lines of commented-out code inside the function body (282-285, 290), including an alternative augmented state construction that the docstring's comment at 279-281 still refers to. Its signature declares `T=12` (272) but every call passes 80 (323). 632-635 uses mutable lists as default arguments for `y` and `P`. Spacing and layout: 313 and 316 carry double spaces inside array literals (`[α,  ρ1, ρ2]`, `[[1,  1.0, 0.]]`) and 316 mixes an int literal with floats; 312-314 indents the continuation to column 12 against an opening bracket at column 13; 920-921 indents a continuation to column 20 against an opening parenthesis at column 12; and 331 and 339 run past 90 characters where every other plot call in the file is wrapped"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        461,
+        519,
+        916
+      ],
+      "detail": "the lecture's central claim about complete markets is that debt \"switches between two values\" indexed by the Markov state (609-612, 942-943), and the figure that is supposed to show it (916-935) never shows the state: `debt_complete[s_path]` is plotted as a line, so the reader sees a two-valued series but has no way to tell which periods are state 1 and which are state 2, in either panel. Shading the axes by $s_t$, or adding a third panel plotting the state path that 909 already computes, would connect the two-valued debt to the Markov chain, and the two-state chain with its transition matrix $P$ is never drawn anywhere in the lecture. Second, the lecture asks the reader two direct questions - \"(Why is this is a plausible guess?)\" (519) and the parenthetical at 562 about $s_0 = 2$ - and has no `{exercise}` or `{hint}` directive anywhere to hold them, so both read as asides. Third, `**Remark:**` at 461-463, which sets aside the natural debt limits the whole complete-markets construction quietly assumes, is precisely a `{note}`"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        89,
+        364,
+        462,
+        487,
+        519,
+        775
+      ],
+      "detail": "six sentences carry slips that a reader stumbles on: 89 \"a prologomenon to a lecture on tax-smoothing\"; 364 \"In that incomplete markerts setting\"; 462 \"even if he consumers zero forevermore\"; 487 \"It is timely please to recall that the gross one-period risk-free interest rate...\"; 519 \"(Why is this is a plausible guess?)\"; and 775 \"where $\\beta$ is the price at time $t$ of a risk-free claim on one unit of time consumption at time $t+1$\", which has lost its \"$t+1$\" before \"consumption\". 461-463 is also a three-sentence paragraph where the rest of the lecture keeps to one"
+    }
   ],
   "strengths": [
     "The comparison the lecture exists to make is run as a controlled experiment: 908-914 builds one `ConsumptionProblem`, draws one Markov path, and feeds both to `consumption_complete` and `consumption_incomplete`, so the two panels at 916-935 differ only in market structure and the bullets at 941-945 can be checked against them",
@@ -35,5 +86,9 @@
   "scanner_doubts": [
     "smoothing.md:177,184,204,236,799,809,814,823,826,831,837 - qe-math-010 (proposed) is reported with count 4 (378, 381, 493 for `\\mathbb P`, 398 for a bare `\\mathbb E`), but eleven further unbraced expectations are missed, all of them of the form `\\mathbb E_t`. The cause is exact and corpus-wide: `bare_mathbb = re.compile(r\"\\\\(?:mathbb|Bbb)\\s+[PEV]\\b\")` in `check_math_010` requires a word boundary after the letter, and `_` is a word character, so `\\mathbb E_t` and `\\mathbb E_0` never match while `\\mathbb E \\sum` and `\\mathbb P \\{` do. I verified this directly against the compiled pattern. Since `\\mathbb E_t` is the most common way this corpus writes a conditional expectation, this understates a Very-High-weight rule across many lectures - this file alone would go from 4 to 15. The fix is to replace `\\b` with a negative lookahead for a letter, e.g. `[PEV](?![A-Za-z])`, so a following subscript still counts. Three further occurrences on lines 190, 196 and 199 write the operator as plain `E_t`; those escape the `bare_E` branch too, because it requires a delimiter (`[`, `\\{` or `(`) after the optional subscript and these are followed by `b_{t+1}`",
     "smoothing.md:761,791 - qe-ref-001 is reported with count 0 and the References category scores 10/10, but 761 (\"the original model of Hall (1978)\") and 791 (\"Hall's (1978) conclusion\") are bare author-year references to a work the lecture cites properly as `{cite}`Hall1978`` at 40, 46 and 757. As with match_transport.md:1421, no registry rule catches an author-year string that should be a `{cite}` role, so a lecture can score a clean 10 on references while containing uncited ones"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "e781f9e08cda9e32034544b2f0d960ddfd776ab9"
+  }
 }

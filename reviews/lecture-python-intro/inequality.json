@@ -23,7 +23,7 @@
         1119,
         1121
       ],
-      "detail": "PEP8 spacing is loose throughout the data-handling cells: whitespace before a closing paren (285), missing space after a comma in `('YR','')`, `['USA','GBR', ...]`, `range(min_year,max_year,5)`, `[0,1],[0,1]`, `reshape((k,1))` (555, 575, 673, 700, 725, 760, 982, 1110), spaces around `=` in the plotly keyword arguments (768-773), `\u03c3 ** 2` where the rule explicitly prefers `\u03c3**2` and where line 490 already writes it that way (936), lambdas bound to names instead of `def` (1013), missing space after an operator in `return 1- t(1 - p)` (1014), a backslash line-continuation inside parentheses with a 3-space hanging indent (1031-1032), `gini_coefficients =[]` (1119) and a 5-space indent (1121)"
+      "detail": "PEP8 spacing is loose throughout the data-handling cells: whitespace before a closing paren (285), missing space after a comma in `('YR','')`, `['USA','GBR', ...]`, `range(min_year,max_year,5)`, `[0,1],[0,1]`, `reshape((k,1))` (555, 575, 673, 700, 725, 760, 982, 1110), spaces around `=` in the plotly keyword arguments (768-773), `σ ** 2` where the rule explicitly prefers `σ**2` and where line 490 already writes it that way (936), lambdas bound to names instead of `def` (1013), missing space after an operator in `return 1- t(1 - p)` (1014), a backslash line-continuation inside parentheses with a 3-space hanging indent (1031-1032), `gini_coefficients =[]` (1119) and a 5-space indent (1121)"
     },
     {
       "rule": "qe-writing-005",
@@ -49,7 +49,7 @@
     "Definitions are placed in `prf:definition` blocks with labels (`define-lorenz`, `define-gini`, `top-shares`) and the equation label `topshares` is genuinely cited later, in exercise 2 at line 997",
     "Nearly every generated figure carries `mystnb: figure: caption/name` metadata and is referenced with `{numref}` in the prose that follows (368, 400, 567, 602)",
     "The plotly figure at 766 is paired with an `{only} latex` fallback at 779 that points LaTeX readers at the web version - a genuinely thoughtful accessibility touch",
-    "Greek variables in code use Unicode (`\u03c3_vals`, `\u03bc`) in the simulation cells, matching the mathematical notation in the surrounding prose",
+    "Greek variables in code use Unicode (`σ_vals`, `μ`) in the simulation cells, matching the mathematical notation in the surrounding prose",
     "All three exercises use gated `exercise` / `solution-start` / `solution-end` with `:class: dropdown`, and exercise 3 cross-references the in-lecture code block by label (`code:gini-coefficient`)"
   ],
   "actions": [
@@ -65,5 +65,9 @@
     "inequality.md:246 - qe-writing-004 flags mid-sentence 'Consumer', but the word sits inside the proper noun \"[Survey of Consumer Finances](...)\", which is correctly capitalised; this looks like a false positive and the count of 3 is probably 2",
     "inequality.md - qe-fig-004 is reported with count 4 but only two line numbers (666, 692), and only two captions exist that could be at fault; either the count double-charges each caption or two line numbers are missing",
     "inequality.md:31 - qe-math-012 (proposed) reports `*` used as multiplication, but the `*` at 31 is a markdown bullet marker; it only looks like math because the unescaped currency signs at 31, 33 and 35 open an accidental `$...$` span across the list. Something is genuinely wrong at that line, but it is an escaping defect, not a multiplication-operator one"
-  ]
+  ],
+  "source": {
+    "commit": "a12d17c0ef81c6e469a47f01c431a708b8ccc065",
+    "blob": "0b649cbdcaf7fa4914be65534fa669a6f5ae58b6"
+  }
 }

@@ -2,18 +2,75 @@
   "series": "lecture-python.myst",
   "lecture": "ross_recovery",
   "judgment": [
-    {"rule": "qe-math-009", "count": 5, "lines": [279, 561, 1023, 1062, 1262],
-     "detail": "the lecture reuses four letters for two things each. $e$ is the vector of ones at 279 (\"$F e = e$ where $e$ is the vector of ones\") and again at 420, 426 and 432, while the same $e$ is the exponential base in the surrounding displays - $e^{-r(\\theta_i)}$ at 121 and 137, $\\beta = e^{-\\rho T}$ at 505, $e^{-\\gamma(s_j-s_i)}$ at 507 and 589 - so `$Pe = b e$` at 420 and `$p_{ij} = e^{-\\rho T} e^{-\\gamma(s_j-s_i)} f_{ij}$` at 589 spell the same glyph two ways. $c$ indexes the current state at 1020-1027 (\"state prices at horizon $t$ observed from today's state $c$\") where $c(\\theta_j)$ is consumption at 197, 451 and 462. The natural probabilities carry three notations at once - $f(\\theta_i,\\theta_j)$ at 189, $f_{ij}$ at 368, $F$ at 216 - and then $\\hat F_k$ at 1262 is a CDF, so $F$ names both an $m\\times m$ matrix and a scalar CDF. Line 1062 subscripts English words inside math, $\\mu_\\text{excess}$ and $\\sigma_\\text{asset}$, in a lecture where $\\sigma$ is already the volatility parameter (533) and $\\sigma(M)$ the standard-deviation operator (1065). And 561 decorates the normal as `\\mathcal{N}` where 532 writes the same distribution as a plain $N$"},
-    {"rule": "qe-writing-007", "count": 4, "lines": [222, 753, 999, 1129],
-     "detail": "the mechanism the whole lecture is about is a reweighting of one matrix into another, $F = \\beta^{-1} D P D^{-1}$, and no figure ever shows a matrix: both $P$ and the recovered $F$ (and `F_true`) are in memory together at 753-759, where two side-by-side heatmaps would show the reweighting the six existing figures can only show one row of. The identification count at 214-222 ($m^2$ equations, $2m^2-m$ unknowns, a shortfall of $m^2-m$, cut to zero by transition independence) is arithmetic delivered in four prose paragraphs and would fit in a three-row table. The whole option-price bridge at 992-1052 - the Breeden-Litzenberger second derivative and the forward recursion $p_{t+1}(c) = p_t(c)P$ filling in the rows of $P$ - has no figure at all, in a section whose one warning is that the second derivative amplifies measurement error. And 1129-1140 gives the closed form $\\lambda(\\alpha)$ for the entire family of positive eigenfunctions $v_\\alpha(s)=e^{\\alpha s}$: a single plot of $\\lambda$ against $\\alpha$ would make the failure of uniqueness visible, which is the reason the finite grid exists. The lecture also carries no `{note}` or `{warning}` anywhere, though 577-580 (truncation is essential) and 1049-1052 (numerically delicate) are written as exactly that"},
-    {"rule": "qe-code-001", "count": 6, "lines": [600, 668, 863, 921, 954, 1364],
-     "detail": "1364-1369 drops to the pyplot state machine - `plt.figure(figsize=(9, 5))`, `plt.plot`, `plt.xlabel`, `plt.title` - where all five other figures use the `fig, ax = plt.subplots()` object interface (795, 817, 849, 970); 863, 865 and 1366 write `f'$\\\\gamma={γ_val:.0f}$'` with doubled backslashes inside a single-quoted f-string where `rf'...'` is the idiomatic form; 668-669 pass the magic `tol=1000` to `np.real_if_close` and then re-test with `np.isreal` at 672, so the tolerance is both unexplained and redundant; 600-602 indents the continuation arguments of `np.linspace` one column past the opening paren; 921-922 opens `print(` on its own line and then closes the call on the argument line (`f\"max |true ρ ...\":.2e}\")`), unlike the same construction at 758-759 and 709-711; and 954-956 defines the helper `tail_prob` in the middle of the one cell that carries `mystnb` figure metadata (945-951), so a function definition sits inside a captioned figure"},
-    {"rule": "qe-writing-005", "count": 4, "lines": [771, 890, 1109, 1174],
-     "detail": "definitions are bold almost everywhere and the exceptions run both ways. 771 bolds emphasis - \"the natural marginal density **first-order stochastically dominates** the risk-neutral density\" - immediately before using italic correctly for the same purpose (\"lies *below*\", 772); 890 italicises a definition, \"the *recovered subjective discount factor* $\\beta$, which equals the Perron-Frobenius eigenvalue\". Both formats are then used as headings: 1109, 1150 and 1160 are italic labels standing alone as paragraphs (`*Finite state space:*`, `*Transition independence:*`, `*Empirical estimation:*`) where `###` headings belong, and 1174, 1254 and 1316 open each exercise with a bold sentence (`**The Perron-Frobenius vector and the pricing kernel.**`) where the `{exercise}` directive takes a title argument"},
-    {"rule": "qe-writing-003", "count": 4, "lines": [645, 854, 990, 1276],
-     "detail": "1276-1289 re-derives from scratch the twelve lines of eigendecomposition already run at 1218-1235, in a solution whose own exercise text at 1256-1257 says \"Using the recovered $F$ ... from the exercise above\" - so the two copies can silently diverge. Line 645 hard-codes the middle row as `P[5]` for the risk-free-rate print, where every other middle index in the lecture is computed (`len(states)//2` at 783, 854, 963, 1347), so the printed number becomes the wrong row the moment `n_states` changes from 11. The same quantity is then named four different ways across the lecture - `mid` (783), `mid_g` (854 and 1347), `mid_b` (963). And 990 defers the tail-risk conclusion with \"We will say more in {ref}`rt_ex3`\" 320 lines forward, where 1375-1377 then repeats 986-988 almost word for word (\"in this CRRA simulation the risk-neutral crash probability rises faster with $\\gamma$ than the recovered natural crash probability\")"},
-    {"rule": "qe-writing-002", "count": 4, "lines": [66, 224, 981, 1078],
-     "detail": "62-64 states the assumption precisely - transition independence - and then 66-67 restates it vaguely as \"if some assumptions about the structure of the pricing kernel hold\", subtracting the precision two lines after it was gained; the same vague hedge recurs at 73-74 (\"when the assumption holds\"), 1056 and 1077-1079 (\"under the assumptions of the Recovery Theorem\", twice inside twenty-five lines). Line 224 loses its article: \"Transition independence restriction does the job, as we will see in the next section.\" And 981, \"This is a simulation illustrating Ross's decomposition\", carries nothing that 939 and 941-943 have not already said"}
+    {
+      "rule": "qe-math-009",
+      "count": 5,
+      "lines": [
+        279,
+        561,
+        1023,
+        1062,
+        1262
+      ],
+      "detail": "the lecture reuses four letters for two things each. $e$ is the vector of ones at 279 (\"$F e = e$ where $e$ is the vector of ones\") and again at 420, 426 and 432, while the same $e$ is the exponential base in the surrounding displays - $e^{-r(\\theta_i)}$ at 121 and 137, $\\beta = e^{-\\rho T}$ at 505, $e^{-\\gamma(s_j-s_i)}$ at 507 and 589 - so `$Pe = b e$` at 420 and `$p_{ij} = e^{-\\rho T} e^{-\\gamma(s_j-s_i)} f_{ij}$` at 589 spell the same glyph two ways. $c$ indexes the current state at 1020-1027 (\"state prices at horizon $t$ observed from today's state $c$\") where $c(\\theta_j)$ is consumption at 197, 451 and 462. The natural probabilities carry three notations at once - $f(\\theta_i,\\theta_j)$ at 189, $f_{ij}$ at 368, $F$ at 216 - and then $\\hat F_k$ at 1262 is a CDF, so $F$ names both an $m\\times m$ matrix and a scalar CDF. Line 1062 subscripts English words inside math, $\\mu_\\text{excess}$ and $\\sigma_\\text{asset}$, in a lecture where $\\sigma$ is already the volatility parameter (533) and $\\sigma(M)$ the standard-deviation operator (1065). And 561 decorates the normal as `\\mathcal{N}` where 532 writes the same distribution as a plain $N$"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 4,
+      "lines": [
+        222,
+        753,
+        999,
+        1129
+      ],
+      "detail": "the mechanism the whole lecture is about is a reweighting of one matrix into another, $F = \\beta^{-1} D P D^{-1}$, and no figure ever shows a matrix: both $P$ and the recovered $F$ (and `F_true`) are in memory together at 753-759, where two side-by-side heatmaps would show the reweighting the six existing figures can only show one row of. The identification count at 214-222 ($m^2$ equations, $2m^2-m$ unknowns, a shortfall of $m^2-m$, cut to zero by transition independence) is arithmetic delivered in four prose paragraphs and would fit in a three-row table. The whole option-price bridge at 992-1052 - the Breeden-Litzenberger second derivative and the forward recursion $p_{t+1}(c) = p_t(c)P$ filling in the rows of $P$ - has no figure at all, in a section whose one warning is that the second derivative amplifies measurement error. And 1129-1140 gives the closed form $\\lambda(\\alpha)$ for the entire family of positive eigenfunctions $v_\\alpha(s)=e^{\\alpha s}$: a single plot of $\\lambda$ against $\\alpha$ would make the failure of uniqueness visible, which is the reason the finite grid exists. The lecture also carries no `{note}` or `{warning}` anywhere, though 577-580 (truncation is essential) and 1049-1052 (numerically delicate) are written as exactly that"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        600,
+        668,
+        863,
+        921,
+        954,
+        1364
+      ],
+      "detail": "1364-1369 drops to the pyplot state machine - `plt.figure(figsize=(9, 5))`, `plt.plot`, `plt.xlabel`, `plt.title` - where all five other figures use the `fig, ax = plt.subplots()` object interface (795, 817, 849, 970); 863, 865 and 1366 write `f'$\\\\gamma={γ_val:.0f}$'` with doubled backslashes inside a single-quoted f-string where `rf'...'` is the idiomatic form; 668-669 pass the magic `tol=1000` to `np.real_if_close` and then re-test with `np.isreal` at 672, so the tolerance is both unexplained and redundant; 600-602 indents the continuation arguments of `np.linspace` one column past the opening paren; 921-922 opens `print(` on its own line and then closes the call on the argument line (`f\"max |true ρ ...\":.2e}\")`), unlike the same construction at 758-759 and 709-711; and 954-956 defines the helper `tail_prob` in the middle of the one cell that carries `mystnb` figure metadata (945-951), so a function definition sits inside a captioned figure"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 4,
+      "lines": [
+        771,
+        890,
+        1109,
+        1174
+      ],
+      "detail": "definitions are bold almost everywhere and the exceptions run both ways. 771 bolds emphasis - \"the natural marginal density **first-order stochastically dominates** the risk-neutral density\" - immediately before using italic correctly for the same purpose (\"lies *below*\", 772); 890 italicises a definition, \"the *recovered subjective discount factor* $\\beta$, which equals the Perron-Frobenius eigenvalue\". Both formats are then used as headings: 1109, 1150 and 1160 are italic labels standing alone as paragraphs (`*Finite state space:*`, `*Transition independence:*`, `*Empirical estimation:*`) where `###` headings belong, and 1174, 1254 and 1316 open each exercise with a bold sentence (`**The Perron-Frobenius vector and the pricing kernel.**`) where the `{exercise}` directive takes a title argument"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 4,
+      "lines": [
+        645,
+        854,
+        990,
+        1276
+      ],
+      "detail": "1276-1289 re-derives from scratch the twelve lines of eigendecomposition already run at 1218-1235, in a solution whose own exercise text at 1256-1257 says \"Using the recovered $F$ ... from the exercise above\" - so the two copies can silently diverge. Line 645 hard-codes the middle row as `P[5]` for the risk-free-rate print, where every other middle index in the lecture is computed (`len(states)//2` at 783, 854, 963, 1347), so the printed number becomes the wrong row the moment `n_states` changes from 11. The same quantity is then named four different ways across the lecture - `mid` (783), `mid_g` (854 and 1347), `mid_b` (963). And 990 defers the tail-risk conclusion with \"We will say more in {ref}`rt_ex3`\" 320 lines forward, where 1375-1377 then repeats 986-988 almost word for word (\"in this CRRA simulation the risk-neutral crash probability rises faster with $\\gamma$ than the recovered natural crash probability\")"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 4,
+      "lines": [
+        66,
+        224,
+        981,
+        1078
+      ],
+      "detail": "62-64 states the assumption precisely - transition independence - and then 66-67 restates it vaguely as \"if some assumptions about the structure of the pricing kernel hold\", subtracting the precision two lines after it was gained; the same vague hedge recurs at 73-74 (\"when the assumption holds\"), 1056 and 1077-1079 (\"under the assumptions of the Recovery Theorem\", twice inside twenty-five lines). Line 224 loses its article: \"Transition independence restriction does the job, as we will see in the next section.\" And 981, \"This is a simulation illustrating Ross's decomposition\", carries nothing that 939 and 941-943 have not already said"
+    }
   ],
   "strengths": [
     "The overview (31-69) lays the whole argument out in eleven one-sentence paragraphs that go state prices to risk-neutral probabilities to why those are not natural probabilities to the pricing kernel to why separating the two used to need preferences - and every term bolded there (**state prices**, **risk-neutral probabilities**, **natural probabilities**, **pricing kernel**, **transition independence**) is the term used for the remaining 1300 lines",
@@ -38,5 +95,9 @@
   ],
   "scanner_doubts": [
     "ross_recovery.md:279,420,426,432 - qe-math-008 reports nothing for this lecture, and I believe it should. The rule as written has two halves - \"Use `\\mathbb{1}` to represent vectors or matrices of ones **and** explain it in the lecture\" - but `check_math_008` (tools/qestyle_rules.py:629-654) only ever fires on an *occurrence* of `\\mathbb{1}`/`\\mathbf{1}`/`\\bm{1}` (the `ones` regex at 636-637); if `uses` is empty it returns at 645 before looking at anything else. So a lecture that writes the ones vector as some other symbol is unmeasured, and this lecture is the damaging case: 279 says \"$F e = e$ where $e$ is the vector of ones\", 420 writes `$Pe = b e$`, 426 and 432 continue with $e$ - while $e$ is Euler's number in the displays at 121, 137, 505, 507 and 589 of the same lecture. Verified with `python3 chk.py .../ross_recovery.md lecture-python.myst qe-math-008` - no output; the file produces 31 hits across the other rules. Note the prose gate at 648-650 already knows the phrase to look for: `vector of ones` appears at 413 and 426, which is exactly the exemption the rule would grant a lecture that *did* use `\\mathbb{1}`. A branch that flags the phrase \"vector of ones\"/\"ones vector\" occurring with no `\\mathbb{1}` anywhere in the file would catch it. Reach is small - I checked the whole corpus with `grep -rlE 'vector of ones|ones vector'` (11 files) and only 2 of those never use a bold or blackboard 1: this file and `lecture-python-advanced.myst/lectures/black_litterman.md:769` - so this is a two-lecture gap, worth a branch only if the rule's first half is meant to be enforced at all"
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "3f879d06970555acb7254692870f29a2d86d6e10"
+  }
 }

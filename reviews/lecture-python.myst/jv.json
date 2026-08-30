@@ -2,16 +2,58 @@
   "series": "lecture-python.myst",
   "lecture": "jv",
   "judgment": [
-    {"rule": "qe-code-001", "count": 6, "lines": [212, 213, 275, 400, 475, 486],
-     "detail": "the parameter named `ɛ` at 213, and used at 222, 224, 225 and 226, is U+025B LATIN SMALL LETTER OPEN E, not the Greek U+03B5 - a confusable that will not be found by a search for `ε` and is out of step with the genuine Greek `α`, `β`, `ϕ`, `π` used everywhere else in the same file; three lambdas are bound to names instead of being defined with `def` (275 `v_func`, 475 `s`, 476 `ϕ`, PEP8 E731), and the last two shadow the model's own $s$ and $\\phi$ policy arrays; 400 has two spaces after a comma inside the list literal `[\"s policy\", \"ϕ policy\",  \"value function\"]`; 212 has a single space before the inline comment `search_grid_size=15, # Size of each action grid`; and the docstring line at 486 runs to 108 characters because a second sentence was appended to it rather than wrapped"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [155, 175, 417, 419, 585],
-     "detail": "the prose drops definite articles and reads as note form rather than sentences: \"marginal cost of investment via either $\\phi$ or $s$ is identical\" (155), \"Return from investment via $\\phi$ dominates expected return from search\" (175), \"Worker switches from one investment strategy to the other depending on relative return\" (417), \"worker does better by investing in human capital\" (419) - the same clipping appears at 101 (\"Agent's objective: maximize...\") and 180. And 585-586 stacks three hedges on one claim: \"This seems reasonable and helps us confirm that our dynamic programming solutions are probably correct\""},
-    {"rule": "qe-writing-007", "count": 1, "lines": [143],
-     "detail": "\"### Back-of-the-Envelope Calculations\" (143-184) is the analytical heart of the lecture and it has no figure. It evaluates the two returns at $x = 0.05$ (0.5 from search against 0.23 from investment) and at $x = 0.4$ (0.5 against 0.8), then states as a prediction that the ranking flips somewhere in between. That is one two-line plot - the flat $\\pi(1)\\mathbb{E}u = 0.5$ against the increasing $g(x, 1) = A x^{\\alpha}$, with the crossing marked - and the crossing point is precisely what the policy figure at 398 is later asked to confirm, so the reader has no picture to compare it against"},
-    {"rule": "qe-writing-005", "count": 3, "lines": [72, 118, 263],
-     "detail": "263 uses bold for emphasis - \"written for a **single** state $x$ and a **single** action pair\" - where the rule wants italic, and it is the only bold in the file; meanwhile the terms the lecture actually defines are in plain text, including \"job-specific human capital\" at 72, which is the central concept, and the notation $a \\vee b := \\max\\{a, b\\}$ introduced mid-sentence at 118. The one italic in the file, *infinitely* at 536, is correct"},
-    {"rule": "qe-writing-003", "count": 2, "lines": [21, 413],
-     "detail": "the H1 at 21 announces \"Job Search VIII\" but nothing in the lecture says what the preceding seven are or where to find them - there is no link to the series and no `{doc}` reference, so a reader arriving here cannot place it; and 413 (\"The horizontal axis is the state $x$, while the vertical axis gives $s(x)$ and $\\phi(x)$\") describes a two-panel figure while the figure above it at 398-410 has three panels, the third being the value function, which the sentence does not mention"}
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        212,
+        213,
+        275,
+        400,
+        475,
+        486
+      ],
+      "detail": "the parameter named `ɛ` at 213, and used at 222, 224, 225 and 226, is U+025B LATIN SMALL LETTER OPEN E, not the Greek U+03B5 - a confusable that will not be found by a search for `ε` and is out of step with the genuine Greek `α`, `β`, `ϕ`, `π` used everywhere else in the same file; three lambdas are bound to names instead of being defined with `def` (275 `v_func`, 475 `s`, 476 `ϕ`, PEP8 E731), and the last two shadow the model's own $s$ and $\\phi$ policy arrays; 400 has two spaces after a comma inside the list literal `[\"s policy\", \"ϕ policy\",  \"value function\"]`; 212 has a single space before the inline comment `search_grid_size=15, # Size of each action grid`; and the docstring line at 486 runs to 108 characters because a second sentence was appended to it rather than wrapped"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        155,
+        175,
+        417,
+        419,
+        585
+      ],
+      "detail": "the prose drops definite articles and reads as note form rather than sentences: \"marginal cost of investment via either $\\phi$ or $s$ is identical\" (155), \"Return from investment via $\\phi$ dominates expected return from search\" (175), \"Worker switches from one investment strategy to the other depending on relative return\" (417), \"worker does better by investing in human capital\" (419) - the same clipping appears at 101 (\"Agent's objective: maximize...\") and 180. And 585-586 stacks three hedges on one claim: \"This seems reasonable and helps us confirm that our dynamic programming solutions are probably correct\""
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        143
+      ],
+      "detail": "\"### Back-of-the-Envelope Calculations\" (143-184) is the analytical heart of the lecture and it has no figure. It evaluates the two returns at $x = 0.05$ (0.5 from search against 0.23 from investment) and at $x = 0.4$ (0.5 against 0.8), then states as a prediction that the ranking flips somewhere in between. That is one two-line plot - the flat $\\pi(1)\\mathbb{E}u = 0.5$ against the increasing $g(x, 1) = A x^{\\alpha}$, with the crossing marked - and the crossing point is precisely what the policy figure at 398 is later asked to confirm, so the reader has no picture to compare it against"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 3,
+      "lines": [
+        72,
+        118,
+        263
+      ],
+      "detail": "263 uses bold for emphasis - \"written for a **single** state $x$ and a **single** action pair\" - where the rule wants italic, and it is the only bold in the file; meanwhile the terms the lecture actually defines are in plain text, including \"job-specific human capital\" at 72, which is the central concept, and the notation $a \\vee b := \\max\\{a, b\\}$ introduced mid-sentence at 118. The one italic in the file, *infinitely* at 536, is correct"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        21,
+        413
+      ],
+      "detail": "the H1 at 21 announces \"Job Search VIII\" but nothing in the lecture says what the preceding seven are or where to find them - there is no link to the series and no `{doc}` reference, so a reader arriving here cannot place it; and 413 (\"The horizontal axis is the state $x$, while the vertical axis gives $s(x)$ and $\\phi(x)$\") describes a two-panel figure while the figure above it at 398-410 has three panels, the third being the value function, which the sentence does not mention"
+    }
   ],
   "strengths": [
     "The vectorization is written to be read: `_B` at 267 handles one state and one action pair so that it lines up term by term with {eq}`defw`, and the three stacked `jax.vmap` calls at 298-300 replace a triple loop with the argument-order comment at 297 sitting directly above the matching `in_axes` tuples - the extra alignment spaces there earn their PEP8 exemption",
@@ -32,5 +74,9 @@
   ],
   "scanner_doubts": [
     "qe-fig-008 x4 in `lectures/jv.md` includes lines 508-509, `ax.plot(jnp.repeat(plot_grid, x_next.shape[1]), x_next.ravel(), 'go', alpha=0.25)`. That is the scatter of 45-degree-diagram realizations, drawn with the marker-only format `'go'`, so `lw=` has no effect and the missing-`lw` finding is a false positive. This is the same defect reported against `lectures/inventory_dynamics.md`:233: the check does not consult the matplotlib format string, so any marker-only style ('go', 'ko', 'o', '.', 'x') is flagged as a line chart. The other three hits (405, 507, 571) are genuine."
-  ]
+  ],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "8f2d46e9d043c55b3e5e2e05874cc01938614913"
+  }
 }

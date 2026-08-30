@@ -2,18 +2,77 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "knowing_forecasts_of_others",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 5, "lines": [601, 613, 788, 817, 1496],
-     "detail": "five places where the reader who checks one part against another is stopped. (i) Step 2 of the *one*-noisy-signal section carries the *two*-signal algebra: 817-818 casts $p = \\sigma_v^2 + p\\rho^2\\sigma_e^2/(2p+\\sigma_e^2)$ and 828-838 sets $B = [\\sqrt{2}]$, but {eq}`kf6` at 579 has $p+\\sigma_e^2$ and the code that immediately follows at 951-956 sets `B_ricc = np.array([[1.]])` and verifies the one-signal fixed point at 964 - while the genuine two-signal section at 1195-1210 gets no displayed matrices at all, only `B_ricc = np.sqrt(2)`. (ii) The measurement equation at 788 is $P_t^i = b k_t^i + \\theta_t + e_t$, sign-flipped from {eq}`town2` (155) and the fourth line of {eq}`sol1` (367), both of which have $-b k_t^i$; the state-space matrices follow 788, not the model - `b * λ_tilde` and `b * κ / (λ - ρ)` at 976 and 1222-1223, and the check at 1005 is `np.array([[1., b, 0., 0., 1., 0.]]) @ x - x[3]`. (iii) 601 writes $\\tilde\\theta_{t+1} = (\\rho-\\kappa)\\tilde\\theta_t + v_t - k e_t$, where `k` should be `\\kappa` (cf. 610, 684). (iv) 613-615 explains {eq}`kf8` by referring twice to \"the first term in braces\" and \"the second term in braces\", but 610 uses square brackets. (v) 1496-1497 are copies of the $v_t$ bullets with one word changed and describe $e_t$ as \"shocks ... to the hidden Markov demand state $\\theta_t$ process\", which is what $v_t$ is; 1498 states it correctly as \"idiosyncratic *own-market* noise-shocks\""},
-    {"rule": "qe-code-001", "count": 17, "lines": [953, 964, 1213, 1237, 1268, 1452],
-     "detail": "the rule asks explicitly for `a**b`, and every one of the 17 exponentiations in the lecture is spaced: `σ_e ** 2` and `σ_v ** 2` at 953-954 and 1198-1199, and the same inside the four verification expressions at 964, 1209 and the two `κ` definitions at 968-969 and 1213-1214. Beyond that: 1268 writes `fig2=fig` with no spaces where 1022 and 1454 write `fig1 = fig` and `fig3 = fig`; 1452 writes `xaxis_title= r'lag $j$'`, spaced on one side of a keyword `=` only; 976 leaves a space before a comma, `b * κ / (λ - ρ) , b * λ_tilde`; 1237 mixes integer and float literals inside one row of a float matrix, `[0., 0, 0, 0., 0., 1., 0., 0.]`; 1075, 1294 and 1330 have a double space before the division, `reg_coeffs @ Σ_x[1:4, 1:4] @ reg_coeffs  / Σ_x[0, 0]`; and every `np.array` continuation in the file (974-978, 981-985, 988-989, 1219-1225, 1228-1234, 1237-1241, 1431) is indented to 17 columns against an opening bracket at 18, so no continuation actually aligns"},
-    {"rule": "qe-writing-002", "count": 6, "lines": [676, 707, 1337, 1373, 1490, 1496],
-     "detail": "1490-1498 says six things in six lines that between them contain two facts: \"responses of $ k_t^i $ to shocks $ v_t $ to the hidden Markov demand state $ \\theta_t $ process are **largest**/**smaller**/**smallest** in the ... structure\" is repeated three times verbatim except for the adjective, and then the whole template is repeated three more times for $e_t$ - a ranking that one sentence per shock would carry. Four sentences are broken rather than long: 676-677, \"we  an equilibrium law of motion for $k_t^i$ can be represented as\"; 707, \"To justify that we are constructing is a **pooling equilibrium**\"; 1336-1337, \"identical in the pooling equilibrium  original model that led Townsend to deduce an infinite-dimensional state space\"; and 1373-1374, \"a model in which demand disturbance in  both industries still both share  have a common persistent component\". 1562 also has \"faciliate\" for \"facilitate\""},
-    {"rule": "qe-writing-005", "count": 12, "lines": [52, 68, 247, 269, 659, 1490],
-     "detail": "bold carries the emphasis that the rule reserves for italic, and the lecture does use italic correctly elsewhere (*two* 230, *one* 271, *certainty equivalence principle* 238, *innovations representation* 551-552, *reconstruction error* 585, *measurement equation* 787, *own-market* 1498), so the two conventions are simply not separated. Emphasis in bold: **pool their information** (52-53), **finding the state is an art** (68), **guess-and-verify** (78), **forecast  forecasts of others** (105), **single** (247), **two** (253), **directly** (282), **largest**/**smaller**/**smallest** (1490-1492), **smallest**/**larger**/**largest** (1496-1498), **pooling** (1503). 659-660 switches markup mid-lecture to `__new state variable__`, the only underscore emphasis in the file. And 269-273 breaks one list item into three bold fragments interleaved with math - \"**Firm** $i$'s **noise-ridden signal on** $\\theta_t$ **and the price in industry** $-i$\" - where the item is a label, not a definition"},
-    {"rule": "qe-writing-007", "count": 3, "lines": [218, 1345, 1512],
-     "detail": "the spine of the lecture is a sequence of five information structures - perfect foresight, observed $\\theta_t$, one noisy signal, two noisy signals (218-231) and Townsend's own price-plus-signal structure (269-273) - and there is no table or diagram of who observes what, so the reader carries five observation sets in their head through 1400 lines while the text repeatedly says things like \"a firm in industry $i$ does not **directly** observe $\\theta_t + \\epsilon_t^{-i}$\" (282-283). A five-row table of structure against observables would also make the claim at 285-288 checkable at a glance. The payoff of the lecture is likewise invisible: the key step at 1334-1358 delivers $R^2 = 1$ as two bare cells whose outputs are `True` and a float, where a scatter of the fitted signal against the realised one, or simply a printed table beside the one-signal $R^2$ from 1073-1077, would show what \"the information sets coincide\" means. And the two scalar comparisons that support the whole discussion of amplification (1509-1526) are pushed out through `display(Latex('$\\\\textbf{Reconstruction error variances}$'))` - bold math used as a heading in program output - rather than as a small two-by-two table of $p$ and $\\kappa$"},
-    {"rule": "qe-math-009", "count": 3, "lines": [806, 857, 904],
-     "detail": "the same objects are written two ways. The root equation is $(\\lambda-1)(\\lambda-1/\\beta)=b\\lambda$ at 414 and $\\left(\\lambda-1\\right)\\left(\\lambda-\\frac{1}{\\beta}\\right)=b\\lambda$ at 806-807, with `\\left(...\\right)` armour around single symbols and `\\frac` for a constant; the same coefficient is `{1 \\over \\lambda - \\rho}` at 509, 623, 670, 683 and 767 but `\\frac{1}{\\lambda-\\rho}` at 857, 1125, 1383 and 1396; and the Gaussian is `${\\mathcal N}(0, \\sigma_\\epsilon^2)$` at 164 but `\\mathcal{N}\\left(0,I\\right)` at 904 and 1190, where a plain $N$ is what the style guide asks for and `\\left(\\right)` around `0,I` buys nothing"}
+    {
+      "rule": "qe-writing-003",
+      "count": 5,
+      "lines": [
+        601,
+        613,
+        788,
+        817,
+        1496
+      ],
+      "detail": "five places where the reader who checks one part against another is stopped. (i) Step 2 of the *one*-noisy-signal section carries the *two*-signal algebra: 817-818 casts $p = \\sigma_v^2 + p\\rho^2\\sigma_e^2/(2p+\\sigma_e^2)$ and 828-838 sets $B = [\\sqrt{2}]$, but {eq}`kf6` at 579 has $p+\\sigma_e^2$ and the code that immediately follows at 951-956 sets `B_ricc = np.array([[1.]])` and verifies the one-signal fixed point at 964 - while the genuine two-signal section at 1195-1210 gets no displayed matrices at all, only `B_ricc = np.sqrt(2)`. (ii) The measurement equation at 788 is $P_t^i = b k_t^i + \\theta_t + e_t$, sign-flipped from {eq}`town2` (155) and the fourth line of {eq}`sol1` (367), both of which have $-b k_t^i$; the state-space matrices follow 788, not the model - `b * λ_tilde` and `b * κ / (λ - ρ)` at 976 and 1222-1223, and the check at 1005 is `np.array([[1., b, 0., 0., 1., 0.]]) @ x - x[3]`. (iii) 601 writes $\\tilde\\theta_{t+1} = (\\rho-\\kappa)\\tilde\\theta_t + v_t - k e_t$, where `k` should be `\\kappa` (cf. 610, 684). (iv) 613-615 explains {eq}`kf8` by referring twice to \"the first term in braces\" and \"the second term in braces\", but 610 uses square brackets. (v) 1496-1497 are copies of the $v_t$ bullets with one word changed and describe $e_t$ as \"shocks ... to the hidden Markov demand state $\\theta_t$ process\", which is what $v_t$ is; 1498 states it correctly as \"idiosyncratic *own-market* noise-shocks\""
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 17,
+      "lines": [
+        953,
+        964,
+        1213,
+        1237,
+        1268,
+        1452
+      ],
+      "detail": "the rule asks explicitly for `a**b`, and every one of the 17 exponentiations in the lecture is spaced: `σ_e ** 2` and `σ_v ** 2` at 953-954 and 1198-1199, and the same inside the four verification expressions at 964, 1209 and the two `κ` definitions at 968-969 and 1213-1214. Beyond that: 1268 writes `fig2=fig` with no spaces where 1022 and 1454 write `fig1 = fig` and `fig3 = fig`; 1452 writes `xaxis_title= r'lag $j$'`, spaced on one side of a keyword `=` only; 976 leaves a space before a comma, `b * κ / (λ - ρ) , b * λ_tilde`; 1237 mixes integer and float literals inside one row of a float matrix, `[0., 0, 0, 0., 0., 1., 0., 0.]`; 1075, 1294 and 1330 have a double space before the division, `reg_coeffs @ Σ_x[1:4, 1:4] @ reg_coeffs  / Σ_x[0, 0]`; and every `np.array` continuation in the file (974-978, 981-985, 988-989, 1219-1225, 1228-1234, 1237-1241, 1431) is indented to 17 columns against an opening bracket at 18, so no continuation actually aligns"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 6,
+      "lines": [
+        676,
+        707,
+        1337,
+        1373,
+        1490,
+        1496
+      ],
+      "detail": "1490-1498 says six things in six lines that between them contain two facts: \"responses of $ k_t^i $ to shocks $ v_t $ to the hidden Markov demand state $ \\theta_t $ process are **largest**/**smaller**/**smallest** in the ... structure\" is repeated three times verbatim except for the adjective, and then the whole template is repeated three more times for $e_t$ - a ranking that one sentence per shock would carry. Four sentences are broken rather than long: 676-677, \"we  an equilibrium law of motion for $k_t^i$ can be represented as\"; 707, \"To justify that we are constructing is a **pooling equilibrium**\"; 1336-1337, \"identical in the pooling equilibrium  original model that led Townsend to deduce an infinite-dimensional state space\"; and 1373-1374, \"a model in which demand disturbance in  both industries still both share  have a common persistent component\". 1562 also has \"faciliate\" for \"facilitate\""
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 12,
+      "lines": [
+        52,
+        68,
+        247,
+        269,
+        659,
+        1490
+      ],
+      "detail": "bold carries the emphasis that the rule reserves for italic, and the lecture does use italic correctly elsewhere (*two* 230, *one* 271, *certainty equivalence principle* 238, *innovations representation* 551-552, *reconstruction error* 585, *measurement equation* 787, *own-market* 1498), so the two conventions are simply not separated. Emphasis in bold: **pool their information** (52-53), **finding the state is an art** (68), **guess-and-verify** (78), **forecast  forecasts of others** (105), **single** (247), **two** (253), **directly** (282), **largest**/**smaller**/**smallest** (1490-1492), **smallest**/**larger**/**largest** (1496-1498), **pooling** (1503). 659-660 switches markup mid-lecture to `__new state variable__`, the only underscore emphasis in the file. And 269-273 breaks one list item into three bold fragments interleaved with math - \"**Firm** $i$'s **noise-ridden signal on** $\\theta_t$ **and the price in industry** $-i$\" - where the item is a label, not a definition"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 3,
+      "lines": [
+        218,
+        1345,
+        1512
+      ],
+      "detail": "the spine of the lecture is a sequence of five information structures - perfect foresight, observed $\\theta_t$, one noisy signal, two noisy signals (218-231) and Townsend's own price-plus-signal structure (269-273) - and there is no table or diagram of who observes what, so the reader carries five observation sets in their head through 1400 lines while the text repeatedly says things like \"a firm in industry $i$ does not **directly** observe $\\theta_t + \\epsilon_t^{-i}$\" (282-283). A five-row table of structure against observables would also make the claim at 285-288 checkable at a glance. The payoff of the lecture is likewise invisible: the key step at 1334-1358 delivers $R^2 = 1$ as two bare cells whose outputs are `True` and a float, where a scatter of the fitted signal against the realised one, or simply a printed table beside the one-signal $R^2$ from 1073-1077, would show what \"the information sets coincide\" means. And the two scalar comparisons that support the whole discussion of amplification (1509-1526) are pushed out through `display(Latex('$\\\\textbf{Reconstruction error variances}$'))` - bold math used as a heading in program output - rather than as a small two-by-two table of $p$ and $\\kappa$"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 3,
+      "lines": [
+        806,
+        857,
+        904
+      ],
+      "detail": "the same objects are written two ways. The root equation is $(\\lambda-1)(\\lambda-1/\\beta)=b\\lambda$ at 414 and $\\left(\\lambda-1\\right)\\left(\\lambda-\\frac{1}{\\beta}\\right)=b\\lambda$ at 806-807, with `\\left(...\\right)` armour around single symbols and `\\frac` for a constant; the same coefficient is `{1 \\over \\lambda - \\rho}` at 509, 623, 670, 683 and 767 but `\\frac{1}{\\lambda-\\rho}` at 857, 1125, 1383 and 1396; and the Gaussian is `${\\mathcal N}(0, \\sigma_\\epsilon^2)$` at 164 but `\\mathcal{N}\\left(0,I\\right)` at 904 and 1190, where a plain $N$ is what the style guide asks for and `\\left(\\right)` around `0,I` buys nothing"
+    }
   ],
   "strengths": [
     "The lecture states its entire strategy as a six-step list in the introduction (80-93) - compute a pooling equilibrium, leave the transition law alone and swap the observation vector, regress the other industry's signal on what a Townsend firm sees, read the $R^2$, conclude - and then does exactly those steps in that order (777-799, 803-1096, 1098-1332, 1334-1365), so the reader always knows which step they are in",
@@ -37,5 +96,9 @@
     "knowing_forecasts_of_others.md:164 - qe-math-011 (proposed) is reported with count 2 (lines 904, 1190, both `\\mathcal{N}\\left(0,I\\right)`), but line 164 writes the same distribution in the brace style, `${\\mathcal N}(0, \\sigma_{\\epsilon}^2)$`, and is not counted. `check_math_011` does have a `\\\\mathcal\\s+(N|U)` alternative, but its context gate then fails: `DIST_BEFORE` needs `\\sim` immediately before the match and `DIST_AFTER` needs `(` immediately after, and the wrapping `{ }` breaks both. The same miss occurs three times in hs_recursive_models.md (233, 244, 1433), so allowing an optional brace on either side of the macro would pick up the whole family",
     "knowing_forecasts_of_others.md:144,593,624,748 - qe-math-010 (proposed) is reported with count 4 (477, 543, 563, 733), which are the four expectations written with a delimiter, `E[...]` or `E(...)`. Four more bare expectations carry no delimiter at all and so escape the `applied` gate in `check_math_010`, which requires `[`, `\\{` or `(` after the optional subscript: `E_0^i \\sum_{t=0}^\\infty` in {eq}`town1` at 144 (also carrying a superscript, which `applied` does not allow for), `E \\tilde \\theta_t^2` at 593, `E \\theta_{t+1} | \\theta^t` inside {eq}`solution2` at 624, and `E \\tilde \\theta_t \\tilde \\theta_t^T` at 748. These are the least braced cases rather than the most, so the true count for this file looks like 8",
     "knowing_forecasts_of_others.md:748 - qe-math-002 is reported with count 0, but 748 writes $p = E \\tilde \\theta_t \\tilde \\theta_t^T$, where `^T` is an outer-product transpose. The `supT` branch of `check_math_002` deliberately requires the `^T` to be followed by a factor to avoid counting terminal dates and summation limits, and here the transpose ends the math span, so the gate rejects it. This is the documented trade-off rather than a bug, and it is the only `^T` in the file; I note it so that the file is not read as already `\\top`-clean"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "44879cd516ed7b6acb41b745e4ac2a4a8d85e6ee"
+  }
 }

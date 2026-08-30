@@ -2,18 +2,76 @@
   "series": "lecture-python-advanced.myst",
   "lecture": "amss3",
   "judgment": [
-    {"rule": "qe-writing-005", "count": 10, "lines": [54, 60, 97, 232, 379, 389, 394, 423, 454, 519],
-     "detail": "bold is used for plain emphasis throughout, where the rule assigns italic: **as close as possible** (54), **three** (97), **before** (232), **in advance** (379), **first** / **then** (389-390), **without** (394), **minus** / **plus** (423), **surplus** (454), **constant** (519). Line 60 additionally puts a bold \"**Warning:**\" label inside a `{note}` directive that should simply be a `{warning}`. The genuine definitions are bolded correctly (299 effective deficit/debt, 311 fiscal risks, 443 effective return), so the two uses are not being kept apart"},
-    {"rule": "qe-writing-002", "count": 5, "lines": [49, 229, 234, 263, 528],
-     "detail": "229-232 is a single 75-word semicolon chain describing three vertical lines on one histogram; 263-265 is a 46-word sentence (\"conceal the weak but inexorable force that the Ramsey planner puts into both series driving them toward ergodic marginal distributions that are far from these early observations\") and ends with no full stop; 49-50 spends 45 words and says \"the ergodic distribution of the par value of government debt\" twice; 234-236 is a 40-word sentence whose subject arrives after three subordinate clauses; and 528-530 is a broken paragraph - it opens lowercase on \"so while\" and line 529 begins with a stray `:` that MyST will read as a definition-list term"},
-    {"rule": "qe-code-001", "count": 7, "lines": [187, 202, 243, 246, 587, 688, 694],
-     "detail": "line 188's continuation is indented 39 spaces against an opening paren at column 38, so the argument list is one column out of alignment (E128); 202 and 243 bind the loop variable `id`, shadowing the builtin; 246, 250 and 252 write `axes[i+2]` without spaces around the operator while the rest of the file spaces its operators; 587-589 and 688-690 use backslash line continuations *inside* parentheses where the parentheses already continue the expression, and add a double space before each backslash and after each `+`; 694 writes `B_star/div` unspaced two lines after `u.β * (...)` spaced normally"},
-    {"rule": "qe-writing-003", "count": 3, "lines": [224, 656, 676],
-     "detail": "line 221 says \"Let's discard the first 2000 observations ... and construct the histogram\" and 224 says \"We obtain the following graph for the histogram\", but no code in the lecture builds that histogram - 226 is a static PNG, so the central object of the section (and the three vertical lines described at 229-232) cannot be reproduced by the reader; 656-660 tells the reader that \"0.2 is the initial value for $\\tau$ in the root-finding algorithm\" while the cell above at 652 passes `.1` and the cell below at 667 passes `.5`; and the Execution walkthrough runs Step 1 (538), Step 2 (560), Step 3 (636), Step 4 (662) and then jumps to Step 6 (676) - Step 5, the variance-minimisation step that defines ${\\mathcal B}^*$, has no execution section at all, and the two `###` interludes at 566 and 577 sit a level *above* the `####` steps they interrupt"},
-    {"rule": "qe-writing-007", "count": 2, "lines": [407, 422],
-     "detail": "the seven-step construction at 409-513 is a composition pipeline - $c_\\tau(s)$ into ${\\mathcal R}_\\tau, {\\mathcal X}_\\tau$ into $\\tau({\\mathcal B})$ into $J({\\mathcal B})$ into ${\\rm var}(J)$ into ${\\mathcal B}^*$ into the rate and $\\hat b$ - and the reader has to hold the whole chain in their head from prose alone; the same section's \"chicken and egg\" circularity (374-384) is a two-node diagram. Separately, the two typo alerts at 422 and 456 are exactly the \"important note\" case the rule points at admonitions for, and are typeset as bold labels in running text instead"},
-    {"rule": "qe-math-009", "count": 1, "lines": [506],
-     "detail": "line 506 defines `div = {\\beta E u_{c,t+1}}` - a three-letter roman-less identifier that renders as the product $d\\,i\\,v$ - and 512 then divides by it; the same quantity already has a name in the lecture ($\\beta E u_{c,t+1}$, used inline at 349), so the abbreviation buys nothing. The calligraphic ${\\mathcal B}, {\\mathcal R}, {\\mathcal X}$ elsewhere is *not* counted: 286-297 introduces them explicitly as BEGS's objects against the lecture's own $b, B, R, X$, so the decoration is carrying a real distinction"}
+    {
+      "rule": "qe-writing-005",
+      "count": 10,
+      "lines": [
+        54,
+        60,
+        97,
+        232,
+        379,
+        389,
+        394,
+        423,
+        454,
+        519
+      ],
+      "detail": "bold is used for plain emphasis throughout, where the rule assigns italic: **as close as possible** (54), **three** (97), **before** (232), **in advance** (379), **first** / **then** (389-390), **without** (394), **minus** / **plus** (423), **surplus** (454), **constant** (519). Line 60 additionally puts a bold \"**Warning:**\" label inside a `{note}` directive that should simply be a `{warning}`. The genuine definitions are bolded correctly (299 effective deficit/debt, 311 fiscal risks, 443 effective return), so the two uses are not being kept apart"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 5,
+      "lines": [
+        49,
+        229,
+        234,
+        263,
+        528
+      ],
+      "detail": "229-232 is a single 75-word semicolon chain describing three vertical lines on one histogram; 263-265 is a 46-word sentence (\"conceal the weak but inexorable force that the Ramsey planner puts into both series driving them toward ergodic marginal distributions that are far from these early observations\") and ends with no full stop; 49-50 spends 45 words and says \"the ergodic distribution of the par value of government debt\" twice; 234-236 is a 40-word sentence whose subject arrives after three subordinate clauses; and 528-530 is a broken paragraph - it opens lowercase on \"so while\" and line 529 begins with a stray `:` that MyST will read as a definition-list term"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 7,
+      "lines": [
+        187,
+        202,
+        243,
+        246,
+        587,
+        688,
+        694
+      ],
+      "detail": "line 188's continuation is indented 39 spaces against an opening paren at column 38, so the argument list is one column out of alignment (E128); 202 and 243 bind the loop variable `id`, shadowing the builtin; 246, 250 and 252 write `axes[i+2]` without spaces around the operator while the rest of the file spaces its operators; 587-589 and 688-690 use backslash line continuations *inside* parentheses where the parentheses already continue the expression, and add a double space before each backslash and after each `+`; 694 writes `B_star/div` unspaced two lines after `u.β * (...)` spaced normally"
+    },
+    {
+      "rule": "qe-writing-003",
+      "count": 3,
+      "lines": [
+        224,
+        656,
+        676
+      ],
+      "detail": "line 221 says \"Let's discard the first 2000 observations ... and construct the histogram\" and 224 says \"We obtain the following graph for the histogram\", but no code in the lecture builds that histogram - 226 is a static PNG, so the central object of the section (and the three vertical lines described at 229-232) cannot be reproduced by the reader; 656-660 tells the reader that \"0.2 is the initial value for $\\tau$ in the root-finding algorithm\" while the cell above at 652 passes `.1` and the cell below at 667 passes `.5`; and the Execution walkthrough runs Step 1 (538), Step 2 (560), Step 3 (636), Step 4 (662) and then jumps to Step 6 (676) - Step 5, the variance-minimisation step that defines ${\\mathcal B}^*$, has no execution section at all, and the two `###` interludes at 566 and 577 sit a level *above* the `####` steps they interrupt"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 2,
+      "lines": [
+        407,
+        422
+      ],
+      "detail": "the seven-step construction at 409-513 is a composition pipeline - $c_\\tau(s)$ into ${\\mathcal R}_\\tau, {\\mathcal X}_\\tau$ into $\\tau({\\mathcal B})$ into $J({\\mathcal B})$ into ${\\rm var}(J)$ into ${\\mathcal B}^*$ into the rate and $\\hat b$ - and the reader has to hold the whole chain in their head from prose alone; the same section's \"chicken and egg\" circularity (374-384) is a two-node diagram. Separately, the two typo alerts at 422 and 456 are exactly the \"important note\" case the rule points at admonitions for, and are typeset as bold labels in running text instead"
+    },
+    {
+      "rule": "qe-math-009",
+      "count": 1,
+      "lines": [
+        506
+      ],
+      "detail": "line 506 defines `div = {\\beta E u_{c,t+1}}` - a three-letter roman-less identifier that renders as the product $d\\,i\\,v$ - and 512 then divides by it; the same quantity already has a name in the lecture ($\\beta E u_{c,t+1}$, used inline at 349), so the abbreviation buys nothing. The calligraphic ${\\mathcal B}, {\\mathcal R}, {\\mathcal X}$ elsewhere is *not* counted: 286-297 introduces them explicitly as BEGS's objects against the lecture's own $b, B, R, X$, so the decoration is carrying a real distinction"
+    }
   ],
   "strengths": [
     "The calligraphic notation earns its keep: 286-297 states which objects are BEGS's (${\\mathcal B}_t, {\\mathcal R}_t, {\\mathcal X}_t$) and gives the full change of variables to the lecture's own $b_t, B_t, R_t$ in one display, so a reader can move between the paper and the code without guessing",
@@ -33,5 +91,9 @@
   ],
   "scanner_doubts": [
     "amss3.md:291,349,450,506,516 - qe-math-010 (proposed) is reported with **no** violations for this lecture, but expectations are written as bare `E` and `E_t` throughout (`\\beta E_{t-1} u_{c,t}` at 291, `\\beta E( E_t u_{c,t+1})` at 349, `E {\\mathcal X_\\tau}` at 450, 506, 516), and variance and covariance as `{\\rm var}^\\infty` / `{\\rm cov}^\\infty` (324, 337, 361, 481, 487, 494). In `check_math_010` the bare-letter branch is gated on `e_is_operator`, which only arms when a bare `E` is followed by `[` or `\\{` - this lecture always applies `E` with parentheses or by juxtaposition, so the gate never arms. The `{\\rm var}` / `{\\rm cov}` spellings escape the `other` pattern too, because it matches `\\mathrm{Var}`/`\\text{Cov}` and not `{\\rm var}` in lower case. This looks like a systemic miss rather than a clean lecture, and it will affect the whole AMSS family, which shares this notation"
-  ]
+  ],
+  "source": {
+    "commit": "b83d6da3998b4206f3d95869f7f552ed6e6f189c",
+    "blob": "4a2b1a1aa3612a5610c9d0f7a0770a98b548ef27"
+  }
 }

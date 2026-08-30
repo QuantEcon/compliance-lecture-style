@@ -2,16 +2,54 @@
   "series": "lecture-python.myst",
   "lecture": "markov_asset",
   "judgment": [
-    {"rule": "qe-writing-003", "count": 2, "lines": [168, 913],
-     "detail": "two internal cross-references point at the wrong object. All three bullets at 168-170 begin 'In equation {eq}`rnapex`', but only the first belongs there: {eq}`rnapex` contains no covariance term (bullet two) and no ${\\mathbb E}_t m_{t+1}$ (bullet three) - both are features of {eq}`lteeqs102`, the equation the paragraph at 166 has just introduced, so the bullets that are supposed to explain the generalization all cite the special case. And line 913 states $m_1 = \\beta M$, contradicting line 904's $m_1 = \\beta M {\\mathbb 1}$ nine lines earlier; since 911 defines $m_j$ as an $n \\times 1$ vector, the $\\mathbb 1$ is not optional"},
-    {"rule": "qe-writing-007", "count": 1, "lines": [887],
-     "detail": "'### Risk-Free Rates' (887-913) closes the substantive part of the lecture with the entire term structure of risk-free rates - the one-period rate across states, then the recursion $m_{j+1} = M m_j$ for every maturity - and computes nothing and plots nothing. Every ingredient is already in hand: `M` is built three times in the code (730, 842, 1095) and `AssetPriceModel` supplies $\\beta$, $\\gamma$ and the chain, so a yield curve by maturity, one line per Markov state, is a few lines of code. It is also the only section in the lecture with neither a figure nor a code cell, in a lecture with six figures"},
-    {"rule": "qe-code-001", "count": 6, "lines": [320, 411, 730, 842, 1095, 1099],
-     "detail": "`M = P * ap.g(y)**(- γ)` puts a space between the unary minus and its operand at 730, 842 and 1095, where the parallel line at 601 writes `**(1 - γ)` cleanly; line 320 has one space before an inline comment where PEP8 asks for two; line 411 has two spaces after the comma in the `assert`; and 1099-1100 leave two blank lines inside a function body, which PEP8 reserves for top-level separation"},
-    {"rule": "qe-writing-002", "count": 2, "lines": [117, 142],
-     "detail": "line 117 restates line 115 almost word for word - 'Here ${\\mathbb E}_t [y]$ denotes the best forecast of $y$, conditioned on information available at time $t$' followed by 'More precisely, ${\\mathbb E}_t [y]$ is the mathematical expectation of $y$ conditional on information available at time $t$' - so the second sentence adds the word 'mathematical' and nothing else; and line 142 is a 38-word sentence stacked three relative clauses deep ('assets that tend to have good payoffs ... are valued more highly than other assets whose payoffs don't behave that way') in the sentence that first explains what the stochastic discount factor is for"},
-    {"rule": "qe-writing-005", "count": 2, "lines": [751, 920],
-     "detail": "line 751 bolds **infinite horizon** as emphasis nine lines before 760 supplies the actual definition, 'This is termed an infinite-horizon **call option** with **strike price** $p_S$' - so the bold appears first on the non-defining use; and line 920 re-bolds **ex-dividend assets** in the exercise although the term was defined at 89. The lecture italicises emphasis correctly elsewhere (*derivative* 64, *tree* / *fruit* / *shares* 454-455, *exercises* / *not to exercise* 758, *before* 766)"}
+    {
+      "rule": "qe-writing-003",
+      "count": 2,
+      "lines": [
+        168,
+        913
+      ],
+      "detail": "two internal cross-references point at the wrong object. All three bullets at 168-170 begin 'In equation {eq}`rnapex`', but only the first belongs there: {eq}`rnapex` contains no covariance term (bullet two) and no ${\\mathbb E}_t m_{t+1}$ (bullet three) - both are features of {eq}`lteeqs102`, the equation the paragraph at 166 has just introduced, so the bullets that are supposed to explain the generalization all cite the special case. And line 913 states $m_1 = \\beta M$, contradicting line 904's $m_1 = \\beta M {\\mathbb 1}$ nine lines earlier; since 911 defines $m_j$ as an $n \\times 1$ vector, the $\\mathbb 1$ is not optional"
+    },
+    {
+      "rule": "qe-writing-007",
+      "count": 1,
+      "lines": [
+        887
+      ],
+      "detail": "'### Risk-Free Rates' (887-913) closes the substantive part of the lecture with the entire term structure of risk-free rates - the one-period rate across states, then the recursion $m_{j+1} = M m_j$ for every maturity - and computes nothing and plots nothing. Every ingredient is already in hand: `M` is built three times in the code (730, 842, 1095) and `AssetPriceModel` supplies $\\beta$, $\\gamma$ and the chain, so a yield curve by maturity, one line per Markov state, is a few lines of code. It is also the only section in the lecture with neither a figure nor a code cell, in a lecture with six figures"
+    },
+    {
+      "rule": "qe-code-001",
+      "count": 6,
+      "lines": [
+        320,
+        411,
+        730,
+        842,
+        1095,
+        1099
+      ],
+      "detail": "`M = P * ap.g(y)**(- γ)` puts a space between the unary minus and its operand at 730, 842 and 1095, where the parallel line at 601 writes `**(1 - γ)` cleanly; line 320 has one space before an inline comment where PEP8 asks for two; line 411 has two spaces after the comma in the `assert`; and 1099-1100 leave two blank lines inside a function body, which PEP8 reserves for top-level separation"
+    },
+    {
+      "rule": "qe-writing-002",
+      "count": 2,
+      "lines": [
+        117,
+        142
+      ],
+      "detail": "line 117 restates line 115 almost word for word - 'Here ${\\mathbb E}_t [y]$ denotes the best forecast of $y$, conditioned on information available at time $t$' followed by 'More precisely, ${\\mathbb E}_t [y]$ is the mathematical expectation of $y$ conditional on information available at time $t$' - so the second sentence adds the word 'mathematical' and nothing else; and line 142 is a 38-word sentence stacked three relative clauses deep ('assets that tend to have good payoffs ... are valued more highly than other assets whose payoffs don't behave that way') in the sentence that first explains what the stochastic discount factor is for"
+    },
+    {
+      "rule": "qe-writing-005",
+      "count": 2,
+      "lines": [
+        751,
+        920
+      ],
+      "detail": "line 751 bolds **infinite horizon** as emphasis nine lines before 760 supplies the actual definition, 'This is termed an infinite-horizon **call option** with **strike price** $p_S$' - so the bold appears first on the non-defining use; and line 920 re-bolds **ex-dividend assets** in the exercise although the term was defined at 89. The lecture italicises emphasis correctly elsewhere (*derivative* 64, *tree* / *fruit* / *shares* 454-455, *exercises* / *not to exercise* 758, *before* 766)"
+    }
   ],
   "strengths": [
     "The lecture is one equation specialised five ways, and it is built so the reader can see that: {eq}`lteeqs0` yields risk-neutral pricing, deterministic growth, Markov growth, the Lucas tree and the consol, and each case is reached by naming a new matrix of the identical form - $K(x,y) = g(y)P(x,y)$ (362), $J(x,y) = g(y)^{1-\\gamma}P(x,y)$ (522), $M(x,y) = g(y)^{-\\gamma}P(x,y)$ (698) - so the same resolvent formula solves all three",
@@ -30,5 +68,9 @@
     "Add `mystnb: figure: caption/name` metadata to the six un-named figure cells (313, 403, 617, 863, 1027, 1113), move the `set_title` at 629 into a caption, and set `lw=2` on the three thin plots (1029, 1030, 1117) (qe-fig-005 x6, qe-fig-003 x1, qe-fig-008 x3)",
     "Sweep the remaining items: close the 32 double spaces (56, 136, 140, 166, 168, 171, 202, 204, 341, 385, ...) (qe-writing-008), convert the two raw cross-series links to `{doc}` (175, 472) (qe-link-002), move the author-position citation at 127 into qe-ref-001 form, replace `{\\rm cov}` with `\\operatorname{cov}` (150, 155, 163, 169, 173), fix the `ϵ` default documented as 1e-8 but coded as 1e-7 (816, 831), correct 'console' to 'consol' in the docstrings at 720 and 725, and split the two-sentence paragraph at 1079 (qe-writing-001)"
   ],
-  "scanner_doubts": []
+  "scanner_doubts": [],
+  "source": {
+    "commit": "e25fdf2345c1b2b125c0aafcdcb689fc7c3876ab",
+    "blob": "4421b37b45d53ff5714f897c5fa1c118d9a7c0fe"
+  }
 }
