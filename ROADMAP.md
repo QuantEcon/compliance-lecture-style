@@ -215,6 +215,11 @@ byte-identical, 122 had been edited and 50 were new, so a churn-scaled queue wou
 half of it. An earlier estimate here said "single-digit agent-hours", which the measurement
 does not support.
 
+**Treat these as ±2.** The 2026-05 pinned commits were never recorded — `snapshot.json` holds
+only the current period — so the baseline had to be reconstructed by date cutoff, and it yields
+298 lectures against the 300 that pass counted. The ratio is sound; the individual counts are
+not exact, and cannot be until a period's commits are recorded (#13).
+
 **The saving is a function of cadence, and that is the operational point.** Three months
 touches half the corpus; a monthly pass touches far less, so frequent passes are
 disproportionately cheaper per period than infrequent ones. The first refresh after a long
@@ -232,7 +237,8 @@ What remains:
 - **Trigger, as an alternative or an addition:** run before each lecture-series release, as a
   quality gate.
 - **Agree an interval — still open.** The 2026-05 → 2026-08 gap was one quarter and 49 new
-  lectures. Whether a quarter is the right period, or whether a pass should hang off each
+  lectures (the pass's own figure — §1's blob diff counts 50 against a date-reconstructed
+  baseline; see the note there). Whether a quarter is the right period, or whether a pass should hang off each
   series release instead, has not been decided.
 
 `action-style-guide` [#20](https://github.com/QuantEcon/action-style-guide/issues/20) is

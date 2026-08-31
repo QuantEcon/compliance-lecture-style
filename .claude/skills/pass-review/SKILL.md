@@ -136,7 +136,8 @@ new, so the queue would have been **172 of 348** — roughly **14 agent-hours ag
 knowing before you plan a session: that is a 51 % saving, not the order-of-magnitude one an
 earlier note here claimed. It is also a function of cadence — three months touches half the
 corpus, a month touches far less — so **the first pass after a long gap should be budgeted as
-close to a full one**.
+close to a full one**. Those counts are ±2: the 2026-05 pinned commits were never recorded, so
+that baseline is reconstructed by date rather than pinned (#13).
 
 ### Reviewer rules that matter
 

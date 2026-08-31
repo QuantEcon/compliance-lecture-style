@@ -221,8 +221,12 @@ records a judgment but not the text it judged, so the only queue anyone can comp
 "lectures with no overlay at all" — and every corpus refresh re-reviews the whole corpus,
 348 lectures at ~5 agent-minutes each, about 30 agent-hours. With it the queue is
 "missing **or stale**", and review cost scales with corpus *churn* rather than corpus
-*size*: 2026-05 → 2026-08 grew the corpus from 300 lectures to 348 and edited some of the
-rest, which is single-digit agent-hours of review instead of thirty.
+*size*. Measured over 2026-05 → 2026-08: 176 of the 348 lectures were byte-identical, 122 had
+been edited and 50 were new, so the queue would have been 172 of 348 — about 14 agent-hours of
+review against 29. A 51 % saving, and it scales with cadence: three months touches half the
+corpus, a month far less, so the first pass after a long gap should be budgeted as close to a
+full one. (Counts are ±2: the 2026-05 pinned commits were never recorded, so that baseline is
+reconstructed by date — see `ROADMAP.md` §1 and #13.)
 
 Overlays written before the `source` key existed are stamped in bulk:
 
