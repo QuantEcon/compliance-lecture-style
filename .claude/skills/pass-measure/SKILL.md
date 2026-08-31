@@ -259,6 +259,13 @@ trend row, any counts table headed *Lectures* / *Occurrences*, and the trend sen
 tallies. At the 2026-08 pass that was 2,376 cited counts, 22 hand-written corpus claims and 31
 line-width claims cross-checked. It exits non-zero on any failure and names the file.
 
+It also fails on a **missing input** rather than skipping the check — every file under `--data`
+is committed, so its absence is a broken tree, not a context where the check does not apply
+([#15](https://github.com/QuantEcon/compliance-lecture-style/issues/15)). `--corpus` is
+required and a series missing under it fails; the one deliberate skip is `--no-corpus`, for a
+tree whose corpus genuinely is not present, and it prints `SKIPPED …` beside the verdict so it
+cannot be read as a pass.
+
 ## 8. Build
 
 The book is vanilla jupyter-book + `quantecon-book-theme`, not the QuantEcon build container.
