@@ -378,9 +378,15 @@ artifact uploaded, not that the page a reader loads has moved. Check the commit 
 actually serving, then spot-check a figure that is new this period:
 
 ```bash
-gh api repos/QuantEcon/compliance-lecture-style/pages/builds/latest -q '.commit, .status'
+gh run list --repo QuantEcon/compliance-lecture-style --workflow deploy.yml --branch main \
+    --status success --limit 1 --json headSha -q '.[0].headSha'
 curl -sf https://quantecon.github.io/compliance-lecture-style/intro.html | grep -c '<a string this period changed>'
 ```
+
+(Not `gh api …/pages/builds/latest`: that endpoint describes the legacy Jekyll build path
+and returns 404 for a site published by `actions/deploy-pages`, which this one is. The
+newest *successful* deploy run's `headSha` is the commit Pages is serving — `--status
+success` is load-bearing, since the newest run of all may have failed or still be going.)
 
 Pick the grep target from something the period actually moved — a corpus size, a scoreboard
 figure — not from boilerplate that was on the page before the deploy. A count of `1` against
@@ -404,7 +410,9 @@ here:
 
 ```bash
 git fetch origin main --tags
-COMMIT=$(gh api repos/QuantEcon/compliance-lecture-style/pages/builds/latest -q .commit)
+COMMIT=$(gh run list --repo QuantEcon/compliance-lecture-style --workflow deploy.yml \
+           --branch main --status success --limit 1 --json headSha -q '.[0].headSha')
+[ -n "$COMMIT" ] || { echo "no successful deploy run to tag"; exit 1; }
 git tag -a pass/2026-08 $COMMIT -m "Ledger tree that produced the 2026-08 period"
 git push origin pass/2026-08
 ```

@@ -354,10 +354,14 @@ overwrites it.
 .venv/bin/python tools/qestyle_check.py --root lectures --data lectures/data --corpus $CORPUS
 ```
 
-It must print `All checks passed`; nothing goes further until it does. `--corpus` is not
-optional — the coverage check only runs when it is given. At the 2026-08 pass this
-cross-checked 2,376 cited counts, 22 hand-written corpus claims and 31 line-width claims.
-See [§ Consistency checks](#consistency-checks).
+It must print `All checks passed`; nothing goes further until it does. `--corpus` is
+required, and a series missing under it is a failure — the only way to run without the
+corpus is the explicit `--no-corpus`, which prints a `SKIPPED` line beside the verdict.
+Every other input is committed, so a missing file under `--data` fails rather than skips
+(that used to be a note, and deleting `lectures/data/` gave a green gate —
+[#15](https://github.com/QuantEcon/compliance-lecture-style/issues/15)). At the 2026-08
+pass this cross-checked 2,376 cited counts, 22 hand-written corpus claims and 31 line-width
+claims. See [§ Consistency checks](#consistency-checks).
 
 ### Step 7 — Regenerate the TOC (only if lectures were added or removed)
 
@@ -433,6 +437,18 @@ command, and the no-closing-keyword rule for the PR body.
 | **Narrative claims** | A hand-written figure the data has since moved: the `intro.md` trend row (`A% → B%`), any counts table whose header names *Lectures* and *Occurrences*, and the trend sentence's own tallies (*N rules measurable in both snapshots*, *N improved*, *N held level*, *N got worse*). The report↔CSV check does not reach any of these, and a rule fix moves reach without touching the prose quoting it — which happened twice in the 2026-08 pass before the sentence tallies were covered. |
 
 Run it after any agent pass. It exits non-zero on any failure.
+
+**A missing input is a failure, not a skip.** Each of the data-dependent rows above used to
+print `<file> absent, … not checked` and let the run pass, so a scan run without
+`--append-history`, followed by the gate, was green and checked nothing about the narrative;
+an empty `lectures/data/` was green outright
+([#15](https://github.com/QuantEcon/compliance-lecture-style/issues/15)). Now every file under
+`--data` is required, `snapshot.json` must pin a commit for all five series (an empty commit is
+what the scan writes when a clone did not resolve, and it used to skip the comparison), and a
+tree with no per-lecture reports under `--root` fails rather than "checking" zero of them. The
+single legitimate skip is the corpus — a past period's clones do not exist — and it is the
+explicit `--no-corpus` flag, reported as `SKIPPED` next to the verdict, never inferred from an
+empty directory.
 
 ---
 

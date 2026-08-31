@@ -67,11 +67,12 @@ jobs:
           done
 
       - name: Verify the corpus is at the pinned snapshot
-        # check_coverage() *skips* a series whose clone is absent — it notes
-        # "corpus not present, coverage not checked" and the gate still passes.
-        # So a clone that half failed, or a sparse pattern that matched nothing,
-        # would give a green check that measured nothing. Assert both the pinned
-        # commit and the per-series lecture count from snapshot.json first.
+        # The gate fails on a series whose clone is absent (it used to note it
+        # and pass — #15), but it cannot tell a clone sitting on the wrong commit
+        # from the right one, and a sparse pattern that matched nothing looks to
+        # it like an empty series. Assert both the pinned commit and the
+        # per-series lecture count from snapshot.json first, so the gate's
+        # coverage check runs over the corpus it claims to.
         run: |
           python - <<'PY'
           import glob, json, subprocess, sys

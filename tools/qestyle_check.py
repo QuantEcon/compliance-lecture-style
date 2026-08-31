@@ -10,7 +10,17 @@ outlived any record of the corpus commits they were measured on.
 
     python3 tools/qestyle_check.py --root lectures --data lectures/data --corpus ../quantecon
 
-Exits non-zero if any check fails.
+Exits non-zero if any check fails — and a check whose input is missing *fails*,
+it does not skip. Four checks used to note "absent, not checked" and let the run
+go green; deleting ``lectures/data/`` outright produced ``All checks passed``
+(issue #15). Every file under ``--data`` is committed, so its absence during a
+gate run is a broken tree, not a context in which the check does not apply.
+
+The one input that can legitimately be missing is the corpus: a past period's
+clones do not exist, and CI fetches one SHA per series. That skip is an explicit
+``--no-corpus``, never inferred from an empty directory, so a clone that half
+failed is an error and a deliberate omission is a flag — and it is printed next
+to the verdict, not scrolled past above it.
 """
 
 from __future__ import annotations
@@ -38,6 +48,7 @@ class Checker:
     def __init__(self):
         self.failures = []
         self.notes = []
+        self.skips = []
 
     def fail(self, check, detail):
         self.failures.append((check, detail))
@@ -45,14 +56,28 @@ class Checker:
     def note(self, msg):
         self.notes.append(msg)
 
+    def skip(self, msg):
+        """A check that did not run because a flag said not to.
+
+        Kept apart from ``note`` so it prints beside the verdict rather than
+        among the passes: "All checks passed" and "one check was switched off"
+        must never be readable as the same line.
+        """
+        self.skips.append(msg)
+
     def report(self):
         by_check = {}
         for check, detail in self.failures:
             by_check.setdefault(check, []).append(detail)
         for msg in self.notes:
             print(f"  {msg}")
+        if self.skips:
+            print()
+            for msg in self.skips:
+                print(f"SKIPPED {msg}")
         if not self.failures:
-            print("\nAll checks passed.")
+            print("\nAll checks passed." if not self.skips else
+                  f"\nAll checks passed ({len(self.skips)} skipped by flag).")
             return 0
         print()
         for check, details in by_check.items():
@@ -65,12 +90,21 @@ class Checker:
 
 
 def check_coverage(ck, root, corpus):
-    """Every corpus lecture has a report, and every report has a lecture."""
+    """Every corpus lecture has a report, and every report has a lecture.
+
+    A series whose clone is absent is a failure, not a note: with ``--corpus``
+    given, the caller has said the corpus is there, so an empty directory means
+    a clone that failed or a sparse pattern that matched nothing — the exact
+    state in which this check used to print a note and let the gate pass.
+    ``--no-corpus`` is the way to say the corpus is deliberately not present.
+    """
     for series in SERIES:
         src = os.path.join(corpus, series, "lectures")
         rep = os.path.join(root, series)
         if not os.path.isdir(src):
-            ck.note(f"{series}: corpus not present, coverage not checked")
+            ck.fail("coverage",
+                    f"{series}: {src} is not a directory — the corpus is absent or "
+                    f"the clone is incomplete (pass --no-corpus to skip on purpose)")
             continue
         lectures = {f[:-3] for f in os.listdir(src) if f.endswith(".md")}
         reports = {os.path.basename(p)[:-3] for p in glob.glob(os.path.join(rep, "*.md"))
@@ -99,6 +133,13 @@ def check_scores(ck, root):
                     f"{path}: header {declared!r} vs categories {overall:.1f}")
         if priority != prio:
             ck.fail("priority-bucket", f"{path}: header {priority!r} vs rule {prio!r}")
+    if n == 0:
+        # Every check below walks the same glob; an empty walk would let all of
+        # them pass over a tree that has no reports in it.
+        ck.fail("score-arithmetic",
+                f"{root}: no per-lecture reports under lecture-*/ — wrong --root, "
+                f"or the reports are missing")
+        return                             # "checked on 0 reports" is not a pass
     ck.note(f"score arithmetic checked on {n} reports")
 
 
@@ -106,7 +147,8 @@ def check_agreement(ck, root, data):
     """A report may not cite a count the evidence layer did not measure."""
     path = os.path.join(data, "violations.csv")
     if not os.path.exists(path):
-        ck.note("violations.csv absent, report/CSV agreement not checked")
+        ck.fail("report-csv-agreement",
+                f"{path}: absent, so no cited count can be held to a measurement")
         return
     measured = {}
     with open(path, newline="", encoding="utf-8") as fh:
@@ -192,21 +234,32 @@ def check_snapshot(ck, root, data):
     """Report headers must name the snapshot the evidence came from."""
     path = os.path.join(data, "snapshot.json")
     if not os.path.exists(path):
-        ck.note("snapshot.json absent, snapshot pinning not checked")
+        ck.fail("snapshot", f"{path}: absent, so no report header can be held to a pin")
         return
     with open(path, encoding="utf-8") as fh:
-        snap = json.load(fh)["snapshot"]
+        snap = json.load(fh).get("snapshot", {})
+    # An empty commit is what `qestyle_scan.git_snapshot` writes when a clone
+    # could not be resolved. The comparison below used to skip on it — `elif
+    # want and …` — so a corpus that failed to resolve passed all 348 headers.
+    # Fail it once per series here, and compare unconditionally below.
+    for series in SERIES:
+        if not snap.get(series, {}).get("commit"):
+            ck.fail("snapshot",
+                    f"{path}: no commit pinned for {series} — the scan could not "
+                    f"resolve its clone")
     for rp in sorted(glob.glob(os.path.join(root, "lecture-*", "*.md"))):
         if os.path.basename(rp) == "index.md":
             continue
         series = os.path.basename(os.path.dirname(rp))
         want = snap.get(series, {}).get("commit", "")[:10]
+        if not want:
+            continue                       # already failed once for the series
         with open(rp, encoding="utf-8") as fh:
             head = fh.read(1200)
         m = re.search(r"\*\*Corpus snapshot:\*\*\s*`([0-9a-f]+)`", head)
         if not m:
             ck.fail("snapshot", f"{rp}: no corpus-snapshot line")
-        elif want and m.group(1) != want:
+        elif m.group(1) != want:
             ck.fail("snapshot", f"{rp}: snapshot {m.group(1)} != {want}")
 
 
@@ -452,7 +505,9 @@ def check_narrative(ck, root, data):
     """
     per = _reach_history(data)
     if not per:
-        ck.note("rule_reach_history.csv absent, narrative claims not checked")
+        ck.fail("narrative-claims",
+                f"{os.path.join(data, 'rule_reach_history.csv')}: absent or empty, so "
+                f"no hand-written figure can be held to a measurement")
         return
     periods = sorted(per)
     now, before = per[periods[-1]], per.get(periods[-2], {}) if len(periods) > 1 else {}
@@ -555,7 +610,8 @@ def check_line_width_claims(ck, root, data):
     """
     path = os.path.join(data, "fig_line_widths.csv")
     if not os.path.exists(path):
-        ck.note("fig_line_widths.csv absent, line-width claims not checked")
+        ck.fail("line-width-claims",
+                f"{path}: absent, so no line-width figure can be held to a measurement")
         return
     widths, classes = {}, {}
     with open(path, newline="", encoding="utf-8") as fh:
@@ -682,11 +738,23 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--root", default="lectures")
     ap.add_argument("--data", default="lectures/data")
-    ap.add_argument("--corpus", default="")
+    # One or the other, never neither: an omitted --corpus used to skip the
+    # coverage check silently, which is the fail-open shape this gate exists to
+    # refuse. Saying "no corpus" has to be a decision someone typed.
+    where = ap.add_mutually_exclusive_group(required=True)
+    where.add_argument("--corpus", metavar="DIR",
+                       help="directory holding one clone per series; a series "
+                            "missing under it is a failure")
+    where.add_argument("--no-corpus", action="store_true",
+                       help="skip the corpus coverage check on purpose (the corpus "
+                            "genuinely is not present, e.g. a past period)")
     args = ap.parse_args()
 
     ck = Checker()
-    if args.corpus:
+    if args.no_corpus:
+        ck.skip("coverage: --no-corpus, so lecture/report coverage was not checked "
+                "against the corpus")
+    else:
         check_coverage(ck, args.root, args.corpus)
     check_scores(ck, args.root)
     check_agreement(ck, args.root, args.data)
