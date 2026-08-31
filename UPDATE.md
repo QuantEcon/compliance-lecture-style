@@ -100,8 +100,12 @@ gitignored `.corpus/` so the working tree stays clean:
 
 ```bash
 PREV=.corpus/.prev-YYYY-MM; mkdir -p $PREV
-[ "$(git -C $CORPUS/$r rev-parse --is-shallow-repository)" = true ] \
-  && git -C $CORPUS/$r fetch --unshallow --filter=blob:none || true
+# Skip the fetch when the clone is already complete, but let a genuine fetch
+# failure stop the script: `&& … || true` would swallow it and leave you
+# reconstructing a period from a clone missing the commit you need.
+if [ "$(git -C $CORPUS/$r rev-parse --is-shallow-repository)" = true ]; then
+  git -C $CORPUS/$r fetch --unshallow --filter=blob:none
+fi
 # The pins are recorded: lectures/data/snapshot_history.csv, header
 #   period,series,basis,commit,committed,lectures,checker
 # one row per series per period. Read the SHA from there — never reconstruct it

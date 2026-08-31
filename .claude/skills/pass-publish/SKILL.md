@@ -130,8 +130,10 @@ for r in lecture-python-intro lecture-python-programming lecture-python.myst \
   SHA=$(awk -F, -v p=$P -v s=$r '$1==p && $2==s {print $4}' \
           lectures/data/snapshot_history.csv)
   [ -n "$SHA" ] || { echo "no recorded pin for $P/$r — recover one, never guess"; exit 1; }
-  [ "$(git -C $CORPUS/$r rev-parse --is-shallow-repository)" = true ] \
-  && git -C $CORPUS/$r fetch --unshallow --filter=blob:none || true
+  # Skip when already complete; do NOT mask a real fetch failure with `|| true`.
+  if [ "$(git -C $CORPUS/$r rev-parse --is-shallow-repository)" = true ]; then
+    git -C $CORPUS/$r fetch --unshallow --filter=blob:none
+  fi
   git -C $CORPUS/$r worktree add --no-checkout "$PWD/$PREV/$r" $SHA
   git -C $PREV/$r sparse-checkout set --no-cone '/lectures/*.md' '/lectures/_static/*.bib'
   git -C $PREV/$r checkout

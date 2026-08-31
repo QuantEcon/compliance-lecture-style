@@ -261,7 +261,10 @@ def check_snapshot_history(ck, data):
                 f"{path}: header is {header!r}, must be {want_header!r}")
         return
     if not rows:
+        # Nothing below can run on an empty file — `max(periods)` would raise and
+        # crash the gate instead of reporting the failure it just recorded.
         ck.fail("snapshot-history", f"{path}: header only, no pins recorded")
+        return
     # Rows are written sorted, so an unsorted file was hand-edited or hand-merged.
     keys = [(r.get("period", ""), r.get("series", "")) for r in rows]
     if keys != sorted(keys):
@@ -273,7 +276,6 @@ def check_snapshot_history(ck, data):
         if None in r:
             ck.fail("snapshot-history",
                     f"{path}:{i}: {len(r[None])} field(s) beyond the header")
-        return
 
     digest = checker_digest()
     if not digest:
