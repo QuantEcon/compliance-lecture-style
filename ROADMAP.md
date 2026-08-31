@@ -206,8 +206,24 @@ every overlay records the `commit` and `blob` it judged. `tools/qestyle_status.p
 two and classes each lecture **fresh**, **stale** or **missing**. Before this, an overlay
 recorded a judgment but not the text judged, so the only answerable queue was "lectures with
 no overlay at all" and every corpus refresh re-reviewed the entire corpus. All 348 overlays
-are now stamped. On that basis the 2026-05 → 2026-08 refresh was 49 new lectures plus edits:
-single-digit agent-hours rather than thirty.
+are now stamped.
+
+The saving has since been **measured** rather than estimated, by diffing the two snapshots'
+blob tables. Over 2026-05 → 2026-08 — a three-month interval — 176 of the 348 lectures were
+byte-identical, 122 had been edited and 50 were new, so a churn-scaled queue would have been
+**172 of 348 (49 %)**: about **14 agent-hours rather than 29**, a 51 % saving. Real, but only
+half of it. An earlier estimate here said "single-digit agent-hours", which the measurement
+does not support.
+
+**Treat these as ±2.** The 2026-05 pinned commits were never recorded — `snapshot.json` holds
+only the current period — so the baseline had to be reconstructed by date cutoff, and it yields
+298 lectures against the 300 that pass counted. The ratio is sound; the individual counts are
+not exact, and cannot be until a period's commits are recorded (#13).
+
+**The saving is a function of cadence, and that is the operational point.** Three months
+touches half the corpus; a monthly pass touches far less, so frequent passes are
+disproportionately cheaper per period than infrequent ones. The first refresh after a long
+gap is close to a full pass and should be budgeted as one.
 
 **That second change is what unblocks Phase 3.** A cadence was never really gated on the
 scripts — those have been cheap for a while. It was gated on every period costing a full
@@ -221,7 +237,8 @@ What remains:
 - **Trigger, as an alternative or an addition:** run before each lecture-series release, as a
   quality gate.
 - **Agree an interval — still open.** The 2026-05 → 2026-08 gap was one quarter and 49 new
-  lectures. Whether a quarter is the right period, or whether a pass should hang off each
+  lectures (the pass's own figure — §1's blob diff counts 50 against a date-reconstructed
+  baseline; see the note there). Whether a quarter is the right period, or whether a pass should hang off each
   series release instead, has not been decided.
 
 `action-style-guide` [#20](https://github.com/QuantEcon/action-style-guide/issues/20) is

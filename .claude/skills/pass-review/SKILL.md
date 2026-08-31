@@ -129,8 +129,15 @@ PY
 That stamp is the whole reason this skill can be run incrementally. An overlay with no `source`
 still counts as coverage, but it can never be shown to be current, so it returns to the queue on
 every refresh forever — and the review cost goes back to scaling with corpus *size* instead of
-corpus *churn*. Stamped, a refresh only re-reviews what actually changed: 2026-05 → 2026-08 was
-49 new lectures plus edits, which is single-digit agent-hours rather than thirty.
+corpus *churn*. Stamped, a refresh only re-reviews what actually changed.
+
+Measured over 2026-05 → 2026-08: 176 of the 348 lectures were byte-identical, 122 edited and 50
+new, so the queue would have been **172 of 348** — roughly **14 agent-hours against 29**. Worth
+knowing before you plan a session: that is a 51 % saving, not the order-of-magnitude one an
+earlier note here claimed. It is also a function of cadence — three months touches half the
+corpus, a month touches far less — so **the first pass after a long gap should be budgeted as
+close to a full one**. Those counts are ±2: the 2026-05 pinned commits were never recorded, so
+that baseline is reconstructed by date rather than pinned (#13).
 
 ### Reviewer rules that matter
 
