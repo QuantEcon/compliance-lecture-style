@@ -15,9 +15,11 @@ lecture, including the several hundred whose text did not move.
 Recording the git blob SHA the reviewer read turns that into a three-way answer:
 an overlay is **fresh** when its ``source.blob`` equals the blob in
 ``lectures/data/lecture_blobs.csv``, **stale** when it differs, and **missing**
-when there is no overlay. The queue is then the churn, not the corpus — 2026-05
-to 2026-08 moved 49 new lectures plus edits, so a refresh is single-digit
-agent-hours rather than thirty. ``tools/qestyle_scan.py`` writes the blob table;
+when there is no overlay. The queue is then the churn, not the corpus. Measured
+over 2026-05 to 2026-08: 176 of 348 lectures unchanged, 122 edited, 50 new, so
+the queue would have been 172 of 348 — about 14 agent-hours against 29. The
+saving scales with cadence, so a monthly pass saves much more than a quarterly
+one. ``tools/qestyle_scan.py`` writes the blob table;
 ``tools/qestyle_status.py`` reads both sides and prints the queue.
 
 This script is the one-off that seeds the scheme: the 348 overlays already on
