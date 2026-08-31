@@ -35,7 +35,7 @@ jobs:
         run: jupyter-book build lectures
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: lectures/_build/html
 
