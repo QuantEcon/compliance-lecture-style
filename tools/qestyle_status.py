@@ -23,6 +23,14 @@ than reported as missing. ``snapshot.json`` counted the same lectures
 independently; the two are cross-checked and any shortfall is a problem, since
 "queue empty" over half a corpus is the worst thing this report could say.
 
+``snapshot_history.csv`` is read the same way, and reported as *recorded pins*: one
+row per series per period, naming the corpus commits a period's numbers came from and
+the digest of the code that measured them. ``snapshot.json`` is overwritten every pass
+and so only ever describes the current period, which is why a period can have published
+numbers and no way to reproduce them. Any period in ``history.csv`` with no row there is
+named — an unreproducible figure that is never flagged reads exactly like a reproducible
+one.
+
 Read-only, and always exits 0: it is a report, not a gate.
 """
 
@@ -41,6 +49,14 @@ CATS = ["writing", "math", "code", "figures", "references", "links", "admonition
 PRIOS = ["HIGH", "MEDIUM", "LOW", "NONE"]
 STATUSES = ["fresh", "stale", "unstamped", "unknown", "missing"]
 BACKFILL = "tools/qestyle_backfill_provenance.py"
+# The two values ``basis`` is allowed to take. There is deliberately no third for a
+# guess: a pin that could not be verified is not written, so an unrecognised value
+# here means something wrote a pin it could not stand behind.
+LEGAL_BASIS = ("pinned", "recovered")
+# Column labels for the pins table, which has to fit five commits on one line.
+SHORT = {"lecture-python-intro": "intro", "lecture-python-programming": "prog",
+         "lecture-python.myst": "python", "lecture-python-advanced.myst": "advanced",
+         "lecture-dp": "dp"}
 SCOL = 30                                  # width of the series column
 WRAP = 88
 
@@ -110,6 +126,28 @@ def load_scores(data, sources):
         except (TypeError, ValueError):
             overall = None
         out[key] = (overall, (r.get("priority") or "").strip())
+    return out
+
+
+def load_pins(data, sources):
+    """{period: [row, ...]} from snapshot_history.csv, or None if absent.
+
+    One row per series per period — the corpus commits a period's numbers were
+    measured from. ``snapshot.json`` is overwritten every pass and so only ever
+    describes the current one; this file is the only place an earlier period's
+    pins survive, and without them that period cannot be re-measured.
+    """
+    rows = read_rows(os.path.join(data, "snapshot_history.csv"), sources)
+    if rows is None:
+        return None
+    out = {}
+    for r in rows:
+        period = (r.get("period") or "").strip()
+        if not period:
+            continue
+        out.setdefault(period, []).append(
+            {k: (r.get(k) or "").strip()
+             for k in ("series", "basis", "commit", "committed", "lectures", "checker")})
     return out
 
 
@@ -233,6 +271,116 @@ def shortfall(per, snapshot, basis, problems):
     return short
 
 
+def col_label(series):
+    """Column label for the pins table, which fits five commits on one line.
+
+    A stray series falls back to the part of its name that distinguishes it, not
+    the first eight characters — every series here begins ``lecture-``, so a bare
+    truncation labels them all the same.
+    """
+    if series in SHORT:
+        return SHORT[series]
+    tail = series.rsplit("-", 1)[-1].split(".")[0]
+    return (tail or series)[:8]
+
+
+def one_value(rows, key):
+    """The value every row agrees on for ``key`` — else ``mixed``, else ``-``.
+
+    A period's rows are written by one scan, so they should agree about ``basis``
+    and ``checker``. ``mixed`` is therefore a finding, not a formatting choice.
+    """
+    vals = {r[key] for r in rows if r[key]}
+    if not vals:
+        return "-"
+    return vals.pop() if len(vals) == 1 else "mixed"
+
+
+def pin_total(rows):
+    """Lectures summed over a period's pins, or None if a count is unreadable."""
+    n = 0
+    for r in rows:
+        try:
+            n += int(r["lectures"])
+        except (TypeError, ValueError):
+            return None
+    return n
+
+
+def pin_check(pins, periods, snapshot, history, problems):
+    """Which periods have no pins, and where the pins disagree with the rest.
+
+    The first answer is the point of the file: a period whose numbers are in
+    ``history.csv`` with no commits recorded anywhere cannot be reproduced, and
+    that silence is what this section exists to break. The rest are cross-checks
+    against records written by the same scan, so a disagreement means two
+    different runs wrote them — the shape the ``--out``/``--append-history``
+    split makes possible, since a re-measured period's pins belong with the
+    history it appended and not with the snapshot it did not write.
+
+    Returns ``(unpinned, unmeasured)``.
+    """
+    if pins is None:
+        if periods:
+            problems.append(
+                f"UNPINNED: snapshot_history.csv is absent, so no period has its corpus "
+                f"commits on record: {', '.join(periods)}. Their numbers cannot be "
+                f"reproduced. tools/qestyle_scan.py writes it beside --append-history.")
+        return list(periods), []
+
+    unpinned = [p for p in periods if p not in pins]
+    unmeasured = [p for p in sorted(pins) if p not in periods]
+    if unpinned:
+        problems.append(
+            f"UNPINNED: {', '.join(unpinned)} — numbers in history.csv, no corpus commits "
+            f"in snapshot_history.csv. Nothing records what was measured, so the period "
+            f"cannot be reproduced.")
+    if unmeasured:
+        problems.append(
+            f"{', '.join(unmeasured)} — pins recorded with no rows in history.csv.")
+
+    hist_total = {}
+    for r in history:
+        if (r.get("series") or "") == "TOTAL":
+            try:
+                hist_total[(r.get("period") or "").strip()] = int(r.get("lectures") or "")
+            except ValueError:
+                pass
+
+    for period in sorted(pins):
+        rows = pins[period]
+        bad = sorted({r["basis"] for r in rows if r["basis"] not in LEGAL_BASIS})
+        if bad:
+            problems.append(
+                f"{period}: basis {', '.join(repr(b) for b in bad)} is not one of "
+                f"{'/'.join(LEGAL_BASIS)}. A pin that could not be verified is not "
+                f"supposed to be written at all.")
+        n = pin_total(rows)
+        if n is None:
+            problems.append(f"{period}: a pin has an unreadable lecture count.")
+        elif period in hist_total and n != hist_total[period]:
+            problems.append(
+                f"{period}: pins sum to {n_of(n, 'lecture')}, history.csv's TOTAL row says "
+                f"{hist_total[period]}. One of the two describes a different corpus.")
+
+    # The current period is the one case where a second record of the same pins
+    # exists, so it is the one case that can be checked rather than trusted.
+    current = periods[-1] if periods else None
+    if current in pins and snapshot:
+        by = {r["series"]: r["commit"] for r in pins[current]}
+        for series in sorted(set(by) | set(snapshot), key=rank):
+            a, b = by.get(series, ""), str((snapshot.get(series) or {}).get("commit") or "")
+            if a and b and not same_blob(a, b):
+                problems.append(
+                    f"{current}: snapshot_history.csv pins {series} at {a[:8]}, "
+                    f"snapshot.json at {b[:8]} — written by different runs.")
+            elif not a:
+                problems.append(
+                    f"{current}: snapshot.json pins {series} but snapshot_history.csv "
+                    f"has no row for it.")
+    return unpinned, unmeasured
+
+
 def build(data, reviews):
     """Everything the report and the JSON both need, measured once."""
     sources, problems = {}, []
@@ -240,6 +388,7 @@ def build(data, reviews):
     snapshot = read_json(os.path.join(data, "snapshot.json"), sources) or {}
     scores = load_scores(data, sources)
     history = read_rows(os.path.join(data, "history.csv"), sources) or []
+    pins = load_pins(data, sources)
     overlays = load_overlays(reviews, problems)
 
     # ``if blobs`` and not ``if blobs is not None``: a present but empty blob
@@ -265,11 +414,16 @@ def build(data, reviews):
     short = shortfall(per, snapshot, basis, problems)
 
     periods = sorted({r.get("period", "") for r in history} - {""})
+    unpinned, unmeasured = pin_check(pins, periods, snapshot.get("snapshot") or {},
+                                     history, problems)
     return {
         "data": data,
         "history_path": os.path.join(data, "history.csv"),
         "period": periods[-1] if periods else None,
         "periods": periods,
+        "pins": pins,
+        "unpinned": unpinned,
+        "unmeasured": unmeasured,
         "snapshot": snapshot.get("snapshot") or {},
         "snapshot_per_series": snapshot.get("per_series") or {},
         "snapshot_total": snapshot.get("n_lectures"),
@@ -374,6 +528,63 @@ def print_period(st):
         if seen != n:
             print(f"  note: snapshot.json says {series} has {n} lectures, "
                   f"{st['basis'] or 'the data'} shows {seen}")
+
+
+def print_pins(st):
+    """Every period's corpus commits, and every period that has none.
+
+    ``print_period`` above shows the pins of the pass running now, read from
+    ``snapshot.json``. That file is overwritten each pass, so this is the same
+    question asked of every period the ledger has ever published — and the
+    periods it cannot answer it for are named, because an unreproducible number
+    that is never flagged reads exactly like a reproducible one.
+    """
+    head("recorded pins")
+    note("The corpus commits each period's numbers were measured from, and the digest of "
+         "the code that measured them. snapshot.json holds only the current period; this "
+         "is the whole record for an earlier one. Commits are abbreviated here — "
+         "snapshot_history.csv carries them in full, with the committer date to the "
+         "second, which is the resolution a pin needs: two commits a corpus day apart "
+         "can differ by two lectures.")
+    pins = st["pins"]
+    print()
+    if pins is None:
+        why = st["sources"].get(os.path.join(st["data"], "snapshot_history.csv"), "not read")
+        print(f"  snapshot_history.csv {why} — no period has its commits on record.")
+    elif not pins:
+        print("  snapshot_history.csv has no rows — no period has its commits on record.")
+    else:
+        cols = sorted({r["series"] for rows in pins.values() for r in rows}, key=rank)
+        print((f"  {'period':<9}{'lectures':>9}  {'basis':<11}{'checker':<14}"
+               + "".join(f"{col_label(s):<10}" for s in cols)).rstrip())
+        for period in sorted(pins):
+            rows = pins[period]
+            commit = {r["series"]: r["commit"] for r in rows}
+            n = pin_total(rows)
+            print((f"  {period:<9}{('?' if n is None else n):>9}  "
+                   f"{one_value(rows, 'basis'):<11}{one_value(rows, 'checker'):<14}"
+                   + "".join(f"{(commit.get(s) or '-')[:8]:<10}" for s in cols)).rstrip())
+        print()
+        note("basis: `pinned` recorded by the scan as it measured; `recovered` established "
+             "afterwards and verified against that period's rule reach. There is no third "
+             "value — an unverified pin is not written. checker: sha256 over the scanning "
+             "code, so two periods sharing a digest were measured by the same instrument "
+             "and their rows are comparable; two that do not, are not.")
+    # One line however many periods are short: naming them all in a sentence keeps
+    # the paragraph that explains *why* it matters from repeating per period.
+    if st["unpinned"] or st["unmeasured"]:
+        print()
+    if st["unpinned"]:
+        note(f"! {', '.join(st['unpinned'])} "
+             f"{'has' if len(st['unpinned']) == 1 else 'have'} numbers in history.csv "
+             f"and no commits here: nothing records which corpus produced them, so "
+             f"{'that period' if len(st['unpinned']) == 1 else 'those periods'} cannot "
+             f"be reproduced. A period reaching this line means a scan wrote its history "
+             f"without writing its pins.")
+    if st["unmeasured"]:
+        note(f"note: {', '.join(st['unmeasured'])} "
+             f"{'has' if len(st['unmeasured']) == 1 else 'have'} commits recorded here "
+             f"but no rows in history.csv.")
 
 
 def list_failures(st):
@@ -555,6 +766,21 @@ def as_json(st, limit):
                 "lectures": st["per"].get(s, {}).get("lectures", 0)}
             for s, info in st["snapshot"].items()
         },
+        "pins": None if st["pins"] is None else {
+            period: {
+                "lectures": pin_total(rows),
+                "basis": one_value(rows, "basis"),
+                "checker": one_value(rows, "checker"),
+                "series": {
+                    r["series"]: {"commit": r["commit"], "committed": r["committed"],
+                                  "lectures": cell(r["lectures"]), "basis": r["basis"],
+                                  "checker": r["checker"]}
+                    for r in sorted(rows, key=lambda r: rank(r["series"]))
+                },
+            }
+            for period, rows in sorted(st["pins"].items())
+        },
+        "periods_without_pins": st["unpinned"],
         "coverage": {
             "basis": st["basis"] or None,
             "blobs_available": bool(st["blobs"]),
@@ -613,6 +839,7 @@ def main():
     print("QuantEcon Lecture Style Compliance — pass status")
     print(f"derived from {args.data}/ and {args.reviews}/; nothing here is hand-maintained")
     print_period(st)
+    print_pins(st)
     print_coverage(st)
     print_queue(st)
     print_doubts(st)

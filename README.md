@@ -77,8 +77,9 @@ runbook around it.
   the remaining 8 are genuine judgment calls and are reviewed by reading
 - **The judgment layer is complete** — every lecture has a review overlay in `reviews/`,
   and each overlay records the version of the lecture it judged
-- **Corpus snapshot pinned per series** — see
-  [`lectures/data/snapshot.json`](lectures/data/snapshot.json)
+- **Corpus snapshot pinned per series** — [`lectures/data/snapshot.json`](lectures/data/snapshot.json)
+  for the current pass, and [`lectures/data/snapshot_history.csv`](lectures/data/snapshot_history.csv)
+  for every recorded period, which is what makes an earlier period reproducible
 
 ## Scoreboard
 

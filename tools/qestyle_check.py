@@ -5,7 +5,8 @@ Each check here corresponds to something that silently broke in a previous pass:
 lectures that were never audited, a report describing a lecture that does not
 exist, a header whose score does not match its own table, a reviewer quietly
 editing a measured count, a proposed rule cited without its tag, a hand-written
-table still quoting a reach the last rule fix moved.
+table still quoting a reach the last rule fix moved, a period whose numbers
+outlived any record of the corpus commits they were measured on.
 
     python3 tools/qestyle_check.py --root lectures --data lectures/data --corpus ../quantecon
 
@@ -16,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import datetime
 import glob
 import json
 import os
@@ -25,7 +27,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from qestyle_rules import PROPOSED                     # noqa: E402
-from qestyle_scan import SERIES                        # noqa: E402
+from qestyle_scan import SERIES, checker_digest        # noqa: E402
 from qestyle_score import compute, parse_report        # noqa: E402
 
 RULE_RE = re.compile(r"\bqe-(?:writing|math|code|jax|fig|ref|link|admon)-\d{3}\b")
@@ -206,6 +208,182 @@ def check_snapshot(ck, root, data):
             ck.fail("snapshot", f"{rp}: no corpus-snapshot line")
         elif want and m.group(1) != want:
             ck.fail("snapshot", f"{rp}: snapshot {m.group(1)} != {want}")
+
+
+SNAPSHOT_HISTORY_FIELDS = ["period", "series", "basis", "commit", "committed",
+                           "lectures", "checker"]
+COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
+BASES = ("pinned", "recovered")
+# The digest that stamps a `snapshot_history.csv` row is `qestyle_scan`'s to compute, and
+# the gate re-derives it through that same helper. Hashing the three tool files a second
+# time here would give the column two definitions, and the day they drifted the gate
+# would go red on rows that were in fact correct.
+
+
+def _history_totals(data):
+    """{period: TOTAL lecture count} from `history.csv`."""
+    path = os.path.join(data, "history.csv")
+    if not os.path.exists(path):
+        return {}
+    out = {}
+    with open(path, newline="", encoding="utf-8") as fh:
+        for r in csv.DictReader(fh):
+            if r["series"] == "TOTAL":
+                out[r["period"]] = int(r["lectures"])
+    return out
+
+
+def check_snapshot_history(ck, data):
+    """Every period's corpus pins, and the code that measured them.
+
+    `history.csv` and `rule_reach_history.csv` carry a period's numbers, and
+    `snapshot.json` carries commits — but only the current pass's, because the
+    scan overwrites it. Until `snapshot_history.csv` existed no earlier period
+    could be re-measured from the corpus it was actually measured on: a day-
+    resolution date could not tell `99a5a21` (50 lectures) from `6a7bc1c` (52).
+
+    Unlike the other data-dependent checks here, a missing file is a failure and
+    not a note. A record that can go quietly missing is the exact thing this file
+    exists to stop.
+    """
+    path = os.path.join(data, "snapshot_history.csv")
+    if not os.path.exists(path):
+        ck.fail("snapshot-history",
+                f"{path}: absent, so no period's corpus pins are recorded")
+        return
+    with open(path, newline="", encoding="utf-8") as fh:
+        header = fh.readline().rstrip("\r\n")
+        fh.seek(0)
+        rows = list(csv.DictReader(fh))
+    want_header = ",".join(SNAPSHOT_HISTORY_FIELDS)
+    if header != want_header:
+        ck.fail("snapshot-history",
+                f"{path}: header is {header!r}, must be {want_header!r}")
+        return
+    if not rows:
+        # Nothing below can run on an empty file — `max(periods)` would raise and
+        # crash the gate instead of reporting the failure it just recorded.
+        ck.fail("snapshot-history", f"{path}: header only, no pins recorded")
+        return
+    # Rows are written sorted, so an unsorted file was hand-edited or hand-merged.
+    keys = [(r.get("period", ""), r.get("series", "")) for r in rows]
+    if keys != sorted(keys):
+        ck.fail("snapshot-history",
+                f"{path}: rows are not sorted by (period, series)")
+    # csv.DictReader parks surplus fields under the None key, so a row wider than
+    # the header would otherwise pass as long as its first seven values are valid.
+    for i, r in enumerate(rows, start=2):
+        if None in r:
+            ck.fail("snapshot-history",
+                    f"{path}:{i}: {len(r[None])} field(s) beyond the header")
+
+    digest = checker_digest()
+    if not digest:
+        ck.fail("snapshot-history",
+                "qestyle_scan.checker_digest() is empty, so the checker column "
+                "cannot be held to the tools in this tree")
+
+    by_period = {}
+    for i, r in enumerate(rows, start=2):
+        where = f"{path}:{i} {r['period'] or '?'}/{r['series'] or '?'}"
+        by_period.setdefault(r["period"], []).append(r)
+        if r["basis"] not in BASES:
+            ck.fail("snapshot-history",
+                    f"{where}: basis {r['basis']!r}, must be "
+                    f"{' or '.join(repr(b) for b in BASES)}")
+        if not COMMIT_RE.match(r["commit"] or ""):
+            ck.fail("snapshot-history",
+                    f"{where}: commit {r['commit']!r} is not a 40-hex commit")
+        try:
+            when = datetime.datetime.fromisoformat(r["committed"])
+        except (TypeError, ValueError):
+            ck.fail("snapshot-history",
+                    f"{where}: committed {r['committed']!r} is not ISO-8601")
+        else:
+            if when.tzinfo is None:
+                ck.fail("snapshot-history",
+                        f"{where}: committed {r['committed']!r} carries no UTC "
+                        "offset")
+        if not (r["lectures"] or "").isdigit() or int(r["lectures"] or 0) < 1:
+            ck.fail("snapshot-history",
+                    f"{where}: lectures {r['lectures']!r} is not a positive integer")
+        if digest and r["checker"] != digest:
+            ck.fail("snapshot-history",
+                    f"{where}: checker {r['checker']!r}, but the tools in this "
+                    f"tree hash to {digest}")
+
+    # One row per series per period, and the period's rows must add up to the
+    # corpus size `history.csv` reports for it.
+    totals = _history_totals(data)
+    for period in sorted(by_period):
+        seen = [r["series"] for r in by_period[period]]
+        for miss in sorted(set(SERIES) - set(seen)):
+            ck.fail("snapshot-history", f"{period}: no pin for {miss}")
+        for extra in sorted(set(seen) - set(SERIES)):
+            ck.fail("snapshot-history",
+                    f"{period}: {extra!r} is not one of the five pipeline series")
+        for dup in sorted({s for s in seen if seen.count(s) > 1}):
+            ck.fail("snapshot-history", f"{period}: {dup} pinned {seen.count(dup)} times")
+        if period in totals:
+            got = sum(int(r["lectures"]) for r in by_period[period]
+                      if (r["lectures"] or "").isdigit())
+            if got != totals[period]:
+                ck.fail("snapshot-history",
+                        f"{period}: pinned lectures sum to {got}, history.csv "
+                        f"TOTAL is {totals[period]}")
+
+    # A period with numbers but no pins is the state being eliminated, so the
+    # period sets have to match in both directions and in both histories.
+    periods = set(by_period)
+    if not totals:
+        ck.fail("snapshot-history",
+                f"{os.path.join(data, 'history.csv')}: absent, so the pinned "
+                "periods cannot be held to the measured ones")
+    reach = set(_reach_history(data))
+    if not reach:
+        ck.fail("snapshot-history",
+                f"{os.path.join(data, 'rule_reach_history.csv')}: absent, so the "
+                "pinned periods cannot be held to the measured ones")
+    for label, other in (("history.csv", set(totals)),
+                         ("rule_reach_history.csv", reach)):
+        if not other:
+            continue
+        for p in sorted(other - periods):
+            ck.fail("snapshot-history",
+                    f"{p}: {label} carries this period's numbers, but nothing "
+                    "pins the corpus they came from")
+        for p in sorted(periods - other):
+            ck.fail("snapshot-history",
+                    f"{p}: pinned here, but {label} has no numbers for it")
+
+    # The newest period is the one `snapshot.json` still describes; they are two
+    # records of the same measurement and may not disagree.
+    snap_path = os.path.join(data, "snapshot.json")
+    newest = max(periods)
+    if not os.path.exists(snap_path):
+        ck.fail("snapshot-history",
+                f"{snap_path}: absent, so the {newest} pins have nothing to agree with")
+    else:
+        with open(snap_path, encoding="utf-8") as fh:
+            meta = json.load(fh)
+        snap, per_series = meta.get("snapshot", {}), meta.get("per_series", {})
+        for r in sorted(by_period[newest], key=lambda r: r["series"]):
+            series = r["series"]
+            want = snap.get(series, {}).get("commit", "")
+            if want != r["commit"]:
+                ck.fail("snapshot-history",
+                        f"{newest}/{series}: pinned {r['commit'] or '(none)'}, "
+                        f"snapshot.json has {want or '(none)'}")
+            n = per_series.get(series)
+            if n is not None and str(n) != r["lectures"]:
+                ck.fail("snapshot-history",
+                        f"{newest}/{series}: pinned at {r['lectures']} lectures, "
+                        f"snapshot.json has {n}")
+
+    ck.note(f"{len(rows)} corpus pins checked across "
+            f"{len(periods)} period{'' if len(periods) == 1 else 's'} "
+            f"({', '.join(sorted(periods))}), checker digest "
+            f"{digest or 'unavailable'}")
 
 
 # The generated regions of a narrative document are `qestyle_report --splice`'s
@@ -514,6 +692,7 @@ def main():
     check_agreement(ck, args.root, args.data)
     check_conventions(ck, args.root)
     check_snapshot(ck, args.root, args.data)
+    check_snapshot_history(ck, args.data)
     check_narrative(ck, args.root, args.data)
     check_line_width_claims(ck, args.root, args.data)
     return ck.report()

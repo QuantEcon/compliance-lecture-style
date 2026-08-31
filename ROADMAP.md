@@ -216,8 +216,9 @@ only half of it. An earlier estimate here said "single-digit agent-hours", which
 does not support.
 
 **These counts are exact, and were not on the first two attempts.** The 2026-05 pinned commits
-are not recorded anywhere — `snapshot.json` only ever holds the current period — so the baseline
-had to be recovered. Two date-cutoff reconstructions were tried and both were wrong: one yielded
+were not recorded anywhere — `snapshot.json` only ever held the current period — so the baseline
+had to be recovered. They are recorded now, in
+[`lectures/data/snapshot_history.csv`](lectures/data/snapshot_history.csv) with `basis=recovered`. Two date-cutoff reconstructions were tried and both were wrong: one yielded
 298 lectures, the other 301. A third matched all five per-series lecture counts *and* the
 300 total and was **still wrong on two series**, which is why a lecture count is not a usable
 check. The pins below are the set that reproduces the recorded 2026-05 rule reach exactly — 35
@@ -231,7 +232,11 @@ of 35 rules, on both lectures affected and total occurrences:
 | `lecture-python-advanced.myst` | `6320d7142b5b807ec33fd2063d509ce8dbb9a302` | 2026-05-28T15:28:02+10:00 | 62 |
 | `lecture-dp` | `6a7bc1c467d7472e008607a3e12bb177dd2fb0c5` | 2026-05-28T17:28:17+10:00 | 52 |
 
-Recording them so this never has to be re-derived is [#13](https://github.com/QuantEcon/compliance-lecture-style/issues/13).
+They are now in [`lectures/data/snapshot_history.csv`](lectures/data/snapshot_history.csv), one
+row per series per period, so no future measurement has to re-derive them — that was
+[#13](https://github.com/QuantEcon/compliance-lecture-style/issues/13). How they were established,
+what was rejected, and the alternative that also fits are in
+[`tools/VERIFICATION.md`](tools/VERIFICATION.md).
 
 **The saving is a function of cadence, and that is the operational point.** Three months
 touches half the corpus; a monthly pass touches far less, so frequent passes are

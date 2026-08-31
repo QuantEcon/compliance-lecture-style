@@ -1,6 +1,6 @@
 ---
 name: pass-publish
-description: Publish the ledger — close a compliance period and deploy the site. Re-measures the previous snapshot with the current code, writes the series narratives, appends the period to the trend, runs the gate, builds the book, opens the PR and watches the deploy to completion. Use when asked to publish the ledger, close the period, close out a pass, add a period to the trend, or deploy the site.
+description: Publish the ledger — close a compliance period and deploy the site. Re-measures the previous snapshot with the current code, writes the series narratives, appends the period to the trend, runs the gate, builds the book, opens the PR, watches the deploy to completion and tags the pass. Use when asked to publish the ledger, close the period, close out a pass, add a period to the trend, or deploy the site.
 ---
 
 # Close a period and publish the ledger
@@ -70,9 +70,13 @@ period — but it is a decision, so **name it in the PR body**: how many stale, 
 missing, and why they are being left. An unstated remainder silently makes the cross-series
 scoreboard partly a ranking of review coverage, which is the one thing it must not be.
 
-The same report prints the period, the pinned snapshot, and the open reviewer doubts. Read
-the doubts before publishing: they are the most productive source of detector defects in the
-project, and one that lands a rule fix sends you back to Step 1.
+The same report prints the period, the pinned snapshot, the **recorded pins** — every
+period's commits with its `basis` and `checker` digest, read straight from
+`snapshot_history.csv` — and the open reviewer doubts. Two periods sharing a digest were
+measured by the same instrument and are comparable; two that do not, are not, which is the
+Step 1 decision in one line. Read the doubts before publishing too: they are the most
+productive source of detector defects in the project, and one that lands a rule fix sends
+you back to Step 1.
 
 **2. The gate passes.**
 
@@ -99,45 +103,51 @@ what took this build from 478 warnings to 0, and both its failure modes are writ
 
 ## Step 1 — Re-measure the previous snapshot with the current code
 
-**This is not optional after any detector change.** Reach is comparable across periods only
-if both periods were measured by the same program. Skip it and a detector fix reads as a
-corpus improvement: the rule looks like it got better because the checker changed, the trend
-chart shows a fall nobody earned, and the sentence in `intro.md` that quotes it is wrong in
-a way no gate can catch.
+**This is not optional after any detector change** — and since the pins landed, the gate
+says so rather than leaving it to judgment: every `snapshot_history.csv` row must carry the
+digest of `qestyle_scan.py` + `qestyle_lex.py` + `qestyle_rules.py` as they are in this
+tree, so an un-re-measured period is a red gate. (Measured: one comment line appended to
+`qestyle_lex.py` fails all 10 rows.)
 
-Reconstruct the previous period's corpus as a worktree per series. Keep it under `.corpus/`,
-which is gitignored, so the working tree stays clean:
+Reach is comparable across periods only if both periods were measured by the same program.
+Skip this step and a detector fix reads as a corpus improvement: the rule looks like it got
+better because the checker changed, the trend chart shows a fall nobody earned, and the
+sentence in `intro.md` that quotes it is wrong in a way no gate can catch — the digest
+catches the *staleness*, never the wrong sentence.
+
+Reconstruct the previous period's corpus as a worktree per series, kept under `.corpus/`,
+which is gitignored, so the working tree stays clean.
+
+The pins are **in the repo**: `lectures/data/snapshot_history.csv`, written by the scan
+beside `--append-history`, header `period,series,basis,commit,committed,lectures,checker`,
+one row per series per period. Read them from there — nothing here carries a SHA inline.
 
 ```bash
 set -euo pipefail
-CORPUS=.corpus; PREV=.corpus/.prev-2026-05; mkdir -p $PREV
-# The verified 2026-05 pins. Recovered, not recorded — see ROADMAP.md § 2.4 for
-# how they were established. Recording them in the repo is issue #13; until that
-# lands, they live here.
-#
-# A `case`, not `declare -A`: associative arrays need bash 4, and macOS still
-# ships bash 3.2, where `declare -A` is an "invalid option" rather than a
-# warning. This is runbook content someone pastes into whatever shell they have.
-pin_for() {
-  case "$1" in
-    lecture-python-intro)          echo 576cd1776110adad5160e304b6f202d694b58a97 ;;
-    lecture-python-programming)    echo a2b929f15e703b6942e8b80a29011c51f234b1e0 ;;
-    lecture-python.myst)           echo 2944402a4c4a3101e92e2824e10b0dc212265264 ;;
-    lecture-python-advanced.myst)  echo 6320d7142b5b807ec33fd2063d509ce8dbb9a302 ;;
-    lecture-dp)                    echo 6a7bc1c467d7472e008607a3e12bb177dd2fb0c5 ;;
-    *)                             echo "" ;;
-  esac
-}
+CORPUS=.corpus; P=2026-05; PREV=.corpus/.prev-$P; mkdir -p $PREV
 for r in lecture-python-intro lecture-python-programming lecture-python.myst \
          lecture-python-advanced.myst lecture-dp; do
-  git -C $CORPUS/$r fetch --unshallow --filter=blob:none
-  SHA=$(pin_for "$r")
-  [ -n "$SHA" ] || { echo "no recorded pin for $r — recover one, never guess"; exit 1; }
+  SHA=$(awk -F, -v p=$P -v s=$r '$1==p && $2==s {print $4}' \
+          lectures/data/snapshot_history.csv)
+  [ -n "$SHA" ] || { echo "no recorded pin for $P/$r — recover one, never guess"; exit 1; }
+  # Skip when already complete; do NOT mask a real fetch failure with `|| true`.
+  if [ "$(git -C $CORPUS/$r rev-parse --is-shallow-repository)" = true ]; then
+    git -C $CORPUS/$r fetch --unshallow --filter=blob:none
+  fi
   git -C $CORPUS/$r worktree add --no-checkout "$PWD/$PREV/$r" $SHA
   git -C $PREV/$r sparse-checkout set --no-cone '/lectures/*.md' '/lectures/_static/*.bib'
   git -C $PREV/$r checkout
 done
 ```
+
+`basis` says where a row came from: **`pinned`** — recorded by the scan at the moment it
+measured that period; **`recovered`** — established afterwards and verified against that
+period's recorded rule reach. Those are the only two legal values, because a pin that could
+not be verified is not written at all. So an **empty result is information**: that period
+has no trustworthy pin, and the answer is to recover one and verify it (below), never to
+fall back to a date. The 2026-05 rows are `recovered`; how they were established is
+[`tools/VERIFICATION.md`](../../../tools/VERIFICATION.md) § How the 2026-05 pins were recovered
+(the pin table is also in `ROADMAP.md` § 2.4).
 
 - **Use an absolute path for `worktree add`.** It resolves relative to the clone, not to
   this repo, and a relative path silently lands the worktree somewhere else.
@@ -147,10 +157,12 @@ done
   previously used `--until=2026-05-31`, which yields a 301-lecture corpus and three wrong pins.
   Three separate date reconstructions of 2026-05 were tried and all three were wrong — and one
   of them matched every per-series lecture count while still being wrong on two series, so a
-  count is not a check. Use the literal pins above.
+  count is not a check. Use the recorded pin.
 - **Verify before you trust a recovered pin.** Re-measure the candidate and compare against that
   period's rows in `rule_reach_history.csv`: a correct pin set reproduces them exactly, all 35
-  rules on both columns. That is the only check that discriminates.
+  rules on both columns. That is the only check that discriminates — and it is the check a
+  `recovered` row asserts has already been run, which is why an unverified candidate must
+  never be written into `snapshot_history.csv` to "save" it.
 - **Carry `_static/*.bib` into the worktree.** Any rule that checks a citation against the
   bibliography resolves *zero* keys without it, and fails silently in both directions: a
   fail-closed check reports no findings, a fail-open one reports all of them, and neither
@@ -167,7 +179,33 @@ Then measure it — **into a throwaway `--out`**:
 `--out /tmp/d05` is load-bearing. `--out lectures/data` would overwrite the *current*
 period's `violations.csv`, `rule_reach.csv` and `snapshot.json` with the old snapshot's
 numbers, and the gate would then fail every per-lecture report against them. Only
-`--append-history` is meant to touch the repo, and it writes one file.
+`--append-history` is meant to touch the repo — and it now writes **two** files: this
+period's reach into the path you give it, and the period's pins into
+`snapshot_history.csv` in the same directory. Both replace that period's rows rather than
+adding a second set, so a re-measure rewrites the period in both.
+
+That second file is written from what the scan actually read, so pointing it at the wrong
+worktrees overwrites good pins with bad ones under the same period label. A re-measure
+refreshes each row's `checker` and **carries its `basis` over** when the commit is
+unchanged: the scan only read that pin back from this very file, so writing it as
+`pinned` would claim it had witnessed a commit it never did. A row whose commit *did*
+change is a new pin and is written as `pinned` — right when the reconstruction verified,
+wrong when it did not. So verify first, then read the diff:
+
+```bash
+git diff lectures/data/snapshot_history.csv
+```
+
+With a correct reconstruction nothing but `checker` moves. A moved `basis`, `commit`,
+`committed` or `lectures` means you measured a different tree than the record names — stop,
+and re-check the pins before committing anything.
+
+The gate keeps one net under this: a period's pinned `lectures` must sum to that period's
+`history.csv` TOTAL. Scanning the 2026-08 corpus under `--period 2026-05` fails with
+`2026-05: pinned lectures sum to 348, history.csv TOTAL is 300`. But it is a net for *size*
+only — the near-miss candidate that matched all five per-series counts and the 300 total
+would pass it and still be wrong on two series. The 35-rule reach fingerprint remains the
+check that discriminates.
 
 A re-measure moves the previous period's own numbers, including its lecture count — that is
 expected, and it is the point. `history.csv` records 2026-05 at **300** lectures because
@@ -248,7 +286,7 @@ period:
 It reads `scores.csv`, so **run `qestyle_score.py` first** or you will record the previous
 run's arithmetic under this period's label. `qestyle_scan.py --period P --append-history …`
 (Step 1, and in `pass-measure`) is the other half: per-rule reach into
-`rule_reach_history.csv`.
+`rule_reach_history.csv`, and the period's pins into `snapshot_history.csv` beside it.
 
 **Both are idempotent within a period.** Each drops every existing row whose `period` equals
 the one being written before it writes:
@@ -354,7 +392,38 @@ The deploy job takes the `github-pages` environment and the `pages` concurrency 
 
 ---
 
-## Step 6 — The contributions loop
+## Step 6 — Tag the published pass
+
+`snapshot_history.csv` now makes a period's *inputs* reproducible — the corpus commits, and
+a digest of the code that measured them. The tag names the other half: the ledger tree that
+produced the period, `tools/` and `reviews/` and `lectures/spec.md` together, in one O(1)
+reference.
+
+Tag the commit Pages actually served, not whatever `main` has become by the time you get
+here:
+
+```bash
+git fetch origin main --tags
+COMMIT=$(gh api repos/QuantEcon/compliance-lecture-style/pages/builds/latest -q .commit)
+git tag -a pass/2026-08 $COMMIT -m "Ledger tree that produced the 2026-08 period"
+git push origin pass/2026-08
+```
+
+It costs nothing and it pairs with the `checker` column. The digest names the scanner that
+measured the recorded periods — the gate holds every row to one, so a green ledger asserts a
+single ruler across all of them — and the tag is how you get that scanner, and everything
+around it, back: `git show pass/2026-08:tools/qestyle_rules.py`, no archaeology.
+
+**It backfills nothing.** Do not invent a retroactive `pass/2026-05`. `tools/` first appears
+in this repository at `f609536` ("Rebuild the audit as a reproducible pipeline; refresh to
+the 2026-08 corpus"), so no 2026-05-era tree holds the pipeline at all — a tag there would
+name a tree that could not have produced that period's numbers, which is worse than no tag.
+Tagging starts with the first period published after this step existed; earlier periods are
+covered by `snapshot_history.csv` and by nothing else.
+
+---
+
+## Step 7 — The contributions loop
 
 [`contributions/issues/*.md`](../../../contributions/) are the **bodies of live issues** on
 `QuantEcon/action-style-guide`. Editing one here does not update GitHub. Re-sync explicitly:
@@ -393,9 +462,20 @@ prose that implies the live issues were updated.
 
 - **Publishing with the previous period un-remeasured.** The single most expensive mistake
   available here, because it produces a plausible number rather than an error. If any file
-  in `tools/` changed since the last publish, Step 1 is mandatory.
+  in `tools/` changed since the last publish, Step 1 is mandatory. The gate catches the
+  three files whose content the `checker` digest covers — `qestyle_scan.py`,
+  `qestyle_lex.py`, `qestyle_rules.py` — and only those: a change in `qestyle_draft.py` or
+  `qestyle_score.py` leaves every digest intact, so that one is still on you.
 - **`--out lectures/data` on the previous-period scan.** Overwrites the current period's
-  numbers with the old snapshot's. Use a throwaway directory.
+  numbers with the old snapshot's. Use a throwaway directory. Note that this does *not*
+  protect `snapshot_history.csv`, which is written beside `--append-history` on purpose —
+  that is the one file a previous-period re-measure is meant to update in the repo.
+- **A pin written into `snapshot_history.csv` that nothing verified.** The file has two
+  bases and deliberately no third: `pinned` (the scan recorded it as it measured) or
+  `recovered` (checked against that period's recorded reach, 35 of 35 rules on both
+  columns). A plausible candidate typed in by hand gives a wrong answer the shape of a
+  right one — three date reconstructions of 2026-05 were wrong, one of them matching every
+  lecture count. If a period cannot be verified, it stays out of the file.
 - **A reach figure inside `qe:series-narrative` or `qe:series-recommendations`.** Neither the
   splicer nor the gate touches those regions. Step 2's snippet is the only thing that does.
 - **`gh run watch` on the wrong run.** `--limit 1` picks the newest run in the repo, which
