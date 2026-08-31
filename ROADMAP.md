@@ -209,16 +209,29 @@ no overlay at all" and every corpus refresh re-reviewed the entire corpus. All 3
 are now stamped.
 
 The saving has since been **measured** rather than estimated, by diffing the two snapshots'
-blob tables. Over 2026-05 → 2026-08 — a three-month interval — 176 of the 348 lectures were
-byte-identical, 122 had been edited and 50 were new, so a churn-scaled queue would have been
-**172 of 348 (49 %)**: about **14 agent-hours rather than 29**, a 51 % saving. Real, but only
-half of it. An earlier estimate here said "single-digit agent-hours", which the measurement
+blob tables. Over 2026-05 → 2026-08 — a three-month interval — **186** of the 348 lectures were
+byte-identical, **114** had been edited and **48** were new, so a churn-scaled queue would have
+been **162 of 348 (47 %)**: about **13.5 agent-hours rather than 29**, a 53 % saving. Real, but
+only half of it. An earlier estimate here said "single-digit agent-hours", which the measurement
 does not support.
 
-**Treat these as ±2.** The 2026-05 pinned commits were never recorded — `snapshot.json` holds
-only the current period — so the baseline had to be reconstructed by date cutoff, and it yields
-298 lectures against the 300 that pass counted. The ratio is sound; the individual counts are
-not exact, and cannot be until a period's commits are recorded (#13).
+**These counts are exact, and were not on the first two attempts.** The 2026-05 pinned commits
+are not recorded anywhere — `snapshot.json` only ever holds the current period — so the baseline
+had to be recovered. Two date-cutoff reconstructions were tried and both were wrong: one yielded
+298 lectures, the other 301. A third matched all five per-series lecture counts *and* the
+300 total and was **still wrong on two series**, which is why a lecture count is not a usable
+check. The pins below are the set that reproduces the recorded 2026-05 rule reach exactly — 35
+of 35 rules, on both lectures affected and total occurrences:
+
+| series | commit | committed | lectures |
+|---|---|---|---|
+| `lecture-python-intro` | `576cd1776110adad5160e304b6f202d694b58a97` | 2026-05-29T14:07:01+10:00 | 50 |
+| `lecture-python-programming` | `a2b929f15e703b6942e8b80a29011c51f234b1e0` | 2026-05-13T18:45:09+08:00 | 26 |
+| `lecture-python.myst` | `2944402a4c4a3101e92e2824e10b0dc212265264` | 2026-05-29T14:27:37+10:00 | 110 |
+| `lecture-python-advanced.myst` | `6320d7142b5b807ec33fd2063d509ce8dbb9a302` | 2026-05-28T15:28:02+10:00 | 62 |
+| `lecture-dp` | `6a7bc1c467d7472e008607a3e12bb177dd2fb0c5` | 2026-05-28T17:28:17+10:00 | 52 |
+
+Recording them so this never has to be re-derived is [#13](https://github.com/QuantEcon/compliance-lecture-style/issues/13).
 
 **The saving is a function of cadence, and that is the operational point.** Three months
 touches half the corpus; a monthly pass touches far less, so frequent passes are

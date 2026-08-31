@@ -16,11 +16,11 @@ Recording the git blob SHA the reviewer read turns that into a three-way answer:
 an overlay is **fresh** when its ``source.blob`` equals the blob in
 ``lectures/data/lecture_blobs.csv``, **stale** when it differs, and **missing**
 when there is no overlay. The queue is then the churn, not the corpus. Measured
-over 2026-05 to 2026-08: 176 of 348 lectures unchanged, 122 edited, 50 new, so
-the queue would have been 172 of 348 — about 14 agent-hours against 29. The
+over 2026-05 to 2026-08: 186 of 348 lectures unchanged, 114 edited, 48 new, so
+the queue would have been 162 of 348 — about 13.5 agent-hours against 29. The
 saving scales with cadence, so a monthly pass saves much more than a quarterly
-one. Those counts are +/-2: the 2026-05 pinned commits were never recorded, so
-that baseline is reconstructed by date. ``tools/qestyle_scan.py`` writes the blob table;
+one. The 2026-05 baseline is recovered rather than recorded; see ROADMAP.md
+section 1 for the pins and how they were verified. ``tools/qestyle_scan.py`` writes the blob table;
 ``tools/qestyle_status.py`` reads both sides and prints the queue.
 
 This script is the one-off that seeds the scheme: the 348 overlays already on

@@ -109,11 +109,30 @@ Reconstruct the previous period's corpus as a worktree per series. Keep it under
 which is gitignored, so the working tree stays clean:
 
 ```bash
+set -euo pipefail
 CORPUS=.corpus; PREV=.corpus/.prev-2026-05; mkdir -p $PREV
+# The verified 2026-05 pins. Recovered, not recorded — see ROADMAP.md § 2.4 for
+# how they were established. Recording them in the repo is issue #13; until that
+# lands, they live here.
+#
+# A `case`, not `declare -A`: associative arrays need bash 4, and macOS still
+# ships bash 3.2, where `declare -A` is an "invalid option" rather than a
+# warning. This is runbook content someone pastes into whatever shell they have.
+pin_for() {
+  case "$1" in
+    lecture-python-intro)          echo 576cd1776110adad5160e304b6f202d694b58a97 ;;
+    lecture-python-programming)    echo a2b929f15e703b6942e8b80a29011c51f234b1e0 ;;
+    lecture-python.myst)           echo 2944402a4c4a3101e92e2824e10b0dc212265264 ;;
+    lecture-python-advanced.myst)  echo 6320d7142b5b807ec33fd2063d509ce8dbb9a302 ;;
+    lecture-dp)                    echo 6a7bc1c467d7472e008607a3e12bb177dd2fb0c5 ;;
+    *)                             echo "" ;;
+  esac
+}
 for r in lecture-python-intro lecture-python-programming lecture-python.myst \
          lecture-python-advanced.myst lecture-dp; do
   git -C $CORPUS/$r fetch --unshallow --filter=blob:none
-  SHA=$(git -C $CORPUS/$r log --until=2026-05-31 -1 --format=%H)
+  SHA=$(pin_for "$r")
+  [ -n "$SHA" ] || { echo "no recorded pin for $r — recover one, never guess"; exit 1; }
   git -C $CORPUS/$r worktree add --no-checkout "$PWD/$PREV/$r" $SHA
   git -C $PREV/$r sparse-checkout set --no-cone '/lectures/*.md' '/lectures/_static/*.bib'
   git -C $PREV/$r checkout
@@ -122,11 +141,16 @@ done
 
 - **Use an absolute path for `worktree add`.** It resolves relative to the clone, not to
   this repo, and a relative path silently lands the worktree somewhere else.
-- **Prefer the recorded pin to a date.** From the next period onward the previous period's
-  exact commits are in this repo's own history:
-  `git log --format='%h %ad' --date=short -- lectures/data/snapshot.json`, then
-  `git show <commit>:lectures/data/snapshot.json`. For **2026-05** that does not work — the
-  pipeline rebuild is the first commit carrying the file — so May is reconstructed by date.
+- **Never reconstruct a past snapshot from a date.** `git log --until=YYYY-MM-DD` fills the
+  unspecified time-of-day from the wall clock at the moment it runs, so it is not a function of
+  its arguments: two runs 26 minutes apart returned cutoffs 1,584 seconds apart. The recipe here
+  previously used `--until=2026-05-31`, which yields a 301-lecture corpus and three wrong pins.
+  Three separate date reconstructions of 2026-05 were tried and all three were wrong — and one
+  of them matched every per-series lecture count while still being wrong on two series, so a
+  count is not a check. Use the literal pins above.
+- **Verify before you trust a recovered pin.** Re-measure the candidate and compare against that
+  period's rows in `rule_reach_history.csv`: a correct pin set reproduces them exactly, all 35
+  rules on both columns. That is the only check that discriminates.
 - **Carry `_static/*.bib` into the worktree.** Any rule that checks a citation against the
   bibliography resolves *zero* keys without it, and fails silently in both directions: a
   fail-closed check reports no findings, a fail-open one reports all of them, and neither

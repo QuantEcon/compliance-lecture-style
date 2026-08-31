@@ -101,7 +101,22 @@ gitignored `.corpus/` so the working tree stays clean:
 ```bash
 PREV=.corpus/.prev-YYYY-MM; mkdir -p $PREV
 git -C $CORPUS/$r fetch --unshallow --filter=blob:none
-SHA=$(git -C $CORPUS/$r log --until=YYYY-MM-DD -1 --format=%H)
+# Use the recorded pin for that period. Leave SHA empty and the guard below
+# stops you, rather than silently checking out today's corpus.
+#
+# NEVER `--until=YYYY-MM-DD`: git fills the unspecified time-of-day from the
+# wall clock at the moment you run it, so a bare date resolves to a different
+# commit depending on the hour. Measured: two runs 26 minutes apart returned
+# cutoffs 1,584 seconds apart.
+#
+# And when no pin was ever recorded, a date cutoff GENERATES A CANDIDATE — it
+# never establishes a pin, even in the deterministic form
+# `--until='YYYY-MM-DD 23:59:59 +1000'`. Two deterministic cutoffs gave 298 and
+# 301 lectures; a third matched all five per-series counts AND the 300 total and
+# was still wrong on two series. A candidate becomes a pin only when
+# re-measuring it reproduces that period's rows in `rule_reach_history.csv` —
+# all 35 rules, both columns. Nothing weaker discriminates.
+SHA=""   # the recorded pin for that period
 git -C $CORPUS/$r worktree add --no-checkout "$PWD/$PREV/$r" $SHA
 git -C $PREV/$r sparse-checkout set --no-cone '/lectures/*.md' '/lectures/_static/*.bib'
 git -C $PREV/$r checkout
@@ -221,12 +236,12 @@ records a judgment but not the text it judged, so the only queue anyone can comp
 "lectures with no overlay at all" — and every corpus refresh re-reviews the whole corpus,
 348 lectures at ~5 agent-minutes each, about 30 agent-hours. With it the queue is
 "missing **or stale**", and review cost scales with corpus *churn* rather than corpus
-*size*. Measured over 2026-05 → 2026-08: 176 of the 348 lectures were byte-identical, 122 had
-been edited and 50 were new, so the queue would have been 172 of 348 — about 14 agent-hours of
-review against 29. A 51 % saving, and it scales with cadence: three months touches half the
+*size*. Measured over 2026-05 → 2026-08: 186 of the 348 lectures were byte-identical, 114 had
+been edited and 48 were new, so the queue would have been 162 of 348 — about 13.5 agent-hours of
+review against 29. A 53 % saving, and it scales with cadence: three months touches half the
 corpus, a month far less, so the first pass after a long gap should be budgeted as close to a
-full one. (Counts are ±2: the 2026-05 pinned commits were never recorded, so that baseline is
-reconstructed by date — see `ROADMAP.md` §1 and #13.)
+full one. (The 2026-05 baseline these are measured against is recovered, not recorded — see
+`ROADMAP.md` §1 for the pins and #13 for why they are not in the data yet.)
 
 Overlays written before the `source` key existed are stamped in bulk:
 
