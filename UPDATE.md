@@ -101,13 +101,22 @@ gitignored `.corpus/` so the working tree stays clean:
 ```bash
 PREV=.corpus/.prev-YYYY-MM; mkdir -p $PREV
 git -C $CORPUS/$r fetch --unshallow --filter=blob:none
-# Use a literal SHA. NEVER `--until=YYYY-MM-DD`: git fills the unspecified
-# time-of-day from the wall clock at the moment you run it, so a bare date
-# resolves to a different commit depending on the hour you run it. Measured:
-# two runs 26 minutes apart returned cutoffs 1,584 seconds apart. If you must
-# use a date, give an explicit instant with an offset:
-#   --until='YYYY-MM-DD 23:59:59 +1000'
-SHA=<the recorded pin for that period>
+# Use the recorded pin for that period. Leave SHA empty and the guard below
+# stops you, rather than silently checking out today's corpus.
+#
+# NEVER `--until=YYYY-MM-DD`: git fills the unspecified time-of-day from the
+# wall clock at the moment you run it, so a bare date resolves to a different
+# commit depending on the hour. Measured: two runs 26 minutes apart returned
+# cutoffs 1,584 seconds apart.
+#
+# And when no pin was ever recorded, a date cutoff GENERATES A CANDIDATE — it
+# never establishes a pin, even in the deterministic form
+# `--until='YYYY-MM-DD 23:59:59 +1000'`. Two deterministic cutoffs gave 298 and
+# 301 lectures; a third matched all five per-series counts AND the 300 total and
+# was still wrong on two series. A candidate becomes a pin only when
+# re-measuring it reproduces that period's rows in `rule_reach_history.csv` —
+# all 35 rules, both columns. Nothing weaker discriminates.
+SHA=""   # the recorded pin for that period
 git -C $CORPUS/$r worktree add --no-checkout "$PWD/$PREV/$r" $SHA
 git -C $PREV/$r sparse-checkout set --no-cone '/lectures/*.md' '/lectures/_static/*.bib'
 git -C $PREV/$r checkout
