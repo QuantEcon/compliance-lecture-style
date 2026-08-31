@@ -185,17 +185,18 @@ period's reach into the path you give it, and the period's pins into
 adding a second set, so a re-measure rewrites the period in both.
 
 That second file is written from what the scan actually read, so pointing it at the wrong
-worktrees overwrites good pins with bad ones under the same period label. Every row the
-scan writes is `basis=pinned` — it is recording what it measured — so a previous-period
-re-measure also restamps that period's `recovered` rows as `pinned` and refreshes their
-`checker`, which is right when the reconstruction verified and wrong when it did not.
-So verify first, then read the diff:
+worktrees overwrites good pins with bad ones under the same period label. A re-measure
+refreshes each row's `checker` and **carries its `basis` over** when the commit is
+unchanged: the scan only read that pin back from this very file, so writing it as
+`pinned` would claim it had witnessed a commit it never did. A row whose commit *did*
+change is a new pin and is written as `pinned` — right when the reconstruction verified,
+wrong when it did not. So verify first, then read the diff:
 
 ```bash
 git diff lectures/data/snapshot_history.csv
 ```
 
-With a correct reconstruction nothing but `basis` and `checker` moves. A moved `commit`,
+With a correct reconstruction nothing but `checker` moves. A moved `basis`, `commit`,
 `committed` or `lectures` means you measured a different tree than the record names — stop,
 and re-check the pins before committing anything.
 
