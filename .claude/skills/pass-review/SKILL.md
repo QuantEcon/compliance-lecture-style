@@ -157,8 +157,9 @@ close to a full one**.
 ## 4. Commit each batch
 
 ```bash
-git add reviews/<series>
-git commit -m "Review <series>: <n> overlays (<stems>)"
+SERIES=lecture-dp          # the series this batch belongs to
+git add "reviews/$SERIES"
+git commit -m "Review $SERIES: 10 overlays (lqcontrol, jv, odu, …)"
 ```
 
 The overlay is the durable unit and is useful the moment it is written — it does not need the

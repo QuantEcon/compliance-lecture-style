@@ -100,23 +100,31 @@ gitignored `.corpus/` so the working tree stays clean:
 
 ```bash
 PREV=.corpus/.prev-YYYY-MM; mkdir -p $PREV
-git -C $CORPUS/$r fetch --unshallow --filter=blob:none
-# Use the recorded pin for that period. Leave SHA empty and the guard below
-# stops you, rather than silently checking out today's corpus.
-#
-# NEVER `--until=YYYY-MM-DD`: git fills the unspecified time-of-day from the
+[ "$(git -C $CORPUS/$r rev-parse --is-shallow-repository)" = true ] \
+  && git -C $CORPUS/$r fetch --unshallow --filter=blob:none || true
+# The pins are recorded: lectures/data/snapshot_history.csv, header
+#   period,series,basis,commit,committed,lectures,checker
+# one row per series per period. Read the SHA from there — never reconstruct it
+# from a date. `--until=YYYY-MM-DD` fills the unspecified time-of-day from the
 # wall clock at the moment you run it, so a bare date resolves to a different
-# commit depending on the hour. Measured: two runs 26 minutes apart returned
-# cutoffs 1,584 seconds apart.
+# commit depending on the hour: two runs 26 minutes apart returned cutoffs
+# 1,584 seconds apart. The `committed` column is a full instant with an offset
+# for exactly that reason.
 #
-# And when no pin was ever recorded, a date cutoff GENERATES A CANDIDATE — it
-# never establishes a pin, even in the deterministic form
+# And for a period with no recorded pin, a date cutoff GENERATES A CANDIDATE —
+# it never establishes a pin, even in the deterministic form
 # `--until='YYYY-MM-DD 23:59:59 +1000'`. Two deterministic cutoffs gave 298 and
 # 301 lectures; a third matched all five per-series counts AND the 300 total and
-# was still wrong on two series. A candidate becomes a pin only when
-# re-measuring it reproduces that period's rows in `rule_reach_history.csv` —
-# all 35 rules, both columns. Nothing weaker discriminates.
-SHA=""   # the recorded pin for that period
+# was still wrong on two series. A candidate becomes a pin only when re-measuring
+# it reproduces that period's rows in `rule_reach_history.csv` — all 35 rules,
+# both columns. Nothing weaker discriminates. That is what `basis=recovered`
+# records, and an unverifiable pin is not written at all.
+SHA=$(awk -F, -v p=YYYY-MM -v s=$r '$1==p && $2==s {print $4}' \
+        lectures/data/snapshot_history.csv)
+# Stop, do not fall through: `worktree add` with an empty SHA succeeds and checks
+# out the clone's CURRENT head, giving you today's corpus wearing a past period's
+# label. This snippet has no `set -e`, so the braces-and-exit form is required.
+[ -n "$SHA" ] || { echo "no recorded pin for that period — recover one, never guess"; exit 1; }
 git -C $CORPUS/$r worktree add --no-checkout "$PWD/$PREV/$r" $SHA
 git -C $PREV/$r sparse-checkout set --no-cone '/lectures/*.md' '/lectures/_static/*.bib'
 git -C $PREV/$r checkout
@@ -125,8 +133,14 @@ git -C $PREV/$r checkout
 `worktree add` resolves a relative path against the *clone*, not against this repo, so
 the absolute `$PWD/…` is load-bearing. Scan a reconstructed period into a **throwaway
 `--out`** — `--out lectures/data` would overwrite the current period's numbers with the
-old snapshot's. From the second period onward, prefer the pin this repo already recorded
-(`git show <commit>:lectures/data/snapshot.json`) over a date.
+old snapshot's.
+
+`snapshot_history.csv` holds only pins that are known good: `basis` is `pinned` (recorded
+by the scan at the time it measured the period) or `recovered` (established afterwards and
+verified against that period's recorded rule reach). There is deliberately no third value
+for a guess, so a **missing row means the period has no verified pin** — recover one and
+verify it against `rule_reach_history.csv` — [`pass-publish`](.claude/skills/pass-publish/SKILL.md)
+Step 1 — rather than falling back to a date.
 
 ---
 
@@ -146,7 +160,7 @@ mechanics.
 > |-------|------|--------------|
 > | [`/pass-measure`](.claude/skills/pass-measure/SKILL.md) | seconds | corpus, scan, draft, score, splice, gate, build, and print the review queue — Steps 1–2 and 5–8, stopping short of the deploy |
 > | [`/pass-review`](.claude/skills/pass-review/SKILL.md) | ~5 agent-min per lecture | the judgment layer, incremental and resumable, with a hard budget — Step 3 |
-> | [`/pass-publish`](.claude/skills/pass-publish/SKILL.md) | minutes | close a period: re-measure the previous snapshot with current code, write the series prose, append the history row, gate, build, PR, deploy — Step 4 and the closing half of Step 8 |
+> | [`/pass-publish`](.claude/skills/pass-publish/SKILL.md) | minutes | close a period: re-measure the previous snapshot with current code, write the series prose, append the history row, gate, build, PR, deploy, tag the pass — Step 4 and the closing half of Step 8 |
 >
 > Each carries the environment checks and the known traps. **This file stays the reference;
 > the skills are the procedure. Change one, check the other.**
@@ -172,16 +186,26 @@ per-lecture per-rule counts to `violations.csv`, corpus and per-series reach to
 `rule_reach.csv` / `series_rule_reach.csv`, rule titles to `rule_titles.csv`, the
 spread of explicit `plot()` line widths to `fig_line_widths.csv`, one blob SHA per
 lecture to `lecture_blobs.csv` (the provenance side of the review queue — see Step 3),
-and appends this pass to `rule_reach_history.csv`. `--evidence` dumps per-lecture JSON
-(counts, line numbers, sample matches) for the review layer to read; keep it under
+and appends this pass to `rule_reach_history.csv` — plus this period's pins, one row per
+series, to `lectures/data/snapshot_history.csv` beside it: commit, full committer instant,
+lecture count, and the digest of the code that measured them. `--evidence` dumps
+per-lecture JSON (counts, line numbers, sample matches) for the review layer to read;
+keep it under
 `.corpus/` for the same permission reason as the corpus itself.
 
 `--append-history` is idempotent — it replaces this period's rows rather than adding a
-second set — but it only ever measures *this* period. If a detector changed, the previous
-period's rows were produced by the old code and the trend is comparing two rulers — a
+second set, in both files it writes — but it only ever measures *this* period. If a
+detector changed, the previous period's rows were produced by the old code and the trend
+is comparing two rulers — a
 detector fix then reads as a corpus improvement. Re-measuring the previous snapshot with
 current code (§ Getting the corpus, and [`pass-publish`](.claude/skills/pass-publish/SKILL.md)
 Step 1) is what fixes that; until it has run, do not quote the trend.
+
+> **`--append-history` is not optional in practice.** Both cross-period files are written
+> from inside its block, so a scan run without it measures the period and records no pins
+> for it — which is the gap that produced
+> [#13](https://github.com/QuantEcon/compliance-lecture-style/issues/13). All four scan
+> invocations in this file and in the skills pass it; keep it that way.
 
 > The lecture count changes between periods — `history.csv` records 300 for 2026-05 and
 > 348 for 2026-08. Never bring a count across from the previous period or write one from
@@ -240,8 +264,9 @@ records a judgment but not the text it judged, so the only queue anyone can comp
 been edited and 48 were new, so the queue would have been 162 of 348 — about 13.5 agent-hours of
 review against 29. A 53 % saving, and it scales with cadence: three months touches half the
 corpus, a month far less, so the first pass after a long gap should be budgeted as close to a
-full one. (The 2026-05 baseline these are measured against is recovered, not recorded — see
-`ROADMAP.md` §1 for the pins and #13 for why they are not in the data yet.)
+full one. (The 2026-05 baseline these are measured against is `recovered` rather than recorded at
+the time; it is in `lectures/data/snapshot_history.csv`, and how it was established is in
+[`tools/VERIFICATION.md`](tools/VERIFICATION.md) § How the 2026-05 pins were recovered.)
 
 Overlays written before the `source` key existed are stamped in bulk:
 
@@ -327,7 +352,7 @@ overwrites it.
 
 It must print `All checks passed`; nothing goes further until it does. `--corpus` is not
 optional — the coverage check only runs when it is given. At the 2026-08 pass this
-cross-checked 2,376 cited counts, 17 hand-written corpus claims and 31 line-width claims.
+cross-checked 2,376 cited counts, 22 hand-written corpus claims and 31 line-width claims.
 See [§ Consistency checks](#consistency-checks).
 
 ### Step 7 — Regenerate the TOC (only if lectures were added or removed)
@@ -378,8 +403,12 @@ gh run watch "$(gh run list --repo QuantEcon/compliance-lecture-style \
 
 Green means the artifact uploaded, not that a reader's page has moved — verify against
 <https://quantecon.github.io/compliance-lecture-style/> with a grep for something this
-period actually changed. [`pass-publish`](.claude/skills/pass-publish/SKILL.md) is the
-full procedure, including the no-closing-keyword rule for the PR body.
+period actually changed. Once it has, tag the published tree `pass/YYYY-MM`: the pins and
+the `checker` digest say what was measured and by which code, and the tag is the O(1) name
+for the tree — `tools/`, `reviews/`, `spec.md` — that produced the period. It backfills
+nothing; no 2026-05-era tree contains `tools/` at all.
+[`pass-publish`](.claude/skills/pass-publish/SKILL.md) is the full procedure — the tag
+command, and the no-closing-keyword rule for the PR body.
 
 ---
 
@@ -395,6 +424,7 @@ full procedure, including the no-closing-keyword rule for the PR body.
 | **Report ↔ CSV agreement** | A per-lecture report citing a count that `violations.csv` does not have — i.e. a reviewer edited a mechanical number. |
 | **Conventions** | Legacy `W#`/`M#` or `qe-*-A#` rule IDs; a proposed rule cited without its **(proposed)** tag; a `# Style Audit —` title prefix; a `Spec version` line; two-pass or "carry-forward" narrative. |
 | **Snapshot** | Reports whose pinned snapshot does not match `snapshot.json`. |
+| **Corpus pins** | A period carrying numbers that nothing pins a corpus for, or a `snapshot_history.csv` row that could not reproduce one: a `basis` outside `pinned`/`recovered`, a commit that is not 40 hex, a `committed` with no UTC offset, per-series lecture counts that do not sum to that period's `history.csv` TOTAL, or a `checker` that is not the digest of `qestyle_scan.py` + `qestyle_lex.py` + `qestyle_rules.py` in this tree — that last one goes red on *every* recorded period the moment a scanner file changes, and stays red until each has been re-measured. Missing file is a failure, not a note. |
 | **Line-width claims** | The figures behind the `qe-fig-008` rule-scope question, in `appendix.md` and in `contributions/issues/07-…`, held to `fig_line_widths.csv`. `qe-fig-008` only asks whether a width is set, so the spread of values is separate evidence — and it moves whenever the check's exemptions move. A first hand-typed pass had five of these numbers wrong and this check caught all five. |
 | **Narrative claims** | A hand-written figure the data has since moved: the `intro.md` trend row (`A% → B%`), any counts table whose header names *Lectures* and *Occurrences*, and the trend sentence's own tallies (*N rules measurable in both snapshots*, *N improved*, *N held level*, *N got worse*). The report↔CSV check does not reach any of these, and a rule fix moves reach without touching the prose quoting it — which happened twice in the 2026-08 pass before the sentence tallies were covered. |
 
@@ -476,7 +506,7 @@ compliance-lecture-style/
 └── lectures/                     Jupyter Book source (published)
     ├── _config.yml, _toc.yml, _static/
     ├── data/                     the numbers — everything else is derived from these
-    │   ├── snapshot.json         pinned corpus commit per series
+    │   ├── snapshot.json         pinned corpus commit per series, this period only
     │   ├── violations.csv        per lecture, per rule, count
     │   ├── lecture_blobs.csv     series,lecture,blob — each lecture's git blob SHA at the
     │   │                         pinned commit; joined against an overlay's source.blob
@@ -489,7 +519,11 @@ compliance-lecture-style/
     │   ├── scores.csv            per-lecture category scores, overall, priority
     │   ├── series_summary.csv    per-series averages + priority counts
     │   ├── history.csv           per-period series scores (2026-05, 2026-08, …)
-    │   └── rule_reach_history.csv per-period rule reach (feeds the trend chart)
+    │   ├── rule_reach_history.csv per-period rule reach (feeds the trend chart)
+    │   └── snapshot_history.csv  every period's pinned commits, one row per series
+    │                             per period — the cross-period pin record, and the
+    │                             only thing that makes an earlier period
+    │                             reproducible (snapshot.json is this period alone)
     ├── intro.md                  front-page triage      ← spliced in Step 5
     ├── details.md                full findings          ← spliced in Step 5
     ├── charts.md                 visual summary         ← reads data/ at build time
@@ -538,7 +572,8 @@ cp -r tools requirements.txt ROADMAP.md UPDATE.md CLAUDE.md .github .claude ../$
 mkdir -p ../$NEW/lectures/data
 cp lectures/_config.yml lectures/spec.md lectures/charts.md ../$NEW/lectures/
 cp -r lectures/_static ../$NEW/lectures/
-cp lectures/data/rule_reach_history.csv lectures/data/history.csv ../$NEW/lectures/data/
+cp lectures/data/rule_reach_history.csv lectures/data/history.csv \
+   lectures/data/snapshot_history.csv ../$NEW/lectures/data/
 # then run Steps 1–8 and enable Pages:
 gh api -X POST repos/QuantEcon/$NEW/pages -f build_type=workflow
 ```
@@ -555,6 +590,10 @@ that: it runs in place here (Steps 1–8), because that is what a ledger is. If 
 audit later acquires a cadence, an owner and a runbook, it becomes a `compliance-*` repo
 assembled from the audits it absorbs — the audits keep their names and stay published.
 
-If the new audit does track something over time, bring `rule_reach_history.csv` and
-`history.csv` across — they are the only files whose *old* rows matter. Generate
-everything else fresh.
+If the new audit does track something over time, bring `rule_reach_history.csv`,
+`history.csv` **and `snapshot_history.csv`** across — those are the files whose *old* rows
+matter. The third is the one that is easy to miss, and the costly one to miss: the other
+two carry a period's numbers but not the commits they were measured over, so a fork that
+leaves it behind cannot re-measure a single period it inherited — it starts life with
+[#13](https://github.com/QuantEcon/compliance-lecture-style/issues/13) already in it.
+Generate everything else fresh.

@@ -107,8 +107,10 @@ uv pip install --python .venv/bin/python -r requirements.txt
 ## 3. Pin or verify the snapshot
 
 The snapshot is **observed, not declared**: `qestyle_scan.py` records whatever each clone's
-`HEAD` is into `lectures/data/snapshot.json`, and stamps it into every report header. So
-decide what you want *before* scanning.
+`HEAD` is into `lectures/data/snapshot.json` — and, for the period, into
+`lectures/data/snapshot_history.csv` (§4) — and stamps it into every report header. So
+decide what you want *before* scanning: whatever the clones are sitting on is what gets
+recorded as this period's pins.
 
 **To re-measure the current snapshot** (a rule change, a detector fix, a re-run), put each
 series back on its pinned commit. Fetching a single SHA into the depth-1 blobless clone is
@@ -145,26 +147,46 @@ CORPUS=.corpus; R=$CORPUS/action-style-guide/style_checker/rules; P=YYYY-MM
     --evidence $CORPUS/evidence
 ```
 
-Writes `snapshot.json` (one pinned commit per series), `violations.csv` (per lecture, per
-rule, count), `rule_reach.csv` and `series_rule_reach.csv`, `rule_titles.csv` (from `--rules`),
-`fig_line_widths.csv`, and **`lecture_blobs.csv`** — header exactly `series,lecture,blob`, one
-row per scanned lecture, the git blob SHA of that lecture's `.md` at the pinned commit. That
-last file is the provenance side of the review queue (§9); a lecture whose SHA could not be
-read is omitted rather than written blank — an empty blob would compare equal to an unstamped
-overlay and read as fresh — so a file short of the lecture count means the scan warned about
-something.
+Writes `snapshot.json` (one pinned commit per series, *this period only*), `violations.csv`
+(per lecture, per rule, count), `rule_reach.csv` and `series_rule_reach.csv`,
+`rule_titles.csv` (from `--rules`), `fig_line_widths.csv`, and **`lecture_blobs.csv`** —
+header exactly `series,lecture,blob`, one row per scanned lecture, the git blob SHA of
+that lecture's `.md` at the pinned commit. That last file is the provenance side of the
+review queue (§9); a lecture whose SHA could not be read is omitted rather than written
+blank — an empty blob would compare equal to an unstamped overlay and read as fresh — so a
+file short of the lecture count means the scan warned about something.
 
 `--evidence` dumps per-lecture JSON (counts, line numbers, sample matches) for reviewers to
 read. Keep it under `.corpus/` for the same permission reason as the corpus itself —
 `UPDATE.md` still writes `/tmp/evidence`, which is fine only when someone is present to
 approve the reads.
 
-`--append-history` is idempotent: it replaces the rows for `$P` rather than adding a second
-set. **But it only re-measures *this* period.** If you changed a detector, the previous
-period's rows in `rule_reach_history.csv` were produced by the old code, so the trend now
-compares two different rulers and reads a detector fix as a corpus improvement. Re-measuring
-the previous snapshot with current code is [`pass-publish`](../pass-publish/SKILL.md)'s job;
-until it runs, do not quote the trend.
+**`--append-history` writes two files, and is no longer optional in practice.** Beside this
+period's per-rule reach at the path you give it, it writes `snapshot_history.csv` into the
+same directory — header exactly `period,series,basis,commit,committed,lectures,checker`, one
+row per series per period: the corpus commit, its full committer instant (`git %cI`, not a
+date — day resolution cannot tell two same-day commits apart, and that ambiguity is what
+produced [#13](https://github.com/QuantEcon/compliance-lecture-style/issues/13)), the lecture
+count, and a digest of `qestyle_scan.py` + `qestyle_lex.py` + `qestyle_rules.py` identifying
+the code that measured the period. `snapshot.json` is overwritten every pass and holds the
+current period alone; this file is the cross-period record, and it is what
+[`pass-publish`](../pass-publish/SKILL.md) Step 1 reads to reconstruct a previous snapshot.
+
+Both writes live inside the `--append-history` block, so **a scan run without the flag
+records no pins for the period at all** — it measures, and leaves nothing anyone can
+re-measure against. Always pass it. Both are idempotent: they replace the rows for `$P`
+rather than adding a second set, so re-running inside a period rewrites it.
+
+**`--append-history` only re-measures *this* period.** If you changed a detector, the
+previous period's rows in `rule_reach_history.csv` were produced by the old code, so the
+trend now compares two different rulers and reads a detector fix as a corpus improvement.
+The `checker` column is what stops that being silent, and the gate enforces it: **every** row
+in `snapshot_history.csv` must carry the digest of the three scanner files as they are in
+this tree, so touching any of them turns `qestyle_check.py` red on every period recorded
+until each has been re-measured with the new code. Measured: appending a single comment line
+to `qestyle_lex.py` failed all 10 rows. The scan above fixes this period's rows; the earlier
+periods are [`pass-publish`](../pass-publish/SKILL.md) Step 1's job, and until that runs, the
+gate stays red and the trend is not quotable.
 
 ## 5. Draft every per-lecture report
 
@@ -234,7 +256,7 @@ coverage both ways, score arithmetic, priority buckets, report↔CSV agreement (
 edited a measured count), the naming conventions, the **(proposed)** tag on the seven
 unregistered rules, snapshot pinning, and the hand-written narrative figures — the `intro.md`
 trend row, any counts table headed *Lectures* / *Occurrences*, and the trend sentence's own
-tallies. At the 2026-08 pass that was 2,376 cited counts, 17 hand-written corpus claims and 31
+tallies. At the 2026-08 pass that was 2,376 cited counts, 22 hand-written corpus claims and 31
 line-width claims cross-checked. It exits non-zero on any failure and names the file.
 
 ## 8. Build
@@ -271,7 +293,11 @@ was edited after it was judged), **missing** (no overlay), **unstamped** (an ove
 gate: read-only, and it always exits 0. Hand the queue to
 [`pass-review`](../pass-review/SKILL.md); this skill does not review anything.
 
-It also prints the **open reviewer doubts**, grouped by series. Read those before touching
+It also prints the **recorded pins**: one row per period from `snapshot_history.csv`, with
+abbreviated commits, the `basis` and the `checker` digest — the quickest way to see whether
+an earlier period is still comparable with this one.
+
+And it prints the **open reviewer doubts**, grouped by series. Read those before touching
 `tools/qestyle_rules.py` — around thirty verified detector and lexer fixes have come from
 reviewer doubts and none from any other source.
 

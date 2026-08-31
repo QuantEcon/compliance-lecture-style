@@ -1,4 +1,4 @@
-# Detector verification
+# Verification — detectors, and the pins a period is measured at
 
 **All 41 checks have now been sampled.** Every check in `qestyle_rules.py` was reviewed
 adversarially against the real corpus before its counts were published: for each rule, at least ten flagged occurrences were
@@ -977,6 +977,167 @@ The 23 that remain are hand-written prose quoting examples in `intro.md`, `appen
 `cross_product_trick`'s malformed `eq:Kalman102}` target, plus three `mcmc` theorem labels
 that genuinely do not exist in this book. That is the "few dozen standing" level the runbook
 describes, and a new warning is now visible against it.
+
+## How the 2026-05 pins were recovered
+
+Everything above verifies a *detector*. This verifies a *pin* — which corpus commits a
+period's published numbers were measured from — because the ledger's promise is that the
+same commits in produce the same numbers out, and a period whose commits are not on record
+cannot keep it.
+
+`snapshot.json` names the commits of the pass that is running and is overwritten by the
+next one, so when `lectures/data/snapshot_history.csv` was introduced the 2026-08 pins were
+still on disk and 2026-05's were not. They were re-established from the corpus history and
+written with `basis` = `recovered`. That value is a claim, and the file has exactly two
+legal values precisely so that it cannot be used to smuggle in a guess — there is no third
+value for "probably". This is what earning `recovered` meant.
+
+| series | commit | committed (`%cI`) | lectures |
+|---|---|---|---|
+| `lecture-python-intro` | `576cd1776110adad5160e304b6f202d694b58a97` | 2026-05-29T14:07:01+10:00 | 50 |
+| `lecture-python-programming` | `a2b929f15e703b6942e8b80a29011c51f234b1e0` | 2026-05-13T18:45:09+08:00 | 26 |
+| `lecture-python.myst` | `2944402a4c4a3101e92e2824e10b0dc212265264` | 2026-05-29T14:27:37+10:00 | 110 |
+| `lecture-python-advanced.myst` | `6320d7142b5b807ec33fd2063d509ce8dbb9a302` | 2026-05-28T15:28:02+10:00 | 62 |
+| `lecture-dp` | `6a7bc1c467d7472e008607a3e12bb177dd2fb0c5` | 2026-05-28T17:28:17+10:00 | 52 |
+
+300 lectures, matching `history.csv`'s `2026-05,TOTAL,300`.
+
+**What was verified.** Re-measuring that set with the current code reproduces the recorded
+2026-05 rows of `rule_reach_history.csv`: **35 rules of 35 exact, on both
+`lectures_affected` and `total_occurrences`**, same rule set, same corpus size of 300. Not
+one row moves. The lecture counts and committer dates in the table are read back from the
+corpus, not transcribed.
+
+**How.** Extract each candidate read-only — `git archive <commit> lectures/ | tar -x -C
+<dir>`, which disturbs no clone and needs no checkout — then measure and diff:
+
+```bash
+python3 tools/qestyle_scan.py --corpus /tmp/corpus2605 --out /tmp/out2605 \
+    --rules .corpus/action-style-guide/style_checker/rules \
+    --period 2026-05 --append-history /tmp/out2605/rule_reach_history.csv
+# then compare /tmp/out2605/rule_reach_history.csv against the 2026-05 rows of
+# lectures/data/rule_reach_history.csv, on lectures_affected and total_occurrences
+```
+
+Note the `--out` and `--append-history` both under `/tmp`: re-measuring an old period must
+not overwrite the current period's `violations.csv` or `snapshot.json`.
+
+### What was rejected, and why a lecture count is not a check
+
+A candidate matching **all five per-series lecture counts and the 300 total** was still
+wrong, on two series, and 10 of the 35 reach rows mismatched. Three of those rows were kept
+in the record — `qe-math-010` 107/1507 against 108/1538, `qe-math-012` 5/7 against 6/14,
+`qe-code-003` 26/33 against 27/34 — and all three are reproduced exactly by one wrong
+commit: `lecture-python.myst` at `5175665`, which carries 110 lectures like the pin and
+lands on the same calendar day, nine hours earlier. Swapped into the otherwise correct set
+it moves nine rules:
+
+| rule | recorded | with `5175665` swapped in |
+|---|---|---|
+| `qe-math-010` | 107 / 1507 | 108 / 1538 |
+| `qe-math-012` | 5 / 7 | 6 / 14 |
+| `qe-code-003` | 26 / 33 | 27 / 34 |
+| `qe-math-006` | 5 / 14 | 6 / 15 |
+| `qe-writing-009` | 33 / 67 | 34 / 70 |
+| `qe-code-002` | 54 / 558 | 54 / 555 |
+| `qe-writing-001` | 165 / 417 | 165 / 419 |
+| `qe-writing-004` | 94 / 296 | 94 / 298 |
+| `qe-writing-008` | 233 / 7391 | 233 / 7404 |
+
+The tenth mismatching row, `qe-math-003` at 41/334 against 40/333, is not one this swap
+produces: it comes from the second wrong series, `lecture-python-intro`. Ten of that
+series' eighteen same-count commits add exactly that row and no other, and three kept rows
+cannot choose between them, so the second commit is not recoverable from the record. Its
+contribution would also lift `qe-writing-001` and `qe-writing-008` slightly above the
+figures tabulated here, which are the `lecture-python.myst` swap's alone. The lesson does
+not depend on naming it.
+
+**A lecture count is not a check.** Two commits a few hours apart, with the same number of
+`lectures/*.md` and the same total across the corpus, differ by 31 occurrences on one rule
+and double another. The reach fingerprint is the check.
+
+### The recorded ambiguity, which the fingerprint does not resolve
+
+`lecture-python.myst` also matches **35 of 35** at `30c5c431` — measured, not assumed. That
+commit is 72 seconds earlier than `2944402a` and is not textually identical to it: the two
+differ by 13 insertions and 11 deletions in `lectures/stats_examples.md`, a change no rule
+happens to see. So on the evidence of the measurement alone the two are interchangeable,
+and `2944402a` was chosen on evidence from outside it:
+
+- it is the upstream repository's own `publish-2026may29` tag (`git tag --points-at`
+  returns exactly that), so it is the commit the series itself declares it published; and
+- its **consistency window** — the interval after the pin in which no lecture in any of the
+  five series changed, i.e. how long the five-series snapshot stayed a coherent picture of
+  the corpus — is 64,096 s (17.8 h), ending at `lecture-python-intro` `f0bd029` on
+  2026-05-30T08:15:53+10:00. For `30c5c431` the window is **72 seconds**, closed by
+  `2944402a` itself. A snapshot taken 72 seconds before its own series moves is a snapshot
+  of nothing in particular.
+
+This is worth stating plainly rather than burying: **the reach fingerprint verifies a set,
+it does not uniquely identify one.** Five further `lecture-python-programming` commits, one
+of them differing from the pin by 5 files and 57 insertions / 51 deletions of `.md` text,
+also reproduce all 35 rows exactly. What the fingerprint establishes is that the recorded
+set reproduces the recorded numbers — which is the whole of what the ledger promises — not
+that no other set would. Where it ties, the tie is broken by the publish tag and the
+window, and that reasoning belongs in the record next to the pin.
+
+### `git log --until=<bare date>` must never establish a pin
+
+Git resolves a bare date to that date **at the current local time of day**, so
+`--until=2026-05-29` behaves as the explicit form below with the wall clock pasted in, and
+the cutoff moves through the day with it — which is why two runs 26 minutes apart once
+returned cutoffs 1,584 seconds apart. All three candidates below carry 110 lectures, and
+which one comes back depends only on when the command is run:
+
+| cutoff | returns | committed |
+|---|---|---|
+| `2026-05-29T06:00:00+10:00` | `5175665` | 2026-05-29T05:28:50+10:00 |
+| `2026-05-29T14:27:00+10:00` | `30c5c431` | 2026-05-29T14:26:25+10:00 |
+| `2026-05-29T16:44:00+10:00` | `2944402a` | 2026-05-29T14:27:37+10:00 |
+
+A morning run yields the candidate that is wrong on nine reach rows; a run inside a
+72-second window yields the one that is right on all 35 but is not the tagged commit; an
+afternoon run yields the pin. Run bare at 16:44 local time, `git log -1 --until=2026-05-29`
+returned `2944402a`; asked for the same date at its own midnight,
+`--until=2026-05-29T00:00:00+10:00`, it returned a commit from **2026-04-28** — a month
+earlier. Two spellings of one date, a month apart, neither of them wrong about anything
+except what was asked.
+
+The same trap at day resolution is what produced the discrepancy this record exists to
+settle: in `lecture-dp`, `99a5a21` (2026-05-28T13:56:07+10:00) carries **50** lectures and
+`6a7bc1c` (2026-05-28T17:28:17+10:00) carries **52** — the same calendar day, with
+`rs_inventory_q.md` and `inventory_q.md` synced in at 17:27 and 17:28. A date cannot
+separate them; a `%cI` timestamp can, which is why `committed` is stored to the second and
+never to the day.
+
+### The instrument is part of the record
+
+Both periods' rows carry the same `checker` digest — a sha256 over `qestyle_scan.py`,
+`qestyle_lex.py` and `qestyle_rules.py` read in that order, truncated to 12 hex characters;
+`277dcd9edf30` at the time of the recovery run. That the two agree is the reason the
+recovery is worth anything: the recovered 2026-05 rows are reproduced by *today's* code,
+and comparing two periods at all assumes the same instrument measured both.
+
+How much the instrument moves is not a hypothetical, and the check is cheap. Extracting
+`tools/` at `f609536` and running it over the **unchanged** 2026-08 corpus — same five
+pinned commits, same 348 lectures, only the code differing, six days of it:
+
+| | `f609536` | today |
+|---|---|---|
+| rules reported | 37 | 35 |
+| rules whose reach moved | — | **19 of 37** |
+| `qe-code-002` | 106 / 579 | 66 / 798 |
+| `qe-fig-008` | 239 / 1363 | 196 / 1194 |
+| `qe-admon-001` | 4 / 4 | silent |
+| `qe-fig-009` | 9 / 13 | silent |
+| total occurrences | 19,249 | 19,101 (**−0.8 %**) |
+
+Half the rules moved, two went silent, and the corpus-wide total moved less than one per
+cent — so no aggregate sanity check would have noticed, and nothing outside this column
+records which instrument produced a row. When two periods' digests differ, their trend row
+compares two measurements rather than two corpora. `tools/qestyle_status.py` prints the
+digest beside each period's pins, and names any period in `history.csv` that has none.
+
 
 ## Reproducing this
 

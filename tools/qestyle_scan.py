@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import os
 import re
@@ -115,17 +116,41 @@ def scan_series(corpus, series, files=None):
 
 
 def git_snapshot(corpus, series):
+    """Resolve one series' checkout to a commit, and describe it four ways.
+
+    ``commit`` and ``date`` are what ``snapshot.json`` has always carried, and
+    are unchanged. The other two exist so a *later* pass can re-measure this one.
+
+    ``committed`` is the same commit's **committer** date at full ISO-8601
+    resolution (``%cI``). That is the field a reconstruction has to match:
+    ``git log --until`` filters on committer date, and ``date``'s day resolution
+    cannot separate two commits landed on the same day — precisely the ambiguity
+    that let a 50-lecture tree and a 52-lecture tree both answer to one day
+    (issue #13). ``%ad`` is the wrong field however it is formatted: an author
+    date can predate its commit by weeks, so ``--until`` would not select it.
+
+    ``lectures`` counts the ``lectures/*.md`` the **commit** holds, so a row
+    written from this says what checking the pin out would give you — which is
+    what makes it a reproduction recipe rather than a note about a directory
+    someone once had on disk. On a clean checkout it equals the number scanned;
+    when the tree is dirty ``warn_if_dirty`` is what says so.
+    """
+    root = os.path.join(corpus, series)
     try:
         sha = subprocess.run(
-            ["git", "-C", os.path.join(corpus, series), "rev-parse", "HEAD"],
+            ["git", "-C", root, "rev-parse", "HEAD"],
             capture_output=True, text=True, check=True).stdout.strip()
         date = subprocess.run(
-            ["git", "-C", os.path.join(corpus, series), "log", "-1",
+            ["git", "-C", root, "log", "-1",
              "--format=%ad", "--date=short"],
             capture_output=True, text=True, check=True).stdout.strip()
-        return {"commit": sha, "date": date}
+        committed = subprocess.run(
+            ["git", "-C", root, "log", "-1", "--format=%cI"],
+            capture_output=True, text=True, check=True).stdout.strip()
     except Exception:
-        return {"commit": "", "date": ""}
+        return {"commit": "", "date": "", "committed": "", "lectures": 0}
+    return {"commit": sha, "date": date, "committed": committed,
+            "lectures": len(git_blobs(corpus, series, sha))}
 
 
 def git_blobs(corpus, series, commit):
@@ -232,6 +257,116 @@ def working_blobs(corpus, series, files, commit):
     return blobs
 
 
+CHECKER_FILES = ("qestyle_scan.py", "qestyle_lex.py", "qestyle_rules.py")
+
+
+def checker_digest():
+    """Name the code that produced a pass's numbers, as a digest of its content.
+
+    Reach is comparable across periods only while the instrument holds still, and
+    the instrument moves quietly. Running ``tools/`` as of ``f609536`` over the
+    *unchanged* pinned corpus moved 19 of 37 rules in six days — ``qe-code-002``
+    106/579 to 66/798, ``qe-fig-008`` 239/1363 to 196/1194, ``qe-admon-001`` and
+    ``qe-fig-009`` to zero — while total occurrences across the corpus moved
+    0.8 %. No aggregate sanity check would have caught that, and nothing else in
+    the ledger records which detector read the corpus. A period whose digest
+    differs from the current one is a trend measured with two rulers.
+
+    A sha256 over the concatenated bytes of the scanner, the lexer and the rules,
+    read in that fixed order, truncated to 12 hex characters. Deliberately a
+    content digest and **not** a git commit SHA: the scan runs before the commit
+    that would record its own SHA, and this repository's HEAD also moves on prose
+    edits that cannot change a count — so a commit SHA would be both unavailable
+    when needed and wrong when available. The digest names the code that ran.
+    """
+    h = hashlib.sha256()
+    here = os.path.dirname(os.path.abspath(__file__))
+    for name in CHECKER_FILES:
+        with open(os.path.join(here, name), "rb") as fh:
+            h.update(fh.read())
+    return h.hexdigest()[:12]
+
+
+SNAPSHOT_HISTORY = "snapshot_history.csv"
+SNAPSHOT_HISTORY_FIELDS = ["period", "series", "basis", "commit", "committed",
+                           "lectures", "checker"]
+
+
+def write_snapshot_history(directory, period, pins, checker):
+    """Record which corpus commits this pass measured — one row per series.
+
+    ``snapshot.json`` holds only the current period's pins and is overwritten
+    every pass, and the two history tables carry a period's numbers with nothing
+    saying what they were measured over. So until this file existed, no earlier
+    period could be re-measured (issue #13). A row here is the whole recipe: the
+    commit, its committer date at full resolution, the number of lectures that
+    commit holds, and the digest of the code that read them.
+
+``basis`` says how the *pin* was established, not when it was last measured.
+    ``pinned`` means the scan resolved the commit while first measuring that
+    period; ``recovered`` means it was established afterwards and verified against
+    that period's recorded rule reach. There is deliberately no third value: a pin
+    that cannot be verified is not written at all.
+
+    So a row's ``basis`` is **preserved across a re-measure**. Re-measuring an
+    earlier period is routine — ``/pass-publish`` requires it after any detector
+    change — and it hands the scan the very pins this file recorded. Overwriting
+    ``recovered`` with ``pinned`` there would quietly upgrade a verified inference
+    into a claim that the scan had witnessed the commit, which it never did, and
+    would erase the distinction this column exists to draw. A commit that has
+    genuinely changed for an existing row is a new pin and is recorded as
+    ``pinned``.
+
+    Written beside ``--append-history`` and never into ``--out``, because
+    re-measuring a previous period deliberately points ``--out`` at a throwaway
+    directory to keep the current period's ``violations.csv`` and
+    ``snapshot.json`` — writing there would discard the previous period's pins at
+    the one moment they were computed.
+
+    Idempotent the same way ``--append-history`` is: the rows for ``period`` are
+    replaced rather than added to, so re-running a pass rewrites its own rows and
+    leaves every other period's alone.
+    """
+    path = os.path.join(directory, SNAPSHOT_HISTORY)
+    rows, prior = [], {}
+    if os.path.exists(path):
+        with open(path, newline="", encoding="utf-8") as fh:
+            for r in csv.DictReader(fh):
+                if r.get("period") == period:
+                    prior[r.get("series", "")] = r
+                else:
+                    rows.append(r)
+    for series, pin in sorted(pins.items()):
+        commit, committed = pin.get("commit", ""), pin.get("committed", "")
+        n = pin.get("lectures", 0)
+        # A partial row is a guess wearing a recipe's clothes: it would be read
+        # as reproducible and would not reproduce. Warn and leave it out.
+        if not (re.fullmatch(r"[0-9a-f]{40}", commit) and committed and n):
+            print(f"warning: no {SNAPSHOT_HISTORY} row for {period}/{series}: "
+                  f"commit={commit or '?'}, committed={committed or '?'}, "
+                  f"lectures={n}", file=sys.stderr)
+            continue
+        # Carry the basis over when this is the same pin we already recorded: a
+        # re-measure hands the scan the pins from this very file, and calling that
+        # `pinned` would claim the scan witnessed a commit it only read back.
+        was = prior.get(series, {})
+        basis = was.get("basis", "") if was.get("commit", "") == commit else ""
+        if basis not in ("pinned", "recovered"):
+            basis = "pinned"
+        rows.append({"period": period, "series": series, "basis": basis,
+                     "commit": commit, "committed": committed,
+                     "lectures": n, "checker": checker})
+    # .get(): a pre-existing file with a foreign header degrades to a gate failure
+    # rather than a KeyError that leaves the reach history appended and pins unwritten.
+    rows.sort(key=lambda r: (r.get("period", ""), r.get("series", "")))
+    with open(path, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=SNAPSHOT_HISTORY_FIELDS)
+        w.writeheader()
+        for r in rows:
+            w.writerow({k: r.get(k, "") for k in SNAPSHOT_HISTORY_FIELDS})
+    return path
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--corpus", required=True,
@@ -248,14 +383,18 @@ def main():
     args = ap.parse_args()
 
     os.makedirs(args.out, exist_ok=True)
-    records, snapshot, blobs = [], {}, {}
+    records, snapshot, blobs, pins = [], {}, {}, {}
     for series in SERIES:
-        snapshot[series] = git_snapshot(args.corpus, series)
+        pins[series] = git_snapshot(args.corpus, series)
+        # ``snapshot.json``'s shape is quoted by every report header the gate
+        # checks, so it keeps exactly the two fields it always had; the rest of
+        # the pin goes to ``snapshot_history.csv``.
+        snapshot[series] = {k: pins[series][k] for k in ("commit", "date")}
         # One file list, hashed and scanned — the SHA describes the text lexed
         # on the line below it, whatever state the checkout is in.
         files = lecture_files(args.corpus, series)
         blobs[series] = working_blobs(args.corpus, series, files,
-                                      snapshot[series]["commit"])
+                                      pins[series]["commit"])
         recs = scan_series(args.corpus, series, files)
         records.extend(recs)
         print(f"{series:32s} {len(recs):4d} lectures", file=sys.stderr)
@@ -350,6 +489,14 @@ def main():
                             "total_occurrences": total[rule],
                             "share_pct": round(reach[rule] / n * 100, 1)})
         print(f"appended {args.period} to {path}", file=sys.stderr)
+
+        # --- the corpus commits those numbers were measured over --------------
+        # Beside the history it explains, not in ``--out``: see
+        # ``write_snapshot_history``. Every documented scan invocation passes
+        # ``--append-history``, so this needs no flag of its own.
+        sh = write_snapshot_history(os.path.dirname(path) or ".", args.period,
+                                    pins, checker_digest())
+        print(f"recorded {args.period} corpus pins in {sh}", file=sys.stderr)
 
     # --- lecture provenance ------------------------------------------------
     # One row per scanned lecture, naming the blob of the exact text this pass
