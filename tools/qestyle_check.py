@@ -139,6 +139,7 @@ def check_scores(ck, root):
         ck.fail("score-arithmetic",
                 f"{root}: no per-lecture reports under lecture-*/ — wrong --root, "
                 f"or the reports are missing")
+        return                             # "checked on 0 reports" is not a pass
     ck.note(f"score arithmetic checked on {n} reports")
 
 

@@ -379,13 +379,14 @@ actually serving, then spot-check a figure that is new this period:
 
 ```bash
 gh run list --repo QuantEcon/compliance-lecture-style --workflow deploy.yml --branch main \
-    --limit 1 --json headSha,conclusion -q '.[0] | .headSha, .conclusion'
+    --status success --limit 1 --json headSha -q '.[0].headSha'
 curl -sf https://quantecon.github.io/compliance-lecture-style/intro.html | grep -c '<a string this period changed>'
 ```
 
 (Not `gh api …/pages/builds/latest`: that endpoint describes the legacy Jekyll build path
 and returns 404 for a site published by `actions/deploy-pages`, which this one is. The
-deploy run's `headSha` is the commit its artifact was built from.)
+newest *successful* deploy run's `headSha` is the commit Pages is serving — `--status
+success` is load-bearing, since the newest run of all may have failed or still be going.)
 
 Pick the grep target from something the period actually moved — a corpus size, a scoreboard
 figure — not from boilerplate that was on the page before the deploy. A count of `1` against
