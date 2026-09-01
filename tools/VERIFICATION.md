@@ -1174,7 +1174,7 @@ Per series, like for like, Writing was flat or up everywhere (intro 7.5 → 7.7,
 5.7 → 5.7, python.myst 5.9 → 7.0, advanced 7.3 → 7.4, dp 7.0 → 7.0) where the published
 columns had it falling by 1.6 to 2.7 points. The sign of the headline was the coverage.
 
-## Re-measure at checker `a0a2fd049290` (2026-09-01)
+## Re-measure at checker `6b5150d246fa` (2026-09-01)
 
 The scan-side bundle ([#24](https://github.com/QuantEcon/compliance-lecture-style/issues/24):
 `git_snapshot` stops on an unresolved clone, `--period`/`--append-history` required, per-period

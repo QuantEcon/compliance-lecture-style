@@ -542,9 +542,17 @@ def main():
         # Beside the history it explains, not in ``--out``: see
         # ``write_snapshot_history``. Every documented scan invocation passes
         # ``--append-history``, so this needs no flag of its own.
-        sh = write_snapshot_history(os.path.dirname(path) or ".", args.period,
-                                    pins, checker_digest())
-        print(f"recorded {args.period} corpus pins in {sh}", file=sys.stderr)
+        # An --unpinned scan has no pins to record, and must not touch the file
+        # either: write_snapshot_history replaces the period's rows, so calling
+        # it here would delete a recorded period's pins under a candidate's
+        # label — the one loss this record exists to prevent.
+        if UNPINNED:
+            print(f"--unpinned: no pins or blob table recorded for {args.period}; "
+                  f"snapshot_history.csv left untouched", file=sys.stderr)
+        else:
+            sh = write_snapshot_history(os.path.dirname(path) or ".", args.period,
+                                        pins, checker_digest())
+            print(f"recorded {args.period} corpus pins in {sh}", file=sys.stderr)
 
         # --- and the blob of every lecture at that pin ---------------------
         # ``lecture_blobs.csv`` (below, in --out) is the current period's; it is

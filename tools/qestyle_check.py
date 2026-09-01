@@ -491,16 +491,21 @@ def check_blob_tables(ck, data):
     newest = max(pins)
     cur = os.path.join(data, "lecture_blobs.csv")
     new = os.path.join(data, "blobs", f"{newest}.csv")
+    verdict = "not compared with lecture_blobs.csv"
     if os.path.exists(cur) and os.path.exists(new):
         with open(cur, "rb") as a, open(new, "rb") as b:
-            if a.read() != b.read():
-                ck.fail("blob-tables", f"{new} is not byte-identical to {cur} — the "
-                                       f"newest table and the current one were written "
-                                       f"by different scans")
+            same = a.read() == b.read()
+        if same:
+            verdict = "matches lecture_blobs.csv"
+        else:
+            verdict = "does NOT match lecture_blobs.csv"
+            ck.fail("blob-tables", f"{new} is not byte-identical to {cur} — the "
+                                   f"newest table and the current one were written "
+                                   f"by different scans")
     elif not os.path.exists(cur):
         ck.fail("blob-tables", f"{cur}: absent")
     ck.note(f"{checked} lecture blobs checked across {len(pins)} period"
-            f"{'' if len(pins) == 1 else 's'}; {newest} matches lecture_blobs.csv")
+            f"{'' if len(pins) == 1 else 's'}; {newest} {verdict}")
 
 
 def check_reach_history(ck, data):
