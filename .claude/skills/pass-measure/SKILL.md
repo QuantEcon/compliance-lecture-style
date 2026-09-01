@@ -174,8 +174,12 @@ current period alone; this file is the cross-period record, and it is what
 
 Both writes live inside the `--append-history` block, so **a scan run without the flag
 records no pins for the period at all** — it measures, and leaves nothing anyone can
-re-measure against. Always pass it. Both are idempotent: they replace the rows for `$P`
-rather than adding a second set, so re-running inside a period rewrites it.
+re-measure against — and leaves the previous run's reach rows in place under this period's
+label. Always pass it; the gate fails when the newest period's `rule_reach_history.csv` rows
+are not what `rule_reach.csv` says now
+([#21](https://github.com/QuantEcon/compliance-lecture-style/issues/21)). Both are
+idempotent: they replace the rows for `$P` rather than adding a second set, so re-running
+inside a period rewrites it.
 
 **`--append-history` only re-measures *this* period.** If you changed a detector, the
 previous period's rows in `rule_reach_history.csv` were produced by the old code, so the

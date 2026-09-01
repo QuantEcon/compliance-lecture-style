@@ -205,11 +205,14 @@ detector fix then reads as a corpus improvement. Re-measuring the previous snaps
 current code (§ Getting the corpus, and [`pass-publish`](.claude/skills/pass-publish/SKILL.md)
 Step 1) is what fixes that; until it has run, do not quote the trend.
 
-> **`--append-history` is not optional in practice.** Both cross-period files are written
-> from inside its block, so a scan run without it measures the period and records no pins
-> for it — which is the gap that produced
-> [#13](https://github.com/QuantEcon/compliance-lecture-style/issues/13). All four scan
-> invocations in this file and in the skills pass it; keep it that way.
+> **`--append-history` is not optional in practice, and the gate now says so.** Both
+> cross-period files are written from inside its block, so a scan run without it measures
+> the period and records no pins for it — the gap that produced
+> [#13](https://github.com/QuantEcon/compliance-lecture-style/issues/13) — and leaves the
+> previous run's reach rows sitting under this period's label
+> ([#21](https://github.com/QuantEcon/compliance-lecture-style/issues/21)). `qestyle_check.py`
+> fails when the newest period's history rows are not what `rule_reach.csv` says now. All
+> four scan invocations in this file and in the skills pass it; keep it that way.
 
 > The lecture count changes between periods — `history.csv` records 300 for 2026-05 and
 > 348 for 2026-08. Never bring a count across from the previous period or write one from
@@ -451,6 +454,7 @@ command, and the no-closing-keyword rule for the PR body.
 | **Conventions** | Legacy `W#`/`M#` or `qe-*-A#` rule IDs; a proposed rule cited without its **(proposed)** tag; a `# Style Audit —` title prefix; a `Spec version` line; two-pass or "carry-forward" narrative. |
 | **Snapshot** | Reports whose pinned snapshot does not match `snapshot.json`. |
 | **Score history** | A `history.csv` row without its `reviewed` count, or with one outside `[0, lectures]`; a period whose series `reviewed`/`lectures` do not sum to its TOTAL; a row with no twin in `history_mechanical.csv` (or a twin with no row); a `reviewed=0` row that differs from its twin; and the newest period's rows not being what `scores.csv` / `scores_mechanical.csv` summarise to *now*, or `reviewed` not matching the overlays actually folded in — the score half of [#21](https://github.com/QuantEcon/compliance-lecture-style/issues/21). |
+| **Reach history** | The newest period's rows in `rule_reach_history.csv` not being what `rule_reach.csv` and `snapshot.json` say *now*: a rule in one file and not the other, a `lectures_affected` / `total_occurrences` pair that differs, a `corpus_size` that is not `n_lectures`, or a `share_pct` that is not `round(100 × lectures_affected / corpus_size, 1)`. This is the stale-row shape of [#21](https://github.com/QuantEcon/compliance-lecture-style/issues/21): a scan run without `--append-history` leaves the previous run's rows *present* under this period's label, and every reader of the history was happy with them. |
 | **Corpus pins** | A period carrying numbers that nothing pins a corpus for, or a `snapshot_history.csv` row that could not reproduce one: a `basis` outside `pinned`/`recovered`, a commit that is not 40 hex, a `committed` with no UTC offset, per-series lecture counts that do not sum to that period's `history.csv` TOTAL, or a `checker` that is not the digest of `qestyle_scan.py` + `qestyle_lex.py` + `qestyle_rules.py` in this tree — that last one goes red on *every* recorded period the moment a scanner file changes, and stays red until each has been re-measured. Missing file is a failure, not a note. |
 | **Line-width claims** | The figures behind the `qe-fig-008` rule-scope question, in `appendix.md` and in `contributions/issues/07-…`, held to `fig_line_widths.csv`. `qe-fig-008` only asks whether a width is set, so the spread of values is separate evidence — and it moves whenever the check's exemptions move. A first hand-typed pass had five of these numbers wrong and this check caught all five. |
 | **Narrative claims** | A hand-written figure the data has since moved: the `intro.md` trend row (`A% → B%`), any counts table whose header names *Lectures* and *Occurrences*, and the trend sentence's own tallies (*N rules measurable in both snapshots*, *N improved*, *N held level*, *N got worse*). The report↔CSV check does not reach any of these, and a rule fix moves reach without touching the prose quoting it — which happened twice in the 2026-08 pass before the sentence tallies were covered. |
