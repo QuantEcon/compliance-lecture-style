@@ -191,8 +191,14 @@ per-lecture per-rule counts to `violations.csv`, corpus and per-series reach to
 spread of explicit `plot()` line widths to `fig_line_widths.csv`, one blob SHA per
 lecture to `lecture_blobs.csv` (the provenance side of the review queue — see Step 3),
 and appends this pass to `rule_reach_history.csv` — plus this period's pins, one row per
-series, to `lectures/data/snapshot_history.csv` beside it: commit, full committer instant,
-lecture count, and the digest of the code that measured them. `--evidence` dumps
+series, to `lectures/data/snapshot_history.csv` beside it (commit, full committer instant,
+lecture count, and the digest of the code that measured them) and the same blob table filed
+by period as `lectures/data/blobs/YYYY-MM.csv`, so churn between any two periods is a
+two-file diff rather than a reconstruction. `--period` and `--append-history` are
+**required** — the scan refuses to run without them — and a series whose checkout cannot be
+resolved to a commit **stops the scan** rather than writing an empty pin; `--unpinned` is the
+one way past that, for measuring a directory that is deliberately not a checkout (a
+candidate extracted with `git archive`), and writes no pin and no blob table. `--evidence` dumps
 per-lecture JSON (counts, line numbers, sample matches) for the review layer to read;
 keep it under
 `.corpus/` for the same permission reason as the corpus itself.
@@ -267,7 +273,8 @@ records a judgment but not the text it judged, so the only queue anyone can comp
 "lectures with no overlay at all" — and every corpus refresh re-reviews the whole corpus,
 348 lectures at ~5 agent-minutes each, about 30 agent-hours. With it the queue is
 "missing **or stale**", and review cost scales with corpus *churn* rather than corpus
-*size*. Measured over 2026-05 → 2026-08: 186 of the 348 lectures were byte-identical, 114 had
+*size*. Measured over 2026-05 → 2026-08 — now a diff of `blobs/2026-05.csv` against
+`blobs/2026-08.csv` — 186 of the 348 lectures were byte-identical, 114 had
 been edited and 48 were new, so the queue would have been 162 of 348 — about 13.5 agent-hours of
 review against 29. A 53 % saving, and it scales with cadence: three months touches half the
 corpus, a month far less, so the first pass after a long gap should be budgeted as close to a
@@ -455,6 +462,7 @@ command, and the no-closing-keyword rule for the PR body.
 | **Snapshot** | Reports whose pinned snapshot does not match `snapshot.json`. |
 | **Score history** | A `history.csv` row without its `reviewed` count, or with one outside `[0, lectures]`; a period whose series `reviewed`/`lectures` do not sum to its TOTAL; a row with no twin in `history_mechanical.csv` (or a twin with no row); a `reviewed=0` row that differs from its twin; and the newest period's rows not being what `scores.csv` / `scores_mechanical.csv` summarise to *now*, or `reviewed` not matching the overlays actually folded in — the score half of [#21](https://github.com/QuantEcon/compliance-lecture-style/issues/21). |
 | **Reach history** | The newest period's rows in `rule_reach_history.csv` not being what `rule_reach.csv` and `snapshot.json` say *now*: a rule in one file and not the other, a `lectures_affected` / `total_occurrences` pair that differs, a `corpus_size` that is not `n_lectures`, or a `share_pct` that is not `round(100 × lectures_affected / corpus_size, 1)`. This is the stale-row shape of [#21](https://github.com/QuantEcon/compliance-lecture-style/issues/21): a scan run without `--append-history` leaves the previous run's rows *present* under this period's label, and every reader of the history was happy with them. |
+| **Blob tables** | A period in `snapshot_history.csv` with no `blobs/<period>.csv`; a table whose per-series row counts are not the pins' lecture counts, or with a blob that is not 40 hex; or the newest period's table not being byte-identical to `lecture_blobs.csv` — written by a different scan than the one it claims. |
 | **Corpus pins** | A period carrying numbers that nothing pins a corpus for, or a `snapshot_history.csv` row that could not reproduce one: a `basis` outside `pinned`/`recovered`, a commit that is not 40 hex, a `committed` with no UTC offset, per-series lecture counts that do not sum to that period's `history.csv` TOTAL, or a `checker` that is not the digest of `qestyle_scan.py` + `qestyle_lex.py` + `qestyle_rules.py` in this tree — that last one goes red on *every* recorded period the moment a scanner file changes, and stays red until each has been re-measured. Missing file is a failure, not a note. |
 | **Line-width claims** | The figures behind the `qe-fig-008` rule-scope question, in `appendix.md` and in `contributions/issues/07-…`, held to `fig_line_widths.csv`. `qe-fig-008` only asks whether a width is set, so the spread of values is separate evidence — and it moves whenever the check's exemptions move. A first hand-typed pass had five of these numbers wrong and this check caught all five. |
 | **Narrative claims** | A hand-written figure the data has since moved: the `intro.md` trend row (`A% → B%`), any counts table whose header names *Lectures* and *Occurrences*, and the trend sentence's own tallies (*N rules measurable in both snapshots*, *N improved*, *N held level*, *N got worse*). The report↔CSV check does not reach any of these, and a rule fix moves reach without touching the prose quoting it — which happened twice in the 2026-08 pass before the sentence tallies were covered. |
@@ -563,6 +571,8 @@ compliance-lecture-style/
     │   ├── series_summary.csv    per-series averages + priority counts
     │   ├── history.csv           per-period series scores (2026-05, 2026-08, …)
     │   ├── rule_reach_history.csv per-period rule reach (feeds the trend chart)
+    │   ├── blobs/YYYY-MM.csv     lecture_blobs.csv filed by period — churn between two
+    │   │                         periods is a diff of two of these
     │   └── snapshot_history.csv  every period's pinned commits, one row per series
     │                             per period — the cross-period pin record, and the
     │                             only thing that makes an earlier period

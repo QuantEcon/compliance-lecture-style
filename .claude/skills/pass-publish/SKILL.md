@@ -179,10 +179,10 @@ Then measure it — **into a throwaway `--out`**:
 `--out /tmp/d05` is load-bearing. `--out lectures/data` would overwrite the *current*
 period's `violations.csv`, `rule_reach.csv` and `snapshot.json` with the old snapshot's
 numbers, and the gate would then fail every per-lecture report against them. Only
-`--append-history` is meant to touch the repo — and it now writes **two** files: this
-period's reach into the path you give it, and the period's pins into
-`snapshot_history.csv` in the same directory. Both replace that period's rows rather than
-adding a second set, so a re-measure rewrites the period in both.
+`--append-history` is meant to touch the repo — and it writes **three** things beside the
+path you give it: this period's reach, the period's pins into `snapshot_history.csv`, and
+the period's blob table as `blobs/2026-05.csv`. All three replace that period's rows (or
+file) rather than adding a second set, so a re-measure rewrites the period in each.
 
 That second file is written from what the scan actually read, so pointing it at the wrong
 worktrees overwrites good pins with bad ones under the same period label. A re-measure
@@ -196,9 +196,10 @@ wrong when it did not. So verify first, then read the diff:
 git diff lectures/data/snapshot_history.csv
 ```
 
-With a correct reconstruction nothing but `checker` moves. A moved `basis`, `commit`,
-`committed` or `lectures` means you measured a different tree than the record names — stop,
-and re-check the pins before committing anything.
+With a correct reconstruction nothing but `checker` moves, `rule_reach_history.csv` shows
+no value change for the period, and `blobs/2026-05.csv` is unchanged if it existed. A moved
+`basis`, `commit`, `committed` or `lectures` means you measured a different tree than the
+record names — stop, and re-check the pins before committing anything.
 
 The gate keeps one net under this: a period's pinned `lectures` must sum to that period's
 `history.csv` TOTAL. Scanning the 2026-08 corpus under `--period 2026-05` fails with

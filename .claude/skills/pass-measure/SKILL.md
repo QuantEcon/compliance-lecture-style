@@ -156,6 +156,13 @@ review queue (§9); a lecture whose SHA could not be read is omitted rather than
 blank — an empty blob would compare equal to an unstamped overlay and read as fresh — so a
 file short of the lecture count means the scan warned about something.
 
+Three things the scan refuses, all fail-closed: `--period` and `--append-history` are
+**required** (a scan without them measured a period and recorded nothing anyone could
+re-measure against); a series whose checkout cannot be resolved to a commit **stops the
+scan** instead of writing an empty pin into every report header; and the only way past the
+second is `--unpinned`, for a directory that is deliberately not a checkout — a candidate
+extracted with `git archive` — which measures and writes no pin and no blob table.
+
 `--evidence` dumps per-lecture JSON (counts, line numbers, sample matches) for reviewers to
 read. Keep it under `.corpus/` for the same permission reason as the corpus itself —
 `UPDATE.md` still writes `/tmp/evidence`, which is fine only when someone is present to
@@ -171,6 +178,9 @@ count, and a digest of `qestyle_scan.py` + `qestyle_lex.py` + `qestyle_rules.py`
 the code that measured the period. `snapshot.json` is overwritten every pass and holds the
 current period alone; this file is the cross-period record, and it is what
 [`pass-publish`](../pass-publish/SKILL.md) Step 1 reads to reconstruct a previous snapshot.
+Beside it, `lectures/data/blobs/$P.csv` — `lecture_blobs.csv` filed by period, so the churn
+between any two periods is a diff of two of these and never a reconstruction; the gate holds
+the newest one byte-identical to `lecture_blobs.csv` and every one to its period's pins.
 
 Both writes live inside the `--append-history` block, so **a scan run without the flag
 records no pins for the period at all** — it measures, and leaves nothing anyone can

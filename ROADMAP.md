@@ -209,7 +209,9 @@ no overlay at all" and every corpus refresh re-reviewed the entire corpus. All 3
 are now stamped.
 
 The saving has since been **measured** rather than estimated, by diffing the two snapshots'
-blob tables. Over 2026-05 → 2026-08 — a three-month interval — **186** of the 348 lectures were
+blob tables — now kept per period as `lectures/data/blobs/<period>.csv`
+([#17](https://github.com/QuantEcon/compliance-lecture-style/issues/17)), so the figures
+below are a two-file diff anyone can re-run, and were re-derived from those files exactly. Over 2026-05 → 2026-08 — a three-month interval — **186** of the 348 lectures were
 byte-identical, **114** had been edited and **48** were new, so a churn-scaled queue would have
 been **162 of 348 (47 %)**: about **13.5 agent-hours rather than 29**, a 53 % saving. Real, but
 only half of it. An earlier estimate here said "single-digit agent-hours", which the measurement
