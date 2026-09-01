@@ -1014,7 +1014,9 @@ corpus, not transcribed.
 ```bash
 python3 tools/qestyle_scan.py --corpus /tmp/corpus2605 --out /tmp/out2605 \
     --rules .corpus/action-style-guide/style_checker/rules \
-    --period 2026-05 --append-history /tmp/out2605/rule_reach_history.csv
+    --period 2026-05 --append-history /tmp/out2605/rule_reach_history.csv --unpinned
+# --unpinned because an archive extraction is not a checkout: without it the scan
+# stops rather than write an empty pin, which is what a *pass* should do.
 # then compare /tmp/out2605/rule_reach_history.csv against the 2026-05 rows of
 # lectures/data/rule_reach_history.csv, on lectures_affected and total_occurrences
 ```
@@ -1171,6 +1173,25 @@ The result, corpus TOTAL:
 Per series, like for like, Writing was flat or up everywhere (intro 7.5 → 7.7, programming
 5.7 → 5.7, python.myst 5.9 → 7.0, advanced 7.3 → 7.4, dp 7.0 → 7.0) where the published
 columns had it falling by 1.6 to 2.7 points. The sign of the headline was the coverage.
+
+## Re-measure at checker `6b5150d246fa` (2026-09-01)
+
+The scan-side bundle ([#24](https://github.com/QuantEcon/compliance-lecture-style/issues/24):
+`git_snapshot` stops on an unresolved clone, `--period`/`--append-history` required, per-period
+blob tables, deterministic tie order in the reach tables) moved the checker digest from
+`aef064f3b260`, so both periods were re-measured with it:
+
+- **2026-08**, from `.corpus/` at the pins: `violations.csv`, `lecture_blobs.csv`,
+  `snapshot.json` and every per-lecture report byte-identical; `rule_reach.csv` and the
+  2026-08 rows of `rule_reach_history.csv` value-identical (tied rows reordered, once, into
+  the stable order the writer now uses). `blobs/2026-08.csv` equals `lecture_blobs.csv`.
+- **2026-05**, from `snapshot_history.csv`'s pins as worktrees under `.corpus/.prev-2026-05/`
+  (sparse: `lectures/*.md` and `_static/*.bib`; `lecture-python-programming` has no `.bib` at
+  either pin): the 2026-05 rows of `rule_reach_history.csv` value-identical, **35 of 35 on
+  both columns**; `snapshot_history.csv` moved on `checker` only, `basis` stayed `recovered`.
+  `blobs/2026-05.csv` written for the first time — 300 rows, per-series counts equal to the
+  pins — and the churn it gives against `blobs/2026-08.csv` is exactly the record's:
+  186 unchanged, 114 edited, 48 new, 0 removed.
 
 ## Reproducing this
 

@@ -153,11 +153,11 @@ reach. Rules tagged **(proposed)** are documented in the style guide but not yet
 ### 33. `qe-math-007` — Use automatic equation numbering, not manual tags (2 / 348 lectures, 2 occurrences)
 - `lecture-dp` 1 / 52 · `lecture-python.myst` 1 / 145
 
-### 34. `qe-admon-002` — Use dropdown class for solutions (1 / 348 lectures, 1 occurrences)
-- `lecture-python-intro` 1 / 56
-
-### 35. `qe-admon-003` — Use tick count management for nested directives (1 / 348 lectures, 2 occurrences)
+### 34. `qe-admon-003` — Use tick count management for nested directives (1 / 348 lectures, 2 occurrences)
 - `lecture-python-programming` 1 / 27
+
+### 35. `qe-admon-002` — Use dropdown class for solutions (1 / 348 lectures, 1 occurrences)
+- `lecture-python-intro` 1 / 56
 <!-- /qe:systemic -->
 
 ---

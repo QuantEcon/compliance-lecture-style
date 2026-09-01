@@ -131,7 +131,7 @@ Enforce everywhere. `tools/qestyle_check.py` asserts all of these; run it before
 ## Layout
 
 - `tools/` — the pipeline: `qestyle_lex` (MyST lexer) · `qestyle_rules` (one function per
-  checkable rule) · `qestyle_scan` (evidence + `lecture_blobs.csv`) · `qestyle_draft` (report
+  checkable rule) · `qestyle_scan` (evidence + `lecture_blobs.csv` + `blobs/<period>.csv`) · `qestyle_draft` (report
   drafts) · `qestyle_score` (scores) · `qestyle_report` (aggregate tables) · `qestyle_check`
   (gate) · `qestyle_toc` · `qestyle_status` (coverage, staleness, review queue) ·
   `qestyle_backfill_provenance` · `VERIFICATION.md` (what each check was sampled against —

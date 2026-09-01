@@ -147,10 +147,24 @@ def git_snapshot(corpus, series):
         committed = subprocess.run(
             ["git", "-C", root, "log", "-1", "--format=%cI"],
             capture_output=True, text=True, check=True).stdout.strip()
-    except Exception:
-        return {"commit": "", "date": "", "committed": "", "lectures": 0}
+    except (OSError, subprocess.CalledProcessError) as exc:
+        # An unresolved clone used to come back as an empty commit, which every
+        # report header then quoted and the gate skipped over (issue #15). A
+        # pass stops here instead. ``--unpinned`` is the one way past: a
+        # directory that is not a checkout (a ``git archive`` extraction, used
+        # when testing a candidate pin) is measured with no pin written at all.
+        if UNPINNED:
+            return {"commit": "", "date": "", "committed": "", "lectures": 0}
+        why = getattr(exc, "stderr", "") or str(exc)
+        sys.exit(f"{root}: cannot resolve HEAD to a commit — {' '.join(why.split())}. "
+                 f"Every report header quotes this pin, so the scan stops rather than "
+                 f"writing an empty one; pass --unpinned to measure a directory that is "
+                 f"deliberately not a checkout.")
     return {"commit": sha, "date": date, "committed": committed,
             "lectures": len(git_blobs(corpus, series, sha))}
+
+
+UNPINNED = False
 
 
 def git_blobs(corpus, series, commit):
@@ -367,6 +381,29 @@ def write_snapshot_history(directory, period, pins, checker):
     return path
 
 
+BLOB_TABLES = "blobs"
+
+
+def write_blob_table(directory, period, records, blobs):
+    """``<directory>/blobs/<period>.csv`` — ``series,lecture,blob`` at that period's pins.
+
+    Byte-identical in content to the ``lecture_blobs.csv`` the same scan writes into
+    ``--out``: one row per scanned lecture, sorted, a lecture with no readable SHA
+    left out rather than written blank (see the provenance section of ``main``).
+    Rewritten whole for the period, never appended to.
+    """
+    os.makedirs(os.path.join(directory, BLOB_TABLES), exist_ok=True)
+    path = os.path.join(directory, BLOB_TABLES, f"{period}.csv")
+    with open(path, "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["series", "lecture", "blob"])
+        for r in sorted(records, key=lambda r: (r["series"], r["lecture"])):
+            sha = blobs.get(r["series"], {}).get(r["lecture"], "")
+            if sha:
+                w.writerow([r["series"], r["lecture"], sha])
+    return path
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--corpus", required=True,
@@ -376,11 +413,22 @@ def main():
                     help="optional directory for per-lecture evidence JSON")
     ap.add_argument("--rules", default="",
                     help="action-style-guide style_checker/rules dir, for rule titles")
-    ap.add_argument("--period", default="",
+    # Required, not optional: a scan run without them measured the period and
+    # recorded no pins for it, and left the previous run's reach rows sitting
+    # under the period's label (issues #13, #21). Every documented invocation
+    # passed both already; the gate fails on their absence; this makes the
+    # scan itself refuse.
+    ap.add_argument("--period", required=True,
                     help="label for this pass, e.g. 2026-08")
-    ap.add_argument("--append-history", default="", metavar="PATH",
-                    help="append this pass's rule reach to a cross-period CSV")
+    ap.add_argument("--append-history", required=True, metavar="PATH",
+                    help="the cross-period rule-reach CSV; the period's pins and blob "
+                         "table are written beside it")
+    ap.add_argument("--unpinned", action="store_true",
+                    help="measure directories that are not git checkouts (a candidate "
+                         "extracted with `git archive`); no pin or blob table is written")
     args = ap.parse_args()
+    global UNPINNED
+    UNPINNED = args.unpinned
 
     os.makedirs(args.out, exist_ok=True)
     records, snapshot, blobs, pins = [], {}, {}, {}
@@ -418,7 +466,7 @@ def main():
         w = csv.writer(fh)
         w.writerow(["rule", "category", "lectures_affected", "total_occurrences", "proposed"])
         rule_cat = {ru: c for c, rs in CATEGORY.items() for ru in rs}
-        for rule in sorted(reach, key=lambda k: -reach[k]):
+        for rule in sorted(reach, key=lambda k: (-reach[k], -total[k], k)):
             w.writerow([rule, rule_cat.get(rule, ""), reach[rule], total[rule],
                         int(rule in PROPOSED)])
 
@@ -483,7 +531,7 @@ def main():
             for r in rows:
                 w.writerow({k: r.get(k, "") for k in fields})
             n = len(records)
-            for rule in sorted(reach, key=lambda k: -reach[k]):
+            for rule in sorted(reach, key=lambda k: (-reach[k], -total[k], k)):
                 w.writerow({"period": args.period, "corpus_size": n, "rule": rule,
                             "lectures_affected": reach[rule],
                             "total_occurrences": total[rule],
@@ -494,9 +542,30 @@ def main():
         # Beside the history it explains, not in ``--out``: see
         # ``write_snapshot_history``. Every documented scan invocation passes
         # ``--append-history``, so this needs no flag of its own.
-        sh = write_snapshot_history(os.path.dirname(path) or ".", args.period,
-                                    pins, checker_digest())
-        print(f"recorded {args.period} corpus pins in {sh}", file=sys.stderr)
+        # An --unpinned scan has no pins to record, and must not touch the file
+        # either: write_snapshot_history replaces the period's rows, so calling
+        # it here would delete a recorded period's pins under a candidate's
+        # label — the one loss this record exists to prevent.
+        if UNPINNED:
+            print(f"--unpinned: no pins or blob table recorded for {args.period}; "
+                  f"snapshot_history.csv left untouched", file=sys.stderr)
+        else:
+            sh = write_snapshot_history(os.path.dirname(path) or ".", args.period,
+                                        pins, checker_digest())
+            print(f"recorded {args.period} corpus pins in {sh}", file=sys.stderr)
+
+        # --- and the blob of every lecture at that pin ---------------------
+        # ``lecture_blobs.csv`` (below, in --out) is the current period's; it is
+        # overwritten every pass, so churn between two periods used to mean five
+        # worktrees and a rescan to rebuild the earlier side (issue #17). The
+        # same rows, filed by period beside the pins, make it a two-file diff
+        # and let "this overlay was fresh at period N" be checked after the
+        # fact. Nothing is written for an --unpinned scan: rows with no pin
+        # behind them would be a table nothing could reproduce.
+        if not UNPINNED:
+            bt = write_blob_table(os.path.dirname(path) or ".", args.period,
+                                  records, blobs)
+            print(f"recorded {args.period} lecture blobs in {bt}", file=sys.stderr)
 
     # --- lecture provenance ------------------------------------------------
     # One row per scanned lecture, naming the blob of the exact text this pass

@@ -140,7 +140,8 @@ the whole corpus in seconds, the judgment layer costs about five agent-minutes a
 `lectures/data/lecture_blobs.csv` — one git blob SHA per lecture at the pinned
 snapshot — against each overlay's `source.blob`, so the queue is *fresh / stale /
 missing* rather than merely *reviewed / not reviewed*, and review cost tracks corpus
-churn instead of corpus size.
+churn instead of corpus size. The same table is filed per period under
+`lectures/data/blobs/`, so the churn between any two periods is a diff of two files.
 
 [`UPDATE.md`](UPDATE.md) is the reference runbook; the methodology is
 [`lectures/spec.md`](lectures/spec.md) §8–§10.

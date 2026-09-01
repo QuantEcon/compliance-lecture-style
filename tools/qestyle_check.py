@@ -442,6 +442,70 @@ def check_snapshot_history(ck, data):
 
 
 SCORE_COLS = HISTORY_FIELDS[2:]            # lectures, the categories, overall, priorities
+BLOB_RE = re.compile(r"^[0-9a-f]{40}$")
+
+
+def check_blob_tables(ck, data):
+    """Every recorded period has its blob table, and the newest is the current one.
+
+    `lecture_blobs.csv` is overwritten each pass; `blobs/<period>.csv` is the same
+    table filed by period beside the pins (issue #17). A period with pins and no
+    table is the state being eliminated, and a table that disagrees with the
+    pins' lecture counts, or a newest table that is not `lecture_blobs.csv`, was
+    written by a different scan than the one it claims.
+    """
+    pins_path = os.path.join(data, "snapshot_history.csv")
+    if not os.path.exists(pins_path):
+        return                              # check_snapshot_history already failed
+    with open(pins_path, newline="", encoding="utf-8") as fh:
+        pins = {}
+        for r in csv.DictReader(fh):
+            pins.setdefault(r["period"], {})[r["series"]] = r.get("lectures", "")
+    if not pins:
+        return
+    checked = 0
+    for period in sorted(pins):
+        path = os.path.join(data, "blobs", f"{period}.csv")
+        if not os.path.exists(path):
+            ck.fail("blob-tables", f"{path}: absent — {period} has pins but no lecture "
+                                   f"blobs, so churn against it cannot be looked up")
+            continue
+        with open(path, newline="", encoding="utf-8") as fh:
+            header = next(csv.reader(fh), [])
+            fh.seek(0)
+            rows = list(csv.DictReader(fh))
+        if header != ["series", "lecture", "blob"]:
+            ck.fail("blob-tables", f"{path}: header is {','.join(header)!r}")
+            continue
+        per = {}
+        for i, r in enumerate(rows, start=2):
+            per[r["series"]] = per.get(r["series"], 0) + 1
+            if not BLOB_RE.match(r.get("blob") or ""):
+                ck.fail("blob-tables", f"{path}:{i}: blob {r.get('blob')!r} is not 40 hex")
+        for series, n in sorted(pins[period].items()):
+            if str(per.get(series, 0)) != n:
+                ck.fail("blob-tables",
+                        f"{path}: {series} has {per.get(series, 0)} rows, the pin says "
+                        f"{n} lectures")
+        checked += len(rows)
+    newest = max(pins)
+    cur = os.path.join(data, "lecture_blobs.csv")
+    new = os.path.join(data, "blobs", f"{newest}.csv")
+    verdict = "not compared with lecture_blobs.csv"
+    if os.path.exists(cur) and os.path.exists(new):
+        with open(cur, "rb") as a, open(new, "rb") as b:
+            same = a.read() == b.read()
+        if same:
+            verdict = "matches lecture_blobs.csv"
+        else:
+            verdict = "does NOT match lecture_blobs.csv"
+            ck.fail("blob-tables", f"{new} is not byte-identical to {cur} — the "
+                                   f"newest table and the current one were written "
+                                   f"by different scans")
+    elif not os.path.exists(cur):
+        ck.fail("blob-tables", f"{cur}: absent")
+    ck.note(f"{checked} lecture blobs checked across {len(pins)} period"
+            f"{'' if len(pins) == 1 else 's'}; {newest} {verdict}")
 
 
 def check_reach_history(ck, data):
@@ -937,6 +1001,7 @@ def main():
     check_snapshot_history(ck, args.data)
     check_score_history(ck, args.data, args.reviews)
     check_reach_history(ck, args.data)
+    check_blob_tables(ck, args.data)
     check_narrative(ck, args.root, args.data)
     check_line_width_claims(ck, args.root, args.data)
     return ck.report()
