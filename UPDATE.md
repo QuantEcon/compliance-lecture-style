@@ -413,8 +413,9 @@ Green means the artifact uploaded, not that a reader's page has moved — verify
 <https://quantecon.github.io/compliance-lecture-style/> with a grep for something this
 period actually changed. Once it has, tag the published tree `pass/YYYY-MM`: the pins and
 the `checker` digest say what was measured and by which code, and the tag is the O(1) name
-for the tree — `tools/`, `reviews/`, `spec.md` — that produced the period. It backfills
-nothing; no 2026-05-era tree contains `tools/` at all.
+for the tree — `tools/`, `reviews/`, `spec.md` — that produced the period. It does not
+backfill 2026-05 — no 2026-05-era tree contains `tools/` at all; `pass/2026-08` was applied
+after the fact to a verified tree, and its annotation says so.
 [`pass-publish`](.claude/skills/pass-publish/SKILL.md) is the full procedure — the tag
 command, and the no-closing-keyword rule for the PR body.
 
