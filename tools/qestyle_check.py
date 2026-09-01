@@ -521,14 +521,17 @@ def check_score_history(ck, data, reviews):
     # The newest period must be what the current-period files summarise to now.
     newest = max(by_period) if by_period else None
     if newest:
-        for label, name, table, extra in (
-                ("history.csv", "scores.csv", H, reviewed_counts(data, reviews)),
-                (MECHANICAL_HISTORY, MECHANICAL_SCORES, M, None)):
+        for label, name, table, needs_reviewed in (
+                ("history.csv", "scores.csv", H, True),
+                (MECHANICAL_HISTORY, MECHANICAL_SCORES, M, False)):
             src = os.path.join(data, name)
             if not os.path.exists(src):
                 ck.fail("score-history", f"{src}: absent, so the {newest} rows of {label} "
                                          f"cannot be held to it")
                 continue
+            # Only now: reviewed_counts() reads scores.csv, so computing it before
+            # the guard above would crash the gate on the very file it reports on.
+            extra = reviewed_counts(data, reviews) if needs_reviewed else None
             for rec in summarise(data, name):
                 row = table.get((newest, rec["series"]))
                 if row is None:

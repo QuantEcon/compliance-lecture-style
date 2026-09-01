@@ -738,12 +738,17 @@ def print_trend(st):
 
     print("  as published (history.csv) — revwd = lectures with a judgment overlay folded in")
     table(rows)
-    cov = {r.get("period"): (r.get("reviewed") or "", r.get("lectures") or "") for r in rows}
-    if len({k for k, _ in cov.values()}) > 1 or any(not k.isdigit() for k, _ in cov.values()):
+    # Comparable only when every period is fully reviewed, or none is — the same rule
+    # the front page's generated coverage block applies. Equal counts (100/110 and
+    # 100/145) or equal ratios (half of each) are still two partially-covered rows.
+    cov = [(r.get("reviewed") or "", r.get("lectures") or "") for r in rows]
+    legible = all(k.isdigit() and n.isdigit() for k, n in cov)
+    comparable = legible and (all(k == n for k, n in cov) or all(int(k) == 0 for k, _ in cov))
+    if not comparable:
         print()
-        note("! judgment coverage differs between periods, so the score columns above are "
-             "not a trend: a lecture assessed against more rules scores lower. Quote the "
-             "like-for-like table below, or rule reach.")
+        note("! judgment coverage differs between periods (or is unreadable), so the score "
+             "columns above are not a trend: a lecture assessed against more rules scores "
+             "lower. Quote the like-for-like table below, or rule reach.")
     mech = [r for r in st["mechanical"] if (r.get("series") or "") == "TOTAL"]
     print()
     if not mech:
