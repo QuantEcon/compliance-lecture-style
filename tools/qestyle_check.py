@@ -495,7 +495,8 @@ def check_reach_history(ck, data):
                     f"--append-history")
         elif size and round(reach / size * 100, 1) != share:
             ck.fail("reach-history",
-                    f"{newest}: {rule} share_pct {share} is not {reach}/{size}")
+                    f"{newest}: {rule} share_pct {share} is not round(100 × {reach} / "
+                    f"{size}, 1) = {round(reach / size * 100, 1)}")
     ck.note(f"{len(hist)} reach rows for {newest} held to rule_reach.csv and snapshot.json")
 
 
