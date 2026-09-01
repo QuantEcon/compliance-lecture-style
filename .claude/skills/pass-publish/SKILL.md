@@ -426,7 +426,11 @@ around it, back: `git show pass/2026-08:tools/qestyle_rules.py`, no archaeology.
 in this repository at `f609536` ("Rebuild the audit as a reproducible pipeline; refresh to
 the 2026-08 corpus"), so no 2026-05-era tree holds the pipeline at all — a tag there would
 name a tree that could not have produced that period's numbers, which is worse than no tag.
-Tagging starts with the first period published after this step existed; earlier periods are
+From the next period on, the tag is applied here, at publish. The one exception already made:
+`pass/2026-08` was applied **retrospectively** on 2026-09-01 to `add0dd4` — a tree verified to
+reproduce the period (gate green, every pin row at checker digest `aef064f3b260`) rather than
+the first one deployed, and its annotation says so
+([#20](https://github.com/QuantEcon/compliance-lecture-style/issues/20)). 2026-05 stays
 covered by `snapshot_history.csv` and by nothing else.
 
 ---
