@@ -13,14 +13,17 @@ Style audit of the **lecture-dp** series.
 <!-- /qe:series-meta -->
 
 <!-- qe:series-narrative -->
-**Writing is the floor under this series, and that is new.** At 4.7 it is the weakest of the
-seven categories measured here, and it sits at or below the ≤ 4 threshold in **30 of the 34
-HIGH lectures** — against Math's 14 and Figures' 2. Nineteen lectures are HIGH on Writing and
-nothing else. In the previous pass Math and Figures tied as the weakest at 6.4 and Writing
-scored 7.0; Math and Figures have barely moved since (6.6 and 6.4) while Writing fell to 4.7
-and the HIGH list grew from 15 to 34. That fall is not particular to this series — the corpus
-Writing mean went 6.6 → 4.6 over the same interval, and at 4.7 `lecture-dp` is marginally
-*above* it. Every one of the 34 is HIGH on a category floor, never on the overall — the
+**Writing is the floor under this series.** At 4.7 it is the weakest of the seven
+categories measured here, and it sits at or below the ≤ 4 threshold in **30 of the 34 HIGH
+lectures** — against Math's 14 and Figures' 2. Nineteen lectures are HIGH on Writing and
+nothing else. In 2026-05 Math and Figures tied as the weakest at 6.4 and Writing scored 7.0;
+the fall to 4.7, and the HIGH list growing from 15 to 34, is the judgment layer landing, not
+the lectures changing — the 2026-05 row folds in no review overlay, this one folds one into
+all 52 lectures, and a lecture assessed against more rules scores lower. Like for like, on
+the evidence layer alone (`history_mechanical.csv`), Writing here is 7.0 → 7.0, Math
+6.4 → 6.9, Figures 6.4 → 6.4 and the HIGH count 15 → 15. So the floor is new to what is
+*measured*, not a regression; at 4.7 `lecture-dp` sits marginally above the corpus Writing
+mean of 4.6 on the same basis. Every one of the 34 is HIGH on a category floor, never on the overall — the
 lowest overall in the series is 5.7. The series mean, 7.7, is exactly the corpus
 mean, but 65.4 % of its lectures are HIGH against 57 % corpus-wide — the second-largest share
 of any series, behind `lecture-python-programming`.

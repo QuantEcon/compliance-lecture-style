@@ -29,10 +29,13 @@ in the tutorial lectures — `getting_started` (17), `python_essentials` (14), `
 (13), `numpy` (12) — and every one of the 20 HIGH lectures carries it. Behind it are three
 cheaper mechanical rules, `qe-writing-008` (16 / 27, 43 occurrences), `qe-writing-001`
 (15 / 27, 29) and `qe-writing-004` (6 / 27, 14), plus a judgment backlog led by
-`qe-writing-005`, found in 23 of the 27 lectures. Since 2026-05 Writing has fallen from
-5.7 to 4.1 and HIGH from 5 to 20 over one added lecture, while the corpus fell 6.6 to 4.6;
-both history rows are re-measured with the current code ([spec](../spec.md)), so this
-series moved roughly with the corpus, from an already lower base.
+`qe-writing-005`, found in 23 of the 27 lectures. Since 2026-05 the published Writing
+figure has gone from 5.7 to 4.1 and HIGH from 5 to 20 over one added lecture — but that is
+the judgment layer, not the lectures: the 2026-05 row folds in no review overlay and this one
+folds one into all 27. Both rows are re-measured with the current code
+([spec](../spec.md)), so the evidence layer *is* comparable, and on that basis
+(`history_mechanical.csv`) Writing here is 5.7 → 5.7 and HIGH 5 → 5 — unchanged, from an
+already lower base than the corpus.
 
 Everything else here is the corpus's best. Math **9.0**, Code **8.4** and Figures **7.3**
 are each the highest of the five series; `qe-code-002` has zero violations in this series

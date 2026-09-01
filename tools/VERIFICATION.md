@@ -1139,6 +1139,39 @@ compares two measurements rather than two corpora. `tools/qestyle_status.py` pri
 digest beside each period's pins, and names any period in `history.csv` that has none.
 
 
+## The 2026-05 score row folds no judgment layer, and what that did to the trend
+
+`history.csv` now carries `reviewed` per row and `history_mechanical.csv` the evidence-layer
+twin ([#16](https://github.com/QuantEcon/compliance-lecture-style/issues/16)). The 2026-08
+rows were written by `qestyle_report.py --history 2026-08` from `scores.csv` and a
+`scores_mechanical.csv` drafted without `--reviews`. The 2026-05 rows predate both records
+and were backfilled once, by hand, on this basis:
+
+- **Every overlay in `reviews/` is stamped with a 2026-08 pin** — 348 of 348 carry a
+  `source.commit` equal to that series' 2026-08 commit in `snapshot_history.csv`; none
+  carries a 2026-05 commit.
+- **The 2026-05 TOTAL row never moved while the overlays landed.** Across every commit of
+  `history.csv` it took two values, both before any overlay existed and differing only by
+  detector fixes (`bf8e14e` → `e173e1f`: Figures 6.3 → 6.4, HIGH 104 → 102). The 2026-08
+  TOTAL row took 25, walking from `8.3 / 98 HIGH` to `7.7 / 197 HIGH` as overlays were folded
+  in. A row that folds no overlay is an evidence-layer row, so its `reviewed` is 0 and its
+  `history_mechanical.csv` twin is itself.
+- **The mechanical draft reproduces the published one exactly when the overlays are added
+  back.** Drafting the pinned 2026-08 corpus into a scratch root *with* `--reviews reviews`
+  and scoring it gives a `scores.csv` byte-identical to the committed one; the same command
+  without `--reviews` is what `scores_mechanical.csv` is. Measured 2026-09-01 at `d3a5956`.
+
+The result, corpus TOTAL:
+
+| basis | 2026-05 | 2026-08 | movement |
+|---|---|---|---|
+| published (`history.csv`, `reviewed` 0 → 348) | 8.2 · Writing 6.6 · HIGH 102 | 7.7 · Writing 4.6 · HIGH 197 | down |
+| evidence layer (`history_mechanical.csv`) | 8.2 · Writing 6.6 · HIGH 102 | 8.4 · Writing 7.1 · HIGH 85 | **up** |
+
+Per series, like for like, Writing was flat or up everywhere (intro 7.5 → 7.7, programming
+5.7 → 5.7, python.myst 5.9 → 7.0, advanced 7.3 → 7.4, dp 7.0 → 7.0) where the published
+columns had it falling by 1.6 to 2.7 points. The sign of the headline was the coverage.
+
 ## Reproducing this
 
 ```bash

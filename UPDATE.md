@@ -315,6 +315,11 @@ these two is checked by nothing. Verify those figures against
 
 ```bash
 .venv/bin/python tools/qestyle_score.py --root lectures --fix --csv lectures/data/scores.csv
+# The same reports drafted WITHOUT --reviews, into a throwaway root, scored beside them:
+# the evidence layer alone, which is the only score comparable across periods.
+MECH=.corpus/.mechanical; rm -rf $MECH; mkdir -p $MECH
+.venv/bin/python tools/qestyle_draft.py --corpus $CORPUS --out $MECH --date YYYY-MM-DD --rules $R
+.venv/bin/python tools/qestyle_score.py --root $MECH --fix --csv lectures/data/scores_mechanical.csv
 .venv/bin/python tools/qestyle_report.py --summarise --history YYYY-MM --splice
 ```
 
@@ -324,6 +329,18 @@ from its own score table, so a header can never contradict its categories.
 `lectures/intro.md`, `lectures/details.md`, `lectures/spec.md` and each series
 `index.md`. Run `qestyle_score.py` first: `--history` reads `scores.csv`, so the other
 order records the previous run's arithmetic under this period's label.
+
+`--history` writes **two** rows per series: the published one into `history.csv`, with a
+`reviewed` column saying how many of the series' lectures fold in a judgment overlay, and
+the like-for-like one into `history_mechanical.csv`, summarised from
+`scores_mechanical.csv`. The second file is not optional — `--history` exits if it is
+absent. A lecture assessed against more rules scores lower, so two published rows with
+different `reviewed` are not a trend: 2026-08 folds an overlay into every lecture and
+2026-05 into none, and the published corpus mean fell 8.2 → 7.7 while the evidence layer
+rose 8.2 → 8.4 over the same lectures
+([#16](https://github.com/QuantEcon/compliance-lecture-style/issues/16)). Quote the
+mechanical twin across periods, or rule reach; the front page's coverage block is generated
+from both files and says which applies.
 
 | Marker | What it generates |
 |--------|-------------------|
@@ -433,6 +450,7 @@ command, and the no-closing-keyword rule for the PR body.
 | **Report ↔ CSV agreement** | A per-lecture report citing a count that `violations.csv` does not have — i.e. a reviewer edited a mechanical number. |
 | **Conventions** | Legacy `W#`/`M#` or `qe-*-A#` rule IDs; a proposed rule cited without its **(proposed)** tag; a `# Style Audit —` title prefix; a `Spec version` line; two-pass or "carry-forward" narrative. |
 | **Snapshot** | Reports whose pinned snapshot does not match `snapshot.json`. |
+| **Score history** | A `history.csv` row without its `reviewed` count, or with one outside `[0, lectures]`; a period whose series `reviewed`/`lectures` do not sum to its TOTAL; a row with no twin in `history_mechanical.csv` (or a twin with no row); a `reviewed=0` row that differs from its twin; and the newest period's rows not being what `scores.csv` / `scores_mechanical.csv` summarise to *now*, or `reviewed` not matching the overlays actually folded in — the score half of [#21](https://github.com/QuantEcon/compliance-lecture-style/issues/21). |
 | **Corpus pins** | A period carrying numbers that nothing pins a corpus for, or a `snapshot_history.csv` row that could not reproduce one: a `basis` outside `pinned`/`recovered`, a commit that is not 40 hex, a `committed` with no UTC offset, per-series lecture counts that do not sum to that period's `history.csv` TOTAL, or a `checker` that is not the digest of `qestyle_scan.py` + `qestyle_lex.py` + `qestyle_rules.py` in this tree — that last one goes red on *every* recorded period the moment a scanner file changes, and stays red until each has been re-measured. Missing file is a failure, not a note. |
 | **Line-width claims** | The figures behind the `qe-fig-008` rule-scope question, in `appendix.md` and in `contributions/issues/07-…`, held to `fig_line_widths.csv`. `qe-fig-008` only asks whether a width is set, so the spread of values is separate evidence — and it moves whenever the check's exemptions move. A first hand-typed pass had five of these numbers wrong and this check caught all five. |
 | **Narrative claims** | A hand-written figure the data has since moved: the `intro.md` trend row (`A% → B%`), any counts table whose header names *Lectures* and *Occurrences*, and the trend sentence's own tallies (*N rules measurable in both snapshots*, *N improved*, *N held level*, *N got worse*). The report↔CSV check does not reach any of these, and a rule fix moves reach without touching the prose quoting it — which happened twice in the 2026-08 pass before the sentence tallies were covered. |

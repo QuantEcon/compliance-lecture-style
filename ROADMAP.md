@@ -416,7 +416,12 @@ moving the checks into `action-style-guide` per #20 rather than maintaining them
 - **Why the trend is reported on rule reach, not on scores.** Reach is a count of
   lectures matching a fixed program, so it is comparable across passes by construction.
   Score levels depend on the scoring function, so a change to that function would show up
-  as a spurious trend. Both are recorded, but reach is the honest headline.
+  as a spurious trend. Both are recorded, but reach is the honest headline. The same holds
+  one layer up: a score row also depends on how much of the judgment layer it folds in —
+  the 2026-08 corpus mean sat above 2026-05's until the overlays landed and below it after,
+  with the lectures unchanged — which is why every `history.csv` row carries `reviewed` and
+  `history_mechanical.csv` carries its evidence-layer twin
+  ([#16](https://github.com/QuantEcon/compliance-lecture-style/issues/16)).
 - **Why bare `align` is reported differently from `align` inside `$$`.** They fail
   differently — one is a nested math environment that breaks a PDF build, the other is a
   supported MyST form that merely departs from the corpus convention. Collapsing them is

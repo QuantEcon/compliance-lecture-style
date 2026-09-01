@@ -388,6 +388,7 @@ def build(data, reviews):
     snapshot = read_json(os.path.join(data, "snapshot.json"), sources) or {}
     scores = load_scores(data, sources)
     history = read_rows(os.path.join(data, "history.csv"), sources) or []
+    mechanical = read_rows(os.path.join(data, "history_mechanical.csv"), sources) or []
     pins = load_pins(data, sources)
     overlays = load_overlays(reviews, problems)
 
@@ -432,6 +433,7 @@ def build(data, reviews):
         "blobs": blobs,
         "scores": scores,
         "history": history,
+        "mechanical": mechanical,
         "overlays": overlays,
         "keys": keys,
         "status": status,
@@ -712,17 +714,43 @@ def print_doubts(st):
 
 
 def print_trend(st):
+    """The TOTAL row per period — as published, then like for like.
+
+    The published row folds in whatever judgment overlays existed when it was
+    written; ``reviewed`` says how many. A lecture assessed against more rules
+    scores lower, so two rows with different coverage are not a trend. The
+    second table is the evidence layer alone, comparable across periods whatever
+    the coverage was — that is the table to quote when the coverage differs.
+    """
     head("trend")
     rows = [r for r in st["history"] if (r.get("series") or "") == "TOTAL"]
     if not rows:
         print("  history.csv absent, or it has no TOTAL row.")
         return
-    cols = ["lectures"] + CATS + ["overall"] + PRIOS
-    label = {"admonitions": "admon", "references": "refs", "MEDIUM": "MED"}
-    print(f"  {'period':<9}" + "".join(f"{label.get(c, c):>8}" for c in cols))
-    for r in sorted(rows, key=lambda r: r.get("period", "")):
-        print(f"  {r.get('period',''):<9}"
-              + "".join(f"{(r.get(c) or '-'):>8}" for c in cols))
+    cols = ["lectures", "reviewed"] + CATS + ["overall"] + PRIOS
+    label = {"admonitions": "admon", "references": "refs", "MEDIUM": "MED", "reviewed": "revwd"}
+
+    def table(rows):
+        print(f"  {'period':<9}" + "".join(f"{label.get(c, c):>8}" for c in cols))
+        for r in sorted(rows, key=lambda r: r.get("period", "")):
+            print(f"  {r.get('period',''):<9}"
+                  + "".join(f"{(r.get(c) or '-'):>8}" for c in cols))
+
+    print("  as published (history.csv) — revwd = lectures with a judgment overlay folded in")
+    table(rows)
+    cov = {r.get("period"): (r.get("reviewed") or "", r.get("lectures") or "") for r in rows}
+    if len({k for k, _ in cov.values()}) > 1 or any(not k.isdigit() for k, _ in cov.values()):
+        print()
+        note("! judgment coverage differs between periods, so the score columns above are "
+             "not a trend: a lecture assessed against more rules scores lower. Quote the "
+             "like-for-like table below, or rule reach.")
+    mech = [r for r in st["mechanical"] if (r.get("series") or "") == "TOTAL"]
+    print()
+    if not mech:
+        print("  history_mechanical.csv absent — no like-for-like score row on record.")
+        return
+    print("  like for like (history_mechanical.csv) — evidence layer only, no overlays")
+    table([{**r, "reviewed": "0"} for r in mech])
 
 
 def print_sources(st, data, reviews):

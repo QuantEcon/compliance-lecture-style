@@ -262,6 +262,11 @@ Content notes for the narratives:
 
 - Write what the data says about **this** series and how it moved since the last period.
   Never "well written"; never a claim that would be true of any series.
+- **Compare score levels with the previous period only from `history_mechanical.csv`**, or
+  where both periods' `reviewed` agree. The published `history.csv` columns move when the
+  judgment layer lands, not only when the lectures change: every "Writing fell" sentence
+  written for 2026-08 against 2026-05 described coverage, and like for like Writing was flat
+  or up in all five series. Say which basis a figure is on. Rule reach needs no such care.
 - `lecture-dp` shares filenames with `lecture-python.myst`, and only some of those are still
   byte-identical. The identical ones are one finding counted twice and one upstream fix
   clears both; the diverged ones each need their own fix. How they should be counted is an
@@ -278,11 +283,27 @@ Two files carry the trend, and they are written by two different tools. Both nee
 period:
 
 ```bash
-.venv/bin/python tools/qestyle_score.py  --root lectures --fix --csv lectures/data/scores.csv
+.venv/bin/python tools/qestyle_score.py --root lectures --fix --csv lectures/data/scores.csv
+# The same reports drafted WITHOUT --reviews, into a throwaway root, scored beside them:
+# the evidence layer alone, which is the only score comparable across periods.
+CORPUS=.corpus; R=$CORPUS/action-style-guide/style_checker/rules
+MECH=$CORPUS/.mechanical; rm -rf $MECH; mkdir -p $MECH
+.venv/bin/python tools/qestyle_draft.py --corpus $CORPUS --out $MECH --date YYYY-MM-DD --rules $R
+.venv/bin/python tools/qestyle_score.py --root $MECH --fix --csv lectures/data/scores_mechanical.csv
 .venv/bin/python tools/qestyle_report.py --summarise --history 2026-08 --splice
 ```
 
-`--history PERIOD` appends this period's per-series scores to `lectures/data/history.csv`.
+`--history PERIOD` appends this period's per-series scores to `lectures/data/history.csv`
+— each row with a **`reviewed`** column, the number of its lectures whose score folds in a
+judgment overlay — and the same rows from the evidence layer alone to
+`history_mechanical.csv`, summarised from `scores_mechanical.csv` (the second draft above,
+made without `--reviews`; `--history` exits if that file is absent). A lecture assessed
+against more rules scores lower, so **a published score row is comparable with a previous
+period's only where `reviewed` agrees**; the mechanical twin is comparable always. That is
+what turned 2026-05 → 2026-08 from "the corpus mean fell 8.2 → 7.7" into "the judgment
+layer landed; like for like the corpus rose 8.2 → 8.4"
+([#16](https://github.com/QuantEcon/compliance-lecture-style/issues/16)). The front page's
+coverage block is generated from both files and states which case applies.
 It reads `scores.csv`, so **run `qestyle_score.py` first** or you will record the previous
 run's arithmetic under this period's label. `qestyle_scan.py --period P --append-history …`
 (Step 1, and in `pass-measure`) is the other half: per-rule reach into
