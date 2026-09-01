@@ -17,9 +17,11 @@ The lowest-scoring series in the corpus — 7.4 against a corpus mean of 7.7, wi
 68 lectures at HIGH. Every one of those 43 is HIGH on a category floor rather than on its
 overall: the lowest overall here is 5.6. The floor is **Writing**, not Math. Writing
 averages 4.6 and sits at or below the ≤ 4 floor in **36 of the 43** HIGH lectures; Math
-(5.8) floors 23 of them, Figures (6.3) 7. Writing was 7.3 at the previous pass, the
-steepest fall of any series — but every series fell, so this is the corpus being re-scored,
-not a regression here. Exactly one full lecture reaches NONE (`supply_demand_var`, 8.6);
+(5.8) floors 23 of them, Figures (6.3) 7. Writing was 7.3 in 2026-05; the fall to 4.6 is
+the judgment layer, which that row does not fold in and this one folds into all 68 lectures,
+so it is the series being assessed against more rules rather than a regression. Like for
+like, on the evidence layer alone (`history_mechanical.csv`), Writing here is 7.3 → 7.4 and
+Math 6.0 → 6.1. Exactly one full lecture reaches NONE (`supply_demand_var`, 8.6);
 the other four are `intro`, `status`, `zreferences` and `troubleshooting`.
 
 Most of what is under that Writing floor does not appear in the systemic table above.

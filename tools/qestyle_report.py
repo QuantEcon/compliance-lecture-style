@@ -41,6 +41,14 @@ SHORT = {"lecture-python-intro": "intro", "lecture-python-programming": "program
          "lecture-python-advanced.myst": "advanced", "lecture-dp": "dp"}
 PRIOS = ["HIGH", "MEDIUM", "LOW", "NONE"]
 
+# The evidence layer alone, drafted without ``--reviews`` into a throwaway root and
+# scored from there (pass-publish Step 3). ``scores.csv`` folds the judgment overlays
+# in; this file does not, so it is the one whose per-period rows are comparable
+# whatever the review coverage of each period happened to be (issue #16).
+MECHANICAL_SCORES = "scores_mechanical.csv"
+MECHANICAL_HISTORY = "history_mechanical.csv"
+HISTORY_FIELDS = ["period", "series", "lectures"] + CATS + ["overall"] + PRIOS
+
 # Editorial framing for the "biggest wins" table: what the fix means in plain
 # words, and whether it is a scriptable sweep or needs a human pass.
 WIN_COPY = {
@@ -101,9 +109,9 @@ def num(v):
         return None
 
 
-def summarise(data_dir):
+def summarise(data_dir, name="scores.csv"):
     """Per-series category means, overall means and priority counts."""
-    scores = read_csv(os.path.join(data_dir, "scores.csv"))
+    scores = read_csv(os.path.join(data_dir, name))
     out = []
     for series in SERIES_ORDER:
         rows = [r for r in scores if r["series"] == series]
@@ -142,10 +150,26 @@ def write_summary(data_dir, rows):
     return path
 
 
-def append_history(data_dir, period, rows):
-    """Append this pass to the cross-period time series (kept, never rewritten)."""
-    path = os.path.join(data_dir, "history.csv")
-    fields = ["period", "series", "lectures"] + CATS + ["overall"] + PRIOS
+def reviewed_counts(data_dir, reviews):
+    """{series: n, "TOTAL": n} — lectures whose score folds a judgment overlay.
+
+    The rule is the draft's own: ``qestyle_draft.load_review`` folds an overlay in
+    whenever ``reviews/<series>/<lecture>.json`` exists, so this counts exactly the
+    lectures the scores in ``scores.csv`` were computed with. It is deliberately not
+    the fresh/stale count from ``qestyle_status`` — a stale overlay is still folded
+    in, and this column records what the score *contains*, not whether it is current.
+    """
+    scores = read_csv(os.path.join(data_dir, "scores.csv"))
+    out = {"TOTAL": 0}
+    for r in scores:
+        n = int(os.path.exists(os.path.join(reviews, r["series"], r["lecture"] + ".json")))
+        out[r["series"]] = out.get(r["series"], 0) + n
+        out["TOTAL"] += n
+    return out
+
+
+def _rewrite_period(path, period, fields, rows):
+    """Replace ``period``'s rows in a history CSV, keeping every other period's as is."""
     existing = read_csv(path) if os.path.exists(path) else []
     existing = [r for r in existing if r.get("period") != period]
     with open(path, "w", newline="", encoding="utf-8") as fh:
@@ -157,6 +181,38 @@ def append_history(data_dir, period, rows):
             w.writerow({**{k: "" for k in fields}, "period": period,
                         **{k: v for k, v in r.items() if k in fields}})
     return path
+
+
+def append_history(data_dir, period, rows, reviews="reviews"):
+    """Append this pass to the cross-period time series (kept, never rewritten).
+
+    Every row carries ``reviewed`` — how many of its lectures had a judgment overlay
+    folded into their score. A lecture assessed against more rules scores lower, so
+    two rows with different coverage are not comparable as *scores*: the 2026-08
+    corpus mean sat above 2026-05's before the overlays landed and below it after,
+    with the lectures unchanged (issue #16). The column is what lets a reader — and
+    the gate — tell a corpus movement from a coverage movement.
+    """
+    counts = reviewed_counts(data_dir, reviews)
+    rows = [{**r, "reviewed": counts.get(r["series"], 0)} for r in rows]
+    return _rewrite_period(os.path.join(data_dir, "history.csv"), period,
+                           HISTORY_FIELDS + ["reviewed"], rows)
+
+
+def append_mechanical_history(data_dir, period):
+    """The same row from the evidence layer alone — comparable across periods.
+
+    Requires ``scores_mechanical.csv`` beside ``scores.csv``: the reports drafted
+    *without* ``--reviews`` into a throwaway root, then scored. Absent, this is an
+    error and not a skip — a period recorded in ``history.csv`` with no like-for-like
+    row is the gap this file exists to close, and the gate will fail on it anyway.
+    """
+    src = os.path.join(data_dir, MECHANICAL_SCORES)
+    if not os.path.exists(src):
+        sys.exit(f"{src}: absent — draft into a throwaway root without --reviews and "
+                 f"score it with --csv {src} before --history (pass-publish Step 3)")
+    return _rewrite_period(os.path.join(data_dir, MECHANICAL_HISTORY), period,
+                           HISTORY_FIELDS, summarise(data_dir, MECHANICAL_SCORES))
 
 
 # ---------------------------------------------------------------------------
@@ -470,8 +526,12 @@ def block_review_coverage(rows, data_dir):
     def _admonition(kind, body):
         return "```{" + kind + "}\n" + _wrap(body) + "\n```"
 
+    def _with_periods(block):
+        extra = _period_comparability(data_dir)
+        return block + ("\n\n" + extra if extra else "")
+
     if not lack:
-        return _admonition("note",
+        return _with_periods(_admonition("note",
             f"**Every one of the {n} lectures has been through the judgment layer**, so "
             f"the scores below are comparable across series and the cross-series "
             f"comparison stands on its own. Per-series coverage is still published on each "
@@ -480,17 +540,17 @@ def block_review_coverage(rows, data_dir):
             f"same code. This retires the caveat tracked in "
             f"[audit.2026-05.style-guide#5]"
             f"(https://github.com/QuantEcon/audit.2026-05.style-guide/issues/5)."
-        )
+        ))
     if not have:
-        return _admonition("warning",
+        return _with_periods(_admonition("warning",
             "**No lecture has been through the judgment layer yet**, so every score below "
             "reflects the measured rules only, and the cross-series comparison is a "
             "ranking of the deterministic evidence alone. Coverage is tracked in this "
             "ledger's [issues](https://github.com/QuantEcon/compliance-lecture-style/issues)."
-        )
+        ))
 
     a, b = stats(have), stats(lack)
-    return _admonition("warning",
+    return _with_periods(_admonition("warning",
         f"**Review coverage is incomplete in this pass, and it moves the scores.** "
         f"The judgment layer has reached **{k} of the {n} lectures**; a lecture "
         f"assessed against more rules scores lower — not because it is worse, but "
@@ -504,7 +564,70 @@ def block_review_coverage(rows, data_dir):
         f"series' overall scores as noise until coverage evens out. This gap is tracked "
         f"in this ledger's "
         f"[issues](https://github.com/QuantEcon/compliance-lecture-style/issues)."
-    )
+    ))
+
+
+def _period_comparability(data_dir):
+    """Whether this period's score row can be compared with the previous one's.
+
+    Generated, because the answer is a fact about coverage and it changed under the
+    hand-written prose once already: the 2026-05 row folds no judgment overlay and the
+    2026-08 row folds one into every lecture, so the published corpus mean fell while
+    the evidence layer, measured identically over both snapshots, rose (issue #16).
+    Returns an admonition, or "" when there is no previous period to compare with.
+    """
+    hist = os.path.join(data_dir, "history.csv")
+    if not os.path.exists(hist):
+        return ""
+    rows = [r for r in read_csv(hist) if r.get("series") == "TOTAL"]
+    periods = sorted({r["period"] for r in rows})
+    if len(periods) < 2:
+        return ""
+    prev, curr = periods[-2], periods[-1]
+    tot = {r["period"]: r for r in rows}
+    cov = {}
+    for p in (prev, curr):
+        n, k = int(tot[p]["lectures"]), int(tot[p].get("reviewed") or 0)
+        cov[p] = (k, n)
+    full = {p: cov[p][0] == cov[p][1] for p in cov}
+    none = {p: cov[p][0] == 0 for p in cov}
+    mech_path = os.path.join(data_dir, MECHANICAL_HISTORY)
+    mech = ({r["period"]: r for r in read_csv(mech_path) if r.get("series") == "TOTAL"}
+            if os.path.exists(mech_path) else {})
+
+    def pair(table, col):
+        return f"{table[prev][col]} → {table[curr][col]}"
+
+    if (full[prev] and full[curr]) or (none[prev] and none[curr]):
+        basis = "a full judgment layer" if full[curr] else "the evidence layer alone"
+        return ("```{note}\n" + _wrap(
+            f"**Score levels are comparable with the previous period.** Both the {prev} "
+            f"and the {curr} rows of `history.csv` carry {basis} "
+            f"({cov[prev][0]} of {cov[prev][1]} and {cov[curr][0]} of {cov[curr][1]} "
+            f"lectures reviewed), so a movement in the score columns is a movement in the "
+            f"lectures. The trend the front page reports is still rule reach, which is "
+            f"comparable by construction.") + "\n```")
+
+    body = (
+        f"**Score levels are not comparable with the previous period, which is why the "
+        f"trend above is reported on rule reach and not on scores.** The {curr} row of "
+        f"`history.csv` folds a judgment overlay into **{cov[curr][0]} of {cov[curr][1]}** "
+        f"lectures; the {prev} row folds one into **{cov[prev][0]} of {cov[prev][1]}** "
+        f"(the `reviewed` column). A lecture assessed against more rules scores lower, so "
+        f"the published corpus mean moved {pair(tot, 'overall')}, Writing "
+        f"{pair(tot, 'writing')} and the HIGH count {pair(tot, 'HIGH')} — movement that is "
+        f"the judgment layer landing on one period and not the other, not the lectures "
+        f"changing.")
+    if prev in mech and curr in mech:
+        body += (
+            f" Like for like — the evidence layer alone, measured identically over both "
+            f"snapshots and recorded in `history_mechanical.csv` — the corpus moved "
+            f"{pair(mech, 'overall')} overall, Writing {pair(mech, 'writing')} and HIGH "
+            f"{pair(mech, 'HIGH')} lectures.")
+    body += (" Compare score levels across periods only where the `reviewed` column "
+             "agrees, or use the like-for-like table; never read the published columns "
+             "as a trend across a coverage change.")
+    return "```{warning}\n" + _wrap(body) + "\n```"
 
 
 BLOCKS = {
@@ -558,7 +681,10 @@ def main():
     ap.add_argument("--data", default="lectures/data")
     ap.add_argument("--summarise", action="store_true")
     ap.add_argument("--history", default="", metavar="PERIOD",
-                    help="append this pass to history.csv under PERIOD (e.g. 2026-08)")
+                    help="append this pass to history.csv and history_mechanical.csv "
+                         "under PERIOD (e.g. 2026-08)")
+    ap.add_argument("--reviews", default="reviews",
+                    help="directory of judgment overlays; decides the `reviewed` column")
     ap.add_argument("--splice", action="store_true")
     ap.add_argument("--targets", nargs="*", default=[
         "README.md", "lectures/intro.md", "lectures/details.md", "lectures/spec.md"]
@@ -573,7 +699,8 @@ def main():
         print(BLOCKS[args.emit](rows, args.data))
         return 0
     if args.history:
-        print("wrote", append_history(args.data, args.history, rows))
+        print("wrote", append_history(args.data, args.history, rows, args.reviews))
+        print("wrote", append_mechanical_history(args.data, args.history))
     if args.splice:
         for t in args.targets:
             if not os.path.exists(t):

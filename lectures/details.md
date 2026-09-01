@@ -457,11 +457,14 @@ row above corresponds to a check that now fails loudly.
   of the 7 proposed); the 8 judgment-only rules (spec §9) are
   reviewed by reading. A category scoring 10 means no mechanical violation was measured,
   not that every rule in it was verified by a human.
-- **Review coverage is partial in this pass, and scores depend on it.** A lecture assessed
-  against more rules scores lower, so the scoreboard above is only comparable between two
-  series to the extent their coverage matches. The size of the gap is quantified on the
-  [front page](intro.md), and per-series coverage is on each Summary page. The rule-reach
-  tables are unaffected, because those are measured over every lecture by the same code.
+- **Review coverage is complete in this pass and was absent in the previous one, and scores
+  depend on it.** A lecture assessed against more rules scores lower. Every 2026-08 lecture
+  folds in a judgment overlay, so the scoreboard above is comparable *across series*; the
+  2026-05 rows of `history.csv` fold in none (its `reviewed` column), so score levels are
+  not comparable *across the two periods*, and the [front page](intro.md) says so with the
+  like-for-like figures from `history_mechanical.csv` — the evidence layer alone, on which
+  the corpus improved. The rule-reach tables are unaffected, because those are measured over
+  every lecture by the same code.
 - **Three checks are heuristic** and say so where they fire: `qe-writing-004` and
   `qe-writing-006` depend on curated proper-noun and common-noun lists, and `qe-math-002`
   has to distinguish a transpose apostrophe from a derivative and a `^T` transpose from a

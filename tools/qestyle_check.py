@@ -39,6 +39,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from qestyle_rules import PROPOSED                     # noqa: E402
 from qestyle_scan import SERIES, checker_digest        # noqa: E402
 from qestyle_score import compute, parse_report        # noqa: E402
+from qestyle_report import (HISTORY_FIELDS, MECHANICAL_HISTORY,   # noqa: E402
+                            MECHANICAL_SCORES, reviewed_counts, summarise)
 
 RULE_RE = re.compile(r"\bqe-(?:writing|math|code|jax|fig|ref|link|admon)-\d{3}\b")
 LEGACY_RE = re.compile(r"\bqe-(?:math|writing)-A\d\b|\[(?:W[1-8]|M(?:1[0-4]|[1-9]))\]")
@@ -439,6 +441,120 @@ def check_snapshot_history(ck, data):
             f"{digest or 'unavailable'}")
 
 
+SCORE_COLS = HISTORY_FIELDS[2:]            # lectures, the categories, overall, priorities
+
+
+def check_score_history(ck, data, reviews):
+    """A score row records its judgment coverage, and has a like-for-like twin.
+
+    A lecture assessed against more rules scores lower. The 2026-08 corpus mean sat
+    above 2026-05's until the review overlays landed and below it afterwards, with
+    the lectures unchanged — so a score row is not comparable with another unless
+    both say how much of the judgment layer they fold in (issue #16). Two records
+    make that checkable: `history.csv` carries `reviewed` per row, and
+    `history_mechanical.csv` carries the same row from the evidence layer alone,
+    which is comparable across periods whatever the coverage was.
+
+    The latest period is also held to the current-period files it was summarised
+    from, so a `--history` step that was skipped, or run before `qestyle_score`,
+    leaves a stale row the gate can see (the score half of issue #21).
+    """
+    hist = os.path.join(data, "history.csv")
+    mech = os.path.join(data, MECHANICAL_HISTORY)
+    for path, want in ((hist, HISTORY_FIELDS + ["reviewed"]), (mech, HISTORY_FIELDS)):
+        if not os.path.exists(path):
+            ck.fail("score-history", f"{path}: absent")
+            continue
+        with open(path, newline="", encoding="utf-8") as fh:
+            header = next(csv.reader(fh), [])
+        if header != want:
+            ck.fail("score-history",
+                    f"{path}: header is {','.join(header)!r}, must be {','.join(want)!r}")
+    if any(c == "score-history" for c, _ in ck.failures):
+        return
+
+    def load(path):
+        with open(path, newline="", encoding="utf-8") as fh:
+            return {(r["period"], r["series"]): r for r in csv.DictReader(fh)}
+
+    H, M = load(hist), load(mech)
+    if set(H) != set(M):
+        for k in sorted(set(H) - set(M)):
+            ck.fail("score-history", f"{'/'.join(k)}: in history.csv, no like-for-like "
+                                     f"row in {MECHANICAL_HISTORY}")
+        for k in sorted(set(M) - set(H)):
+            ck.fail("score-history", f"{'/'.join(k)}: in {MECHANICAL_HISTORY}, no row in "
+                                     f"history.csv")
+
+    by_period = {}
+    for (period, series), r in H.items():
+        by_period.setdefault(period, {})[series] = r
+        n = r.get("lectures") or ""
+        k = r.get("reviewed") or ""
+        if not (k.isdigit() and n.isdigit() and 0 <= int(k) <= int(n)):
+            ck.fail("score-history",
+                    f"{period}/{series}: reviewed {k!r} is not an integer in "
+                    f"[0, {n or '?'}]")
+            continue
+        # A row with no judgment layer *is* an evidence-layer row: the two files
+        # must agree on it exactly, or one of them was written from other scores.
+        m = M.get((period, series))
+        if int(k) == 0 and m is not None:
+            diff = [c for c in SCORE_COLS if r.get(c, "") != m.get(c, "")]
+            if diff:
+                ck.fail("score-history",
+                        f"{period}/{series}: reviewed=0 but differs from "
+                        f"{MECHANICAL_HISTORY} on {', '.join(diff)}")
+    for period, rows in sorted(by_period.items()):
+        tot = rows.get("TOTAL")
+        if tot is None:
+            ck.fail("score-history", f"{period}: no TOTAL row in history.csv")
+            continue
+        for col in ("lectures", "reviewed"):
+            parts = [int(r[col]) for s, r in rows.items()
+                     if s != "TOTAL" and (r.get(col) or "").isdigit()]
+            if (tot.get(col) or "").isdigit() and sum(parts) != int(tot[col]):
+                ck.fail("score-history",
+                        f"{period}: TOTAL {col} is {tot[col]}, the series sum to "
+                        f"{sum(parts)}")
+
+    # The newest period must be what the current-period files summarise to now.
+    newest = max(by_period) if by_period else None
+    if newest:
+        for label, name, table, needs_reviewed in (
+                ("history.csv", "scores.csv", H, True),
+                (MECHANICAL_HISTORY, MECHANICAL_SCORES, M, False)):
+            src = os.path.join(data, name)
+            if not os.path.exists(src):
+                ck.fail("score-history", f"{src}: absent, so the {newest} rows of {label} "
+                                         f"cannot be held to it")
+                continue
+            # Only now: reviewed_counts() reads scores.csv, so computing it before
+            # the guard above would crash the gate on the very file it reports on.
+            extra = reviewed_counts(data, reviews) if needs_reviewed else None
+            for rec in summarise(data, name):
+                row = table.get((newest, rec["series"]))
+                if row is None:
+                    ck.fail("score-history", f"{newest}/{rec['series']}: summarised from "
+                                             f"{name}, but {label} has no row for it")
+                    continue
+                diff = [c for c in SCORE_COLS if str(rec.get(c, "")) != row.get(c, "")]
+                if diff:
+                    ck.fail("score-history",
+                            f"{newest}/{rec['series']}: {label} differs from {name} as "
+                            f"summarised now on {', '.join(diff)} — re-run "
+                            f"qestyle_score then qestyle_report --history {newest}")
+                if extra is not None and str(extra.get(rec["series"], 0)) != row.get("reviewed", ""):
+                    ck.fail("score-history",
+                            f"{newest}/{rec['series']}: reviewed is {row.get('reviewed')!r}, "
+                            f"but {extra.get(rec['series'], 0)} overlays are folded into "
+                            f"scores.csv now")
+    cov = ", ".join(f"{p} {rows['TOTAL'].get('reviewed', '?')}/{rows['TOTAL'].get('lectures', '?')}"
+                    for p, rows in sorted(by_period.items()) if "TOTAL" in rows)
+    ck.note(f"{len(H)} score rows checked against their like-for-like twins; judgment "
+            f"coverage {cov}")
+
+
 # The generated regions of a narrative document are `qestyle_report --splice`'s
 # business; these regexes strip them so only hand-written prose is examined.
 SPLICE_RE = re.compile(r"<!-- qe:[A-Za-z0-9_-]+ -->.*?<!-- /qe:[A-Za-z0-9_-]+ -->", re.S)
@@ -738,6 +854,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--root", default="lectures")
     ap.add_argument("--data", default="lectures/data")
+    ap.add_argument("--reviews", default="reviews",
+                    help="directory of judgment overlays, for the `reviewed` column")
     # One or the other, never neither: an omitted --corpus used to skip the
     # coverage check silently, which is the fail-open shape this gate exists to
     # refuse. Saying "no corpus" has to be a decision someone typed.
@@ -761,6 +879,7 @@ def main():
     check_conventions(ck, args.root)
     check_snapshot(ck, args.root, args.data)
     check_snapshot_history(ck, args.data)
+    check_score_history(ck, args.data, args.reviews)
     check_narrative(ck, args.root, args.data)
     check_line_width_claims(ck, args.root, args.data)
     return ck.report()

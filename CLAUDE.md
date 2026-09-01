@@ -84,6 +84,13 @@ Enforce everywhere. `tools/qestyle_check.py` asserts all of these; run it before
   makes review cost scale with corpus *churn* instead of corpus *size*. Never hand-stamp it:
   the scan writes the blobs, and `tools/qestyle_backfill_provenance.py` stamps older overlays
   — before the snapshot advances, never after, or it launders stale reviews into fresh ones.
+- **A score row carries its coverage.** Every `history.csv` row has a `reviewed` column —
+  how many of its lectures fold in a judgment overlay — and a twin row in
+  `history_mechanical.csv` measured from the evidence layer alone. A lecture assessed
+  against more rules scores lower, so **never compare score levels across periods whose
+  `reviewed` differs**; quote the mechanical twin or rule reach. Both files are written by
+  `qestyle_report.py --history`, which needs `scores_mechanical.csv` (a draft made without
+  `--reviews`, scored) beside `scores.csv`; the gate holds each row to both.
 - **JAX is out of scope** — distinct from `N/A` ("not applicable to this lecture").
 - **One pass, no process narrative.** A report describes the corpus at one pinned
   snapshot; it never narrates how the pass was run in "v1/v2" or "two-pass" terms.

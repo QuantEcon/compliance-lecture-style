@@ -145,6 +145,20 @@ Per-series coverage is still published on each series' Summary page, and the
 measured over the whole corpus by the same code. This retires the caveat tracked in
 [audit.2026-05.style-guide#5](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/5).
 ```
+
+```{warning}
+**Score levels are not comparable with the previous period, which is why the trend above
+is reported on rule reach and not on scores.** The 2026-08 row of `history.csv` folds a
+judgment overlay into **348 of 348** lectures; the 2026-05 row folds one into **0 of
+300** (the `reviewed` column). A lecture assessed against more rules scores lower, so
+the published corpus mean moved 8.2 → 7.7, Writing 6.6 → 4.6 and the HIGH count 102 →
+197 — movement that is the judgment layer landing on one period and not the other, not
+the lectures changing. Like for like — the evidence layer alone, measured identically
+over both snapshots and recorded in `history_mechanical.csv` — the corpus moved 8.2 →
+8.4 overall, Writing 6.6 → 7.1 and HIGH 102 → 85 lectures. Compare score levels across
+periods only where the `reviewed` column agrees, or use the like-for-like table; never
+read the published columns as a trend across a coverage change.
+```
 <!-- /qe:review-coverage -->
 
 ---

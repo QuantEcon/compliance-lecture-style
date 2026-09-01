@@ -24,10 +24,12 @@ Underneath Writing are four rules, and no single one of them accounts for a lect
 the only one that sweeps cleanly, but every one of the 18 floored lectures also breaks at
 least one rule that has to be read: `qe-writing-001` (30 / 56) in 16 of them,
 `qe-writing-006` (13 / 56) in 11, `qe-writing-004` (18 / 56) in 9. Across the 18 that is 85
-hand-edited sites, against 338 whitespace occurrences a script handles. The 2026-05 pass,
-done by reading, put Writing at 7.5 here and left Figures as the weakest category; corpus
-Writing moved 6.6 → 4.6 over the same interval, so the reordering is not particular to this
-series.
+hand-edited sites, against 338 whitespace occurrences a script handles. The 2026-05 row put
+Writing at 7.5 here and left Figures as the weakest category. The reordering since is the
+judgment layer — that row folds in no review overlay, this one folds one into all 56
+lectures — not the lectures: like for like, on the evidence layer alone
+(`history_mechanical.csv`), Writing here is 7.5 → 7.7 and Figures 6.5 → 6.5, so on a
+comparable basis Figures is still the weakest category.
 
 By every other measure this is the strongest series in the corpus: the highest overall (8.1
 against 7.7), the smallest share of HIGH lectures (19 of 56, against 197 of 348), nothing

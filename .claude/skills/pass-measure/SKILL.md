@@ -225,10 +225,23 @@ too. Nothing checks for an orphan overlay, so it will sit in the coverage count 
 
 ```bash
 .venv/bin/python tools/qestyle_score.py --root lectures --fix --csv lectures/data/scores.csv
+# The same reports drafted WITHOUT --reviews, into a throwaway root, scored beside them:
+# the evidence layer alone, which is the only score comparable across periods.
+MECH=.corpus/.mechanical; rm -rf $MECH; mkdir -p $MECH
+.venv/bin/python tools/qestyle_draft.py --corpus $CORPUS --out $MECH --date YYYY-MM-DD --rules $R
+.venv/bin/python tools/qestyle_score.py --root $MECH --fix --csv lectures/data/scores_mechanical.csv
 .venv/bin/python tools/qestyle_report.py --summarise --history $P --splice
 .venv/bin/python tools/qestyle_toc.py --root lectures --check || \
   .venv/bin/python tools/qestyle_toc.py --root lectures
 ```
+
+The second draft is the evidence layer alone. `--history $P` writes this period's row into
+`history.csv` **with a `reviewed` column** (lectures whose score folds in an overlay) and
+its like-for-like twin into `history_mechanical.csv`, and exits if `scores_mechanical.csv`
+is missing. A lecture assessed against more rules scores lower, so a score row is only a
+trend against another with the same `reviewed`; the mechanical twin always is
+([#16](https://github.com/QuantEcon/compliance-lecture-style/issues/16)). The gate holds
+both files to the current `scores*.csv` and to each other.
 
 `--fix` recomputes each report's overall score and priority bucket from its own score table,
 so a header can never contradict its categories. `--splice` regenerates the marked table

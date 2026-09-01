@@ -56,8 +56,16 @@ runbook around it.
   itself [#7](https://github.com/QuantEcon/audit.2026-05.style-guide/issues/7).
 - **Both passes are here.** [`lectures/data/history.csv`](lectures/data/history.csv) holds
   the 2026-05 and the 2026-08 rows, and both were measured with the current code — so the
-  trend is a like-for-like comparison of two corpus snapshots, not of two vintages of
-  checker.
+  **rule-reach** trend
+  ([`rule_reach_history.csv`](lectures/data/rule_reach_history.csv)) is a like-for-like
+  comparison of two corpus snapshots, not of two vintages of checker. The **score** rows are
+  not: each carries a `reviewed` column saying how many of its lectures fold in a judgment
+  overlay, and 2026-08 folds one into every lecture where 2026-05 folds in none, so the
+  published score movement between them is coverage, not the corpus. The like-for-like score
+  row — the evidence layer alone — is
+  [`history_mechanical.csv`](lectures/data/history_mechanical.csv); the
+  [front page](https://quantecon.github.io/compliance-lecture-style/) states both, and the
+  gate holds every row to its coverage and to its twin.
 - **The open questions moved with it.** Archiving locks a repo's issues, so the four
   questions still open against the audit — the `{doc}` link form for same-series
   references, the near-empty MEDIUM band, how lectures shared between `lecture-dp` and

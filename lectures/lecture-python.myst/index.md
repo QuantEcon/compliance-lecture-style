@@ -30,9 +30,12 @@ math 7.0 against 7.0, figures 6.5 against 6.5. The floor proportions match too �
 extremes are what distinguish it. `cross_product_trick` at **5.5** is the lowest-scoring
 lecture in all 348, and `qe-writing-008` at **2,569 occurrences across 89 lectures** is the
 largest count of any rule in any series — 36 % of the corpus total for that rule, with
-`ak2` alone at 197. Math and Figures both edged up since 2026-05 (6.6 → 7.0 and 6.3 → 6.5)
-while Writing fell 1.4 points; the series grew from 110 lectures to 145 over the same
-interval, so part of that movement is composition rather than regression.
+`ak2` alone at 197. The published Writing figure fell 1.4 points since 2026-05, but that is
+the judgment layer — the 2026-05 row folds in no review overlay and this one folds one into
+all 145 lectures. Like for like, on the evidence layer alone (`history_mechanical.csv`),
+Writing here *rose* 5.9 → 7.0, Math 6.6 → 7.4 and Figures 6.3 → 6.5, while the series grew
+from 110 lectures to 145 — so the comparable movement is an improvement, part of it
+composition.
 
 **A caveat this series shares with `lecture-dp`.** 31 of these 145 filenames also exist in
 `lecture-dp`, which syncs them from here; 16 of the 31 are HIGH here and 15 are HIGH in
