@@ -150,6 +150,7 @@ churn instead of corpus size. The same table is filed per period under
 
 ```
 .
+├── LICENSE                    ← MIT, for this repository's own work (see Licence below)
 ├── README.md                  ← this file
 ├── ROADMAP.md                 ← project direction, open decisions, phased plan
 ├── UPDATE.md                  ← runbook: how to run a pass and refresh the ledger
@@ -175,6 +176,22 @@ churn instead of corpus size. The same table is filed per period under
 
 **This repository is the source of truth for the published ledger** — the site is built
 from `lectures/` by `.github/workflows/deploy.yml` on every push to `main`.
+
+## Licence
+
+This repository's **own work** — the pipeline in `tools/` (lexer, rule checks, scoring,
+reports, gate), the runbook and skills, and the derived data in `lectures/data/`
+(`violations.csv`, the reach and score tables, the history files) — is released under the
+[MIT License](LICENSE), matching
+[`action-style-guide`](https://github.com/QuantEcon/action-style-guide).
+
+That licence does **not** extend to the lecture material the per-lecture reports quote.
+Headings, captions, sentences and code identifiers reproduced with line numbers in
+`lectures/lecture-*/` are excerpts from the QuantEcon lecture repositories
+(`lecture-python-intro`, `lecture-python-programming`, `lecture-python.myst`,
+`lecture-python-advanced.myst`, `lecture-dp`), quoted here to locate a finding, and remain
+under whatever terms those repositories adopt. This repository claims nothing over them.
+(Decision: [#6](https://github.com/QuantEcon/compliance-lecture-style/issues/6).)
 
 ## Related
 
