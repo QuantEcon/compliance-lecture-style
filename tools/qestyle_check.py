@@ -444,6 +444,61 @@ def check_snapshot_history(ck, data):
 SCORE_COLS = HISTORY_FIELDS[2:]            # lectures, the categories, overall, priorities
 
 
+def check_reach_history(ck, data):
+    """The newest period's reach rows are what the current-period files say now.
+
+    `rule_reach_history.csv` is written by `qestyle_scan.py --append-history`, an
+    optional flag, and the file is committed — so a scan run without it leaves the
+    previous run's rows *present* under the current period's label, not absent.
+    `rule_reach.csv` moves and the history does not, and every check that reads
+    the history (the trend chart, the narrative claims) is happy with the stale
+    row (issue #21). Both files are written from the same counts, so the newest
+    period's rows must equal `rule_reach.csv` per rule, and its `corpus_size`
+    must be the lecture count `snapshot.json` recorded.
+    """
+    hist_path = os.path.join(data, "rule_reach_history.csv")
+    cur_path = os.path.join(data, "rule_reach.csv")
+    snap_path = os.path.join(data, "snapshot.json")
+    per = _reach_history(data)
+    if not per:
+        ck.fail("reach-history", f"{hist_path}: absent or empty")
+        return
+    missing = [p for p in (cur_path, snap_path) if not os.path.exists(p)]
+    if missing:
+        for p in missing:
+            ck.fail("reach-history", f"{p}: absent, so the newest reach rows cannot be "
+                                     f"held to it")
+        return
+    newest = max(per)
+    hist = per[newest]
+    with open(cur_path, newline="", encoding="utf-8") as fh:
+        cur = {r["rule"]: (int(r["lectures_affected"]), int(r["total_occurrences"]))
+               for r in csv.DictReader(fh)}
+    with open(snap_path, encoding="utf-8") as fh:
+        n = json.load(fh).get("n_lectures")
+    for rule in sorted(set(cur) - set(hist)):
+        ck.fail("reach-history", f"{newest}: {rule} is in rule_reach.csv but has no "
+                                 f"history row — --append-history was not run")
+    for rule in sorted(set(hist) - set(cur)):
+        ck.fail("reach-history", f"{newest}: {rule} has a history row but is not in "
+                                 f"rule_reach.csv — the history is from another run")
+    sizes = {v[3] for v in hist.values()}
+    if n is None or sizes != {int(n)}:
+        ck.fail("reach-history", f"{newest}: corpus_size {sorted(sizes)} in the history, "
+                                 f"snapshot.json has n_lectures {n}")
+    for rule in sorted(set(cur) & set(hist)):
+        reach, occ, share, size = hist[rule]
+        if (reach, occ) != cur[rule]:
+            ck.fail("reach-history",
+                    f"{newest}: {rule} history says {reach}/{occ}, rule_reach.csv says "
+                    f"{cur[rule][0]}/{cur[rule][1]} — re-run the scan with "
+                    f"--append-history")
+        elif size and round(reach / size * 100, 1) != share:
+            ck.fail("reach-history",
+                    f"{newest}: {rule} share_pct {share} is not {reach}/{size}")
+    ck.note(f"{len(hist)} reach rows for {newest} held to rule_reach.csv and snapshot.json")
+
+
 def check_score_history(ck, data, reviews):
     """A score row records its judgment coverage, and has a like-for-like twin.
 
@@ -880,6 +935,7 @@ def main():
     check_snapshot(ck, args.root, args.data)
     check_snapshot_history(ck, args.data)
     check_score_history(ck, args.data, args.reviews)
+    check_reach_history(ck, args.data)
     check_narrative(ck, args.root, args.data)
     check_line_width_claims(ck, args.root, args.data)
     return ck.report()
