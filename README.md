@@ -150,7 +150,8 @@ churn instead of corpus size. The same table is filed per period under
 
 ```
 .
-├── LICENSE · README.md                  ← this file
+├── LICENSE                    ← MIT, for this repository's own work (see Licence below)
+├── README.md                  ← this file
 ├── ROADMAP.md                 ← project direction, open decisions, phased plan
 ├── UPDATE.md                  ← runbook: how to run a pass and refresh the ledger
 ├── CLAUDE.md                  ← read-me-first orientation for agents
